@@ -26,7 +26,7 @@ User Request
 ```text
 accelerate
   -> Issue Bootstrap Gate
-  -> linear-pm
+  -> active workflow adapter
   -> issue-ready validation
 ```
 

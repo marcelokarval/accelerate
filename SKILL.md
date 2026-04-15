@@ -1,13 +1,13 @@
 ---
 name: accelerate
-description: Use as the always-on runtime root for engineering work in Prop4You to classify trivial vs non-trivial execution, then route into the correct bounded or orchestrated workflow.
+description: Use as the always-on runtime root for engineering work to classify trivial vs non-trivial execution, then route into the correct bounded or orchestrated workflow.
 metadata:
   category: orchestration
   origin: rewritten-from-claude
 ---
 # Accelerate
 
-Codex-native root orchestration skill for Prop4You engineering work.
+Codex-native root orchestration skill for standalone engineering work.
 
 Use `accelerate` as the always-on runtime root for engineering work.
 
@@ -16,9 +16,9 @@ It decides how the work should run before implementation starts, then either:
 - keeps the run in the trivial bounded branch
 - or stays as the master orchestrator for non-trivial work
 
-`accelerate` is project-agnostic, stack-aware, and workflow-opinionated. It does
-not promote Prop4You business specifics into universal rules, but it does carry
-the operating contracts of the active stack.
+`accelerate` is project-agnostic, stack-aware, and workflow-opinionated. It
+does not promote incubator-specific business context into universal rules, but
+it does carry the operating contracts of the active stack and distribution.
 
 This file is intentionally short. Advanced behavior lives in `references/` so the
 entry skill stays readable and does not inflate base context.
@@ -100,7 +100,7 @@ task:
 
 - touches multiple layers or domains
 - needs planning before implementation
-- is issue-driven or depends on Linear hygiene
+- is issue-driven or depends on workflow hygiene
 - may need quality lenses, review orchestration, or cross-stack checks
 - is long, ambiguous, multi-phase, or likely to drift without shaping
 - might require subagents, browser truth, or bounded execution sequencing
@@ -161,7 +161,7 @@ It also owns severity-aligned communication:
 - a requirement that agents must exist before the control plane can operate
 - a reason to skip `prompt-hardening` when the prompt is weak
 - a substitute for runtime evidence
-- a substitute for `linear-pm` on issue-driven work
+- a substitute for the active workflow adapter on issue-driven work
 - a license for bounded agents to inherit orchestration authority
 - a license to turn small tasks into ceremony
 
@@ -336,7 +336,7 @@ living docs, the packet must also make visible:
 - `issue bootstrap`
   - `complete`, `missing`, or `approved exception`
 - `governing issue`
-  - the Linear issue key when bootstrap is complete
+  - the governing issue key when bootstrap is complete
 - `bootstrap exception reason`
   - only when the user explicitly approved a narrow no-issue exception
 
@@ -535,7 +535,7 @@ real review gate remains, but it does not become issue-optional.
 
 ### Issue-Driven Delivery
 
-- `linear-pm`
+- active workflow adapter
 - `linear-implementation-planner` when sequencing is non-trivial
 - `executing-plans` for bounded execution
 
@@ -723,7 +723,7 @@ The following gates are part of the workflow when applicable:
 - `Post-Issue Planning Gate` for non-trivial issue-driven work before execution
   begins
 - `Metadata Rehydration Check` before `In Progress` or closure if a minimal
-  Linear create fallback occurred
+  workflow-adapter create fallback occurred
 - `Ready-for-Execution Revalidation` before execution continues after metadata
   rehydration so a merely created issue is not mistaken for an execution-ready
   issue
@@ -781,7 +781,7 @@ The following gates are part of the workflow when applicable:
 
 The `Issue Bootstrap Gate` is satisfied only when:
 
-- a governing Linear issue already exists and is execution-ready
+- a governing issue already exists and is execution-ready
 - or a new governing issue/package was created and revalidated before
   implementation
 - or the user explicitly approved a narrow no-issue exception and that
@@ -837,7 +837,7 @@ course openly, and restart the inspection on the verified target.
 
 ## Runtime Guardrail
 
-- In Prop4You, Python commands use `uv run ...`.
+- In the default Python distribution, commands use `uv run ...`.
 - Do not use `python`, `pytest`, `pip`, or `source .venv/bin/activate`
   directly.
 - Do not let convenience commands override the repo runtime contract.
@@ -888,7 +888,7 @@ Use these phases for engineering work once `accelerate` has classified the run.
 - define blockers, dependencies, and verification expectations
 - produce the persona handoff artifact required for the next active owner of the
   work, especially before code mutation or formal review
-- if the work is issue-driven, make sure Linear metadata is complete before
+- if the work is issue-driven, make sure workflow metadata is complete before
   active execution
 - for non-trivial issue-driven work, produce the explicit post-issue planning
   artifact here; execution must not begin before it exists
@@ -988,27 +988,31 @@ For issue-driven work:
 - parent/child hierarchy must exist as real `parentId` links before dependency
   edges are used as complements
 
-## Linear Rule
+## Workflow Adapter Rule
 When work is issue-driven:
 
-1. parent/child means real Linear sub-issues, not just `relatedTo`
-2. if tool capability is unclear, verify `parentId` support before writing
+1. parent/child means real sub-issue hierarchy in the active workflow backend,
+   not just loose related links
+2. if tool capability is unclear, verify hierarchy and lifecycle support before
+   writing
 3. labels, priority, assignee, and project linkage must be correct before
    active execution
 4. relation hygiene is rechecked during closure, not trusted from commentary
 
 Also remember:
 
-- the issue is the source of scope, not just a status container
-- mutually exclusive label groups are real; choose the correct home label rather
-  than forcing invalid combinations
-- `Duplicate` and `Canceled` are reserved for true duplicate or discard
+- the governing issue is the source of scope, not just a status container
+- adapter-specific label constraints are real; choose the correct home label
+  rather than forcing invalid combinations
+- duplicate/canceled states are reserved for true duplicate or discard
   decisions, not as status shortcuts
 
 The full issue lane and its mandatory packets live in
 `references/issue-stack.md`.
 
-Detailed issue governance lives in `references/linear-execution.md`.
+Detailed current-default workflow governance still lives in
+`references/linear-execution.md` until the dedicated workflow adapters are
+fully rehomed under `adapters/workflow/`.
 ## Subagent Rule
 
 Subagents are bounded collaborators, not replacements for the master.
@@ -1081,7 +1085,7 @@ Load only the module you need.
   - use when backend QA, frontend QA, browser-proof, Chrome DevTools truth, or
     Playwright persistence need an explicit lane model
 - `references/issue-stack.md`
-  - use when issue bootstrap, Linear metadata, planning artifacts, or AI Review
+  - use when issue bootstrap, workflow metadata, planning artifacts, or AI Review
     lifecycle enforcement need to be made explicit
 - `references/current-enforcement-surfaces.md`
   - use when the run must enforce current-stack constraints such as IDOR,
@@ -1122,7 +1126,8 @@ Load only the module you need.
   - use when repeated failures or structural misses should be promoted into skill,
     gate, or workflow evolution instead of staying as one-off fixes
 - `references/linear-execution.md`
-  - use when the work is governed by Linear and relation hygiene, AI Review, or
+  - use when the work is governed by the current workflow backend and relation
+    hygiene, AI Review, or
     metadata completeness matter
 
 ## Recommended Skill Stack
@@ -1130,7 +1135,7 @@ Load only the module you need.
 Primary companions:
 
 - `prompt-hardening`
-- `linear-pm`
+- current workflow adapter
 - `verification-before-completion`
 - `architecture`
 - `napkin`
@@ -1158,8 +1163,8 @@ working posture when another skill becomes the main owner of the next step.
 
 Typical handoffs:
 
-- to `linear-pm` when the main deliverable is issue architecture or execution
-  governance
+- to the active workflow adapter when the main deliverable is issue
+  architecture or execution governance
 - to stack skills when the next step is implementation-heavy in a specific
   layer
 - to `ascii-wireframe` when structure, composition, or state design must be

@@ -1,6 +1,9 @@
 # Linear Execution
 
-Use this module whenever the work is issue-driven.
+Use this module when the active workflow backend is Linear.
+
+It is the current default workflow-backend reference, not the universal law of
+the standalone platform.
 
 ## Bootstrap Authority
 

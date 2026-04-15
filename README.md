@@ -1,7 +1,7 @@
 # Accelerate
 
 `accelerate` is the root orchestration skill for engineering work in the
-Prop4You ecosystem.
+standalone platform and its supported project distributions.
 
 Use it to decide how work should run before implementation starts, not merely
 to narrate that work is happening.
@@ -120,7 +120,7 @@ The minimum mutation path is:
 
 1. `accelerate`
 2. `Issue Bootstrap Gate`
-3. `linear-pm`
+3. active workflow adapter
 4. planning artifact
 5. execution
 6. proof stack
@@ -497,9 +497,11 @@ Start here:
 
 - [SKILL.md](./SKILL.md)
 
-Then use the public navigable docs when you want a broader human-readable view:
+Then use the local architecture docs when you want the current standalone
+forward path:
 
-- [accelerate-operational-model.md](/home/marcelo-karval/Backup/Projetos/prop4you/prop4you-inertia/frontends/docusaurus/docs/ai/accelerate-operational-model.md)
+- [accelerate-control-plane.md](./docs/architecture/accelerate-control-plane.md)
+- [accelerate-sdd-v1.md](./docs/architecture/accelerate-sdd-v1.md)
 
 Then use the governed reference tree for authority:
 
@@ -516,21 +518,54 @@ For the governed future-agent ecosystem:
 
 - [codex-agents/README.md](./references/codex-agents/README.md)
 
-## Sandbox Source Of Truth
+## Platform Source Of Truth
 
-For the Prop4You `accelerate` ecosystem:
+For this standalone repository:
 
-- sandbox source of truth:
-  - `docs/codex-skill-seeds/skills/`
+- repo source of truth:
+  - the files tracked here
 - runtime mirror:
-  - `~/.codex/skills/`
+  - `~/.codex/skills/accelerate` when global sync is intentionally performed
 
-This README describes the sandbox-governed model first.
+This README describes the standalone product model first.
 
-Global sync is a separate step.
+Global sync remains a separate step.
 
-Do not treat runtime mirror state as the authoring source for governed
+Do not treat any runtime mirror as the authoring source for governed
 `accelerate` behavior.
+
+## Current Distribution Reality
+
+The current default distribution is still strongly shaped by the incubator
+stack that matured `accelerate` first.
+
+That is a distribution and migration fact, not the permanent boundary of the
+platform core.
+
+Treat:
+
+- workflow backend assumptions
+- stack assumptions
+- runtime command assumptions
+- project-specific docs posture
+
+as material that will progressively move into adapters, profiles, and overlays.
+
+## Current Repository Shape
+
+The repository is no longer only a transitional import tree.
+
+The first standalone shell of the target architecture now exists:
+
+- `core/`
+- `adapters/`
+- `profiles/`
+- `agents/`
+- `onboarding/`
+- `overlays/`
+
+These directories currently act as contract-bearing shells while the inherited
+doctrine is still being rehomed out of `references/`.
 
 ## Repository Bootstrap Context
 

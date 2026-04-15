@@ -12,7 +12,7 @@ Use this module when the operator needs a single executive view of the full
 ║ ENTRY / SHAPING      ║ ISSUE / PLANNING     ║ IMPLEMENTATION       ║ QA / PROOF           ║ CLOSURE              ║
 ╠══════════════════════╬══════════════════════╬══════════════════════╬══════════════════════╬══════════════════════╣
 ║ Specification PM     ║ Issue Architect /    ║ Implementation       ║ Backend Tester       ║ Closure / Forensic   ║
-║ Prompt Hardening     ║ Linear PM            ║ Designer             ║ Frontend Tester      ║ Reviewer             ║
+║ Prompt Hardening     ║ Workflow Adapter     ║ Designer             ║ Frontend Tester      ║ Reviewer             ║
 ║ Editor               ║ Product Planner      ║ Wireframe / Design   ║ Browser-Proof        ║ Governance Auditor   ║
 ║                      ║                      ║ Contract Extractor   ║ Auditor              ║ Stack Constitution   ║
 ║ Outputs:             ║ Outputs:             ║ Implementer /        ║ E2E Regression       ║ Auditor              ║
@@ -30,7 +30,7 @@ Use this module when the operator needs a single executive view of the full
 ║ AGENT POSTURE: non-trivial -> use bounded subagent(s) when they create honest value; root-only remains legitimate       ║
 ║ SUBAGENT RULE: each subagent loads `accelerate` first, stays bounded, returns self-review + self-forensic review         ║
 ║ PROOF ORDER: implementation -> backend/frontend QA -> browser truth (Chrome DevTools) -> persistent E2E (Playwright)     ║
-║ ISSUE ORDER: bootstrap -> linear-pm -> planning artifact -> execution -> AI Review Report -> real closure                 ║
+║ ISSUE ORDER: bootstrap -> active workflow adapter -> planning artifact -> execution -> AI Review Report -> real closure   ║
 ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 ```
 

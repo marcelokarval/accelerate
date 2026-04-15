@@ -12,7 +12,7 @@ of the execution model.
 
 - `accelerate`
 - `Issue Bootstrap Gate`
-- `linear-pm`
+- active workflow adapter
 - `linear-implementation-planner` when sequencing or parent/child structure is
   non-trivial
 - planning artifact (`planning-with-files` or equivalent execution-ready plan)
@@ -29,8 +29,8 @@ User Request
         -> no  -> analysis path
         -> yes -> Issue Bootstrap Gate
                  -> missing issue     -> BLOCK
-                 -> existing issue    -> validate with linear-pm
-                 -> new issue needed  -> create with linear-pm
+                 -> existing issue    -> validate with active workflow adapter
+                 -> new issue needed  -> create with active workflow adapter
                       -> planning gate
                          -> missing plan -> BLOCK
                          -> plan present -> execute

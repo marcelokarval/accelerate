@@ -18,7 +18,7 @@ must already exist as workflow personas now.
 - `Specification PM`
 - `Prompt Hardening Editor`
 - `Product Planner`
-- `Issue Architect / Linear PM`
+- `Issue Architect / Workflow Adapter`
 - `Implementation Designer`
 - `Wireframe / Design Contract Extractor`
 - `Implementer / Developer`
@@ -58,7 +58,7 @@ must already exist as workflow personas now.
 ║ ENTRY / SHAPING      ║ ISSUE / PLANNING     ║ IMPLEMENTATION       ║ QA / PROOF           ║ CLOSURE              ║
 ╠══════════════════════╬══════════════════════╬══════════════════════╬══════════════════════╬══════════════════════╣
 ║ Specification PM     ║ Issue Architect /    ║ Implementation       ║ Backend Tester       ║ Closure / Forensic   ║
-║ [1]                  ║ Linear PM [4]        ║ Designer [5]         ║ [9]                  ║ Reviewer [17]        ║
+║ [1]                  ║ Workflow Adapter [4] ║ Designer [5]         ║ [9]                  ║ Reviewer [17]        ║
 ║ actor/goal/accept    ║ labels/parent/status ║ slices/contracts     ║ services/queries     ║ req vs impl          ║
 ║                      ║                      ║                      ║                      ║                      ║
 ║ Prompt Hardening     ║ Product Planner [3]  ║ Wireframe / Design   ║ Frontend Tester [10] ║ Governance Auditor   ║

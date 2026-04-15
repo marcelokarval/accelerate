@@ -2,8 +2,8 @@
 
 ## Purpose
 
-This document is the canonical architecture source for the `accelerate`
-workflow in Prop4You.
+This document is the canonical architecture source for the standalone
+`accelerate` control plane.
 
 It exists to stop the full operating model from living only in:
 
@@ -26,7 +26,7 @@ This document does not replace:
 - the installed root skill
 - adjacent specialized skills
 - repo review policy
-- Linear execution policy
+- current workflow-adapter execution policy
 
 It explains how those pieces fit together as one operating system.
 
@@ -121,11 +121,12 @@ This means:
 
 Validation in `accelerate` is slice-aware, not memory-based.
 
-For backend schema/runtime-sensitive work, the minimum stack is:
+For backend schema/runtime-sensitive work, the minimum stack is defined at the
+capability level first:
 
-1. `uv run python backend/src/manage.py check`
-2. `uv run python backend/src/manage.py makemigrations --check --dry-run`
-3. `uv run python backend/src/manage.py migrate --check`
+1. backend runtime/config checks
+2. model/migration drift checks
+3. unapplied migration checks
 
 These prove different things:
 
@@ -137,9 +138,7 @@ These prove different things:
   - unapplied migrations already present in the codebase
 
 For frontend-bearing or TypeScript contract-bearing work, the minimum frontend
-gate is:
-
-1. `npm run type-check --prefix frontends/front-react`
+gate is frontend type/contract validation in the active stack profile.
 
 For full-stack work, both gate sets apply.
 
@@ -434,7 +433,8 @@ The canonical host remediation lives in
 
 When issue-driven drift appears to be recurring rather than local, the control
 plane should stop relying on anecdotal cleanup and switch to the repo protocol
-in [Linear Hygiene Audit Protocol](./linear-hygiene-audit-protocol.md).
+in the current-default workflow hygiene protocol, still documented through
+`linear-execution.md` until dedicated workflow adapters are fully rehomed.
 
 That protocol is the repeatable path for:
 
@@ -527,7 +527,7 @@ accelerate
 ├── ambiguous / long / epic-like
 │   └── prompt-hardening
 ├── issue-driven delivery
-│   ├── linear-pm
+│   ├── active workflow adapter
 │   ├── linear-implementation-planner
 │   └── executing-plans
 ├── bug / failure / regression
@@ -687,7 +687,7 @@ This gate is enforced through:
 
 - the root `accelerate` skill
 - the branch enforcement matrix
-- `linear-pm`
+- active workflow adapter
 - `linear-execution`
 - the workflow execution manifest
 
@@ -1053,7 +1053,7 @@ global skill runtime.
 ```text
 accelerate
   -> Issue Bootstrap Gate
-  -> linear-pm
+  -> active workflow adapter
   -> planning artifact gate
   -> executing-plans
   -> QA / browser-proof / E2E

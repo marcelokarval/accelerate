@@ -36,7 +36,7 @@ These do not need to be active on every run, but the full model should be able
 to activate them explicitly when the branch demands it:
 
 - `Prompt Hardening Editor`
-- `Issue Architect / Linear PM`
+- `Issue Architect / Workflow Adapter`
 - `Wireframe / Design Contract Extractor`
 - `Design Reference Extractor`
 - `Backend Implementer`
@@ -338,8 +338,10 @@ Do not let a persona be active without leaving a traceable artifact or decision.
 
 Common mappings:
 
-- `Specification PM` -> `prompt-hardening`, `architecture`, `linear-pm`
-- `Product Planner` -> `linear-pm`, `linear-implementation-planner`
+- `Specification PM` -> `prompt-hardening`, `architecture`, active workflow
+  adapter when issue structure matters
+- `Product Planner` -> active workflow adapter, `linear-implementation-planner`
+  when sequencing is non-trivial in the current default distribution
 - `Implementation Designer` -> `planning-with-files`, `executing-plans`
 - `Implementer / Developer` -> stack skills for the active layer plus
   implementation verification skills when needed

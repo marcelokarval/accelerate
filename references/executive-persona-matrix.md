@@ -26,10 +26,10 @@ When any of those evolve, this matrix must be reviewed for drift.
 
 | Persona | Mandatory skills | Non-mandatory / contextual skills | Typical trigger | Expected output |
 |---|---|---|---|---|
-| `Specification PM` | `prompt-hardening`, `architecture`; `linear-pm` when issue structure matters | domain/context skills as needed | actor/goal ambiguity, weak request framing | `Specification Handoff Packet` |
+| `Specification PM` | `prompt-hardening`, `architecture`; active workflow adapter when issue structure matters | domain/context skills as needed | actor/goal ambiguity, weak request framing | `Specification Handoff Packet` |
 | `Prompt Hardening Editor` | `prompt-hardening` | `architecture` when shaping affects design/structure | weak prompt shape | `Prompt Hardening Packet` |
-| `Product Planner` | `linear-pm`; `linear-implementation-planner` when sequencing is non-trivial | `planning-with-files`, `executing-plans` when a bounded plan already exists | scope split, rollout shape, slices | `Planning Handoff Packet` |
-| `Issue Architect / Linear PM` | `linear-pm` | `linear-progress-reporter` | issue creation, metadata repair, hierarchy | issue packet / metadata proof |
+| `Product Planner` | active workflow adapter; `linear-implementation-planner` when sequencing is non-trivial in the current default distribution | `planning-with-files`, `executing-plans` when a bounded plan already exists | scope split, rollout shape, slices | `Planning Handoff Packet` |
+| `Issue Architect / Workflow Adapter` | active workflow adapter | `linear-progress-reporter` in the current default distribution | issue creation, metadata repair, hierarchy | issue packet / metadata proof |
 | `Implementation Designer` | `planning-with-files`, `executing-plans` when accepted | `ascii-wireframe`, contract/governance sidecars | execution design | `Implementation Design Packet` |
 | `Wireframe / Design Contract Extractor` | `ascii-wireframe` | `figma-node-fidelity`, `front-react-shadcn`, `product-runtime-review` | structural UI uncertainty | design / wireframe packet |
 | `Implementer / Developer` | active layer stack skills | verification/review companions as needed | bounded implementation | `Implementation Handoff Packet` |
