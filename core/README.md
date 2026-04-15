@@ -13,7 +13,17 @@ The core owns:
 - root closure mode
 - runtime packet contracts
 
-During the transition, the imported doctrine still lives mainly in
-`references/`. Rehome material into `core/` only through deliberate bounded
-slices that preserve traceability.
+Native pre-agents authority now starts here:
 
+- `control-plane/root-laws.md`
+- `hardening/prompt-hardening.md`
+- `issue-topology/issue-driven-mutation-stack.md`
+- `issue-topology/topology-policy.md`
+- `lanes/manager-lane-model.md`
+- `risk/risk-enforcement-matrix.md`
+- `closure/authority-boundary.md`
+- `runtime-packets/templates.md`
+- `runtime-packets/cadence.md`
+
+During the transition, the imported doctrine still lives mainly in
+`references/`. Use those files as supporting detail while rehoming continues.

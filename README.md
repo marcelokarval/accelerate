@@ -68,6 +68,20 @@ The README should stay rich enough for onboarding and maintenance.
 
 The references should stay authoritative for deep behavior.
 
+## Pre-Agents Baseline
+
+The standalone repo now has a native pre-agents baseline.
+
+Start here:
+
+- [accelerate-pre-agents-baseline.md](./docs/architecture/accelerate-pre-agents-baseline.md)
+- [core/README.md](./core/README.md)
+- [adapters/workflow/README.md](./adapters/workflow/README.md)
+- [adapters/runtime/README.md](./adapters/runtime/README.md)
+- [onboarding/README.md](./onboarding/README.md)
+
+Use `references/` as supporting doctrine while rehoming continues.
+
 ## Core Operating Model
 
 At a high level, `accelerate` works like this:
@@ -503,7 +517,7 @@ forward path:
 - [accelerate-control-plane.md](./docs/architecture/accelerate-control-plane.md)
 - [accelerate-sdd-v1.md](./docs/architecture/accelerate-sdd-v1.md)
 
-Then use the governed reference tree for authority:
+Then use the governed reference tree for supporting authority:
 
 - [team-operating-model.md](./references/team-operating-model.md)
 - [executive-operating-matrix.md](./references/executive-operating-matrix.md)
@@ -579,3 +593,4 @@ the extraction and early platform build-out:
 - [docs/architecture/accelerate-classification-matrix.md](./docs/architecture/accelerate-classification-matrix.md)
 - [docs/architecture/accelerate-migration-plan.md](./docs/architecture/accelerate-migration-plan.md)
 - [docs/architecture/accelerate-onboarding-model.md](./docs/architecture/accelerate-onboarding-model.md)
+- [docs/architecture/accelerate-pre-agents-baseline.md](./docs/architecture/accelerate-pre-agents-baseline.md)

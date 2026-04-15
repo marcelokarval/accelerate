@@ -22,18 +22,20 @@ For work in this repository, the root must preserve:
 
 ## Current Stage
 
-This repository is in the early standalone build-out phase.
+This repository is in the standalone pre-agents phase.
 
 The current source-of-truth stack for continuing work is:
 
 1. [README.md](./README.md)
-2. [docs/bootstrap/context-and-origin.md](./docs/bootstrap/context-and-origin.md)
-3. [docs/bootstrap/decisions-and-final-state.md](./docs/bootstrap/decisions-and-final-state.md)
-4. [docs/bootstrap/prd-initial-platform-foundation.md](./docs/bootstrap/prd-initial-platform-foundation.md)
-5. [docs/architecture/accelerate-sdd-v1.md](./docs/architecture/accelerate-sdd-v1.md)
-6. [docs/architecture/accelerate-classification-matrix.md](./docs/architecture/accelerate-classification-matrix.md)
-7. [docs/architecture/accelerate-migration-plan.md](./docs/architecture/accelerate-migration-plan.md)
-8. [docs/architecture/accelerate-onboarding-model.md](./docs/architecture/accelerate-onboarding-model.md)
+2. [docs/architecture/accelerate-pre-agents-baseline.md](./docs/architecture/accelerate-pre-agents-baseline.md)
+3. [core/README.md](./core/README.md)
+4. [adapters/workflow/README.md](./adapters/workflow/README.md)
+5. [adapters/runtime/README.md](./adapters/runtime/README.md)
+6. [onboarding/README.md](./onboarding/README.md)
+7. [docs/architecture/accelerate-sdd-v1.md](./docs/architecture/accelerate-sdd-v1.md)
+8. [docs/architecture/accelerate-classification-matrix.md](./docs/architecture/accelerate-classification-matrix.md)
+9. [docs/architecture/accelerate-migration-plan.md](./docs/architecture/accelerate-migration-plan.md)
+10. [docs/architecture/accelerate-onboarding-model.md](./docs/architecture/accelerate-onboarding-model.md)
 
 ## Migration Rule
 

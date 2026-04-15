@@ -12,7 +12,13 @@ setup by discovering:
 - recommended skills
 - future agent candidates
 
-The conceptual model already exists in
-`docs/architecture/accelerate-onboarding-model.md`. This directory is the shell
-for making that model operational.
+Native pre-agents reading order:
 
+1. `aq/question-set.md`
+2. `discovery/discovery-contract.md`
+3. `planning/executive-bootstrap-plan-template.md`
+4. `recommendations/recommendation-model.md`
+
+The architecture doc remains the wider design source:
+
+- `docs/architecture/accelerate-onboarding-model.md`
