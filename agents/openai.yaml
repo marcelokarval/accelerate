@@ -1,0 +1,7 @@
+interface:
+  display_name: "Accelerate"
+  short_description: "Act as the always-on runtime root for engineering work in Prop4You, classifying trivial vs non-trivial execution and enforcing the correct workflow."
+  default_prompt: "Use this skill as the engineering runtime root: classify the work, choose the minimum valid branch and skill stack, keep a live plan when needed, and verify before closing."
+
+policy:
+  allow_implicit_invocation: true
