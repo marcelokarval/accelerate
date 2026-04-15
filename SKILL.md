@@ -23,6 +23,59 @@ it does carry the operating contracts of the active stack and distribution.
 This file is intentionally short. Advanced behavior lives in `references/` so the
 entry skill stays readable and does not inflate base context.
 
+## Current Stage
+
+This repository is currently in the `standalone pre-agents` phase.
+
+That means:
+
+- the root control plane is already active
+- the platform must already work coherently with zero promoted agents
+- onboarding, adapters, topology, lanes, risk, and closure are already native
+  concepts
+- the repo is still rehoming deeper doctrine out of `references/`
+
+Treat pre-agents as an active baseline, not as a placeholder waiting for
+future agent promotion.
+
+## Current Operational Truth Stack
+
+For a fresh session, the minimum reading order is:
+
+1. `AGENTS.md`
+2. `SKILL.md`
+
+When the work is architectural, non-trivial, or needs concrete operating truth
+beyond entry classification, continue with:
+
+3. `README.md`
+4. `docs/architecture/accelerate-pre-agents-baseline.md`
+5. `docs/architecture/accelerate-control-plane.md`
+
+Use `core/`, `adapters/`, `onboarding/`, and `references/` only as the next
+layer after that truth stack is already understood.
+
+The root skill must still be sufficient to start coherently. It is not
+expected to carry the full deep-operating manual by itself.
+
+## Workflow Backend Reality
+
+This standalone repository does not yet have a fully implemented native
+workflow-adapter backend.
+
+Until that exists:
+
+- architecture docs and planning docs are the governing execution artifacts
+- do not invent fake adapter behavior
+- do not assume `Linear`, `GitHub Issues`, or any other workflow backend is
+  already the enforced runtime truth for this repo
+- root-only execution remains fully valid when the workflow backend is not yet
+  concretized
+
+The control plane still owns issue topology, planning gates, and closure
+discipline. The missing adapter backend changes the execution vehicle, not the
+root authority model.
+
 ## Team OS Principle
 
 `accelerate` is not only a branch classifier.
