@@ -23,3 +23,7 @@ This is where the platform should later define the real transition from:
 - approval
 - promotion
 - runtime installation
+
+The first native contract artifact now lives in:
+
+- `execution-contract.md`

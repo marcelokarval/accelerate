@@ -11,3 +11,7 @@ Its current role is to reserve the place where the platform will later define:
 - what runtime packet shape a bounded agent must return
 - what proof and closure surfaces cannot be skipped
 - what local `accelerate` discipline means inside a bounded session
+
+The first native envelope doctrine now lives in:
+
+- `skill-envelopes.md`

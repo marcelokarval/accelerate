@@ -25,6 +25,17 @@ doctrine into a first-class module that owns:
 - promotion criteria
 - authority boundary
 
+The first native doctrine rehome now lives under:
+
+- `doctrine/ontology.md`
+- `doctrine/capability-matrix.md`
+- `doctrine/selection-policy.md`
+- `doctrine/gap-detection.md`
+- `doctrine/authority-boundary.md`
+- `doctrine/pooling-model.md`
+- `envelopes/skill-envelopes.md`
+- `promotion/execution-contract.md`
+
 The runtime configuration artifact `openai.yaml` remains here because it is
 already part of the current surface.
 
@@ -66,9 +77,15 @@ For a fresh session trying to understand the agents layer, read in this order:
 2. `../SKILL.md`
 3. `README.md`
 4. `doctrine/README.md`
-5. `promotion/README.md`
-6. `envelopes/README.md`
-7. `templates/README.md`
+5. `doctrine/ontology.md`
+6. `doctrine/capability-matrix.md`
+7. `doctrine/selection-policy.md`
+8. `doctrine/gap-detection.md`
+9. `promotion/README.md`
+10. `promotion/execution-contract.md`
+11. `envelopes/README.md`
+12. `envelopes/skill-envelopes.md`
+13. `templates/README.md`
 
 If deeper doctrine is needed before the native rehome is complete, continue
 into:
@@ -88,3 +105,8 @@ clear truth for later sessions:
 
 That output truth matters now, even before `*.toml` becomes a normal runtime
 surface.
+
+When a deeper path from gap detection to future promotion is needed, continue
+into:
+
+- `../planning/promotion/README.md`

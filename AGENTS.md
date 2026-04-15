@@ -32,10 +32,11 @@ The current source-of-truth stack for continuing work is:
 4. [adapters/workflow/README.md](./adapters/workflow/README.md)
 5. [adapters/runtime/README.md](./adapters/runtime/README.md)
 6. [onboarding/README.md](./onboarding/README.md)
-7. [docs/architecture/accelerate-sdd-v1.md](./docs/architecture/accelerate-sdd-v1.md)
-8. [docs/architecture/accelerate-classification-matrix.md](./docs/architecture/accelerate-classification-matrix.md)
-9. [docs/architecture/accelerate-migration-plan.md](./docs/architecture/accelerate-migration-plan.md)
-10. [docs/architecture/accelerate-onboarding-model.md](./docs/architecture/accelerate-onboarding-model.md)
+7. [planning/README.md](./planning/README.md)
+8. [docs/architecture/accelerate-sdd-v1.md](./docs/architecture/accelerate-sdd-v1.md)
+9. [docs/architecture/accelerate-classification-matrix.md](./docs/architecture/accelerate-classification-matrix.md)
+10. [docs/architecture/accelerate-migration-plan.md](./docs/architecture/accelerate-migration-plan.md)
+11. [docs/architecture/accelerate-onboarding-model.md](./docs/architecture/accelerate-onboarding-model.md)
 
 ## Migration Rule
 
@@ -75,6 +76,7 @@ The accepted target architecture is layered:
 - stack profiles
 - agent factory
 - onboarding
+- planning
 - overlays
 
 Preserve strong defaults while moving toward that architecture.

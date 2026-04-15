@@ -28,6 +28,7 @@ This SDD covers:
 - platform layer boundaries
 - migration strategy
 - onboarding system shape
+- planning system shape
 - workflow adapter shape
 - runtime adapter shape
 - stack profile shape
@@ -57,6 +58,7 @@ The design is constrained by the following accepted truths:
 - `stack profiles`
 - `agent factory`
 - `onboarding`
+- `planning`
 - `project overlays`
 
 The dominant default distribution can remain deeply aligned with the current
@@ -102,8 +104,13 @@ accelerate/
 ├── onboarding/
 │   ├── aq/
 │   ├── discovery/
-│   ├── planning/
 │   └── recommendations/
+├── planning/
+│   ├── executive/
+│   ├── architecture/
+│   ├── migration/
+│   ├── onboarding/
+│   └── promotion/
 └── overlays/
     └── prop4you/
 ```
@@ -245,7 +252,24 @@ It should use:
 - capability discovery
 - explicit defaults and overrides
 
-### 7. Overlays
+Onboarding must emit an executive bootstrap plan rather than stopping at raw
+discovery.
+
+### 7. Planning
+
+Planning formalizes the artifact layer that bridges discovery and execution.
+
+It should own:
+
+- executive plans
+- architecture plans
+- migration plans
+- onboarding bootstrap plans
+- promotion planning
+
+Planning is a platform layer, not just a docs habit.
+
+### 8. Overlays
 
 Overlays capture project-specific deployment truth that should not leak into
 the reusable core.
@@ -281,7 +305,7 @@ The documentation system should adopt a three-tier model:
    - `README.md`
    - `SKILL.md`
 2. architecture documents
-   - system design, migration, onboarding, adapters
+   - system design, migration, onboarding, planning, adapters
 3. submodule doctrine
    - agent factory
    - profile-specific guidance
@@ -310,12 +334,17 @@ Move or rewrite:
 - root `README.md`
 - canonical control-plane architecture
 
-### Phase 4. Extract agent-factory doctrine
+### Phase 4. Institute the planning layer
+
+Create the native planning layer and connect onboarding outputs to executive
+plans before deeper rehome continues.
+
+### Phase 5. Extract agent-factory doctrine
 
 Move the current `codex-agents` module into the `agents/` area with the new
 platform vocabulary preserved.
 
-### Phase 5. Extract onboarding and self-evolution guidance
+### Phase 6. Extract onboarding and self-evolution guidance
 
 Move and adapt:
 
@@ -323,11 +352,11 @@ Move and adapt:
 - self-evolution / autoresearch rules
 - recommendation pathways
 
-### Phase 6. Introduce adapters and profiles
+### Phase 7. Introduce adapters and profiles
 
 Create the first workflow adapters, runtime adapters, and stack profiles.
 
-### Phase 7. Build overlays
+### Phase 8. Build overlays
 
 Re-express Prop4You-specific material as overlay instead of source-of-truth.
 

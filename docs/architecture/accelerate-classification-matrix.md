@@ -20,6 +20,8 @@ guesswork or blind copying.
   - opinionated technology posture
 - `agent factory`
   - bounded-agent doctrine and promotion logic
+- `planning`
+  - formal planning artifacts that bridge discovery and execution
 - `overlay`
   - project-specific deployment truth
 - `publication adapter`
@@ -32,6 +34,7 @@ guesswork or blind copying.
 | root `SKILL.md` | `skills/accelerate/SKILL.md` | `core` | Keep as the compact constitutional entrypoint. |
 | root `README.md` | `skills/accelerate/README.md` | `core` | Keep as operational guide; update links after extraction. |
 | `accelerate-control-plane.md` | `docs/architecture/accelerate-control-plane.md` | `core` | Becomes canonical platform architecture source or is merged into core architecture docs. |
+| bootstrap PRD / SDD / architecture docs | `docs/bootstrap/*`, `docs/architecture/*` | `planning` + `core` | Architecture reasoning remains durable docs; execution-facing planning should gain native planning homes. |
 | `prompt-hardening-gate.md` | `references/prompt-hardening-gate.md` | `core` | Move under `core/hardening/`. |
 | `issue-stack.md` | `references/issue-stack.md` | `core` | Move under `core/control-plane/` or `core/issue-topology/`. |
 | runtime packet templates | `references/runtime-packet-templates.md` | `core` | Move under `core/runtime-packets/`. |
@@ -61,6 +64,7 @@ guesswork or blind copying.
 | `agent-selection-policy.md` | `references/codex-agents/agent-selection-policy.md` | `agent factory` | Selection logic. |
 | `agent-gap-detection.md` | `references/codex-agents/agent-gap-detection.md` | `agent factory` | Gap detection and suggestion law. |
 | `agent-skill-envelopes.md` | `references/codex-agents/agent-skill-envelopes.md` | `agent factory` | Skill-envelope doctrine. |
+| executive bootstrap plan template | `onboarding/planning/executive-bootstrap-plan-template.md` | `planning` | Canonical ownership should move into `planning/executive/`. |
 | `linear-pm` references and assumptions | mixed skills/docs | `workflow adapter` + `overlay` | Shared orchestration concepts become adapter; Prop4You naming/details become overlay. |
 | GitHub workflow skill assumptions | mixed skills/docs | `workflow adapter` | Formal peer of Linear adapter. |
 | `uv run ... manage.py ...` examples | mixed skills/docs | `runtime adapter` + `stack profile` | Abstract to Python wrapper capability plus profile-specific command mapping. |
@@ -74,10 +78,11 @@ guesswork or blind copying.
 The safest early moves are:
 
 1. extract `core` doctrine first
-2. extract `agent factory` second
-3. define the first `stack profile`
-4. then define workflow/runtime adapters
-5. leave overlays and publication adapters for later phases
+2. institute `planning` as a native layer
+3. extract `agent factory`
+4. define the first `stack profile`
+5. then define workflow/runtime adapters
+6. leave overlays and publication adapters for later phases
 
 ## Explicit Split Warnings
 

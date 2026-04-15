@@ -41,6 +41,9 @@ At the current phase, onboarding must not pretend that it already has:
 
 The current layer is operationally real, but still architecturally conservative.
 
+It now hands off explicitly into the native `planning/` layer rather than
+ending inside onboarding itself.
+
 ## Operational Reading Order
 
 For a fresh session using onboarding as an active layer, read in this order:
@@ -50,8 +53,9 @@ For a fresh session using onboarding as an active layer, read in this order:
 3. `README.md`
 4. `aq/question-set.md`
 5. `discovery/discovery-contract.md`
-6. `planning/executive-bootstrap-plan-template.md`
-7. `recommendations/recommendation-model.md`
+6. `../planning/executive/README.md`
+7. `../planning/executive/bootstrap-plan-template.md`
+8. `recommendations/recommendation-model.md`
 
 If the repo still needs wider rationale, continue into:
 
@@ -61,7 +65,7 @@ Native pre-agents reading order:
 
 1. `aq/question-set.md`
 2. `discovery/discovery-contract.md`
-3. `planning/executive-bootstrap-plan-template.md`
+3. `../planning/executive/bootstrap-plan-template.md`
 4. `recommendations/recommendation-model.md`
 
 ## Current Output Contract
@@ -80,6 +84,10 @@ The minimum output is:
 - recommended adjacent skills
 - recommended future agent candidates
 - executive bootstrap plan
+
+That bootstrap plan is now canonically owned by:
+
+- `../planning/executive/bootstrap-plan-template.md`
 
 ## Re-entry Rule
 

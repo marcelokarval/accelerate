@@ -79,6 +79,7 @@ Start here:
 - [adapters/workflow/README.md](./adapters/workflow/README.md)
 - [adapters/runtime/README.md](./adapters/runtime/README.md)
 - [onboarding/README.md](./onboarding/README.md)
+- [planning/README.md](./planning/README.md)
 
 Use `references/` as supporting doctrine while rehoming continues.
 

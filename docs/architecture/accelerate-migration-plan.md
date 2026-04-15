@@ -37,6 +37,7 @@ Phase outputs:
 - initial `adapters/`
 - initial `profiles/`
 - initial `onboarding/`
+- initial `planning/`
 - initial `overlays/`
 
 Goal:
@@ -78,7 +79,25 @@ Goal:
 
 - root law stops depending on the old repo
 
-## Phase 4. Extract agent-factory doctrine
+## Phase 4. Institute the planning layer
+
+Create the native planning layer that owns executive plans and planning
+artifacts.
+
+Priority material:
+
+- executive bootstrap plan template
+- architecture planning posture
+- migration planning posture
+- onboarding-to-plan handoff
+- promotion planning posture
+
+Goal:
+
+- planning becomes a first-class product layer instead of an implicit docs
+  habit
+
+## Phase 5. Extract agent-factory doctrine
 
 Move and rename the current `codex-agents` material into the `agents/` layer.
 
@@ -98,7 +117,7 @@ Goal:
 
 - bounded-agent design can evolve independently inside the new platform
 
-## Phase 5. Define the default stack profile
+## Phase 6. Define the default stack profile
 
 Take the dominant current stack and formalize it as the first profile.
 
@@ -111,7 +130,7 @@ Goal:
 - preserve today’s opinionated value without leaking framework assumptions into
   core laws
 
-## Phase 6. Define workflow adapters
+## Phase 7. Define workflow adapters
 
 Start with the workflow backends already implied by the current discussions.
 
@@ -129,7 +148,7 @@ Each adapter should define:
 - AI review report placement
 - closure traceability
 
-## Phase 7. Define runtime adapters
+## Phase 8. Define runtime adapters
 
 Create adapters for the concrete execution environments.
 
@@ -147,7 +166,7 @@ Each adapter should define:
 - evidence shape
 - failure handling
 
-## Phase 8. Build onboarding
+## Phase 9. Build onboarding
 
 Create the onboarding system once the first adapters and profile exist.
 
@@ -158,8 +177,9 @@ Onboarding should be able to answer:
 - what runtime adapters should be active
 - what publication adapter should be active
 - what future agent gaps already exist
+- what executive plan should govern the next bounded slices
 
-## Phase 9. Re-express Prop4You as overlay
+## Phase 10. Re-express project residue as overlay
 
 Move project-specific residue into overlay form.
 
@@ -186,14 +206,19 @@ Goal:
 
 ### Batch C
 
-- extract agent factory
+- institute planning layer
+- connect onboarding to planning
 
 ### Batch D
+
+- extract agent factory
+
+### Batch E
 
 - create first stack profile
 - create first runtime adapter contracts
 
-### Batch E
+### Batch F
 
 - create workflow adapters
 - create onboarding architecture

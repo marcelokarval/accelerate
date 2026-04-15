@@ -1,8 +1,15 @@
 # Executive Bootstrap Plan Template
 
+Canonical location:
+
+- `../../planning/executive/bootstrap-plan-template.md`
+
 ## Purpose
 
-This template defines the minimum onboarding output for the pre-agents phase.
+This file remains as a compatibility bridge while `planning/` becomes the
+native owner of executive plan artifacts.
+
+Use the canonical file above for current work.
 
 ## Template
 
@@ -14,4 +21,3 @@ This template defines the minimum onboarding output for the pre-agents phase.
 - recommended future agent candidates
 - explicit non-goals
 - next bounded setup slices
-
