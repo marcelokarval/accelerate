@@ -16,6 +16,10 @@ of `.accelerate/`.
 It is small enough to stay teachable and strict enough to preserve continuity
 between sessions.
 
+For the hardened operational contract of this recommendation, read:
+
+- [V2 Implementation Contract](./accelerate-project-local-workspace-v2-contract.md)
+
 ## Scope
 
 `V2` persists:
@@ -72,9 +76,16 @@ It aligns with the current shape of `accelerate` itself:
 
 ## File Contracts
 
+These file contracts describe the intent of each artifact.
+
+For minimum required schemas, lifecycle transitions, and write thresholds, use
+the contract document above.
+
 ### `state.yaml`
 
 High-level installation summary and pointer map.
+
+It is the fast local index, not the detailed authority for every subdomain.
 
 Suggested additions beyond `V1`:
 
@@ -86,6 +97,9 @@ agents_status_file: .accelerate/agents/status.yaml
 ### `onboarding/status.yaml`
 
 Authoritative state of onboarding progress.
+
+This file is the detailed source of truth for onboarding lifecycle, while
+`state.yaml` mirrors it at summary level.
 
 Suggested fields:
 
@@ -112,6 +126,8 @@ It should capture:
 ### `onboarding/decisions.yaml`
 
 Decisions derived from discovery.
+
+This file is the detailed source of truth for onboarding decisions.
 
 It should capture:
 
@@ -155,6 +171,9 @@ Closed plans that are no longer the active governing artifact.
 ### `agents/status.yaml`
 
 Local agent-governance posture.
+
+This file is the detailed source of truth for local pre-agents status, while
+`state.yaml` mirrors only the high-level `agent_mode`.
 
 Suggested fields:
 
