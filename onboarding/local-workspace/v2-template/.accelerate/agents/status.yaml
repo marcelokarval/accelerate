@@ -1,0 +1,5 @@
+schema_version: 1
+agent_mode: root-only
+agent_readiness: pre-agents
+promotion_discussion: false
+catalog_required: false

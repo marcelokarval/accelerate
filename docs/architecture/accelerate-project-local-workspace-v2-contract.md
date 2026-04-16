@@ -9,6 +9,10 @@ This document hardens the operational contract of:
 It exists to reduce ambiguity before the first real implementation of the
 project-local `.accelerate/` workspace.
 
+The first native product implementation surface for this contract now lives in:
+
+- `../../onboarding/local-workspace/`
+
 ## Contract Scope
 
 This contract defines:

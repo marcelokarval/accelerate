@@ -17,8 +17,10 @@ setup by discovering:
 The onboarding layer is already native in the `standalone pre-agents` phase.
 
 That means onboarding is no longer only an architecture idea. It already has a
-defined operating surface, even though its final persistence model and full
-runtime implementation are still future work.
+defined operating surface, and the first native implementation surface for the
+project-local `.accelerate/` workspace now lives under:
+
+- `local-workspace/`
 
 ## What Onboarding Must Already Do
 
@@ -53,9 +55,10 @@ For a fresh session using onboarding as an active layer, read in this order:
 3. `README.md`
 4. `aq/question-set.md`
 5. `discovery/discovery-contract.md`
-6. `../planning/executive/README.md`
-7. `../planning/executive/bootstrap-plan-template.md`
-8. `recommendations/recommendation-model.md`
+6. `local-workspace/README.md`
+7. `../planning/executive/README.md`
+8. `../planning/executive/bootstrap-plan-template.md`
+9. `recommendations/recommendation-model.md`
 
 If the repo still needs wider rationale, continue into:
 
@@ -88,6 +91,11 @@ The minimum output is:
 That bootstrap plan is now canonically owned by:
 
 - `../planning/executive/bootstrap-plan-template.md`
+
+The first native product surface for emitting the project-local `.accelerate/`
+workspace is:
+
+- `local-workspace/`
 
 ## Re-entry Rule
 

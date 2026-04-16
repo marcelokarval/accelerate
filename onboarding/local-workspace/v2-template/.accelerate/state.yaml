@@ -1,0 +1,14 @@
+schema_version: 1
+accelerate_stage: standalone-pre-agents
+project_onboarded: false
+installation_mode: greenfield
+repo_maturity: empty
+onboarding_status: not_started
+reentry_status: clean
+workflow_backend: none-yet
+active_profile: unknown
+active_runtime_adapters: []
+agent_mode: root-only
+current_plan: .accelerate/planning/current-plan.md
+agents_status_file: .accelerate/agents/status.yaml
+last_bootstrap_update: YYYY-MM-DD

@@ -1,0 +1,8 @@
+schema_version: 1
+languages: []
+framework_signals: []
+workflow_tool_signals: []
+docs_posture_signals: []
+proof_runtime_signals: []
+package_manager_signals: []
+repo_notes: []

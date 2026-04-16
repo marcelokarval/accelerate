@@ -20,6 +20,11 @@ For the hardened operational contract of this recommendation, read:
 
 - [V2 Implementation Contract](./accelerate-project-local-workspace-v2-contract.md)
 
+The first native product implementation surface for this recommendation now
+lives in:
+
+- `../../onboarding/local-workspace/`
+
 ## Scope
 
 `V2` persists:
