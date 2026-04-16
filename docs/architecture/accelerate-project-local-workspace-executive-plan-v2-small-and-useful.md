@@ -1,0 +1,217 @@
+# `.accelerate/` Executive Plan V2: Small And Useful
+
+## Purpose
+
+Define the first recommended real rollout of `.accelerate/` inside a project.
+
+This version assumes that `accelerate` is no longer only classifying work in
+session memory. It is now persisting onboarding, planning, and local
+agent-governance truth.
+
+## Recommendation Status
+
+This is the **current recommended default** for the first real implementation
+of `.accelerate/`.
+
+It is small enough to stay teachable and strict enough to preserve continuity
+between sessions.
+
+## Scope
+
+`V2` persists:
+
+- local installation state
+- onboarding state and decisions
+- current planning state
+- local pre-agents status, candidates, and gaps
+
+It does not yet persist the wider local control surfaces for:
+
+- workflow mapping
+- runtime capability registry
+- profile overrides
+- long-form local memory
+
+## Target Shape
+
+```text
+.accelerate/
+├── README.md
+├── state.yaml
+├── onboarding/
+│   ├── status.yaml
+│   ├── discovery.yaml
+│   ├── decisions.yaml
+│   └── executive-bootstrap-plan.md
+├── planning/
+│   ├── current-plan.md
+│   ├── review-ready.md
+│   ├── execution-log.md
+│   ├── open-questions.md
+│   └── history/
+└── agents/
+    ├── status.yaml
+    ├── candidates.yaml
+    └── gaps.yaml
+```
+
+## Why This Is The Default Recommendation
+
+`V2` is the strongest balance between:
+
+- low operational overhead
+- high session continuity
+- clear planning persistence
+- clear pre-agents local governance
+
+It aligns with the current shape of `accelerate` itself:
+
+- onboarding is already a real native layer
+- planning is already a real native layer
+- agent-factory is already architecturally real in pre-agents
+
+## File Contracts
+
+### `state.yaml`
+
+High-level installation summary and pointer map.
+
+Suggested additions beyond `V1`:
+
+```yaml
+current_plan: .accelerate/planning/current-plan.md
+agents_status_file: .accelerate/agents/status.yaml
+```
+
+### `onboarding/status.yaml`
+
+Authoritative state of onboarding progress.
+
+Suggested fields:
+
+```yaml
+status: not_started|in_progress|partially_stabilized|completed
+reentry_status: clean|light_reentry|partial_reonboarding|structural_reonboarding
+last_updated: YYYY-MM-DD
+```
+
+### `onboarding/discovery.yaml`
+
+Observed repository signals.
+
+This file is observational, not declarative.
+
+It should capture:
+
+- detected language/runtime/tooling
+- framework signals
+- workflow tool signals
+- docs posture signals
+- proof/runtime signals
+
+### `onboarding/decisions.yaml`
+
+Decisions derived from discovery.
+
+It should capture:
+
+- selected workflow backend
+- selected profile
+- selected runtime posture
+- selected docs posture
+- explicit non-goals
+
+### `onboarding/executive-bootstrap-plan.md`
+
+The first local bootstrap plan emitted by onboarding.
+
+This file is the bridge from discovery into real local execution.
+
+### `planning/current-plan.md`
+
+The governing live plan for the next bounded slice or active program.
+
+### `planning/review-ready.md`
+
+The staged plan state after execution is advanced enough for review or closure
+preparation.
+
+### `planning/execution-log.md`
+
+A local summary of execution under the current plan.
+
+This does not replace issue comments or workflow backend logs.
+
+It complements them as local accelerate-centric continuity.
+
+### `planning/open-questions.md`
+
+High-impact ambiguities still unresolved.
+
+### `planning/history/`
+
+Closed plans that are no longer the active governing artifact.
+
+### `agents/status.yaml`
+
+Local agent-governance posture.
+
+Suggested fields:
+
+```yaml
+agent_mode: root-only|agent-eligible
+agent_readiness: pre-agents
+promotion_discussion: false
+catalog_required: false
+```
+
+### `agents/candidates.yaml`
+
+Locally relevant families that seem contextually useful for the project.
+
+This must not imply:
+
+- approval
+- promotion
+- installation
+
+### `agents/gaps.yaml`
+
+Local recurring missing specialties.
+
+This file exists so the project can accumulate pre-promotion evidence instead
+of rediscovering the same gap repeatedly.
+
+## Writing Policy
+
+`accelerate` should be highly autonomous under `V2`.
+
+It may create and update these files automatically when:
+
+- onboarding is real
+- discovery is factual
+- planning artifacts have been created
+- local agent posture is clearly inferable from control-plane behavior
+
+## Upgrade Rule
+
+Upgrade from `V2` to `V3` when the project needs explicit persisted local
+surfaces for:
+
+- workflow mapping
+- runtime capability registry
+- profile overrides
+- memory beyond plan and onboarding
+
+## Success Criteria
+
+`V2` succeeds when a fresh session can determine without conversational
+reconstruction:
+
+- whether onboarding happened
+- what was discovered
+- what was decided
+- what plan currently governs execution
+- which open questions remain
+- whether the repo is still root-only
+- which local candidate families and gaps already exist
