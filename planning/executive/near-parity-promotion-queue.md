@@ -180,8 +180,13 @@ Current evidence status:
   standard comparative benchmark evidence from lighter synthetic reruns
 - native correction landed in `core/workflows/catalog.md` and
   `core/control-plane/quick-invocation-map.md`
-- post-correction local rerun showed the written local workflow set is now
-  sufficient, but behavioral parity still needs repetition
+- post-correction explicit and light local reruns showed the written local
+  workflow set now selects the expected lane family and refuses premature
+  promotion
+- the durable packet is
+  `workflow-catalog-post-correction-rerun-result.md`
+- behavioral parity still needs repetition under a full durable comparative
+  registration cycle
 
 ## Tier 3: Maturity And Repeatability Targets
 

@@ -118,9 +118,15 @@ living docs must be paired with:
 Post-correction local rerun result:
 
 - the local now identifies the right written workflow set for this scenario
+- a lighter local prompt also selects the corrected lane family and blocks
+  promotion without repeated proof
 - the local still should not be promoted beyond `near parity` until repeated
   live or benchmarked runs prove that runtime selection follows the corrected
   catalog without over-steering
+
+The post-correction rerun packet is preserved in:
+
+- `workflow-catalog-post-correction-rerun-result.md`
 
 ## Residual Gap Statement
 
@@ -132,10 +138,21 @@ Residual gap for this surface:
 
 What the legacy still does better:
 
-- it exposed the issue-bootstrap and benchmark-evidence distinction before the
-  local catalog correction
-- it still spends less time “having” the workflow map and more time coercing the
-  active lane behaviorally
+- it exposed the issue-bootstrap, planning-artifact, parallel-output, and
+  benchmark-evidence distinctions before the local catalog correction
+- it still has more demonstrated runtime history coercing the active lane
+  behaviorally
+
+What the local now does correctly:
+
+- it names benchmark rerun / result registration as a first-class branch and
+  workflow lane
+- it distinguishes standard comparative evidence from weaker synthetic reruns
+- it ties durable result registration to docs-sync and forensic closure
+- it requires issue/bootstrap posture or the current explicit
+  `pre-adapter/no-backend` exception before durable mutation
+- it refuses promotion when the evidence is only a routing correction rather
+  than repeated behavioral proof
 
 ## Replacement Risk
 

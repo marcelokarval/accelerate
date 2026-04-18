@@ -246,11 +246,23 @@ post-incident stabilization
 
 ```text
 comparative or representative benchmark
+  -> entry shaping when target / registration scope is not already bounded
+  -> governance audit when authority or parity status is under judgment
   -> benchmark packet
-  -> side-by-side outputs or weaker-evidence declaration
-  -> result registration target
+  -> standard comparative outputs or weaker-evidence declaration
   -> scoreboard / executive artifact update
+  -> forensic closure
 ```
+
+For standard comparative benchmarks, this workflow composes with:
+
+- `Parallel-Discovery` or `Governed Multi-Subagent` when independent local and
+  legacy outputs are actually produced.
+- `Docs-Sync` when the result updates living docs, scoreboards, or executive
+  artifacts.
+- `Issue-Bootstrap` plus `Planning-Artifact` when that durable registration is
+  mutating work, unless the current pre-adapter/no-backend exception is
+  explicitly recorded before the doc mutation.
 
 ### 21. Docs-Sync Workflow
 
@@ -309,8 +321,13 @@ to vague `reviewed` or `tested` claims.
     output, comparison axes, evidence strength, registration artifact, and
     final status decision.
   - if the standard comparative benchmark method is used, raw side-by-side
-    outputs should be preserved or referenced; if a lighter synthetic rerun is
-    used, the output must say it is weaker evidence.
+    outputs should be preserved or referenced and the active
+    `Parallel-Discovery` or `Governed Multi-Subagent` posture should be named.
+  - if a lighter synthetic rerun is used, the output must say it is weaker
+    evidence and must not promote a parity verdict by itself.
+  - if the result is registered durably, the output should name the
+    `Issue-Bootstrap` / no-backend-exception posture and the planning artifact
+    or reason it is not required.
 - `Release-Handoff`
   - output should leave merge-readiness status, operator handoff notes, and
     rollback or follow-up posture when relevant.
