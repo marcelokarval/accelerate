@@ -1,10 +1,14 @@
 # Risk
 
-This layer will hold the active risk-enforcement model, including detectors,
-signals, owners, blockers, and release conditions.
+This layer is the native home of the active risk-enforcement model, including
+detectors, surfaces, owners, blockers, and release conditions.
 
-Current authority still lives in:
+Native authority now starts here:
+
+- `risk-enforcement-matrix.md`
+- `enforcement-surfaces.md`
+
+Supporting inherited doctrine may still exist in:
 
 - `references/codex-agents/risk-enforcement-model.md`
 - `references/codex-agents/risk-enforcement-matrix.md`
-

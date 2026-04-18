@@ -1,5 +1,15 @@
 # Persona Model
 
+## Local Authority Status
+
+Primary local authority lives in:
+
+- `../core/personas/model.md`
+
+Use this reference for supporting doctrine and comparison depth.
+
+If the native local file and this reference disagree, prefer the local file.
+
 Use this module when the active posture of the orchestrator matters more than
 the raw phase list.
 

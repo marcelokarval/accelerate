@@ -17,24 +17,43 @@ real agent-factory promotion work.
 2. prompt hardening is a native gate
 3. issue-driven mutation discipline is native
 4. topology, lanes, risk, and closure are native core concepts
-5. workflow adapters are documented as peers, not accidents
-6. runtime adapters are documented as capabilities-to-tooling layers
-7. onboarding has a native operational surface
-8. the repo remains fully functional with zero promoted agents
+5. persona activation and review architecture are native core concepts
+6. workflow, proof, and delegation doctrine are native core concepts
+7. workflow adapters are documented as peers, not accidents
+8. runtime adapters are documented as capabilities-to-tooling layers
+9. onboarding has a native operational surface
+10. the repo remains fully functional with zero promoted agents
 
 ## Current Native Baseline
 
 The current native pre-agents baseline now includes:
 
 - `core/control-plane/root-laws.md`
+- `core/control-plane/branch-enforcement-matrix.md`
+- `core/control-plane/quick-invocation-map.md`
+- `core/control-plane/workflow-change-approval-gate.md`
+- `core/personas/model.md`
+- `core/personas/mandatory-skills.md`
+- `core/personas/executive-matrix.md`
 - `core/hardening/prompt-hardening.md`
 - `core/issue-topology/issue-driven-mutation-stack.md`
 - `core/issue-topology/topology-policy.md`
+- `core/delegation/subagent-model.md`
 - `core/lanes/manager-lane-model.md`
 - `core/risk/risk-enforcement-matrix.md`
+- `core/risk/enforcement-surfaces.md`
+- `core/review/architecture.md`
+- `core/review/persisted-modeling-forensics.md`
+- `core/review/product-critical-surfaces.md`
+- `core/review/premium-interface-production.md`
+- `core/workflows/catalog.md`
+- `core/workflows/operational-calibration.md`
+- `core/workflows/self-evolution.md`
+- `core/workflows/maturity-control.md`
 - `core/closure/authority-boundary.md`
 - `core/runtime-packets/templates.md`
 - `core/runtime-packets/cadence.md`
+- `core/runtime-packets/qa-proof-stack.md`
 - `adapters/workflow/adapter-contract.md`
 - `adapters/workflow/linear/adapter.md`
 - `adapters/workflow/github/adapter.md`

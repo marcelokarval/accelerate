@@ -1,5 +1,15 @@
 # QA And Proof Stack
 
+## Local Authority Status
+
+Primary local authority lives in:
+
+- `../core/runtime-packets/qa-proof-stack.md`
+
+Use this reference for supporting doctrine and comparison depth.
+
+If the native local file and this reference disagree, prefer the local file.
+
 Use this module when the work needs explicit QA lane ownership instead of a
 generic "tests/review later" posture.
 

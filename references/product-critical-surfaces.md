@@ -1,5 +1,15 @@
 # Product-Critical Surfaces
 
+## Local Authority Status
+
+Primary local authority lives in:
+
+- `../core/review/product-critical-surfaces.md`
+
+Use this reference for supporting doctrine and comparison depth.
+
+If the native local file and this reference disagree, prefer the local file.
+
 Use this module when the work is a critical user-facing surface where backend
 truth and frontend product quality are both blocking concerns.
 

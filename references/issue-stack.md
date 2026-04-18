@@ -1,5 +1,15 @@
 # Issue Stack
 
+## Local Authority Status
+
+Primary local authority lives in:
+
+- `../core/issue-topology/issue-driven-mutation-stack.md`
+
+Use this reference for supporting doctrine and comparison depth.
+
+If the native local file and this reference disagree, prefer the local file.
+
 Use this module when the work mutates code, docs, workflow seeds, or runtime
 governance and the issue lane must be visible as a first-class workflow stack.
 

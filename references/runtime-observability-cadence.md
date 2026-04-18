@@ -1,5 +1,15 @@
 # Runtime Observability Cadence
 
+## Local Authority Status
+
+Primary local authority lives in:
+
+- `../core/runtime-packets/cadence.md`
+
+Use this reference for supporting doctrine and comparison depth.
+
+If the native local file and this reference disagree, prefer the local file.
+
 Use this module when the question is not what packet fields exist, but when they
 must be emitted.
 

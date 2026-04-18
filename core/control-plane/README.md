@@ -1,11 +1,25 @@
 # Control Plane
 
-This layer will hold the platform's root orchestration law, including
-classification, branch discipline, and the visible control-plane model.
+This layer is the native home of the platform's root orchestration law,
+including classification, branch discipline, quick invocation, and workflow
+mutation approval.
 
-Current authority still lives in:
+The control plane now also depends on native:
+
+- `../personas/`
+- `../review/`
+- `../workflows/`
+
+Native authority now starts here:
+
+- `root-laws.md`
+- `branch-enforcement-matrix.md`
+- `quick-invocation-map.md`
+- `workflow-change-approval-gate.md`
+- `parity-replacement-gate.md`
+
+Root-facing architectural context still lives in:
 
 - `SKILL.md`
 - `README.md`
 - `docs/architecture/accelerate-control-plane.md`
-

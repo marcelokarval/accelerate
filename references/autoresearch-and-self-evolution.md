@@ -1,5 +1,15 @@
 # Autoresearch And Self-Evolution
 
+## Local Authority Status
+
+Primary local authority lives in:
+
+- `../core/workflows/self-evolution.md`
+
+Use this reference for supporting doctrine and comparison depth.
+
+If the native local file and this reference disagree, prefer the local file.
+
 Use this module when the question is not only how to finish the current work,
 but how to evolve skills, gates, or agents from repeated runtime evidence.
 

@@ -1,5 +1,15 @@
 # Subagent Model
 
+## Local Authority Status
+
+Primary local authority lives in:
+
+- `../core/delegation/subagent-model.md`
+
+Use this reference for supporting doctrine and comparison depth.
+
+If the native local file and this reference disagree, prefer the local file.
+
 Use this module when deciding whether delegation should happen and how it must
 be governed.
 

@@ -1,0 +1,160 @@
+# Accelerate Legacy-To-Local Gap Matrix
+
+## Purpose
+
+This document tracks the remaining methodological gaps between the governed
+legacy/global `accelerate` runtime and the standalone local repository.
+
+It exists to stop two bad outcomes:
+
+- claiming parity too early because the local platform already looks cleaner
+- preserving the legacy indefinitely because the remaining gaps were never made
+  explicit
+
+The active executive handoff for this convergence track lives in:
+
+- `planning/executive/legacy-to-local-benchmark-convergence-plan.md`
+- `planning/executive/legacy-vs-local-harvest-plan.md`
+- `planning/executive/legacy-benchmark-battery-harvest-matrix.md`
+- `docs/architecture/accelerate-comparative-benchmark-persisted-modeling-battery.md`
+- `docs/architecture/accelerate-comparative-benchmark-persisted-modeling-model-comparison.md`
+
+## Replacement Rule
+
+The local platform should only replace the legacy as the primary operational
+distribution when it is **superior or equal in operational value**, ignoring the
+future-agent layer.
+
+The comparison should not ask only whether the local repo has better structure.
+It must ask whether the local repo can already execute the same engineering
+method with equal or better quality.
+
+## Comparison Axes
+
+The gap hunt should classify each surface as:
+
+- `native`
+  - local has a first-class native surface
+- `reference-backed`
+  - local still depends mainly on `references/`
+- `breach`
+  - legacy still has a material operational advantage
+
+## Current Matrix
+
+| Surface | Legacy/global status | Local status | Verdict | Why it still matters |
+| --- | --- | --- | --- | --- |
+| root control plane | strong | native | local at parity | root law is already local and usable |
+| prompt hardening | strong | native | local at parity | gate is already native |
+| issue topology | strong | native | local at parity | topology laws already exist locally |
+| risk enforcement | strong | native | local at parity | risk matrix already exists locally |
+| closure authority | strong | native | local at parity | closure law already exists locally |
+| runtime packet schema | strong | native | local ahead | focused schema benchmark showed the local core can now emit all packet shapes without reference fallback and is richer than the inherited reference schema after a small subagent-cadence correction |
+| persona activation | strong | native | local at parity | recently rehomed into `core/personas/` |
+| review architecture | strong | native | local at parity | recently rehomed into `core/review/` |
+| persisted-modeling review | implicit but strong in practice | native | local ahead | bounded benchmark rerun after the defect-bias harvest showed the local winning this class on both method and directly actionable defect capture |
+| current enforcement surfaces | strong | native | local ahead | the original billing/self-service benchmark plus the later upload/import rerun both showed the local side applying the harvested enforcement clauses more explicitly across different trust-sensitive categories |
+| issue stack | strong | native | local ahead | rerun after native hardening showed the local side keeping the benchmark slice itself in calibration mode while expressing the shaping-first mutation order more cleanly than the legacy/reference-backed path |
+| QA / proof stack | strong | native | local ahead | the 360 rerun after local hardening showed the local side naming proof-order failures more explicitly, exposing lane-state closure blocking directly, and escalating `high` runs to `product-critical user surface`; legacy remained strong but the cleanest strongest signal favored the hardened local |
+| subagent model | strong | native | near parity | native delegation law now includes spawn defaults, master integration, and operational hand-off; residual gap is mostly wording/teaching density |
+| branch enforcement matrix | strong | native | local ahead | focused branch-enforcement benchmark showed the local side matching legacy harshness on issue/planning/validation blockers while applying the richer native cross-surface gate set more precisely |
+| workflow catalog | strong | native | near parity | latest focused retest exposed a real under-call around benchmark result registration; native catalog and quick map now include an explicit benchmark rerun / result-registration lane, but behavioral promotion still needs repeated post-correction proof |
+| operational calibration | strong | native | local at parity | rerun after native hardening showed the local side choosing the same smallest valid bounded process as legacy while doing so from cleaner native authority and without reopening the old ceremony-inflation failure mode |
+| autoresearch / self-evolution | strong | native | near parity | native self-evolution now carries detailed evidence packets, approval boundaries, and closure requirements; residual gap is proving that sessions actually escalate repeated failures consistently |
+| maturity control | strong | native | near parity | native maturity control now carries the richer telemetry, playbook, evidence, and meta-governance framing; residual gap is practice, not surface coverage |
+| workflow-change approval gate | strong | native | local at parity | focused retest showed both local and reference-backed paths block workflow-doctrine mutation without explicit HITL approval for the exact change |
+| parity / replacement gate | implicit but effective | native | near parity | native gate now exists, the benchmark battery is versioned, and a full near-parity batch of explicit parity packets has been issued; residual gap is repeated rerun-backed promotion, not missing mechanism |
+| benchmark run versioning | implicit memory in practice | native | local ahead | native benchmark artifacts now preserve run evolution, model-comparison policy, and correction-to-result traceability durably |
+| product-critical surface discipline | strong | native | local ahead | the auth-recovery rerun already cleared parity, and the later onboarding-critical visual/composition rerun showed the local side producing the sharper product-critical closure judgment with stronger native failure-mode naming and cleaner branch focus |
+| premium interface discipline | strong | native | local ahead | the premium billing recovery / upgrade rerun showed both sides blocking closure, but the local side used the sharper premium failure-mode vocabulary and kept the benchmark focused on the real premium blockers rather than inflating unrelated process weight |
+| quick invocation / operating map | strong | native | local at parity | native quick invocation map now exists |
+
+## Native Landings
+
+### 1. Enforcement Inventory
+
+Closed by:
+
+- `core/control-plane/branch-enforcement-matrix.md`
+- `core/risk/enforcement-surfaces.md`
+
+### 2. Proof Stack
+
+Closed by:
+
+- `core/runtime-packets/qa-proof-stack.md`
+
+### 3. Delegation Governance
+
+Closed by:
+
+- `core/delegation/subagent-model.md`
+
+### 4. Workflow Map
+
+Closed by:
+
+- `core/workflows/catalog.md`
+- `core/control-plane/quick-invocation-map.md`
+
+### 5. Calibration And Self-Evolution
+
+Closed by:
+
+- `core/workflows/operational-calibration.md`
+- `core/workflows/self-evolution.md`
+- `core/workflows/maturity-control.md`
+- `core/control-plane/workflow-change-approval-gate.md`
+
+### 6. Product-Critical Branch
+
+Closed by:
+
+- `core/review/product-critical-surfaces.md`
+- `core/review/premium-interface-production.md`
+
+## Status
+
+The phase-11 breach set is now natively implemented, and the remaining
+workflow-governance harvest has been brought over almost wholesale. Comparative
+retesting is still running.
+
+Landing a native surface is not the same thing as proving parity. Recent
+benchmark and document-comparison work showed that workflow-governance surfaces
+were still too compressed after their first local landing, which is why the
+native block was rewritten side by side against the legacy references.
+
+The reference layer has now also been rationalized explicitly:
+
+- `references/README.md` names which files are native-backed and supporting
+  only
+- high-traffic duplicated reference files now carry local-authority banners
+
+That cleanup reduced authority confusion without reopening a behavioral gap in
+the premium rerun that followed it.
+
+Inherited `references/` modules remain readable as supporting doctrine and
+comparison material, not as the primary authority for the surfaces above.
+
+## Acceptance Rule
+
+A breach is only considered closed when:
+
+1. a native local surface exists
+2. `SKILL.md`, `README.md`, or the relevant core/adapter layer point to it as
+   primary authority
+3. the local surface is at least as operationally useful as the legacy one for
+   real runs
+4. the remaining inherited reference is supporting doctrine, not the primary
+   method
+
+## Anti-Illusion Rule
+
+Do not mark parity because:
+
+- the local repo is cleaner
+- the local repo has better directory architecture
+- the local repo has partial shells or README placeholders
+
+Parity means the local platform can already execute the method with equal or
+better practical quality.

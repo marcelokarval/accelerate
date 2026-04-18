@@ -13,6 +13,7 @@ Non-trivial work must not hide the active workflow stack for long stretches.
 - first technical update -> `Branch Entry Packet`
 - meaningful stack change -> `Runtime Delta Packet`
 - prompt hardening active -> `Prompt Hardening Packet`
+- subagent completion -> `Subagent Return Packet`
 - QA lane completion -> `QA / Proof Packet`
 - pre-close -> `Closure Packet`
 
@@ -26,4 +27,3 @@ explicit `single-threaded exception`.
 The detailed cadence reference still lives in:
 
 - `references/runtime-observability-cadence.md`
-

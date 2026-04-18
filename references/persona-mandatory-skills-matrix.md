@@ -1,5 +1,15 @@
 # Persona Mandatory Skills Matrix
 
+## Local Authority Status
+
+Primary local authority lives in:
+
+- `../core/personas/mandatory-skills.md`
+
+Use this reference for supporting doctrine and comparison depth.
+
+If the native local file and this reference disagree, prefer the local file.
+
 Use this module when the active persona must expose its non-optional skill set
 instead of relying on informal judgment.
 

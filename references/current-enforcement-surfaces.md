@@ -1,5 +1,15 @@
 # Current Enforcement Surfaces
 
+## Local Authority Status
+
+Primary local authority lives in:
+
+- `../core/risk/enforcement-surfaces.md`
+
+Use this reference for supporting doctrine and comparison depth.
+
+If the native local file and this reference disagree, prefer the local file.
+
 Use this module when the current stack-specific mandatory enforcement points need
 to be made explicit for backend, frontend, runtime, and governance work.
 

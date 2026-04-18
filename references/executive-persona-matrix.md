@@ -1,5 +1,15 @@
 # Executive Persona Matrix
 
+## Local Authority Status
+
+Primary local authority lives in:
+
+- `../core/personas/executive-matrix.md`
+
+Use this reference for supporting doctrine and comparison depth.
+
+If the native local file and this reference disagree, prefer the local file.
+
 Use this module when the operator needs a single table showing:
 
 - persona

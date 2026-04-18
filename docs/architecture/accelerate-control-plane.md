@@ -57,6 +57,10 @@ frontend branch gains a new mandatory skill, gate, or source-ladder
 requirement, both the repo runtime matrix and the public catalog/docs must be
 updated in the same batch.
 
+The native branch, proof, delegation, workflow, and calibration surfaces now
+live under `core/` and should be treated as primary authority before inherited
+`references/` modules for these concerns.
+
 ## What Accelerate Is
 
 `accelerate` is:
@@ -187,6 +191,21 @@ Use these roles and skills distinctly:
 
 This lane matters because access-path choice is part of execution truth, not a
 mere setup footnote.
+
+## Native Operating Surfaces
+
+For concrete control-plane execution, start with these native modules:
+
+- `core/control-plane/branch-enforcement-matrix.md`
+- `core/control-plane/quick-invocation-map.md`
+- `core/issue-topology/issue-driven-mutation-stack.md`
+- `core/runtime-packets/qa-proof-stack.md`
+- `core/delegation/subagent-model.md`
+- `core/workflows/catalog.md`
+- `core/workflows/operational-calibration.md`
+- `core/control-plane/workflow-change-approval-gate.md`
+- `core/review/product-critical-surfaces.md`
+- `core/review/premium-interface-production.md`
 
 ## Local Smoke Credential Lookup
 

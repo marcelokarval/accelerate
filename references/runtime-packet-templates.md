@@ -1,5 +1,15 @@
 # Runtime Packet Templates
 
+## Local Authority Status
+
+Primary local authority lives in:
+
+- `../core/runtime-packets/templates.md`
+
+Use this reference for supporting doctrine and comparison depth.
+
+If the native local file and this reference disagree, prefer the local file.
+
 Use this module when `accelerate` must not leave packet shape to operator taste.
 
 ## Rule

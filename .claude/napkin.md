@@ -35,3 +35,5 @@
    Do instead: continue platform architecture, onboarding, and adapter work here instead of back in the incubator repo.
 2. **[2026-04-15] Temporary development-stage runbooks stay out of git**
    Do instead: keep stage-specific notes in `.claude/napkin.dev.md` or similar ignored files, and commit only durable runbook guidance to `.claude/napkin.md`.
+3. **[2026-04-16] New local workspace slices must beat the legacy before replacing it**
+   Do instead: only treat `.accelerate/` as ready to replace the legacy local model when it is superior or equal in operational value, desconsiderando agents because the legacy still works there today.

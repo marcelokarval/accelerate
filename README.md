@@ -60,13 +60,23 @@ Keep the split intentional:
 - this README
   - richer operational guide, examples, reading map, and doctrine overview
 - `references/`
-  - deep modules that hold detailed policy and design layers
+  - inherited deep doctrine that remains readable as supporting context while
+    native surfaces continue taking over primary authority
 
 The root skill should stay compact.
 
 The README should stay rich enough for onboarding and maintenance.
 
-The references should stay authoritative for deep behavior.
+The references should stay readable for inherited depth, but when a surface has
+already been rehomed into `core/`, the native local file is the primary
+authority.
+
+See also:
+
+- [references/README.md](./references/README.md)
+
+for the explicit native-vs-supporting authority map inside the reference layer.
+
 
 ## Pre-Agents Baseline
 
@@ -81,7 +91,9 @@ Start here:
 - [onboarding/README.md](./onboarding/README.md)
 - [planning/README.md](./planning/README.md)
 
-Use `references/` as supporting doctrine while rehoming continues.
+Use `references/` as supporting doctrine while rehoming continues. Branch,
+proof, delegation, workflow, calibration, and product-critical doctrine now
+have native homes under `core/`.
 
 ## Core Operating Model
 
@@ -124,7 +136,7 @@ When hardening is active, the run should visibly expose:
 
 See:
 
-- [prompt-hardening-gate.md](./references/prompt-hardening-gate.md)
+- [prompt-hardening.md](./core/hardening/prompt-hardening.md)
 
 ## Issue-Driven Mutation Stack
 
@@ -146,7 +158,35 @@ Mutation must not jump directly from request to implementation.
 
 See:
 
-- [issue-stack.md](./references/issue-stack.md)
+- [issue-driven-mutation-stack.md](./core/issue-topology/issue-driven-mutation-stack.md)
+
+## Enforcement And Branching
+
+The native branch and enforcement authorities now live in:
+
+- [branch-enforcement-matrix.md](./core/control-plane/branch-enforcement-matrix.md)
+- [enforcement-surfaces.md](./core/risk/enforcement-surfaces.md)
+
+Use them to decide:
+
+- which branch is active
+- which mandatory skills must be open
+- which gates are blocking
+- which proof and artifacts closure requires
+
+## Proof Stack
+
+The native proof-order and lane-ownership authority now lives in:
+
+- [qa-proof-stack.md](./core/runtime-packets/qa-proof-stack.md)
+
+Proof ordering is:
+
+1. implementation proof
+2. backend/frontend QA proof
+3. browser truth
+4. persistent regression proof
+5. forensic closure
 
 ## Agent Optionality
 
@@ -170,6 +210,10 @@ Agents are a governed capability, not a structural dependency.
 - force delegation because a catalog exists
 - force delegation because thread budget exists
 - treat gap detection as automatic promotion
+
+The native bounded-delegation authority now lives in:
+
+- [subagent-model.md](./core/delegation/subagent-model.md)
 
 ### Suggestion vs Promotion
 
@@ -219,6 +263,29 @@ They are not the semantic foundation of `accelerate`.
 
 `accelerate` must still make correct control-plane decisions even if the user is
 not explicitly talking about those adjacent skills.
+
+## Named Workflows And Calibration
+
+The native workflow and calibration authorities now live in:
+
+- [catalog.md](./core/workflows/catalog.md)
+- [operational-calibration.md](./core/workflows/operational-calibration.md)
+- [self-evolution.md](./core/workflows/self-evolution.md)
+- [maturity-control.md](./core/workflows/maturity-control.md)
+
+Use them when the question is not only what branch is active, but what named
+execution family, proportionality, and workflow self-improvement posture should
+govern the run.
+
+## Product-Critical And Premium Surfaces
+
+The native review authority for high-stakes user surfaces now lives in:
+
+- [product-critical-surfaces.md](./core/review/product-critical-surfaces.md)
+- [premium-interface-production.md](./core/review/premium-interface-production.md)
+
+Do not treat these branches as generic frontend work. They require backend
+truth sufficiency, stronger artifact discipline, and stricter closure judgment.
 
 ## Root Authority
 

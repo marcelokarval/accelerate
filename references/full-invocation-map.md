@@ -1,5 +1,14 @@
 # Full Invocation Map
 
+## Local Authority Status
+
+Primary local authority lives in:
+
+- `../core/control-plane/quick-invocation-map.md`
+
+Use this reference for the larger inherited N+1 discovery map, not as the
+first local authority.
+
 Use this module when the operator needs the richer N+1 map of what `accelerate`
 can become when invoked across different kinds of work.
 

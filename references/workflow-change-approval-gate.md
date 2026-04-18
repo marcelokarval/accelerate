@@ -1,5 +1,15 @@
 # Workflow Change Approval Gate
 
+## Local Authority Status
+
+Primary local authority lives in:
+
+- `../core/control-plane/workflow-change-approval-gate.md`
+
+Use this reference for supporting doctrine and comparison depth.
+
+If the native local file and this reference disagree, prefer the local file.
+
 Use this module when a run is proposing to mutate the workflow itself instead
 of only delivering product code.
 

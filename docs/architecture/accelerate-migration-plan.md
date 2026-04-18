@@ -193,6 +193,53 @@ Goal:
 
 - the old repo becomes a deployment overlay, not the hidden source of truth
 
+## Phase 11. Close legacy-to-local operational gaps
+
+Move the remaining methodological surfaces that still give the legacy/global
+runtime an operational advantage into native local layers.
+
+Priority material:
+
+- branch enforcement matrix
+- current enforcement surfaces
+- QA / proof stack
+- subagent model
+- workflow catalog
+- operational calibration
+- autoresearch and self-evolution
+- maturity control
+- workflow-change approval gate
+- product-critical surface discipline
+
+Goal:
+
+- the standalone repo becomes superior or equal in operational value to the
+  legacy distribution, ignoring the future-agent layer
+
+Acceptance artifact:
+
+- `docs/architecture/accelerate-legacy-to-local-gap-matrix.md`
+
+Status:
+
+- native surfaces landed in the local repo; comparative retesting is still
+  narrowing residual workflow-governance compression before a true parity claim
+
+Outputs:
+
+- `core/control-plane/branch-enforcement-matrix.md`
+- `core/control-plane/quick-invocation-map.md`
+- `core/control-plane/workflow-change-approval-gate.md`
+- `core/risk/enforcement-surfaces.md`
+- `core/runtime-packets/qa-proof-stack.md`
+- `core/delegation/subagent-model.md`
+- `core/workflows/catalog.md`
+- `core/workflows/operational-calibration.md`
+- `core/workflows/self-evolution.md`
+- `core/workflows/maturity-control.md`
+- `core/review/product-critical-surfaces.md`
+- `core/review/premium-interface-production.md`
+
 ## First Extraction Batches Recommended
 
 ### Batch A
