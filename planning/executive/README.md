@@ -63,6 +63,7 @@ in:
 - `workflow-catalog-post-correction-rerun-result.md`
 - `workflow-catalog-full-comparative-rerun-result.md`
 - `workflow-catalog-promotion-targeted-rerun-result.md`
+- `self-evolution-durable-evidence-rerun-result.md`
 
 Recent rerun-backed promotions after native hardening:
 
@@ -83,6 +84,14 @@ Recent rerun-backed correction promoted after follow-up:
   - the missing benchmark registration lane was corrected; explicit/light
     checks, full independent local-vs-legacy rerun, and promotion-targeted
     arbitration now show `local at parity`
+
+Recent rerun-backed correction still awaiting promotion:
+
+- `self-evolution-durable-evidence-rerun-result.md`
+  - both local and legacy/global judges kept `autoresearch / self-evolution`
+    at `near parity`; a post-correction local rerun confirmed the local now
+    blocks parity/promotion closure when decision-relevant benchmark evidence
+    remains only in chat, `/tmp`, or untracked scratch state
 
 The current promotion queue for the remaining `near parity` set is:
 

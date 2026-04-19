@@ -430,6 +430,10 @@ approval dependency.
 - the native surface is strong and explicit
 - the scoreboard still records the residual as practice: repeated failures must
   actually escalate consistently
+- focused local-vs-legacy rerun in
+  `self-evolution-durable-evidence-rerun-result.md` found both judges aligned
+  on `near parity`, with a concrete closure blocker around transient-only
+  benchmark evidence
 
 ### Residual Gap Statement
 
@@ -437,6 +441,9 @@ Residual gap:
 
 - repeated proof is still needed that sessions consistently escalate the same
   recurring failure classes into the right workflow mutation path
+- repeated proof is also needed that parity, promotion, or workflow-truth
+  evidence is preserved durably before closure, not left only in chat, `/tmp`,
+  or untracked scratch state
 
 ### Replacement Risk
 
@@ -449,8 +456,9 @@ failure patterns recur.
 
 ### Next Correction
 
-- keep checking that repeated misses trigger self-evolution rather than staying
-  trapped in commentary
+- enforce durable executive or architecture capture for benchmark, rerun, and
+  arbitration evidence that affects parity, promotion, workflow truth, or
+  closure
 
 ---
 

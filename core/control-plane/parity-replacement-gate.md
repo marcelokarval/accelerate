@@ -125,6 +125,7 @@ These are insufficient on their own:
 - stylistic preference for the local wording
 - partial shell artifacts
 - one-off narrative claims without preserved evidence
+- chat-only, `/tmp`-only, or untracked scratch evidence
 
 ## What Does Count As Strong Proof
 
@@ -147,6 +148,8 @@ Do not pass this gate if any of these are true:
 - the local still under-runs required workflow output shapes
 - the parity claim ignores residual risk that matters operationally
 - the evidence exists only in conversational memory and not in durable docs
+- benchmark or arbitration outputs influenced the verdict but were not
+  preserved or summarized in a durable executive or architecture artifact
 
 ## Closure Rule
 
@@ -158,6 +161,9 @@ This gate is only complete when:
 - the residual gap, if any, is named concretely
 - the next correction is named if the verdict is not `local at parity` or
   `local ahead`
+
+Source outputs may start in transient files during local benchmarking, but the
+decision packet must preserve the relevant comparison before this gate closes.
 
 ## Anti-Illusion Rule
 

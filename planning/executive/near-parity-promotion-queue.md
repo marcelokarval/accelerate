@@ -213,6 +213,19 @@ Target:
 
 - stay `near parity` until repetition evidence accumulates naturally
 
+Current evidence status:
+
+- focused durable-evidence rerun registered in
+  `self-evolution-durable-evidence-rerun-result.md`
+- both local and legacy/global judges kept `autoresearch / self-evolution` at
+  `near parity`
+- correction landed as a narrow durable-capture rule across self-evolution,
+  operational calibration, and the parity replacement gate
+- a post-correction local-authority rerun confirmed the new rule blocks
+  transient-only closure, but did not justify promotion in the same cycle
+- next validation must prove repeated behavior after this durable result is
+  committed
+
 ## Tier 4: Surface-Specific Premium Discipline
 
 ### 10. Product-Critical Surface Discipline
@@ -259,11 +272,13 @@ Why:
 
 ## Immediate Operating Sequence
 
-1. spend follow-on rerun effort on the wider governance / maturity surfaces
+1. rerun `autoresearch / self-evolution` once more after the committed
+   durable-evidence packet and require the next result packet before closure
+2. spend follow-on rerun effort on the wider governance / maturity surfaces
    still marked `near parity`
-2. prefer `autoresearch / self-evolution`, `maturity control`, and
-   `parity / replacement gate`
-3. use real or benchmarked runs to watch for regression on recently promoted
+3. prefer `maturity control` and `parity / replacement gate` after the
+   self-evolution evidence-capture rerun
+4. use real or benchmarked runs to watch for regression on recently promoted
    calibration / issue-stack / workflow-catalog surfaces
 
 ## Success Condition

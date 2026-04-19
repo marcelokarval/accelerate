@@ -57,6 +57,27 @@ Minimum packet:
    - review drag
    - rework cost
 
+## Durable Evidence Capture Rule
+
+When benchmark, rerun, or arbitration evidence changes parity, promotion,
+workflow truth, or closure judgment, preserve it before claiming closure.
+
+Acceptable durable homes:
+
+- executive planning artifact
+- architecture artifact
+- living workflow doc updated by an approved change
+
+Chat history, `/tmp` files, untracked scratch notes, and conversational memory
+can be diagnosis inputs. They are not closure proof.
+
+In the standalone pre-adapter / no-backend phase, a durable executive artifact
+is the substitute for issue-backend registration. Do not invent fake adapter
+behavior to satisfy this rule.
+
+Keep this rule narrow. It applies to evidence that affects parity, promotion,
+workflow truth, or closure decisions, not to every disposable exploration note.
+
 ## Promotion Decision
 
 Promote only as far as needed.

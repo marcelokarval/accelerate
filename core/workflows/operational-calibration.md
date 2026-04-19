@@ -151,6 +151,11 @@ Put the artifact in the right place:
 
 Do not let durable guidance hide in ephemeral artifacts.
 
+For benchmark, rerun, or arbitration evidence that affects parity, promotion,
+workflow truth, or closure, transient storage is only a staging area. Preserve
+the decision-relevant evidence in an executive or architecture artifact before
+closing the calibration slice.
+
 ## Failure Mode Catalog
 
 Watch for:
