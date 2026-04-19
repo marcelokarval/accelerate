@@ -91,7 +91,9 @@ Recent rerun-backed correction still awaiting promotion:
   - both local and legacy/global judges kept `autoresearch / self-evolution`
     at `near parity`; a post-correction local rerun confirmed the local now
     blocks parity/promotion closure when decision-relevant benchmark evidence
-    remains only in chat, `/tmp`, or untracked scratch state
+    remains only in chat, `/tmp`, or untracked scratch state; a second
+    post-commit local rerun kept the surface at `near parity` pending repeated
+    behavioral proof
 
 The current promotion queue for the remaining `near parity` set is:
 

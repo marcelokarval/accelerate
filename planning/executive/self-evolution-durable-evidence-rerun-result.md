@@ -166,6 +166,43 @@ The surface can be promoted only if the next run:
 - blocks parity/promotion if evidence remains chat-only, `/tmp`-only, or
   untracked scratch-only
 
+## Second Post-Commit Local Rerun
+
+After commit `9b7efba`, a second focused local-authority benchmark inspected the
+committed state.
+
+Rerun result:
+
+- the worktree was clean at `HEAD`
+  `9b7efbaf634b099da5f4f1e4d7da81d69821a104`
+- the corrected local rules were present in the expected native surfaces
+- the benchmark confirmed that the rule text is now targeted and correctly
+  placed
+- the benchmark still rejected promotion because the decisive post-commit
+  verdict started as transient benchmark output
+
+Second post-commit verdict:
+
+- `near parity`
+
+Promotion decision:
+
+- do not promote yet
+
+Reason:
+
+- the local surface now blocks transient-only closure
+- this section preserves the second post-commit verdict durably
+- a single surface-specific correction plus registered reruns proves the gap is
+  narrowed, not that repeated organizational behavior is stable
+
+Updated next validation:
+
+- keep `autoresearch / self-evolution` in `near parity`
+- use the next naturally occurring parity or promotion cycle to prove repeated
+  durable evidence capture without special prompting
+- only then consider `local at parity`
+
 ## AI Review Report
 
 ### Self-Review

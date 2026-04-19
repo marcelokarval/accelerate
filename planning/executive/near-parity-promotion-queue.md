@@ -223,8 +223,11 @@ Current evidence status:
   operational calibration, and the parity replacement gate
 - a post-correction local-authority rerun confirmed the new rule blocks
   transient-only closure, but did not justify promotion in the same cycle
-- next validation must prove repeated behavior after this durable result is
-  committed
+- a second post-commit local-authority rerun confirmed the committed rule is
+  correctly placed, but still rejected promotion because one surface-specific
+  correction cycle is not repeated organizational proof
+- next validation should come from the next naturally occurring parity or
+  promotion cycle, not from promoting on wording alone
 
 ## Tier 4: Surface-Specific Premium Discipline
 
@@ -272,8 +275,9 @@ Why:
 
 ## Immediate Operating Sequence
 
-1. rerun `autoresearch / self-evolution` once more after the committed
-   durable-evidence packet and require the next result packet before closure
+1. keep `autoresearch / self-evolution` in `near parity` until the next
+   naturally occurring parity or promotion cycle proves durable evidence
+   capture without special prompting
 2. spend follow-on rerun effort on the wider governance / maturity surfaces
    still marked `near parity`
 3. prefer `maturity control` and `parity / replacement gate` after the
