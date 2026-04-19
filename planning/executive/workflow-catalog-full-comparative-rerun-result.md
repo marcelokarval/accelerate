@@ -145,7 +145,7 @@ The only remaining practical difference is wording density:
 ## Verdict
 
 - previous verdict: `near parity`
-- current verdict: `near parity`
+- current verdict at the time of this rerun: `near parity`
 
 Reason:
 
@@ -156,6 +156,12 @@ Reason:
   - run another full durable comparative cycle after this registration
   - or capture a live non-synthetic workflow-catalog use where the local
     behaves with no legacy edge
+
+Follow-up:
+
+- the later promotion-targeted rerun is recorded in
+  `workflow-catalog-promotion-targeted-rerun-result.md`
+- root arbitration promoted the surface to `local at parity`
 
 ## Residual Gap
 

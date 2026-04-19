@@ -5,14 +5,8 @@
 This artifact is the explicit `parity-replacement-gate` packet for the
 `workflow catalog` surface.
 
-It exists to separate:
-
-- the fact that the local repo now has a strong native workflow map
-
-from:
-
-- the stronger claim that the local runtime already selects and enforces that
-  map as reliably as the legacy/global runtime in repeated live use
+It records the evidence that moved the local workflow catalog from native
+coverage plus residual caution to `local at parity`.
 
 ## Surface Under Judgment
 
@@ -46,7 +40,7 @@ The local primary authority now lives in:
 - `core/workflows/catalog.md`
 - `core/control-plane/quick-invocation-map.md`
 
-The scoreboard records this surface as `near parity` in:
+The scoreboard records this surface as `local at parity` in:
 
 - `docs/architecture/accelerate-legacy-to-local-gap-matrix.md`
 
@@ -76,10 +70,10 @@ The local now has a real native workflow map, including:
 This means the local no longer depends on the legacy references as the primary
 written source for the workflow catalog itself.
 
-### Limiting Evidence
+### Former Limiting Evidence
 
-The current evidence still stops short of `local at parity` because the
-remaining deficit is behavioral:
+Earlier evidence stopped short of `local at parity` because the remaining
+deficit was behavioral:
 
 - benchmark reruns showed that workflow-governance strength was initially too
   compressed in the local repo
@@ -92,11 +86,8 @@ remaining deficit is behavioral:
   - the legacy/reference-backed run also required issue bootstrap for living-doc
     registration and distinguished standard comparative benchmark evidence from
     lighter synthetic reruns
-- the gap matrix still records the residual for `workflow catalog` as:
-  - behavioral selection discipline under benchmark reruns
-
-That means the method is now present natively, but the evidence is not yet
-strong enough to claim that the local selects and enforces the catalog with no
+That meant the method was present natively, but the evidence was not yet strong
+enough to claim that the local selected and enforced the catalog with no
 meaningful practical deficit.
 
 ### Latest Correction
@@ -122,32 +113,33 @@ Post-correction local rerun result:
   promotion without repeated proof
 - a full independent local-vs-legacy comparative rerun aligned on the same
   required lane family and the same conservative no-promotion verdict
-- the local still should not be promoted beyond `near parity` until repeated
-  live or benchmarked runs prove that runtime selection follows the corrected
-  catalog without over-steering
+- a promotion-targeted rerun then split:
+  - local judge remained conservative because prior docs still said more proof
+    was required
+  - legacy/global judge promoted the local to `local at parity` because no
+    material operational deficit remained
 
 The post-correction rerun packet is preserved in:
 
 - `workflow-catalog-post-correction-rerun-result.md`
 - `workflow-catalog-full-comparative-rerun-result.md`
+- `workflow-catalog-promotion-targeted-rerun-result.md`
 
 ## Residual Gap Statement
 
 Residual gap for this surface:
 
-- the local still needs repeated live or promotion-grade benchmark proof that
-  named workflows are selected and enforced with legacy-grade coercion,
-  especially when runtime updates could otherwise collapse into branch labels
-  or under-specified packet shapes
+- future live sessions should continue to monitor whether named workflows are
+  selected and enforced with legacy-grade coercion, especially when runtime
+  updates could otherwise collapse into branch labels or under-specified
+  packet shapes
 
-What the legacy still does better:
+What the legacy still does better materially:
 
-- it exposed the issue-bootstrap, planning-artifact, parallel-output,
-  workflow-change-approval, and benchmark-evidence distinctions before the
-  local catalog correction
-- it still has more demonstrated runtime history coercing the active lane
-  behaviorally, even though the latest full rerun no longer found a concrete
-  local doctrine omission
+- no material method edge remains for the judged surface
+- legacy still has longer runtime history and slightly stronger wording density
+  around entry shaping and workflow-change approval, but the promotion-targeted
+  legacy/global judge did not treat that as a blocker
 
 What the local now does correctly:
 
@@ -157,35 +149,34 @@ What the local now does correctly:
 - it ties durable result registration to docs-sync and forensic closure
 - it requires issue/bootstrap posture or the current explicit
   `pre-adapter/no-backend` exception before durable mutation
-- it refuses promotion when the evidence is only a routing correction rather
-  than repeated behavioral proof
+- it refuses promotion when evidence is only a routing correction
+- it now has promotion-targeted evidence that the remaining legacy difference
+  is not a material operational deficit
 
 ## Replacement Risk
 
-If this surface is called `local at parity` too early, sessions may:
+Residual replacement risk:
 
-- cite the native workflow catalog correctly
-- but still under-run packet expectations
-- or close work after only partial workflow execution
-
-That would create a false sense of maturity:
-
-- the method would look complete in docs
-- while runtime selection discipline would still lag the legacy
+- future sessions may still regress into branch-label-only behavior
+- any such regression should reopen this surface as workflow-governance
+  evidence
+- this is now a monitoring risk, not a blocker to parity
 
 ## Decision Proposal
 
-- verdict: `near parity`
+- verdict: `local at parity`
 
 Effect:
 
-- the local native workflow catalog is already the primary written authority
-- but it should not yet be treated as behaviorally superior or fully parity-safe
-  without more repeated runtime evidence
+- the local native workflow catalog is a valid primary authority for this class
+- legacy/global workflow-catalog doctrine becomes supporting comparison, not
+  the primary method
+- `local ahead` is not claimed because live non-synthetic superiority has not
+  been proven
 
-## Next Correction
+## Next Monitoring Target
 
-Use future comparative runs and real non-trivial sessions to prove:
+Use future real non-trivial sessions to monitor:
 
 - active workflow family was named correctly
 - expected packet shapes stayed visible
@@ -193,7 +184,3 @@ Use future comparative runs and real non-trivial sessions to prove:
 - benchmark registration does not omit issue/bootstrap posture
 - synthetic benchmark evidence is not overstated as standard side-by-side
   comparative proof
-
-Once those signals are repeated without the legacy showing a stronger
-selection/coercion edge, this surface can move from `near parity` to
-`local at parity`.

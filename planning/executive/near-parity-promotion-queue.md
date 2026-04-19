@@ -171,7 +171,7 @@ Why here:
 
 Target:
 
-- remain `near parity` until post-correction repetition proves behavior
+- satisfied; promoted beyond `near parity`
 
 Current evidence status:
 
@@ -186,12 +186,16 @@ Current evidence status:
 - a full independent local-vs-legacy comparative rerun then aligned on the
   same lane family, blockers, evidence rules, and conservative no-promotion
   verdict
+- a promotion-targeted rerun split between local conservatism and
+  legacy/global promotion; root arbitration followed the parity gate ladder and
+  promoted to `local at parity`
 - the durable packet is
   `workflow-catalog-post-correction-rerun-result.md`
 - the full comparative packet is
   `workflow-catalog-full-comparative-rerun-result.md`
-- behavioral parity still needs repetition under a full durable comparative
-  registration cycle
+- the promotion-targeted packet is
+  `workflow-catalog-promotion-targeted-rerun-result.md`
+- residual risk is now live-session monitoring, not a promotion blocker
 
 ## Tier 3: Maturity And Repeatability Targets
 
@@ -240,26 +244,27 @@ Promoted beyond `near parity` during later benchmark work:
 - `QA / proof stack`
 - `product-critical surface discipline`
 - `premium interface discipline`
+- `workflow catalog`
 
 Why:
 
 - `runtime packet schema` was promoted after the native schema absorbed the
   detailed packet fields and the focused benchmark found local authority richer
   than the reference-backed surface
+- `workflow catalog` was promoted after correction, explicit/light reruns, a
+  full independent local-vs-legacy rerun, and a promotion-targeted legacy judge
+  found no material remaining operational deficit
 - `subagent model` needs more real delegation-heavy runs than this repo is
   currently producing
 
 ## Immediate Operating Sequence
 
-1. run one more promotion-targeted `workflow catalog` cycle after the full
-   comparative registration to decide whether the repeated alignment is now
-   enough for `local at parity`
-2. spend follow-on rerun effort on the wider governance / maturity surfaces
+1. spend follow-on rerun effort on the wider governance / maturity surfaces
    still marked `near parity`
-3. prefer `autoresearch / self-evolution`, `maturity control`, and
+2. prefer `autoresearch / self-evolution`, `maturity control`, and
    `parity / replacement gate`
-4. use real or benchmarked runs to watch for regression on recently promoted
-   calibration / issue-stack surfaces
+3. use real or benchmarked runs to watch for regression on recently promoted
+   calibration / issue-stack / workflow-catalog surfaces
 
 ## Success Condition
 

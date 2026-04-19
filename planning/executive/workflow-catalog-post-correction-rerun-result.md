@@ -184,7 +184,8 @@ What the local now does correctly:
 ## Verdict
 
 - previous verdict: `near parity`
-- current verdict: `near parity`
+- post-correction verdict before promotion-targeted arbitration: `near parity`
+- current verdict after promotion-targeted arbitration: `local at parity`
 
 Reason:
 
@@ -194,13 +195,14 @@ Reason:
   lane family and the same conservative no-promotion verdict
 - the evidence is still not repeated enough to claim legacy-grade behavioral
   coercion under live or promotion-grade durable benchmark registration
+- the later promotion-targeted rerun resolved this conservatism by showing the
+  legacy/global judge no longer found a material operational deficit
 
 ## Residual Gap
 
-The remaining gap is behavioral repeatability, not missing local structure.
+The remaining gap is now monitoring, not a parity blocker.
 
-The next promotion attempt must show one additional promotion-targeted or live
-non-synthetic cycle where:
+Future live or benchmarked sessions should continue checking that:
 
 - local and legacy outputs are independently preserved or durably summarized
 - the local route selects benchmark registration without over-steering
@@ -215,12 +217,13 @@ Requested vs implemented:
 - requested: continue the local-vs-legacy benchmark loop and correct detected
   divergence
 - implemented: detected a remaining workflow-catalog under-call, corrected the
-  local catalog, and reran explicit plus light local checks
+  local catalog, reran explicit plus light local checks, and later linked the
+  promotion-targeted arbitration
 
 Promised vs delivered:
 
 - promised: compare legacy and local and preserve the result in durable docs
-- delivered: durable evidence packet and updated executive decision artifacts
+- delivered: durable evidence packets and updated executive decision artifacts
 
 Issue / plan vs landing:
 
@@ -230,5 +233,5 @@ Issue / plan vs landing:
 
 Residual risk:
 
-- promotion still depends on repeated real comparative runs, not on this
-  document-only correction cycle
+- future live sessions should still be watched for workflow output-shape
+  regression
