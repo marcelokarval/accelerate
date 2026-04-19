@@ -61,6 +61,7 @@ in:
 - `premium-and-product-critical-loop-result.md`
 - `reference-layer-rationalization-and-rerun-result.md`
 - `workflow-catalog-post-correction-rerun-result.md`
+- `workflow-catalog-full-comparative-rerun-result.md`
 
 Recent rerun-backed promotions after native hardening:
 
@@ -77,9 +78,9 @@ Recent rerun-backed correction without promotion:
 
 - `workflow-catalog-parity-decision.md`
   - remains `near parity`; latest reruns exposed and then corrected the missing
-    benchmark registration lane, with explicit and light post-correction checks
-    now showing correct lane selection but not enough repeated behavioral proof
-    for promotion
+    benchmark registration lane, with explicit/light checks and one full
+    independent local-vs-legacy rerun now showing aligned lane selection and
+    conservative no-promotion behavior
 
 The current promotion queue for the remaining `near parity` set is:
 

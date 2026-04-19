@@ -183,8 +183,13 @@ Current evidence status:
 - post-correction explicit and light local reruns showed the written local
   workflow set now selects the expected lane family and refuses premature
   promotion
+- a full independent local-vs-legacy comparative rerun then aligned on the
+  same lane family, blockers, evidence rules, and conservative no-promotion
+  verdict
 - the durable packet is
   `workflow-catalog-post-correction-rerun-result.md`
+- the full comparative packet is
+  `workflow-catalog-full-comparative-rerun-result.md`
 - behavioral parity still needs repetition under a full durable comparative
   registration cycle
 
@@ -246,8 +251,9 @@ Why:
 
 ## Immediate Operating Sequence
 
-1. rerun the corrected `workflow catalog` surface until benchmark registration
-   consistently selects the explicit lane and issue/bootstrap posture
+1. run one more promotion-targeted `workflow catalog` cycle after the full
+   comparative registration to decide whether the repeated alignment is now
+   enough for `local at parity`
 2. spend follow-on rerun effort on the wider governance / maturity surfaces
    still marked `near parity`
 3. prefer `autoresearch / self-evolution`, `maturity control`, and

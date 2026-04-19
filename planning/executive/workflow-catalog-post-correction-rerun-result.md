@@ -132,6 +132,34 @@ Result:
 - the local route now behaves correctly under a lighter prompt
 - the promotion gate correctly refused to overstate a single correction cycle
 
+### 4. Full Comparative Post-Correction Rerun
+
+A later full comparative rerun used independent local and legacy/global outputs
+for the same durable-registration scenario.
+
+The result is preserved in:
+
+- `workflow-catalog-full-comparative-rerun-result.md`
+
+Local and legacy/global outputs converged on:
+
+- non-trivial benchmark / governance classification
+- prompt hardening or entry shaping before execution
+- governance audit
+- parallel side-by-side evidence for standard comparative proof
+- issue/bootstrap posture or explicit `pre-adapter/no-backend` exception
+- planning-artifact discipline for durable registration
+- docs-sync / durable executive registration
+- forensic closure
+- conservative no-promotion verdict
+
+Result:
+
+- no new local doctrine gap was found
+- the surface remains `near parity`
+- the residual gap narrowed to repeated behavioral proof for promotion, not
+  missing structure or a known lane omission
+
 ## Side-By-Side Finding
 
 What the legacy did better before correction:
@@ -161,15 +189,18 @@ What the local now does correctly:
 Reason:
 
 - the concrete catalog defect was corrected
-- two post-correction local reruns now select the expected lane family
+- two post-correction local reruns selected the expected lane family
+- one later full local-vs-legacy comparative rerun aligned on the same required
+  lane family and the same conservative no-promotion verdict
 - the evidence is still not repeated enough to claim legacy-grade behavioral
-  coercion under real durable benchmark registration
+  coercion under live or promotion-grade durable benchmark registration
 
 ## Residual Gap
 
 The remaining gap is behavioral repeatability, not missing local structure.
 
-The next promotion attempt must show at least one full comparative cycle where:
+The next promotion attempt must show one additional promotion-targeted or live
+non-synthetic cycle where:
 
 - local and legacy outputs are independently preserved or durably summarized
 - the local route selects benchmark registration without over-steering

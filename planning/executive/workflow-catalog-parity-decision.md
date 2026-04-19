@@ -120,6 +120,8 @@ Post-correction local rerun result:
 - the local now identifies the right written workflow set for this scenario
 - a lighter local prompt also selects the corrected lane family and blocks
   promotion without repeated proof
+- a full independent local-vs-legacy comparative rerun aligned on the same
+  required lane family and the same conservative no-promotion verdict
 - the local still should not be promoted beyond `near parity` until repeated
   live or benchmarked runs prove that runtime selection follows the corrected
   catalog without over-steering
@@ -127,21 +129,25 @@ Post-correction local rerun result:
 The post-correction rerun packet is preserved in:
 
 - `workflow-catalog-post-correction-rerun-result.md`
+- `workflow-catalog-full-comparative-rerun-result.md`
 
 ## Residual Gap Statement
 
 Residual gap for this surface:
 
-- the local still needs repeated live proof that named workflows are selected
-  and enforced with legacy-grade coercion, especially when runtime updates
-  could otherwise collapse into branch labels or under-specified packet shapes
+- the local still needs repeated live or promotion-grade benchmark proof that
+  named workflows are selected and enforced with legacy-grade coercion,
+  especially when runtime updates could otherwise collapse into branch labels
+  or under-specified packet shapes
 
 What the legacy still does better:
 
-- it exposed the issue-bootstrap, planning-artifact, parallel-output, and
-  benchmark-evidence distinctions before the local catalog correction
+- it exposed the issue-bootstrap, planning-artifact, parallel-output,
+  workflow-change-approval, and benchmark-evidence distinctions before the
+  local catalog correction
 - it still has more demonstrated runtime history coercing the active lane
-  behaviorally
+  behaviorally, even though the latest full rerun no longer found a concrete
+  local doctrine omission
 
 What the local now does correctly:
 
