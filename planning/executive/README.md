@@ -65,6 +65,7 @@ in:
 - `workflow-catalog-promotion-targeted-rerun-result.md`
 - `self-evolution-durable-evidence-rerun-result.md`
 - `maturity-control-deescalation-rerun-result.md`
+- `parity-replacement-gate-rerun-result.md`
 
 Recent rerun-backed promotions after native hardening:
 
@@ -77,6 +78,8 @@ Recent rerun-backed promotions after native hardening:
 - `workflow-change-approval-gate-parity-decision.md`
   - promoted to `local at parity`
 - `workflow-catalog-parity-decision.md`
+  - promoted to `local at parity`
+- `parity-replacement-gate-rerun-result.md`
   - promoted to `local at parity`
 
 Recent rerun-backed correction promoted after follow-up:
@@ -99,6 +102,14 @@ Recent rerun-backed correction still awaiting promotion:
   - both local and legacy/global judges kept `maturity control` at
     `near parity`; no new doctrine was added because the mature behavior is
     de-escalation and restraint, not another benchmark-specific rule
+
+Recent rerun-backed promotion from the repeatability queue:
+
+- `parity-replacement-gate-rerun-result.md`
+  - both local and legacy/global judges promoted `parity / replacement gate` to
+    `local at parity`; the gate now has repeated durable proof of both
+    evidence-backed promotion and refusal of wording-led, transient, or
+    behavior-thin claims
 
 The current promotion queue for the remaining `near parity` set is:
 

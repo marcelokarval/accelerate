@@ -201,7 +201,6 @@ Current evidence status:
 
 ### 8. Autoresearch / Self-Evolution
 ### 9. Maturity Control
-### 10. Parity / Replacement Gate
 
 Why grouped:
 
@@ -234,9 +233,25 @@ Current evidence status:
   and recommended no new doctrine; the mature behavior is de-escalating the
   benchmark loop
 
+### 10. Parity / Replacement Gate
+
+Target:
+
+- satisfied; promoted beyond `near parity`
+
+Current evidence status:
+
+- focused parity-gate rerun registered in
+  `parity-replacement-gate-rerun-result.md`
+- both local and legacy/global judges promoted `parity / replacement gate` to
+  `local at parity`, while rejecting `local ahead`
+- repeated durable evidence now shows mixed behavior: the gate promotes
+  evidence-backed surfaces and blocks wording-led, transient, or behavior-thin
+  claims
+
 ## Tier 4: Surface-Specific Premium Discipline
 
-### 10. Product-Critical Surface Discipline
+### 11. Product-Critical Surface Discipline
 Why it moved:
 
 - the auth-recovery 2x2 rerun already cleared parity
@@ -244,7 +259,7 @@ Why it moved:
   beyond parity
 - the surface is now promoted beyond `near parity`
 
-### 11. Premium Interface Discipline
+### 12. Premium Interface Discipline
 
 Why it moved:
 
@@ -266,6 +281,7 @@ Promoted beyond `near parity` during later benchmark work:
 - `product-critical surface discipline`
 - `premium interface discipline`
 - `workflow catalog`
+- `parity / replacement gate`
 
 Why:
 
@@ -275,6 +291,9 @@ Why:
 - `workflow catalog` was promoted after correction, explicit/light reruns, a
   full independent local-vs-legacy rerun, and a promotion-targeted legacy judge
   found no material remaining operational deficit
+- `parity / replacement gate` was promoted after both local and legacy/global
+  judges found the explicit local gate now matches the implicit legacy behavior
+  for promotion and refusal decisions
 - `subagent model` needs more real delegation-heavy runs than this repo is
   currently producing
 
@@ -284,13 +303,14 @@ Why:
    naturally occurring parity or promotion cycle proves durable evidence
    capture without special prompting
 2. treat `maturity control` as evidence-narrowed but still `near parity`
-3. spend follow-on rerun effort on `parity / replacement gate`
+3. monitor `parity / replacement gate` in future live or benchmarked sessions
+   for under-application, not for missing mechanism
 4. use real or benchmarked runs to watch for regression on recently promoted
-   calibration / issue-stack / workflow-catalog surfaces
+   calibration / issue-stack / workflow-catalog / parity-gate surfaces
 
 ## Success Condition
 
 This queue is working if the next promotion cycle produces:
 
-- at least one additional `local at parity` or `local ahead` verdict from the current `near parity` set
+- durable behavioral evidence for the remaining `near parity` surfaces
 - and the reason is repeated behavioral evidence, not doc-only argument

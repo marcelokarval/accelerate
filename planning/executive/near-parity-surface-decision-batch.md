@@ -588,27 +588,35 @@ The local repo now has a native parity gate and explicit decision packets.
   - `persisted-modeling-review-parity-decision.md`
   - `workflow-catalog-parity-decision.md`
 - this batch extends that use across the remaining near-parity surfaces
+- focused rerun registered in
+  `parity-replacement-gate-rerun-result.md`
+- both local and legacy/global judges promoted the gate to `local at parity`
+  while rejecting `local ahead`
+- the decisive evidence was mixed behavior: the gate promoted
+  evidence-backed surfaces and blocked wording-led, transient, or
+  behavior-thin claims
 
 ### Residual Gap Statement
 
 Residual gap:
 
-- the gate now exists and is working, but still needs more cross-surface
-  repetition tied to future reruns before it can be treated as fully mature
+- the gate now has enough repeated benchmark-backed behavior for parity
+- future live sessions still need monitoring so parity claims do not become
+  optimistic migration theater
 
 ### Replacement Risk
 
-Calling this surface “done” too early would confuse “mechanism exists” with
-“mechanism has enough repeated operational proof.”
+Calling this surface `local ahead` too early would confuse durable benchmark
+parity with broad live runtime superiority.
 
 ### Decision Proposal
 
-- verdict: `near parity`
+- verdict: `local at parity`
 
 ### Next Correction
 
-- continue issuing explicit decision packets after reruns and surface upgrades
-  until parity decisions feel routine rather than exceptional
+- keep issuing explicit decision packets for future surface upgrades and watch
+  whether the gate is under-applied in live sessions
 
 ---
 
