@@ -33,6 +33,7 @@ Do not collapse these into a single vague `tested` claim.
   - interactive truth in Chrome DevTools
   - breadth and route-family audit
   - runtime console and UX drift detection
+  - optional agent-browser-style CLI operations after the flow is bounded
   - when exploratory browser QA and issue capture are the main need, `dogfood`
     is a valid lane companion
 - `E2E Regression Engineer`
@@ -48,12 +49,19 @@ Do not invert these roles.
   - runtime truth
   - broad sweep
   - route-family validation
+- `agent-browser`
+  - repeatable browser operations after the target flow is bounded
+  - high-capability browser interaction, snapshots, screenshots, video, and
+    state-aware observation under adapter safety rules
 - `Playwright`
   - persistent regression
   - repeatable scenario proof
   - CI-friendly safety net
 
 If the flow is not yet understood, start in Chrome DevTools.
+
+Use an `agent-browser` adapter only after browser truth is bounded enough that
+its higher automation power will not hide the real user path.
 
 Only persist to Playwright after the interactive truth is stable enough to be
 worth automating.

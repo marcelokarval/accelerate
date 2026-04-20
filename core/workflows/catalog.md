@@ -135,6 +135,34 @@ browser truth stabilized
   -> rerun proof
 ```
 
+### 11b. Agent-Browser Runtime Workflow
+
+```text
+bounded browser operation need
+  -> Chrome DevTools truth check when flow is unstable
+  -> agent-browser adapter for repeatable browser operations
+  -> evidence packet
+  -> Playwright persistence decision
+```
+
+Use this workflow when a browser CLI adapter can preserve high-capability
+interactive automation without replacing browser truth or persistent regression
+ownership.
+
+### 11c. UI Polishing Observer Workflow
+
+```text
+product-critical / premium surface allowlist
+  -> browser observation
+  -> visual / UX / cross-component audit
+  -> severity classification
+  -> issue or executive registration
+  -> bounded implementation / proof
+```
+
+This workflow can support future scheduled observers, but observation must not
+silently mutate code or doctrine.
+
 ### 12. Security-Review Workflow
 
 ```text
@@ -187,6 +215,32 @@ admin or operator surface
   -> admin contract proof
   -> runtime/admin validation
 ```
+
+### 15d. External-Skill-Vetting Workflow
+
+```text
+external skill / adapter / agent recipe
+  -> source and runtime-power inspection
+  -> platform-assumption classification
+  -> direct-import / adapt-as-native / pattern-only / sandbox / reject decision
+  -> insertion target and proof requirement
+```
+
+Run this before importing or promoting third-party skill-stack material.
+
+### 15e. Skill-Evaluation-Lab Workflow
+
+```text
+skill / workflow / trigger hypothesis
+  -> baseline run
+  -> candidate run
+  -> assertions / rubric
+  -> blind comparison
+  -> analyst pass
+  -> promote / revise / rerun / reject
+```
+
+Use this when workflow or skill evolution needs evidence rather than taste.
 
 ### 16. Provider-Runtime-Audit Workflow
 

@@ -17,6 +17,7 @@ The active executive handoff for this convergence track lives in:
 - `planning/executive/legacy-vs-local-harvest-plan.md`
 - `planning/executive/legacy-benchmark-battery-harvest-matrix.md`
 - `planning/executive/zai-skill-stack-harvest-analysis.md`
+- `planning/executive/zai-skill-stack-harvest-implementation-result.md`
 - `docs/architecture/accelerate-comparative-benchmark-persisted-modeling-battery.md`
 - `docs/architecture/accelerate-comparative-benchmark-persisted-modeling-model-comparison.md`
 
@@ -61,7 +62,7 @@ The gap hunt should classify each surface as:
 | branch enforcement matrix | strong | native | local ahead | focused branch-enforcement benchmark showed the local side matching legacy harshness on issue/planning/validation blockers while applying the richer native cross-surface gate set more precisely |
 | workflow catalog | strong | native | local at parity | focused retest exposed and corrected a real under-call around benchmark result registration; explicit/light reruns, a full independent local-vs-legacy rerun, and a promotion-targeted legacy/global judge now show no material remaining operational deficit |
 | operational calibration | strong | native | local at parity | rerun after native hardening showed the local side choosing the same smallest valid bounded process as legacy while doing so from cleaner native authority and without reopening the old ceremony-inflation failure mode |
-| autoresearch / self-evolution | strong | native | near parity | focused durable-evidence rerun and later natural follow-up after the parity-gate promotion both kept this surface at `near parity`; the local now has its first real external workflow-learning capture from the Z.ai / GLM skill-stack harvest, but still needs the harvested vetting, adapter, evaluation, and polishing slices implemented and rerun before promotion |
+| autoresearch / self-evolution | strong | native | near parity | focused durable-evidence rerun and later natural follow-up after the parity-gate promotion both kept this surface at `near parity`; the local now has its first real external workflow-learning capture and implementation pass from the Z.ai / GLM skill-stack harvest, but still needs a second behavioral proof cycle through the new vetting, adapter, evaluation, and polishing lanes before promotion |
 | maturity control | strong | native | near parity | focused de-escalation rerun showed the local is not below legacy on method coverage; both judges kept `near parity` because the remaining proof is behavioral restraint, not another doctrine correction |
 | workflow-change approval gate | strong | native | local at parity | focused retest showed both local and reference-backed paths block workflow-doctrine mutation without explicit HITL approval for the exact change |
 | parity / replacement gate | implicit but effective | native | local at parity | focused rerun showed the explicit local gate now matches legacy effective behavior by promoting evidence-backed surfaces and blocking wording-led, transient, or behavior-thin claims; remaining risk is future-session monitoring, not a replacement blocker |

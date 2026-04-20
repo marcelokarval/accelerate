@@ -13,6 +13,7 @@ Native authority now starts here:
 - `persisted-modeling-defect-bias.md`
 - `product-critical-surfaces.md`
 - `premium-interface-production.md`
+- `ui-polishing-observer.md`
 
 Supporting inherited doctrine may still exist in `references/`, but review
 method should no longer be implicit or left primarily to imported modules.

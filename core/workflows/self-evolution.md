@@ -21,6 +21,8 @@ Use it when one or more of these are true:
 - the same failure pattern repeats across sessions or sprints
 - a root gate allowed a serious miss that should have been blocked
 - a skill was structurally too weak, vague, or easy to misapply
+- an external skill stack exposes a materially stronger operating pattern that
+  should be harvested into local doctrine without blind import
 - implementation was technically correct but repeatedly weak as product
 - reviews passed but the real request still drifted in a recurring way
 - the same follow-up class keeps reappearing because the workflow lacks a
@@ -28,6 +30,10 @@ Use it when one or more of these are true:
 
 Do not trigger it for isolated mistakes, typo-level misses, or local execution
 noise that does not justify workflow change.
+
+External workflow harvests are valid self-evolution evidence when they reveal a
+repeatable capability gap or a stronger proven operating loop. They still need
+vetting, insertion planning, and rerun proof before promotion.
 
 ## Evidence Packet
 
@@ -93,6 +99,12 @@ rule or adjacent skill is the correct home.
 
 Before a workflow-level promotion is treated as authorized, run
 `../control-plane/workflow-change-approval-gate.md`.
+
+When the proposed promotion comes from an external skill stack, run
+`../risk/external-skill-vetting-gate.md` first.
+
+When the proposed promotion changes skill behavior, trigger selection, or
+workflow method, prefer `skill-evaluation-lab.md` before promoting the change.
 
 That gate exists to ensure repeated failure evidence does not silently mutate
 the control plane without explicit human approval.

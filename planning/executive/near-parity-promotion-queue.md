@@ -236,8 +236,12 @@ Current evidence status:
 - Z.ai / GLM skill-stack harvest identified concrete additions for external
   skill vetting, optional `agent-browser` runtime adaptation, skill-lab
   evaluation, and UI polishing observer lanes
+- first implementation pass registered in
+  `zai-skill-stack-harvest-implementation-result.md`
+- native surfaces now exist for external skill vetting, `agent-browser`
+  adaptation, skill-evaluation lab behavior, and UI polishing observation
 - this improves the evidence base but does not promote the surface yet; next
-  validation must implement the harvested slices and rerun the behavior
+  validation must exercise these lanes in a second behavioral proof cycle
 - focused maturity-control de-escalation rerun registered in
   `maturity-control-deescalation-rerun-result.md`
 - both local and legacy/global judges kept `maturity control` at `near parity`

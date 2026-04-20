@@ -37,10 +37,14 @@ User Request
 - visual / artifact-driven frontend
 - query / contract-sensitive backend
 - browser-proof audit
+- agent-browser bounded browser operations
 - persistent regression authoring
+- UI polishing observer
 - adversarial / hostile-path review
 - observability / performance / N+1
 - transport / dependency / legacy doubt
+- external skill / adapter vetting
+- skill / workflow evaluation lab
 - benchmark rerun / result registration
 
 ## Workflow Families
@@ -55,8 +59,12 @@ are:
 - backend QA
 - frontend QA
 - browser proof
+- agent-browser bounded browser operations
+- UI polishing observer
 - persistent regression
 - governance / contract review
+- external skill vetting
+- skill evaluation lab
 - benchmark rerun / result registration
 - closure / forensic review
 

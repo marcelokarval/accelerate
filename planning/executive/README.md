@@ -68,6 +68,7 @@ in:
 - `maturity-control-deescalation-rerun-result.md`
 - `parity-replacement-gate-rerun-result.md`
 - `zai-skill-stack-harvest-analysis.md`
+- `zai-skill-stack-harvest-implementation-result.md`
 
 Recent rerun-backed promotions after native hardening:
 
@@ -111,6 +112,11 @@ Recent rerun-backed correction still awaiting promotion:
     vetting, an optional `agent-browser` runtime adapter, skill-lab evaluation,
     and UI polishing observer lanes, but keeps `autoresearch / self-evolution`
     at `near parity` until those slices land and are rerun
+- `zai-skill-stack-harvest-implementation-result.md`
+  - first implementation pass from that harvest landed native surfaces for
+    external skill vetting, `agent-browser` runtime adaptation, skill-evaluation
+    lab behavior, and UI polishing observation; the surface remains
+    `near parity` pending a second behavioral proof cycle through the new lanes
 - `maturity-control-deescalation-rerun-result.md`
   - both local and legacy/global judges kept `maturity control` at
     `near parity`; no new doctrine was added because the mature behavior is

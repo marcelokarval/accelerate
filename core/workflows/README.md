@@ -9,6 +9,7 @@ Native authority now starts here:
 - `operational-calibration.md`
 - `self-evolution.md`
 - `maturity-control.md`
+- `skill-evaluation-lab.md`
 
 Supporting inherited doctrine may still exist in `references/`, but workflow
 method should no longer depend primarily on imported modules.

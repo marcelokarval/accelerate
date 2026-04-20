@@ -7,6 +7,7 @@ Native authority now starts here:
 
 - `risk-enforcement-matrix.md`
 - `enforcement-surfaces.md`
+- `external-skill-vetting-gate.md`
 
 Supporting inherited doctrine may still exist in:
 

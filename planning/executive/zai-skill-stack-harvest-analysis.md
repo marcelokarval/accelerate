@@ -201,6 +201,10 @@ Acceptance:
 - adoption decisions must distinguish direct import, pattern-only harvest,
   sandboxed experiment, and reject
 
+Status:
+
+- landed in `zai-skill-stack-harvest-implementation-result.md`
+
 ### Sprint 3: Agent-Browser Runtime Adapter Spec
 
 Add an optional runtime adapter specification.
@@ -213,6 +217,10 @@ Acceptance:
 
 - adapter has capability inventory, evidence shape, session safety rules, and
   proof-order relationship to Chrome DevTools and Playwright
+
+Status:
+
+- landed in `zai-skill-stack-harvest-implementation-result.md`
 
 ### Sprint 4: Skill-Lab / Evaluation Harness
 
@@ -230,6 +238,10 @@ Acceptance:
 - supports trigger / no-trigger description tests
 - records durable benchmark artifacts before any workflow promotion
 
+Status:
+
+- landed in `zai-skill-stack-harvest-implementation-result.md`
+
 ### Sprint 5: UI Polishing Observer Lane
 
 Add a product-critical / premium proof companion for recurring visual QA.
@@ -245,6 +257,10 @@ Acceptance:
 - severity taxonomy
 - no silent mutation rule
 - escalation into issue/planning/proof stack
+
+Status:
+
+- landed in `zai-skill-stack-harvest-implementation-result.md`
 
 ## Effect On Current Parity Status
 
