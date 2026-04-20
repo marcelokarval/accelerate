@@ -69,6 +69,7 @@ in:
 - `parity-replacement-gate-rerun-result.md`
 - `zai-skill-stack-harvest-analysis.md`
 - `zai-skill-stack-harvest-implementation-result.md`
+- `zai-skill-stack-post-implementation-benchmark-result.md`
 
 Recent rerun-backed promotions after native hardening:
 
@@ -117,6 +118,11 @@ Recent rerun-backed correction still awaiting promotion:
     external skill vetting, `agent-browser` runtime adaptation, skill-evaluation
     lab behavior, and UI polishing observation; the surface remains
     `near parity` pending a second behavioral proof cycle through the new lanes
+- `zai-skill-stack-post-implementation-benchmark-result.md`
+  - first post-implementation local-vs-legacy benchmark split the verdict:
+    the specific GLM-harvest capability translation is now `local ahead`, while
+    the broader `autoresearch / self-evolution` surface remains `near parity`
+    pending an independent replay through the new lanes
 - `maturity-control-deescalation-rerun-result.md`
   - both local and legacy/global judges kept `maturity control` at
     `near parity`; no new doctrine was added because the mature behavior is

@@ -240,8 +240,14 @@ Current evidence status:
   `zai-skill-stack-harvest-implementation-result.md`
 - native surfaces now exist for external skill vetting, `agent-browser`
   adaptation, skill-evaluation lab behavior, and UI polishing observation
-- this improves the evidence base but does not promote the surface yet; next
-  validation must exercise these lanes in a second behavioral proof cycle
+- post-implementation benchmark registered in
+  `zai-skill-stack-post-implementation-benchmark-result.md`
+- root arbitration now treats the specific GLM-harvest capability translation
+  as `local ahead`, because the legacy lacks first-class workflows for the new
+  vetting, adapter, evaluation, and polishing surfaces
+- this still does not promote the broader `autoresearch / self-evolution`
+  surface; next validation must exercise these lanes in a second independent
+  behavioral proof cycle
 - focused maturity-control de-escalation rerun registered in
   `maturity-control-deescalation-rerun-result.md`
 - both local and legacy/global judges kept `maturity control` at `near parity`
