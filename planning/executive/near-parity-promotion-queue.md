@@ -225,8 +225,12 @@ Current evidence status:
 - a second post-commit local-authority rerun confirmed the committed rule is
   correctly placed, but still rejected promotion because one surface-specific
   correction cycle is not repeated organizational proof
-- next validation should come from the next naturally occurring parity or
-  promotion cycle, not from promoting on wording alone
+- natural follow-up rerun registered in
+  `self-evolution-natural-followup-rerun-result.md`
+- both local and legacy/global judges kept `autoresearch / self-evolution` at
+  `near parity` after the parity-gate promotion cycle
+- next validation should come from a real recurring failure or workflow-learning
+  event, not another synthetic promotion question
 - focused maturity-control de-escalation rerun registered in
   `maturity-control-deescalation-rerun-result.md`
 - both local and legacy/global judges kept `maturity control` at `near parity`
@@ -300,8 +304,8 @@ Why:
 ## Immediate Operating Sequence
 
 1. keep `autoresearch / self-evolution` in `near parity` until the next
-   naturally occurring parity or promotion cycle proves durable evidence
-   capture without special prompting
+   real recurring failure or workflow-learning event proves durable capture and
+   correct promotion discipline without special prompting
 2. treat `maturity control` as evidence-narrowed but still `near parity`
 3. monitor `parity / replacement gate` in future live or benchmarked sessions
    for under-application, not for missing mechanism

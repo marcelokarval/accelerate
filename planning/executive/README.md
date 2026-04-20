@@ -64,6 +64,7 @@ in:
 - `workflow-catalog-full-comparative-rerun-result.md`
 - `workflow-catalog-promotion-targeted-rerun-result.md`
 - `self-evolution-durable-evidence-rerun-result.md`
+- `self-evolution-natural-followup-rerun-result.md`
 - `maturity-control-deescalation-rerun-result.md`
 - `parity-replacement-gate-rerun-result.md`
 
@@ -98,6 +99,11 @@ Recent rerun-backed correction still awaiting promotion:
     remains only in chat, `/tmp`, or untracked scratch state; a second
     post-commit local rerun kept the surface at `near parity` pending repeated
     behavioral proof
+- `self-evolution-natural-followup-rerun-result.md`
+  - both local and legacy/global judges again kept `autoresearch /
+    self-evolution` at `near parity` after the parity-gate promotion cycle; no
+    doctrine change was made because the remaining proof must come from a real
+    recurring failure or workflow-learning event
 - `maturity-control-deescalation-rerun-result.md`
   - both local and legacy/global judges kept `maturity control` at
     `near parity`; no new doctrine was added because the mature behavior is
