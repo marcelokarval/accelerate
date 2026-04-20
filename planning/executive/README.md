@@ -67,6 +67,7 @@ in:
 - `self-evolution-natural-followup-rerun-result.md`
 - `maturity-control-deescalation-rerun-result.md`
 - `parity-replacement-gate-rerun-result.md`
+- `zai-skill-stack-harvest-analysis.md`
 
 Recent rerun-backed promotions after native hardening:
 
@@ -104,6 +105,12 @@ Recent rerun-backed correction still awaiting promotion:
     self-evolution` at `near parity` after the parity-gate promotion cycle; no
     doctrine change was made because the remaining proof must come from a real
     recurring failure or workflow-learning event
+- `zai-skill-stack-harvest-analysis.md`
+  - first real external workflow-learning event captured from the Z.ai / GLM
+    skill stack; it identifies concrete local additions for external skill
+    vetting, an optional `agent-browser` runtime adapter, skill-lab evaluation,
+    and UI polishing observer lanes, but keeps `autoresearch / self-evolution`
+    at `near parity` until those slices land and are rerun
 - `maturity-control-deescalation-rerun-result.md`
   - both local and legacy/global judges kept `maturity control` at
     `near parity`; no new doctrine was added because the mature behavior is

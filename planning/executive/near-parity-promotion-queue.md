@@ -231,6 +231,13 @@ Current evidence status:
   `near parity` after the parity-gate promotion cycle
 - next validation should come from a real recurring failure or workflow-learning
   event, not another synthetic promotion question
+- first real external workflow-learning event registered in
+  `zai-skill-stack-harvest-analysis.md`
+- Z.ai / GLM skill-stack harvest identified concrete additions for external
+  skill vetting, optional `agent-browser` runtime adaptation, skill-lab
+  evaluation, and UI polishing observer lanes
+- this improves the evidence base but does not promote the surface yet; next
+  validation must implement the harvested slices and rerun the behavior
 - focused maturity-control de-escalation rerun registered in
   `maturity-control-deescalation-rerun-result.md`
 - both local and legacy/global judges kept `maturity control` at `near parity`
