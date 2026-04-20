@@ -64,6 +64,7 @@ in:
 - `workflow-catalog-full-comparative-rerun-result.md`
 - `workflow-catalog-promotion-targeted-rerun-result.md`
 - `self-evolution-durable-evidence-rerun-result.md`
+- `maturity-control-deescalation-rerun-result.md`
 
 Recent rerun-backed promotions after native hardening:
 
@@ -94,6 +95,10 @@ Recent rerun-backed correction still awaiting promotion:
     remains only in chat, `/tmp`, or untracked scratch state; a second
     post-commit local rerun kept the surface at `near parity` pending repeated
     behavioral proof
+- `maturity-control-deescalation-rerun-result.md`
+  - both local and legacy/global judges kept `maturity control` at
+    `near parity`; no new doctrine was added because the mature behavior is
+    de-escalation and restraint, not another benchmark-specific rule
 
 The current promotion queue for the remaining `near parity` set is:
 

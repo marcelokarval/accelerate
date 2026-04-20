@@ -487,6 +487,10 @@ guidance.
 - method coverage is strong and native
 - the residual recorded in the scoreboard is practice, not missing surface
   coverage
+- focused local-vs-legacy rerun in
+  `maturity-control-deescalation-rerun-result.md` found both judges aligned on
+  `near parity`, with the correct maturity behavior being de-escalation rather
+  than another rule
 
 ### Residual Gap Statement
 
@@ -494,6 +498,8 @@ Residual gap:
 
 - repeated proof is still needed that the local runtime actually uses maturity
   control to simplify, de-escalate, and relocate guidance when warranted
+- the latest rerun narrowed the gap by proving the written local surface is not
+  below the legacy on method coverage; the remaining proof must be behavioral
 
 ### Replacement Risk
 
@@ -506,8 +512,9 @@ without enough live pruning discipline.
 
 ### Next Correction
 
-- keep checking real sessions for evidence that maturity control is being used
-  to govern workflow size and cost, not only to describe ideals
+- do not add new doctrine for this scenario; use future natural parity or
+  promotion cycles to prove maturity control actually stops overfitting and
+  reduces ceremony
 
 ---
 

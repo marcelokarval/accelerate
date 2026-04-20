@@ -228,6 +228,11 @@ Current evidence status:
   correction cycle is not repeated organizational proof
 - next validation should come from the next naturally occurring parity or
   promotion cycle, not from promoting on wording alone
+- focused maturity-control de-escalation rerun registered in
+  `maturity-control-deescalation-rerun-result.md`
+- both local and legacy/global judges kept `maturity control` at `near parity`
+  and recommended no new doctrine; the mature behavior is de-escalating the
+  benchmark loop
 
 ## Tier 4: Surface-Specific Premium Discipline
 
@@ -278,10 +283,8 @@ Why:
 1. keep `autoresearch / self-evolution` in `near parity` until the next
    naturally occurring parity or promotion cycle proves durable evidence
    capture without special prompting
-2. spend follow-on rerun effort on the wider governance / maturity surfaces
-   still marked `near parity`
-3. prefer `maturity control` and `parity / replacement gate` after the
-   self-evolution evidence-capture rerun
+2. treat `maturity control` as evidence-narrowed but still `near parity`
+3. spend follow-on rerun effort on `parity / replacement gate`
 4. use real or benchmarked runs to watch for regression on recently promoted
    calibration / issue-stack / workflow-catalog surfaces
 
