@@ -55,7 +55,13 @@ Treat these as branch-defined, not optional memory aids:
   raw HTML reference, or existing web app that should become
   `docs/reference/design-system.html` and
   `docs/reference/design-system.contract.md` before implementation or visual
-  convergence
+  convergence. When premium, humanization, de-AI, or product-critical visual
+  improvement is in scope, the same branch must also require
+  `design-system.slop-audit.md`, `design-system.premium-direction.md`, and
+  `design-system.premium-direction.html`; if the frontend stack exposes a broad
+  shadcn/Radix-style primitive catalog, the premium direction must include a
+  component coverage matrix and a broad component gallery rather than a thin
+  moodboard.
 
 ### Backend Structural / Contract Branch
 

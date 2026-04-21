@@ -74,6 +74,31 @@ design uncertainty
   -> implementation handoff
 ```
 
+### 5c. Premium Design-System Direction Workflow
+
+```text
+HTML design-system extraction
+  -> source-truth showcase + contract
+  -> AI-slop / genericity audit
+  -> premium direction markdown
+  -> component coverage matrix when a broad primitive catalog exists
+  -> premium direction HTML proof
+  -> broad component gallery proof
+  -> render / artifact validation
+  -> implementation handoff
+```
+
+Use this workflow when an extracted design system is meant to become a better
+premium product direction rather than only a faithful source-truth package.
+
+The workflow must preserve the baseline extraction and place redesign judgment
+in separate premium artifacts.
+
+The premium HTML proof is invalid if it only demonstrates atmosphere, a hero,
+cards, and one table. For shadcn/Radix-style stacks, it must show how the
+direction treats realistic app primitives: actions, forms, controls, navigation,
+data surfaces, overlays, feedback, loading, empty states, and coverage status.
+
 ### 6. Backend-Implementation Workflow
 
 ```text

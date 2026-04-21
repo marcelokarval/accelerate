@@ -1,0 +1,103 @@
+# HTML Design-System Premium Enforcement Regression
+
+Date: 2026-04-21
+
+## Decision
+
+Promote the two-project evidence loop into an Accelerate regression expectation
+for premium design-system extraction.
+
+The tested projects were:
+
+- `~/Backup/Projetos/nextjs/launch-fullstack`
+- `~/Backup/Projetos/all-agrelli-projects/ht-agrelli-com-bot-telegram-dashboard`
+
+Both exposed the same enforcement gap:
+
+- the source-truth extraction and premium direction markdown were useful
+- the first premium HTML proofs were visually better than the baseline
+- but the premium HTML proofs were too thin to judge recomposition across real
+  app screens
+
+## New Enforcement Rule
+
+When premium direction is active and the local frontend stack exposes a broad
+component primitive catalog such as shadcn/ui or Radix, the premium package must
+include:
+
+- `docs/reference/design-system.slop-audit.md`
+- `docs/reference/design-system.premium-direction.md`
+- `docs/reference/design-system.premium-direction.html`
+- a component coverage matrix
+- a broad premium component gallery
+- offline render proof for the premium HTML
+
+The broad component gallery must demonstrate the proposed visual treatment for:
+
+- actions and button hierarchy
+- forms and validation
+- inputs, selects, textarea, checkbox, radio, switch, slider
+- tabs, filters, command/search surfaces
+- data tables, lists, pagination and status chips
+- overlays such as dialogs, dropdowns, popovers and tooltips
+- feedback such as alerts, toasts, progress, skeletons and empty states
+- navigation and shell treatment when relevant
+
+## Status Classification
+
+Use these component status labels:
+
+- `source-observed`: present in current rendered/source product surfaces
+- `available-in-code`: primitive exists locally but needs product skin before
+  becoming finished UI
+- `premium-proposed`: valuable for the target product library but not source
+  truth
+- `not-approved-yet`: catalog primitive exists, but product need is unproven
+
+## Regression Commands
+
+For each target project, the minimum regression proof is:
+
+```bash
+rg -n "Premium Component Coverage Matrix|Component gallery|Coverage matrix|available-in-code|not-approved-yet" docs/reference/design-system.premium-direction.md docs/reference/design-system.premium-direction.html
+rg -n "[ \t]+$" docs/reference/design-system.premium-direction.md docs/reference/design-system.premium-direction.html
+git diff --check
+npx playwright screenshot file://$PWD/docs/reference/design-system.premium-direction.html .tmp/design-system-premium-direction-rich-render.png --full-page
+file .tmp/design-system-premium-direction-rich-render.png
+```
+
+If browser MCP is unavailable, Playwright CLI is acceptable proof for offline
+artifact rendering.
+
+## Closure Blockers
+
+Do not close a premium design-system pipeline if:
+
+- the premium HTML only proves atmosphere, hero, cards, and one table
+- the component coverage matrix is missing for a shadcn/Radix-style stack
+- proposed components are not clearly distinguished from source truth
+- the artifact lacks render proof
+- the implementation handoff treats shadcn/Radix defaults as final visual style
+- the source-truth `design-system.html` was overwritten by redesign
+
+## Applied Accelerate Updates
+
+- `docs/codex-skill-seeds/skills/extract-html-design-system-v2/SKILL.md`
+- `core/review/html-design-system-extraction.md`
+- `core/review/premium-interface-production.md`
+- `core/workflows/catalog.md`
+- `core/control-plane/branch-enforcement-matrix.md`
+- `references/branch-enforcement-matrix.md`
+- `references/adjacent-skill-trigger-audit.md`
+- `docs/codex-skill-seeds/skills/README.md`
+
+## Rationale
+
+The learned rule is not "add more components everywhere".
+
+The rule is that premium direction must be useful to an implementation agent
+that needs to rebuild or extend a real product. A thin moodboard can look better
+than the baseline while still failing as an implementation contract.
+
+The component gallery turns premium direction into a usable recomposition
+artifact without corrupting source-truth extraction.

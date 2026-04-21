@@ -49,6 +49,13 @@ The required local artifacts are:
 - `docs/reference/design-system.html`
 - `docs/reference/design-system.contract.md`
 
+When premium improvement, humanization, de-AI cleanup, visual polish, or
+product-critical visual direction is in scope, the extended artifact set is:
+
+- `docs/reference/design-system.slop-audit.md`
+- `docs/reference/design-system.premium-direction.md`
+- `docs/reference/design-system.premium-direction.html`
+
 Temporary files belong under:
 
 - `.tmp/`
@@ -97,8 +104,44 @@ without treating the showcase as a loose moodboard.
    HTML artifact and every major rule/component in the contract artifact.
 7. Treat both files as the design-system evidence package for subsequent UI
    correction, recreation, or convergence.
-8. Before implementation, compare the target UI plan against the generated
+8. When premium improvement is in scope, run the AI-slop audit and premium
+   direction extension before implementation.
+9. Before implementation, compare the target UI plan against the generated
    artifacts instead of relying on memory or visual vibes.
+
+## Premium Extension
+
+The premium extension exists because source-truth extraction can faithfully
+capture a weak or AI-shaped design.
+
+Do not solve that by corrupting `design-system.html` with invented premium
+styles. Preserve the baseline, then create a separate premium package:
+
+1. `design-system.slop-audit.md`
+   - score concrete AI/genericity smells
+   - name evidence from the baseline and contract
+   - compare against local benchmarks such as `popular-web-designs` when useful
+   - distinguish source-truth pass/fail from premium-direction pass/fail
+2. `design-system.premium-direction.md`
+   - define the proposed premium identity, tokens, surfaces, component
+     direction, motion, forbidden patterns, and handoff rules
+   - explain exactly how the direction reduces the audit findings
+3. `design-system.premium-direction.html`
+   - render a concrete visual proof of the proposed direction
+   - label itself as directional, not source truth
+   - avoid cloning benchmark brands or pretending invented styles were observed
+
+The premium extension is required when the user asks for terms such as:
+
+- improve
+- humanize
+- premium
+- polish
+- de-AI
+- less AI
+- less generic
+- upgrade the design
+- make it feel like a real product
 
 ## Acceptance Gate
 
@@ -121,6 +164,12 @@ The extraction is not complete unless all of these are true:
   instead of being guessed into the system
 - the artifact pair can be used as a practical reference for later UI correction
   and new-screen generation
+- when premium improvement is active, the audit, premium direction markdown, and
+  premium direction HTML all exist and the premium HTML has render proof
+- when the local frontend stack exposes a broad primitive catalog such as
+  shadcn/ui or Radix, premium direction includes a component coverage matrix and
+  the premium HTML includes enough component families to judge recomposition
+  beyond atmosphere
 
 If the generated file is thin, synthetic, or only moodboard-like, treat the run
 as failed even if `design-system.html` exists.
@@ -145,6 +194,13 @@ Do not close an HTML-reference-driven UI task if:
 - the artifact omits major visible page patterns without explanation
 - subsequent UI work ignores either generated design-system artifact
 - temporary capture files are scattered outside `.tmp/`
+- premium improvement was requested but the slop audit or premium direction
+  artifacts were skipped
+- the premium direction is just another generic violet/shadcn/SaaS moodboard
+- the premium HTML is not rendered or reviewed before being used as handoff
+- the premium HTML only proves a hero/card/table slice and is too thin to judge
+  how forms, overlays, feedback, navigation, loading, and empty states would
+  look in the proposed direction
 
 ## Relationship To Premium UI
 
@@ -158,4 +214,10 @@ For premium surfaces, final review should compare:
 - original URL / HTML reference
 - `docs/reference/design-system.html`
 - `docs/reference/design-system.contract.md`
+- `docs/reference/design-system.slop-audit.md` when premium improvement is in
+  scope
+- `docs/reference/design-system.premium-direction.md` when premium improvement
+  is in scope
+- `docs/reference/design-system.premium-direction.html` when premium improvement
+  is in scope
 - target implementation

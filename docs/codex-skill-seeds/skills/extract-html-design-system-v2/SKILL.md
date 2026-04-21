@@ -33,6 +33,12 @@ design:
 - a human-readable visual showcase
 - a machine-readable / LLM-readable implementation contract
 
+When the user asks to improve, humanize, premiumize, de-AI, polish, or upgrade
+the extracted design, or when the surface is product-critical,
+conversion-critical, brand-critical, or premium-interface class, extend the
+run with a premium diagnosis and direction package. This package must improve
+from the evidence; it must not overwrite the evidence.
+
 ---
 
 ## GOAL
@@ -53,6 +59,15 @@ keyframes, transitions, effects, and layout patterns** — not approximations.
 `design-system.contract.md` must translate the same evidence into a strict
 implementation contract that another AI/agent can follow when building new
 screens. It is not a summary. It is the rulebook.
+
+For premium or humanization work, also generate:
+
+- `design-system.slop-audit.md`
+- `design-system.premium-direction.md`
+- `design-system.premium-direction.html`
+
+These premium artifacts are directional. They do not replace the source-truth
+showcase or contract.
 
 ---
 
@@ -77,6 +92,11 @@ screens. It is not a summary. It is the rulebook.
 10. When source code or runtime interaction proves a component exists but the
     initial page state hides it, capture the route/state/interaction that shows
     it before adding it to either artifact.
+11. Do **not** mutate `design-system.html` into a redesign. Premium direction
+    belongs in the premium artifacts so future agents can compare source truth
+    against proposed improvement.
+12. Do **not** treat premium direction as a moodboard. It must name concrete
+    failures in the baseline and show how the proposed direction corrects them.
 
 ---
 
@@ -214,7 +234,91 @@ so future UI work can audit it without redoing the extraction.
 The contract must also include source evidence for every major rule, component
 family, and forbidden pattern.
 
-### F) Acceptance Gate
+### F) AI-Slop Audit Phase
+
+Run this phase when the user asks for improvement/humanization/premium
+direction, when the surface is premium/product-critical, or when the extracted
+baseline visibly reads as generic AI/template output.
+
+Build `docs/reference/design-system.slop-audit.md`.
+
+The audit must evaluate concrete signals such as:
+
+- purple/violet/fuchsia default bias
+- generic AI/SaaS gradient language
+- raw shadcn/default component leakage
+- card-soup or repeated undifferentiated panels
+- typography personality and hierarchy
+- brand specificity
+- layout memorability
+- component originality and curation
+- motion intentionality
+- premium materiality
+- human craft signals
+
+The audit must include:
+
+- input artifacts used
+- benchmark references used, if any
+- an overall AI/genericity score
+- a detection matrix with scores, evidence, and impact
+- concrete findings
+- priority corrections
+- pass/fail judgment for source truth vs premium product direction
+
+Use benchmark libraries such as `popular-web-designs` when locally available,
+but only as comparison material. Borrow principles, not identities.
+
+### G) Premium Direction Phase
+
+Run this phase after the audit when premium improvement is in scope.
+
+Build both:
+
+- `docs/reference/design-system.premium-direction.md`
+- `docs/reference/design-system.premium-direction.html`
+
+`design-system.premium-direction.md` must include:
+
+- direction name
+- core shift from current baseline to premium target
+- palette and token proposal
+- typography direction
+- surface system
+- component direction for observed and expected product primitives
+- premium component coverage matrix based on the local stack and relevant
+  primitive catalogs such as shadcn/ui and Radix, classifying each family as
+  `source-observed`, `available-in-code`, `premium-proposed`, or
+  `not-approved-yet`
+- motion direction
+- premium rules
+- forbidden patterns
+- implementation handoff guidance
+
+`design-system.premium-direction.html` must be a concrete visual proof of the
+direction. It may introduce proposed premium tokens and styles because it is
+directional, not source truth. It must clearly identify itself as a premium
+direction artifact and must not pretend to be extracted source evidence.
+
+The premium HTML should demonstrate:
+
+- hero or primary product framing
+- surface/material language
+- at least one card or panel system
+- buttons and action hierarchy
+- form/input or control treatment when relevant
+- table/list/status treatment when relevant
+- a component gallery broad enough to judge recomposition, including common app
+  primitives such as buttons, inputs, selects, checkboxes, switches, sliders,
+  tabs, badges, alerts, dialogs, dropdowns, popovers, tooltips, tables,
+  skeletons, toasts/notifications, empty states, pagination, and navigation
+  when the local stack supports them
+- explicit labels separating `observed baseline`, `available primitive`, and
+  `premium proposal` so the directional artifact does not pretend proposed
+  components were extracted from source truth
+- motion/material intent when practical
+
+### H) Acceptance Gate
 
 Before closure, compare the final `design-system.html` and
 `design-system.contract.md` against the captured sources.
@@ -236,6 +340,17 @@ The output is invalid if any of these are true:
   tables, menus, or similar components but the artifacts omit them without a
   concrete reason
 - the result is merely a moodboard, style sampler, or visual approximation
+- premium/humanization work was requested but `design-system.slop-audit.md`,
+  `design-system.premium-direction.md`, or
+  `design-system.premium-direction.html` is missing
+- the premium audit does not name concrete baseline smells
+- the premium direction fails to reduce the concrete smells named in the audit
+- the premium HTML does not render offline
+- the premium HTML is only another generic AI/SaaS moodboard
+- the premium HTML is too thin to compare recomposition across a realistic app
+  component set
+- the premium direction lacks a component coverage matrix when the local stack
+  exposes a broad primitive catalog such as shadcn/ui or Radix
 
 If the gate fails, do not claim completion. Report the blockers and revise the
 artifact.

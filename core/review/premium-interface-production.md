@@ -150,12 +150,64 @@ The workflow must distinguish:
 
 Do not confuse component correctness with premium visual direction.
 
+## AI-Slop Premium Direction Protocol
+
+When the premium branch depends on an extracted HTML/URL/app design system, use
+the HTML design-system package as evidence, then open the premium direction
+extension.
+
+Required comparison set:
+
+- `docs/reference/design-system.html`
+- `docs/reference/design-system.contract.md`
+- `docs/reference/design-system.slop-audit.md`
+- `docs/reference/design-system.premium-direction.md`
+- `docs/reference/design-system.premium-direction.html`
+
+The slop audit should explicitly inspect for:
+
+- purple/violet/fuchsia default bias
+- generic AI/SaaS gradients
+- raw shadcn or framework-default leakage
+- card-soup
+- flat hierarchy
+- weak typography personality
+- weak materiality
+- low brand specificity
+- motion with no product intent
+
+The premium direction is valid only if it does three things:
+
+- preserves the source-truth extraction as baseline evidence
+- names which baseline smells it is correcting
+- proves the new direction with a rendered HTML artifact before implementation
+- includes a component coverage matrix when the stack exposes many primitives,
+  using shadcn/ui, Radix, or the active component library as a checklist rather
+  than as a visual identity to copy
+- demonstrates enough component families in the premium HTML to evaluate real
+  screen recomposition, not just atmosphere
+
+Benchmark systems such as `popular-web-designs` may inform the judgment, but
+they are comparison references, not identities to copy.
+
+Add these premium failure modes when relevant:
+
+- `ai-saas-purple-bias`
+- `generic-gradient-language`
+- `raw-shadcn-surface`
+- `premium-direction-missing`
+- `slop-audit-missing`
+- `premium-html-not-rendered`
+- `premium-component-gallery-too-thin`
+
 ## Premium Interface Reconciliation
 
 Final review for premium surfaces must compare side by side:
 
 - source reference
 - target ASCII / approved composition
+- slop audit when the surface came from HTML design-system extraction
+- premium direction HTML when premium improvement is in scope
 - delivered implementation
 
 Review must explicitly judge:
