@@ -312,7 +312,30 @@ Why it moved:
 
 These remain important, but are not the best immediate promotion targets:
 
-- `subagent model`
+- none currently active in this tier after the latest subagent rerun
+
+Current evidence status:
+
+- focused scenario benchmark registered in
+  `subagent-model-scenario-benchmark-result.md`
+- the first local and legacy/global judges kept `subagent model` at
+  `near parity`
+- the local model already handles ordinary spawn/no-spawn, root authority,
+  return contracts, self-review, self-forensic review, master integration, and
+  explicit single-threaded exceptions
+- the remaining legacy advantage was concrete family routing and gap semantics:
+  trust / anti-abuse specialization, provider-boundary/source-observer
+  handling, and refusal to force-fit a generic governance auditor when no
+  honest family owns the dominant risk
+- correction landed in `core/delegation/subagent-model.md` with fit scoring,
+  no-honest-family handling, a scenario routing matrix, and role-specific
+  return expectations
+- focused post-correction delegation-heavy rerun then promoted the bounded
+  delegation-governance scope to `local at parity`
+- the promotion excludes provider-boundary ownership, scheduled/source
+  observers as implemented agents, future `*.toml` agent promotion,
+  `local ahead`, and richer concrete family-catalog claims beyond the local
+  document
 
 Promoted beyond `near parity` during later benchmark work:
 
@@ -323,6 +346,7 @@ Promoted beyond `near parity` during later benchmark work:
 - `workflow catalog`
 - `parity / replacement gate`
 - `autoresearch / self-evolution`
+- `subagent model`
 
 Why:
 
@@ -338,14 +362,15 @@ Why:
 - `autoresearch / self-evolution` was promoted after the Z.ai / GLM harvest,
   native implementation pass, independent `web-reader` replay, and matching
   local plus legacy/global promotion-targeted judges
-- `subagent model` needs more real delegation-heavy runs than this repo is
-  currently producing
+- `subagent model` was promoted after the local family-routing/no-honest-family
+  correction and matching post-correction local plus legacy/global
+  delegation-heavy reruns
 
 ## Immediate Operating Sequence
 
 1. treat `maturity control` as evidence-narrowed but still `near parity`
-2. move active convergence focus to `subagent model` instead of forcing another
-   maturity-control promotion loop
+2. monitor `subagent model` in future real delegated runs for under-use of
+   no-honest-family and provider-boundary gap rules
 3. monitor `autoresearch / self-evolution` in future external-learning sessions
    for over-promotion beyond its bounded document-backed scope
 4. monitor `parity / replacement gate` in future live or benchmarked sessions

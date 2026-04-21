@@ -22,6 +22,7 @@ The active executive handoff for this convergence track lives in:
 - `planning/executive/web-reader-external-skill-replay-result.md`
 - `planning/executive/self-evolution-web-reader-replay-parity-result.md`
 - `planning/executive/maturity-control-post-self-evolution-rerun-result.md`
+- `planning/executive/subagent-model-scenario-benchmark-result.md`
 - `docs/architecture/accelerate-comparative-benchmark-persisted-modeling-battery.md`
 - `docs/architecture/accelerate-comparative-benchmark-persisted-modeling-model-comparison.md`
 
@@ -62,7 +63,7 @@ The gap hunt should classify each surface as:
 | current enforcement surfaces | strong | native | local ahead | the original billing/self-service benchmark plus the later upload/import rerun both showed the local side applying the harvested enforcement clauses more explicitly across different trust-sensitive categories |
 | issue stack | strong | native | local ahead | rerun after native hardening showed the local side keeping the benchmark slice itself in calibration mode while expressing the shaping-first mutation order more cleanly than the legacy/reference-backed path |
 | QA / proof stack | strong | native | local ahead | the 360 rerun after local hardening showed the local side naming proof-order failures more explicitly, exposing lane-state closure blocking directly, and escalating `high` runs to `product-critical user surface`; legacy remained strong but the cleanest strongest signal favored the hardened local |
-| subagent model | strong | native | near parity | native delegation law now includes spawn defaults, master integration, and operational hand-off; residual gap is mostly wording/teaching density |
+| subagent model | strong | native | local at parity | initial focused benchmark exposed a real local gap in concrete family routing and provider-boundary future-gap semantics; after adding fit scoring, no-honest-family handling, scenario routing, and role-specific return expectations, both post-correction local and legacy/global judges promoted bounded delegation governance to parity while excluding provider-boundary ownership, scheduled observers, future `*.toml` agents, and `local ahead` |
 | branch enforcement matrix | strong | native | local ahead | focused branch-enforcement benchmark showed the local side matching legacy harshness on issue/planning/validation blockers while applying the richer native cross-surface gate set more precisely |
 | workflow catalog | strong | native | local at parity | focused retest exposed and corrected a real under-call around benchmark result registration; explicit/light reruns, a full independent local-vs-legacy rerun, and a promotion-targeted legacy/global judge now show no material remaining operational deficit |
 | operational calibration | strong | native | local at parity | rerun after native hardening showed the local side choosing the same smallest valid bounded process as legacy while doing so from cleaner native authority and without reopening the old ceremony-inflation failure mode |

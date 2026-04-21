@@ -73,6 +73,7 @@ in:
 - `web-reader-external-skill-replay-result.md`
 - `self-evolution-web-reader-replay-parity-result.md`
 - `maturity-control-post-self-evolution-rerun-result.md`
+- `subagent-model-scenario-benchmark-result.md`
 
 Recent rerun-backed promotions after native hardening:
 
@@ -91,6 +92,10 @@ Recent rerun-backed promotions after native hardening:
 - `self-evolution-web-reader-replay-parity-result.md`
   - promoted `autoresearch / self-evolution` to `local at parity` for the
     bounded document-backed external workflow-learning loop
+- `subagent-model-scenario-benchmark-result.md`
+  - promoted `subagent model` to `local at parity` for bounded delegation
+    governance after the family-routing and no-honest-family correction plus
+    matching post-correction local and legacy/global judges
 
 Recent rerun-backed correction promoted after follow-up:
 
