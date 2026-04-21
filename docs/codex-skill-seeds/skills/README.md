@@ -16,7 +16,7 @@ Changes should land here first and then be synchronized into:
 
 | Skill | Purpose | Operational module | Runtime mirror |
 | --- | --- | --- | --- |
-| `extract-html-design-system-v2` | Extract a URL, local HTML file, or raw HTML reference into `docs/reference/design-system.html` so UI correction, recreation, or premium visual convergence can reuse concrete design-system evidence instead of inferred style. | `core/review/html-design-system-extraction.md` | `~/.codex/skills/extract-html-design-system-v2/` |
+| `extract-html-design-system-v2` | Extract a URL, local HTML file, raw HTML reference, or existing web app into `docs/reference/design-system.html` plus `docs/reference/design-system.contract.md` so UI correction, new-screen generation, recreation, or premium visual convergence can reuse concrete design-system evidence and an LLM-safe rule contract instead of inferred style. | `core/review/html-design-system-extraction.md` | `~/.codex/skills/extract-html-design-system-v2/` |
 
 ## Operating Rule
 

@@ -69,6 +69,7 @@ structural UI uncertainty
 design uncertainty
   -> wireframe / visual contract / reference extraction
   -> HTML design-system extraction when URL/HTML reference is active
+  -> paired visual showcase + LLM implementation contract
   -> design artifact packet
   -> implementation handoff
 ```

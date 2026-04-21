@@ -573,7 +573,7 @@ accelerate
 │   ├── front-react-shadcn
 │   ├── frontend-boundary-governance
 │   ├── tailwind-design-system
-│   ├── extract-html-design-system-v2 when URL/HTML reference extraction is active
+│   ├── extract-html-design-system-v2 when URL/HTML/app reference extraction is active
 │   ├── ascii-wireframe
 │   └── premium-interface-production when needed
 ├── query / contract-sensitive backend

@@ -36,7 +36,7 @@ Do not use `exact` for documentary review alone.
 | `i18n-patterns` | `documentarily-strong` | strong i18n/runtime proof contract; should be mandatory when user-facing copy changes |
 | `validation-governance` | `documentarily-strong` | strong backend-vs-frontend validation authority model; should be loaded when local validation or parsing boundaries are part of the risk |
 | `systematic-debugging` | `documentarily-strong` | now present and valid as the bug/regression branch entry skill |
-| `extract-html-design-system-v2` | `documentarily-strong` | strong HTML-reference-to-local-design-system bridge; should be loaded when a URL, local HTML file, or raw HTML reference is intended to guide UI correction, recreation, or premium visual convergence |
+| `extract-html-design-system-v2` | `documentarily-strong` | strong HTML-reference-to-local-design-system bridge; should be loaded when a URL, local HTML file, raw HTML reference, or existing web app is intended to guide UI correction, new-screen generation, recreation, or premium visual convergence |
 
 ## Hard Trigger Rules
 
@@ -52,8 +52,10 @@ Treat these as branch-defined, not optional memory aids:
 - `product-runtime-review` when the surface is runtime-sensitive or
   user-goal-sensitive
 - `extract-html-design-system-v2` when the request supplies a URL, local HTML,
-  or raw HTML reference that should become `docs/reference/design-system.html`
-  before implementation or visual convergence
+  raw HTML reference, or existing web app that should become
+  `docs/reference/design-system.html` and
+  `docs/reference/design-system.contract.md` before implementation or visual
+  convergence
 
 ### Backend Structural / Contract Branch
 
