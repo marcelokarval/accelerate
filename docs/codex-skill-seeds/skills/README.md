@@ -1,7 +1,12 @@
 # Repo-Managed Skill Seeds
 
-This directory is the repo-owned source of truth for governed Codex skills that
+This directory is the repo-owned seed source for governed Codex skills that
 belong to the standalone `accelerate` ecosystem.
+
+It is not the operational control-plane layer.
+
+Operational doctrine for when a skill is used belongs under native Accelerate
+layers such as `core/`, `agents/`, `adapters/`, `profiles/`, or `references/`.
 
 Changes should land here first and then be synchronized into:
 
@@ -9,9 +14,9 @@ Changes should land here first and then be synchronized into:
 
 ## Current Skills
 
-| Skill | Purpose | Runtime mirror |
-| --- | --- | --- |
-| `extract-html-design-system-v2` | Extract a URL, local HTML file, or raw HTML reference into `docs/reference/design-system.html` so UI correction, recreation, or premium visual convergence can reuse concrete design-system evidence instead of inferred style. | `~/.codex/skills/extract-html-design-system-v2/` |
+| Skill | Purpose | Operational module | Runtime mirror |
+| --- | --- | --- | --- |
+| `extract-html-design-system-v2` | Extract a URL, local HTML file, or raw HTML reference into `docs/reference/design-system.html` so UI correction, recreation, or premium visual convergence can reuse concrete design-system evidence instead of inferred style. | `core/review/html-design-system-extraction.md` | `~/.codex/skills/extract-html-design-system-v2/` |
 
 ## Operating Rule
 

@@ -13,6 +13,7 @@ Native authority now starts here:
 - `persisted-modeling-defect-bias.md`
 - `product-critical-surfaces.md`
 - `premium-interface-production.md`
+- `html-design-system-extraction.md`
 - `ui-polishing-observer.md`
 
 Supporting inherited doctrine may still exist in `references/`, but review

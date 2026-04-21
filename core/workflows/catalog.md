@@ -68,6 +68,7 @@ structural UI uncertainty
 ```text
 design uncertainty
   -> wireframe / visual contract / reference extraction
+  -> HTML design-system extraction when URL/HTML reference is active
   -> design artifact packet
   -> implementation handoff
 ```
