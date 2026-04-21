@@ -33,6 +33,7 @@ The first native doctrine rehome now lives under:
 - `doctrine/gap-detection.md`
 - `doctrine/authority-boundary.md`
 - `doctrine/pooling-model.md`
+- `doctrine/empirical-replay.md`
 - `envelopes/skill-envelopes.md`
 - `promotion/execution-contract.md`
 
@@ -81,11 +82,12 @@ For a fresh session trying to understand the agents layer, read in this order:
 6. `doctrine/capability-matrix.md`
 7. `doctrine/selection-policy.md`
 8. `doctrine/gap-detection.md`
-9. `promotion/README.md`
-10. `promotion/execution-contract.md`
-11. `envelopes/README.md`
-12. `envelopes/skill-envelopes.md`
-13. `templates/README.md`
+9. `doctrine/empirical-replay.md`
+10. `promotion/README.md`
+11. `promotion/execution-contract.md`
+12. `envelopes/README.md`
+13. `envelopes/skill-envelopes.md`
+14. `templates/README.md`
 
 If deeper doctrine is needed before the native rehome is complete, continue
 into:

@@ -18,6 +18,7 @@ The doctrine sublayer now makes the first native rehome explicit through:
 - `gap-detection.md`
 - `authority-boundary.md`
 - `pooling-model.md`
+- `empirical-replay.md`
 
 This sublayer should make explicit:
 
@@ -34,3 +35,4 @@ Operational reading order:
 4. `gap-detection.md`
 5. `authority-boundary.md`
 6. `pooling-model.md`
+7. `empirical-replay.md`

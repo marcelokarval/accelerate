@@ -75,6 +75,8 @@ in:
 - `maturity-control-post-self-evolution-rerun-result.md`
 - `subagent-model-scenario-benchmark-result.md`
 - `maturity-control-post-subagent-rerun-result.md`
+- `maturity-control-loop-stop-agent-factory-transition-result.md`
+- `maturity-control-final-promotion-result.md`
 
 Recent rerun-backed promotions after native hardening:
 
@@ -97,6 +99,10 @@ Recent rerun-backed promotions after native hardening:
   - promoted `subagent model` to `local at parity` for bounded delegation
     governance after the family-routing and no-honest-family correction plus
     matching post-correction local and legacy/global judges
+- `maturity-control-final-promotion-result.md`
+  - promoted `maturity control` to bounded `local at parity` after two direct
+    behavior cycles proved loop stopping, smallest-home routing, doctrine
+    restraint, and bounded overclaim blocking
 
 Recent rerun-backed correction promoted after follow-up:
 
@@ -146,7 +152,7 @@ Recent rerun-backed correction promoted after independent replay:
     learning; `local ahead`, scheduled observers, browser/UI runtime proof,
     blind-comparator quality proof, and future agents remain excluded
 
-Recent rerun-backed correction still awaiting promotion:
+Recent maturity-control promotion trail:
 
 - `maturity-control-deescalation-rerun-result.md`
   - both local and legacy/global judges kept `maturity control` at
@@ -162,6 +168,16 @@ Recent rerun-backed correction still awaiting promotion:
     legacy/global promoted bounded parity, while local kept `near parity`;
     root arbitration kept `near parity` because this is the first direct
     maturity-control behavior cycle, not repeated proof yet
+- `maturity-control-loop-stop-agent-factory-transition-result.md`
+  - second direct maturity-control behavior cycle: the run stopped the
+    maturity-promotion loop, moved to native agent-factory work, rehomed
+    `agents/doctrine/empirical-replay.md`, and avoided new maturity-control
+    doctrine
+- `maturity-control-final-promotion-result.md`
+  - both local and legacy/global judges promoted `maturity control` to bounded
+    `local at parity`; promotion excludes `local ahead`, live agent runtime,
+    provider-boundary ownership, scheduled observers, and future `*.toml`
+    claims
 
 Recent rerun-backed promotion from the repeatability queue:
 
@@ -171,6 +187,7 @@ Recent rerun-backed promotion from the repeatability queue:
     evidence-backed promotion and refusal of wording-led, transient, or
     behavior-thin claims
 
-The current promotion queue for the remaining `near parity` set is:
+The current promotion queue is now a monitoring queue for future near-parity
+surfaces:
 
 - `near-parity-promotion-queue.md`

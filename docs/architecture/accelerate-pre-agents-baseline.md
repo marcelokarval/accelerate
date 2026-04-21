@@ -54,6 +54,7 @@ The current native pre-agents baseline now includes:
 - `core/runtime-packets/templates.md`
 - `core/runtime-packets/cadence.md`
 - `core/runtime-packets/qa-proof-stack.md`
+- `agents/doctrine/empirical-replay.md`
 - `adapters/workflow/adapter-contract.md`
 - `adapters/workflow/linear/adapter.md`
 - `adapters/workflow/github/adapter.md`

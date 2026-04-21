@@ -238,6 +238,7 @@ Outputs:
 - `core/workflows/self-evolution.md`
 - `core/workflows/maturity-control.md`
 - `core/review/product-critical-surfaces.md`
+- `agents/doctrine/empirical-replay.md`
 - `core/review/premium-interface-production.md`
 
 ## First Extraction Batches Recommended

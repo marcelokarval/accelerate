@@ -24,6 +24,8 @@ The active executive handoff for this convergence track lives in:
 - `planning/executive/maturity-control-post-self-evolution-rerun-result.md`
 - `planning/executive/subagent-model-scenario-benchmark-result.md`
 - `planning/executive/maturity-control-post-subagent-rerun-result.md`
+- `planning/executive/maturity-control-loop-stop-agent-factory-transition-result.md`
+- `planning/executive/maturity-control-final-promotion-result.md`
 - `docs/architecture/accelerate-comparative-benchmark-persisted-modeling-battery.md`
 - `docs/architecture/accelerate-comparative-benchmark-persisted-modeling-model-comparison.md`
 
@@ -70,7 +72,7 @@ The gap hunt should classify each surface as:
 | operational calibration | strong | native | local at parity | rerun after native hardening showed the local side choosing the same smallest valid bounded process as legacy while doing so from cleaner native authority and without reopening the old ceremony-inflation failure mode |
 | autoresearch / self-evolution | strong | native | local at parity | the Z.ai / GLM harvest created the first external workflow-learning capture, the local implementation landed the missing vetting/evaluation surfaces, and the independent `web-reader` replay plus local and legacy/global judges now show no meaningful operational deficit for document-backed external workflow learning |
 | external skill harvest / GLM capability translation | implicit / inferable | native | local ahead | post-implementation benchmark showed the legacy can infer this through generic governance, agent pooling, browser proof, and premium UI doctrine, but the local now has first-class external skill vetting, `agent-browser`, skill-evaluation lab, and UI polishing observer surfaces |
-| maturity control | strong | native | near parity | focused de-escalation and post-self-evolution reruns kept `near parity`; post-subagent rerun produced the first direct maturity-control evidence and the legacy/global judge promoted bounded parity, but local arbitration stayed conservative because direct shrink/relocate/anti-bloat behavior has not repeated yet |
+| maturity control | strong | native | local at parity | final promotion arbitration after two direct behavior cycles promoted bounded parity: the local stopped low-value promotion pressure, redirected work to real structural surfaces, corrected the smallest owning home, avoided maturity-control doctrine bloat, and kept `local ahead`, live agent runtime, provider-boundary ownership, scheduled observers, and future `*.toml` claims out of scope |
 | workflow-change approval gate | strong | native | local at parity | focused retest showed both local and reference-backed paths block workflow-doctrine mutation without explicit HITL approval for the exact change |
 | parity / replacement gate | implicit but effective | native | local at parity | focused rerun showed the explicit local gate now matches legacy effective behavior by promoting evidence-backed surfaces and blocking wording-led, transient, or behavior-thin claims; remaining risk is future-session monitoring, not a replacement blocker |
 | benchmark run versioning | implicit memory in practice | native | local ahead | native benchmark artifacts now preserve run evolution, model-comparison policy, and correction-to-result traceability durably |

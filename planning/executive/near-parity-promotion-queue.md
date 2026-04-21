@@ -1,14 +1,18 @@
-# Executive Queue: Near-Parity Promotion
+# Executive Queue: Near-Parity Promotion And Monitoring
 
 ## Purpose
 
-This artifact converts the current `near parity` batch into an execution queue.
+This artifact converted the original `near parity` batch into an execution
+queue. After the latest promotion cycle, it now also serves as the monitoring
+queue for future near-parity surfaces and regression-prone promoted surfaces.
 
 It exists to answer:
 
 - which surfaces should be promoted first
 - which surfaces are mostly blocked by real reruns
 - which surfaces can realistically move to `local at parity` earliest
+- which promoted surfaces still need future monitoring for overclaim or
+  regression
 
 This is not a new gap matrix.
 
@@ -211,8 +215,7 @@ Why grouped:
 Target:
 
 - `autoresearch / self-evolution`: satisfied; promoted beyond `near parity`
-- `maturity control`: stay `near parity` until repetition evidence accumulates
-  naturally
+- `maturity control`: satisfied; promoted beyond `near parity`
 
 Current evidence status:
 
@@ -280,6 +283,20 @@ Current evidence status:
   materially stronger, but still only one direct cycle under a split verdict
 - the next promotion opportunity should require one more direct cycle where
   maturity control shrinks, stops, or relocates work without adding doctrine
+- loop-stop / agent-factory transition registered in
+  `maturity-control-loop-stop-agent-factory-transition-result.md`
+- this provided the second direct maturity-control signal: the loop stopped
+  chasing maturity promotion, rehomed missing `agent empirical replay` doctrine
+  into the native `agents/` layer, and avoided new maturity-control doctrine
+- next move is a promotion arbitration for bounded `maturity control`, not
+  another correction to `core/workflows/maturity-control.md`
+- final promotion arbitration registered in
+  `maturity-control-final-promotion-result.md`
+- both local and legacy/global judges promoted bounded `maturity control` to
+  `local at parity`
+- promotion scope is limited to standalone pre-agents governance behavior that
+  stops low-value loops, redirects or shrinks process, routes durable learning
+  to the smallest correct home, and blocks doctrine bloat
 
 ### 10. Parity / Replacement Gate
 
@@ -355,6 +372,7 @@ Promoted beyond `near parity` during later benchmark work:
 - `parity / replacement gate`
 - `autoresearch / self-evolution`
 - `subagent model`
+- `maturity control`
 
 Why:
 
@@ -373,10 +391,14 @@ Why:
 - `subagent model` was promoted after the local family-routing/no-honest-family
   correction and matching post-correction local plus legacy/global
   delegation-heavy reruns
+- `maturity control` was promoted after two direct behavior cycles proved
+  low-value loop stopping, smallest-home routing, doctrine restraint, and
+  bounded promotion/exclusion discipline
 
 ## Immediate Operating Sequence
 
-1. treat `maturity control` as evidence-narrowed but still `near parity`
+1. monitor bounded `maturity control` in future live runs for overclaim beyond
+   the promoted pre-agents scope
 2. monitor `subagent model` in future real delegated runs for under-use of
    no-honest-family and provider-boundary gap rules
 3. monitor `autoresearch / self-evolution` in future external-learning sessions
@@ -390,5 +412,5 @@ Why:
 
 This queue is working if the next promotion cycle produces:
 
-- durable behavioral evidence for the remaining `near parity` surfaces
-- and the reason is repeated behavioral evidence, not doc-only argument
+- durable behavioral evidence for future near-parity surfaces
+- and the reason remains repeated behavioral evidence, not doc-only argument
