@@ -266,6 +266,12 @@ Current evidence status:
 - both local and legacy/global judges kept `maturity control` at `near parity`
   and recommended no new doctrine; the mature behavior is de-escalating the
   benchmark loop
+- post-self-evolution maturity-control rerun registered in
+  `maturity-control-post-self-evolution-rerun-result.md`
+- both local and legacy/global judges again kept `maturity control` at
+  `near parity`; adjacent `parity / replacement gate` and `self-evolution`
+  promotions are positive evidence, but still prove their own surfaces rather
+  than repeated direct maturity-control behavior
 
 ### 10. Parity / Replacement Gate
 
@@ -338,11 +344,13 @@ Why:
 ## Immediate Operating Sequence
 
 1. treat `maturity control` as evidence-narrowed but still `near parity`
-2. monitor `autoresearch / self-evolution` in future external-learning sessions
+2. move active convergence focus to `subagent model` instead of forcing another
+   maturity-control promotion loop
+3. monitor `autoresearch / self-evolution` in future external-learning sessions
    for over-promotion beyond its bounded document-backed scope
-3. monitor `parity / replacement gate` in future live or benchmarked sessions
+4. monitor `parity / replacement gate` in future live or benchmarked sessions
    for under-application, not for missing mechanism
-4. use real or benchmarked runs to watch for regression on recently promoted
+5. use real or benchmarked runs to watch for regression on recently promoted
    calibration / issue-stack / workflow-catalog / parity-gate surfaces
 
 ## Success Condition

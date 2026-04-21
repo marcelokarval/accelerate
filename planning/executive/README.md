@@ -72,6 +72,7 @@ in:
 - `zai-skill-stack-post-implementation-benchmark-result.md`
 - `web-reader-external-skill-replay-result.md`
 - `self-evolution-web-reader-replay-parity-result.md`
+- `maturity-control-post-self-evolution-rerun-result.md`
 
 Recent rerun-backed promotions after native hardening:
 
@@ -145,6 +146,11 @@ Recent rerun-backed correction still awaiting promotion:
   - both local and legacy/global judges kept `maturity control` at
     `near parity`; no new doctrine was added because the mature behavior is
     de-escalation and restraint, not another benchmark-specific rule
+- `maturity-control-post-self-evolution-rerun-result.md`
+  - after `parity / replacement gate` and `autoresearch / self-evolution`
+    promoted, both local and legacy/global judges still kept `maturity control`
+    at `near parity`; adjacent restraint is positive evidence but not direct
+    enough to promote the surface itself
 
 Recent rerun-backed promotion from the repeatability queue:
 

@@ -21,6 +21,7 @@ The active executive handoff for this convergence track lives in:
 - `planning/executive/zai-skill-stack-post-implementation-benchmark-result.md`
 - `planning/executive/web-reader-external-skill-replay-result.md`
 - `planning/executive/self-evolution-web-reader-replay-parity-result.md`
+- `planning/executive/maturity-control-post-self-evolution-rerun-result.md`
 - `docs/architecture/accelerate-comparative-benchmark-persisted-modeling-battery.md`
 - `docs/architecture/accelerate-comparative-benchmark-persisted-modeling-model-comparison.md`
 
@@ -67,7 +68,7 @@ The gap hunt should classify each surface as:
 | operational calibration | strong | native | local at parity | rerun after native hardening showed the local side choosing the same smallest valid bounded process as legacy while doing so from cleaner native authority and without reopening the old ceremony-inflation failure mode |
 | autoresearch / self-evolution | strong | native | local at parity | the Z.ai / GLM harvest created the first external workflow-learning capture, the local implementation landed the missing vetting/evaluation surfaces, and the independent `web-reader` replay plus local and legacy/global judges now show no meaningful operational deficit for document-backed external workflow learning |
 | external skill harvest / GLM capability translation | implicit / inferable | native | local ahead | post-implementation benchmark showed the legacy can infer this through generic governance, agent pooling, browser proof, and premium UI doctrine, but the local now has first-class external skill vetting, `agent-browser`, skill-evaluation lab, and UI polishing observer surfaces |
-| maturity control | strong | native | near parity | focused de-escalation rerun showed the local is not below legacy on method coverage; both judges kept `near parity` because the remaining proof is behavioral restraint, not another doctrine correction |
+| maturity control | strong | native | near parity | focused de-escalation and post-self-evolution reruns both kept `near parity`; local method coverage is not below legacy, but promotion still needs repeated direct behavior where maturity control shrinks, stops, or relocates work instead of extending benchmark ceremony |
 | workflow-change approval gate | strong | native | local at parity | focused retest showed both local and reference-backed paths block workflow-doctrine mutation without explicit HITL approval for the exact change |
 | parity / replacement gate | implicit but effective | native | local at parity | focused rerun showed the explicit local gate now matches legacy effective behavior by promoting evidence-backed surfaces and blocking wording-led, transient, or behavior-thin claims; remaining risk is future-session monitoring, not a replacement blocker |
 | benchmark run versioning | implicit memory in practice | native | local ahead | native benchmark artifacts now preserve run evolution, model-comparison policy, and correction-to-result traceability durably |
