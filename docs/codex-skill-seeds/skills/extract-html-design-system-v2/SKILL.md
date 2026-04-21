@@ -22,6 +22,11 @@ Temporary files must be created under `.tmp/` inside the root of the project
 where the skill was invoked, or inside the root of the project explicitly
 referenced by the user. If that directory does not exist, create it.
 
+If multiple URLs are provided for the same site or product, treat them as one
+shared design-system corpus. Capture every URL separately, then build one
+consolidated `design-system.html` from the union of components, typography,
+surfaces, layouts, motion, and icons actually present in those sources.
+
 Your task is to create **one new intermediate HTML file** that acts as a **living design system + pattern library** for this exact design.
 
 ---
@@ -46,6 +51,108 @@ This file must preserve the **exact look & behavior** of the reference design by
 4. If a style/component is not used in the reference HTML, **do not add it**.
 5. The file must be **self-explanatory by structure** (sections = documentation).
 6. Include a **top horizontal nav** with anchor links to each section.
+7. Do **not** create synthetic summary cards, placeholder logos, fake metrics,
+   invented copy, or "visual language" samples that are not backed by source
+   HTML.
+8. Keep a clear evidence trail from each displayed pattern back to the captured
+   source file or URL.
+
+---
+
+## REQUIRED EXECUTION PHASES
+
+Do not jump directly from URL/HTML input to a finished showcase. Execute these
+phases in order.
+
+### A) Capture Phase
+
+For every input URL or HTML source:
+
+- create `.tmp/` if missing
+- save the raw or rendered HTML under `.tmp/`
+- save a readable text snapshot when a browser/capture tool is available
+- save screenshots when visual QA is relevant
+- preserve or record the linked CSS and JS asset URLs
+
+Use stable names such as:
+
+- `.tmp/reference-home.html`
+- `.tmp/reference-product-ai-agents.html`
+- `.tmp/reference-scheduled-tasks.html`
+- `.tmp/reference-home.snapshot.md`
+- `.tmp/reference-home-full.png`
+
+The exact names may vary, but the files must be understandable and traceable.
+
+### B) Inventory Phase
+
+Before writing `design-system.html`, inspect the captured sources and identify:
+
+- page shell: header, nav, footer, major section wrappers
+- hero structure and assets
+- typography classes and real text hierarchy
+- color/surface classes and gradients
+- buttons, links, badges, tabs, cards, menus, forms, code blocks, logos, and
+  other real components
+- grid, split, stack, and container patterns
+- animation, transition, hover, focus, active, disabled, and `data-state`
+  patterns
+- icon systems and inline SVG conventions
+
+If an item is not found in the captured sources, omit it.
+
+### C) Extraction Phase
+
+Build `docs/reference/design-system.html` by reusing real markup fragments and
+class strings from the captured sources.
+
+Allowed documentation additions:
+
+- section headings
+- short labels
+- anchor navigation
+- source/evidence labels
+
+Forbidden additions:
+
+- new component structures that do not exist in source
+- new CSS classes or inline styles except where the original fragment already
+  used inline styles
+- guessed typography sizes
+- fake states that are not represented by real source classes
+- decorative placeholders replacing real source assets
+
+### D) Evidence Phase
+
+Every major section must include concise source evidence.
+
+Use visible labels or comments such as:
+
+- `Source: .tmp/reference-home.html | hero`
+- `Source: https://example.com/product | nav product menu`
+- `Source: captured CSS class list | hover:bg-* transition duration-*`
+
+This is not optional. The artifact must show where each pattern came from so
+future UI work can audit it without redoing the extraction.
+
+### E) Acceptance Gate
+
+Before closure, compare the final `design-system.html` against the captured
+sources.
+
+The output is invalid if any of these are true:
+
+- `.tmp/` does not contain captured source files
+- `docs/reference/design-system.html` is missing
+- the hero is not a direct clone except for text adaptation
+- source assets are not referenced or documented
+- major visible source patterns are absent without explanation
+- the artifact contains invented cards, icons, layouts, metrics, or copy
+- the artifact has no visible source evidence
+- the result is merely a moodboard, style sampler, or visual approximation
+
+If the gate fails, do not claim completion. Report the blockers and revise the
+artifact.
 
 ---
 
@@ -106,6 +213,9 @@ Rules:
 - Typography, colors, spacing, and gradients MUST come from original CSS
 - If a style uses gradient text, show it exactly the same
 - If a style does not exist, do NOT include it
+- Size and line-height labels must come from computed browser evidence or the
+  original CSS. If neither is available, mark the size label as
+  `source class only` instead of guessing.
 
 This section must communicate **hierarchy, scale, and rhythm** at a glance.
 

@@ -54,18 +54,51 @@ Temporary files belong under:
 
 Both directories must be created when missing.
 
+For multiple URLs in the same request, the artifact must be a consolidated
+design-system corpus, not one isolated page sample. Each source URL must have a
+separate capture trail under `.tmp/`.
+
 ## Workflow
 
 1. Resolve the reference.
    - URL: fetch or capture the page first.
    - local `.html`: read it directly.
    - raw HTML: materialize it into `.tmp/` before extraction if needed.
-2. Preserve original asset references when possible.
-3. Generate `docs/reference/design-system.html`.
-4. Treat that file as the design-system evidence artifact for subsequent UI
+2. Inventory the captured sources before writing the final artifact.
+   - page shell: header, nav, footer, and global wrappers
+   - hero structure and assets
+   - typography classes and text hierarchy
+   - colors, surfaces, borders, overlays, and gradients
+   - buttons, cards, menus, tabs, badges, forms, code blocks, logos, and other
+     real components
+   - layout patterns and spacing scales
+   - motion, transition, hover, focus, disabled, active, and `data-state`
+     behavior
+   - icon markup and SVG conventions
+3. Preserve original asset references when possible.
+4. Generate `docs/reference/design-system.html` using real source markup and
+   class strings.
+5. Include visible source evidence for every major section or pattern.
+6. Treat that file as the design-system evidence artifact for subsequent UI
    correction, recreation, or convergence.
-5. Before implementation, compare the target UI plan against the generated
+7. Before implementation, compare the target UI plan against the generated
    artifact instead of relying on memory or visual vibes.
+
+## Acceptance Gate
+
+The extraction is not complete unless all of these are true:
+
+- `.tmp/` contains the captured source HTML for every input URL or source
+- source CSS/JS asset references are preserved or explicitly documented
+- the first section is a direct hero clone with text-only adaptation
+- the final artifact includes visible evidence labels that connect sections to
+  source files or URLs
+- UI components are backed by source markup, not invented approximations
+- major source patterns are represented or explicitly omitted with reason
+- the artifact can be used as a practical reference for later UI correction
+
+If the generated file is thin, synthetic, or only moodboard-like, treat the run
+as failed even if `design-system.html` exists.
 
 ## Closure Blockers
 
@@ -73,8 +106,13 @@ Do not close an HTML-reference-driven UI task if:
 
 - the reference was used only as inspiration
 - `docs/reference/design-system.html` was not produced
+- `.tmp/` does not contain traceable source captures
+- source evidence is missing from the final artifact
 - the generated artifact invents classes or styles not present in the source
+- the generated artifact invents component structures, metrics, logos, icons, or
+  copy not backed by source markup
 - the hero clone changes structure beyond text adaptation
+- the artifact omits major visible page patterns without explanation
 - subsequent UI work ignores the generated design-system artifact
 - temporary capture files are scattered outside `.tmp/`
 
