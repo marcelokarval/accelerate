@@ -9,13 +9,30 @@ You are given a reference website HTML:
 
 `$ARGUMENTS`
 
+`$ARGUMENTS` may be:
+
+- a local `.html` file path
+- a URL pointing to a webpage
+- raw HTML content
+
+If `$ARGUMENTS` is a URL, fetch or capture the page first and preserve linked
+asset references when possible.
+
+Temporary files must be created under `.tmp/` inside the root of the project
+where the skill was invoked, or inside the root of the project explicitly
+referenced by the user. If that directory does not exist, create it.
+
 Your task is to create **one new intermediate HTML file** that acts as a **living design system + pattern library** for this exact design.
 
 ---
 
 ## GOAL
 
-Generate **one single file** called: `design-system.html` and place it in the same folder of the html file.
+Generate **one single file** called: `design-system.html` and place it under
+`docs/reference/` inside the root of the project where the skill was invoked, or
+inside the root of the project explicitly referenced by the user.
+
+If `docs/reference/` does not exist, create it.
 
 This file must preserve the **exact look & behavior** of the reference design by **reusing the original HTML, CSS classes, animations, keyframes, transitions,effects, and layout patterns** — not approximations.
 
