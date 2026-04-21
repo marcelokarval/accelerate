@@ -272,6 +272,14 @@ Current evidence status:
   `near parity`; adjacent `parity / replacement gate` and `self-evolution`
   promotions are positive evidence, but still prove their own surfaces rather
   than repeated direct maturity-control behavior
+- post-subagent maturity-control rerun registered in
+  `maturity-control-post-subagent-rerun-result.md`
+- the local judge kept `maturity control` at `near parity`; the legacy/global
+  judge promoted bounded `local at parity`
+- root arbitration kept `near parity` because the new evidence is direct and
+  materially stronger, but still only one direct cycle under a split verdict
+- the next promotion opportunity should require one more direct cycle where
+  maturity control shrinks, stops, or relocates work without adding doctrine
 
 ### 10. Parity / Replacement Gate
 

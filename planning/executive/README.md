@@ -74,6 +74,7 @@ in:
 - `self-evolution-web-reader-replay-parity-result.md`
 - `maturity-control-post-self-evolution-rerun-result.md`
 - `subagent-model-scenario-benchmark-result.md`
+- `maturity-control-post-subagent-rerun-result.md`
 
 Recent rerun-backed promotions after native hardening:
 
@@ -156,6 +157,11 @@ Recent rerun-backed correction still awaiting promotion:
     promoted, both local and legacy/global judges still kept `maturity control`
     at `near parity`; adjacent restraint is positive evidence but not direct
     enough to promote the surface itself
+- `maturity-control-post-subagent-rerun-result.md`
+  - after `subagent model` promoted, local and legacy/global judges split:
+    legacy/global promoted bounded parity, while local kept `near parity`;
+    root arbitration kept `near parity` because this is the first direct
+    maturity-control behavior cycle, not repeated proof yet
 
 Recent rerun-backed promotion from the repeatability queue:
 
