@@ -256,7 +256,7 @@ Trivial and non-trivial are both branches beneath the same runtime root.
 
 For the minimum required stack in trivial execution, see:
 
-- `docs/codex-skill-seeds/skills/accelerate/references/trivial-branch-contract.md`
+- `references/trivial-branch-contract.md`
 
 ## Control Plane Flow
 
@@ -754,7 +754,7 @@ them.
 
 For the one-page executive summary view of the entire operating model, see:
 
-- `docs/codex-skill-seeds/skills/accelerate/references/executive-operating-matrix.md`
+- `references/executive-operating-matrix.md`
 
 Additional specialist roles also include backend/frontend implementers,
 constitution auditing, recovery-surface review, migration stewardship,
@@ -1105,11 +1105,11 @@ Branch Entry Packet
 
 Templates and cadence live in:
 
-- `docs/codex-skill-seeds/skills/accelerate/references/runtime-packet-templates.md`
-- `docs/codex-skill-seeds/skills/accelerate/references/runtime-observability-cadence.md`
+- `core/runtime-packets/templates.md`
+- `core/runtime-packets/cadence.md`
 
 ### Full Workflow Catalog
 
 The richer catalog for future agent derivation lives in:
 
-- `docs/codex-skill-seeds/skills/accelerate/references/workflow-catalog.md`
+- `references/workflow-catalog.md`
