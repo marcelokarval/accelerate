@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" style="color-scheme:dark">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Trigger.dev Living Design System</title>
+    <meta name="description" content="A living design system and pattern library extracted from Trigger.dev public pages.">
+    <link rel="stylesheet" href="https://trigger.dev/build/_assets/cookieconsent-RB5RFBLH.css">
+    <link rel="stylesheet" href="https://trigger.dev/build/_assets/tailwind-EYUUQRAW.css">
+    <link rel="stylesheet" href="https://trigger.dev/build/_assets/index-PKUN5SAD.css">
+  </head>
+  <body class="grid h-full min-h-screen w-full max-w-[100vw] grid-rows-[auto,1fr,auto] overflow-x-hidden text-bright">
+    <header class="sticky top-0 z-[49] h-[3.75rem] w-full items-center border-b border-grid-dimmed bg-background px-3 md:px-0">
+      <nav aria-label="Design system" data-orientation="horizontal" dir="ltr" class="relative z-10 flex-1 mx-auto flex h-full max-w-[90rem] items-center justify-between px-0 md:px-3">
+        <a class="inline-block whitespace-nowrap text-sm text-bright transition hover:text-secondary flex items-center lg:mr-2" href="#hero" aria-label="Trigger.dev design system">
+          <span class="font-title font-semibold text-md sm:text-lg leading-6 sm:leading-normal text-bright">Trigger.dev DS</span>
+        </a>
+        <ul data-orientation="horizontal" class="flex-1 list-none items-stretch justify-end space-x-1 hidden h-full md:flex lg:gap-x-3" dir="ltr">
+          <li><a class="group inline-flex w-max h-full items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary" href="#capture-evidence">Evidence</a></li>
+          <li><a class="group inline-flex w-max h-full items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary" href="#shell-header">Shell</a></li>
+          <li><a class="group inline-flex w-max h-full items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary" href="#typography">Typography</a></li>
+          <li><a class="group inline-flex w-max h-full items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary" href="#colors-surfaces">Colors &amp; Surfaces</a></li>
+          <li><a class="group inline-flex w-max h-full items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary" href="#ui-components">UI Components</a></li>
+          <li><a class="group inline-flex w-max h-full items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary" href="#layout-spacing">Layout &amp; Spacing</a></li>
+          <li><a class="group inline-flex w-max h-full items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary" href="#motion-interaction">Motion &amp; Interaction</a></li>
+          <li><a class="group inline-flex w-max h-full items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary" href="#icons">Icons</a></li>
+          <li><a class="group inline-flex w-max h-full items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary" href="#major-patterns">Patterns</a></li>
+          <li><a class="group inline-flex w-max h-full items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary" href="#footer-pattern">Footer</a></li>
+        </ul>
+        <a class="group outline-none w-fit md:hidden" target="_self" rel="noopener noreferrer" href="#typography">
+          <div class="gap-x-2 text-center font-sans justify-center items-center shrink-0 select-none group-focus:outline-none group-disabled:opacity-75 group-disabled:pointer-events-none px-4 rounded border-charcoal-600 border hover:bg-grid-dimmed w-auto group flex h-[2.625rem] border-none bg-transparent text-charcoal-300 transition">
+            <div class="w-full transition">Sections</div>
+          </div>
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="relative mx-auto max-w-[90rem]" id="hero"><div class="h-fit px-4 sm:px-12"><div class="absolute inset-0 -z-10 h-96 w-full sm:h-fit md:h-fit" style="--mask-size:calc(100% / 2.4 * 0.285);--mask-invisible:transparent;--mask-visible:black;mask:linear-gradient(to bottom, var(--mask-invisible) 0%, var(--mask-visible) var(--mask-size), var(--mask-visible) calc(100% - var(--mask-size)), var(--mask-invisible) 100%), linear-gradient(to right, var(--mask-invisible) 0%, var(--mask-visible) 50%, var(--mask-invisible) 100%);mask-composite:intersect"><video autoplay="" loop="" muted="" playsinline="" preload="none" poster="/assets/hero-video-poster.png" class="pointer-events-none block aspect-[1920/800] h-full max-w-full select-none object-cover sm:h-auto"><source src="https://content.trigger.dev/hero-video-av1.webm" type="video/webm; codecs=av01"><source src="https://content.trigger.dev/hero-video-h265.mp4" type="video/mp4; codecs=hevc"><source src="https://content.trigger.dev/hero-video-h264.mp4" type="video/mp4"></video></div><div class="col-span-12 flex flex-col items-center justify-center gap-4 pb-12 sm:pb-24 lg:gap-8 pt-72 lg:pt-96"><h1 class="font-title font-semibold sm:text-5xl lg:text-6xl max-w-5xl text-center text-3xl text-charcoal-100">Trigger.dev living design&nbsp;system and pattern library</h1><p class="font-sans text-base sm:text-lg !m-0 max-w-2xl text-center font-medium text-charcoal-300">A consolidated reference of real Trigger.dev typography, surfaces, layouts, motion, and components captured from the public product&nbsp;pages.</p><div class="mt-3 flex flex-col items-center gap-3 sm:flex-row lg:mt-4"><a class="group outline-none w-fit" target="_self" rel="noopener noreferrer" href="#typography"><div class="flex text-center font-sans transition justify-center items-center shrink-0 select-none group-focus:outline-none group-disabled:opacity-75 group-disabled:pointer-events-none h-10 px-4 rounded bg-primary hover:bg-primary-hover disabled:opacity-50 w-auto group gap-x-1 text-charcoal-900"><span class="mx-auto grow self-center truncate transition group-hover:text-charcoal-800 text-charcoal-900 group-disabled:text-dimmed/80 text-lg font-medium">Explore system now</span><span class="relative -mr-1 ml-1 flex size-6"><span class="absolute rounded-full opacity-0 transition duration-300 ease-in-out group-hover:opacity-100 h-[2.3px] w-[12px] translate-x-[6px] top-[calc(50%-1px)] bg-background"></span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon" class="absolute -translate-x-0.5 transition duration-300 ease-in-out group-hover:translate-x-1 size-6 text-background"><path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"></path></svg></span></div></a><a class="group outline-none w-fit" target="_self" rel="noopener noreferrer" href="#ui-components"><div class="gap-x-2 text-center font-sans justify-center items-center shrink-0 select-none group-focus:outline-none group-disabled:opacity-75 group-disabled:pointer-events-none px-4 rounded border-charcoal-600 border hover:bg-grid-dimmed w-auto group flex h-[2.625rem] border-none bg-transparent text-charcoal-300 transition"><svg viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg" title="GitHub" class="size-5 pb-[0.1875rem]"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" fill="#fff"></path></svg><div class="w-full transition">3 pages<!-- --> <span class="hidden text-charcoal-600 lg:inline">| </span> <span class=" text-charcoal-200 lg:text-charcoal-300">Captured</span></div></div></a></div></div></div></section>
+
+      <section id="capture-evidence" class="relative mx-auto max-w-[90rem] px-3 py-12 sm:px-12 md:py-20">
+        <div class="relative grid justify-center border-grid-dimmed grid-cols-1 sm:grid-cols-12 divide-y divide-grid-dimmed pt-0 border-t mx-3 max-w-[76.5rem] grid-rows-[1fr_auto] xl:mx-auto border-x">
+          <div class="col-span-12 px-3 py-5 sm:px-6">
+            <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-hero.html | direct homepage hero clone above, text-only adaptation</p>
+            <h2 class="font-title text-bright font-semibold text-2xl sm:text-3xl flex w-full mt-2">Capture Evidence</h2>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 mt-2">Every major pattern below names its captured source. This artifact references the real Trigger.dev CSS assets instead of replacing them with local styles.</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-1 lg:grid-cols-3 divide-x divide-y divide-grid-dimmed border-t border-grid-dimmed">
+            <div class="p-4"><h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Home</h3><p class="font-sans font-light !m-0 text-xs text-bright/50 mt-2">Source: .tmp/trigger-home.html | raw HTML</p><p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-rendered.json | rendered section inventory</p><p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home.snapshot.md | readable snapshot</p><p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-full.png | full-page screenshot</p></div>
+            <div class="p-4"><h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">AI Agents</h3><p class="font-sans font-light !m-0 text-xs text-bright/50 mt-2">Source: .tmp/trigger-ai-agents.html | raw HTML</p><p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-ai-agents-rendered.json | rendered section inventory</p><p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-ai-agents.snapshot.md | readable snapshot</p><p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-ai-agents-full.png | full-page screenshot</p></div>
+            <div class="p-4"><h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Scheduled Tasks</h3><p class="font-sans font-light !m-0 text-xs text-bright/50 mt-2">Source: .tmp/trigger-scheduled-tasks.html | raw HTML</p><p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-scheduled-tasks-rendered.json | rendered section inventory</p><p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-scheduled-tasks.snapshot.md | readable snapshot</p><p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-scheduled-tasks-full.png | full-page screenshot</p></div>
+          </div>
+          <div class="col-span-12 px-3 py-5 sm:px-6">
+            <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/*rendered.json | CSS assets preserved: cookieconsent-RB5RFBLH.css, tailwind-EYUUQRAW.css, index-PKUN5SAD.css</p>
+            <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/*rendered.json | scripts observed but not embedded: analytics, PostHog modules, Remix route modules</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="shell-header" class="relative mx-auto max-w-[90rem] px-3 py-12 sm:px-12 md:py-20">
+        <div class="relative grid justify-center border-grid-dimmed grid-cols-1 sm:grid-cols-12 divide-x divide-y divide-grid-dimmed sm:divide-y-0 pt-0 border-t mx-3 max-w-[76.5rem] grid-rows-[1fr_auto] xl:mx-auto border-x">
+          <div class="col-span-12 px-3 py-5 sm:px-6">
+            <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home.html | shared body/header/nav shell classes appear across all three pages</p>
+            <h2 class="font-title text-bright font-semibold text-2xl sm:text-3xl flex w-full mt-2">Page Shell, Header &amp; Product Menu</h2>
+          </div>
+          <div class="col-span-12 p-0">
+            <div class="sticky top-0 z-[49] h-[3.75rem] w-full items-center border-b border-grid-dimmed bg-background px-3 md:px-0">
+              <nav aria-label="Main" data-orientation="horizontal" dir="ltr" class="relative z-10 flex-1 mx-auto flex h-full max-w-[90rem] items-center justify-between px-0 md:px-3">
+                <div class="flex h-full gap-x-3"><div class="h-full w-px bg-gradient-to-t from-grid-dimmed to-transparent md:hidden"></div><div class="flex items-stretch gap-x-4"><a class="inline-block whitespace-nowrap text-sm text-bright transition hover:text-secondary flex w-[145px] items-center md:w-[120px] lg:mr-2 lg:w-[130px] lg:min-w-[130px] xl:w-[150px] xl:min-w-[150px]" id="home" aria-label="Go to homepage" href="#shell-header"><span class="font-title font-semibold text-md sm:text-lg leading-6 sm:leading-normal text-bright">Trigger.dev</span></a><ul data-orientation="horizontal" class="flex-1 list-none items-stretch justify-center space-x-1 hidden h-full md:flex lg:gap-x-3" dir="ltr"><li><a aria-label="How it works" class="group inline-flex w-max h-full items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary" href="#shell-header">How it works</a></li><li><button data-state="closed" class="group inline-flex w-max h-full items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary group" aria-label="Product">Product</button></li><li><a aria-label="Docs" class="group inline-flex w-max h-full items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary" href="#shell-header">Docs</a></li></ul></div></div>
+                <div class="hidden items-center gap-x-2 md:flex"><a class="group outline-none w-fit" target="_self" rel="noopener noreferrer" href="#shell-header"><div class="gap-x-2 text-center font-sans justify-center items-center shrink-0 select-none group-focus:outline-none group-disabled:opacity-75 group-disabled:pointer-events-none px-4 rounded border-charcoal-600 border hover:bg-grid-dimmed w-auto group flex h-[2.625rem] border-none bg-transparent text-charcoal-300 transition"><div class="w-full transition">Sign in</div></div></a><a class="group outline-none w-fit" target="_self" rel="noopener noreferrer" href="#shell-header"><div class="flex text-center font-sans transition justify-center items-center shrink-0 select-none group-focus:outline-none group-disabled:opacity-75 group-disabled:pointer-events-none h-10 px-4 rounded bg-primary hover:bg-primary-hover disabled:opacity-50 w-auto group gap-x-1 text-charcoal-900"><span class="mx-auto grow self-center truncate transition group-hover:text-charcoal-800 text-charcoal-900 group-disabled:text-dimmed/80 text-lg font-medium">Get started</span></div></a></div>
+              </nav>
+            </div>
+          </div>
+          <div class="col-span-12 grid grid-cols-1 lg:grid-cols-2 divide-x divide-y divide-grid-dimmed border-t border-grid-dimmed">
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home.html | product menu card link pattern</p>
+              <a class="inline-block whitespace-nowrap text-sm text-bright transition hover:text-secondary group gap-3 group flex items-center gap-x-1.5 rounded py-2 pr-3 transition hover:bg-charcoal-750 w-full mt-4" href="#shell-header"><div class="p-3"><svg class="size-5 text-barbie-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="--icon-color:currentColor;--icon-color-dark:color-mix(in srgb, var(--icon-color) 35%, black)"><path d="M18.5477 8.56279L18.2769 9.64603L18.0061 8.56279C17.6898 7.29777 16.7021 6.31004 15.4371 5.99379L14.3538 5.72298L15.4371 5.45217C16.7021 5.13591 17.6898 4.14819 18.0061 2.88317L18.2769 1.79993L18.5477 2.88317C18.864 4.14819 19.8517 5.13591 21.1167 5.45217L22.2 5.72298L21.1167 5.99379C19.8517 6.31004 18.864 7.29777 18.5477 8.56279Z" fill="var(--icon-color-dark)" stroke="var(--icon-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.71226 16.0839L8.86153 19.0615L8.0108 16.0839C7.56396 14.52 6.34147 13.2975 4.77754 12.8507L1.79999 12L4.77754 11.1492C6.34148 10.7024 7.56396 9.47993 8.0108 7.91601L8.86153 4.93848L9.71226 7.91601C10.1591 9.47993 11.3816 10.7024 12.9455 11.1492L15.9231 12L12.9455 12.8507C11.3816 13.2975 10.1591 14.52 9.71226 16.0839Z" fill="var(--icon-color-dark)" stroke="var(--icon-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17.1201 20.9627L16.7077 22.2L16.2952 20.9627C16.0609 20.2598 15.5094 19.7083 14.8065 19.474L13.5692 19.0615L14.8065 18.6491C15.5094 18.4148 16.0609 17.8633 16.2952 17.1604L16.7077 15.9231L17.1201 17.1604C17.3544 17.8633 17.9059 18.4148 18.6088 18.6491L19.8461 19.0615L18.6088 19.474C17.9059 19.7083 17.3544 20.2598 17.1201 20.9627Z" fill="var(--icon-color-dark)" stroke="var(--icon-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div class="flex flex-col gap-0"><h4 class="font-title text-bright font-semibold text-sm sm:text-base transition duration-300 sm:group-hover:text-white">AI Agents</h4><p class="font-sans font-light text-dimmed text-sm !m-0 transition duration-300 sm:group-hover:text-charcoal-300">Build and deploy invincible AI agents.</p></div></a>
+            </div>
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home.snapshot.md | footer link rows repeat across captures</p>
+              <a aria-label="Customers" title="Customers" href="#shell-header" class="mt-4 block"><div class="group flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="size-4 text-dimmed transition group-hover:text-bright"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"></path></svg><p class="font-sans font-light text-dimmed text-sm !m-0 transition group-hover:text-bright">Customers</p></div></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="typography" class="relative mx-auto max-w-[90rem] px-3 py-12 sm:px-12 md:py-20">
+        <div class="relative grid justify-center border-grid-dimmed grid-cols-1 sm:grid-cols-12 divide-y divide-grid-dimmed pt-0 border-t mx-3 max-w-[76.5rem] grid-rows-[1fr_auto] xl:mx-auto border-x">
+          <div class="col-span-12 px-3 py-5 sm:px-6">
+            <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/*-rendered.json | computed heading inventory and original class strings</p>
+            <h2 class="font-title text-bright font-semibold text-2xl sm:text-3xl flex w-full">Typography</h2>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 mt-2">Only text treatments found in the captured Trigger.dev pages are listed.</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-12 gap-3 border-t border-grid-dimmed px-3 py-3 text-charcoal-400">
+            <p class="font-sans font-light text-xs !m-0 col-span-12 sm:col-span-3">Name</p>
+            <p class="font-sans font-light text-xs !m-0 col-span-12 sm:col-span-6">Live preview</p>
+            <p class="font-sans font-light text-xs !m-0 col-span-12 sm:col-span-3">Observed size / line-height</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-12 gap-3 border-t border-grid-dimmed px-3 py-5">
+            <p class="font-title text-base font-medium text-bright sm:text-base col-span-12 sm:col-span-3">Homepage hero H1</p>
+            <h1 class="font-title font-semibold sm:text-5xl lg:text-6xl max-w-5xl text-3xl text-charcoal-100 col-span-12 sm:col-span-6">Build and deploy fully-managed AI agents</h1>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 col-span-12 sm:col-span-3">text-3xl, sm:text-5xl, lg:text-6xl / lg line-height 1</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-12 gap-3 border-t border-grid-dimmed px-3 py-5">
+            <p class="font-title text-base font-medium text-bright sm:text-base col-span-12 sm:col-span-3">Product hero H1</p>
+            <h1 class="font-title font-semibold text-3xl sm:text-4xl lg:text-5xl mb-3 sm:mb-4 text-balance col-span-12 sm:col-span-6">AI agents without infrastructure headaches</h1>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 col-span-12 sm:col-span-3">text-3xl, sm:text-4xl, lg:text-5xl / lg 48px</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-12 gap-3 border-t border-grid-dimmed px-3 py-5">
+            <p class="font-title text-base font-medium text-bright sm:text-base col-span-12 sm:col-span-3">Section H2</p>
+            <h2 class="font-title text-bright font-semibold text-2xl sm:text-3xl flex w-full col-span-12 sm:col-span-6">Everything you need to build reliable background jobs</h2>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 col-span-12 sm:col-span-3">text-2xl, sm:text-3xl / 36px</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-12 gap-3 border-t border-grid-dimmed px-3 py-5">
+            <p class="font-title text-base font-medium text-bright sm:text-base col-span-12 sm:col-span-3">Card H3</p>
+            <h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal col-span-12 sm:col-span-6">Product</h3>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 col-span-12 sm:col-span-3">text-md, sm:text-lg / leading-6 then normal</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-12 gap-3 border-t border-grid-dimmed px-3 py-5">
+            <p class="font-title text-base font-medium text-bright sm:text-base col-span-12 sm:col-span-3">Accent H3</p>
+            <h3 class="font-title font-semibold text-lg sm:text-xl leading-6 sm:leading-normal text-lavender-500 col-span-12 sm:col-span-6">Concurrency and queues</h3>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 col-span-12 sm:col-span-3">text-lg, sm:text-xl / 30px</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-12 gap-3 border-t border-grid-dimmed px-3 py-5">
+            <p class="font-title text-base font-medium text-bright sm:text-base col-span-12 sm:col-span-3">Navigation/card title</p>
+            <h4 class="font-title text-bright font-semibold text-sm sm:text-base transition duration-300 sm:group-hover:text-white col-span-12 sm:col-span-6">Scheduled tasks</h4>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 col-span-12 sm:col-span-3">text-sm, sm:text-base / 24px</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-12 gap-3 border-t border-grid-dimmed px-3 py-5">
+            <p class="font-title text-base font-medium text-bright sm:text-base col-span-12 sm:col-span-3">Hero body</p>
+            <p class="font-sans text-base sm:text-lg !m-0 max-w-2xl font-medium text-charcoal-300 col-span-12 sm:col-span-6">Long-running tasks with retries, queues, observability, and elastic scaling.</p>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 col-span-12 sm:col-span-3">text-base, sm:text-lg / 28px</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-12 gap-3 border-t border-grid-dimmed px-3 py-5">
+            <p class="font-title text-base font-medium text-bright sm:text-base col-span-12 sm:col-span-3">Body / description</p>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 transition duration-300 sm:group-hover:text-charcoal-300 col-span-12 sm:col-span-6">Build and deploy invincible AI agents.</p>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 col-span-12 sm:col-span-3">text-sm / 20px</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-12 gap-3 border-t border-grid-dimmed px-3 py-5">
+            <p class="font-title text-base font-medium text-bright sm:text-base col-span-12 sm:col-span-3">Meta label</p>
+            <p class="font-sans font-light !m-0 text-xs text-bright/50 col-span-12 sm:col-span-6">Source pages: home, AI agents, scheduled tasks</p>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 col-span-12 sm:col-span-3">text-xs / 16px</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="colors-surfaces" class="relative mx-auto max-w-[90rem] px-3 py-12 sm:px-12 md:py-20">
+        <div class="relative grid justify-center border-grid-dimmed grid-cols-1 sm:grid-cols-12 divide-x divide-y divide-grid-dimmed sm:divide-y-0 pt-0 border-t mx-3 max-w-[76.5rem] grid-rows-[1fr_auto] xl:mx-auto border-x">
+          <div class="col-span-12 px-3 py-5 sm:px-6">
+            <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/tailwind-EYUUQRAW.css and .tmp/trigger-*.html | CSS variables and observed surface classes</p>
+            <h2 class="font-title text-bright font-semibold text-2xl sm:text-3xl flex w-full">Colors &amp; Surfaces</h2>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 mt-2">Backgrounds, borders, dividers, gradients, and patterned surfaces used in the pages.</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-x divide-y divide-grid-dimmed border-t border-grid-dimmed">
+            <div class="p-4"><div class="h-20 rounded border border-grid-dimmed bg-background"></div><h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Background</h3><p class="font-sans font-light text-dimmed text-sm !m-0">body/bg-background - rgb(18 19 23)</p></div>
+            <div class="p-4"><div class="h-20 rounded border border-grid-dimmed bg-charcoal-850"></div><h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Charcoal 850</h3><p class="font-sans font-light text-dimmed text-sm !m-0">--charcoal-850 - #15171A</p></div>
+            <div class="p-4"><div class="h-20 rounded border border-grid-dimmed bg-charcoal-800"></div><h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Charcoal 800</h3><p class="font-sans font-light text-dimmed text-sm !m-0">--charcoal-800 - #1A1B1F</p></div>
+            <div class="p-4"><div class="h-20 rounded border border-grid-dimmed bg-charcoal-750"></div><h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Hover surface</h3><p class="font-sans font-light text-dimmed text-sm !m-0">bg-charcoal-750 on cards/tabs/nav</p></div>
+            <div class="p-4"><div class="h-20 rounded border border-grid-dimmed bg-grid-dimmed"></div><h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Grid dimmed</h3><p class="font-sans font-light text-dimmed text-sm !m-0">--grid-dimmed - #1C1E21</p></div>
+            <div class="p-4"><div class="h-20 rounded border border-grid-dimmed bg-primary"></div><h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Primary CTA</h3><p class="font-sans font-light text-dimmed text-sm !m-0">--primary - #A8FF53</p></div>
+            <div class="p-4"><div class="h-20 rounded border border-grid-dimmed bg-pattern-crosses-fade"></div><h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Cross pattern</h3><p class="font-sans font-light text-dimmed text-sm !m-0">bg-pattern-crosses-fade</p></div>
+            <div class="p-4"><div class="h-20 rounded border border-grid-dimmed bg-visible-grid-4"></div><h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Visible grid</h3><p class="font-sans font-light text-dimmed text-sm !m-0">bg-visible-grid-4</p></div>
+            <div class="p-4"><div class="h-20 rounded border border-grid-dimmed bg-pattern-diagonal-lines-left"></div><h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Diagonal lines</h3><p class="font-sans font-light text-dimmed text-sm !m-0">bg-pattern-diagonal-lines-left</p></div>
+            <div class="p-4"><div class="h-20 rounded border border-grid-dimmed bg-gradient-to-t from-grid-dimmed to-transparent"></div><h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Vertical fade</h3><p class="font-sans font-light text-dimmed text-sm !m-0">bg-gradient-to-t from-grid-dimmed to-transparent</p></div>
+            <div class="p-4"><div class="h-20 rounded border border-grid-dimmed bg-gradient-to-r from-charcoal-800 to-transparent"></div><h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Horizontal fade</h3><p class="font-sans font-light text-dimmed text-sm !m-0">bg-gradient-to-r from-charcoal-800 to-transparent</p></div>
+            <div class="p-4"><div class="h-20 rounded border border-grid-dimmed bg-background hover:bg-charcoal-750 transition"></div><h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Interactive card</h3><p class="font-sans font-light text-dimmed text-sm !m-0">bg-background hover:bg-charcoal-750 transition</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="ui-components" class="relative mx-auto max-w-[90rem] px-3 py-12 sm:px-12 md:py-20">
+        <div class="relative grid justify-center border-grid-dimmed grid-cols-1 sm:grid-cols-12 divide-x divide-y divide-grid-dimmed sm:divide-y-0 pt-0 border-t mx-3 max-w-[76.5rem] grid-rows-[1fr_auto] xl:mx-auto border-x">
+          <div class="col-span-12 px-3 py-5 sm:px-6">
+            <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home.html, .tmp/trigger-home-rendered.json, .tmp/trigger-scheduled-tasks-rendered.json | buttons, tabs, cards, links</p>
+            <h2 class="font-title text-bright font-semibold text-2xl sm:text-3xl flex w-full">UI Components</h2>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 mt-2">Buttons, tabs, card links, and feature surfaces seen in the captured pages. Inputs are not shown because the pages did not use form inputs.</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-1 lg:grid-cols-3 divide-x divide-y divide-grid-dimmed border-t border-grid-dimmed">
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-hero.html | primary CTA</p>
+              <h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Primary CTA</h3>
+              <div class="mt-4 flex flex-col gap-3">
+                <a class="group outline-none w-fit" target="_self" rel="noopener noreferrer" href="#ui-components"><div class="flex text-center font-sans transition justify-center items-center shrink-0 select-none group-focus:outline-none group-disabled:opacity-75 group-disabled:pointer-events-none h-10 px-4 rounded bg-primary hover:bg-primary-hover disabled:opacity-50 w-auto group gap-x-1 text-charcoal-900"><span class="mx-auto grow self-center truncate transition group-hover:text-charcoal-800 text-charcoal-900 group-disabled:text-dimmed/80 text-lg font-medium">Start building now</span><span class="relative -mr-1 ml-1 flex size-6"><span class="absolute rounded-full opacity-0 transition duration-300 ease-in-out group-hover:opacity-100 h-[2.3px] w-[12px] translate-x-[6px] top-[calc(50%-1px)] bg-background"></span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon" class="absolute -translate-x-0.5 transition duration-300 ease-in-out group-hover:translate-x-1 size-6 text-background"><path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"></path></svg></span></div></a>
+                <button class="group outline-none w-fit" disabled><div class="flex text-center font-sans transition justify-center items-center shrink-0 select-none group-focus:outline-none group-disabled:opacity-75 group-disabled:pointer-events-none h-10 px-4 rounded bg-primary hover:bg-primary-hover disabled:opacity-50 w-auto group gap-x-1 text-charcoal-900"><span class="mx-auto grow self-center truncate transition group-hover:text-charcoal-800 text-charcoal-900 group-disabled:text-dimmed/80 text-lg font-medium">Disabled state</span></div></button>
+              </div>
+            </div>
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-hero.html | secondary GitHub CTA</p>
+              <h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Secondary CTA</h3>
+              <a class="group outline-none w-fit mt-4 block" target="_self" rel="noopener noreferrer" href="#ui-components"><div class="gap-x-2 text-center font-sans justify-center items-center shrink-0 select-none group-focus:outline-none group-disabled:opacity-75 group-disabled:pointer-events-none px-4 rounded border-charcoal-600 border hover:bg-grid-dimmed w-auto group flex h-[2.625rem] border-none bg-transparent text-charcoal-300 transition"><svg viewBox="0 0 98 96" xmlns="http://www.w3.org/2000/svg" title="GitHub" class="size-5 pb-[0.1875rem]"><path fill-rule="evenodd" clip-rule="evenodd" d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z" fill="#fff"></path></svg><div class="w-full transition">14.6k <span class="hidden text-charcoal-600 lg:inline">| </span> <span class=" text-charcoal-200 lg:text-charcoal-300">Open source</span></div></div></a>
+            </div>
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home.html | top navigation link</p>
+              <h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Navigation link</h3>
+              <a aria-label="How it works" class="group inline-flex w-max h-[2.625rem] items-center font-normal justify-center rounded px-2 py-1 text-sm transition-colors hover:text-primary focus-visible:ring-1 focus-visible:ring-primary focus-visible:text-primary focus:outline-none disabled:pointer-events-none disabled:opacity-50 data-[active]:bg-text-primary data-[state=open]:bg-text-primary mt-4" href="#ui-components">How it works</a>
+            </div>
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-rendered.json | horizontal feature tablist</p>
+              <h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Tabs</h3>
+              <div class="mt-4 flex flex-col gap-2">
+                <button data-state="active" class="group inline-flex h-[2.5rem] w-full items-center justify-center gap-2 whitespace-nowrap rounded border border-grid-dimmed bg-background pl-2 pr-3 text-base text-charcoal-300 ring-offset-background transition-all duration-200 data-[state=active]:bg-charcoal-750 data-[state=active]:text-bright data-[state=active]:opacity-100 data-[state=active]:shadow-sm hover:bg-charcoal-750 hover:text-bright hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">Active tab</button>
+                <button data-state="inactive" class="group inline-flex h-[2.5rem] w-full items-center justify-center gap-2 whitespace-nowrap rounded border border-grid-dimmed bg-background pl-2 pr-3 text-base text-charcoal-300 ring-offset-background transition-all duration-200 data-[state=active]:bg-charcoal-750 data-[state=active]:text-bright data-[state=active]:opacity-100 data-[state=active]:shadow-sm hover:bg-charcoal-750 hover:text-bright hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">Default tab</button>
+                <button disabled data-state="inactive" class="group inline-flex h-[2.5rem] w-full items-center justify-center gap-2 whitespace-nowrap rounded border border-grid-dimmed bg-background pl-2 pr-3 text-base text-charcoal-300 ring-offset-background transition-all duration-200 data-[state=active]:bg-charcoal-750 data-[state=active]:text-bright data-[state=active]:opacity-100 data-[state=active]:shadow-sm hover:bg-charcoal-750 hover:text-bright hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">Disabled tab</button>
+              </div>
+            </div>
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home.html | product dropdown card link</p>
+              <h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Product card link</h3>
+              <a class="inline-block whitespace-nowrap text-sm text-bright transition hover:text-secondary group gap-3 group flex items-center gap-x-1.5 rounded py-2 pr-3 transition hover:bg-charcoal-750 w-full mt-4" href="#ui-components"><div class="p-3"><svg class="size-5 text-barbie-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="--icon-color:currentColor;--icon-color-dark:color-mix(in srgb, var(--icon-color) 35%, black)"><path d="M18.5477 8.56279L18.2769 9.64603L18.0061 8.56279C17.6898 7.29777 16.7021 6.31004 15.4371 5.99379L14.3538 5.72298L15.4371 5.45217C16.7021 5.13591 17.6898 4.14819 18.0061 2.88317L18.2769 1.79993L18.5477 2.88317C18.864 4.14819 19.8517 5.13591 21.1167 5.45217L22.2 5.72298L21.1167 5.99379C19.8517 6.31004 18.864 7.29777 18.5477 8.56279Z" fill="var(--icon-color-dark)" stroke="var(--icon-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.71226 16.0839L8.86153 19.0615L8.0108 16.0839C7.56396 14.52 6.34147 13.2975 4.77754 12.8507L1.79999 12L4.77754 11.1492C6.34148 10.7024 7.56396 9.47993 8.0108 7.91601L8.86153 4.93848L9.71226 7.91601C10.1591 9.47993 11.3816 10.7024 12.9455 11.1492L15.9231 12L12.9455 12.8507C11.3816 13.2975 10.1591 14.52 9.71226 16.0839Z" fill="var(--icon-color-dark)" stroke="var(--icon-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17.1201 20.9627L16.7077 22.2L16.2952 20.9627C16.0609 20.2598 15.5094 19.7083 14.8065 19.474L13.5692 19.0615L14.8065 18.6491C15.5094 18.4148 16.0609 17.8633 16.2952 17.1604L16.7077 15.9231L17.1201 17.1604C17.3544 17.8633 17.9059 18.4148 18.6088 18.6491L19.8461 19.0615L18.6088 19.474C17.9059 19.7083 17.3544 20.2598 17.1201 20.9627Z" fill="var(--icon-color-dark)" stroke="var(--icon-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg></div><div class="flex flex-col gap-0"><h4 class="font-title text-bright font-semibold text-sm sm:text-base transition duration-300 sm:group-hover:text-white">AI Agents</h4><p class="font-sans font-light text-dimmed text-sm !m-0 transition duration-300 sm:group-hover:text-charcoal-300">Build and deploy invincible AI agents.</p></div></a>
+            </div>
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-rendered.json | feature surface/card classes</p>
+              <h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Feature surface</h3>
+              <div class="rounded border border-grid-dimmed bg-background p-4 transition hover:bg-charcoal-750 mt-4">
+                <h4 class="font-title text-bright font-semibold text-sm sm:text-base transition duration-300 sm:group-hover:text-white">Scheduled tasks</h4>
+                <p class="font-sans font-light text-dimmed text-sm !m-0 transition duration-300 sm:group-hover:text-charcoal-300">Durable cron schedules that never miss a beat.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="layout-spacing" class="relative mx-auto max-w-[90rem] px-3 py-12 sm:px-12 md:py-20">
+        <div class="relative grid justify-center border-grid-dimmed grid-cols-1 sm:grid-cols-12 divide-x divide-y divide-grid-dimmed sm:divide-y-0 pt-0 border-t mx-3 max-w-[76.5rem] grid-rows-[1fr_auto] xl:mx-auto border-x">
+          <div class="col-span-12 px-3 py-5 sm:px-6">
+            <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-rendered.json, .tmp/trigger-ai-agents-rendered.json, .tmp/trigger-scheduled-tasks-rendered.json | major layout wrappers</p>
+            <h2 class="font-title text-bright font-semibold text-2xl sm:text-3xl flex w-full">Layout &amp; Spacing</h2>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 mt-2">Representative structural patterns observed across the home and product pages.</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-1 lg:grid-cols-3 divide-x divide-y divide-grid-dimmed border-t border-grid-dimmed">
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-rendered.json | hero layout wrapper</p>
+              <h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Hero stack</h3>
+              <div class="mt-4 flex flex-col items-center justify-center gap-4 pb-12 sm:pb-24 lg:gap-8 pt-20 bg-pattern-crosses-fade border border-grid-dimmed">
+                <h4 class="font-title font-semibold text-3xl text-charcoal-100 max-w-2xl text-center">Centered hero content</h4>
+                <p class="font-sans text-base sm:text-lg !m-0 max-w-2xl text-center font-medium text-charcoal-300">pt-72 lg:pt-96 in the homepage hero; shorter sample shown here.</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-rendered.json | max-w-[76.5rem] 12-column frame</p>
+              <h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">12-column framed grid</h3>
+              <div class="relative grid justify-center border-grid-dimmed grid-cols-1 sm:grid-cols-12 divide-x divide-y divide-grid-dimmed sm:divide-y-0 pt-0 border-t max-w-[76.5rem] grid-rows-[1fr_auto] border-x mt-4">
+                <div class="col-span-12 sm:col-span-4 p-4"><p class="font-sans font-light text-dimmed text-sm !m-0">col-span-4</p></div>
+                <div class="col-span-12 sm:col-span-4 p-4"><p class="font-sans font-light text-dimmed text-sm !m-0">dividers</p></div>
+                <div class="col-span-12 sm:col-span-4 p-4"><p class="font-sans font-light text-dimmed text-sm !m-0">border frame</p></div>
+              </div>
+            </div>
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-ai-agents-rendered.json | product split section pattern</p>
+              <h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Split product layout</h3>
+              <div class="mt-4 grid grid-cols-1 lg:grid-cols-[.75fr_1fr] gap-8 border border-grid-dimmed p-4">
+                <div><h4 class="font-title text-bright font-semibold text-sm sm:text-base">Content column</h4><p class="font-sans font-light text-dimmed text-sm !m-0">Text and CTA blocks.</p></div>
+                <div class="bg-visible-grid-3 border border-grid-dimmed p-8"><p class="font-sans font-light text-dimmed text-sm !m-0">Visual/product panel</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="major-patterns" class="relative mx-auto max-w-[90rem] px-3 py-12 sm:px-12 md:py-20">
+        <div class="relative grid justify-center border-grid-dimmed grid-cols-1 sm:grid-cols-12 divide-x divide-y divide-grid-dimmed sm:divide-y-0 pt-0 border-t mx-3 max-w-[76.5rem] grid-rows-[1fr_auto] xl:mx-auto border-x">
+          <div class="col-span-12 px-3 py-5 sm:px-6">
+            <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-rendered.json, .tmp/trigger-ai-agents-rendered.json, .tmp/trigger-scheduled-tasks-rendered.json | major visible product patterns</p>
+            <h2 class="font-title text-bright font-semibold text-2xl sm:text-3xl flex w-full mt-2">Major Visible Product Patterns</h2>
+          </div>
+          <div class="col-span-12 grid grid-cols-1 lg:grid-cols-2 divide-x divide-y divide-grid-dimmed border-t border-grid-dimmed">
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-ai-agents-rendered.json | "The 6 pillars of building agents"</p>
+              <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div class="rounded border border-grid-dimmed bg-background p-4 transition hover:bg-charcoal-750"><h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Long-running without timeouts</h3><p class="font-sans font-light text-dimmed text-sm !m-0 mt-2">Execute your tasks with absolutely no timeouts.</p></div>
+                <div class="rounded border border-grid-dimmed bg-background p-4 transition hover:bg-charcoal-750"><h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Durability, retries &amp; queues</h3><p class="font-sans font-light text-dimmed text-sm !m-0 mt-2">Build rock solid agents and AI applications.</p></div>
+                <div class="rounded border border-grid-dimmed bg-background p-4 transition hover:bg-charcoal-750"><h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">True runtime freedom</h3><p class="font-sans font-light text-dimmed text-sm !m-0 mt-2">Customize your deployed tasks with system packages.</p></div>
+                <div class="rounded border border-grid-dimmed bg-background p-4 transition hover:bg-charcoal-750"><h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Human-in-the-loop</h3><p class="font-sans font-light text-dimmed text-sm !m-0 mt-2">Programmatically pause your task.</p></div>
+              </div>
+            </div>
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-scheduled-tasks-rendered.json | scheduled example cards</p>
+              <div class="mt-4 grid grid-cols-1 gap-3">
+                <button type="button" role="tab" aria-selected="true" data-state="active" class="rounded border border-grid-dimmed p-2 text-left font-sans text-sm text-charcoal-500 ring-offset-background transition-all duration-200 data-[state=active]:bg-grid-dimmed data-[state=active]:text-foreground data-[state=active]:opacity-100 hover:bg-grid-dimmed hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 sm:h-auto sm:p-3 lg:max-w-full lg:p-4 group flex h-full w-full flex-col justify-start lg:h-fit"><h4 class="font-title text-bright font-semibold text-base sm:text-lg pb-2">Sync Airtable to the database</h4><p class="font-sans font-light text-dimmed text-sm !m-0">Periodically sync modified records from an Airtable table to a database.</p></button>
+                <button type="button" role="tab" aria-selected="false" data-state="inactive" class="rounded border border-grid-dimmed p-2 text-left font-sans text-sm text-charcoal-500 ring-offset-background transition-all duration-200 data-[state=active]:bg-grid-dimmed data-[state=active]:text-foreground data-[state=active]:opacity-100 hover:bg-grid-dimmed hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 sm:h-auto sm:p-3 lg:max-w-full lg:p-4 group flex h-full w-full flex-col justify-start lg:h-fit"><h4 class="font-title text-bright font-semibold text-base sm:text-lg pb-2">Post GIF to Slack on a schedule</h4><p class="font-sans font-light text-dimmed text-sm !m-0">Select a random GIF from Giphy and post it to Slack every 2 minutes.</p></button>
+              </div>
+            </div>
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-ai-agents-rendered.json | modern agent infrastructure cards</p>
+              <div class="mt-4 grid grid-cols-1 gap-3">
+                <a class="flex gap-2 group rounded py-2 px-3 items-center justify-between group bg-charcoal-800/50 hover:bg-charcoal-800 transition duration-300 overflow-hidden" href="#major-patterns"><div class="flex items-center gap-3"><div><h4 class="font-title text-bright font-semibold text-sm sm:text-base transition duration-300 sm:group-hover:text-white">Write agents in regular code</h4><p class="font-sans font-light sm:text-base text-sm !m-0 text-charcoal-300">Build AI agents using familiar programming models in native Javascript / Typescript.</p></div></div></a>
+                <a class="flex gap-2 group rounded py-2 px-3 items-center justify-between group bg-charcoal-800/50 hover:bg-charcoal-800 transition duration-300 overflow-hidden" href="#major-patterns"><div class="flex items-center gap-3"><div><h4 class="font-title text-bright font-semibold text-sm sm:text-base transition duration-300 sm:group-hover:text-white">Agent observability</h4><p class="font-sans font-light sm:text-base text-sm !m-0 text-charcoal-300">Monitor every aspect of your agents' performance.</p></div></div></a>
+              </div>
+            </div>
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-rendered.json | All the tools you need to ship</p>
+              <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <a class="flex gap-2 group rounded py-2 px-3 items-center justify-between group bg-charcoal-800/50 hover:bg-charcoal-800 transition duration-300 overflow-hidden" href="#major-patterns"><div class="flex items-center gap-3"><div><p class="font-sans font-light sm:text-base text-sm !m-0 text-charcoal-300">Durable cron schedules</p></div></div></a>
+                <a class="flex gap-2 group rounded py-2 px-3 items-center justify-between group bg-charcoal-800/50 hover:bg-charcoal-800 transition duration-300 overflow-hidden" href="#major-patterns"><div class="flex items-center gap-3"><div><p class="font-sans font-light sm:text-base text-sm !m-0 text-charcoal-300">Realtime updates &amp; streaming</p></div></div></a>
+                <a class="flex gap-2 group rounded py-2 px-3 items-center justify-between group bg-charcoal-800/50 hover:bg-charcoal-800 transition duration-300 overflow-hidden" href="#major-patterns"><div class="flex items-center gap-3"><div><p class="font-sans font-light sm:text-base text-sm !m-0 text-charcoal-300">React hooks</p></div></div></a>
+                <a class="flex gap-2 group rounded py-2 px-3 items-center justify-between group bg-charcoal-800/50 hover:bg-charcoal-800 transition duration-300 overflow-hidden" href="#major-patterns"><div class="flex items-center gap-3"><div><p class="font-sans font-light sm:text-base text-sm !m-0 text-charcoal-300">Vercel integration</p></div></div></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="motion-interaction" class="relative mx-auto max-w-[90rem] px-3 py-12 sm:px-12 md:py-20">
+        <div class="relative grid justify-center border-grid-dimmed grid-cols-1 sm:grid-cols-12 divide-x divide-y divide-grid-dimmed sm:divide-y-0 pt-0 border-t mx-3 max-w-[76.5rem] grid-rows-[1fr_auto] xl:mx-auto border-x">
+          <div class="col-span-12 px-3 py-5 sm:px-6">
+            <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-hero.html, .tmp/trigger-scheduled-tasks.html, .tmp/tailwind-EYUUQRAW.css | hover and animation classes</p>
+            <h2 class="font-title text-bright font-semibold text-2xl sm:text-3xl flex w-full">Motion &amp; Interaction</h2>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 mt-2">Real transition, hover, and animation classes present in the captured pages.</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-1 lg:grid-cols-3 divide-x divide-y divide-grid-dimmed border-t border-grid-dimmed">
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home-hero.html | group-hover arrow reveal</p>
+              <h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Arrow reveal on CTA</h3>
+              <a class="group outline-none w-fit mt-4 block" target="_self" rel="noopener noreferrer" href="#motion-interaction"><div class="flex text-center font-sans transition justify-center items-center shrink-0 select-none group-focus:outline-none group-disabled:opacity-75 group-disabled:pointer-events-none h-10 px-4 rounded bg-primary hover:bg-primary-hover disabled:opacity-50 w-auto group gap-x-1 text-charcoal-900"><span class="mx-auto grow self-center truncate transition group-hover:text-charcoal-800 text-charcoal-900 group-disabled:text-dimmed/80 text-lg font-medium">Hover arrow</span><span class="relative -mr-1 ml-1 flex size-6"><span class="absolute rounded-full opacity-0 transition duration-300 ease-in-out group-hover:opacity-100 h-[2.3px] w-[12px] translate-x-[6px] top-[calc(50%-1px)] bg-background"></span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon" class="absolute -translate-x-0.5 transition duration-300 ease-in-out group-hover:translate-x-1 size-6 text-background"><path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"></path></svg></span></div></a>
+            </div>
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-scheduled-tasks.html | hover:animate-moving-lines</p>
+              <h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Moving line pattern</h3>
+              <div class="mt-4 col-span-1 sm:col-span-12 flex h-48 items-center justify-center bg-pattern-diagonal-lines-left transition delay-100 hover:animate-moving-lines border border-grid-dimmed">
+                <p class="font-sans font-light text-dimmed text-sm !m-0 transition group-hover:text-bright">hover:animate-moving-lines</p>
+              </div>
+            </div>
+            <div class="p-4">
+              <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/tailwind-EYUUQRAW.css | animation classes found but source fragment is decorative page art</p>
+              <h3 class="font-title text-bright font-semibold text-md sm:text-lg leading-6 sm:leading-normal">Ambient animation classes</h3>
+              <p class="font-sans font-light text-dimmed text-sm !m-0 mt-4">Omitted from live demo to avoid synthetic decorative replicas. Evidence retained: animate-blue, animate-green, and animate-pink appear in the AI Agents capture.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="icons" class="relative mx-auto max-w-[90rem] px-3 py-12 sm:px-12 md:py-20">
+        <div class="relative grid justify-center border-grid-dimmed grid-cols-1 sm:grid-cols-12 divide-x divide-y divide-grid-dimmed sm:divide-y-0 pt-0 border-t mx-3 max-w-[76.5rem] grid-rows-[1fr_auto] xl:mx-auto border-x">
+          <div class="col-span-12 px-3 py-5 sm:px-6">
+            <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home.html and .tmp/trigger-ai-agents.html | inline SVG conventions and icon classes</p>
+            <h2 class="font-title text-bright font-semibold text-2xl sm:text-3xl flex w-full">Icons</h2>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 mt-2">The pages use inline SVG icons with Tailwind sizing/color classes and icon CSS variables.</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-x divide-y divide-grid-dimmed border-t border-grid-dimmed">
+            <div class="p-4">
+              <svg class="size-5 text-barbie-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="--icon-color:currentColor;--icon-color-dark:color-mix(in srgb, var(--icon-color) 35%, black)"><path d="M18.5477 8.56279L18.2769 9.64603L18.0061 8.56279C17.6898 7.29777 16.7021 6.31004 15.4371 5.99379L14.3538 5.72298L15.4371 5.45217C16.7021 5.13591 17.6898 4.14819 18.0061 2.88317L18.2769 1.79993L18.5477 2.88317C18.864 4.14819 19.8517 5.13591 21.1167 5.45217L22.2 5.72298L21.1167 5.99379C19.8517 6.31004 18.864 7.29777 18.5477 8.56279Z" fill="var(--icon-color-dark)" stroke="var(--icon-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9.71226 16.0839L8.86153 19.0615L8.0108 16.0839C7.56396 14.52 6.34147 13.2975 4.77754 12.8507L1.79999 12L4.77754 11.1492C6.34148 10.7024 7.56396 9.47993 8.0108 7.91601L8.86153 4.93848L9.71226 7.91601C10.1591 9.47993 11.3816 10.7024 12.9455 11.1492L15.9231 12L12.9455 12.8507C11.3816 13.2975 10.1591 14.52 9.71226 16.0839Z" fill="var(--icon-color-dark)" stroke="var(--icon-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M17.1201 20.9627L16.7077 22.2L16.2952 20.9627C16.0609 20.2598 15.5094 19.7083 14.8065 19.474L13.5692 19.0615L14.8065 18.6491C15.5094 18.4148 16.0609 17.8633 16.2952 17.1604L16.7077 15.9231L17.1201 17.1604C17.3544 17.8633 17.9059 18.4148 18.6088 18.6491L19.8461 19.0615L18.6088 19.474C17.9059 19.7083 17.3544 20.2598 17.1201 20.9627Z" fill="var(--icon-color-dark)" stroke="var(--icon-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">AI Agents</h3>
+              <p class="font-sans font-light text-dimmed text-sm !m-0">Custom inline SVG with --icon-color vars.</p>
+            </div>
+            <div class="p-4">
+              <svg class="size-5 text-aqua-500" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="--icon-color:currentColor;--icon-color-dark:color-mix(in srgb, var(--icon-color) 35%, black)"><path d="M11.9006 3.84772C10.8546 3.84772 9.82194 4.07576 8.87359 4.51616C7.92524 4.95657 7.08365 5.59897 6.40665 6.3992C5.72965 7.19943 5.23327 8.13863 4.95162 9.15226C4.66997 10.1659 4.60972 11.2301 4.77502 12.2699L3.3326 13.5628C3.15961 13.7178 3.10181 13.9637 3.18772 14.1794C3.27363 14.3951 3.48514 14.5336 3.71719 14.5263L5.64599 14.4659C6.16435 15.4085 6.88712 16.2211 7.76182 16.8414C8.63651 17.4616 9.64098 17.8739 10.7022 18.0483C11.7635 18.2227 12.8546 18.1547 13.8864 17.8497C14.9181 17.5447 15.8643 17.0105 16.6475 16.2908C17.4307 15.5712 18.0311 14.6845 18.3994 13.7036C18.7678 12.7227 18.8946 11.6725 18.7697 10.6374C18.6448 9.60222 18.2712 8.60827 17.6791 7.73534C17.087 6.8624 16.2918 6.13283 15.3575 5.60614" stroke="var(--icon-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M12 6.75V12L15.75 14.25" stroke="var(--icon-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Scheduled task</h3>
+              <p class="font-sans font-light text-dimmed text-sm !m-0">Custom feature icon styling.</p>
+            </div>
+            <div class="p-4">
+              <svg class="size-5 text-dimmed transition group-hover:text-bright" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="--icon-color:currentColor;--icon-color-dark:color-mix(in srgb, var(--icon-color) 35%, black)"><path d="M2.03556 12.3224C1.96648 12.1151 1.96642 11.8907 2.03538 11.6834C3.42374 7.50972 7.3608 4.5 12.0008 4.5C16.6387 4.5 20.5742 7.50692 21.9643 11.6776C22.0334 11.8849 22.0335 12.1093 21.9645 12.3166C20.5762 16.4903 16.6391 19.5 11.9991 19.5C7.36121 19.5 3.42565 16.4931 2.03556 12.3224Z" fill="var(--icon-color-dark)"></path><path d="M15 12C15 13.6569 13.6569 15 12 15C10.3432 15 9.00001 13.6569 9.00001 12C9.00001 10.3431 10.3432 9 12 9C13.6569 9 15 10.3431 15 12Z" fill="var(--icon-color-dark)"></path><path d="M2.03556 12.3224C1.96648 12.1151 1.96642 11.8907 2.03538 11.6834C3.42374 7.50972 7.3608 4.5 12.0008 4.5C16.6387 4.5 20.5742 7.50692 21.9643 11.6776C22.0334 11.8849 22.0335 12.1093 21.9645 12.3166C20.5762 16.4903 16.6391 19.5 11.9991 19.5C7.36121 19.5 3.42565 16.4931 2.03556 12.3224Z" stroke="var(--icon-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path><path d="M15 12C15 13.6569 13.6569 15 12 15C10.3432 15 9.00001 13.6569 9.00001 12C9.00001 10.3431 10.3432 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="var(--icon-color)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              <h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Observability</h3>
+              <p class="font-sans font-light text-dimmed text-sm !m-0">size-5 text-dimmed transition.</p>
+            </div>
+            <div class="p-4">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="size-4 text-dimmed transition group-hover:text-bright"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21 3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"></path></svg>
+              <h3 class="font-title text-bright font-semibold text-sm sm:text-base mt-3">Heroicon style</h3>
+              <p class="font-sans font-light text-dimmed text-sm !m-0">size-4 text-dimmed transition group-hover:text-bright.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="footer-pattern" class="relative mx-auto max-w-[90rem] px-3 py-12 sm:px-12 md:py-20">
+        <div class="relative grid justify-center border-grid-dimmed grid-cols-1 sm:grid-cols-12 divide-x divide-y divide-grid-dimmed sm:divide-y-0 pt-0 border-t mx-3 max-w-[76.5rem] grid-rows-[1fr_auto] xl:mx-auto border-x">
+          <div class="col-span-12 px-3 py-5 sm:px-6">
+            <p class="font-sans font-light !m-0 text-xs text-bright/50">Source: .tmp/trigger-home.snapshot.md, .tmp/trigger-ai-agents.snapshot.md, .tmp/trigger-scheduled-tasks.snapshot.md | repeated footer groups and link-row pattern</p>
+            <h2 class="font-title text-bright font-semibold text-2xl sm:text-3xl flex w-full mt-2">Footer Pattern</h2>
+            <p class="font-sans font-light text-dimmed text-sm !m-0 mt-2">The captured pages share a dense footer made of grouped link columns, small outline icons, dimmed text, grid borders, and a final status/copyright row.</p>
+          </div>
+          <div class="col-span-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 divide-x divide-y divide-grid-dimmed border-t border-grid-dimmed">
+            <div class="grid px-3 py-3 place-content-start gap-y-4">
+              <h4 class="font-title text-base font-medium text-bright sm:text-base">Docs</h4>
+              <a aria-label="Introduction" title="Introduction" href="#footer-pattern"><div class="group flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="size-4 text-dimmed transition group-hover:text-bright"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25v14.25"></path></svg><p class="font-sans font-light text-dimmed text-sm !m-0 transition group-hover:text-bright">Introduction</p></div></a>
+              <a aria-label="Quick start" title="Quick start" href="#footer-pattern"><div class="group flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="size-4 text-dimmed transition group-hover:text-bright"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"></path></svg><p class="font-sans font-light text-dimmed text-sm !m-0 transition group-hover:text-bright">Quick start</p></div></a>
+            </div>
+            <div class="grid px-3 py-3 place-content-start gap-y-4">
+              <h4 class="font-title text-base font-medium text-bright sm:text-base">Product</h4>
+              <a aria-label="Pricing" title="Pricing" href="#footer-pattern"><div class="group flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="size-4 text-dimmed transition group-hover:text-bright"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0"></path></svg><p class="font-sans font-light text-dimmed text-sm !m-0 transition group-hover:text-bright">Pricing</p></div></a>
+              <a aria-label="AI agents" title="AI agents" href="#footer-pattern"><div class="group flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="size-4 text-dimmed transition group-hover:text-bright"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813"></path></svg><p class="font-sans font-light text-dimmed text-sm !m-0 transition group-hover:text-bright">AI agents</p></div></a>
+            </div>
+            <div class="grid px-3 py-3 place-content-start gap-y-4">
+              <h4 class="font-title text-base font-medium text-bright sm:text-base">Developers</h4>
+              <a aria-label="Changelog" title="Changelog" href="#footer-pattern"><div class="group flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="size-4 text-dimmed transition group-hover:text-bright"><path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 1 1 0-9h.75"></path></svg><p class="font-sans font-light text-dimmed text-sm !m-0 transition group-hover:text-bright">Changelog</p></div></a>
+              <a aria-label="GitHub" title="GitHub" href="#footer-pattern"><div class="group flex items-center gap-1.5"><svg class="size-4 text-dimmed transition group-hover:text-bright" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.37017 0 0 5.50708 0 12.306C0 17.745 3.44015 22.3532 8.20626 23.9849C8.80295 24.0982 9.02394 23.7205 9.02394 23.3881C9.02394 23.0935 9.01657 22.3229 9.00921 21.2956C5.67219 22.0359 4.96501 19.6487 4.96501 19.6487C4.41989 18.2285 3.63168 17.8508 3.63168 17.8508C2.54144 17.0878 3.71271 17.1029 3.71271 17.1029C4.91344 17.1936 5.55433 18.372 5.55433 18.372C6.62247 20.2531 8.36096 19.7092 9.04604 19.3919C9.15654 18.5987 9.46593 18.0548 9.80479 17.745C7.13812 17.4353 4.33886 16.3777 4.33886 11.6638C4.33886 10.3192 4.80295 9.2238 5.57643 8.36261C5.4512 8.05288 5.03867 6.79887 5.69429 5.1067C5.69429 5.1067 6.7035 4.77432 8.99447 6.36827C9.95212 6.09632 10.9761 5.96034 12 5.95279C13.0166 5.95279 14.0479 6.09632 15.0055 6.36827C17.2965 4.77432 18.3057 5.1067 18.3057 5.1067C18.9613 6.79887 18.5488 8.05288 18.4236 8.36261C19.1897 9.2238 19.6538 10.3192 19.6538 11.6638C19.6538 16.3928 16.8471 17.4278 14.1731 17.7375C14.6004 18.1152 14.9908 18.8706 14.9908 20.0189C14.9908 21.6657 14.9761 22.9877 14.9761 23.3957C14.9761 23.728 15.1897 24.1058 15.8011 23.9849C20.5672 22.3532 24 17.745 24 12.3135C24 5.50708 18.6298 0 12 0Z" fill="currentColor"></path></svg><p class="font-sans font-light text-dimmed text-sm !m-0 transition group-hover:text-bright">GitHub</p></div></a>
+            </div>
+            <div class="grid px-3 py-3 place-content-start gap-y-4">
+              <h4 class="font-title text-base font-medium text-bright sm:text-base">Company</h4>
+              <a aria-label="Contact" title="Contact" href="#footer-pattern"><div class="group flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="size-4 text-dimmed transition group-hover:text-bright"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75"></path></svg><p class="font-sans font-light text-dimmed text-sm !m-0 transition group-hover:text-bright">Contact</p></div></a>
+              <a aria-label="Security" title="Security" href="#footer-pattern"><div class="group flex items-center gap-1.5"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" class="size-4 text-dimmed transition group-hover:text-bright"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75"></path></svg><p class="font-sans font-light text-dimmed text-sm !m-0 transition group-hover:text-bright">Security</p></div></a>
+            </div>
+          </div>
+          <div class="col-span-12 flex flex-col gap-y-3 px-3 py-5 xs:flex-row xs:justify-between xs:py-4 xs:pr-4">
+            <p class="font-sans font-light text-sm !m-0 whitespace-nowrap pl-2 text-charcoal-600 xs:pl-0">Source: .tmp/trigger-home.snapshot.md | final footer row with status badge and copyright.</p>
+            <p class="font-sans font-light text-sm !m-0 whitespace-nowrap pl-2 text-charcoal-600 xs:pl-0">© 2026 API Hero Ltd.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

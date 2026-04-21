@@ -1,4 +1,6 @@
 .codex
 .backups
+.playwright-mcp/
+.tmp/
 .claude/napkin.dev.md
 AGENTS.dev.md
