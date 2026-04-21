@@ -70,6 +70,8 @@ in:
 - `zai-skill-stack-harvest-analysis.md`
 - `zai-skill-stack-harvest-implementation-result.md`
 - `zai-skill-stack-post-implementation-benchmark-result.md`
+- `web-reader-external-skill-replay-result.md`
+- `self-evolution-web-reader-replay-parity-result.md`
 
 Recent rerun-backed promotions after native hardening:
 
@@ -85,6 +87,9 @@ Recent rerun-backed promotions after native hardening:
   - promoted to `local at parity`
 - `parity-replacement-gate-rerun-result.md`
   - promoted to `local at parity`
+- `self-evolution-web-reader-replay-parity-result.md`
+  - promoted `autoresearch / self-evolution` to `local at parity` for the
+    bounded document-backed external workflow-learning loop
 
 Recent rerun-backed correction promoted after follow-up:
 
@@ -93,7 +98,7 @@ Recent rerun-backed correction promoted after follow-up:
     checks, full independent local-vs-legacy rerun, and promotion-targeted
     arbitration now show `local at parity`
 
-Recent rerun-backed correction still awaiting promotion:
+Recent rerun-backed correction promoted after independent replay:
 
 - `self-evolution-durable-evidence-rerun-result.md`
   - both local and legacy/global judges kept `autoresearch / self-evolution`
@@ -123,6 +128,19 @@ Recent rerun-backed correction still awaiting promotion:
     the specific GLM-harvest capability translation is now `local ahead`, while
     the broader `autoresearch / self-evolution` surface remains `near parity`
     pending an independent replay through the new lanes
+- `web-reader-external-skill-replay-result.md`
+  - second independent external-skill replay exercised external skill vetting
+    and skill-evaluation lab against GLM / Z.ai `web-reader`; it preserved the
+    useful source-observation pattern, rejected direct import, and registered a
+    bounded `pattern-only` insertion decision
+- `self-evolution-web-reader-replay-parity-result.md`
+  - local and legacy/global judges both promoted `autoresearch /
+    self-evolution` to `local at parity` for document-backed external workflow
+    learning; `local ahead`, scheduled observers, browser/UI runtime proof,
+    blind-comparator quality proof, and future agents remain excluded
+
+Recent rerun-backed correction still awaiting promotion:
+
 - `maturity-control-deescalation-rerun-result.md`
   - both local and legacy/global judges kept `maturity control` at
     `near parity`; no new doctrine was added because the mature behavior is

@@ -210,7 +210,9 @@ Why grouped:
 
 Target:
 
-- stay `near parity` until repetition evidence accumulates naturally
+- `autoresearch / self-evolution`: satisfied; promoted beyond `near parity`
+- `maturity control`: stay `near parity` until repetition evidence accumulates
+  naturally
 
 Current evidence status:
 
@@ -245,9 +247,20 @@ Current evidence status:
 - root arbitration now treats the specific GLM-harvest capability translation
   as `local ahead`, because the legacy lacks first-class workflows for the new
   vetting, adapter, evaluation, and polishing surfaces
-- this still does not promote the broader `autoresearch / self-evolution`
-  surface; next validation must exercise these lanes in a second independent
-  behavioral proof cycle
+- second independent replay registered in
+  `web-reader-external-skill-replay-result.md`
+- the replay exercised the new external skill vetting and skill-evaluation lab
+  surfaces against the GLM / Z.ai `web-reader` skill, rejected direct import,
+  preserved the useful source-observation pattern, and registered a bounded
+  `pattern-only` insertion decision
+- promotion-targeted rerun registered in
+  `self-evolution-web-reader-replay-parity-result.md`
+- both local and legacy/global judges promoted broad `autoresearch /
+  self-evolution` to `local at parity` for the document-backed external
+  workflow-learning loop
+- this promotion excludes scheduled observers, browser/UI polishing runtime
+  proof, blind-comparator output-quality proof, future `*.toml` agents, and any
+  concrete web-reader-like runtime adapter
 - focused maturity-control de-escalation rerun registered in
   `maturity-control-deescalation-rerun-result.md`
 - both local and legacy/global judges kept `maturity control` at `near parity`
@@ -303,6 +316,7 @@ Promoted beyond `near parity` during later benchmark work:
 - `premium interface discipline`
 - `workflow catalog`
 - `parity / replacement gate`
+- `autoresearch / self-evolution`
 
 Why:
 
@@ -315,15 +329,17 @@ Why:
 - `parity / replacement gate` was promoted after both local and legacy/global
   judges found the explicit local gate now matches the implicit legacy behavior
   for promotion and refusal decisions
+- `autoresearch / self-evolution` was promoted after the Z.ai / GLM harvest,
+  native implementation pass, independent `web-reader` replay, and matching
+  local plus legacy/global promotion-targeted judges
 - `subagent model` needs more real delegation-heavy runs than this repo is
   currently producing
 
 ## Immediate Operating Sequence
 
-1. keep `autoresearch / self-evolution` in `near parity` until the next
-   real recurring failure or workflow-learning event proves durable capture and
-   correct promotion discipline without special prompting
-2. treat `maturity control` as evidence-narrowed but still `near parity`
+1. treat `maturity control` as evidence-narrowed but still `near parity`
+2. monitor `autoresearch / self-evolution` in future external-learning sessions
+   for over-promotion beyond its bounded document-backed scope
 3. monitor `parity / replacement gate` in future live or benchmarked sessions
    for under-application, not for missing mechanism
 4. use real or benchmarked runs to watch for regression on recently promoted
