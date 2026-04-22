@@ -223,6 +223,13 @@ Use these native authorities first:
   - `core/control-plane/quick-invocation-map.md`
 - mutation / issue discipline:
   - `core/issue-topology/issue-driven-mutation-stack.md`
+- product/specification planning:
+  - `planning/README.md`
+  - `planning/product/README.md`
+  - `planning/product/user-story-template.md`
+  - `planning/product/prd-lite-template.md`
+  - `planning/architecture/sdd-template.md`
+  - `planning/execution/task-breakdown-template.md`
 - proof and closure:
   - `core/runtime-packets/qa-proof-stack.md`
   - `core/workflows/operational-calibration.md`

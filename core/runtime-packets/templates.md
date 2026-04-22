@@ -39,6 +39,12 @@ Branch Entry Packet
 - gate ledger: <gate=status, gate=status>
 - phase / SDLC: <phase / overlay>
 - persona handoff artifact: <packet/artifact or n/a>
+- product/spec artifact chain:
+  - source story=<path|n/a|required-missing>
+  - PRD-lite=<path|n/a|required-missing>
+  - SDD=<path|n/a|required-missing>
+  - task breakdown=<path|n/a|required-missing>
+- artifact sufficiency decision: <smallest sufficient artifact / missing blocker>
 - mandatory gates: <gates>
 - required artifacts: <artifacts>
 - closure blockers: <blockers>
@@ -68,6 +74,7 @@ Runtime Delta Packet
 - gates failed: <...>
 - persona transition: <A -> B or n/a>
 - phase transition: <A -> B or n/a>
+- product/spec artifact transition: <A -> B or n/a>
 - QA / proof lane transition: <A -> B or n/a>
 - browser-proof intensity transition: <A -> B or n/a>
 - issue stack transition: <A -> B or n/a>

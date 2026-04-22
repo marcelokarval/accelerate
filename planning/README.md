@@ -69,6 +69,20 @@ Use the smallest artifact that makes the next phase honest.
 Not every task needs the full chain. Implementation must not start while the
 artifact needed for the next safe step is missing.
 
+## Artifact Persistence
+
+When a planning artifact is created for a real run, persist it in the closest
+native planning sublayer with a date and slug:
+
+- user story: `product/YYYY-MM-DD-<slug>-user-story.md`
+- PRD-lite: `product/YYYY-MM-DD-<slug>-prd-lite.md`
+- SDD: `architecture/YYYY-MM-DD-<slug>-sdd.md`
+- task breakdown: `execution/YYYY-MM-DD-<slug>-task-breakdown.md`
+- executive plan: `executive/YYYY-MM-DD-<slug>-executive-plan.md`
+
+Templates stay generic. Run artifacts should name their source request, upstream
+artifact chain, active phase, proof expectations, and unresolved blockers.
+
 ## Reading Order
 
 For a fresh session, read in this order:

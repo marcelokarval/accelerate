@@ -50,6 +50,11 @@ supporting doctrine:
   - primary: `../core/runtime-packets/cadence.md`
 - `runtime-packet-templates.md`
   - primary: `../core/runtime-packets/templates.md`
+- `specification-layer.md`
+  - primary: `../planning/README.md`
+  - primary: `../planning/product/README.md`
+  - primary: `../planning/architecture/sdd-template.md`
+  - primary: `../planning/execution/task-breakdown-template.md`
 - `subagent-model.md`
   - primary: `../core/delegation/subagent-model.md`
 - `workflow-catalog.md`
@@ -70,7 +75,6 @@ These are still useful reference-first or support-heavy surfaces:
 - `adjacent-skill-trigger-audit.md`
 - `executive-operating-matrix.md`
 - `linear-execution.md`
-- `specification-layer.md`
 - `team-operating-model.md`
 - `trivial-branch-contract.md`
 - `codex-agents/`

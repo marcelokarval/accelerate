@@ -28,6 +28,7 @@ User Request
 ## Active Branch Families
 
 - issue-driven delivery
+- product spec to execution
 - bug / failure / regression
 - architecture / governance doubt
 - backend implementation
@@ -55,6 +56,7 @@ are:
 
 - entry shaping
 - issue bootstrap
+- product spec to execution
 - planning artifact
 - implementation handoff
 - design-system application / recomposition
@@ -86,8 +88,9 @@ Before starting a non-trivial run, answer:
 1. what branch is active?
 2. what mandatory skills are in force?
 3. is issue bootstrap already satisfied?
-4. is the planning artifact already satisfied?
-5. if `docs/reference/design-system*` exists, is this extraction or
+4. is Story / PRD-lite / SDD / task breakdown required and satisfied?
+5. is the planning artifact already satisfied?
+6. if `docs/reference/design-system*` exists, is this extraction or
    application?
-6. what proof lane is next?
-7. what review still blocks closure?
+7. what proof lane is next?
+8. what review still blocks closure?
