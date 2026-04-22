@@ -3,6 +3,9 @@
 This directory is reserved for a peer stack profile that keeps the same control
 plane while changing the dominant frontend/backend posture.
 
-The profile does not exist yet. Its presence here marks the accepted platform
-direction.
+The profile now exists as a validation bundle for Next.js + Tailwind projects.
+It is a peer profile, not a replacement for Django/Inertia.
 
+Execution validation for this profile lives in:
+
+- `validation-bundle.md`

@@ -48,7 +48,8 @@ Load this bundle unless a smaller one is explicitly justified:
 - `tailwind-design-system`
 - `sql-optimization-patterns` when relational fetch risk is real
 - `anti-abuse-review` when abuse-sensitive
-- domain-truth skills such as `financial-source-truth` when specialized truth is involved
+- concrete domain authority skills such as `financial-source-truth`,
+  `payment-integration`, or `stripe-integration` when specialized truth is involved
 
 For backend-heavy relational surfaces, `Backend Query Correctness` is not only a
 review lens. It is an execution gate.

@@ -82,8 +82,10 @@ HTML design-system extraction
   -> AI-slop / genericity audit
   -> premium direction markdown
   -> component coverage matrix when a broad primitive catalog exists
+  -> light/dark token-sibling proof when theme switching exists
   -> premium direction HTML proof
   -> broad component gallery proof
+  -> theme-generator readiness proof
   -> render / artifact validation
   -> implementation handoff
 ```
@@ -98,6 +100,39 @@ The premium HTML proof is invalid if it only demonstrates atmosphere, a hero,
 cards, and one table. For shadcn/Radix-style stacks, it must show how the
 direction treats realistic app primitives: actions, forms, controls, navigation,
 data surfaces, overlays, feedback, loading, empty states, and coverage status.
+
+When the source product supports light/dark themes, the premium proof is also
+invalid if dark mode is only a decorative sample or an unrelated skin. It must
+show equivalent component treatment across both themes and identify which
+visual changes belong to tokens versus fixed component anatomy.
+
+### 5d. Design-System Application / Recomposition Workflow
+
+```text
+existing docs/reference/design-system* package
+  -> contract-first reading
+  -> source-truth showcase inspection
+  -> premium direction inspection when active
+  -> target component / token / route inventory
+  -> source-observed / code-available / premium-proposed / not-approved-yet map
+  -> anatomy vs token split
+  -> bounded UI implementation / correction / proposal
+  -> runtime comparison against design-system artifacts
+  -> residual drift registration
+```
+
+Use this workflow when the design-system package already exists and the task is
+to implement, correct, improve, propose, or generate UI from it.
+
+This workflow is invalid if the artifact package is treated as inspiration
+instead of implementation law. `design-system.contract.md` must be read before
+mutation, `design-system.html` must remain the source-truth visual evidence,
+and premium artifacts may guide improvement only where they explicitly define a
+direction.
+
+For themeable systems, the workflow must separate fixed component anatomy from
+changeable tokens. For broad component-library stacks, it must map more than
+hero/card/table surfaces and prove realistic component recomposition.
 
 ### 6. Backend-Implementation Workflow
 

@@ -1,0 +1,8 @@
+name: requesting-code-review
+category: review
+status: standalone-adapted
+source: ~/.codex/skills/requesting-code-review
+runtime_mirror: ~/.codex/skills/requesting-code-review
+local_native_owner: core/review/
+sync_policy: repo-first
+description: Pre-commit verification, static scan, reviewer pass, and bounded auto-fix loop.

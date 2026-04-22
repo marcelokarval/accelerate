@@ -196,6 +196,8 @@ Escalate into `premium interface` when:
 - perceived quality is part of the requested outcome
 - a reference, Stitch, or Figma artifact is central
 - technical correctness alone would still be unacceptable
+- an existing `docs/reference/design-system*` package is meant to drive
+  implementation, correction, improvement, or proposal work
 
 These branches do not close on logic correctness alone.
 
@@ -229,6 +231,8 @@ Use these native authorities first:
 - critical visual/runtime review:
   - `core/review/product-critical-surfaces.md`
   - `core/review/premium-interface-production.md`
+  - `core/review/html-design-system-extraction.md`
+  - `core/review/design-system-contract-application.md`
 - delegation:
   - `core/delegation/subagent-model.md`
 

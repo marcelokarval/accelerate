@@ -1,0 +1,11 @@
+name: django-service-patterns
+category: backend
+status: standalone-adapted
+source: ~/.codex/skills/django-service-patterns
+owner: accelerate
+runtime_mirror: ~/.codex/skills/django-service-patterns
+local_native_owner: profiles/django-inertia-react/README.md
+adaptation_policy: >
+  Standalone Accelerate Django profile version. Keep service-layer, ownership,
+  transaction, and query-shape discipline without hard-coded downstream paths.
+last_reviewed: 2026-04-22

@@ -1,0 +1,11 @@
+name: systematic-debugging
+category: review
+status: standalone-adapted
+source: ~/.codex/skills/systematic-debugging
+owner: accelerate
+runtime_mirror: ~/.codex/skills/systematic-debugging
+local_native_owner: core/control-plane/branch-enforcement-matrix.md
+adaptation_policy: >
+  Standalone Accelerate version. Preserve repro-first diagnosis and
+  regression-proof closure without binding to one project or workflow backend.
+last_reviewed: 2026-04-22

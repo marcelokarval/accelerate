@@ -1,0 +1,8 @@
+name: subagent-governance
+category: workflow
+status: standalone-adapted
+source: ~/.codex/skills/subagent-governance
+runtime_mirror: ~/.codex/skills/subagent-governance
+local_native_owner: core/delegation/subagent-model.md
+sync_policy: repo-first
+description: Multi-agent scope, delegation, nested-spawn, review aggregation, and master revalidation governance.

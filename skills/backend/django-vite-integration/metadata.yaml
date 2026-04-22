@@ -1,0 +1,8 @@
+name: django-vite-integration
+category: backend
+status: standalone-adapted
+source: ~/.codex/skills/django-vite-integration
+runtime_mirror: ~/.codex/skills/django-vite-integration
+local_native_owner: profiles/django-inertia-react/README.md
+sync_policy: repo-first
+description: Django-Vite and Inertia asset-pipeline guidance for dev/prod modes, manifest behavior, and blank-page debugging.

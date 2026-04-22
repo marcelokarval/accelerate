@@ -1,0 +1,11 @@
+name: server-prop-governance
+category: frontend
+status: standalone-adapted
+source: ~/.codex/skills/server-prop-governance
+owner: accelerate
+runtime_mirror: ~/.codex/skills/server-prop-governance
+local_native_owner: core/control-plane/branch-enforcement-matrix.md
+adaptation_policy: >
+  Standalone Accelerate version. Govern server-to-frontend page contracts
+  independently of a specific server rendering framework.
+last_reviewed: 2026-04-22

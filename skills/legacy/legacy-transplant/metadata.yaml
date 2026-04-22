@@ -1,0 +1,8 @@
+name: legacy-transplant
+category: legacy
+status: standalone-adapted
+source: ~/.codex/skills/legacy-transplant
+runtime_mirror: ~/.codex/skills/legacy-transplant
+local_native_owner: core/control-plane/branch-enforcement-matrix.md
+sync_policy: repo-first
+description: Legacy behavior transplantation that preserves business truth while leaving obsolete implementation shapes behind.

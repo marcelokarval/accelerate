@@ -1,0 +1,8 @@
+name: financial-source-truth
+category: data
+status: standalone-adapted
+source: ~/.codex/skills/financial-source-truth
+runtime_mirror: ~/.codex/skills/financial-source-truth
+local_native_owner: core/control-plane/branch-enforcement-matrix.md
+sync_policy: repo-first
+description: Financial source-of-truth guidance for balances, charges, refunds, ledgers, reconciliation, and projections.

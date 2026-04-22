@@ -81,7 +81,9 @@ Do not attach by default:
 Mandatory:
 
 - `architecture`
-- `p4y-stack-constitution`
+- `governance-audit`
+- branch-specific governance skills such as `api-surface-governance`,
+  `dependency-governance`, or `validation-governance`
 - `governance-audit`
 
 Conditional:

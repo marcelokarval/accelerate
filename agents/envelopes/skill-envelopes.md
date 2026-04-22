@@ -48,7 +48,10 @@ The correct question is:
 
 Mandatory:
 
-- workflow adapter planning skill
+- `planning-with-files`
+- selected workflow adapter skills such as `linear-implementation-planner`,
+  `linear-pm`, `linear-workflow-orchestrator`, `github-issues`, or
+  `github-pr-workflow`
 
 Conditional:
 
@@ -59,8 +62,9 @@ Conditional:
 Mandatory:
 
 - architecture
-- constitutional stack skill
-- governance review skill
+- `governance-audit`
+- branch-specific governance skills such as `api-surface-governance`,
+  `dependency-governance`, or `validation-governance`
 
 Conditional:
 
@@ -71,7 +75,11 @@ Conditional:
 
 Mandatory:
 
-- Django, service, Python, and system-boundary skills
+- `django-pro`
+- `django-service-patterns`
+- `python-pro`
+- system-boundary skills such as `validation-governance` and
+  `security-patterns`
 
 Conditional:
 
@@ -84,10 +92,11 @@ Conditional:
 
 Mandatory:
 
-- frontend stack skill
-- Inertia guidance
-- boundary governance
-- TypeScript
+- `front-react-shadcn` or `nextjs-app-router-patterns` when the active profile
+  is Next.js
+- `inertia-patterns` when the active profile is Inertia
+- `frontend-boundary-governance`
+- `typescript-pro`
 
 Conditional:
 
@@ -139,4 +148,5 @@ Conditional:
 
 Mandatory:
 
-- legacy consultation and adaptation skills
+- `legacy-first-protocol`
+- `legacy-transplant`

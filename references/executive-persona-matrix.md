@@ -42,24 +42,24 @@ When any of those evolve, this matrix must be reviewed for drift.
 | `Issue Architect / Workflow Adapter` | active workflow adapter | `linear-progress-reporter` in the current default distribution | issue creation, metadata repair, hierarchy | issue packet / metadata proof |
 | `Implementation Designer` | `planning-with-files`, `executing-plans` when accepted | `ascii-wireframe`, contract/governance sidecars | execution design | `Implementation Design Packet` |
 | `Wireframe / Design Contract Extractor` | `ascii-wireframe` | `figma-node-fidelity`, `front-react-shadcn`, `product-runtime-review` | structural UI uncertainty | design / wireframe packet |
-| `Implementer / Developer` | active layer stack skills | verification/review companions as needed | bounded implementation | `Implementation Handoff Packet` |
+| `Implementer / Developer` | concrete active profile skills from `skills/_registry/manifest.md` | verification/review companions as needed | bounded implementation | `Implementation Handoff Packet` |
 | `Backend Implementer` | `django-service-patterns`, `django-pro`, `security-patterns` | `sql-optimization-patterns`, `financial-source-truth`, `validation-governance` | backend-heavy mutation | backend implementation packet |
 | `Frontend Implementer` | `front-react-shadcn`, `frontend-boundary-governance`, `i18n-patterns` | `ascii-wireframe`, `frontend-componentization-audit`, `react-best-practices`, `server-prop-governance` | frontend-heavy mutation | frontend implementation packet |
 | `Delivery PM` | none fixed globally | `linear-progress-reporter`, `executing-plans` | cadence/checkpoints | `Delivery Packet` |
-| `Backend Tester` | `python-testing`, active backend stack skills | `django-service-patterns`, `security-patterns`, `sql-optimization-patterns`, `financial-source-truth` | backend QA lane | `QA / Proof Packet` |
-| `Frontend Tester` | active frontend stack skills, `i18n-patterns` | `frontend-componentization-audit`, `react-best-practices` | frontend QA lane | `QA / Proof Packet` |
+| `Backend Tester` | `python-testing`, backend profile bundle, data/query skills as needed | `django-service-patterns`, `security-patterns`, `sql-optimization-patterns`, `financial-source-truth` | backend QA lane | `QA / Proof Packet` |
+| `Frontend Tester` | frontend profile bundle, `i18n-patterns` | `frontend-componentization-audit`, `react-best-practices` | frontend QA lane | `QA / Proof Packet` |
 | `Browser-Proof Auditor` | `product-runtime-review`; active stack skills as needed | `ascii-wireframe`, `server-prop-governance` | browser truth / route-family audit | `Browser-Proof Packet` / `QA / Proof Packet` |
-| `E2E Regression Engineer` | persistent E2E tooling + active stack skills as needed | `product-runtime-review` | Playwright persistence | `Persistent Regression Packet` |
+| `E2E Regression Engineer` | `dogfood`, `product-runtime-review`, active profile skills, and local Playwright fixture when available | `product-runtime-review` | Playwright persistence | `Persistent Regression Packet` |
 | `Runtime/Product Reviewer` | `product-runtime-review` | `ascii-wireframe`, `server-prop-governance`, `anti-abuse-review` | user-facing runtime-sensitive flow | `Runtime Review Packet` |
-| `Governance Auditor` | `governance-audit`, `p4y-stack-constitution` | `validation-governance`, `api-surface-governance`, `dependency-governance`, `legacy-transplant` | governance / truth doubt | `Governance Packet` |
-| `Stack Constitution Auditor` | `p4y-stack-constitution`, `governance-audit` | `system-adr`, `validation-governance`, `api-surface-governance` | constitution drift | stack boundary packet |
+| `Governance Auditor` | `governance-audit`, `architecture`, branch-specific governance skills | `validation-governance`, `api-surface-governance`, `dependency-governance`, `legacy-transplant` | governance / truth doubt | `Governance Packet` |
+| `Stack Constitution Auditor` | `governance-audit`, `architecture`, `api-surface-governance`, `dependency-governance` | `validation-governance`, `api-surface-governance` | constitution drift | stack boundary packet |
 | `Security Reviewer` | `security-patterns` | `anti-abuse-review`, `adversarial-security-review`, `untrusted-ingress-hardening` | security-sensitive branch | security packet |
 | `Anti-Abuse Reviewer` | `anti-abuse-review` | `security-patterns`, `product-runtime-review` | abuse-sensitive branch | anti-abuse packet |
 | `Accessibility Reviewer` | none fixed globally | active frontend stack + accessibility review skills when available | keyboard/focus/semantic review | accessibility packet |
 | `Performance / Observability Reviewer` | none fixed globally | `sql-optimization-patterns`, observability/perf sidecars, active stack skills | N+1 / perf / telemetry drift | perf / observability packet |
 | `Data / Contract Steward` | `server-prop-governance`, `validation-governance` | `api-surface-governance`, `financial-source-truth`, contract stack skills | DTO/presenter/props/route/identifier truth | contract packet |
 | `Provider Boundary Auditor` | `api-surface-governance` | provider/runtime skills, `dependency-governance`, `security-patterns` | external integration / transport doubt | provider/runtime packet |
-| `Legacy Truth Analyst` | `legacy-first-protocol`, `legacy-transplant` | `p4y-stack-constitution`, active stack skills | legacy truth branch | adaptation packet |
+| `Legacy Truth Analyst` | `legacy-first-protocol`, `legacy-transplant` | `governance-audit`, active profile skills | legacy truth branch | adaptation packet |
 | `Recovery Surface Reviewer` | none fixed globally | `product-runtime-review`, `anti-abuse-review`, `security-patterns` | recovery/re-entry/isolated-state review | recovery packet |
 | `Migration Steward` | none fixed globally | backend stack + migration/runtime validation stack | schema/data migration branch | migration packet |
 | `Fixture / Test Data Steward` | none fixed globally | backend/frontend test skills, regression tools | fixture realism or test-data drift | fixture packet |

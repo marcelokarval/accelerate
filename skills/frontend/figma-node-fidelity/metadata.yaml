@@ -1,0 +1,8 @@
+name: figma-node-fidelity
+category: frontend
+status: standalone-adapted
+source: ~/.codex/skills/figma-node-fidelity
+runtime_mirror: ~/.codex/skills/figma-node-fidelity
+local_native_owner: core/review/premium-interface-production.md
+sync_policy: repo-first
+description: Figma node-chain inspection and visual-fidelity workflow for UI rebuilds and refinements.

@@ -1,0 +1,8 @@
+name: inertia-runtime-persistence-audit
+category: frontend
+status: standalone-adapted
+source: ~/.codex/skills/inertia-runtime-persistence-audit
+runtime_mirror: ~/.codex/skills/inertia-runtime-persistence-audit
+local_native_owner: profiles/django-inertia-react/README.md
+sync_policy: repo-first
+description: Inertia shell persistence, partial reload, page-meta, and navigation-churn audit.

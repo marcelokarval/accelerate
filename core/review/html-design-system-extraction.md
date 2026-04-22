@@ -106,8 +106,9 @@ without treating the showcase as a loose moodboard.
    correction, recreation, or convergence.
 8. When premium improvement is in scope, run the AI-slop audit and premium
    direction extension before implementation.
-9. Before implementation, compare the target UI plan against the generated
-   artifacts instead of relying on memory or visual vibes.
+9. Before implementation, hand off to
+   `design-system-contract-application.md` instead of relying on memory or
+   visual vibes.
 
 ## Premium Extension
 
@@ -126,10 +127,19 @@ styles. Preserve the baseline, then create a separate premium package:
    - define the proposed premium identity, tokens, surfaces, component
      direction, motion, forbidden patterns, and handoff rules
    - explain exactly how the direction reduces the audit findings
+   - when the source supports theme switching, define light and dark as sibling
+     token systems over the same product semantics instead of unrelated skins
+   - separate immutable component anatomy from theme tokens so the artifact can
+     seed future theme generation through `global.css`, CSS variables, Tailwind
+     tokens, or equivalent configuration
 3. `design-system.premium-direction.html`
    - render a concrete visual proof of the proposed direction
    - label itself as directional, not source truth
    - avoid cloning benchmark brands or pretending invented styles were observed
+   - when dark mode exists or is requested, show a `Light vs Dark System`
+     comparison with equivalent component families in both modes
+   - when a broad primitive catalog exists, behave like a theme showroom rather
+     than a landing-page moodboard
 
 The premium extension is required when the user asks for terms such as:
 
@@ -164,12 +174,19 @@ The extraction is not complete unless all of these are true:
   instead of being guessed into the system
 - the artifact pair can be used as a practical reference for later UI correction
   and new-screen generation
+- the next implementation or correction step is explicitly routed through
+  `apply-design-system-contract`
 - when premium improvement is active, the audit, premium direction markdown, and
   premium direction HTML all exist and the premium HTML has render proof
 - when the local frontend stack exposes a broad primitive catalog such as
   shadcn/ui or Radix, premium direction includes a component coverage matrix and
   the premium HTML includes enough component families to judge recomposition
   beyond atmosphere
+- when dark mode is source-supported or requested, the premium artifact proves
+  dark mode as a coherent token-derived sibling of light mode, not a single
+  decorative black panel or unrelated neon dashboard
+- for themeable systems, the premium direction identifies what can change by
+  tokens and what must remain fixed as product/component anatomy
 
 If the generated file is thin, synthetic, or only moodboard-like, treat the run
 as failed even if `design-system.html` exists.
@@ -193,6 +210,8 @@ Do not close an HTML-reference-driven UI task if:
 - the hero clone changes structure beyond text adaptation
 - the artifact omits major visible page patterns without explanation
 - subsequent UI work ignores either generated design-system artifact
+- subsequent UI work skips `apply-design-system-contract` after the artifact
+  package exists
 - temporary capture files are scattered outside `.tmp/`
 - premium improvement was requested but the slop audit or premium direction
   artifacts were skipped
@@ -201,6 +220,11 @@ Do not close an HTML-reference-driven UI task if:
 - the premium HTML only proves a hero/card/table slice and is too thin to judge
   how forms, overlays, feedback, navigation, loading, and empty states would
   look in the proposed direction
+- dark mode is supported or requested but the premium direction only mentions
+  it textually, shows it as a small decorative block, or makes it visually
+  disconnected from the light theme
+- the component gallery is not broad enough to evaluate the design as a future
+  theme generator for many interfaces
 
 ## Relationship To Premium UI
 

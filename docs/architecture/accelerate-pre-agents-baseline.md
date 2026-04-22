@@ -47,6 +47,7 @@ The current native pre-agents baseline now includes:
 - `core/review/product-critical-surfaces.md`
 - `core/review/premium-interface-production.md`
 - `core/review/html-design-system-extraction.md`
+- `core/review/design-system-contract-application.md`
 - `core/workflows/catalog.md`
 - `core/workflows/operational-calibration.md`
 - `core/workflows/self-evolution.md`

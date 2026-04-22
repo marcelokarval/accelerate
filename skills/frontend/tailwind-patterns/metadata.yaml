@@ -1,0 +1,8 @@
+name: tailwind-patterns
+category: frontend
+status: standalone-adapted
+source: ~/.codex/skills/tailwind-patterns
+runtime_mirror: ~/.codex/skills/tailwind-patterns
+local_native_owner: profiles/
+sync_policy: repo-first
+description: Tailwind utility composition, responsive behavior, token usage, and readable class-structure guidance.

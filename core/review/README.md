@@ -14,6 +14,7 @@ Native authority now starts here:
 - `product-critical-surfaces.md`
 - `premium-interface-production.md`
 - `html-design-system-extraction.md`
+- `design-system-contract-application.md`
 - `ui-polishing-observer.md`
 
 Supporting inherited doctrine may still exist in `references/`, but review

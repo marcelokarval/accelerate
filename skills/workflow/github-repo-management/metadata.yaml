@@ -1,0 +1,8 @@
+name: github-repo-management
+category: workflow
+status: standalone-adapted
+source: ~/.codex/skills/github-repo-management
+runtime_mirror: ~/.codex/skills/github-repo-management
+local_native_owner: adapters/workflow/github/
+sync_policy: repo-first
+description: GitHub repository setup, cloning, forking, remote wiring, and identity verification.

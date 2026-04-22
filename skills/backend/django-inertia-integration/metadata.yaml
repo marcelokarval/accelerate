@@ -1,0 +1,11 @@
+name: django-inertia-integration
+category: backend
+status: standalone-adapted
+source: ~/.codex/skills/django-inertia-integration
+owner: accelerate
+runtime_mirror: ~/.codex/skills/django-inertia-integration
+local_native_owner: profiles/django-inertia-react/README.md
+adaptation_policy: >
+  Standalone Accelerate Django/Inertia profile version. Keep backend-side
+  Inertia render/props/redirect/page-name discipline profile-scoped.
+last_reviewed: 2026-04-22

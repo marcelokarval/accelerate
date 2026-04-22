@@ -1,0 +1,8 @@
+name: api-surface-governance
+category: governance
+status: standalone-adapted
+source: ~/.codex/skills/api-surface-governance
+runtime_mirror: ~/.codex/skills/api-surface-governance
+local_native_owner: core/control-plane/branch-enforcement-matrix.md
+sync_policy: repo-first
+description: Runtime, REST, webhook, callback, and future API surface governance.

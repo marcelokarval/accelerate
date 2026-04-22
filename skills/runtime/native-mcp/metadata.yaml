@@ -1,0 +1,8 @@
+name: native-mcp
+category: runtime
+status: standalone-adapted
+source: ~/.codex/skills/native-mcp
+runtime_mirror: ~/.codex/skills/native-mcp
+local_native_owner: adapters/runtime/
+sync_policy: repo-first
+description: Codex-native MCP configuration, transport, approval, secret, and troubleshooting guidance.

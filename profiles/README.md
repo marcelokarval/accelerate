@@ -11,3 +11,14 @@ Profiles may define:
 - proof posture
 - common reviewers
 
+Every active profile should expose a `validation-bundle.md` before agents or
+operators treat it as execution-ready.
+
+The bundle must name:
+
+- mandatory skills
+- default implementation proof
+- backend/frontend QA commands
+- browser-proof posture
+- persistent regression posture
+- closure packet requirements

@@ -1,0 +1,8 @@
+name: code-audit
+category: review
+status: standalone-adapted
+source: ~/.codex/skills/code-audit
+runtime_mirror: ~/.codex/skills/code-audit
+local_native_owner: core/review/
+sync_policy: repo-first
+description: P0-P3 code audit guidance for security, architecture, maintainability, documentation, and quality gates.

@@ -1,0 +1,11 @@
+name: architecture
+category: review
+status: standalone-adapted
+source: ~/.codex/skills/architecture
+owner: accelerate
+runtime_mirror: ~/.codex/skills/architecture
+local_native_owner: core/review/architecture.md
+adaptation_policy: >
+  Standalone Accelerate version. Keep decision/tradeoff/ADR discipline and
+  route project-specific stack rules through active profiles or overlays.
+last_reviewed: 2026-04-22

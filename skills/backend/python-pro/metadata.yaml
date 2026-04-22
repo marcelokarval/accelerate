@@ -1,0 +1,8 @@
+name: python-pro
+category: backend
+status: standalone-adapted
+source: ~/.codex/skills/python-pro
+runtime_mirror: ~/.codex/skills/python-pro
+local_native_owner: profiles/django-inertia-react/README.md
+sync_policy: repo-first
+description: Python 3.12+ implementation, typing, structure, and tooling discipline.

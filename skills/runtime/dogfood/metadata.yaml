@@ -1,0 +1,8 @@
+name: dogfood
+category: runtime
+status: standalone-adapted
+source: ~/.codex/skills/dogfood
+runtime_mirror: ~/.codex/skills/dogfood
+local_native_owner: adapters/runtime/browser/
+sync_policy: repo-first
+description: Exploratory browser QA, evidence capture, issue taxonomy, and structured bug reports.

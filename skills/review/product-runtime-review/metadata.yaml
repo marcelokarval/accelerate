@@ -1,0 +1,11 @@
+name: product-runtime-review
+category: review
+status: standalone-adapted
+source: ~/.codex/skills/product-runtime-review
+owner: accelerate
+runtime_mirror: ~/.codex/skills/product-runtime-review
+local_native_owner: core/review/product-critical-surfaces.md
+adaptation_policy: >
+  Standalone Accelerate version. Keep user-facing truth, recovery, capability
+  honesty, and browser-proof expectations independent of one stack.
+last_reviewed: 2026-04-22

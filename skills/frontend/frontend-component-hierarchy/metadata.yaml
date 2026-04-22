@@ -1,0 +1,11 @@
+name: frontend-component-hierarchy
+category: frontend
+status: standalone-adapted
+source: ~/.codex/skills/frontend-component-hierarchy
+owner: accelerate
+runtime_mirror: ~/.codex/skills/frontend-component-hierarchy
+local_native_owner: core/control-plane/branch-enforcement-matrix.md
+adaptation_policy: >
+  Standalone Accelerate version. Preserve placement/import direction and layer
+  ownership rules across active frontend profiles.
+last_reviewed: 2026-04-22

@@ -1,0 +1,11 @@
+name: security-patterns
+category: security
+status: standalone-adapted
+source: ~/.codex/skills/security-patterns
+owner: accelerate
+runtime_mirror: ~/.codex/skills/security-patterns
+local_native_owner: references/adjacent-skill-trigger-audit.md
+adaptation_policy: >
+  Standalone Accelerate version. Keep ownership, auth, secrets, fail-closed
+  mutations, and race-safety stack-neutral.
+last_reviewed: 2026-04-22

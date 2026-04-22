@@ -1,0 +1,11 @@
+name: frontend-componentization-audit
+category: frontend
+status: standalone-adapted
+source: ~/.codex/skills/frontend-componentization-audit
+owner: accelerate
+runtime_mirror: ~/.codex/skills/frontend-componentization-audit
+local_native_owner: core/control-plane/branch-enforcement-matrix.md
+adaptation_policy: >
+  Standalone Accelerate version. Keep adopt/extract/converge/leave-as-is
+  componentization review independent of one frontend repository path.
+last_reviewed: 2026-04-22

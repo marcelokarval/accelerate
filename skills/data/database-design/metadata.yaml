@@ -1,0 +1,8 @@
+name: database-design
+category: data
+status: standalone-adapted
+source: ~/.codex/skills/database-design
+runtime_mirror: ~/.codex/skills/database-design
+local_native_owner: skills/data/README.md
+sync_policy: repo-first
+description: Relational schema design, entity relationships, invariants, constraints, and migration-safe evolution.

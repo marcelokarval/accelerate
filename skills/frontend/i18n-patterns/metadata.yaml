@@ -1,0 +1,11 @@
+name: i18n-patterns
+category: frontend
+status: standalone-adapted
+source: ~/.codex/skills/i18n-patterns
+owner: accelerate
+runtime_mirror: ~/.codex/skills/i18n-patterns
+local_native_owner: core/control-plane/branch-enforcement-matrix.md
+adaptation_policy: >
+  Standalone Accelerate version. Govern copy ownership, locale-pack parity, and
+  runtime locale proof through the active project's i18n model.
+last_reviewed: 2026-04-22

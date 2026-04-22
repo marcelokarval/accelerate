@@ -14,14 +14,14 @@ outside this table.
 
 | Family | Phase | Dominant surfaces | Risk focus | Write scope | Ownership class | Mandatory skills |
 | --- | --- | --- | --- | --- | --- | --- |
-| `lifecycle-product-manager` | frame / plan | issue shape, acceptance, parent/child structure | scope drift, execution unreadiness | read-only | root-preferred sidecar | workflow adapter planning skill, `prompt-hardening` when needed |
-| `django-inertia-technical-planner` | plan | Django/Inertia boundaries, execution order, decomposition | architecture drift, contract drift | read-only | delegate-possible sidecar | `architecture`, constitutional stack skill, governance review skill |
-| `django-domain-implementer` | execute | models, services, tasks, admin, backend queries | backend contract drift, migration/runtime drift | workspace-write | delegate-possible worker | Django/service/python/system skills |
-| `inertia-react-ui-implementer` | execute | Inertia pages, React features, route-level UX, i18n-aware UI | frontend structure drift, shell churn symptoms | workspace-write | delegate-possible worker | frontend/Inertia/TypeScript boundary skills |
+| `lifecycle-product-manager` | frame / plan | issue shape, acceptance, parent/child structure | scope drift, execution unreadiness | read-only | root-preferred sidecar | `planning-with-files`, selected workflow adapter skills, `prompt-hardening` when needed |
+| `django-inertia-technical-planner` | plan | Django/Inertia boundaries, execution order, decomposition | architecture drift, contract drift | read-only | delegate-possible sidecar | `architecture`, `governance-audit`, `api-surface-governance`, `validation-governance` as needed |
+| `django-domain-implementer` | execute | models, services, tasks, admin, backend queries | backend contract drift, migration/runtime drift | workspace-write | delegate-possible worker | `django-pro`, `django-service-patterns`, `python-pro`, `validation-governance`, `security-patterns` as needed |
+| `inertia-react-ui-implementer` | execute | Inertia pages, React features, route-level UX, i18n-aware UI | frontend structure drift, shell churn symptoms | workspace-write | delegate-possible worker | `front-react-shadcn`, `inertia-patterns`, `typescript-pro`, `frontend-boundary-governance`, `tailwind-patterns` |
 | `django-inertia-contract-integrator` | plan / execute | prop contracts, route truth, shared props, identifier semantics | contract correctness, boundary drift | read-only or workspace-write depending on slice | delegate-possible integrator | Django-Inertia integration, prop governance, validation governance |
 | `runtime-proof-auditor` | prove | browser runtime, staged flows, redirect truth, shell persistence | runtime/product drift | read-only by default | delegate-possible reviewer | runtime review and dogfood skills |
 | `trust-anti-abuse-reviewer` | review / prove | auth, session, billing, export, deletion, upload, ownership-sensitive flows | misuse, replay, enumeration, privilege drift | read-only by default | delegate-possible reviewer | anti-abuse and security review skills |
-| `legacy-truth-analyst` | frame / plan | donor-system or legacy truth extraction | adaptation drift, false rewrites | read-only | specialist sidecar | legacy consultation and adaptation skills |
+| `legacy-truth-analyst` | frame / plan | donor-system or legacy truth extraction | adaptation drift, false rewrites | read-only | specialist sidecar | `legacy-first-protocol`, `legacy-transplant` |
 
 ## Ownership Classes
 

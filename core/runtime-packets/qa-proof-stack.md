@@ -39,6 +39,8 @@ Do not collapse these into a single vague `tested` claim.
 - `E2E Regression Engineer`
   - persistent Playwright scenarios
   - regression protection after the flow is understood
+  - scenario fixtures from `adapters/runtime/playwright/scenario-fixture-template.md`
+  - closure packets from `adapters/runtime/playwright/proof-packet-template.md`
 
 ## Chrome DevTools vs Playwright
 
@@ -65,6 +67,9 @@ its higher automation power will not hide the real user path.
 
 Only persist to Playwright after the interactive truth is stable enough to be
 worth automating.
+
+When persistent proof is needed, use the local Playwright adapter fixtures in
+`adapters/runtime/playwright/` instead of an informal test note.
 
 ## Browser-Proof Intensity Labels
 

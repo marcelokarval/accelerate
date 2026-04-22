@@ -1,0 +1,8 @@
+name: inertia-patterns
+category: backend
+status: standalone-adapted
+source: ~/.codex/skills/inertia-patterns
+runtime_mirror: ~/.codex/skills/inertia-patterns
+local_native_owner: profiles/django-inertia-react/README.md
+sync_policy: repo-first
+description: Inertia.js page, layout, navigation, partial reload, form, and server-driven prop patterns.

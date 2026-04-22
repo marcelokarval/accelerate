@@ -1,0 +1,11 @@
+name: tailwind-design-system
+category: frontend
+status: standalone-adapted
+source: ~/.codex/skills/tailwind-design-system
+owner: accelerate
+runtime_mirror: ~/.codex/skills/tailwind-design-system
+local_native_owner: core/review/design-system-contract-application.md
+adaptation_policy: >
+  Standalone Accelerate version. Keep Tailwind tokens, variants, themes, and
+  shared visual-language governance aligned with design-system contracts.
+last_reviewed: 2026-04-22

@@ -164,6 +164,13 @@ Required comparison set:
 - `docs/reference/design-system.premium-direction.md`
 - `docs/reference/design-system.premium-direction.html`
 
+When the task moves from diagnosis/direction into implementation, correction,
+or proposal, route through `design-system-contract-application.md` and
+`apply-design-system-contract`. Premium direction is not allowed to remain a
+pretty reference detached from code. It must become a contract-aware
+implementation packet with component mapping, anatomy/token separation, and
+runtime comparison proof.
+
 The slop audit should explicitly inspect for:
 
 - purple/violet/fuchsia default bias
@@ -186,6 +193,12 @@ The premium direction is valid only if it does three things:
   than as a visual identity to copy
 - demonstrates enough component families in the premium HTML to evaluate real
   screen recomposition, not just atmosphere
+- when light/dark themes exist, proves dark mode as a token-derived sibling of
+  the light system, not as an unrelated black/neon product
+- separates theme-token changes from immutable component anatomy so the
+  direction can become a future theme generator rather than a one-off mockup
+- covers enough states and primitives to behave like a product UI/theme kit,
+  comparable in breadth expectation to Bootstrap or mature component systems
 
 Benchmark systems such as `popular-web-designs` may inform the judgment, but
 they are comparison references, not identities to copy.
@@ -199,6 +212,9 @@ Add these premium failure modes when relevant:
 - `slop-audit-missing`
 - `premium-html-not-rendered`
 - `premium-component-gallery-too-thin`
+- `dark-mode-as-unrelated-skin`
+- `theme-generator-contract-missing`
+- `component-kit-coverage-too-thin`
 
 ## Premium Interface Reconciliation
 

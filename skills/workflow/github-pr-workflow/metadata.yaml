@@ -1,0 +1,8 @@
+name: github-pr-workflow
+category: workflow
+status: standalone-adapted
+source: ~/.codex/skills/github-pr-workflow
+runtime_mirror: ~/.codex/skills/github-pr-workflow
+local_native_owner: adapters/workflow/github/
+sync_policy: repo-first
+description: GitHub branch, PR, CI, update, and merge workflow.

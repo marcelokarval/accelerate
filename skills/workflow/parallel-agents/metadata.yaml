@@ -1,0 +1,8 @@
+name: parallel-agents
+category: workflow
+status: standalone-adapted
+source: ~/.codex/skills/parallel-agents
+runtime_mirror: ~/.codex/skills/parallel-agents
+local_native_owner: core/workflows/catalog.md
+sync_policy: repo-first
+description: Safe parallelization of independent reads, analyses, validations, and bounded implementation slices.

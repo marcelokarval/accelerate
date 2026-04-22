@@ -1,0 +1,11 @@
+name: frontend-boundary-governance
+category: frontend
+status: standalone-adapted
+source: ~/.codex/skills/frontend-boundary-governance
+owner: accelerate
+runtime_mirror: ~/.codex/skills/frontend-boundary-governance
+local_native_owner: references/adjacent-skill-trigger-audit.md
+adaptation_policy: >
+  Standalone Accelerate version. Preserve backend truth, nonvisual TypeScript,
+  and TSX rendering boundaries without binding examples to one repository.
+last_reviewed: 2026-04-22

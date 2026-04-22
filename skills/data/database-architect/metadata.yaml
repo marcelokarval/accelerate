@@ -1,0 +1,8 @@
+name: database-architect
+category: data
+status: standalone-adapted
+source: ~/.codex/skills/database-architect
+runtime_mirror: ~/.codex/skills/database-architect
+local_native_owner: skills/data/README.md
+sync_policy: repo-first
+description: Cross-domain data architecture, lifecycle, retention, partitioning, and storage strategy.

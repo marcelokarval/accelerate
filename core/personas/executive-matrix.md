@@ -18,10 +18,10 @@ same mutation package or the defer reason should be explicit.
 | `Specification PM` | `prompt-hardening`, `architecture` | actor/goal ambiguity, weak request framing | `Specification Handoff Packet` |
 | `Product Planner` | active workflow adapter or planning surface | scope split, rollout shape, slices | `Planning Handoff Packet` |
 | `Implementation Designer` | `planning-with-files`, `executing-plans` when accepted | execution design | `Implementation Design Packet` |
-| `Implementer / Developer` | active layer stack skills | bounded implementation | `Implementation Handoff Packet` |
-| `Backend Implementer` | active backend stack skills | backend-heavy mutation | backend implementation packet |
-| `Frontend Implementer` | active frontend stack skills | frontend-heavy mutation | frontend implementation packet |
-| `Runtime/Product Reviewer` | runtime/product review skill | user-facing runtime-sensitive flow | `Runtime Review Packet` |
+| `Implementer / Developer` | concrete active profile skills from `skills/_registry/manifest.md` | bounded implementation | `Implementation Handoff Packet` |
+| `Backend Implementer` | backend profile bundle: `django-pro`, `django-service-patterns`, `django-inertia-integration`, `python-pro`, plus data/test skills as needed | backend-heavy mutation | backend implementation packet |
+| `Frontend Implementer` | frontend profile bundle: `front-react-shadcn`, `react-best-practices`, `typescript-pro`, `frontend-boundary-governance`, `tailwind-patterns`, plus profile-specific skills | frontend-heavy mutation | frontend implementation packet |
+| `Runtime/Product Reviewer` | `product-runtime-review` | user-facing runtime-sensitive flow | `Runtime Review Packet` |
 | `Governance Auditor` | governance / constitution / contract skills relevant to the branch | governance / truth doubt | `Governance Packet` |
 | `Data / Contract Steward` | contract / schema / validation governance skills relevant to the branch | DTO, persistence, identifier, or contract truth doubt | contract packet |
 | `Provider Boundary Auditor` | provider / boundary governance skills relevant to the branch | external integration or upstream/downstream seam doubt | provider/runtime packet |

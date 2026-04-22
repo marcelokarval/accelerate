@@ -1,0 +1,8 @@
+name: linear-workflow-orchestrator
+category: workflow
+status: standalone-adapted
+source: ~/.codex/skills/linear-workflow-orchestrator
+runtime_mirror: ~/.codex/skills/linear-workflow-orchestrator
+local_native_owner: adapters/workflow/linear/
+sync_policy: repo-first
+description: Multi-issue Linear dependency sequencing and critical-path planning.

@@ -1,0 +1,8 @@
+name: planning-with-files
+category: workflow
+status: standalone-adapted
+source: ~/.codex/skills/planning-with-files
+runtime_mirror: ~/.codex/skills/planning-with-files
+local_native_owner: planning/
+sync_policy: repo-first
+description: Persistent markdown planning for multi-step implementation and execution tracking.

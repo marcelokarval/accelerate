@@ -1,0 +1,11 @@
+name: prompt-hardening
+category: root
+status: standalone-adapted
+source: ~/.codex/skills/prompt-hardening
+owner: accelerate
+runtime_mirror: ~/.codex/skills/prompt-hardening
+local_native_owner: core/hardening/prompt-hardening.md
+adaptation_policy: >
+  Standalone Accelerate version. Keep prompt-hardening project-agnostic,
+  workflow-adapter-aware, and visible through Prompt A / Prompt B artifacts.
+last_reviewed: 2026-04-22

@@ -366,8 +366,10 @@ Common mappings:
 - `E2E Regression Engineer` -> persistent E2E/regression tooling after browser
   truth is stable
 - `Runtime/Product Reviewer` -> `product-runtime-review`
-- `Governance Auditor` -> `governance-audit`, `p4y-stack-constitution`
-- `Stack Constitution Auditor` -> `p4y-stack-constitution`, `governance-audit`
+- `Governance Auditor` -> `governance-audit`, `architecture`,
+  branch-specific governance skills
+- `Stack Constitution Auditor` -> `governance-audit`, `architecture`,
+  `api-surface-governance`, `dependency-governance`
 - `Closure / Forensic Reviewer` -> `verification-before-completion`
 
 For hard mandatory sets by persona, see:

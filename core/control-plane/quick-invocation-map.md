@@ -35,6 +35,7 @@ User Request
 - full-stack delivery
 - product-critical surface
 - visual / artifact-driven frontend
+- design-system application / recomposition
 - query / contract-sensitive backend
 - browser-proof audit
 - agent-browser bounded browser operations
@@ -56,6 +57,7 @@ are:
 - issue bootstrap
 - planning artifact
 - implementation handoff
+- design-system application / recomposition
 - backend QA
 - frontend QA
 - browser proof
@@ -85,5 +87,7 @@ Before starting a non-trivial run, answer:
 2. what mandatory skills are in force?
 3. is issue bootstrap already satisfied?
 4. is the planning artifact already satisfied?
-5. what proof lane is next?
-6. what review still blocks closure?
+5. if `docs/reference/design-system*` exists, is this extraction or
+   application?
+6. what proof lane is next?
+7. what review still blocks closure?

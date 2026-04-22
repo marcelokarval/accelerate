@@ -1,0 +1,8 @@
+name: linear-pm
+category: workflow
+status: standalone-adapted
+source: ~/.codex/skills/linear-pm
+runtime_mirror: ~/.codex/skills/linear-pm
+local_native_owner: adapters/workflow/linear/
+sync_policy: repo-first
+description: Linear issue creation, enrichment, lifecycle, metadata, hierarchy, and closure hygiene.

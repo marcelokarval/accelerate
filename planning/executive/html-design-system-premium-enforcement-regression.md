@@ -43,6 +43,35 @@ The broad component gallery must demonstrate the proposed visual treatment for:
 - feedback such as alerts, toasts, progress, skeletons and empty states
 - navigation and shell treatment when relevant
 
+## Light / Dark Theme Rule
+
+The `sistema-financeiro` follow-up exposed a second enforcement gap: a premium
+light theme can be strong while the dark sample is merely a discrepant black
+panel.
+
+When the source product supports light/dark themes or the user asks about dark
+mode, the premium package must include:
+
+- a light/dark token model in `design-system.premium-direction.md`
+- a `Light vs Dark System` section in `design-system.premium-direction.html`
+- equivalent component families in both modes, not only a hero sample
+- explicit separation between immutable component anatomy and theme tokens
+- proof that dark mode preserves product semantics, hierarchy, density and
+  component behavior from light mode
+
+The dark theme fails if it feels like an unrelated black/neon dashboard rather
+than a token-derived sibling of the light theme.
+
+## Theme Generator Rule
+
+When the project exposes a broad local catalog, treat the premium artifact as a
+future theme-generator seed, not a one-off visual mock.
+
+The expected breadth is closer to Bootstrap, shadcn/Radix kits, or mature UI
+theme galleries than to a landing-page moodboard. The artifact should prove
+enough primitives, variants and states that a future agent can generate many
+interfaces by changing tokens and preserving component recipes.
+
 ## Status Classification
 
 Use these component status labels:
@@ -60,6 +89,7 @@ For each target project, the minimum regression proof is:
 
 ```bash
 rg -n "Premium Component Coverage Matrix|Component gallery|Coverage matrix|available-in-code|not-approved-yet" docs/reference/design-system.premium-direction.md docs/reference/design-system.premium-direction.html
+rg -n "Light vs Dark System|dark-mode|theme generator|token-derived|component anatomy" docs/reference/design-system.premium-direction.md docs/reference/design-system.premium-direction.html
 rg -n "[ \t]+$" docs/reference/design-system.premium-direction.md docs/reference/design-system.premium-direction.html
 git diff --check
 npx playwright screenshot file://$PWD/docs/reference/design-system.premium-direction.html .tmp/design-system-premium-direction-rich-render.png --full-page
@@ -79,6 +109,12 @@ Do not close a premium design-system pipeline if:
 - the artifact lacks render proof
 - the implementation handoff treats shadcn/Radix defaults as final visual style
 - the source-truth `design-system.html` was overwritten by redesign
+- dark mode is supported or requested but appears only as one isolated visual
+  block, a textual mention, or an unrelated skin
+- the package does not separate token-level theme variation from fixed
+  component/product anatomy
+- the component gallery is too narrow to serve as a future theme-generator
+  reference
 
 ## Applied Accelerate Updates
 

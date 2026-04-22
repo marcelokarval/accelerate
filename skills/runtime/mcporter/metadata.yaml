@@ -1,0 +1,8 @@
+name: mcporter
+category: runtime
+status: standalone-adapted
+source: ~/.codex/skills/mcporter
+runtime_mirror: ~/.codex/skills/mcporter
+local_native_owner: adapters/runtime/
+sync_policy: repo-first
+description: Ad-hoc MCP discovery, schema inspection, auth, direct calls, and CLI generation with mcporter.

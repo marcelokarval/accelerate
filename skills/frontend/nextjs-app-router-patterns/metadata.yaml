@@ -1,0 +1,8 @@
+name: nextjs-app-router-patterns
+category: frontend
+status: standalone-adapted
+source: ~/.codex/skills/nextjs-app-router-patterns
+runtime_mirror: ~/.codex/skills/nextjs-app-router-patterns
+local_native_owner: profiles/nextjs-tailwind/
+sync_policy: repo-first
+description: Next.js App Router layout and composition reference profile.

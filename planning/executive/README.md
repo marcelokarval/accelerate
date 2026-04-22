@@ -55,6 +55,11 @@ The current explicit parity-decision packets issued from that evidence are:
 The current runtime-sensitive loop evidence for cross-surface verification lives
 in:
 
+- `autocontained-accelerate-dependency-curation-plan.md`
+- `root-skills-structure-implementation-result.md`
+- `final-global-only-audit-result.md`
+- `local-ambiguity-and-md-size-audit-result.md`
+- `design-system-contract-application-implementation-result.md`
 - `html-design-system-premium-pipeline-plan.md`
 - `html-design-system-premium-enforcement-regression.md`
 - `runtime-sensitive-surface-loop-plan.md`

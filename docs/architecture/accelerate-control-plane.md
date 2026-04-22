@@ -574,6 +574,7 @@ accelerate
 │   ├── frontend-boundary-governance
 │   ├── tailwind-design-system
 │   ├── extract-html-design-system-v2 when URL/HTML/app reference extraction is active
+│   ├── apply-design-system-contract when docs/reference/design-system* drives UI mutation
 │   ├── ascii-wireframe
 │   └── premium-interface-production when needed
 ├── query / contract-sensitive backend

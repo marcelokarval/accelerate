@@ -1,0 +1,8 @@
+name: react-best-practices
+category: frontend
+status: standalone-adapted
+source: ~/.codex/skills/react-best-practices
+runtime_mirror: ~/.codex/skills/react-best-practices
+local_native_owner: profiles/
+sync_policy: repo-first
+description: React rendering, state, component-boundary, and pragmatic performance guidance.

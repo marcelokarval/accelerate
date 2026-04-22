@@ -37,6 +37,7 @@ Do not use `exact` for documentary review alone.
 | `validation-governance` | `documentarily-strong` | strong backend-vs-frontend validation authority model; should be loaded when local validation or parsing boundaries are part of the risk |
 | `systematic-debugging` | `documentarily-strong` | now present and valid as the bug/regression branch entry skill |
 | `extract-html-design-system-v2` | `documentarily-strong` | strong HTML-reference-to-local-design-system bridge; should be loaded when a URL, local HTML file, raw HTML reference, or existing web app is intended to guide UI correction, new-screen generation, recreation, or premium visual convergence |
+| `apply-design-system-contract` | `documentarily-strong` | strong post-extraction bridge; should be loaded when existing `docs/reference/design-system*` artifacts must drive implementation, correction, proposal, recomposition, or theme generation |
 
 ## Hard Trigger Rules
 
@@ -61,7 +62,13 @@ Treat these as branch-defined, not optional memory aids:
   `design-system.premium-direction.html`; if the frontend stack exposes a broad
   shadcn/Radix-style primitive catalog, the premium direction must include a
   component coverage matrix and a broad component gallery rather than a thin
-  moodboard.
+  moodboard. If light/dark theme support exists, the premium direction must
+  prove dark as a token-derived sibling of light mode and separate theme-token
+  changes from fixed component anatomy so the artifact can seed future theme
+  generation.
+- `apply-design-system-contract` when those `docs/reference/design-system*`
+  artifacts already exist and the task is implementation, correction,
+  improvement, proposal, recomposition, or theme generation from them.
 
 ### Backend Structural / Contract Branch
 
@@ -106,7 +113,9 @@ Current decision:
 
 - backend structural enforcement remains covered by the explicit bundle
   (`django-service-patterns`, `validation-governance`, `security-patterns`,
-  `sql-optimization-patterns`, plus domain-truth skills when needed)
+  `sql-optimization-patterns`, plus concrete domain authority skills such as
+  `financial-source-truth`, `payment-integration`, or `stripe-integration`
+  when needed)
 - if this bundle still proves too soft in real usage, a dedicated lens can be
   promoted later through the workflow-change approval path
 

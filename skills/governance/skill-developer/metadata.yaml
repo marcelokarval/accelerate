@@ -1,0 +1,8 @@
+name: skill-developer
+category: governance
+status: native
+source: skills/governance/skill-developer
+runtime_mirror: ~/.codex/skills/skill-developer
+local_native_owner: core/workflows/skill-evaluation-lab.md
+sync_policy: repo-first
+description: Accelerate skill creation, adaptation, registration, synchronization, and parity-verification guidance.
