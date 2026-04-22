@@ -53,6 +53,29 @@ issue-ready work
   -> bounded execution order
 ```
 
+### 4b. Product-Spec-To-Execution Workflow
+
+```text
+raw request / product ambiguity
+  -> Story Framing using planning/product/user-story-template.md
+  -> PRD-lite when capability-level or epic-like
+  -> SDD when architecture, design, or layer ownership is unresolved
+  -> Executive Plan when sequencing, adapters, proof lanes, or rollout matter
+  -> Task Breakdown when implementation can be sliced
+  -> Issue-Bootstrap or explicit no-backend exception
+  -> bounded execution
+```
+
+Use this workflow when a request mentions or implies user stories, PRD, SDD,
+planner, executive planner, tasks, roadmap, capability, epic, acceptance, or
+implementation sequencing.
+
+Do not require every artifact for every run. The workflow should choose the
+smallest sufficient artifact that makes the next phase honest.
+
+This workflow is invalid if implementation starts while actor/value/acceptance,
+PRD scope, SDD technical ownership, or task dependencies are still unresolved.
+
 ### 5. Wireframe-Gate Workflow
 
 ```text

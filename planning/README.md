@@ -15,6 +15,7 @@ layer even though not every plan type is backed by a live workflow adapter yet.
 
 That means planning must already be able to:
 
+- frame user stories and PRD-lite artifacts
 - define the role of executive plans
 - distinguish PRD, SDD, migration, onboarding, and promotion planning
 - provide reusable templates for later sessions
@@ -30,7 +31,11 @@ It must not pretend that it already has:
 
 This layer owns the explicit artifacts that shape work before execution:
 
+- user stories
+- PRD-lite artifacts
+- SDD artifacts
 - executive plans
+- task breakdowns
 - architecture plans
 - migration plans
 - onboarding bootstrap plans
@@ -50,11 +55,19 @@ root should require a planning artifact before mutation begins.
 The usual chain is:
 
 1. classify and harden the request
-2. discover the real operating context
-3. produce the required planning artifact
-4. execute
-5. prove
-6. close
+2. frame user value and acceptance when needed
+3. produce PRD-lite when scope is capability-level or epic-like
+4. produce SDD when technical ownership or architecture is unresolved
+5. produce an executive plan when sequencing, adapters, proof lanes, or rollout matter
+6. break the work into dependency-aware tasks
+7. execute
+8. prove
+9. close
+
+Use the smallest artifact that makes the next phase honest.
+
+Not every task needs the full chain. Implementation must not start while the
+artifact needed for the next safe step is missing.
 
 ## Reading Order
 
@@ -63,11 +76,13 @@ For a fresh session, read in this order:
 1. `../AGENTS.md`
 2. `../SKILL.md`
 3. `README.md`
-4. `executive/README.md`
+4. `product/README.md`
 5. `architecture/README.md`
-6. `migration/README.md`
-7. `onboarding/README.md`
-8. `promotion/README.md`
+6. `executive/README.md`
+7. `execution/README.md`
+8. `migration/README.md`
+9. `onboarding/README.md`
+10. `promotion/README.md`
 
 ## Current Output Contract
 
@@ -77,8 +92,10 @@ to continue without reconstructing the reasoning from scratch.
 The minimum output is:
 
 - scope and non-goals
+- actor, value, and acceptance when product framing is active
 - governing assumptions
 - selected layer or branch
 - active constraints
 - next bounded slices
+- proof lane expectations
 - explicit residual risks or unresolved ambiguities

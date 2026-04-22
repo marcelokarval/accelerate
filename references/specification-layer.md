@@ -3,6 +3,18 @@
 Use this module when the work is not yet ready for safe implementation because
 the specification is still weak, incomplete, or incorrectly scoped.
 
+## Native Templates
+
+Primary templates now live in:
+
+- `../planning/product/user-story-template.md`
+- `../planning/product/prd-lite-template.md`
+- `../planning/architecture/sdd-template.md`
+- `../planning/execution/task-breakdown-template.md`
+
+This reference remains supporting doctrine. The templates are the native
+planning artifacts used by the standalone `accelerate` repo.
+
 ## Explicit Aliases
 
 This layer already covers the workflow language often described as:
