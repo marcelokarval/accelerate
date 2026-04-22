@@ -11,8 +11,8 @@ transition from global-only skills to self-contained local runtime skills.
 
 | Path | Role |
 | --- | --- |
-| `skill-dependency-manifest.md` | Migration inventory and current dependency-status audit. |
-| `skills/` | Historical seed bodies preserved for traceability; root `skills/` is active. |
+| `skill-dependency-manifest.md` | Compact migration audit and pointers to active registry truth. |
+| `skills/` | Historical transition index; full duplicated skill bodies were removed after root `skills/` became active. |
 
 ## Rule
 
@@ -25,3 +25,5 @@ The active state is:
 - root `skills/` is source of truth
 - global `~/.codex/skills/` is generated mirror
 - required runtime behavior does not depend on global-only skill bodies
+
+Full pre-compaction inventories remain available through git history.
