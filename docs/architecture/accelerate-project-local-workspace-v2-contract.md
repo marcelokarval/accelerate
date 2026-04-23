@@ -27,7 +27,7 @@ It does not yet define:
 - full workflow adapter persistence
 - runtime capability registry persistence
 - profile override persistence
-- long-form local memory persistence
+- long-form local memory persistence beyond a minimal status layer
 
 Those remain V3 concerns.
 
@@ -39,6 +39,10 @@ The minimum V2 implementation must create all of these paths:
 .accelerate/
 ├── README.md
 ├── state.yaml
+├── status/
+│   ├── readiness-dashboard.yaml
+│   ├── timeline.jsonl
+│   └── learnings.jsonl
 ├── onboarding/
 │   ├── status.yaml
 │   ├── discovery.yaml
@@ -67,14 +71,20 @@ When two V2 files appear to overlap, precedence is:
 
 1. `.accelerate/state.yaml`
    - global local-installation summary
-2. `.accelerate/onboarding/status.yaml`
+2. `.accelerate/status/readiness-dashboard.yaml`
+   - local synthesized readiness and closure posture
+3. `.accelerate/onboarding/status.yaml`
    - detailed onboarding and reentry state
-3. `.accelerate/onboarding/decisions.yaml`
+4. `.accelerate/onboarding/decisions.yaml`
    - declarative onboarding decisions
-4. `.accelerate/planning/current-plan.md`
+5. `.accelerate/planning/current-plan.md`
    - current planning index and governing artifact pointer
-5. `.accelerate/agents/status.yaml`
+6. `.accelerate/agents/status.yaml`
    - local pre-agents posture
+7. `.accelerate/status/timeline.jsonl`
+   - append-only continuity chronology
+8. `.accelerate/status/learnings.jsonl`
+   - append-only durable learnings
 
 ### Precedence Rule
 
@@ -122,6 +132,9 @@ active_runtime_adapters: []
 agent_mode: root-only|agent-eligible
 current_plan: .accelerate/planning/current-plan.md
 agents_status_file: .accelerate/agents/status.yaml
+readiness_dashboard: .accelerate/status/readiness-dashboard.yaml
+timeline_file: .accelerate/status/timeline.jsonl
+learnings_file: .accelerate/status/learnings.jsonl
 last_bootstrap_update: YYYY-MM-DD
 ```
 
@@ -137,6 +150,51 @@ Rules:
   `.accelerate/onboarding/status.yaml`
 - `reentry_status` here is a summary mirror of
   `.accelerate/onboarding/status.yaml`
+
+### `.accelerate/status/readiness-dashboard.yaml`
+
+Minimum required keys:
+
+```yaml
+schema_version: 1
+current_phase: onboarding|planning|execution|review|closure
+dashboard_verdict: blocked|ready-for-execution|ready-for-review|ready-for-closure
+execution_readiness: blocked|ready
+review_readiness: blocked|ready
+closure_readiness: blocked|ready
+required_gates: []
+completed_gates: []
+blocking_items: []
+last_updated: YYYY-MM-DD
+```
+
+Rules:
+
+- this file is a local synthesis surface, not a replacement for root packets
+- it should stay small and conservative
+- it must not claim review or closure readiness without real upstream proof
+
+### `.accelerate/status/timeline.jsonl`
+
+This file is mandatory and append-only.
+
+It records meaningful local workspace transitions such as:
+
+- workspace emitted
+- project classified
+- reentry reconciled
+- learning recorded
+
+It must not become a full chat log.
+
+### `.accelerate/status/learnings.jsonl`
+
+This file is mandatory and append-only.
+
+It records durable operational learnings that are worth carrying across
+sessions before they are promoted into stronger governing surfaces.
+
+It must stay curated and high-signal.
 
 ### `.accelerate/README.md`
 
@@ -155,6 +213,9 @@ It should not become:
 - a duplicate of repo `AGENTS.md`
 - a duplicate of the standalone `accelerate` doctrine
 - a session log
+
+The `status/` subtree may exist, but it should remain small and operational
+rather than becoming a noisy runtime dump.
 
 ### `.accelerate/onboarding/status.yaml`
 

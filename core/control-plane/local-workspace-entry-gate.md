@@ -34,6 +34,7 @@ For governed target repositories:
 2. if absent, decide whether first local install is required now
 3. if present, read:
    - `.accelerate/state.yaml`
+   - `.accelerate/status/readiness-dashboard.yaml`
    - `.accelerate/onboarding/status.yaml`
    - `.accelerate/onboarding/decisions.yaml`
    - `.accelerate/planning/current-plan.md`
@@ -48,6 +49,9 @@ This gate comes before:
 - proof-lane selection
 
 because those downstream decisions may depend on persisted local truth.
+
+It also fails when readiness, timeline, or learnings state exists locally but
+is ignored during branch routing or closure judgment.
 
 ## Satisfied States
 
@@ -135,6 +139,9 @@ When this gate matters, the runtime packet should expose:
 - local workspace action: `none|required-init|required-reentry|required-reonboarding|reused`
 - onboarding status
 - reentry status
+- local readiness status when a dashboard exists
+- local timeline continuity when a timeline exists
+- local durable learning backlog or registration posture when learnings exist
 - active local profile
 - active local workflow backend
 - workspace drift status

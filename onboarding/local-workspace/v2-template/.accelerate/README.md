@@ -13,6 +13,7 @@ conversation alone.
 The main canonical files here are:
 
 - `state.yaml`
+- `status/readiness-dashboard.yaml`
 - `onboarding/status.yaml`
 - `onboarding/decisions.yaml`
 - `planning/current-plan.md`
@@ -26,6 +27,9 @@ The main canonical files here are:
 ## Summary vs Detailed Authority
 
 - `state.yaml` is the fast global summary index
+- `status/readiness-dashboard.yaml` is the local branch/readiness synthesis authority
+- `status/timeline.jsonl` is the append-only continuity log of meaningful local workspace transitions
+- `status/learnings.jsonl` is the append-only store for durable operational learnings worth carrying across sessions
 - `onboarding/status.yaml` is detailed onboarding and reentry authority
 - `onboarding/decisions.yaml` is detailed onboarding decision authority
 - `planning/current-plan.md` is the active local planning index and governing artifact pointer
@@ -46,16 +50,19 @@ The main canonical files here are:
 For a fresh session, read in this order:
 
 1. `state.yaml`
-2. `onboarding/status.yaml`
-3. `onboarding/decisions.yaml`
-4. `planning/current-plan.md`
-5. `planning/user-story.md`
-6. `planning/prd-lite.md`
-7. `planning/sdd.md`
-8. `planning/executive-plan.md`
-9. `planning/task-breakdown.md`
-10. `planning/open-questions.md`
-11. `agents/status.yaml`
+2. `status/readiness-dashboard.yaml`
+3. `onboarding/status.yaml`
+4. `onboarding/decisions.yaml`
+5. `planning/current-plan.md`
+6. `planning/user-story.md`
+7. `planning/prd-lite.md`
+8. `planning/sdd.md`
+9. `planning/executive-plan.md`
+10. `planning/task-breakdown.md`
+11. `planning/open-questions.md`
+12. `agents/status.yaml`
+13. `status/timeline.jsonl`
+14. `status/learnings.jsonl`
 
 ## Non-Goals
 
@@ -66,3 +73,7 @@ This directory must not become:
 - a raw session log
 - a place for secrets or runtime noise
 - a place for cache, tmp files, browser traces, or throwaway artifacts
+
+`timeline.jsonl` and `learnings.jsonl` are exceptions only because they are
+small, append-only operational memory surfaces. They should remain curated and
+high-signal, not become general chat transcripts.

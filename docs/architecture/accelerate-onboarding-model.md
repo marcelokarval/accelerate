@@ -211,6 +211,15 @@ That V2 model is intentionally small and useful. Broader local persistence
 remains a later concern, but onboarding output persistence itself is no longer
 undefined.
 
+The current V2 persistence set now also includes a minimal local status layer
+for:
+
+- readiness dashboard
+- continuity timeline
+- durable operational learnings
+
+This remains intentionally smaller than a full V3 runtime registry.
+
 ## Failure Modes
 
 ### Failure Mode 1. Over-questioning

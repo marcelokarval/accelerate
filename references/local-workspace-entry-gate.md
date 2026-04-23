@@ -42,6 +42,9 @@ When the gate is relevant, runtime packets should show:
 
 - `.accelerate=<present|absent|n/a>`
 - local workspace action
+- readiness dashboard status when present
+- timeline continuity when present
+- durable learning registration posture when present
 - onboarding status
 - reentry status
 - drift status

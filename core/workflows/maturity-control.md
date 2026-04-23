@@ -130,3 +130,6 @@ Maintain a lightweight operating mode that helps an operator answer quickly:
 - what branch am I in?
 - what proof is missing?
 - what review still blocks closure?
+- what readiness state is currently honest?
+- what checkpoint comes next?
+- which learning is ephemeral vs worth preserving?

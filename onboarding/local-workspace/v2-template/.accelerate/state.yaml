@@ -11,4 +11,7 @@ active_runtime_adapters: []
 agent_mode: root-only
 current_plan: .accelerate/planning/current-plan.md
 agents_status_file: .accelerate/agents/status.yaml
+readiness_dashboard: .accelerate/status/readiness-dashboard.yaml
+timeline_file: .accelerate/status/timeline.jsonl
+learnings_file: .accelerate/status/learnings.jsonl
 last_bootstrap_update: YYYY-MM-DD

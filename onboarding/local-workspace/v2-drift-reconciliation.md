@@ -10,10 +10,13 @@ workspace when summary and detailed authorities diverge.
 When files disagree, use this order:
 
 1. `.accelerate/state.yaml` as summary index
-2. `.accelerate/onboarding/status.yaml` for onboarding and reentry truth
-3. `.accelerate/onboarding/decisions.yaml` for onboarding decision truth
-4. `.accelerate/planning/current-plan.md` for governing execution truth
-5. `.accelerate/agents/status.yaml` for local pre-agents posture
+2. `.accelerate/status/readiness-dashboard.yaml` for synthesized local readiness truth
+3. `.accelerate/onboarding/status.yaml` for onboarding and reentry truth
+4. `.accelerate/onboarding/decisions.yaml` for onboarding decision truth
+5. `.accelerate/planning/current-plan.md` for governing execution truth
+6. `.accelerate/agents/status.yaml` for local pre-agents posture
+7. `.accelerate/status/timeline.jsonl` for continuity chronology
+8. `.accelerate/status/learnings.jsonl` for durable local learnings
 
 ## Reconciliation Rules
 
@@ -29,6 +32,7 @@ Examples:
 - `state.yaml` points to a stale plan path
 - `state.yaml` says `agent_mode: root-only`, but `agents/status.yaml`
   says `agent-eligible`
+- `state.yaml` points at a readiness dashboard path that no longer exists
 
 ### Planning drift
 

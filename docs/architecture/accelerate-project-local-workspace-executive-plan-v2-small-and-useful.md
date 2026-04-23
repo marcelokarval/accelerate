@@ -33,13 +33,14 @@ lives in:
 - onboarding state and decisions
 - current planning state
 - local pre-agents status, candidates, and gaps
+- minimal branch readiness / continuity / learnings truth
 
 It does not yet persist the wider local control surfaces for:
 
 - workflow mapping
 - runtime capability registry
 - profile overrides
-- long-form local memory
+- long-form local memory beyond the minimal status layer
 
 ## Target Shape
 
@@ -47,6 +48,10 @@ It does not yet persist the wider local control surfaces for:
 .accelerate/
 ├── README.md
 ├── state.yaml
+├── status/
+│   ├── readiness-dashboard.yaml
+│   ├── timeline.jsonl
+│   └── learnings.jsonl
 ├── onboarding/
 │   ├── status.yaml
 │   ├── discovery.yaml

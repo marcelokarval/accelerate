@@ -107,8 +107,9 @@ At a high level, `accelerate` works like this:
 5. decide which lanes and skills are required
 6. decide whether the work should stay root-only or use bounded agents
 7. execute with visible runtime packets and active gates
-8. force proof in the correct order
-9. enter root closure mode before `Done`
+8. keep readiness, timeline, and learning disposition visible when local workspace state is active
+9. force proof in the correct order
+10. enter root closure mode before `Done`
 
 The control plane should be visible, not implied.
 
@@ -176,6 +177,9 @@ Use them to decide:
 - which branch is active
 - which mandatory skills must be open
 - which gates are blocking
+- what readiness state is currently honest
+- what checkpoint was crossed last and what comes next
+- whether durable learnings must be registered before closure
 - which proof and artifacts closure requires
 
 ## Proof Stack

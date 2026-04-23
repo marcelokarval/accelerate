@@ -13,6 +13,9 @@ FAILURES=0
 required_files=(
   "${WORKSPACE}/README.md"
   "${WORKSPACE}/state.yaml"
+  "${WORKSPACE}/status/readiness-dashboard.yaml"
+  "${WORKSPACE}/status/timeline.jsonl"
+  "${WORKSPACE}/status/learnings.jsonl"
   "${WORKSPACE}/onboarding/status.yaml"
   "${WORKSPACE}/onboarding/discovery.yaml"
   "${WORKSPACE}/onboarding/decisions.yaml"
@@ -128,6 +131,20 @@ require_key "${WORKSPACE}/state.yaml" "active_profile"
 require_key "${WORKSPACE}/state.yaml" "active_runtime_adapters"
 require_key "${WORKSPACE}/state.yaml" "agent_mode"
 require_key "${WORKSPACE}/state.yaml" "current_plan"
+require_key "${WORKSPACE}/state.yaml" "readiness_dashboard"
+require_key "${WORKSPACE}/state.yaml" "timeline_file"
+require_key "${WORKSPACE}/state.yaml" "learnings_file"
+
+require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "schema_version"
+require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "current_phase"
+require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "dashboard_verdict"
+require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "execution_readiness"
+require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "review_readiness"
+require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "closure_readiness"
+require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "required_gates"
+require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "completed_gates"
+require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "blocking_items"
+require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "last_updated"
 
 require_key "${WORKSPACE}/onboarding/status.yaml" "schema_version"
 require_key "${WORKSPACE}/onboarding/status.yaml" "status"
@@ -171,6 +188,16 @@ require_enum "${WORKSPACE}/state.yaml" "workflow_backend" "none-yet" "github" "l
 require_enum "${WORKSPACE}/state.yaml" "active_profile" "unknown" "django-inertia-react" "nextjs-tailwind"
 require_enum "${WORKSPACE}/state.yaml" "agent_mode" "root-only" "agent-eligible"
 require_listish "${WORKSPACE}/state.yaml" "active_runtime_adapters"
+
+require_exact_value "${WORKSPACE}/status/readiness-dashboard.yaml" "schema_version" "1"
+require_enum "${WORKSPACE}/status/readiness-dashboard.yaml" "current_phase" "onboarding" "planning" "execution" "review" "closure"
+require_enum "${WORKSPACE}/status/readiness-dashboard.yaml" "dashboard_verdict" "blocked" "ready-for-execution" "ready-for-review" "ready-for-closure"
+require_enum "${WORKSPACE}/status/readiness-dashboard.yaml" "execution_readiness" "blocked" "ready"
+require_enum "${WORKSPACE}/status/readiness-dashboard.yaml" "review_readiness" "blocked" "ready"
+require_enum "${WORKSPACE}/status/readiness-dashboard.yaml" "closure_readiness" "blocked" "ready"
+require_listish "${WORKSPACE}/status/readiness-dashboard.yaml" "required_gates"
+require_listish "${WORKSPACE}/status/readiness-dashboard.yaml" "completed_gates"
+require_listish "${WORKSPACE}/status/readiness-dashboard.yaml" "blocking_items"
 
 require_exact_value "${WORKSPACE}/onboarding/status.yaml" "schema_version" "1"
 require_enum "${WORKSPACE}/onboarding/status.yaml" "status" "not_started" "in_progress" "partially_stabilized" "completed"
@@ -242,6 +269,24 @@ fi
 current_plan="$(yaml_value "${WORKSPACE}/state.yaml" "current_plan")"
 if [ -n "${current_plan}" ] && [ ! -f "${TARGET_ROOT}/${current_plan}" ]; then
   echo "state.yaml current_plan does not exist: ${TARGET_ROOT}/${current_plan}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+readiness_dashboard="$(yaml_value "${WORKSPACE}/state.yaml" "readiness_dashboard")"
+if [ -n "${readiness_dashboard}" ] && [ ! -f "${TARGET_ROOT}/${readiness_dashboard}" ]; then
+  echo "state.yaml readiness_dashboard does not exist: ${TARGET_ROOT}/${readiness_dashboard}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+timeline_file="$(yaml_value "${WORKSPACE}/state.yaml" "timeline_file")"
+if [ -n "${timeline_file}" ] && [ ! -f "${TARGET_ROOT}/${timeline_file}" ]; then
+  echo "state.yaml timeline_file does not exist: ${TARGET_ROOT}/${timeline_file}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+learnings_file="$(yaml_value "${WORKSPACE}/state.yaml" "learnings_file")"
+if [ -n "${learnings_file}" ] && [ ! -f "${TARGET_ROOT}/${learnings_file}" ]; then
+  echo "state.yaml learnings_file does not exist: ${TARGET_ROOT}/${learnings_file}" >&2
   FAILURES=$((FAILURES + 1))
 fi
 

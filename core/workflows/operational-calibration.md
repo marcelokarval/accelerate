@@ -156,6 +156,10 @@ workflow truth, or closure, transient storage is only a staging area. Preserve
 the decision-relevant evidence in an executive or architecture artifact before
 closing the calibration slice.
 
+When a governed target repository carries `.accelerate/` local status, also
+make the readiness impact, current checkpoint, and durable learning
+registration posture visible before closing the calibration slice.
+
 ## Failure Mode Catalog
 
 Watch for:

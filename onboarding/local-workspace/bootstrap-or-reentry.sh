@@ -67,6 +67,14 @@ set_scalar "${STATE_FILE}" "onboarding_status" "partially_stabilized"
 perl -0pi -e "s/^last_updated:.*/last_updated: $(date +%F)/m" "${STATUS_FILE}"
 perl -0pi -e "s/^last_bootstrap_update:.*/last_bootstrap_update: $(date +%F)/m" "${STATE_FILE}"
 
+"${SCRIPT_DIR}/refresh-readiness.sh" "${TARGET_ROOT}" >/dev/null
+"${SCRIPT_DIR}/append-timeline.sh" \
+  "${TARGET_ROOT}" \
+  "workspace_reconciled" \
+  "Reconciled local workspace with reentry_status ${reentry_status}" \
+  "info" \
+  "bootstrap-or-reentry.sh" >/dev/null
+
 "${SCRIPT_DIR}/validate-v2.sh" "${TARGET_ROOT}" >/dev/null
 
 echo "reconciled local workspace at:"

@@ -90,5 +90,5 @@ Before V3 is explicitly adopted, do not add persisted local surfaces for:
 - workflow mapping
 - runtime capability registry
 - profile overrides
-- long-form local memory
+- long-form local memory beyond the minimal `status/` layer
 - cache, tmp, browser traces, or session-noise folders

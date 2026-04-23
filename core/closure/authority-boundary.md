@@ -18,6 +18,7 @@ The root may:
 - perform final AI review
 - enter root closure mode
 - move the issue to `Done`
+- judge readiness state, checkpoint continuity, and durable learning registration before real closure
 
 ## Bounded Authority
 
@@ -38,6 +39,7 @@ They must not:
 - restaff the run
 - claim final closure authority
 - move an issue to `Done`
+- imply review readiness or learning-registration closure without root acceptance
 
 ## Pre-Agents Reading
 
@@ -54,4 +56,3 @@ It governs:
 Detailed support still lives in:
 
 - `references/codex-agents/root-vs-agent-authority-boundary.md`
-

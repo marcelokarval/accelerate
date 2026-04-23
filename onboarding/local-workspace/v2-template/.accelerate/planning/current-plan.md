@@ -30,6 +30,12 @@ This file is the local planning summary and pointer layer.
 
 - bounded objective:
 
+## Local Status Surfaces
+
+- readiness dashboard: .accelerate/status/readiness-dashboard.yaml
+- timeline: .accelerate/status/timeline.jsonl
+- learnings: .accelerate/status/learnings.jsonl
+
 ## Active Constraints
 
 - constraint:

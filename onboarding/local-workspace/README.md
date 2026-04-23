@@ -20,7 +20,7 @@ It does not yet own:
 
 - a V3 local control surface
 - a native workflow adapter backend
-- a runtime persistence registry
+- a broad runtime capability registry
 - a full automatic installer
 
 ## Reading Order
@@ -57,6 +57,9 @@ Use:
 - `./onboarding/local-workspace/detect-signals.sh /path/to/target-repo`
 - `./onboarding/local-workspace/classify-project.sh /path/to/target-repo`
 - `./onboarding/local-workspace/bootstrap-or-reentry.sh /path/to/target-repo`
+- `./onboarding/local-workspace/refresh-readiness.sh /path/to/target-repo`
+- `./onboarding/local-workspace/append-timeline.sh /path/to/target-repo <event> <summary>`
+- `./onboarding/local-workspace/record-learning.sh /path/to/target-repo <type> <key> <insight>`
 - `./onboarding/local-workspace/validate-v2.sh /path/to/target-repo`
 
 This now supports the minimum deterministic onboarding loop:
@@ -71,6 +74,12 @@ This now supports the minimum deterministic onboarding loop:
   - derives initial profile/backend/runtime/docs posture from discovery signals
 - `bootstrap-or-reentry.sh`
   - chooses `init` vs local reentry/reonboarding reconciliation
+- `refresh-readiness.sh`
+  - refreshes the local readiness dashboard from current workspace truth
+- `append-timeline.sh`
+  - records durable local workspace transitions in the continuity timeline
+- `record-learning.sh`
+  - records curated durable learnings worth carrying across sessions
 - `validate-v2.sh`
   - verifies file presence, schemas, and summary/detail coherence
 
@@ -80,3 +89,5 @@ The validator checks:
 - minimum key presence
 - summary drift between `state.yaml` and detailed authorities
 - local planning artifact ladder coherence
+- readiness dashboard presence and shape
+- local status pointers for continuity timeline and learnings

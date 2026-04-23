@@ -113,3 +113,7 @@ The minimum output is:
 - next bounded slices
 - proof lane expectations
 - explicit residual risks or unresolved ambiguities
+
+When a governed target repository already has `.accelerate/`, planning should
+also keep the local readiness dashboard and current checkpoint coherent with
+the chosen governing artifact.

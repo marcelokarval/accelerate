@@ -42,6 +42,23 @@ Use this workflow when a governed target repository is in scope and the root
 must decide whether `.accelerate/` is absent, reusable, or requires
 reconciliation before branch selection.
 
+### 2b. Local-Status Dashboard / Continuity Workflow
+
+```text
+local workspace truth
+  -> refresh readiness dashboard
+  -> append timeline checkpoint when a durable transition occurred
+  -> record durable learning when the run produced cross-session workflow truth
+  -> continue to execution / proof / closure with visible local status
+```
+
+Use this workflow when a governed target repository already has `.accelerate/`
+and the run needs a visible answer to:
+
+- is the branch actually ready to execute or review?
+- what checkpoint was last crossed and what is next?
+- did the run produce a durable learning that should survive this session?
+
 ### 3. Issue-Bootstrap Workflow
 
 ```text

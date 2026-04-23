@@ -34,3 +34,9 @@ Then verify:
 bash scripts/check-global-skill-mirror.sh
 git diff --check
 ```
+
+When local workspace state is active, this portable bundle should expose:
+
+- readiness dashboard status
+- continuity timeline status
+- learning disposition

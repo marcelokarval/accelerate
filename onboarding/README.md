@@ -112,15 +112,19 @@ When a governed target repository is in scope, the root should read local
 workspace truth in this order:
 
 1. `.accelerate/state.yaml`
-2. `.accelerate/onboarding/status.yaml`
-3. `.accelerate/onboarding/decisions.yaml`
-4. `.accelerate/planning/current-plan.md`
-5. `.accelerate/agents/status.yaml`
+2. `.accelerate/status/readiness-dashboard.yaml`
+3. `.accelerate/onboarding/status.yaml`
+4. `.accelerate/onboarding/decisions.yaml`
+5. `.accelerate/planning/current-plan.md`
+6. `.accelerate/agents/status.yaml`
+7. `.accelerate/status/timeline.jsonl`
+8. `.accelerate/status/learnings.jsonl`
 
 The root should call the local-workspace reconciliation surface when:
 
 - `.accelerate/` is absent and first local install is required
 - onboarding truth is stale
+- readiness, timeline, or learnings state is incoherent with the current run
 - `reentry_status` is not clean
 - stack, workflow, docs posture, or runtime posture changed materially
 

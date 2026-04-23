@@ -60,6 +60,8 @@ perl -0pi -e "s/^last_updated:.*/last_updated: $(date +%F)/m" "${TARGET_WORKSPAC
 
 "${SCRIPT_DIR}/detect-signals.sh" "${TARGET_ROOT}" >/dev/null
 "${SCRIPT_DIR}/classify-project.sh" "${TARGET_ROOT}" >/dev/null
+"${SCRIPT_DIR}/refresh-readiness.sh" "${TARGET_ROOT}" >/dev/null
+"${SCRIPT_DIR}/append-timeline.sh" "${TARGET_ROOT}" "workspace_emitted" "Emitted V2 local workspace in mode ${MODE}" "info" "emit-v2.sh" >/dev/null
 
 "${SCRIPT_DIR}/validate-v2.sh" "${TARGET_ROOT}" >/dev/null
 

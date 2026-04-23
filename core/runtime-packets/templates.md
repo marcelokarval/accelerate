@@ -41,6 +41,12 @@ Branch Entry Packet
   - action=<none|required-init|required-reentry|required-reonboarding|reused>
   - onboarding status=<state|n/a>
   - reentry status=<state|n/a>
+  - readiness dashboard=<path|n/a>
+  - readiness status=<blocked|ready-for-execution|ready-for-review|ready-for-closure|n/a>
+  - timeline=<path|n/a>
+  - current checkpoint=<state|n/a>
+  - learnings=<path|n/a>
+  - learning disposition=<none|ephemeral-only|candidate-for-promotion|durably-registered|n/a>
   - current governing artifact=<path|n/a>
   - local agents status=<path|n/a>
   - drift status=<clean|warning|blocking|n/a>
@@ -81,6 +87,9 @@ Runtime Delta Packet
 - gates passed: <...>
 - gates failed: <...>
 - local workspace transition: <A -> B or n/a>
+- readiness transition: <A -> B or n/a>
+- timeline checkpoint transition: <A -> B or n/a>
+- learning disposition transition: <A -> B or n/a>
 - persona transition: <A -> B or n/a>
 - phase transition: <A -> B or n/a>
 - product/spec artifact transition: <A -> B or n/a>
@@ -139,6 +148,7 @@ QA / Proof Packet
 - evidence used: <...>
 - failures found: <...>
 - residual gaps: <...>
+- readiness impact: <none|moved-to-review-ready|still-blocked>
 ```
 
 ## Closure Packet
@@ -149,6 +159,9 @@ Closure Packet
 - requested vs implemented: <...>
 - promised vs delivered: <...>
 - issue scope vs landing: <...>
+- readiness summary: <status + next blocking gate>
+- timeline closure checkpoint: <present|missing|n/a>
+- learning registration status: <none|ephemeral|candidate|durably-registered|required-before-closure>
 - proof lane status:
   - Backend QA=<present|missing|blocked>
   - Frontend QA=<present|missing|blocked>

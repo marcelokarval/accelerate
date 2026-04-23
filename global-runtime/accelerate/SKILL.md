@@ -123,6 +123,9 @@ For engineering runs, keep visible:
 - active skills
 - active references
 - local workspace status / action
+- readiness status
+- timeline checkpoint status
+- learning disposition
 - gate ledger
 - phase / SDLC
 - issue stack status

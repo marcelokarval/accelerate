@@ -1,0 +1,18 @@
+schema_version: 1
+current_phase: onboarding
+dashboard_verdict: blocked
+execution_readiness: blocked
+review_readiness: blocked
+closure_readiness: blocked
+required_gates:
+  - local-workspace-entry
+  - planning-artifact-sufficiency
+  - issue-bootstrap-or-explicit-no-backend-exception
+  - implementation-proof
+  - qa-proof-lane
+  - ai-review
+completed_gates: []
+blocking_items:
+  - onboarding not stabilized yet
+  - current governing artifact not declared yet
+last_updated: YYYY-MM-DD

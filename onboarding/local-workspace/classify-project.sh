@@ -111,4 +111,12 @@ set_scalar "${STATUS_FILE}" "reentry_status" "${reentry_status}"
 perl -0pi -e "s/^last_bootstrap_update:.*/last_bootstrap_update: $(date +%F)/m" "${STATE_FILE}"
 perl -0pi -e "s/^last_updated:.*/last_updated: $(date +%F)/m" "${STATUS_FILE}"
 
+"$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/refresh-readiness.sh" "${TARGET_ROOT}" >/dev/null
+"$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/append-timeline.sh" \
+  "${TARGET_ROOT}" \
+  "project_classified" \
+  "Derived profile=${selected_profile} workflow_backend=${selected_workflow_backend}" \
+  "info" \
+  "classify-project.sh" >/dev/null
+
 echo "classified project into profile=${selected_profile} workflow_backend=${selected_workflow_backend}"
