@@ -59,6 +59,10 @@ When premium work is active, also use:
 
 The implementation packet must name which artifacts were read.
 
+When rollout planning artifacts exist, the entrypoint handoff must also satisfy:
+
+- `../control-plane/design-system-rollout-entry-gate.md`
+
 ## Workflow
 
 1. Read the contract before editing.
@@ -72,23 +76,43 @@ The implementation packet must name which artifacts were read.
    - `code-available`
    - `premium-proposed`
    - `not-approved-yet`
-6. Separate component anatomy from theme tokens before changing code.
-7. Implement with existing project components first.
-8. Validate with type/lint/build gates appropriate to the stack.
-9. Run browser/runtime proof and compare the delivered surface against the
+6. Decide the honest owner layer using the UI mutation ladder:
+   - `token`
+   - `ui`
+   - `ui-enhanced`
+   - `registry`
+   - `shell`
+   - `page`
+7. Separate component anatomy from theme tokens before changing code.
+8. Implement with existing project components first and shared owners before
+   page-local overrides.
+9. Validate with type/lint/build gates appropriate to the stack.
+10. Run browser/runtime proof and compare the delivered surface against the
    source showcase and premium HTML when active.
-10. Register residual drift instead of hiding it.
+11. Register residual drift instead of hiding it.
+12. If execution starts from an executive rollout plan, verify that the plan
+    explicitly names:
+   - required pre-read artifacts
+   - immutable contract authority
+   - primary implementation driver
+   - secondary macro direction when active
+   - execution slicing artifact
 
 ## Implementation Rules
 
 - Treat `design-system.contract.md` as the immutable rulebook.
 - Treat `design-system.html` as source-truth visual evidence.
 - Treat premium artifacts as directional improvement, not source evidence.
+- When an executive rollout plan is the session entrypoint, treat it as an
+  orchestrator only. It must not replace the contract, source evidence, or the
+  primary implementation driver.
 - Preserve source-observed component anatomy unless the premium direction
   explicitly authorizes recomposition.
 - Prefer token/config changes for theme generation.
 - Keep light and dark themes as sibling token systems over the same component
   semantics.
+- Use the highest honest shared owner first when the visual change repeats
+  across multiple surfaces.
 - Do not invent component families that are neither source-observed,
   code-available, nor premium-proposed.
 - Do not collapse a broad component system into hero/cards/tables only.
@@ -107,6 +131,7 @@ Design-System Application Packet
 - immutable laws:
 - premium direction rules:
 - component mapping:
+- owner layer:
 - anatomy fixed:
 - token changes allowed:
 - states/components required:
@@ -119,8 +144,12 @@ Design-System Application Packet
 The task is not complete unless:
 
 - the contract and relevant premium artifacts were read
+- any executive rollout entrypoint explicitly declared the required pre-read
+  set, constraint artifact, primary implementation driver, and slicing artifact
 - every changed UI element maps to `source-observed`, `code-available`,
   `premium-proposed`, or explicitly registered gap
+- the packet names the chosen owner layer and justifies any page-first
+  exception
 - anatomy/token separation is visible in the implementation decision
 - broad component coverage is honored when the project exposes a broad
   primitive catalog
@@ -134,10 +163,14 @@ The task is not complete unless:
 Do not close if:
 
 - the design-system package was used as inspiration rather than law
+- an executive rollout plan was used as the only artifact and did not declare
+  the rest of the required read set
 - the contract was skipped
 - premium artifacts existed but were ignored for improvement/premium work
 - the implementation invents unsupported colors, gradients, components, states,
   metrics, or layouts
+- shared-owner changes were handled as repeated page-local polish without
+  justified exception
 - component anatomy and theme tokens are mixed without explanation
 - dark mode is visually unrelated to light mode
 - broad component coverage is required but not represented

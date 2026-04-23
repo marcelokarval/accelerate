@@ -137,6 +137,32 @@ The recurring branch families are:
 When structural UI uncertainty exists, use wireframe / visual-contract
 discipline before implementation.
 
+When a run is design-system-driven, premium, or broadly visual, default to the
+UI Mutation Ladder:
+
+1. token authority
+2. derived token wiring
+3. shared primitives
+4. shared composites
+5. registry / examples / reference package
+6. shells / layouts
+7. pages / feature consumers
+
+When design-system extraction or premium artifacts already exist and rollout
+planning enters the picture, do not let the session jump from premium package
+to implementation by implication. Open
+`core/control-plane/design-system-rollout-entry-gate.md` and verify that the
+implementation entrypoint explicitly names:
+
+- required pre-read artifacts
+- immutable contract authority
+- primary implementation driver
+- secondary macro direction when active
+- execution slicing artifact
+
+Do not start broad premiumization at page level unless a bounded exception is
+explicitly packeted.
+
 ## Runtime Visibility
 
 Non-trivial runs should keep the active runtime state visible.
@@ -248,6 +274,7 @@ Use these native authorities first:
   - `core/control-plane/branch-enforcement-matrix.md`
   - `core/control-plane/quick-invocation-map.md`
   - `core/control-plane/local-workspace-entry-gate.md`
+  - `core/control-plane/ui-mutation-ladder.md`
   - `core/control-plane/review-readiness-gate.md`
   - `core/control-plane/timeline-continuity-gate.md`
   - `core/control-plane/durable-learning-registration-gate.md`

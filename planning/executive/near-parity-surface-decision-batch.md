@@ -442,8 +442,8 @@ Residual gap:
 - repeated proof is still needed that sessions consistently escalate the same
   recurring failure classes into the right workflow mutation path
 - repeated proof is also needed that parity, promotion, or workflow-truth
-  evidence is preserved durably before closure, not left only in chat, `/tmp`,
-  or untracked scratch state
+  evidence is preserved durably before closure, not left only in chat,
+  project-root `.tmp/`, or untracked scratch state
 
 ### Replacement Risk
 

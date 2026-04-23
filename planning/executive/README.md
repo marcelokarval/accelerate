@@ -124,7 +124,8 @@ Recent rerun-backed correction promoted after independent replay:
   - both local and legacy/global judges kept `autoresearch / self-evolution`
     at `near parity`; a post-correction local rerun confirmed the local now
     blocks parity/promotion closure when decision-relevant benchmark evidence
-    remains only in chat, `/tmp`, or untracked scratch state; a second
+    remains only in chat, project-root `.tmp/`, or untracked scratch state; a
+    second
     post-commit local rerun kept the surface at `near parity` pending repeated
     behavioral proof
 - `self-evolution-natural-followup-rerun-result.md`

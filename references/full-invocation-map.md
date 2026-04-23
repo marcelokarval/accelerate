@@ -58,6 +58,7 @@ can become when invoked across different kinds of work.
 ║[24] provider-runtime audit                                                                                                ║
 ║[25] docs / living-doc sync                                                                                                ║
 ║[26] design-reference extraction                                                                                            ║
+║[27] UI shared-owner convergence                                                                                             ║
 ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 ```
 

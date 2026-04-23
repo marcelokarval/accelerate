@@ -67,6 +67,7 @@ are:
 - planning artifact
 - implementation handoff
 - design-system application / recomposition
+- UI shared-owner convergence
 - backend QA
 - frontend QA
 - browser proof
@@ -104,20 +105,24 @@ Before starting a non-trivial run, answer:
 8. is the planning artifact already satisfied?
 9. if `docs/reference/design-system*` exists, is this extraction or
    application?
-10. what does the readiness dashboard currently say?
-11. what checkpoint was crossed last and what comes next?
-12. did the run produce a learning that must be registered before closure?
-13. does `current-plan.md` need to be synchronized into local status now?
-14. should a closure packet be rendered from local status already?
-15. should an AI Review Report be rendered from local status already?
-16. should a review-ready packet be rendered now?
-17. should the review artifacts now be persisted canonically under `.accelerate/review/`?
-18. should a pre-review bundle or closure bundle be persisted now?
-19. should `prepare-review.sh` or `prepare-closure.sh` be used now instead of a looser manual sequence?
-20. what does `suggest-next-local-action.sh` say?
-21. should `render-branch-entry-packet.sh` be emitted now?
-22. should `render-runtime-delta-packet.sh` be emitted now?
-23. should `persist-runtime-packets.sh` be used now?
-24. should `persist-handoff-summary.sh` be used now?
-25. what proof lane is next?
-26. what review still blocks closure?
+10. for UI/design-system work, what is the honest owner layer: `token`, `ui`, `ui-enhanced`, `registry`, `shell`, or `page`?
+11. is this a shared-owner change that should start above page level?
+12. if rollout planning exists, does the entrypoint explicitly name the required pre-read set, contract authority, primary implementation driver, and slicing artifact?
+13. does the run need the UI Mutation Ladder explicitly packeted before editing?
+14. what does the readiness dashboard currently say?
+15. what checkpoint was crossed last and what comes next?
+16. did the run produce a learning that must be registered before closure?
+17. does `current-plan.md` need to be synchronized into local status now?
+18. should a closure packet be rendered from local status already?
+19. should an AI Review Report be rendered from local status already?
+20. should a review-ready packet be rendered now?
+21. should the review artifacts now be persisted canonically under `.accelerate/review/`?
+22. should a pre-review bundle or closure bundle be persisted now?
+23. should `prepare-review.sh` or `prepare-closure.sh` be used now instead of a looser manual sequence?
+24. what does `suggest-next-local-action.sh` say?
+25. should `render-branch-entry-packet.sh` be emitted now?
+26. should `render-runtime-delta-packet.sh` be emitted now?
+27. should `persist-runtime-packets.sh` be used now?
+28. should `persist-handoff-summary.sh` be used now?
+29. what proof lane is next?
+30. what review still blocks closure?

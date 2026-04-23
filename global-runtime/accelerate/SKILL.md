@@ -64,6 +64,27 @@ The top-level outcomes are:
 - trivial bounded engineering work
 - orchestrated non-trivial work
 
+When a run is design-system-driven, premium, or broadly visual, default to the
+UI Mutation Ladder:
+
+1. token authority
+2. derived token wiring
+3. shared primitives
+4. shared composites
+5. registry / examples / reference package
+6. shells / layouts
+7. pages / feature consumers
+
+When design-system extraction or premium artifacts already exist and rollout
+planning enters the picture, open
+`core/control-plane/design-system-rollout-entry-gate.md` before using an
+executive plan as an implementation entrypoint. The handoff is incomplete if it
+does not explicitly name the required pre-read set, immutable contract
+authority, primary implementation driver, and execution slicing artifact.
+
+Do not start broad premiumization at page level unless a bounded exception is
+explicitly packeted.
+
 ### Bounded Trivial Branch
 
 For bounded trivial work, still enforce:
@@ -182,6 +203,7 @@ Use these bundled references first:
 - `references/branch-enforcement-matrix.md`
 - `references/full-invocation-map.md`
 - `references/local-workspace-entry-gate.md`
+- `references/ui-mutation-ladder.md`
 - `references/issue-stack.md`
 - `references/runtime-packet-templates.md`
 - `references/runtime-observability-cadence.md`

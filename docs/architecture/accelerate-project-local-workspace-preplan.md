@@ -565,7 +565,7 @@ Talvez uma futura subpasta como:
 
 ```text
 .accelerate/runtime/
-.accelerate/tmp/
+.tmp/
 .accelerate/cache/
 ```
 

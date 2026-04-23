@@ -233,6 +233,7 @@ existing docs/reference/design-system* package
   -> premium direction inspection when active
   -> target component / token / route inventory
   -> source-observed / code-available / premium-proposed / not-approved-yet map
+  -> UI owner ladder decision
   -> anatomy vs token split
   -> bounded UI implementation / correction / proposal
   -> runtime comparison against design-system artifacts
@@ -242,15 +243,49 @@ existing docs/reference/design-system* package
 Use this workflow when the design-system package already exists and the task is
 to implement, correct, improve, propose, or generate UI from it.
 
+If rollout planning artifacts exist, open
+`../control-plane/design-system-rollout-entry-gate.md` before treating the
+executive plan as a valid implementation entrypoint.
+
 This workflow is invalid if the artifact package is treated as inspiration
 instead of implementation law. `design-system.contract.md` must be read before
 mutation, `design-system.html` must remain the source-truth visual evidence,
 and premium artifacts may guide improvement only where they explicitly define a
 direction.
 
+This workflow is also invalid when a rollout executive plan exists but does not
+explicitly declare:
+
+- the required pre-read artifact set
+- the immutable contract authority
+- the primary implementation driver
+- the secondary macro direction artifact when active
+- the execution slicing artifact
+
 For themeable systems, the workflow must separate fixed component anatomy from
 changeable tokens. For broad component-library stacks, it must map more than
 hero/card/table surfaces and prove realistic component recomposition.
+
+### 5e. UI Shared-Owner Convergence Workflow
+
+```text
+broad UI mutation / premiumization / greenfield system work
+  -> classify target owner first
+  -> tokens / theme authority when semantic language changes
+  -> shared primitives when anatomy or states repeat
+  -> shared composites when page-level structure repeats
+  -> registry/examples/reference package when authority or coverage changed
+  -> shell/layout convergence when the product frame changed
+  -> page/feature consumers last
+  -> runtime proof + residual drift registration
+```
+
+Use this workflow when the change affects more than one surface, when premium
+quality is part of the requested outcome, or when a new shared UI system is
+being founded.
+
+The workflow is invalid when repeated page-local edits are used in place of the
+honest shared owner.
 
 ### 6. Backend-Implementation Workflow
 

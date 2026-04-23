@@ -74,8 +74,8 @@ Acceptable durable homes:
 - architecture artifact
 - living workflow doc updated by an approved change
 
-Chat history, `/tmp` files, untracked scratch notes, and conversational memory
-can be diagnosis inputs. They are not closure proof.
+Chat history, project-root `.tmp/` files, untracked scratch notes, and
+conversational memory can be diagnosis inputs. They are not closure proof.
 
 In the standalone pre-adapter / no-backend phase, a durable executive artifact
 is the substitute for issue-backend registration. Do not invent fake adapter

@@ -125,7 +125,7 @@ These are insufficient on their own:
 - stylistic preference for the local wording
 - partial shell artifacts
 - one-off narrative claims without preserved evidence
-- chat-only, `/tmp`-only, or untracked scratch evidence
+- chat-only, project-root `.tmp/`-only, or untracked scratch evidence
 
 ## What Does Count As Strong Proof
 

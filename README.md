@@ -297,9 +297,27 @@ The native review authority for high-stakes user surfaces now lives in:
 
 - [product-critical-surfaces.md](./core/review/product-critical-surfaces.md)
 - [premium-interface-production.md](./core/review/premium-interface-production.md)
+- [ui-mutation-ladder.md](./core/control-plane/ui-mutation-ladder.md)
 
 Do not treat these branches as generic frontend work. They require backend
 truth sufficiency, stronger artifact discipline, and stricter closure judgment.
+
+For design-system-driven, premium, or broad visual modernization work, default
+to the shared-owner UI mutation order:
+
+1. token authority
+2. derived token wiring
+3. shared primitives
+4. shared composites
+5. registry / examples / reference package
+6. shells / layouts
+7. pages / feature consumers
+
+When the work has already produced a `docs/reference/design-system*` package
+and later grows an executive rollout plan, do not assume the handoff is
+complete. The implementation entrypoint must explicitly name the required
+pre-read set, the immutable contract, the primary implementation driver, and
+the slicing artifact for bounded execution.
 
 ## Root Authority
 
