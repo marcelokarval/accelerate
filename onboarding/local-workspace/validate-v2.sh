@@ -30,6 +30,8 @@ required_files=(
   "${WORKSPACE}/review/review-ready-packet.md"
   "${WORKSPACE}/review/ai-review-report.md"
   "${WORKSPACE}/review/closure-packet.md"
+  "${WORKSPACE}/review/branch-entry-packet.md"
+  "${WORKSPACE}/review/runtime-delta-packet.md"
   "${WORKSPACE}/review/pre-review-bundle.md"
   "${WORKSPACE}/review/closure-bundle.md"
   "${WORKSPACE}/agents/status.yaml"
@@ -142,6 +144,8 @@ require_key "${WORKSPACE}/state.yaml" "learnings_file"
 require_key "${WORKSPACE}/state.yaml" "review_ready_packet"
 require_key "${WORKSPACE}/state.yaml" "ai_review_report"
 require_key "${WORKSPACE}/state.yaml" "closure_packet"
+require_key "${WORKSPACE}/state.yaml" "branch_entry_packet"
+require_key "${WORKSPACE}/state.yaml" "runtime_delta_packet"
 require_key "${WORKSPACE}/state.yaml" "pre_review_bundle"
 require_key "${WORKSPACE}/state.yaml" "closure_bundle"
 
@@ -315,6 +319,18 @@ fi
 closure_packet="$(yaml_value "${WORKSPACE}/state.yaml" "closure_packet")"
 if [ -n "${closure_packet}" ] && [ ! -f "${TARGET_ROOT}/${closure_packet}" ]; then
   echo "state.yaml closure_packet does not exist: ${TARGET_ROOT}/${closure_packet}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+branch_entry_packet="$(yaml_value "${WORKSPACE}/state.yaml" "branch_entry_packet")"
+if [ -n "${branch_entry_packet}" ] && [ ! -f "${TARGET_ROOT}/${branch_entry_packet}" ]; then
+  echo "state.yaml branch_entry_packet does not exist: ${TARGET_ROOT}/${branch_entry_packet}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+runtime_delta_packet="$(yaml_value "${WORKSPACE}/state.yaml" "runtime_delta_packet")"
+if [ -n "${runtime_delta_packet}" ] && [ ! -f "${TARGET_ROOT}/${runtime_delta_packet}" ]; then
+  echo "state.yaml runtime_delta_packet does not exist: ${TARGET_ROOT}/${runtime_delta_packet}" >&2
   FAILURES=$((FAILURES + 1))
 fi
 

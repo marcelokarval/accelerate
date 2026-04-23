@@ -116,5 +116,6 @@ Before starting a non-trivial run, answer:
 19. what does `suggest-next-local-action.sh` say?
 20. should `render-branch-entry-packet.sh` be emitted now?
 21. should `render-runtime-delta-packet.sh` be emitted now?
-22. what proof lane is next?
-23. what review still blocks closure?
+22. should `persist-runtime-packets.sh` be used now?
+23. what proof lane is next?
+24. what review still blocks closure?

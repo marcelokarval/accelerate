@@ -47,6 +47,8 @@ The minimum V2 implementation must create all of these paths:
 │   ├── review-ready-packet.md
 │   ├── ai-review-report.md
 │   └── closure-packet.md
+│   ├── branch-entry-packet.md
+│   ├── runtime-delta-packet.md
 │   ├── pre-review-bundle.md
 │   └── closure-bundle.md
 ├── onboarding/
@@ -146,6 +148,8 @@ learnings_file: .accelerate/status/learnings.jsonl
 review_ready_packet: .accelerate/review/review-ready-packet.md
 ai_review_report: .accelerate/review/ai-review-report.md
 closure_packet: .accelerate/review/closure-packet.md
+branch_entry_packet: .accelerate/review/branch-entry-packet.md
+runtime_delta_packet: .accelerate/review/runtime-delta-packet.md
 pre_review_bundle: .accelerate/review/pre-review-bundle.md
 closure_bundle: .accelerate/review/closure-bundle.md
 last_bootstrap_update: YYYY-MM-DD
@@ -218,6 +222,8 @@ They persist the current local:
 - review-ready packet
 - AI Review Report
 - closure packet
+- branch entry packet
+- runtime delta packet
 - pre-review bundle
 - closure bundle
 

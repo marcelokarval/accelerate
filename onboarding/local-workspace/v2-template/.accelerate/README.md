@@ -26,6 +26,8 @@ The main canonical files here are:
 - `review/review-ready-packet.md`
 - `review/ai-review-report.md`
 - `review/closure-packet.md`
+- `review/branch-entry-packet.md`
+- `review/runtime-delta-packet.md`
 - `review/pre-review-bundle.md`
 - `review/closure-bundle.md`
 
@@ -41,6 +43,7 @@ The main canonical files here are:
 - `planning/user-story.md`, `planning/prd-lite.md`, `planning/sdd.md`, `planning/executive-plan.md`, and `planning/task-breakdown.md` are the local artifact ladder
 - `agents/status.yaml` is detailed local pre-agents posture authority
 - `review/*.md` are persisted local handoff and closure artifacts derived from current local status
+- `review/branch-entry-packet.md` and `review/runtime-delta-packet.md` are persisted local runtime observability packets
 - bundle artifacts group those review surfaces for operator handoff
 
 ## What Accelerate May Rewrite
@@ -73,8 +76,10 @@ For a fresh session, read in this order:
 15. `review/review-ready-packet.md`
 16. `review/ai-review-report.md`
 17. `review/closure-packet.md`
-18. `review/pre-review-bundle.md`
-19. `review/closure-bundle.md`
+18. `review/branch-entry-packet.md`
+19. `review/runtime-delta-packet.md`
+20. `review/pre-review-bundle.md`
+21. `review/closure-bundle.md`
 
 ## Non-Goals
 

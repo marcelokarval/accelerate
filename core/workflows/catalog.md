@@ -88,6 +88,7 @@ and may end with:
 - `suggest-next-local-action.sh`
 - `render-branch-entry-packet.sh`
 - `render-runtime-delta-packet.sh`
+- `persist-runtime-packets.sh`
 - `prepare-review.sh`
 - `prepare-closure.sh`
 
@@ -107,6 +108,10 @@ opening state from the local workspace rather than a prose summary.
 
 Use `render-runtime-delta-packet.sh` when the root needs the latest honest
 transition packet inferred from local status plus the last timeline event.
+
+Use `persist-runtime-packets.sh` when the root wants those observability
+packets canonically written into the local workspace rather than only rendered
+on demand.
 
 ### 3. Issue-Bootstrap Workflow
 
