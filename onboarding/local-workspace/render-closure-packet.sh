@@ -49,6 +49,13 @@ last_jsonl_field() {
   (grep -ve '^[[:space:]]*$' "${path}" | tail -n 1 | sed -n "s/.*\"${key}\":\"\\([^\"]*\\)\".*/\\1/p") || true
 }
 
+next_action_value() {
+  local key="$1"
+  local output
+  output="$(bash "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/suggest-next-local-action.sh" "${TARGET_ROOT}")"
+  printf '%s\n' "${output}" | sed -n "s/^${key}=//p" | head -n 1
+}
+
 dashboard_verdict="$(yaml_value "${READINESS_FILE}" "dashboard_verdict")"
 execution_readiness="$(yaml_value "${READINESS_FILE}" "execution_readiness")"
 review_readiness="$(yaml_value "${READINESS_FILE}" "review_readiness")"
@@ -90,6 +97,7 @@ Closure Packet
 - readiness summary: ${dashboard_verdict}
 - timeline closure checkpoint: ${last_event:-missing}
 - learning registration status: ${learning_status}
+- local review / closure preparation: $(next_action_value "next_action")
 - proof lane status:
   - Backend QA=${backend_qa}
   - Frontend QA=${frontend_qa}

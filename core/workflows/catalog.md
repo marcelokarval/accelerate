@@ -85,6 +85,7 @@ and may end with:
 - `render-pre-review-bundle.sh`
 - `render-closure-bundle.sh`
 - `persist-review-bundles.sh`
+- `suggest-next-local-action.sh`
 - `prepare-review.sh`
 - `prepare-closure.sh`
 
@@ -94,6 +95,10 @@ sequence for review preparation without persisting closure bundles yet.
 Use `prepare-closure.sh` when the operator wants the honest minimum composed
 sequence for closure preparation and the readiness dashboard is already strong
 enough to reconcile into closure.
+
+Use `suggest-next-local-action.sh` when the operator or root packet needs the
+current canonical handoff answer materialized from local readiness and
+timeline truth instead of inferred ad hoc in conversation.
 
 ### 3. Issue-Bootstrap Workflow
 

@@ -44,6 +44,13 @@ last_jsonl_field() {
   (grep -ve '^[[:space:]]*$' "${path}" | tail -n 1 | sed -n "s/.*\"${key}\":\"\\([^\"]*\\)\".*/\\1/p") || true
 }
 
+next_action_value() {
+  local key="$1"
+  local output
+  output="$(bash "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/suggest-next-local-action.sh" "${TARGET_ROOT}")"
+  printf '%s\n' "${output}" | sed -n "s/^${key}=//p" | head -n 1
+}
+
 printf 'Accelerate Local Status\n\n'
 printf 'workspace: %s\n' "${WORKSPACE}"
 printf 'onboarding_status: %s\n' "$(yaml_value "${STATE_FILE}" "onboarding_status")"
@@ -59,3 +66,5 @@ printf 'timeline_events: %s\n' "$(count_jsonl "${TIMELINE_FILE}")"
 printf 'last_timeline_event: %s\n' "$(last_jsonl_field "${TIMELINE_FILE}" "event")"
 printf 'learning_count: %s\n' "$(count_jsonl "${LEARNINGS_FILE}")"
 printf 'last_learning_key: %s\n' "$(last_jsonl_field "${LEARNINGS_FILE}" "key")"
+printf 'next_canonical_local_action: %s\n' "$(next_action_value "next_action")"
+printf 'next_action_reason: %s\n' "$(next_action_value "reason")"

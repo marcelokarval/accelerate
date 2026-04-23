@@ -39,6 +39,13 @@ last_jsonl_field() {
   (grep -ve '^[[:space:]]*$' "${path}" | tail -n 1 | sed -n "s/.*\"${key}\":\"\\([^\"]*\\)\".*/\\1/p") || true
 }
 
+next_action_value() {
+  local key="$1"
+  local output
+  output="$(bash "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/suggest-next-local-action.sh" "${TARGET_ROOT}")"
+  printf '%s\n' "${output}" | sed -n "s/^${key}=//p" | head -n 1
+}
+
 dashboard_verdict="$(yaml_value "${READINESS_FILE}" "dashboard_verdict")"
 review_readiness="$(yaml_value "${READINESS_FILE}" "review_readiness")"
 closure_readiness="$(yaml_value "${READINESS_FILE}" "closure_readiness")"
@@ -57,5 +64,7 @@ Review-Ready Packet
 - review readiness: ${review_readiness}
 - closure readiness: ${closure_readiness}
 - latest checkpoint: ${last_event:-n/a}
+- next canonical local action: $(next_action_value "next_action")
+- next action reason: $(next_action_value "reason")
 - recommendation: $(if [ "${review_readiness}" = "ready" ] || [ "${closure_readiness}" = "ready" ]; then echo "ready-for-review"; else echo "not-ready"; fi)
 EOF

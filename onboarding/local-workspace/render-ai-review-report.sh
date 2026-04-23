@@ -49,6 +49,13 @@ last_jsonl_field() {
   (grep -ve '^[[:space:]]*$' "${path}" | tail -n 1 | sed -n "s/.*\"${key}\":\"\\([^\"]*\\)\".*/\\1/p") || true
 }
 
+next_action_value() {
+  local key="$1"
+  local output
+  output="$(bash "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/suggest-next-local-action.sh" "${TARGET_ROOT}")"
+  printf '%s\n' "${output}" | sed -n "s/^${key}=//p" | head -n 1
+}
+
 dashboard_verdict="$(yaml_value "${READINESS_FILE}" "dashboard_verdict")"
 execution_readiness="$(yaml_value "${READINESS_FILE}" "execution_readiness")"
 review_readiness="$(yaml_value "${READINESS_FILE}" "review_readiness")"
@@ -95,6 +102,8 @@ cat <<EOF
 - last timeline event: ${last_event:-n/a}
 - durable learning count: ${learning_count}
 - last learning key: ${last_learning_key:-n/a}
+- next canonical local action: $(next_action_value "next_action")
+- next action reason: $(next_action_value "reason")
 
 ### Classification
 
