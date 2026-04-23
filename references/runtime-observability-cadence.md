@@ -23,6 +23,12 @@ Non-trivial work must not hide the active workflow stack for long stretches.
 
 - first technical update -> `Branch Entry Packet`
 
+When `.accelerate/` local status already exists, the compact read that should
+feed that opening packet is:
+
+- `review/handoff-summary.md`
+- otherwise `read-local-handoff.sh`
+
 ### On meaningful stack change
 
 - branch change -> `Runtime Delta Packet`

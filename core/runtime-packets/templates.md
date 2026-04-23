@@ -73,6 +73,12 @@ Branch Entry Packet
 For calibration-only or read-only benchmark slices, keep the packet bounded.
 Do not inflate it with execution lanes the current slice is only evaluating.
 
+When `.accelerate/` local status already exists, this packet should prefer the
+compact local handoff read first:
+
+- `review/handoff-summary.md`
+- otherwise `read-local-handoff.sh`
+
 ## Runtime Delta Packet
 
 ```text

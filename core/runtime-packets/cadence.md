@@ -17,6 +17,12 @@ Non-trivial work must not hide the active workflow stack for long stretches.
 - QA lane completion -> `QA / Proof Packet`
 - pre-close -> `Closure Packet`
 
+When a governed target repository already has `.accelerate/`, the opening
+`Branch Entry Packet` should prefer the compact local handoff read first:
+
+- `review/handoff-summary.md`
+- otherwise `read-local-handoff.sh`
+
 ## Single-Threaded Exception
 
 If a non-trivial run remains single-threaded, the opening packet must expose an
