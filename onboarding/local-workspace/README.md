@@ -69,6 +69,8 @@ Use:
 - `./onboarding/local-workspace/render-pre-review-bundle.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-closure-bundle.sh /path/to/target-repo`
 - `./onboarding/local-workspace/persist-review-bundles.sh /path/to/target-repo`
+- `./onboarding/local-workspace/prepare-review.sh /path/to/target-repo`
+- `./onboarding/local-workspace/prepare-closure.sh /path/to/target-repo`
 - `./onboarding/local-workspace/append-timeline.sh /path/to/target-repo <event> <summary>`
 - `./onboarding/local-workspace/record-learning.sh /path/to/target-repo <type> <key> <insight>`
 - `./onboarding/local-workspace/validate-v2.sh /path/to/target-repo`
@@ -109,6 +111,10 @@ This now supports the minimum deterministic onboarding loop:
   - groups the closure packet and AI review report into one closure bundle
 - `persist-review-bundles.sh`
   - persists both bundles canonically after refreshing the review artifacts
+- `prepare-review.sh`
+  - synchronizes the plan, reconciles review readiness when the dashboard is not blocked, persists review artifacts, and materializes the canonical pre-review bundle in one operator step
+- `prepare-closure.sh`
+  - synchronizes the plan, reconciles review and closure readiness when the dashboard is not blocked, and persists the canonical review bundle set in one operator step
 - `append-timeline.sh`
   - records durable local workspace transitions in the continuity timeline
 - `record-learning.sh`

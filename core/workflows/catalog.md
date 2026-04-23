@@ -85,6 +85,15 @@ and may end with:
 - `render-pre-review-bundle.sh`
 - `render-closure-bundle.sh`
 - `persist-review-bundles.sh`
+- `prepare-review.sh`
+- `prepare-closure.sh`
+
+Use `prepare-review.sh` when the operator wants the honest minimum composed
+sequence for review preparation without persisting closure bundles yet.
+
+Use `prepare-closure.sh` when the operator wants the honest minimum composed
+sequence for closure preparation and the readiness dashboard is already strong
+enough to reconcile into closure.
 
 ### 3. Issue-Bootstrap Workflow
 
