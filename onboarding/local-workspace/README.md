@@ -99,16 +99,6 @@ This now supports the minimum deterministic onboarding loop:
   - prints the local status summary for operator visibility
 - `suggest-next-local-action.sh`
   - derives the next canonical local handoff action from readiness and timeline truth
-- `render-branch-entry-packet.sh`
-  - renders the local root-facing Branch Entry Packet from persisted workspace truth
-- `render-runtime-delta-packet.sh`
-  - renders the latest honest Runtime Delta Packet inferred from persisted workspace truth and the last timeline event
-- `persist-runtime-packets.sh`
-  - persists the local Branch Entry Packet and Runtime Delta Packet into canonical files under `.accelerate/review/` and refreshes the compact handoff summary
-- `render-handoff-summary.sh`
-  - renders one compact handoff summary from the persisted review and runtime packet surfaces
-- `persist-handoff-summary.sh`
-  - persists that handoff summary canonically under `.accelerate/review/`
 - `mark-checkpoint.sh`
   - appends a semantic checkpoint into the local continuity timeline
 - `reconcile-readiness.sh`
@@ -133,6 +123,17 @@ This now supports the minimum deterministic onboarding loop:
   - synchronizes the plan, reconciles review readiness when the dashboard is not blocked, persists review artifacts, materializes the canonical pre-review bundle, and persists runtime-backed handoff surfaces in one operator step
 - `prepare-closure.sh`
   - synchronizes the plan, reconciles review and closure readiness when the dashboard is not blocked, persists the canonical review bundle set, and persists runtime-backed handoff surfaces in one operator step
+- runtime observability / compact reentry
+  - `render-branch-entry-packet.sh`
+    - renders the local root-facing Branch Entry Packet from persisted workspace truth
+  - `render-runtime-delta-packet.sh`
+    - renders the latest honest Runtime Delta Packet inferred from persisted workspace truth and the last timeline event
+  - `persist-runtime-packets.sh`
+    - persists both runtime packets and refreshes the compact handoff summary under `.accelerate/review/`
+  - `render-handoff-summary.sh`
+    - renders the compact reentry view over persisted review and runtime packet surfaces
+  - `persist-handoff-summary.sh`
+    - persists that compact handoff summary canonically under `.accelerate/review/`
 - `append-timeline.sh`
   - records durable local workspace transitions in the continuity timeline
 - `record-learning.sh`

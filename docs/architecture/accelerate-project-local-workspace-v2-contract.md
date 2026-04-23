@@ -233,6 +233,10 @@ They persist the current local:
 They are derived artifacts, but they are still canonical local handoff outputs
 once written.
 
+Within this review surface, `handoff-summary.md` is the compact reentry index.
+It does not replace the packet or bundle files; it points the operator back
+into them.
+
 ### `.accelerate/README.md`
 
 This file is mandatory and human-facing.
