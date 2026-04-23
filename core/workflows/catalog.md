@@ -89,6 +89,8 @@ and may end with:
 - `render-branch-entry-packet.sh`
 - `render-runtime-delta-packet.sh`
 - `persist-runtime-packets.sh`
+- `render-handoff-summary.sh`
+- `persist-handoff-summary.sh`
 - `prepare-review.sh`
 - `prepare-closure.sh`
 
@@ -112,6 +114,12 @@ transition packet inferred from local status plus the last timeline event.
 Use `persist-runtime-packets.sh` when the root wants those observability
 packets canonically written into the local workspace rather than only rendered
 on demand.
+
+Use `render-handoff-summary.sh` when the operator or root wants one compact
+reentry surface over the persisted review and runtime packet set.
+
+Use `persist-handoff-summary.sh` when that compact reentry surface should be
+written canonically into the local workspace.
 
 ### 3. Issue-Bootstrap Workflow
 

@@ -117,5 +117,6 @@ Before starting a non-trivial run, answer:
 20. should `render-branch-entry-packet.sh` be emitted now?
 21. should `render-runtime-delta-packet.sh` be emitted now?
 22. should `persist-runtime-packets.sh` be used now?
-23. what proof lane is next?
-24. what review still blocks closure?
+23. should `persist-handoff-summary.sh` be used now?
+24. what proof lane is next?
+25. what review still blocks closure?

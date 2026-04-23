@@ -49,6 +49,7 @@ The minimum V2 implementation must create all of these paths:
 │   └── closure-packet.md
 │   ├── branch-entry-packet.md
 │   ├── runtime-delta-packet.md
+│   ├── handoff-summary.md
 │   ├── pre-review-bundle.md
 │   └── closure-bundle.md
 ├── onboarding/
@@ -150,6 +151,7 @@ ai_review_report: .accelerate/review/ai-review-report.md
 closure_packet: .accelerate/review/closure-packet.md
 branch_entry_packet: .accelerate/review/branch-entry-packet.md
 runtime_delta_packet: .accelerate/review/runtime-delta-packet.md
+handoff_summary: .accelerate/review/handoff-summary.md
 pre_review_bundle: .accelerate/review/pre-review-bundle.md
 closure_bundle: .accelerate/review/closure-bundle.md
 last_bootstrap_update: YYYY-MM-DD
@@ -224,6 +226,7 @@ They persist the current local:
 - closure packet
 - branch entry packet
 - runtime delta packet
+- handoff summary
 - pre-review bundle
 - closure bundle
 

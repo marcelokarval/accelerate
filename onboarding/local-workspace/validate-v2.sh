@@ -32,6 +32,7 @@ required_files=(
   "${WORKSPACE}/review/closure-packet.md"
   "${WORKSPACE}/review/branch-entry-packet.md"
   "${WORKSPACE}/review/runtime-delta-packet.md"
+  "${WORKSPACE}/review/handoff-summary.md"
   "${WORKSPACE}/review/pre-review-bundle.md"
   "${WORKSPACE}/review/closure-bundle.md"
   "${WORKSPACE}/agents/status.yaml"
@@ -146,6 +147,7 @@ require_key "${WORKSPACE}/state.yaml" "ai_review_report"
 require_key "${WORKSPACE}/state.yaml" "closure_packet"
 require_key "${WORKSPACE}/state.yaml" "branch_entry_packet"
 require_key "${WORKSPACE}/state.yaml" "runtime_delta_packet"
+require_key "${WORKSPACE}/state.yaml" "handoff_summary"
 require_key "${WORKSPACE}/state.yaml" "pre_review_bundle"
 require_key "${WORKSPACE}/state.yaml" "closure_bundle"
 
@@ -331,6 +333,12 @@ fi
 runtime_delta_packet="$(yaml_value "${WORKSPACE}/state.yaml" "runtime_delta_packet")"
 if [ -n "${runtime_delta_packet}" ] && [ ! -f "${TARGET_ROOT}/${runtime_delta_packet}" ]; then
   echo "state.yaml runtime_delta_packet does not exist: ${TARGET_ROOT}/${runtime_delta_packet}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+handoff_summary="$(yaml_value "${WORKSPACE}/state.yaml" "handoff_summary")"
+if [ -n "${handoff_summary}" ] && [ ! -f "${TARGET_ROOT}/${handoff_summary}" ]; then
+  echo "state.yaml handoff_summary does not exist: ${TARGET_ROOT}/${handoff_summary}" >&2
   FAILURES=$((FAILURES + 1))
 fi
 

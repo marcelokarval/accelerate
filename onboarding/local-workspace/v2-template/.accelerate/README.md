@@ -28,6 +28,7 @@ The main canonical files here are:
 - `review/closure-packet.md`
 - `review/branch-entry-packet.md`
 - `review/runtime-delta-packet.md`
+- `review/handoff-summary.md`
 - `review/pre-review-bundle.md`
 - `review/closure-bundle.md`
 
@@ -44,6 +45,7 @@ The main canonical files here are:
 - `agents/status.yaml` is detailed local pre-agents posture authority
 - `review/*.md` are persisted local handoff and closure artifacts derived from current local status
 - `review/branch-entry-packet.md` and `review/runtime-delta-packet.md` are persisted local runtime observability packets
+- `review/handoff-summary.md` is the compact session reentry view over the persisted review and runtime packet surfaces
 - bundle artifacts group those review surfaces for operator handoff
 
 ## What Accelerate May Rewrite
@@ -78,8 +80,9 @@ For a fresh session, read in this order:
 17. `review/closure-packet.md`
 18. `review/branch-entry-packet.md`
 19. `review/runtime-delta-packet.md`
-20. `review/pre-review-bundle.md`
-21. `review/closure-bundle.md`
+20. `review/handoff-summary.md`
+21. `review/pre-review-bundle.md`
+22. `review/closure-bundle.md`
 
 ## Non-Goals
 

@@ -63,6 +63,8 @@ Use:
 - `./onboarding/local-workspace/render-branch-entry-packet.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-runtime-delta-packet.sh /path/to/target-repo`
 - `./onboarding/local-workspace/persist-runtime-packets.sh /path/to/target-repo`
+- `./onboarding/local-workspace/render-handoff-summary.sh /path/to/target-repo`
+- `./onboarding/local-workspace/persist-handoff-summary.sh /path/to/target-repo`
 - `./onboarding/local-workspace/mark-checkpoint.sh /path/to/target-repo <checkpoint> <summary>`
 - `./onboarding/local-workspace/reconcile-readiness.sh /path/to/target-repo review-ready|closure-ready [summary]`
 - `./onboarding/local-workspace/sync-plan-status.sh /path/to/target-repo`
@@ -103,6 +105,10 @@ This now supports the minimum deterministic onboarding loop:
   - renders the latest honest Runtime Delta Packet inferred from persisted workspace truth and the last timeline event
 - `persist-runtime-packets.sh`
   - persists the local Branch Entry Packet and Runtime Delta Packet into canonical files under `.accelerate/review/`
+- `render-handoff-summary.sh`
+  - renders one compact handoff summary from the persisted review and runtime packet surfaces
+- `persist-handoff-summary.sh`
+  - persists that handoff summary canonically under `.accelerate/review/`
 - `mark-checkpoint.sh`
   - appends a semantic checkpoint into the local continuity timeline
 - `reconcile-readiness.sh`
@@ -124,9 +130,9 @@ This now supports the minimum deterministic onboarding loop:
 - `persist-review-bundles.sh`
   - persists both bundles canonically after refreshing the review artifacts
 - `prepare-review.sh`
-  - synchronizes the plan, reconciles review readiness when the dashboard is not blocked, persists review artifacts, materializes the canonical pre-review bundle, and persists runtime packets in one operator step
+  - synchronizes the plan, reconciles review readiness when the dashboard is not blocked, persists review artifacts, materializes the canonical pre-review bundle, persists runtime packets, and persists the compact handoff summary in one operator step
 - `prepare-closure.sh`
-  - synchronizes the plan, reconciles review and closure readiness when the dashboard is not blocked, persists the canonical review bundle set, and persists runtime packets in one operator step
+  - synchronizes the plan, reconciles review and closure readiness when the dashboard is not blocked, persists the canonical review bundle set, persists runtime packets, and persists the compact handoff summary in one operator step
 - `append-timeline.sh`
   - records durable local workspace transitions in the continuity timeline
 - `record-learning.sh`
