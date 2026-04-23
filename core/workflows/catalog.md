@@ -72,6 +72,14 @@ current local status
 Use this workflow when the local workspace already exists and the operator
 needs an explicit, durable move from execution toward review or closure.
 
+This workflow is often preceded by:
+
+- `sync-plan-status.sh`
+
+and may end with:
+
+- `render-closure-packet.sh`
+
 ### 3. Issue-Bootstrap Workflow
 
 ```text

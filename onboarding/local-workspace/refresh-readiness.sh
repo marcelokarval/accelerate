@@ -48,6 +48,8 @@ project_onboarded="$(yaml_value "${STATE_FILE}" "project_onboarded")"
 smallest_artifact="$(plan_value "smallest sufficient artifact")"
 governing_path="$(plan_value "path")"
 bounded_objective="$(plan_value "bounded objective")"
+current_review_readiness="$(yaml_value "${READINESS_FILE}" "review_readiness")"
+current_closure_readiness="$(yaml_value "${READINESS_FILE}" "closure_readiness")"
 
 current_phase="onboarding"
 dashboard_verdict="blocked"
@@ -113,14 +115,24 @@ else
   [ -n "${bounded_objective}" ] || blocking_items+=("bounded objective not declared yet")
 fi
 
-if [ "${execution_readiness}" = "ready" ]; then
+if [ "${#blocking_items[@]}" -gt 0 ]; then
+  dashboard_verdict="blocked"
+elif [ "${current_closure_readiness}" = "ready" ]; then
+  current_phase="closure"
+  execution_readiness="ready"
+  review_readiness="ready"
+  closure_readiness="ready"
+  dashboard_verdict="ready-for-closure"
+elif [ "${current_review_readiness}" = "ready" ]; then
+  current_phase="review"
+  execution_readiness="ready"
+  review_readiness="ready"
+  closure_readiness="blocked"
+  dashboard_verdict="ready-for-review"
+elif [ "${execution_readiness}" = "ready" ]; then
   review_readiness="blocked"
   closure_readiness="blocked"
   dashboard_verdict="ready-for-execution"
-fi
-
-if [ "${#blocking_items[@]}" -gt 0 ]; then
-  dashboard_verdict="blocked"
 fi
 
 cat > "${READINESS_FILE}" <<EOF

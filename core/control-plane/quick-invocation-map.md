@@ -106,5 +106,7 @@ Before starting a non-trivial run, answer:
 9. what does the readiness dashboard currently say?
 10. what checkpoint was crossed last and what comes next?
 11. did the run produce a learning that must be registered before closure?
-12. what proof lane is next?
-13. what review still blocks closure?
+12. does `current-plan.md` need to be synchronized into local status now?
+13. should a closure packet be rendered from local status already?
+14. what proof lane is next?
+15. what review still blocks closure?
