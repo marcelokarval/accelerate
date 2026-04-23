@@ -86,6 +86,8 @@ and may end with:
 - `render-closure-bundle.sh`
 - `persist-review-bundles.sh`
 - `suggest-next-local-action.sh`
+- `render-branch-entry-packet.sh`
+- `render-runtime-delta-packet.sh`
 - `prepare-review.sh`
 - `prepare-closure.sh`
 
@@ -99,6 +101,12 @@ enough to reconcile into closure.
 Use `suggest-next-local-action.sh` when the operator or root packet needs the
 current canonical handoff answer materialized from local readiness and
 timeline truth instead of inferred ad hoc in conversation.
+
+Use `render-branch-entry-packet.sh` when the root needs a current packeted
+opening state from the local workspace rather than a prose summary.
+
+Use `render-runtime-delta-packet.sh` when the root needs the latest honest
+transition packet inferred from local status plus the last timeline event.
 
 ### 3. Issue-Bootstrap Workflow
 

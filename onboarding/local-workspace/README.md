@@ -60,6 +60,8 @@ Use:
 - `./onboarding/local-workspace/refresh-readiness.sh /path/to/target-repo`
 - `./onboarding/local-workspace/print-status.sh /path/to/target-repo`
 - `./onboarding/local-workspace/suggest-next-local-action.sh /path/to/target-repo`
+- `./onboarding/local-workspace/render-branch-entry-packet.sh /path/to/target-repo`
+- `./onboarding/local-workspace/render-runtime-delta-packet.sh /path/to/target-repo`
 - `./onboarding/local-workspace/mark-checkpoint.sh /path/to/target-repo <checkpoint> <summary>`
 - `./onboarding/local-workspace/reconcile-readiness.sh /path/to/target-repo review-ready|closure-ready [summary]`
 - `./onboarding/local-workspace/sync-plan-status.sh /path/to/target-repo`
@@ -94,6 +96,10 @@ This now supports the minimum deterministic onboarding loop:
   - prints the local status summary for operator visibility
 - `suggest-next-local-action.sh`
   - derives the next canonical local handoff action from readiness and timeline truth
+- `render-branch-entry-packet.sh`
+  - renders the local root-facing Branch Entry Packet from persisted workspace truth
+- `render-runtime-delta-packet.sh`
+  - renders the latest honest Runtime Delta Packet inferred from persisted workspace truth and the last timeline event
 - `mark-checkpoint.sh`
   - appends a semantic checkpoint into the local continuity timeline
 - `reconcile-readiness.sh`
