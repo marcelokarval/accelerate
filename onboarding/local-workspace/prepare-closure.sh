@@ -57,6 +57,5 @@ fi
   "prepare-closure.sh" >/dev/null
 
 bash "${SCRIPT_DIR}/persist-runtime-packets.sh" "${TARGET_ROOT}" >/dev/null
-bash "${SCRIPT_DIR}/persist-handoff-summary.sh" "${TARGET_ROOT}" >/dev/null
 
 echo "prepared local closure surface"

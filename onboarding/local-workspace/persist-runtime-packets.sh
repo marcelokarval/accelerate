@@ -25,4 +25,6 @@ bash "${SCRIPT_DIR}/render-runtime-delta-packet.sh" "${TARGET_ROOT}" > "${RUNTIM
   "info" \
   "persist-runtime-packets.sh" >/dev/null
 
+bash "${SCRIPT_DIR}/persist-handoff-summary.sh" "${TARGET_ROOT}" >/dev/null
+
 echo "persisted local runtime packets"
