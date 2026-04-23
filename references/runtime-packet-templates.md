@@ -19,6 +19,10 @@ For non-trivial work, use explicit packet templates.
 Do not replace these with vague prose or compressed narrative when the run is
 mutating code, docs, workflow seeds, or runtime governance.
 
+When `.accelerate/` local status is active, the canonical composed local
+handoff commands should leave these packet shapes not only renderable on demand
+but also persisted inside the local workspace review surface.
+
 ## 1. Branch Entry Packet
 
 ```text

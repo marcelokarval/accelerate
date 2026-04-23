@@ -156,6 +156,13 @@ entering review or closure, prefer the canonical composed local commands:
 - `prepare-review.sh`
 - `prepare-closure.sh`
 
+These composed commands now represent the full local handoff preparation flow:
+
+- persisted review / closure artifacts
+- persisted pre-review / closure bundles
+- persisted `Branch Entry Packet`
+- persisted `Runtime Delta Packet`
+
 Only bypass this with an explicit manual-debug exception for the local
 workspace layer itself.
 

@@ -47,3 +47,11 @@ prefer the canonical composed local commands for handoff preparation:
 
 - `prepare-review.sh`
 - `prepare-closure.sh`
+
+Those commands are expected to leave the local workspace with a complete
+handoff surface, including:
+
+- review / closure artifacts
+- pre-review / closure bundles
+- persisted branch entry packet
+- persisted runtime delta packet
