@@ -66,6 +66,7 @@ Branch Entry Packet
 - issue stack status: <status or n/a>
 - browser-proof intensity: <status or n/a>
 - persistent E2E status: <status or n/a>
+- local review / closure action: <none|prepare-review|prepare-closure|manual-debug-exception>
 - single-threaded exception: <reason or n/a>
 ```
 
@@ -90,6 +91,7 @@ Runtime Delta Packet
 - readiness transition: <A -> B or n/a>
 - timeline checkpoint transition: <A -> B or n/a>
 - learning disposition transition: <A -> B or n/a>
+- local review / closure action transition: <A -> B or n/a>
 - persona transition: <A -> B or n/a>
 - phase transition: <A -> B or n/a>
 - product/spec artifact transition: <A -> B or n/a>
@@ -149,6 +151,7 @@ QA / Proof Packet
 - failures found: <...>
 - residual gaps: <...>
 - readiness impact: <none|moved-to-review-ready|still-blocked>
+- next canonical local action: <prepare-review|prepare-closure|manual-debug-exception|n/a>
 ```
 
 ## Closure Packet
@@ -162,6 +165,7 @@ Closure Packet
 - readiness summary: <status + next blocking gate>
 - timeline closure checkpoint: <present|missing|n/a>
 - learning registration status: <none|ephemeral|candidate|durably-registered|required-before-closure>
+- local review / closure preparation: <prepare-review used|prepare-closure used|manual-debug-exception|n/a>
 - proof lane status:
   - Backend QA=<present|missing|blocked>
   - Frontend QA=<present|missing|blocked>

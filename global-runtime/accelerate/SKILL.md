@@ -132,6 +132,7 @@ For engineering runs, keep visible:
 - QA / proof lane
 - browser-proof status
 - persistent E2E status
+- local review / closure action
 - closure blockers
 - `single-threaded exception` when non-trivial work stays root-only
 
@@ -148,6 +149,15 @@ The proof order is:
 5. forensic closure
 
 Browser truth comes before Playwright when the flow is not yet stabilized.
+
+When the active repository has `.accelerate/` local status and the run is
+entering review or closure, prefer the canonical composed local commands:
+
+- `prepare-review.sh`
+- `prepare-closure.sh`
+
+Only bypass this with an explicit manual-debug exception for the local
+workspace layer itself.
 
 ## Reference Map
 

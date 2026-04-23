@@ -40,3 +40,10 @@ When local workspace state is active, this portable bundle should expose:
 - readiness dashboard status
 - continuity timeline status
 - learning disposition
+- local review / closure action
+
+And when the target repo already has `.accelerate/` local status, it should
+prefer the canonical composed local commands for handoff preparation:
+
+- `prepare-review.sh`
+- `prepare-closure.sh`

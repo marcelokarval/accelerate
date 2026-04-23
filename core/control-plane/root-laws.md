@@ -12,6 +12,7 @@ The root always owns:
 - classification
 - prompt-hardening decisions
 - local workspace entry state when a governed target repo is in scope
+- local review / closure preparation choice when `.accelerate/` status is active
 - review readiness judgment
 - checkpoint continuity judgment
 - durable learning registration judgment
@@ -29,6 +30,13 @@ The root must remain fully functional:
 - with no governed agents installed
 - with agents explicitly disabled by the user
 - when no honest family fit exists
+
+When `.accelerate/` local status is active, root review/closure preparation
+should prefer the canonical composed local commands over loose manual
+sequencing:
+
+- `prepare-review.sh`
+- `prepare-closure.sh`
 
 ## Operating Rule
 

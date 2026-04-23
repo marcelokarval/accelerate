@@ -156,6 +156,7 @@ At minimum, runtime packets should expose:
 - QA / proof lane
 - browser-proof status
 - persistent E2E status
+- local review / closure action
 - closure blockers
 - `single-threaded exception` when non-trivial work stays root-only
 
@@ -194,6 +195,15 @@ The proof order is:
 Do not collapse these lanes into a vague “tested” claim.
 
 Browser truth comes before Playwright when the flow is not yet stabilized.
+
+When a governed target repository has active `.accelerate/` local status and
+the run is entering review or closure, prefer the canonical composed commands:
+
+- `onboarding/local-workspace/prepare-review.sh`
+- `onboarding/local-workspace/prepare-closure.sh`
+
+Do not replace these with an ad hoc sequence unless the run is explicitly
+debugging that local workspace layer itself.
 
 ## Product-Critical And Premium Rule
 

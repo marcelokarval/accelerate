@@ -149,13 +149,15 @@ issue stack is mandatory.
 The minimum mutation path is:
 
 1. `accelerate`
-2. `Issue Bootstrap Gate`
-3. active workflow adapter
-4. planning artifact
-5. execution
-6. proof stack
-7. `AI Review Report`
-8. root closure mode
+2. `Local Workspace Entry Gate` when a governed target repo is in scope
+3. `Issue Bootstrap Gate`
+4. active workflow adapter
+5. planning artifact
+6. execution
+7. proof stack
+8. local review / closure preparation when `.accelerate/` local status is active
+9. `AI Review Report`
+10. root closure mode
 
 Mutation must not jump directly from request to implementation.
 
@@ -183,6 +185,7 @@ Use them to decide:
 - what readiness state is currently honest
 - what checkpoint was crossed last and what comes next
 - whether durable learnings must be registered before closure
+- whether `prepare-review.sh` or `prepare-closure.sh` is now the canonical local next step
 - which proof and artifacts closure requires
 
 ## Proof Stack
@@ -567,6 +570,18 @@ Expected behavior:
 - root-only mode remains active
 - `single-threaded exception` is emitted honestly when the run is non-trivial
 - the work still follows the same proof and closure standards
+
+### Example 10. Local workspace review preparation should not fragment
+
+A governed target repo already has `.accelerate/`, proof is complete, and the
+run is entering review or closure.
+
+Expected behavior:
+
+- `accelerate` does not improvise a loose sequence of readiness/artifact steps
+- it prefers `prepare-review.sh` for the review handoff lane
+- it prefers `prepare-closure.sh` for the closure handoff lane
+- ad hoc manual sequencing is reserved for debugging the local workspace layer
 
 ## Common Usage Guidance
 

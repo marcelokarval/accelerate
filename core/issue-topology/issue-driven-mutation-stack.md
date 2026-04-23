@@ -26,8 +26,9 @@ of the execution model.
 8. `executing-plans` when the execution packet is accepted
 9. `linear-progress-reporter` for longer runs
 10. proof stack
-11. `AI Review Report`
-12. root closure mode
+11. local review / closure preparation when `.accelerate/` local status is active
+12. `AI Review Report`
+13. root closure mode
 
 ## Flow
 
@@ -53,6 +54,7 @@ User Request
                                    -> missing plan -> BLOCK
                                    -> plan present -> execute
                                         -> proof stack
+                                        -> local review / closure prep when active
                                         -> AI Review Report
                                         -> Done
 ```
@@ -95,6 +97,7 @@ Issue-driven runtime packets must make visible:
 - whether the run is still blocked on issue/plan hygiene
 - whether the slice is still in shaping-first mode before execution
 - whether `Prompt Hardening Gate` was satisfied or is still blocking entry
+- whether `prepare-review.sh` or `prepare-closure.sh` is now the canonical next step
 
 ## Subagents In Issue-Driven Work
 
