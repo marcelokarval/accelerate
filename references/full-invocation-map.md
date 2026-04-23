@@ -67,3 +67,6 @@ can become when invoked across different kinds of work.
 - `accelerate` should discover broadly, then activate minimally.
 - The point of the full map is to make future agent derivation and branch growth
   explicit without loading the entire catalog on every run.
+- When governed `.accelerate/` local status is active and a fast handoff read is
+  needed, prefer `review/handoff-summary.md` before opening the full persisted
+  packet and bundle set.

@@ -162,6 +162,10 @@ These composed commands now represent the full local handoff preparation flow:
 - persisted pre-review / closure bundles
 - persisted `Branch Entry Packet`
 - persisted `Runtime Delta Packet`
+- persisted `handoff-summary.md`
+
+When a compact local reentry read is needed, prefer `handoff-summary.md` first,
+then expand into the individual packet and bundle surfaces only as needed.
 
 Only bypass this with an explicit manual-debug exception for the local
 workspace layer itself.

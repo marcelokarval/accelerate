@@ -55,3 +55,10 @@ handoff surface, including:
 - pre-review / closure bundles
 - persisted branch entry packet
 - persisted runtime delta packet
+- persisted handoff summary
+
+For fast reentry, the preferred compact read is:
+
+- `review/handoff-summary.md`
+
+Then, only when needed, expand into the individual packets and bundles.

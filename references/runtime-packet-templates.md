@@ -23,6 +23,10 @@ When `.accelerate/` local status is active, the canonical composed local
 handoff commands should leave these packet shapes not only renderable on demand
 but also persisted inside the local workspace review surface.
 
+The preferred compact reentry read above the individual packet set is the local
+`handoff-summary.md`, which should point the operator back into the persisted
+packet and bundle surfaces without replacing them.
+
 ## 1. Branch Entry Packet
 
 ```text
