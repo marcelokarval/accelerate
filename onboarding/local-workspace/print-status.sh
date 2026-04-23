@@ -41,7 +41,7 @@ last_jsonl_field() {
   if [ ! -s "${path}" ]; then
     return
   fi
-  grep -ve '^[[:space:]]*$' "${path}" | tail -n 1 | sed -n "s/.*\"${key}\":\"\\([^\"]*\\)\".*/\\1/p"
+  (grep -ve '^[[:space:]]*$' "${path}" | tail -n 1 | sed -n "s/.*\"${key}\":\"\\([^\"]*\\)\".*/\\1/p") || true
 }
 
 printf 'Accelerate Local Status\n\n'

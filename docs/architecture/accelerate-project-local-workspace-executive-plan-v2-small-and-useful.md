@@ -34,6 +34,7 @@ lives in:
 - current planning state
 - local pre-agents status, candidates, and gaps
 - minimal branch readiness / continuity / learnings truth
+- local handoff / review / closure packet truth
 
 It does not yet persist the wider local control surfaces for:
 
@@ -52,6 +53,10 @@ It does not yet persist the wider local control surfaces for:
 │   ├── readiness-dashboard.yaml
 │   ├── timeline.jsonl
 │   └── learnings.jsonl
+├── review/
+│   ├── review-ready-packet.md
+│   ├── ai-review-report.md
+│   └── closure-packet.md
 ├── onboarding/
 │   ├── status.yaml
 │   ├── discovery.yaml

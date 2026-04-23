@@ -14,4 +14,7 @@ agents_status_file: .accelerate/agents/status.yaml
 readiness_dashboard: .accelerate/status/readiness-dashboard.yaml
 timeline_file: .accelerate/status/timeline.jsonl
 learnings_file: .accelerate/status/learnings.jsonl
+review_ready_packet: .accelerate/review/review-ready-packet.md
+ai_review_report: .accelerate/review/ai-review-report.md
+closure_packet: .accelerate/review/closure-packet.md
 last_bootstrap_update: YYYY-MM-DD

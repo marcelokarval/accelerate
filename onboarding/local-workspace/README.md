@@ -65,6 +65,7 @@ Use:
 - `./onboarding/local-workspace/render-closure-packet.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-ai-review-report.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-review-ready-packet.sh /path/to/target-repo`
+- `./onboarding/local-workspace/persist-review-artifacts.sh /path/to/target-repo`
 - `./onboarding/local-workspace/append-timeline.sh /path/to/target-repo <event> <summary>`
 - `./onboarding/local-workspace/record-learning.sh /path/to/target-repo <type> <key> <insight>`
 - `./onboarding/local-workspace/validate-v2.sh /path/to/target-repo`
@@ -97,6 +98,8 @@ This now supports the minimum deterministic onboarding loop:
   - renders a local status-backed AI Review Report summary
 - `render-review-ready-packet.sh`
   - renders a compact review-ready packet from local status and current plan
+- `persist-review-artifacts.sh`
+  - persists the local review-ready packet, AI review report, and closure packet into canonical files under `.accelerate/review/`
 - `append-timeline.sh`
   - records durable local workspace transitions in the continuity timeline
 - `record-learning.sh`

@@ -43,6 +43,10 @@ The minimum V2 implementation must create all of these paths:
 │   ├── readiness-dashboard.yaml
 │   ├── timeline.jsonl
 │   └── learnings.jsonl
+├── review/
+│   ├── review-ready-packet.md
+│   ├── ai-review-report.md
+│   └── closure-packet.md
 ├── onboarding/
 │   ├── status.yaml
 │   ├── discovery.yaml
@@ -85,6 +89,8 @@ When two V2 files appear to overlap, precedence is:
    - append-only continuity chronology
 8. `.accelerate/status/learnings.jsonl`
    - append-only durable learnings
+9. `.accelerate/review/*.md`
+   - persisted local handoff and closure artifacts derived from current local state
 
 ### Precedence Rule
 
@@ -135,6 +141,9 @@ agents_status_file: .accelerate/agents/status.yaml
 readiness_dashboard: .accelerate/status/readiness-dashboard.yaml
 timeline_file: .accelerate/status/timeline.jsonl
 learnings_file: .accelerate/status/learnings.jsonl
+review_ready_packet: .accelerate/review/review-ready-packet.md
+ai_review_report: .accelerate/review/ai-review-report.md
+closure_packet: .accelerate/review/closure-packet.md
 last_bootstrap_update: YYYY-MM-DD
 ```
 
@@ -195,6 +204,19 @@ It records durable operational learnings that are worth carrying across
 sessions before they are promoted into stronger governing surfaces.
 
 It must stay curated and high-signal.
+
+### `.accelerate/review/*.md`
+
+These files are mandatory and human-facing.
+
+They persist the current local:
+
+- review-ready packet
+- AI Review Report
+- closure packet
+
+They are derived artifacts, but they are still canonical local handoff outputs
+once written.
 
 ### `.accelerate/README.md`
 

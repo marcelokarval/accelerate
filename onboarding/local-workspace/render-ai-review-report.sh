@@ -46,7 +46,7 @@ last_jsonl_field() {
   if [ ! -s "${path}" ]; then
     return
   fi
-  grep -ve '^[[:space:]]*$' "${path}" | tail -n 1 | sed -n "s/.*\"${key}\":\"\\([^\"]*\\)\".*/\\1/p"
+  (grep -ve '^[[:space:]]*$' "${path}" | tail -n 1 | sed -n "s/.*\"${key}\":\"\\([^\"]*\\)\".*/\\1/p") || true
 }
 
 dashboard_verdict="$(yaml_value "${READINESS_FILE}" "dashboard_verdict")"

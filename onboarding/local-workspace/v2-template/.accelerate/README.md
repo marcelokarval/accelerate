@@ -23,6 +23,9 @@ The main canonical files here are:
 - `planning/executive-plan.md`
 - `planning/task-breakdown.md`
 - `agents/status.yaml`
+- `review/review-ready-packet.md`
+- `review/ai-review-report.md`
+- `review/closure-packet.md`
 
 ## Summary vs Detailed Authority
 
@@ -35,6 +38,7 @@ The main canonical files here are:
 - `planning/current-plan.md` is the active local planning index and governing artifact pointer
 - `planning/user-story.md`, `planning/prd-lite.md`, `planning/sdd.md`, `planning/executive-plan.md`, and `planning/task-breakdown.md` are the local artifact ladder
 - `agents/status.yaml` is detailed local pre-agents posture authority
+- `review/*.md` are persisted local handoff and closure artifacts derived from current local status
 
 ## What Accelerate May Rewrite
 
@@ -63,6 +67,9 @@ For a fresh session, read in this order:
 12. `agents/status.yaml`
 13. `status/timeline.jsonl`
 14. `status/learnings.jsonl`
+15. `review/review-ready-packet.md`
+16. `review/ai-review-report.md`
+17. `review/closure-packet.md`
 
 ## Non-Goals
 

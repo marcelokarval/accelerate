@@ -27,6 +27,9 @@ required_files=(
   "${WORKSPACE}/planning/executive-plan.md"
   "${WORKSPACE}/planning/task-breakdown.md"
   "${WORKSPACE}/planning/open-questions.md"
+  "${WORKSPACE}/review/review-ready-packet.md"
+  "${WORKSPACE}/review/ai-review-report.md"
+  "${WORKSPACE}/review/closure-packet.md"
   "${WORKSPACE}/agents/status.yaml"
   "${WORKSPACE}/agents/candidates.yaml"
   "${WORKSPACE}/agents/gaps.yaml"
@@ -134,6 +137,9 @@ require_key "${WORKSPACE}/state.yaml" "current_plan"
 require_key "${WORKSPACE}/state.yaml" "readiness_dashboard"
 require_key "${WORKSPACE}/state.yaml" "timeline_file"
 require_key "${WORKSPACE}/state.yaml" "learnings_file"
+require_key "${WORKSPACE}/state.yaml" "review_ready_packet"
+require_key "${WORKSPACE}/state.yaml" "ai_review_report"
+require_key "${WORKSPACE}/state.yaml" "closure_packet"
 
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "schema_version"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "current_phase"
@@ -287,6 +293,24 @@ fi
 learnings_file="$(yaml_value "${WORKSPACE}/state.yaml" "learnings_file")"
 if [ -n "${learnings_file}" ] && [ ! -f "${TARGET_ROOT}/${learnings_file}" ]; then
   echo "state.yaml learnings_file does not exist: ${TARGET_ROOT}/${learnings_file}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+review_ready_packet="$(yaml_value "${WORKSPACE}/state.yaml" "review_ready_packet")"
+if [ -n "${review_ready_packet}" ] && [ ! -f "${TARGET_ROOT}/${review_ready_packet}" ]; then
+  echo "state.yaml review_ready_packet does not exist: ${TARGET_ROOT}/${review_ready_packet}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+ai_review_report="$(yaml_value "${WORKSPACE}/state.yaml" "ai_review_report")"
+if [ -n "${ai_review_report}" ] && [ ! -f "${TARGET_ROOT}/${ai_review_report}" ]; then
+  echo "state.yaml ai_review_report does not exist: ${TARGET_ROOT}/${ai_review_report}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+closure_packet="$(yaml_value "${WORKSPACE}/state.yaml" "closure_packet")"
+if [ -n "${closure_packet}" ] && [ ! -f "${TARGET_ROOT}/${closure_packet}" ]; then
+  echo "state.yaml closure_packet does not exist: ${TARGET_ROOT}/${closure_packet}" >&2
   FAILURES=$((FAILURES + 1))
 fi
 
