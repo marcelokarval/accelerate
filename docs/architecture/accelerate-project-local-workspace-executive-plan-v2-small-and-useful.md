@@ -54,8 +54,11 @@ It does not yet persist the wider local control surfaces for:
 │   └── executive-bootstrap-plan.md
 ├── planning/
 │   ├── current-plan.md
-│   ├── review-ready.md
-│   ├── execution-log.md
+│   ├── user-story.md
+│   ├── prd-lite.md
+│   ├── sdd.md
+│   ├── executive-plan.md
+│   ├── task-breakdown.md
 │   ├── open-questions.md
 │   └── history/
 └── agents/
@@ -150,28 +153,43 @@ This file is the bridge from discovery into real local execution.
 
 ### `planning/current-plan.md`
 
-The governing live plan for the next bounded slice or active program.
+The governing local planning index for the active artifact ladder.
 
-### `planning/review-ready.md`
+It should say:
 
-The staged plan state after execution is advanced enough for review or closure
-preparation.
+- which artifact currently governs the slice
+- which artifacts are not required vs required-but-missing vs active
+- what the next required artifact is
+- what still blocks execution or closure
 
-### `planning/execution-log.md`
+### `planning/user-story.md`
 
-A local summary of execution under the current plan.
+Actor, goal, value, pain, and acceptance framing when needed.
 
-This does not replace issue comments or workflow backend logs.
+### `planning/prd-lite.md`
 
-It complements them as local accelerate-centric continuity.
+Capability-level scope, non-goals, constraints, and success signals when needed.
+
+### `planning/sdd.md`
+
+Technical design authority when architecture or ownership is still unresolved.
+
+### `planning/executive-plan.md`
+
+Sequencing, rollout, proof-lane, and bounded execution-order authority when
+needed.
+
+### `planning/task-breakdown.md`
+
+Dependency-aware implementation slices when needed.
 
 ### `planning/open-questions.md`
 
-High-impact ambiguities still unresolved.
+High-impact ambiguities still unresolved across the artifact ladder.
 
 ### `planning/history/`
 
-Closed plans that are no longer the active governing artifact.
+Superseded planning artifacts that are no longer active.
 
 ### `agents/status.yaml`
 
@@ -235,7 +253,8 @@ reconstruction:
 - whether onboarding happened
 - what was discovered
 - what was decided
-- what plan currently governs execution
+- which planning artifact currently governs execution
+- which parts of the artifact ladder are active vs not required
 - which open questions remain
 - whether the repo is still root-only
 - which local candidate families and gaps already exist

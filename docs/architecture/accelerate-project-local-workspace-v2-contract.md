@@ -46,8 +46,11 @@ The minimum V2 implementation must create all of these paths:
 │   └── executive-bootstrap-plan.md
 ├── planning/
 │   ├── current-plan.md
-│   ├── review-ready.md
-│   ├── execution-log.md
+│   ├── user-story.md
+│   ├── prd-lite.md
+│   ├── sdd.md
+│   ├── executive-plan.md
+│   ├── task-breakdown.md
 │   ├── open-questions.md
 │   └── history/
 └── agents/
@@ -69,7 +72,7 @@ When two V2 files appear to overlap, precedence is:
 3. `.accelerate/onboarding/decisions.yaml`
    - declarative onboarding decisions
 4. `.accelerate/planning/current-plan.md`
-   - currently governing execution artifact
+   - current planning index and governing artifact pointer
 5. `.accelerate/agents/status.yaml`
    - local pre-agents posture
 
@@ -85,7 +88,8 @@ Examples:
   `onboarding/status.yaml` says `in_progress`, treat that as drift and prefer
   `onboarding/status.yaml` for onboarding truth
 - if `state.yaml` points to `planning/current-plan.md`, that path is the
-  pointer, but the plan file itself remains the execution authority
+  pointer, and that file remains the local planning authority over the artifact
+  ladder
 
 `state.yaml` should summarize. Subfiles should specialize.
 
@@ -313,38 +317,67 @@ Rules:
 
 ### `planning/current-plan.md`
 
-This is the active governing plan.
+This is the active local planning index.
 
-It should exist whenever execution is presently governed by a local plan.
+It should exist whenever execution is presently governed by local planning
+artifacts.
 
-### `planning/review-ready.md`
+It should summarize:
 
-This is the staged post-execution artifact used before a plan is archived.
+- active phase
+- current governing artifact
+- current artifact ladder state
+- smallest sufficient artifact decision
+- next required artifact
+- bounded objective
+- residual risks or blockers
 
-A plan may move from `current-plan.md` to `review-ready.md` when:
+### `planning/user-story.md`
 
-- the bounded execution it governs has materially completed
-- evidence and residual risks are known
-- the plan is ready for review or closure preparation
+Use this file when actor, goal, value, pain, or acceptance criteria are active
+local blockers.
 
-It should not move early merely because work has started.
+If story framing is not required for the current slice, say so explicitly.
 
-### `planning/execution-log.md`
+### `planning/prd-lite.md`
 
-This file summarizes execution under the active or recently active plan.
+Use this file when the local work is capability-level, epic-like, or too broad
+for safe execution from story framing alone.
 
-It is not a replacement for issue comments or workflow backend logs.
+If PRD-lite is not required for the current slice, say so explicitly.
+
+### `planning/sdd.md`
+
+Use this file when architecture, data ownership, transport, migration, runtime
+adapter choice, or proof posture are still design blockers.
+
+If SDD is not required for the current slice, say so explicitly.
+
+### `planning/executive-plan.md`
+
+Use this file when sequencing, rollout, adapters, proof lanes, or bounded
+execution order need an explicit local plan.
+
+If executive planning is not required for the current slice, say so
+explicitly.
+
+### `planning/task-breakdown.md`
+
+Use this file when implementation must be decomposed into dependency-aware
+slices.
+
+If task breakdown is not required for the current slice, say so explicitly.
 
 ### `planning/history/`
 
-A plan should move into `history/` only after:
+Planning artifacts should move into `history/` only after:
 
-- it is no longer the active governing artifact
-- review/closure preparation is complete enough that the plan is no longer
-  driving execution
+- they are no longer active
+- a newer artifact superseded them
+- the supersession or closure state is recorded honestly
 
-If a plan is superseded before closure is clean, preserve that fact explicitly
-in the archived artifact rather than pretending it was fully complete.
+If an artifact is superseded before closure is clean, preserve that fact
+explicitly in the archived copy rather than pretending it was fully complete.
 
 ### `planning/open-questions.md`
 
@@ -368,6 +401,7 @@ Examples:
 - writing `state.yaml`
 - writing discovery facts
 - writing the first executive bootstrap plan
+- writing the first artifact ladder placeholders
 - writing `agents/status.yaml` as `root-only`
 
 ### Level 2. Conditioned autonomous writes
@@ -379,7 +413,7 @@ Examples:
 - changing `selected_profile`
 - changing `workflow_backend`
 - marking `partial_reonboarding`
-- moving a plan to `review-ready`
+- changing which planning artifact is currently governing
 
 ### Level 3. Sensitive structural writes
 

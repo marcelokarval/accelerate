@@ -53,8 +53,11 @@ Use `V3` when:
 │   └── proof-posture.yaml
 ├── planning/
 │   ├── current-plan.md
-│   ├── review-ready.md
-│   ├── execution-log.md
+│   ├── user-story.md
+│   ├── prd-lite.md
+│   ├── sdd.md
+│   ├── executive-plan.md
+│   ├── task-breakdown.md
 │   ├── open-questions.md
 │   └── history/
 ├── agents/
@@ -182,3 +185,14 @@ Examples:
 `V3` succeeds when the project-local `.accelerate/` is strong enough that a
 fresh session can operate with minimal implicit context, while still remaining
 readable and intentionally structured for humans.
+
+Its planning surface should stay aligned with the native standalone ladder:
+
+- user story
+- PRD-lite
+- SDD
+- executive plan
+- task breakdown
+
+The V3 difference is wider local control-surface persistence around workflow,
+runtime, profiles, and memory, not a different planning model.

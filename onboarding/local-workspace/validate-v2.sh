@@ -18,8 +18,11 @@ required_files=(
   "${WORKSPACE}/onboarding/decisions.yaml"
   "${WORKSPACE}/onboarding/executive-bootstrap-plan.md"
   "${WORKSPACE}/planning/current-plan.md"
-  "${WORKSPACE}/planning/review-ready.md"
-  "${WORKSPACE}/planning/execution-log.md"
+  "${WORKSPACE}/planning/user-story.md"
+  "${WORKSPACE}/planning/prd-lite.md"
+  "${WORKSPACE}/planning/sdd.md"
+  "${WORKSPACE}/planning/executive-plan.md"
+  "${WORKSPACE}/planning/task-breakdown.md"
   "${WORKSPACE}/planning/open-questions.md"
   "${WORKSPACE}/agents/status.yaml"
   "${WORKSPACE}/agents/candidates.yaml"
@@ -241,6 +244,18 @@ if [ -n "${current_plan}" ] && [ ! -f "${TARGET_ROOT}/${current_plan}" ]; then
   echo "state.yaml current_plan does not exist: ${TARGET_ROOT}/${current_plan}" >&2
   FAILURES=$((FAILURES + 1))
 fi
+
+for planning_ref in \
+  ".accelerate/planning/user-story.md" \
+  ".accelerate/planning/prd-lite.md" \
+  ".accelerate/planning/sdd.md" \
+  ".accelerate/planning/executive-plan.md" \
+  ".accelerate/planning/task-breakdown.md"; do
+  if ! grep -Fq "${planning_ref}" "${WORKSPACE}/planning/current-plan.md"; then
+    echo "planning/current-plan.md is missing artifact reference: ${planning_ref}" >&2
+    FAILURES=$((FAILURES + 1))
+  fi
+done
 
 if [ "${FAILURES}" -ne 0 ]; then
   echo "V2 validation failed with ${FAILURES} error(s)." >&2

@@ -67,4 +67,5 @@ echo
 echo "next steps:"
 echo "  1. fill onboarding discovery and decisions"
 echo "  2. write the first executive bootstrap plan"
-echo "  3. update state.yaml summary fields honestly"
+echo "  3. mark story / PRD-lite / SDD / executive-plan / task-breakdown as active or not-required-yet"
+echo "  4. update current-plan.md and state.yaml honestly"

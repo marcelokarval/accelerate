@@ -32,12 +32,20 @@ Examples:
 
 ### Planning drift
 
-If `current-plan.md`, `review-ready.md`, and `history/` imply contradictory
-execution states:
+If `current-plan.md`, the active planning artifacts, and `history/` imply
+contradictory execution states:
 
 1. prefer the currently active execution artifact
 2. preserve evidence of supersession or incomplete closure
 3. do not rewrite history to make it appear cleaner than it is
+
+Examples:
+
+- `current-plan.md` says `task-breakdown.md` governs, but `executive-plan.md`
+  still says task decomposition is pending
+- `current-plan.md` says PRD-lite is not required, but `prd-lite.md` contains
+  active scope decisions
+- a superseded `sdd.md` was archived, but `current-plan.md` still points to it
 
 ### Discovery vs decisions drift
 

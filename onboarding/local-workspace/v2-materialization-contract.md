@@ -38,6 +38,9 @@ When `accelerate` performs real onboarding in a governed repository, it should:
 6. keep `.accelerate/state.yaml` as a summary index
 7. keep subfiles as detailed local authorities
 
+For planning, that means emitting the full local artifact ladder even when some
+artifacts are initially marked `not required yet`.
+
 The first implementation entrypoint may emit placeholder values that honestly
 represent `not_started`, `unknown`, or empty states. It must not claim
 completed onboarding by default.
@@ -75,6 +78,9 @@ The emitted `.accelerate/` workspace must remain:
 - machine-readable where structured state is needed
 - free of secrets and noisy session logs
 
+The local workspace must persist project-specific control-plane state, not a
+copy of standalone `accelerate` doctrine.
+
 ## Scope Boundary
 
 The V2 materialization must not silently expand into V3.
@@ -85,3 +91,4 @@ Before V3 is explicitly adopted, do not add persisted local surfaces for:
 - runtime capability registry
 - profile overrides
 - long-form local memory
+- cache, tmp, browser traces, or session-noise folders

@@ -1,6 +1,7 @@
 # Planning History
 
-Archive plans here only after they are no longer the active governing artifact.
+Archive superseded planning artifacts here only after they are no longer
+active.
 
-Preserve supersession or imperfect closure honestly rather than rewriting the
-historical record.
+Preserve whether the artifact was completed, superseded, abandoned, or only
+partially executed.

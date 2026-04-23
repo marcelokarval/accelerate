@@ -64,3 +64,4 @@ The validator checks:
 - required V2 files
 - minimum key presence
 - summary drift between `state.yaml` and detailed authorities
+- local planning artifact ladder coherence
