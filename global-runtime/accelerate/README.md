@@ -61,4 +61,8 @@ For fast reentry, the preferred compact read is:
 
 - `review/handoff-summary.md`
 
+If that file is missing or still template-shaped, fall back to:
+
+- `read-local-handoff.sh`
+
 Then, only when needed, expand into the individual packets and bundles.

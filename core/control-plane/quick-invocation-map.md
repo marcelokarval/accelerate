@@ -95,28 +95,29 @@ Before starting a non-trivial run, answer:
 1. what branch is active?
 2. is a governed target repo in scope, and what is the `.accelerate/` local
    workspace state?
-3. what mandatory skills are in force?
-4. is local workspace init / reentry / reonboarding required before branch
+3. has `review/handoff-summary.md` already been read as the compact reentry surface?
+4. what mandatory skills are in force?
+5. is local workspace init / reentry / reonboarding required before branch
    execution?
-5. is issue bootstrap already satisfied?
-6. is Story / PRD-lite / SDD / task breakdown required and satisfied?
-7. is the planning artifact already satisfied?
-8. if `docs/reference/design-system*` exists, is this extraction or
+6. is issue bootstrap already satisfied?
+7. is Story / PRD-lite / SDD / task breakdown required and satisfied?
+8. is the planning artifact already satisfied?
+9. if `docs/reference/design-system*` exists, is this extraction or
    application?
-9. what does the readiness dashboard currently say?
-10. what checkpoint was crossed last and what comes next?
-11. did the run produce a learning that must be registered before closure?
-12. does `current-plan.md` need to be synchronized into local status now?
-13. should a closure packet be rendered from local status already?
-14. should an AI Review Report be rendered from local status already?
-15. should a review-ready packet be rendered now?
-16. should the review artifacts now be persisted canonically under `.accelerate/review/`?
-17. should a pre-review bundle or closure bundle be persisted now?
-18. should `prepare-review.sh` or `prepare-closure.sh` be used now instead of a looser manual sequence?
-19. what does `suggest-next-local-action.sh` say?
-20. should `render-branch-entry-packet.sh` be emitted now?
-21. should `render-runtime-delta-packet.sh` be emitted now?
-22. should `persist-runtime-packets.sh` be used now?
-23. should `persist-handoff-summary.sh` be used now?
-24. what proof lane is next?
-25. what review still blocks closure?
+10. what does the readiness dashboard currently say?
+11. what checkpoint was crossed last and what comes next?
+12. did the run produce a learning that must be registered before closure?
+13. does `current-plan.md` need to be synchronized into local status now?
+14. should a closure packet be rendered from local status already?
+15. should an AI Review Report be rendered from local status already?
+16. should a review-ready packet be rendered now?
+17. should the review artifacts now be persisted canonically under `.accelerate/review/`?
+18. should a pre-review bundle or closure bundle be persisted now?
+19. should `prepare-review.sh` or `prepare-closure.sh` be used now instead of a looser manual sequence?
+20. what does `suggest-next-local-action.sh` say?
+21. should `render-branch-entry-packet.sh` be emitted now?
+22. should `render-runtime-delta-packet.sh` be emitted now?
+23. should `persist-runtime-packets.sh` be used now?
+24. should `persist-handoff-summary.sh` be used now?
+25. what proof lane is next?
+26. what review still blocks closure?

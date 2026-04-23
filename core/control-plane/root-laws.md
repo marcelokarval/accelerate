@@ -38,6 +38,12 @@ sequencing:
 - `prepare-review.sh`
 - `prepare-closure.sh`
 
+When `.accelerate/` is already present and the root is reentering a governed
+repo, the preferred compact read is:
+
+- `review/handoff-summary.md`
+- otherwise `read-local-handoff.sh`
+
 ## Operating Rule
 
 Treat `accelerate` as:

@@ -33,7 +33,9 @@ For governed target repositories:
 1. detect whether `.accelerate/` exists
 2. if absent, decide whether first local install is required now
 3. if present, read:
-   - `.accelerate/state.yaml`
+   - `.accelerate/review/handoff-summary.md` first when materialized
+   - otherwise `onboarding/local-workspace/read-local-handoff.sh`
+   - then expand into `.accelerate/state.yaml`
    - `.accelerate/status/readiness-dashboard.yaml`
    - `.accelerate/onboarding/status.yaml`
    - `.accelerate/onboarding/decisions.yaml`
@@ -129,6 +131,7 @@ The current implementation surface is:
 - `onboarding/local-workspace/detect-signals.sh`
 - `onboarding/local-workspace/classify-project.sh`
 - `onboarding/local-workspace/bootstrap-or-reentry.sh`
+- `onboarding/local-workspace/read-local-handoff.sh`
 - `onboarding/local-workspace/validate-v2.sh`
 
 ## Runtime Visibility

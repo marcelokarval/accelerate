@@ -167,6 +167,10 @@ These composed commands now represent the full local handoff preparation flow:
 When a compact local reentry read is needed, prefer `handoff-summary.md` first,
 then expand into the individual packet and bundle surfaces only as needed.
 
+If that file is missing or still only template-shaped, fall back to:
+
+- `read-local-handoff.sh`
+
 Only bypass this with an explicit manual-debug exception for the local
 workspace layer itself.
 

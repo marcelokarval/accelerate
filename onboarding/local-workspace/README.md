@@ -59,6 +59,7 @@ Use:
 - `./onboarding/local-workspace/bootstrap-or-reentry.sh /path/to/target-repo`
 - `./onboarding/local-workspace/refresh-readiness.sh /path/to/target-repo`
 - `./onboarding/local-workspace/print-status.sh /path/to/target-repo`
+- `./onboarding/local-workspace/read-local-handoff.sh /path/to/target-repo`
 - `./onboarding/local-workspace/suggest-next-local-action.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-branch-entry-packet.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-runtime-delta-packet.sh /path/to/target-repo`
@@ -97,6 +98,8 @@ This now supports the minimum deterministic onboarding loop:
   - refreshes the local readiness dashboard from current workspace truth
 - `print-status.sh`
   - prints the local status summary for operator visibility
+- `read-local-handoff.sh`
+  - is the compact root-facing reentry read: prefer persisted handoff summary, otherwise fall back to live local status
 - `suggest-next-local-action.sh`
   - derives the next canonical local handoff action from readiness and timeline truth
 - `mark-checkpoint.sh`

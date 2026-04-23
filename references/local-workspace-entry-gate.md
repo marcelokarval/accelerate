@@ -36,6 +36,11 @@ The local-workspace gate resolves before:
 - delegated execution
 - mutation-bearing bounded work inside the governed target repo
 
+When `.accelerate/` already exists, the preferred compact reentry read is:
+
+- `review/handoff-summary.md`
+- otherwise `read-local-handoff.sh`
+
 ## Minimum Visible Runtime Truth
 
 When the gate is relevant, runtime packets should show:

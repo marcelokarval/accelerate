@@ -205,6 +205,13 @@ the run is entering review or closure, prefer the canonical composed commands:
 Do not replace these with an ad hoc sequence unless the run is explicitly
 debugging that local workspace layer itself.
 
+When the root is reentering a governed target repository with `.accelerate/`
+already present, prefer this compact read order:
+
+1. `.accelerate/review/handoff-summary.md`
+2. if missing or still only template-shaped, `onboarding/local-workspace/read-local-handoff.sh`
+3. only then expand into packets, bundles, or deeper planning/onboarding state
+
 ## Product-Critical And Premium Rule
 
 Use `product-critical user surface` when backend truth and frontend product
