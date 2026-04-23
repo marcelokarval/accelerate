@@ -10,6 +10,7 @@ if [[ ! -f "$manifest" ]]; then
 fi
 
 status=0
+root_runtime_bundle="$root_dir/global-runtime/accelerate"
 
 while IFS= read -r skill_dir; do
   [[ -f "$skill_dir/SKILL.md" ]] || {
@@ -31,5 +32,15 @@ done < <(find "$root_dir/skills" -mindepth 2 -maxdepth 2 -type d \
   ! -path "$root_dir/skills/_registry/*" \
   ! -path "$root_dir/skills/overlays/*" \
   | sort)
+
+if [[ ! -f "$root_runtime_bundle/SKILL.md" ]]; then
+  echo "Missing global runtime accelerate SKILL.md in $root_runtime_bundle" >&2
+  status=1
+fi
+
+if [[ ! -f "$root_runtime_bundle/README.md" ]]; then
+  echo "Missing global runtime accelerate README.md in $root_runtime_bundle" >&2
+  status=1
+fi
 
 exit "$status"

@@ -101,12 +101,14 @@ At a high level, `accelerate` works like this:
 
 1. classify the run
 2. decide whether prompt hardening is mandatory
-3. decide the honest issue topology
-4. decide which lanes and skills are required
-5. decide whether the work should stay root-only or use bounded agents
-6. execute with visible runtime packets and active gates
-7. force proof in the correct order
-8. enter root closure mode before `Done`
+3. when a governed target repository is in scope, decide local `.accelerate/`
+   entry state
+4. decide the honest issue topology
+5. decide which lanes and skills are required
+6. decide whether the work should stay root-only or use bounded agents
+7. execute with visible runtime packets and active gates
+8. force proof in the correct order
+9. enter root closure mode before `Done`
 
 The control plane should be visible, not implied.
 
@@ -165,10 +167,12 @@ See:
 The native branch and enforcement authorities now live in:
 
 - [branch-enforcement-matrix.md](./core/control-plane/branch-enforcement-matrix.md)
+- [local-workspace-entry-gate.md](./core/control-plane/local-workspace-entry-gate.md)
 - [enforcement-surfaces.md](./core/risk/enforcement-surfaces.md)
 
 Use them to decide:
 
+- whether `.accelerate/` is absent, reusable, or requires reentry
 - which branch is active
 - which mandatory skills must be open
 - which gates are blocking

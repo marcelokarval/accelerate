@@ -11,6 +11,7 @@ The root always owns:
 
 - classification
 - prompt-hardening decisions
+- local workspace entry state when a governed target repo is in scope
 - issue topology
 - lane opening and closing
 - staffing shape
@@ -56,9 +57,11 @@ In the pre-agents phase, the platform must already be complete enough to:
 
 - classify work honestly
 - shape prompts
+- detect and reconcile local `.accelerate/` workspace truth when relevant
 - choose topology
 - document adapters and profiles
 - generate onboarding recommendations
+- consume onboarding outputs when they already exist locally
 - stay root-only when appropriate
 
 That is the baseline for later agent promotion. Agents are not the foundation
@@ -71,4 +74,3 @@ Use these docs together:
 - `SKILL.md`
 - `README.md`
 - `docs/architecture/accelerate-control-plane.md`
-

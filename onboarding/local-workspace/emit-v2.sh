@@ -58,6 +58,9 @@ perl -0pi -e "s/^repo_maturity:.*/repo_maturity: ${REPO_MATURITY}/m" "${TARGET_W
 perl -0pi -e "s/^last_bootstrap_update:.*/last_bootstrap_update: $(date +%F)/m" "${TARGET_WORKSPACE}/state.yaml"
 perl -0pi -e "s/^last_updated:.*/last_updated: $(date +%F)/m" "${TARGET_WORKSPACE}/onboarding/status.yaml"
 
+"${SCRIPT_DIR}/detect-signals.sh" "${TARGET_ROOT}" >/dev/null
+"${SCRIPT_DIR}/classify-project.sh" "${TARGET_ROOT}" >/dev/null
+
 "${SCRIPT_DIR}/validate-v2.sh" "${TARGET_ROOT}" >/dev/null
 
 echo "emitted V2 local workspace at:"
@@ -65,7 +68,7 @@ echo "  ${TARGET_WORKSPACE}"
 echo "mode: ${MODE}"
 echo
 echo "next steps:"
-echo "  1. fill onboarding discovery and decisions"
-echo "  2. write the first executive bootstrap plan"
+echo "  1. review the detected discovery signals and derived decisions"
+echo "  2. write or refine the executive bootstrap plan"
 echo "  3. mark story / PRD-lite / SDD / executive-plan / task-breakdown as active or not-required-yet"
 echo "  4. update current-plan.md and state.yaml honestly"

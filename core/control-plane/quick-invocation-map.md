@@ -17,6 +17,9 @@ study.
 ```text
 User Request
   -> classify
+     -> governed target repo in scope?
+        -> yes -> local workspace entry
+        -> no  -> continue
      -> conversational / no-op
      -> trivial bounded
      -> ambiguous / prompt hardening
@@ -55,6 +58,7 @@ Use the named workflow catalog for exact sequencing, but the common families
 are:
 
 - entry shaping
+- local workspace bootstrap / reentry
 - issue bootstrap
 - product spec to execution
 - planning artifact
@@ -86,11 +90,15 @@ are:
 Before starting a non-trivial run, answer:
 
 1. what branch is active?
-2. what mandatory skills are in force?
-3. is issue bootstrap already satisfied?
-4. is Story / PRD-lite / SDD / task breakdown required and satisfied?
-5. is the planning artifact already satisfied?
-6. if `docs/reference/design-system*` exists, is this extraction or
+2. is a governed target repo in scope, and what is the `.accelerate/` local
+   workspace state?
+3. what mandatory skills are in force?
+4. is local workspace init / reentry / reonboarding required before branch
+   execution?
+5. is issue bootstrap already satisfied?
+6. is Story / PRD-lite / SDD / task breakdown required and satisfied?
+7. is the planning artifact already satisfied?
+8. if `docs/reference/design-system*` exists, is this extraction or
    application?
-7. what proof lane is next?
-8. what review still blocks closure?
+9. what proof lane is next?
+10. what review still blocks closure?

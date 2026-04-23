@@ -32,6 +32,8 @@ supporting doctrine:
   - primary: `../core/control-plane/quick-invocation-map.md`
 - `issue-stack.md`
   - primary: `../core/issue-topology/issue-driven-mutation-stack.md`
+- `local-workspace-entry-gate.md`
+  - primary: `../core/control-plane/local-workspace-entry-gate.md`
 - `maturity-control.md`
   - primary: `../core/workflows/maturity-control.md`
 - `operational-calibration.md`
@@ -92,6 +94,8 @@ The intended reading order is:
 1. `AGENTS.md`
 2. `SKILL.md`
 3. `README.md`
-4. relevant native `core/` surface
-5. only then matching `references/` file when deeper inherited doctrine still
+4. relevant native local-workspace surface when `.accelerate/` in a governed
+   target repo is itself part of runtime truth
+5. relevant native `core/` surface
+6. only then matching `references/` file when deeper inherited doctrine still
    helps

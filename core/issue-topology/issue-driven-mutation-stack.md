@@ -16,17 +16,18 @@ of the execution model.
 ## Stack
 
 1. `accelerate`
-2. `Prompt Hardening Gate` when the request is ambiguous, multi-phase,
+2. `Local Workspace Entry Gate` when a governed target repository is in scope
+3. `Prompt Hardening Gate` when the request is ambiguous, multi-phase,
    governance-heavy, or not execution-ready yet
-3. `Issue Bootstrap Gate`
-4. active workflow adapter
-5. `linear-implementation-planner` when sequencing or hierarchy is non-trivial
-6. planning artifact
-7. `executing-plans` when the execution packet is accepted
-8. `linear-progress-reporter` for longer runs
-9. proof stack
-10. `AI Review Report`
-11. root closure mode
+4. `Issue Bootstrap Gate`
+5. active workflow adapter
+6. `linear-implementation-planner` when sequencing or hierarchy is non-trivial
+7. planning artifact
+8. `executing-plans` when the execution packet is accepted
+9. `linear-progress-reporter` for longer runs
+10. proof stack
+11. `AI Review Report`
+12. root closure mode
 
 ## Flow
 
@@ -36,6 +37,11 @@ User Request
      -> mutating?
         -> no  -> analysis path
         -> yes -> execution-ready?
+                 -> governed target repo?
+                    -> yes -> Local Workspace Entry Gate
+                            -> missing/reentry required -> BLOCK
+                            -> local state ready -> continue
+                    -> no  -> continue
                  -> no  -> Prompt Hardening Gate
                          -> execution-ready artifact missing -> BLOCK
                          -> shaped request ready -> Issue Bootstrap Gate
@@ -58,6 +64,13 @@ Mutation must not jump directly from request to implementation.
 If issue bootstrap succeeded but no post-bootstrap planning artifact exists for
 non-trivial work, execution is still blocked.
 
+If a governed target repository is in scope, local workspace entry happens
+before issue bootstrap:
+
+- absent local workspace when init is required -> BLOCK
+- stale local workspace when reentry is required -> BLOCK
+- structural drift requiring reonboarding -> BLOCK until reconciled
+
 If the request is mutating but still needs shaping, the run must not look like
 execution with blockers attached. It should look like shaping-first lane
 selection:
@@ -73,6 +86,7 @@ Do not open with execution language and retrofit issue hygiene later.
 
 Issue-driven runtime packets must make visible:
 
+- local workspace status / action when target repo governance is in scope
 - governing issue
 - issue lifecycle state
 - metadata completeness

@@ -26,7 +26,23 @@ User Request
   -> Product Planner
 ```
 
-### 2. Issue-Bootstrap Workflow
+### 2. Local-Workspace Bootstrap / Reentry Workflow
+
+```text
+governed target repo
+  -> detect .accelerate presence
+  -> init when absent and required
+  -> read local authorities when present
+  -> reconcile light reentry / partial reonboarding / structural reonboarding
+  -> validate local workspace truth
+  -> continue to branch-specific execution
+```
+
+Use this workflow when a governed target repository is in scope and the root
+must decide whether `.accelerate/` is absent, reusable, or requires
+reconciliation before branch selection.
+
+### 3. Issue-Bootstrap Workflow
 
 ```text
 accelerate
@@ -35,7 +51,7 @@ accelerate
   -> issue-ready validation
 ```
 
-### 3. Prompt-Hardening Workflow
+### 4. Prompt-Hardening Workflow
 
 ```text
 Prompt A
@@ -44,7 +60,7 @@ Prompt A
   -> visible hardened artifact
 ```
 
-### 4. Planning-Artifact Workflow
+### 5. Planning-Artifact Workflow
 
 ```text
 issue-ready work
@@ -53,7 +69,7 @@ issue-ready work
   -> bounded execution order
 ```
 
-### 4b. Product-Spec-To-Execution Workflow
+### 5b. Product-Spec-To-Execution Workflow
 
 ```text
 raw request / product ambiguity

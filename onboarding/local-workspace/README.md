@@ -54,10 +54,25 @@ It is a materialization template.
 Use:
 
 - `./onboarding/local-workspace/emit-v2.sh /path/to/target-repo`
+- `./onboarding/local-workspace/detect-signals.sh /path/to/target-repo`
+- `./onboarding/local-workspace/classify-project.sh /path/to/target-repo`
+- `./onboarding/local-workspace/bootstrap-or-reentry.sh /path/to/target-repo`
 - `./onboarding/local-workspace/validate-v2.sh /path/to/target-repo`
 
-This emits the canonical V2 tree into a governed target repository without
-pretending that onboarding decisions have already been filled.
+This now supports the minimum deterministic onboarding loop:
+
+- `emit-v2.sh`
+  - materializes the canonical V2 tree
+  - runs signal detection
+  - derives initial decisions and summary state
+- `detect-signals.sh`
+  - writes observational repo facts into `.accelerate/onboarding/discovery.yaml`
+- `classify-project.sh`
+  - derives initial profile/backend/runtime/docs posture from discovery signals
+- `bootstrap-or-reentry.sh`
+  - chooses `init` vs local reentry/reonboarding reconciliation
+- `validate-v2.sh`
+  - verifies file presence, schemas, and summary/detail coherence
 
 The validator checks:
 

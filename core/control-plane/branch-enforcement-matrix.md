@@ -50,6 +50,23 @@ That gate is satisfied only when:
 Starting implementation after issue bootstrap but before this planning artifact
 exists is execution drift, not acceptable speed.
 
+When a governed target repository is in scope, `Local Workspace Entry Gate` is
+inherited before deeper branch-specific gating for:
+
+- all orchestrated non-trivial runs
+- any trivial run that still mutates code, docs, workflow seeds, or runtime
+  governance in the target repo
+
+That gate is satisfied only when:
+
+- the root explicitly decided that no local workspace is required yet
+- or `.accelerate/` was created through the canonical local-workspace surface
+- or existing `.accelerate/` truth was read and found coherent enough
+- or reentry / reonboarding was explicitly reconciled before execution
+
+Proceeding as if local workspace state did not matter is enforcement failure,
+not a harmless omission.
+
 ## Validation Gate Matrix
 
 Do not treat `manage.py check` as sufficient backend runtime proof.
@@ -84,9 +101,9 @@ also treat that as a validation failure.
 
 | Branch | Mandatory skills | Mandatory gates | Expected artifacts | Expected evidence | Typical closure blockers |
 | --- | --- | --- | --- | --- | --- |
-| trivial bounded | none beyond the directly relevant stack skill | honest classification; `Issue Bootstrap Gate` when the slice mutates code, workflow seeds, or living docs; validation gate matrix when backend/frontend runtime is in scope | bounded scope statement; governing issue when mutating | direct code/test/runtime proof; required validation commands for the slice class; commit traceability when mutating | hidden cross-surface drift; trivial run attempted without governing issue; validation stack under-run |
-| ambiguous / long / epic-like | `prompt-hardening`; product/specification planning artifacts from `planning/product/`, `planning/architecture/sdd-template.md`, and `planning/execution/` when scope requires them | `Prompt Hardening Gate`; `Story Framing` when actor/goal/value are still implicit; `PRD-lite Gate` when scope is capability-level or epic-like; `SDD Gate` when technical ownership, architecture, data, transport, migration, or proof strategy is unresolved; `Task Breakdown Gate` before bounded execution | `Hardened Prompt` or `Execution-Ready Prompt Packet`; user story when actor/value/acceptance are active; PRD-lite when scope is broader than one story; SDD when design decisions block safe execution; task breakdown when implementation can be sliced | visible hardened artifact in the run; artifact sufficiency decision; source artifact chain in runtime packet | ambiguity still unresolved; implementation starts without the smallest required product/spec artifact; PRD/SDD/task breakdown treated as optional narration when gates are active |
-| issue-driven delivery | active workflow adapter; `linear-implementation-planner` when sequencing is non-trivial; `executing-plans` for accepted execution | `Issue Bootstrap Gate`; `Post-Issue Planning Gate` for non-trivial work; `Minimal Create Recovery Protocol`; `Metadata Rehydration Check`; `Ready-for-Execution Revalidation`; `AI Review Report` before `Done` | dependency-aware issue body or execution plan; explicit post-issue planning artifact for non-trivial runs | issue bootstrap proof + issue metadata + planning artifact + commit trail + AI Review | issue created but not truly execution-ready; execution started without integrated planning artifact |
+| trivial bounded | none beyond the directly relevant stack skill | honest classification; `Local Workspace Entry Gate` when a governed target repo is mutated; `Issue Bootstrap Gate` when the slice mutates code, workflow seeds, or living docs; validation gate matrix when backend/frontend runtime is in scope | bounded scope statement; governing issue when mutating; local workspace decision when target repo governance applies | direct code/test/runtime proof; required validation commands for the slice class; commit traceability when mutating | hidden cross-surface drift; local workspace skipped in a governed target repo; trivial run attempted without governing issue; validation stack under-run |
+| ambiguous / long / epic-like | `prompt-hardening`; product/specification planning artifacts from `planning/product/`, `planning/architecture/sdd-template.md`, and `planning/execution/` when scope requires them | `Local Workspace Entry Gate` when a governed target repo is in scope; `Prompt Hardening Gate`; `Story Framing` when actor/goal/value are still implicit; `PRD-lite Gate` when scope is capability-level or epic-like; `SDD Gate` when technical ownership, architecture, data, transport, migration, or proof strategy is unresolved; `Task Breakdown Gate` before bounded execution | `Hardened Prompt` or `Execution-Ready Prompt Packet`; local workspace decision when target repo governance applies; user story when actor/value/acceptance are active; PRD-lite when scope is broader than one story; SDD when design decisions block safe execution; task breakdown when implementation can be sliced | visible hardened artifact in the run; local workspace truth when target repo governance applies; artifact sufficiency decision; source artifact chain in runtime packet | ambiguity still unresolved; local workspace truth ignored before branch routing; implementation starts without the smallest required product/spec artifact; PRD/SDD/task breakdown treated as optional narration when gates are active |
+| issue-driven delivery | active workflow adapter; `linear-implementation-planner` when sequencing is non-trivial; `executing-plans` for accepted execution | `Local Workspace Entry Gate` when a governed target repo is in scope; `Issue Bootstrap Gate`; `Post-Issue Planning Gate` for non-trivial work; `Minimal Create Recovery Protocol`; `Metadata Rehydration Check`; `Ready-for-Execution Revalidation`; `AI Review Report` before `Done` | dependency-aware issue body or execution plan; local workspace decision when target repo governance applies; explicit post-issue planning artifact for non-trivial runs | local workspace proof when target repo governance applies + issue bootstrap proof + issue metadata + planning artifact + commit trail + AI Review | local workspace skipped before issue/planning routing; issue created but not truly execution-ready; execution started without integrated planning artifact |
 | bug / failure / regression | `systematic-debugging` + affected stack skills | `Failure Classification Gate` | repro, failure classification, narrowed hypothesis | repro evidence, validation, regression proof | fix with no repro or no regression confidence |
 | adversarial security audit / hostile-path review | `adversarial-security-review`, `anti-abuse-review`, `security-patterns`; `product-runtime-review` when user-facing | `Failure Classification Gate`; `Artifact Sufficiency Check` when the branch depends on attack packets | attack-surface packet, attack-class matrix, variant notes, finding or no-finding report | code/runtime evidence, bounded exploitability judgment, variant-check evidence | speculative exploit theater, no trust boundary, or no actionable finding shape |
 | architecture / governance doubt | `architecture`, `governance-audit`; add `api-surface-governance`, `dependency-governance`, or `validation-governance` when that stack truth is involved | `Truth Ownership Check`; `Stack Adherence` | decision record, boundary matrix, or ADR-oriented conclusion | code/doc evidence and explicit judgment | conclusion still implicit or stack truth unresolved |
@@ -111,6 +128,7 @@ Promote gates into one of these classes:
 These gates should stay visible from `accelerate` itself:
 
 - `Prompt Hardening Gate`
+- `Local Workspace Entry Gate`
 - `Issue Bootstrap Gate`
 - `Post-Issue Planning Gate`
 - `Truth Ownership Check`

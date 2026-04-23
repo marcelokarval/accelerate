@@ -32,6 +32,14 @@ Branch Entry Packet
 - active ADRs / references:
   - <path>
   - <path>
+- local workspace:
+  - .accelerate=<present|absent|n/a>
+  - action=<none|required-init|required-reentry|required-reonboarding|reused>
+  - onboarding status=<state|n/a>
+  - reentry status=<state|n/a>
+  - current governing artifact=<path|n/a>
+  - local agents status=<path|n/a>
+  - drift status=<clean|warning|blocking|n/a>
 - gate ledger: <gate=status, gate=status>
 - phase / SDLC: <phase / overlay>
 - persona handoff artifact: <packet/artifact>
@@ -59,6 +67,7 @@ Runtime Delta Packet
 - gates opened: <...>
 - gates passed: <...>
 - gates failed: <...>
+- local workspace transition: <A -> B>
 - persona transition: <A -> B>
 - phase transition: <A -> B>
 - QA / proof lane transition: <A -> B>

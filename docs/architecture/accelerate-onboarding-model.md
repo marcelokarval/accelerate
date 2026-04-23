@@ -76,6 +76,22 @@ Sources may include:
 - existing CI/docs structures
 - explicit user answers
 
+Discovery should prefer deterministic repo scanning before LLM inference.
+
+The initial standalone implementation should treat these as first-class signal
+families:
+
+- language and manifest signals
+- framework and runtime signals
+- package-manager signals
+- workflow-tool signals
+- docs-posture signals
+- proof-runtime signals
+- repo-shape notes
+
+These belong in local onboarding discovery state before the recommendation
+layer derives stronger decisions.
+
 ### Phase 2. A&Q
 
 Ask the minimum questions needed to resolve uncertainty that materially affects
@@ -184,17 +200,16 @@ The onboarding system must preserve the distinction between:
 
 ## Persistence Model
 
-This SDD does not yet define the final persistence format for onboarding
-outputs.
+The current pre-agents persistence model for governed target repositories is
+the `.accelerate/` V2 local workspace.
 
-Candidate directions include:
+The current implementation surface lives under:
 
-- repo-local platform config
-- generated planning docs
-- adapter/profile manifests
+- `onboarding/local-workspace/`
 
-The persistence choice should be decided later without changing the onboarding
-selection hierarchy.
+That V2 model is intentionally small and useful. Broader local persistence
+remains a later concern, but onboarding output persistence itself is no longer
+undefined.
 
 ## Failure Modes
 
@@ -205,6 +220,7 @@ The onboarding asks too many questions and loses momentum.
 Mitigation:
 
 - only ask questions that materially change adapter/profile choices
+- prefer deterministic detection plus explicit confidence before asking
 
 ### Failure Mode 2. Over-inference
 
@@ -228,6 +244,7 @@ Mitigation:
 When onboarding is first implemented, start with:
 
 1. discovery inputs
+2. deterministic signal scanner
 2. A&Q schema
 3. executive planning output
 4. recommendation output

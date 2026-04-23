@@ -28,6 +28,7 @@ At the current phase, onboarding must already be able to:
 
 - frame discovery as a control-plane concern, not as an install wizard
 - ask only the minimum questions that materially affect adapter/profile choice
+- run deterministic repo-signal detection before asking humans or LLMs to infer
 - produce an executive bootstrap plan
 - recommend skills, adapters, profiles, and future agent candidates
 - work in repos that still have no promoted agents
@@ -96,6 +97,32 @@ The first native product surface for emitting the project-local `.accelerate/`
 workspace is:
 
 - `local-workspace/`
+
+The local-workspace surface now carries the minimum deterministic loop:
+
+- emit
+- detect signals
+- classify
+- reconcile reentry
+- validate
+
+## Root Consumption Contract
+
+When a governed target repository is in scope, the root should read local
+workspace truth in this order:
+
+1. `.accelerate/state.yaml`
+2. `.accelerate/onboarding/status.yaml`
+3. `.accelerate/onboarding/decisions.yaml`
+4. `.accelerate/planning/current-plan.md`
+5. `.accelerate/agents/status.yaml`
+
+The root should call the local-workspace reconciliation surface when:
+
+- `.accelerate/` is absent and first local install is required
+- onboarding truth is stale
+- `reentry_status` is not clean
+- stack, workflow, docs posture, or runtime posture changed materially
 
 ## Re-entry Rule
 

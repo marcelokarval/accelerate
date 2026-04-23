@@ -52,6 +52,7 @@ Then open the native surface that actually governs the branch, usually from:
 
 - `core/control-plane/branch-enforcement-matrix.md`
 - `core/control-plane/quick-invocation-map.md`
+- `core/control-plane/local-workspace-entry-gate.md`
 - `core/issue-topology/issue-driven-mutation-stack.md`
 - `core/runtime-packets/qa-proof-stack.md`
 - `core/workflows/operational-calibration.md`
@@ -83,11 +84,13 @@ Run `accelerate` in this order:
 
 1. decide whether the task is actually engineering work
 2. decide whether prompt hardening is mandatory
-3. classify the run honestly
-4. open the required branch, skills, gates, and artifacts
-5. keep runtime state visible with explicit packets
-6. enforce proof in the correct order
-7. block closure until the branch contract is truly satisfied
+3. when a governed target repository is in scope, decide local workspace entry
+   state first
+4. classify the run honestly
+5. open the required branch, skills, gates, and artifacts
+6. keep runtime state visible with explicit packets
+7. enforce proof in the correct order
+8. block closure until the branch contract is truly satisfied
 
 Do not treat `accelerate` as a label. Treat it as the visible team operating
 system for the run.
@@ -143,6 +146,7 @@ At minimum, runtime packets should expose:
 - active branch
 - active skills
 - active references
+- local workspace status / action
 - gate ledger
 - phase / SDLC
 - issue stack status
@@ -171,6 +175,8 @@ In the current pre-agents phase, that means:
 - executive planning artifacts are the governing execution handoff
 - do not invent a fake workflow adapter
 - do not assume Linear or another backend is already the enforced runtime truth
+- in governed target repositories, do not skip `.accelerate/` local workspace
+  entry detection before issue and planning gates
 
 ## Proof Order
 
@@ -221,6 +227,7 @@ Use these native authorities first:
 - branch routing:
   - `core/control-plane/branch-enforcement-matrix.md`
   - `core/control-plane/quick-invocation-map.md`
+  - `core/control-plane/local-workspace-entry-gate.md`
 - mutation / issue discipline:
   - `core/issue-topology/issue-driven-mutation-stack.md`
 - product/specification planning:
