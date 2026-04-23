@@ -49,8 +49,10 @@ fi
 "${SCRIPT_DIR}/append-timeline.sh" \
   "${TARGET_ROOT}" \
   "prepare-review:completed" \
-  "Prepared local review artifacts and pre-review bundle" \
+  "Prepared local review artifacts, pre-review bundle, and review handoff surface" \
   "info" \
   "prepare-review.sh" >/dev/null
+
+bash "${SCRIPT_DIR}/persist-runtime-packets.sh" "${TARGET_ROOT}" >/dev/null
 
 echo "prepared local review surface"

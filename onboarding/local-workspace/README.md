@@ -124,9 +124,9 @@ This now supports the minimum deterministic onboarding loop:
 - `persist-review-bundles.sh`
   - persists both bundles canonically after refreshing the review artifacts
 - `prepare-review.sh`
-  - synchronizes the plan, reconciles review readiness when the dashboard is not blocked, persists review artifacts, and materializes the canonical pre-review bundle in one operator step
+  - synchronizes the plan, reconciles review readiness when the dashboard is not blocked, persists review artifacts, materializes the canonical pre-review bundle, and persists runtime packets in one operator step
 - `prepare-closure.sh`
-  - synchronizes the plan, reconciles review and closure readiness when the dashboard is not blocked, and persists the canonical review bundle set in one operator step
+  - synchronizes the plan, reconciles review and closure readiness when the dashboard is not blocked, persists the canonical review bundle set, and persists runtime packets in one operator step
 - `append-timeline.sh`
   - records durable local workspace transitions in the continuity timeline
 - `record-learning.sh`

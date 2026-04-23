@@ -52,8 +52,10 @@ fi
 "${SCRIPT_DIR}/append-timeline.sh" \
   "${TARGET_ROOT}" \
   "prepare-closure:completed" \
-  "Prepared local review artifacts, bundles, and closure surface" \
+  "Prepared local review artifacts, bundles, and closure handoff surface" \
   "info" \
   "prepare-closure.sh" >/dev/null
+
+bash "${SCRIPT_DIR}/persist-runtime-packets.sh" "${TARGET_ROOT}" >/dev/null
 
 echo "prepared local closure surface"
