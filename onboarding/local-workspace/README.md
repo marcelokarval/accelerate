@@ -59,6 +59,8 @@ Use:
 - `./onboarding/local-workspace/bootstrap-or-reentry.sh /path/to/target-repo`
 - `./onboarding/local-workspace/refresh-readiness.sh /path/to/target-repo`
 - `./onboarding/local-workspace/print-status.sh /path/to/target-repo`
+- `./onboarding/local-workspace/mark-checkpoint.sh /path/to/target-repo <checkpoint> <summary>`
+- `./onboarding/local-workspace/reconcile-readiness.sh /path/to/target-repo review-ready|closure-ready [summary]`
 - `./onboarding/local-workspace/append-timeline.sh /path/to/target-repo <event> <summary>`
 - `./onboarding/local-workspace/record-learning.sh /path/to/target-repo <type> <key> <insight>`
 - `./onboarding/local-workspace/validate-v2.sh /path/to/target-repo`
@@ -79,6 +81,10 @@ This now supports the minimum deterministic onboarding loop:
   - refreshes the local readiness dashboard from current workspace truth
 - `print-status.sh`
   - prints the local status summary for operator visibility
+- `mark-checkpoint.sh`
+  - appends a semantic checkpoint into the local continuity timeline
+- `reconcile-readiness.sh`
+  - promotes the local dashboard into `review-ready` or `closure-ready` when the proof lane is already satisfied
 - `append-timeline.sh`
   - records durable local workspace transitions in the continuity timeline
 - `record-learning.sh`

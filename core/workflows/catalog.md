@@ -59,6 +59,19 @@ and the run needs a visible answer to:
 - what checkpoint was last crossed and what is next?
 - did the run produce a durable learning that should survive this session?
 
+### 2c. Local Checkpoint / Readiness Reconciliation Workflow
+
+```text
+current local status
+  -> mark semantic checkpoint when a meaningful phase transition happened
+  -> reconcile readiness to review-ready when QA/proof is truly satisfied
+  -> reconcile readiness to closure-ready when review/AI review is truly satisfied
+  -> keep timeline and readiness aligned
+```
+
+Use this workflow when the local workspace already exists and the operator
+needs an explicit, durable move from execution toward review or closure.
+
 ### 3. Issue-Bootstrap Workflow
 
 ```text

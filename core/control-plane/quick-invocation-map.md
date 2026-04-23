@@ -61,6 +61,7 @@ are:
 - entry shaping
 - local workspace bootstrap / reentry
 - local status dashboard / continuity
+- local checkpoint / readiness reconciliation
 - issue bootstrap
 - product spec to execution
 - planning artifact
