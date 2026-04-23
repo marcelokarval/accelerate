@@ -8,6 +8,7 @@ This is the native operator quick map for answering fast:
 - what proof is missing
 - what review still blocks closure
 - what workflow family is running
+- what readiness / timeline / learning state is currently visible
 
 Use this before opening deeper modules when the goal is orientation, not full
 study.
@@ -59,6 +60,7 @@ are:
 
 - entry shaping
 - local workspace bootstrap / reentry
+- local status dashboard / continuity
 - issue bootstrap
 - product spec to execution
 - planning artifact
@@ -100,5 +102,8 @@ Before starting a non-trivial run, answer:
 7. is the planning artifact already satisfied?
 8. if `docs/reference/design-system*` exists, is this extraction or
    application?
-9. what proof lane is next?
-10. what review still blocks closure?
+9. what does the readiness dashboard currently say?
+10. what checkpoint was crossed last and what comes next?
+11. did the run produce a learning that must be registered before closure?
+12. what proof lane is next?
+13. what review still blocks closure?

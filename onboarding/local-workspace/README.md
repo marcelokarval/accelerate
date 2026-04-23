@@ -58,6 +58,7 @@ Use:
 - `./onboarding/local-workspace/classify-project.sh /path/to/target-repo`
 - `./onboarding/local-workspace/bootstrap-or-reentry.sh /path/to/target-repo`
 - `./onboarding/local-workspace/refresh-readiness.sh /path/to/target-repo`
+- `./onboarding/local-workspace/print-status.sh /path/to/target-repo`
 - `./onboarding/local-workspace/append-timeline.sh /path/to/target-repo <event> <summary>`
 - `./onboarding/local-workspace/record-learning.sh /path/to/target-repo <type> <key> <insight>`
 - `./onboarding/local-workspace/validate-v2.sh /path/to/target-repo`
@@ -76,6 +77,8 @@ This now supports the minimum deterministic onboarding loop:
   - chooses `init` vs local reentry/reonboarding reconciliation
 - `refresh-readiness.sh`
   - refreshes the local readiness dashboard from current workspace truth
+- `print-status.sh`
+  - prints the local status summary for operator visibility
 - `append-timeline.sh`
   - records durable local workspace transitions in the continuity timeline
 - `record-learning.sh`

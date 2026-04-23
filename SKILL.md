@@ -231,6 +231,9 @@ Use these native authorities first:
   - `core/control-plane/branch-enforcement-matrix.md`
   - `core/control-plane/quick-invocation-map.md`
   - `core/control-plane/local-workspace-entry-gate.md`
+  - `core/control-plane/review-readiness-gate.md`
+  - `core/control-plane/timeline-continuity-gate.md`
+  - `core/control-plane/durable-learning-registration-gate.md`
 - mutation / issue discipline:
   - `core/issue-topology/issue-driven-mutation-stack.md`
 - product/specification planning:

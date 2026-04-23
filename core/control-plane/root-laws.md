@@ -12,6 +12,9 @@ The root always owns:
 - classification
 - prompt-hardening decisions
 - local workspace entry state when a governed target repo is in scope
+- review readiness judgment
+- checkpoint continuity judgment
+- durable learning registration judgment
 - issue topology
 - lane opening and closing
 - staffing shape

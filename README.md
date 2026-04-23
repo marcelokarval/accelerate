@@ -169,6 +169,9 @@ The native branch and enforcement authorities now live in:
 
 - [branch-enforcement-matrix.md](./core/control-plane/branch-enforcement-matrix.md)
 - [local-workspace-entry-gate.md](./core/control-plane/local-workspace-entry-gate.md)
+- [review-readiness-gate.md](./core/control-plane/review-readiness-gate.md)
+- [timeline-continuity-gate.md](./core/control-plane/timeline-continuity-gate.md)
+- [durable-learning-registration-gate.md](./core/control-plane/durable-learning-registration-gate.md)
 - [enforcement-surfaces.md](./core/risk/enforcement-surfaces.md)
 
 Use them to decide:
