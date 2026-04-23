@@ -63,6 +63,8 @@ Use:
 - `./onboarding/local-workspace/reconcile-readiness.sh /path/to/target-repo review-ready|closure-ready [summary]`
 - `./onboarding/local-workspace/sync-plan-status.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-closure-packet.sh /path/to/target-repo`
+- `./onboarding/local-workspace/render-ai-review-report.sh /path/to/target-repo`
+- `./onboarding/local-workspace/render-review-ready-packet.sh /path/to/target-repo`
 - `./onboarding/local-workspace/append-timeline.sh /path/to/target-repo <event> <summary>`
 - `./onboarding/local-workspace/record-learning.sh /path/to/target-repo <type> <key> <insight>`
 - `./onboarding/local-workspace/validate-v2.sh /path/to/target-repo`
@@ -91,6 +93,10 @@ This now supports the minimum deterministic onboarding loop:
   - refreshes readiness and records a semantic phase checkpoint from `planning/current-plan.md`
 - `render-closure-packet.sh`
   - renders a local status-backed closure packet for operator/review handoff
+- `render-ai-review-report.sh`
+  - renders a local status-backed AI Review Report summary
+- `render-review-ready-packet.sh`
+  - renders a compact review-ready packet from local status and current plan
 - `append-timeline.sh`
   - records durable local workspace transitions in the continuity timeline
 - `record-learning.sh`

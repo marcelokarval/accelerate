@@ -108,5 +108,7 @@ Before starting a non-trivial run, answer:
 11. did the run produce a learning that must be registered before closure?
 12. does `current-plan.md` need to be synchronized into local status now?
 13. should a closure packet be rendered from local status already?
-14. what proof lane is next?
-15. what review still blocks closure?
+14. should an AI Review Report be rendered from local status already?
+15. should a review-ready packet be rendered now?
+16. what proof lane is next?
+17. what review still blocks closure?

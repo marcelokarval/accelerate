@@ -79,6 +79,8 @@ This workflow is often preceded by:
 and may end with:
 
 - `render-closure-packet.sh`
+- `render-ai-review-report.sh`
+- `render-review-ready-packet.sh`
 
 ### 3. Issue-Bootstrap Workflow
 
