@@ -66,6 +66,9 @@ Use:
 - `./onboarding/local-workspace/render-ai-review-report.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-review-ready-packet.sh /path/to/target-repo`
 - `./onboarding/local-workspace/persist-review-artifacts.sh /path/to/target-repo`
+- `./onboarding/local-workspace/render-pre-review-bundle.sh /path/to/target-repo`
+- `./onboarding/local-workspace/render-closure-bundle.sh /path/to/target-repo`
+- `./onboarding/local-workspace/persist-review-bundles.sh /path/to/target-repo`
 - `./onboarding/local-workspace/append-timeline.sh /path/to/target-repo <event> <summary>`
 - `./onboarding/local-workspace/record-learning.sh /path/to/target-repo <type> <key> <insight>`
 - `./onboarding/local-workspace/validate-v2.sh /path/to/target-repo`
@@ -100,6 +103,12 @@ This now supports the minimum deterministic onboarding loop:
   - renders a compact review-ready packet from local status and current plan
 - `persist-review-artifacts.sh`
   - persists the local review-ready packet, AI review report, and closure packet into canonical files under `.accelerate/review/`
+- `render-pre-review-bundle.sh`
+  - groups the review-ready packet and AI review report into one pre-review bundle
+- `render-closure-bundle.sh`
+  - groups the closure packet and AI review report into one closure bundle
+- `persist-review-bundles.sh`
+  - persists both bundles canonically after refreshing the review artifacts
 - `append-timeline.sh`
   - records durable local workspace transitions in the continuity timeline
 - `record-learning.sh`

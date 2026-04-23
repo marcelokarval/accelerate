@@ -111,5 +111,6 @@ Before starting a non-trivial run, answer:
 14. should an AI Review Report be rendered from local status already?
 15. should a review-ready packet be rendered now?
 16. should the review artifacts now be persisted canonically under `.accelerate/review/`?
-17. what proof lane is next?
-18. what review still blocks closure?
+17. should a pre-review bundle or closure bundle be persisted now?
+18. what proof lane is next?
+19. what review still blocks closure?

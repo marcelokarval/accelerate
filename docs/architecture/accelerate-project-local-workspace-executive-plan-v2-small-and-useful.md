@@ -57,6 +57,8 @@ It does not yet persist the wider local control surfaces for:
 │   ├── review-ready-packet.md
 │   ├── ai-review-report.md
 │   └── closure-packet.md
+│   ├── pre-review-bundle.md
+│   └── closure-bundle.md
 ├── onboarding/
 │   ├── status.yaml
 │   ├── discovery.yaml

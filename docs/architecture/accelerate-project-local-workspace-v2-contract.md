@@ -47,6 +47,8 @@ The minimum V2 implementation must create all of these paths:
 │   ├── review-ready-packet.md
 │   ├── ai-review-report.md
 │   └── closure-packet.md
+│   ├── pre-review-bundle.md
+│   └── closure-bundle.md
 ├── onboarding/
 │   ├── status.yaml
 │   ├── discovery.yaml
@@ -144,6 +146,8 @@ learnings_file: .accelerate/status/learnings.jsonl
 review_ready_packet: .accelerate/review/review-ready-packet.md
 ai_review_report: .accelerate/review/ai-review-report.md
 closure_packet: .accelerate/review/closure-packet.md
+pre_review_bundle: .accelerate/review/pre-review-bundle.md
+closure_bundle: .accelerate/review/closure-bundle.md
 last_bootstrap_update: YYYY-MM-DD
 ```
 
@@ -214,6 +218,8 @@ They persist the current local:
 - review-ready packet
 - AI Review Report
 - closure packet
+- pre-review bundle
+- closure bundle
 
 They are derived artifacts, but they are still canonical local handoff outputs
 once written.

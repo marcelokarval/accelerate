@@ -82,6 +82,9 @@ and may end with:
 - `render-ai-review-report.sh`
 - `render-review-ready-packet.sh`
 - `persist-review-artifacts.sh`
+- `render-pre-review-bundle.sh`
+- `render-closure-bundle.sh`
+- `persist-review-bundles.sh`
 
 ### 3. Issue-Bootstrap Workflow
 

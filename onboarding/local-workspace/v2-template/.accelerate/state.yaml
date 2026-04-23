@@ -17,4 +17,6 @@ learnings_file: .accelerate/status/learnings.jsonl
 review_ready_packet: .accelerate/review/review-ready-packet.md
 ai_review_report: .accelerate/review/ai-review-report.md
 closure_packet: .accelerate/review/closure-packet.md
+pre_review_bundle: .accelerate/review/pre-review-bundle.md
+closure_bundle: .accelerate/review/closure-bundle.md
 last_bootstrap_update: YYYY-MM-DD
