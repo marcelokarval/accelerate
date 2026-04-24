@@ -9,6 +9,7 @@ fi
 TARGET_ROOT="$(cd "$1" && pwd)"
 WORKSPACE="${TARGET_ROOT}/.accelerate"
 READINESS_FILE="${WORKSPACE}/status/readiness-dashboard.yaml"
+EVIDENCE_FILE="${WORKSPACE}/status/evidence-registry.yaml"
 TIMELINE_FILE="${WORKSPACE}/status/timeline.jsonl"
 LEARNINGS_FILE="${WORKSPACE}/status/learnings.jsonl"
 PLAN_FILE="${WORKSPACE}/planning/current-plan.md"
@@ -24,6 +25,18 @@ yaml_value() {
   local path="$1"
   local key="$2"
   sed -n "s/^${key}:[[:space:]]*//p" "${path}" | head -n 1
+}
+
+evidence_value() {
+  local key="$1"
+  local default="$2"
+  if [ ! -f "${EVIDENCE_FILE}" ]; then
+    printf '%s\n' "${default}"
+    return
+  fi
+  local value
+  value="$(yaml_value "${EVIDENCE_FILE}" "${key}")"
+  printf '%s\n' "${value:-${default}}"
 }
 
 plan_value() {
@@ -66,10 +79,14 @@ smallest_artifact="$(plan_value "smallest sufficient artifact")"
 last_event="$(last_jsonl_field "${TIMELINE_FILE}" "event")"
 learning_count="$(count_jsonl "${LEARNINGS_FILE}")"
 last_learning_key="$(last_jsonl_field "${LEARNINGS_FILE}" "key")"
+implementation_proof="$(evidence_value "implementation_proof" "missing")"
+qa_proof_lane="$(evidence_value "qa_proof_lane" "missing")"
+requested_vs_implemented="$(evidence_value "requested_vs_implemented" "missing")"
+ai_review="$(evidence_value "ai_review" "missing")"
 
 classification="partial"
 status_recommendation="In Review"
-if [ "${closure_readiness}" = "ready" ]; then
+if [ "${closure_readiness}" = "ready" ] && [ "${implementation_proof}" = "present" ] && [ "${qa_proof_lane}" = "present" ] && [ "${requested_vs_implemented}" = "present" ] && [ "${ai_review}" = "present" ]; then
   classification="exact"
   status_recommendation="Done"
 elif [ "${review_readiness}" = "ready" ]; then
@@ -102,6 +119,10 @@ cat <<EOF
 - last timeline event: ${last_event:-n/a}
 - durable learning count: ${learning_count}
 - last learning key: ${last_learning_key:-n/a}
+- implementation proof: ${implementation_proof}
+- QA proof lane: ${qa_proof_lane}
+- requested-vs-implemented: ${requested_vs_implemented}
+- AI review evidence: ${ai_review}
 - next canonical local action: $(next_action_value "next_action")
 - next action reason: $(next_action_value "reason")
 

@@ -86,10 +86,27 @@ Use it when the question is:
 - Playwright for persistent regression proof
 - browser-proof comes before Playwright persistence when the flow is not yet
   understood
+- design-system or premium UI mutation requires Design Implementation Proof
+- corrected-state visual proof is required after in-scope UI defects are fixed
 - every bounded batch requires self-review
 - every bounded batch requires self-forensic review
 - every subagent requires self-review and self-forensic review output
 - frontend-bearing or TS contract-bearing slices require `type-check`
+
+## Design And Visual Enforcement
+
+- design-system artifacts are implementation law, not inspiration
+- premium direction is directional authority, not a moodboard
+- UI mutation must name the honest owner layer before editing
+- page-local polish must not bypass shared token, primitive, composite, or shell
+  owners without an explicit bounded exception
+- browser/runtime proof must compare the delivered surface against active visual
+  authorities
+- viewport and state coverage must be explicit for premium, product-critical, or
+  broad UI work
+- visual defects found in scope must enter the defect ledger
+- fixed visual defects require corrected-state browser proof before promotion
+- residual visual drift must be registered rather than hidden in final prose
 
 ## Multi-Agent Enforcement
 

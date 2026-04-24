@@ -9,6 +9,13 @@ Native authority now starts here:
 - `templates.md`
 - `cadence.md`
 - `qa-proof-stack.md`
+- `design-implementation-proof-packet.md`
+- `browser-proof-packet.md`
+- `product-critical-closure-packet.md`
+- `requested-vs-implemented-packet.md`
+- `defect-ledger-packet.md`
+- `correction-loop-packet.md`
+- `seam-proof-packet.md`
 
 Supporting inherited detail may still exist in:
 

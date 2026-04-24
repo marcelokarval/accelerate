@@ -9,6 +9,7 @@ fi
 TARGET_ROOT="$(cd "$1" && pwd)"
 WORKSPACE="${TARGET_ROOT}/.accelerate"
 READINESS_FILE="${WORKSPACE}/status/readiness-dashboard.yaml"
+EVIDENCE_FILE="${WORKSPACE}/status/evidence-registry.yaml"
 TIMELINE_FILE="${WORKSPACE}/status/timeline.jsonl"
 LEARNINGS_FILE="${WORKSPACE}/status/learnings.jsonl"
 PLAN_FILE="${WORKSPACE}/planning/current-plan.md"
@@ -24,6 +25,18 @@ yaml_value() {
   local path="$1"
   local key="$2"
   sed -n "s/^${key}:[[:space:]]*//p" "${path}" | head -n 1
+}
+
+evidence_value() {
+  local key="$1"
+  local default="$2"
+  if [ ! -f "${EVIDENCE_FILE}" ]; then
+    printf '%s\n' "${default}"
+    return
+  fi
+  local value
+  value="$(yaml_value "${EVIDENCE_FILE}" "${key}")"
+  printf '%s\n' "${value:-${default}}"
 }
 
 plan_value() {
@@ -74,19 +87,46 @@ if [ "${learning_count}" -gt 0 ]; then
   fi
 fi
 
-backend_qa="missing"
-frontend_qa="missing"
-browser_proof="missing"
-persistent_e2e="missing"
-blocking_lane="proof-state-not-declared"
+implementation_proof="$(evidence_value "implementation_proof" "missing")"
+qa_proof_lane="$(evidence_value "qa_proof_lane" "missing")"
+backend_qa="$(evidence_value "backend_qa" "missing")"
+frontend_qa="$(evidence_value "frontend_qa" "missing")"
+browser_proof="$(evidence_value "browser_proof" "missing")"
+persistent_e2e="$(evidence_value "persistent_e2e" "missing")"
+design_implementation_proof="$(evidence_value "design_implementation_proof" "not-applicable")"
+product_critical_closure="$(evidence_value "product_critical_closure" "not-applicable")"
+requested_vs_implemented="$(evidence_value "requested_vs_implemented" "missing")"
+defect_ledger="$(evidence_value "defect_ledger" "missing")"
+correction_loop="$(evidence_value "correction_loop" "missing")"
+seam_proof="$(evidence_value "seam_proof" "missing")"
+ai_review="$(evidence_value "ai_review" "missing")"
 
-if [ "${review_readiness}" = "ready" ] || [ "${closure_readiness}" = "ready" ]; then
-  backend_qa="present"
-  frontend_qa="present"
-  browser_proof="present"
-  persistent_e2e="n/a"
-  blocking_lane="none"
-fi
+blocking_lane="none"
+for lane in \
+  "implementation_proof:${implementation_proof}" \
+  "qa_proof_lane:${qa_proof_lane}" \
+  "requested_vs_implemented:${requested_vs_implemented}" \
+  "ai_review:${ai_review}"; do
+  key="${lane%%:*}"
+  value="${lane#*:}"
+  if [ "${value}" != "present" ]; then
+    blocking_lane="${key}"
+    break
+  fi
+done
+
+for lane in \
+  "defect_ledger:${defect_ledger}" \
+  "correction_loop:${correction_loop}" \
+  "seam_proof:${seam_proof}" \
+  "design_implementation_proof:${design_implementation_proof}" \
+  "product_critical_closure:${product_critical_closure}"; do
+  key="${lane%%:*}"
+  value="${lane#*:}"
+  if [ "${blocking_lane}" = "none" ] && [ "${value}" != "present" ] && [ "${value}" != "not-applicable" ] && [ "${value}" != "clear" ] && [ "${value}" != "not-needed" ]; then
+    blocking_lane="${key}"
+  fi
+done
 
 cat <<EOF
 Closure Packet
@@ -94,16 +134,25 @@ Closure Packet
 - requested vs implemented: ${bounded_objective:-n/a} -> local status-backed closure summary
 - promised vs delivered: dashboard_verdict=${dashboard_verdict}, execution=${execution_readiness}, review=${review_readiness}, closure=${closure_readiness}
 - issue scope vs landing: ${governing_path:-n/a}
+- defect ledger status: ${defect_ledger}
+- correction loop status: ${correction_loop}
+- seam-proof status: ${seam_proof}
 - readiness summary: ${dashboard_verdict}
 - timeline closure checkpoint: ${last_event:-missing}
 - learning registration status: ${learning_status}
 - local review / closure preparation: $(next_action_value "next_action")
 - proof lane status:
+  - Implementation Proof=${implementation_proof}
+  - QA Proof Lane=${qa_proof_lane}
   - Backend QA=${backend_qa}
   - Frontend QA=${frontend_qa}
   - Browser-Proof=${browser_proof}
   - Persistent E2E=${persistent_e2e}
+  - Design Implementation Proof=${design_implementation_proof}
+  - Product-Critical Closure=${product_critical_closure}
+  - Requested-Vs-Implemented=${requested_vs_implemented}
+  - AI Review=${ai_review}
 - blocking lane: ${blocking_lane}
-- residual risk: $(if [ "${closure_readiness}" = "ready" ]; then echo "low from local status perspective"; else echo "closure not yet reconciled to ready"; fi)
-- recommendation: $(if [ "${closure_readiness}" = "ready" ]; then echo "done"; elif [ "${review_readiness}" = "ready" ]; then echo "follow-up"; else echo "blocked"; fi)
+- residual risk: $(if [ "${blocking_lane}" = "none" ] && [ "${closure_readiness}" = "ready" ]; then echo "low from local status perspective"; else echo "evidence-backed closure not satisfied"; fi)
+- recommendation: $(if [ "${blocking_lane}" = "none" ] && [ "${closure_readiness}" = "ready" ]; then echo "done"; elif [ "${review_readiness}" = "ready" ]; then echo "follow-up"; else echo "blocked"; fi)
 EOF

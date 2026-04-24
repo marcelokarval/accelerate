@@ -273,6 +273,10 @@ Closure Packet
   - Frontend QA=<present|missing|blocked>
   - Browser-Proof=<present|missing|blocked>
   - Persistent E2E=<present|missing|blocked|out of order>
+  - Design Implementation Proof=<present|missing|blocked|not-applicable>
+  - Product-Critical Closure=<present|missing|blocked|not-applicable>
+  - Requested-Vs-Implemented=<present|missing|blocked>
+  - AI Review=<present|missing|blocked>
 - blocking lane: <lane or none>
 - residual risk: <...>
 - recommendation: <done|partial|follow-up|blocked>

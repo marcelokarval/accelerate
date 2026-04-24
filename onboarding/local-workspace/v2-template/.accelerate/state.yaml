@@ -6,6 +6,7 @@ repo_maturity: empty
 onboarding_status: not_started
 reentry_status: clean
 workflow_backend: none-yet
+workflow_backend_detected: none-yet
 active_profile: unknown
 active_runtime_adapters: []
 agent_mode: root-only
@@ -14,6 +15,7 @@ agents_status_file: .accelerate/agents/status.yaml
 readiness_dashboard: .accelerate/status/readiness-dashboard.yaml
 timeline_file: .accelerate/status/timeline.jsonl
 learnings_file: .accelerate/status/learnings.jsonl
+evidence_registry: .accelerate/status/evidence-registry.yaml
 review_ready_packet: .accelerate/review/review-ready-packet.md
 ai_review_report: .accelerate/review/ai-review-report.md
 closure_packet: .accelerate/review/closure-packet.md

@@ -48,6 +48,7 @@ repo_notes="$(yaml_value "${DISCOVERY_FILE}" "repo_notes")"
 
 selected_profile="unknown"
 selected_workflow_backend="none-yet"
+selected_workflow_backend_detected="none-yet"
 selected_runtime_posture="[]"
 selected_docs_posture="default"
 reentry_status="clean"
@@ -59,9 +60,9 @@ elif list_contains "${framework_signals}" "nextjs" && list_contains "${framework
 fi
 
 if list_contains "${workflow_tool_signals}" "github"; then
-  selected_workflow_backend="github"
+  selected_workflow_backend_detected="github"
 elif list_contains "${workflow_tool_signals}" "linear-signal"; then
-  selected_workflow_backend="linear"
+  selected_workflow_backend_detected="linear"
 fi
 
 runtime_items=()
@@ -87,11 +88,13 @@ if list_contains "${docs_posture_signals}" "docs-dir" || list_contains "${docs_p
 fi
 
 set_scalar "${DECISIONS_FILE}" "selected_workflow_backend" "${selected_workflow_backend}"
+set_scalar "${DECISIONS_FILE}" "selected_workflow_backend_detected" "${selected_workflow_backend_detected}"
 set_scalar "${DECISIONS_FILE}" "selected_profile" "${selected_profile}"
 set_scalar "${DECISIONS_FILE}" "selected_runtime_posture" "${selected_runtime_posture}"
 set_scalar "${DECISIONS_FILE}" "selected_docs_posture" "${selected_docs_posture}"
 
 set_scalar "${STATE_FILE}" "workflow_backend" "${selected_workflow_backend}"
+set_scalar "${STATE_FILE}" "workflow_backend_detected" "${selected_workflow_backend_detected}"
 set_scalar "${STATE_FILE}" "active_profile" "${selected_profile}"
 set_scalar "${STATE_FILE}" "active_runtime_adapters" "${selected_runtime_posture}"
 
@@ -115,8 +118,8 @@ perl -0pi -e "s/^last_updated:.*/last_updated: $(date +%F)/m" "${STATUS_FILE}"
 "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/append-timeline.sh" \
   "${TARGET_ROOT}" \
   "project_classified" \
-  "Derived profile=${selected_profile} workflow_backend=${selected_workflow_backend}" \
+  "Derived profile=${selected_profile} workflow_backend=${selected_workflow_backend} detected=${selected_workflow_backend_detected}" \
   "info" \
   "classify-project.sh" >/dev/null
 
-echo "classified project into profile=${selected_profile} workflow_backend=${selected_workflow_backend}"
+echo "classified project into profile=${selected_profile} workflow_backend=${selected_workflow_backend} detected=${selected_workflow_backend_detected}"

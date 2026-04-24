@@ -32,6 +32,7 @@ The current native pre-agents baseline now includes:
 - `core/control-plane/branch-enforcement-matrix.md`
 - `core/control-plane/quick-invocation-map.md`
 - `core/control-plane/workflow-change-approval-gate.md`
+- `core/control-plane/design-implementation-proof-gate.md`
 - `core/personas/model.md`
 - `core/personas/mandatory-skills.md`
 - `core/personas/executive-matrix.md`
@@ -56,6 +57,7 @@ The current native pre-agents baseline now includes:
 - `core/runtime-packets/templates.md`
 - `core/runtime-packets/cadence.md`
 - `core/runtime-packets/qa-proof-stack.md`
+- `core/runtime-packets/design-implementation-proof-packet.md`
 - `agents/doctrine/empirical-replay.md`
 - `adapters/workflow/adapter-contract.md`
 - `adapters/workflow/linear/adapter.md`

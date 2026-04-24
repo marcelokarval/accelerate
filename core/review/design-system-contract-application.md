@@ -12,6 +12,10 @@ This is the native Accelerate operating surface for the
 Extraction answers "what is the design system?" Application answers "how must
 new or existing UI obey it?"
 
+When application mutates real UI, proof is owned by the control-plane gate:
+
+- `../control-plane/design-implementation-proof-gate.md`
+
 ## Activation Trigger
 
 Activate this module when the request includes or implies:
@@ -63,6 +67,10 @@ When rollout planning artifacts exist, the entrypoint handoff must also satisfy:
 
 - `../control-plane/design-system-rollout-entry-gate.md`
 
+When the task mutates UI, the implementation/proof handoff must also satisfy:
+
+- `../control-plane/design-implementation-proof-gate.md`
+
 ## Workflow
 
 1. Read the contract before editing.
@@ -101,12 +109,14 @@ When rollout planning artifacts exist, the entrypoint handoff must also satisfy:
     proof on the corrected state.
 12. Validate with type/lint/build gates appropriate to the stack.
 13. Run browser/runtime proof and compare the delivered surface against the
-   source showcase and premium HTML when active.
-14. Use seam proof when shell/layout/state joins are likely defect hotspots.
-15. Store temporary screenshots and proof captures under the governed project
+    source showcase and premium HTML when active.
+14. Use the Design Implementation Proof Gate to name the runtime target,
+    viewport/state coverage, owner layer, and corrected-state evidence.
+15. Use seam proof when shell/layout/state joins are likely defect hotspots.
+16. Store temporary screenshots and proof captures under the governed project
     root `.tmp/` tree.
-16. Register residual drift instead of hiding it.
-17. If execution starts from an executive rollout plan, verify that the plan
+17. Register residual drift instead of hiding it.
+18. If execution starts from an executive rollout plan, verify that the plan
     explicitly names:
    - required pre-read artifacts
    - immutable contract authority
@@ -158,6 +168,7 @@ Design-System Application Packet
 During or after mutation, the branch should also leave:
 
 - `Requested-Vs-Implemented Packet`
+- `Design Implementation Proof Packet` for mutation-bearing UI work
 - defect ledger update when concrete defects are found
 - seam proof when route-level proof would be too coarse
 
@@ -181,6 +192,7 @@ The task is not complete unless:
 - proof corresponds to the corrected state when in-scope defects were fixed
 - seam proof is used when the likely drift lives at a seam
 - browser/runtime proof compares the result to the design-system artifacts
+- the Design Implementation Proof Gate is satisfied when UI was mutated
 - type-check/lint/build gates run according to the target stack
 - residual drift is documented
 
@@ -208,3 +220,4 @@ Do not close if:
   `project-root/.tmp/`
 - final proof is screenshot-only with no artifact comparison
 - final proof is code-only with no runtime/browser evidence
+- runtime proof shows pre-fix state after in-scope visual defects were corrected

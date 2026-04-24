@@ -68,6 +68,7 @@ Use:
 - `./onboarding/local-workspace/persist-handoff-summary.sh /path/to/target-repo`
 - `./onboarding/local-workspace/mark-checkpoint.sh /path/to/target-repo <checkpoint> <summary>`
 - `./onboarding/local-workspace/reconcile-readiness.sh /path/to/target-repo review-ready|closure-ready [summary]`
+- `./onboarding/local-workspace/check-evidence-gate.sh /path/to/target-repo review-ready|closure-ready`
 - `./onboarding/local-workspace/sync-plan-status.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-closure-packet.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-ai-review-report.sh /path/to/target-repo`
@@ -110,11 +111,13 @@ This now supports the minimum deterministic onboarding loop:
 - `mark-checkpoint.sh`
   - appends a semantic checkpoint into the local continuity timeline
 - `reconcile-readiness.sh`
-  - promotes the local dashboard into `review-ready` or `closure-ready` when the proof lane is already satisfied
+  - promotes the local dashboard into `review-ready` or `closure-ready` only after `check-evidence-gate.sh` confirms the required proof state
+- `check-evidence-gate.sh`
+  - blocks review/closure promotion when `.accelerate/status/evidence-registry.yaml` does not contain the required evidence statuses
 - `sync-plan-status.sh`
   - refreshes readiness and records a semantic phase checkpoint from `planning/current-plan.md`
 - `render-closure-packet.sh`
-  - renders a local status-backed closure packet for operator/review handoff
+  - renders a local status-backed closure packet using the evidence registry instead of inferring proof presence from readiness alone
 - `render-ai-review-report.sh`
   - renders a local status-backed AI Review Report summary
 - `render-review-ready-packet.sh`
@@ -164,6 +167,7 @@ The validator checks:
 - required V2 files
 - minimum key presence
 - summary drift between `state.yaml` and detailed authorities
+- evidence registry presence and proof-status enums
 - local planning artifact ladder coherence
 - readiness dashboard presence and shape
 - local status pointers for continuity timeline and learnings

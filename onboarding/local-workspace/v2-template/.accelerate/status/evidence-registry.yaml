@@ -1,0 +1,28 @@
+schema_version: 1
+implementation_proof: missing
+implementation_proof_artifact:
+qa_proof_lane: missing
+qa_proof_lane_artifact:
+backend_qa: missing
+backend_qa_artifact:
+frontend_qa: missing
+frontend_qa_artifact:
+browser_proof: missing
+browser_proof_artifact:
+persistent_e2e: not-applicable
+persistent_e2e_artifact:
+design_implementation_proof: not-applicable
+design_implementation_proof_artifact:
+product_critical_closure: not-applicable
+product_critical_closure_artifact:
+requested_vs_implemented: missing
+requested_vs_implemented_artifact:
+defect_ledger: clear
+defect_ledger_artifact: .accelerate/review/defect-ledger.yaml
+correction_loop: not-needed
+correction_loop_artifact:
+seam_proof: not-needed
+seam_proof_artifact: .accelerate/review/seam-proof.md
+ai_review: missing
+ai_review_artifact:
+last_updated: YYYY-MM-DD

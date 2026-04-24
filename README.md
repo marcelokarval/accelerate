@@ -298,6 +298,7 @@ The native review authority for high-stakes user surfaces now lives in:
 - [product-critical-surfaces.md](./core/review/product-critical-surfaces.md)
 - [premium-interface-production.md](./core/review/premium-interface-production.md)
 - [ui-mutation-ladder.md](./core/control-plane/ui-mutation-ladder.md)
+- [design-implementation-proof-gate.md](./core/control-plane/design-implementation-proof-gate.md)
 
 Do not treat these branches as generic frontend work. They require backend
 truth sufficiency, stronger artifact discipline, and stricter closure judgment.
@@ -318,6 +319,11 @@ and later grows an executive rollout plan, do not assume the handoff is
 complete. The implementation entrypoint must explicitly name the required
 pre-read set, the immutable contract, the primary implementation driver, and
 the slicing artifact for bounded execution.
+
+When that package or premium direction mutates real UI, closure also requires
+Design Implementation Proof: the owner layer, runtime target, viewport/state
+coverage, artifact comparison, defect disposition, and corrected-state browser
+evidence must be explicit.
 
 ## Root Authority
 

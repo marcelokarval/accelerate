@@ -69,6 +69,50 @@ An `agent-browser` proof packet should include:
 - residual gaps
 - whether the result should become Playwright coverage
 
+## Bounded Visual Proof Recipe
+
+Use this adapter for repeatable browser operations only after the target surface
+and session posture are bounded.
+
+Representative command flow:
+
+```bash
+agent-browser open <url>
+agent-browser snapshot -i
+agent-browser errors
+agent-browser console
+agent-browser set viewport 1440 1000
+agent-browser screenshot .tmp/browser-proof-desktop.png --full
+agent-browser set viewport 375 812
+agent-browser screenshot .tmp/browser-proof-mobile.png --full
+```
+
+For interaction proof, re-snapshot after navigation or state changes:
+
+```bash
+agent-browser snapshot -i
+agent-browser click @e1
+agent-browser wait --load networkidle
+agent-browser snapshot -i
+agent-browser screenshot .tmp/browser-proof-after-action.png --full
+```
+
+For design-system or premium UI work, pair these captures with the Design
+Implementation Proof Gate. The adapter captures evidence; the gate decides
+whether the evidence is sufficient.
+
+## Required Bounds Before Use
+
+Before running this adapter, state:
+
+- target route or route family
+- session posture
+- allowed viewports
+- allowed interactions
+- whether screenshots may include user data
+- where captures will be stored, usually project-root `.tmp/`
+- whether cookie/storage/state commands are prohibited or explicitly allowed
+
 ## Session Safety
 
 Browser state access is privileged.
@@ -83,6 +127,10 @@ The adapter must distinguish:
 
 Do not dump or persist cookies, tokens, localStorage, or sessionStorage unless
 the proof explicitly requires it and the scope is safe.
+
+For design proof, default to screenshots, semantic snapshots, console/errors,
+and explicit user-path actions. Treat cookie, storage, network mock, and JS eval
+commands as elevated operations requiring a stated reason.
 
 State save/load must state:
 
@@ -134,6 +182,10 @@ Name these failures explicitly:
 - `automation-as-closure`
   - a scripted pass is used to close a product or UX issue without forensic
     review
+- `unbounded-visual-sweep`
+  - the adapter browses routes or captures states outside the declared allowlist
+- `screenshot-without-comparison`
+  - screenshots exist but are not compared against the active visual authority
 - `mocked-reality-closure`
   - network or JS manipulation hides the real behavior under review
 - `observer-without-registration`

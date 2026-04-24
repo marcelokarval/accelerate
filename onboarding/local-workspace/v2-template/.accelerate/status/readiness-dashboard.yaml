@@ -9,6 +9,7 @@ required_gates:
   - local-workspace-entry
   - planning-artifact-sufficiency
   - issue-bootstrap-or-explicit-no-backend-exception
+  - evidence-registry
   - implementation-proof
   - qa-proof-lane
   - ai-review

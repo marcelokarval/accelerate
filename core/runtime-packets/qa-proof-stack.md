@@ -33,6 +33,7 @@ Do not collapse these into a single vague `tested` claim.
   - interactive truth in Chrome DevTools
   - breadth and route-family audit
   - runtime console and UX drift detection
+  - design implementation proof for contract-driven or premium UI mutation
   - optional agent-browser-style CLI operations after the flow is bounded
   - when exploratory browser QA and issue capture are the main need, `dogfood`
     is a valid lane companion
@@ -80,6 +81,22 @@ Every browser-proof packet should classify its breadth as one of:
 - `broad sweep`
 - `full route-family audit`
 
+## Design Implementation Proof
+
+When browser proof is used for design-system application, premium recomposition,
+or visual correction, it must also state:
+
+- active visual authorities
+- changed route, shell, component, or state
+- owner layer from the UI Mutation Ladder
+- viewport and state coverage
+- comparison target such as source showcase, premium HTML, or approved ASCII
+- defects opened, fixed, waived, or deferred
+- corrected-state evidence when any in-scope defect was fixed
+
+This is a specialization of browser proof, not a separate shortcut around the
+proof stack.
+
 ## Named Failure Modes
 
 Name the proof failure explicitly when it appears.
@@ -92,6 +109,9 @@ Name the proof failure explicitly when it appears.
     `tested successfully`.
 - `packetless proof`
   - evidence exists, but the lane did not leave an explicit `QA / Proof Packet`.
+- `pre-fix visual proof`
+  - closure proof still shows the state before an in-scope visual defect was
+    corrected.
 
 These are closure-relevant failures, not optional cleanup notes.
 
@@ -105,6 +125,8 @@ Before closure, make visible at least:
 - `Frontend QA=<present|missing|blocked>`
 - `Browser-Proof=<present|missing|blocked>`
 - `Persistent E2E=<present|missing|blocked|out of order>`
+- `Design Implementation Proof=<present|missing|blocked|not-applicable>` when
+  design-system or premium UI mutation was active
 - `blocking lane=<lane or none>`
 
 If `Browser-Proof` is missing while `Persistent E2E` is already present for a

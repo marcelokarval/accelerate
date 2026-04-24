@@ -17,6 +17,7 @@ Native authority now starts here:
 - `quick-invocation-map.md`
 - `workflow-change-approval-gate.md`
 - `parity-replacement-gate.md`
+- `design-implementation-proof-gate.md`
 
 Root-facing architectural context still lives in:
 

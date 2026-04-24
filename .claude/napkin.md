@@ -7,11 +7,13 @@
 - Each item includes date + "Do instead".
 
 ## Execution & Validation (Highest Priority)
-1. **[2026-04-15] Preserve root laws before reorganizing structure**
+1. **[2026-04-24] Design-system artifacts need runtime proof before UI closure**
+   Do instead: route mutation-bearing design-system or premium UI work through `core/control-plane/design-implementation-proof-gate.md` and require artifact comparison plus corrected-state browser evidence.
+2. **[2026-04-15] Preserve root laws before reorganizing structure**
    Do instead: verify that topology ownership, risk enforcement, closure mode, and agent optionality remain intact before accepting any refactor.
-2. **[2026-04-15] Architecture docs govern implementation here**
+3. **[2026-04-15] Architecture docs govern implementation here**
    Do instead: consult `docs/architecture/` before starting extraction, migration, adapter, or onboarding slices.
-3. **[2026-04-15] Prefer bounded architectural commits**
+4. **[2026-04-15] Prefer bounded architectural commits**
    Do instead: land one coherent migration or doctrine slice per commit instead of mixing import, refactor, and cleanup noise.
 
 ## Repository Structure

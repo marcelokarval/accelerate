@@ -11,9 +11,14 @@ standalone pre-agents phase.
 - command mapping
 - evidence shape
 - failure handling
+- safety boundaries for privileged runtime powers such as browser state,
+  network interception, JavaScript evaluation, filesystem writes, or package
+  installation
 
 ## Core Rule
 
 The core should speak in capabilities first. Concrete commands belong to
 runtime adapters or stack profiles.
 
+Adapters provide evidence. They do not own root closure, issue topology, or
+visual authority selection.

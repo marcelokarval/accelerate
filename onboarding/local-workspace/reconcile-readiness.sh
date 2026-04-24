@@ -11,6 +11,7 @@ TARGET_STATE="$2"
 SUMMARY="${3:-}"
 WORKSPACE="${TARGET_ROOT}/.accelerate"
 READINESS_FILE="${WORKSPACE}/status/readiness-dashboard.yaml"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ ! -f "${READINESS_FILE}" ]; then
   echo "missing readiness dashboard: ${READINESS_FILE}" >&2
@@ -56,6 +57,7 @@ case "${TARGET_STATE}" in
       echo "cannot reconcile to review-ready before execution_readiness=ready" >&2
       exit 1
     fi
+    bash "${SCRIPT_DIR}/check-evidence-gate.sh" "${TARGET_ROOT}" "review-ready" >/dev/null
     set_scalar "${READINESS_FILE}" "current_phase" "review"
     set_scalar "${READINESS_FILE}" "dashboard_verdict" "ready-for-review"
     set_scalar "${READINESS_FILE}" "review_readiness" "ready"
@@ -67,6 +69,7 @@ case "${TARGET_STATE}" in
       echo "cannot reconcile to closure-ready before execution_readiness=ready and review_readiness=ready" >&2
       exit 1
     fi
+    bash "${SCRIPT_DIR}/check-evidence-gate.sh" "${TARGET_ROOT}" "closure-ready" >/dev/null
     set_scalar "${READINESS_FILE}" "current_phase" "closure"
     set_scalar "${READINESS_FILE}" "dashboard_verdict" "ready-for-closure"
     set_scalar "${READINESS_FILE}" "closure_readiness" "ready"
@@ -81,7 +84,7 @@ esac
 
 perl -0pi -e "s/^last_updated:.*/last_updated: $(date +%F)/m" "${READINESS_FILE}"
 
-"$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/append-timeline.sh" \
+bash "${SCRIPT_DIR}/append-timeline.sh" \
   "${TARGET_ROOT}" \
   "readiness:${TARGET_STATE}" \
   "${SUMMARY:-Reconciled readiness to ${TARGET_STATE}}" \

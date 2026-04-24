@@ -142,6 +142,7 @@ repo_maturity: empty|early|existing|mature
 onboarding_status: not_started|in_progress|partially_stabilized|completed
 reentry_status: clean|light_reentry|partial_reonboarding|structural_reonboarding
 workflow_backend: none-yet|github|linear
+workflow_backend_detected: none-yet|github|linear
 active_profile: unknown|django-inertia-react|nextjs-tailwind
 active_runtime_adapters: []
 agent_mode: root-only|agent-eligible
@@ -150,6 +151,7 @@ agents_status_file: .accelerate/agents/status.yaml
 readiness_dashboard: .accelerate/status/readiness-dashboard.yaml
 timeline_file: .accelerate/status/timeline.jsonl
 learnings_file: .accelerate/status/learnings.jsonl
+evidence_registry: .accelerate/status/evidence-registry.yaml
 review_ready_packet: .accelerate/review/review-ready-packet.md
 ai_review_report: .accelerate/review/ai-review-report.md
 closure_packet: .accelerate/review/closure-packet.md
@@ -167,8 +169,10 @@ last_bootstrap_update: YYYY-MM-DD
 
 Rules:
 
-- `workflow_backend` is posture, not proof that a native adapter is already
-  implemented
+- `workflow_backend` is enforced backend posture; in the pre-agents phase it
+  should normally remain `none-yet`
+- `workflow_backend_detected` may record GitHub/Linear signals without claiming
+  that a native adapter is enforced
 - `active_runtime_adapters` may be empty in early adoption, but the key should
   exist
 - `project_onboarded` should only become `true` after real onboarding output
@@ -201,6 +205,8 @@ Rules:
 - this file is a local synthesis surface, not a replacement for root packets
 - it should stay small and conservative
 - it must not claim review or closure readiness without real upstream proof
+- it must not promote review or closure readiness unless
+  `.accelerate/status/evidence-registry.yaml` satisfies the relevant gate
 - it must reset inherited review/closure readiness when the governing artifact
   changes to a new bounded slice
 
@@ -225,6 +231,33 @@ It records durable operational learnings that are worth carrying across
 sessions before they are promoted into stronger governing surfaces.
 
 It must stay curated and high-signal.
+
+### `.accelerate/status/evidence-registry.yaml`
+
+This file is mandatory.
+
+It records proof status for readiness promotion. Readiness dashboards and
+closure packets must not infer proof presence from phase state alone.
+
+Minimum required keys:
+
+```yaml
+schema_version: 1
+implementation_proof: missing|present|blocked|not-applicable
+qa_proof_lane: missing|present|blocked|not-applicable
+backend_qa: missing|present|blocked|not-applicable
+frontend_qa: missing|present|blocked|not-applicable
+browser_proof: missing|present|blocked|not-applicable
+persistent_e2e: missing|present|blocked|not-applicable|out-of-order
+design_implementation_proof: missing|present|blocked|not-applicable
+product_critical_closure: missing|present|blocked|not-applicable
+requested_vs_implemented: missing|present|blocked|not-applicable
+defect_ledger: clear|open-defects-remain|waived-defects-present|missing|blocked
+correction_loop: not-needed|completed|incomplete|missing|blocked
+seam_proof: not-needed|present|missing|insufficient|blocked
+ai_review: missing|present|blocked|not-applicable
+last_updated: YYYY-MM-DD
+```
 
 ### `.accelerate/review/*.md`
 
@@ -350,6 +383,7 @@ Minimum required keys:
 ```yaml
 schema_version: 1
 selected_workflow_backend: none-yet|github|linear
+selected_workflow_backend_detected: none-yet|github|linear
 selected_profile: unknown|django-inertia-react|nextjs-tailwind
 selected_runtime_posture: []
 selected_docs_posture: default|custom|none-yet
@@ -359,7 +393,9 @@ explicit_non_goals: []
 Rules:
 
 - decisions must be derivable from discovery or explicit user direction
-- a missing backend implementation does not forbid selecting a backend posture
+- a missing backend implementation must keep `selected_workflow_backend` at
+  `none-yet`; detected backend signals belong in
+  `selected_workflow_backend_detected`
 
 ### `.accelerate/onboarding/executive-bootstrap-plan.md`
 

@@ -163,6 +163,10 @@ implementation entrypoint explicitly names:
 Do not start broad premiumization at page level unless a bounded exception is
 explicitly packeted.
 
+When design-system or premium artifacts mutate real UI, open
+`core/control-plane/design-implementation-proof-gate.md` and require runtime
+comparison proof against the active artifacts before closure.
+
 ## Runtime Visibility
 
 Non-trivial runs should keep the active runtime state visible.
@@ -275,6 +279,7 @@ Use these native authorities first:
   - `core/control-plane/quick-invocation-map.md`
   - `core/control-plane/local-workspace-entry-gate.md`
   - `core/control-plane/ui-mutation-ladder.md`
+  - `core/control-plane/design-implementation-proof-gate.md`
   - `core/control-plane/review-readiness-gate.md`
   - `core/control-plane/timeline-continuity-gate.md`
   - `core/control-plane/durable-learning-registration-gate.md`
@@ -297,6 +302,7 @@ Use these native authorities first:
   - `core/review/premium-interface-production.md`
   - `core/review/html-design-system-extraction.md`
   - `core/review/design-system-contract-application.md`
+  - `core/control-plane/design-implementation-proof-gate.md`
 - delegation:
   - `core/delegation/subagent-model.md`
 

@@ -59,9 +59,6 @@ next_action_value() {
 
 classification="orchestrated non-trivial work"
 dashboard_verdict="$(yaml_value "${READINESS_FILE}" "dashboard_verdict")"
-if [ "${dashboard_verdict}" = "blocked" ]; then
-  classification="trivial bounded engineering work"
-fi
 
 learning_disposition="none"
 if [ "$(count_jsonl "${LEARNINGS_FILE}")" -gt 0 ]; then

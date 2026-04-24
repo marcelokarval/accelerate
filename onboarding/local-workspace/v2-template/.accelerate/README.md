@@ -14,6 +14,7 @@ The main canonical files here are:
 
 - `state.yaml`
 - `status/readiness-dashboard.yaml`
+- `status/evidence-registry.yaml`
 - `onboarding/status.yaml`
 - `onboarding/decisions.yaml`
 - `planning/current-plan.md`
@@ -40,6 +41,8 @@ The main canonical files here are:
 
 - `state.yaml` is the fast global summary index
 - `status/readiness-dashboard.yaml` is the local branch/readiness synthesis authority
+- `status/evidence-registry.yaml` is the local proof evidence authority for
+  review and closure promotion
 - `status/timeline.jsonl` is the append-only continuity log of meaningful local workspace transitions
 - `status/learnings.jsonl` is the append-only store for durable operational learnings worth carrying across sessions
 - `onboarding/status.yaml` is detailed onboarding and reentry authority
@@ -68,30 +71,31 @@ For a fresh session, read in this order:
 
 1. `state.yaml`
 2. `status/readiness-dashboard.yaml`
-3. `onboarding/status.yaml`
-4. `onboarding/decisions.yaml`
-5. `planning/current-plan.md`
-6. `planning/user-story.md`
-7. `planning/prd-lite.md`
-8. `planning/sdd.md`
-9. `planning/executive-plan.md`
-10. `planning/task-breakdown.md`
-11. `planning/open-questions.md`
-12. `agents/status.yaml`
-13. `status/timeline.jsonl`
-14. `status/learnings.jsonl`
-15. `review/review-ready-packet.md`
-16. `review/ai-review-report.md`
-17. `review/closure-packet.md`
-18. `review/branch-entry-packet.md`
-19. `review/runtime-delta-packet.md`
-20. `review/handoff-summary.md`
-21. `review/pre-review-bundle.md`
-22. `review/closure-bundle.md`
-23. `review/current-slice-review.md`
-24. `review/current-slice-forensics.md`
-25. `review/defect-ledger.yaml`
-26. `review/seam-proof.md`
+3. `status/evidence-registry.yaml`
+4. `onboarding/status.yaml`
+5. `onboarding/decisions.yaml`
+6. `planning/current-plan.md`
+7. `planning/user-story.md`
+8. `planning/prd-lite.md`
+9. `planning/sdd.md`
+10. `planning/executive-plan.md`
+11. `planning/task-breakdown.md`
+12. `planning/open-questions.md`
+13. `agents/status.yaml`
+14. `status/timeline.jsonl`
+15. `status/learnings.jsonl`
+16. `review/review-ready-packet.md`
+17. `review/ai-review-report.md`
+18. `review/closure-packet.md`
+19. `review/branch-entry-packet.md`
+20. `review/runtime-delta-packet.md`
+21. `review/handoff-summary.md`
+22. `review/pre-review-bundle.md`
+23. `review/closure-bundle.md`
+24. `review/current-slice-review.md`
+25. `review/current-slice-forensics.md`
+26. `review/defect-ledger.yaml`
+27. `review/seam-proof.md`
 
 ## Non-Goals
 

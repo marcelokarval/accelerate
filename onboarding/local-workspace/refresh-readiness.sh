@@ -66,6 +66,7 @@ required_gates=(
   "local-workspace-entry"
   "planning-artifact-sufficiency"
   "issue-bootstrap-or-explicit-no-backend-exception"
+  "evidence-registry"
   "implementation-proof"
   "qa-proof-lane"
   "ai-review"
@@ -75,6 +76,12 @@ completed_gates=()
 blocking_items=()
 
 completed_gates+=("local-workspace-materialized")
+
+if [ -f "${WORKSPACE}/status/evidence-registry.yaml" ]; then
+  completed_gates+=("evidence-registry")
+else
+  blocking_items+=("evidence registry missing")
+fi
 
 if [ "${project_onboarded}" = "true" ]; then
   completed_gates+=("discovery-classified")

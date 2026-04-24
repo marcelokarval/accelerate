@@ -42,6 +42,16 @@ surface allowlist
 
 Observation is not mutation.
 
+When observation happens inside an active design-system or premium UI slice, its
+findings feed:
+
+- `defect-ledger.md`
+- `active-correction-loop.md`
+- `../control-plane/design-implementation-proof-gate.md`
+
+The observer does not replace implementation proof and does not own root
+closure.
+
 ## Cross-Component Audit Checklist
 
 Inspect:
@@ -111,6 +121,10 @@ An `agent-browser` adapter may power fast repeated observation once the target
 surface and session posture are bounded.
 
 Playwright persistence comes after stable browser truth.
+
+For design-system or premium UI application, browser proof should also satisfy
+the Design Implementation Proof Gate's viewport/state coverage and corrected
+state requirements.
 
 ## Scheduled Operation Guardrails
 

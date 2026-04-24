@@ -14,6 +14,7 @@ required_files=(
   "${WORKSPACE}/README.md"
   "${WORKSPACE}/state.yaml"
   "${WORKSPACE}/status/readiness-dashboard.yaml"
+  "${WORKSPACE}/status/evidence-registry.yaml"
   "${WORKSPACE}/status/timeline.jsonl"
   "${WORKSPACE}/status/learnings.jsonl"
   "${WORKSPACE}/onboarding/status.yaml"
@@ -139,6 +140,7 @@ require_key "${WORKSPACE}/state.yaml" "repo_maturity"
 require_key "${WORKSPACE}/state.yaml" "onboarding_status"
 require_key "${WORKSPACE}/state.yaml" "reentry_status"
 require_key "${WORKSPACE}/state.yaml" "workflow_backend"
+require_key "${WORKSPACE}/state.yaml" "workflow_backend_detected"
 require_key "${WORKSPACE}/state.yaml" "active_profile"
 require_key "${WORKSPACE}/state.yaml" "active_runtime_adapters"
 require_key "${WORKSPACE}/state.yaml" "agent_mode"
@@ -146,6 +148,7 @@ require_key "${WORKSPACE}/state.yaml" "current_plan"
 require_key "${WORKSPACE}/state.yaml" "readiness_dashboard"
 require_key "${WORKSPACE}/state.yaml" "timeline_file"
 require_key "${WORKSPACE}/state.yaml" "learnings_file"
+require_key "${WORKSPACE}/state.yaml" "evidence_registry"
 require_key "${WORKSPACE}/state.yaml" "review_ready_packet"
 require_key "${WORKSPACE}/state.yaml" "ai_review_report"
 require_key "${WORKSPACE}/state.yaml" "closure_packet"
@@ -171,6 +174,22 @@ require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "completed_gates"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "blocking_items"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "last_updated"
 
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "schema_version"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "implementation_proof"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "qa_proof_lane"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "backend_qa"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "frontend_qa"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "browser_proof"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "persistent_e2e"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "design_implementation_proof"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "product_critical_closure"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "requested_vs_implemented"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "defect_ledger"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "correction_loop"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "seam_proof"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "ai_review"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "last_updated"
+
 require_key "${WORKSPACE}/onboarding/status.yaml" "schema_version"
 require_key "${WORKSPACE}/onboarding/status.yaml" "status"
 require_key "${WORKSPACE}/onboarding/status.yaml" "reentry_status"
@@ -187,6 +206,7 @@ require_key "${WORKSPACE}/onboarding/discovery.yaml" "repo_notes"
 
 require_key "${WORKSPACE}/onboarding/decisions.yaml" "schema_version"
 require_key "${WORKSPACE}/onboarding/decisions.yaml" "selected_workflow_backend"
+require_key "${WORKSPACE}/onboarding/decisions.yaml" "selected_workflow_backend_detected"
 require_key "${WORKSPACE}/onboarding/decisions.yaml" "selected_profile"
 require_key "${WORKSPACE}/onboarding/decisions.yaml" "selected_runtime_posture"
 require_key "${WORKSPACE}/onboarding/decisions.yaml" "selected_docs_posture"
@@ -210,6 +230,7 @@ require_enum "${WORKSPACE}/state.yaml" "repo_maturity" "empty" "early" "existing
 require_enum "${WORKSPACE}/state.yaml" "onboarding_status" "not_started" "in_progress" "partially_stabilized" "completed"
 require_enum "${WORKSPACE}/state.yaml" "reentry_status" "clean" "light_reentry" "partial_reonboarding" "structural_reonboarding"
 require_enum "${WORKSPACE}/state.yaml" "workflow_backend" "none-yet" "github" "linear"
+require_enum "${WORKSPACE}/state.yaml" "workflow_backend_detected" "none-yet" "github" "linear"
 require_enum "${WORKSPACE}/state.yaml" "active_profile" "unknown" "django-inertia-react" "nextjs-tailwind"
 require_enum "${WORKSPACE}/state.yaml" "agent_mode" "root-only" "agent-eligible"
 require_listish "${WORKSPACE}/state.yaml" "active_runtime_adapters"
@@ -223,6 +244,24 @@ require_enum "${WORKSPACE}/status/readiness-dashboard.yaml" "closure_readiness" 
 require_listish "${WORKSPACE}/status/readiness-dashboard.yaml" "required_gates"
 require_listish "${WORKSPACE}/status/readiness-dashboard.yaml" "completed_gates"
 require_listish "${WORKSPACE}/status/readiness-dashboard.yaml" "blocking_items"
+
+require_exact_value "${WORKSPACE}/status/evidence-registry.yaml" "schema_version" "1"
+for evidence_key in \
+  implementation_proof \
+  qa_proof_lane \
+  backend_qa \
+  frontend_qa \
+  browser_proof \
+  persistent_e2e \
+  design_implementation_proof \
+  product_critical_closure \
+  requested_vs_implemented \
+  ai_review; do
+  require_enum "${WORKSPACE}/status/evidence-registry.yaml" "${evidence_key}" "missing" "present" "blocked" "not-applicable" "out-of-order"
+done
+require_enum "${WORKSPACE}/status/evidence-registry.yaml" "defect_ledger" "clear" "open-defects-remain" "waived-defects-present" "missing" "blocked"
+require_enum "${WORKSPACE}/status/evidence-registry.yaml" "correction_loop" "not-needed" "completed" "incomplete" "missing" "blocked"
+require_enum "${WORKSPACE}/status/evidence-registry.yaml" "seam_proof" "not-needed" "present" "missing" "insufficient" "blocked"
 
 require_exact_value "${WORKSPACE}/onboarding/status.yaml" "schema_version" "1"
 require_enum "${WORKSPACE}/onboarding/status.yaml" "status" "not_started" "in_progress" "partially_stabilized" "completed"
@@ -239,6 +278,7 @@ require_listish "${WORKSPACE}/onboarding/discovery.yaml" "repo_notes"
 
 require_exact_value "${WORKSPACE}/onboarding/decisions.yaml" "schema_version" "1"
 require_enum "${WORKSPACE}/onboarding/decisions.yaml" "selected_workflow_backend" "none-yet" "github" "linear"
+require_enum "${WORKSPACE}/onboarding/decisions.yaml" "selected_workflow_backend_detected" "none-yet" "github" "linear"
 require_enum "${WORKSPACE}/onboarding/decisions.yaml" "selected_profile" "unknown" "django-inertia-react" "nextjs-tailwind"
 require_enum "${WORKSPACE}/onboarding/decisions.yaml" "selected_docs_posture" "default" "custom" "none-yet"
 require_listish "${WORKSPACE}/onboarding/decisions.yaml" "selected_runtime_posture"
@@ -312,6 +352,12 @@ fi
 learnings_file="$(yaml_value "${WORKSPACE}/state.yaml" "learnings_file")"
 if [ -n "${learnings_file}" ] && [ ! -f "${TARGET_ROOT}/${learnings_file}" ]; then
   echo "state.yaml learnings_file does not exist: ${TARGET_ROOT}/${learnings_file}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+evidence_registry="$(yaml_value "${WORKSPACE}/state.yaml" "evidence_registry")"
+if [ -n "${evidence_registry}" ] && [ ! -f "${TARGET_ROOT}/${evidence_registry}" ]; then
+  echo "state.yaml evidence_registry does not exist: ${TARGET_ROOT}/${evidence_registry}" >&2
   FAILURES=$((FAILURES + 1))
 fi
 
