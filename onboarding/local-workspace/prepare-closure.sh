@@ -34,22 +34,28 @@ if [ "${dashboard_verdict}" = "blocked" ]; then
 fi
 
 if [ "${review_readiness}" != "ready" ]; then
-  "${SCRIPT_DIR}/reconcile-readiness.sh" \
+  bash "${SCRIPT_DIR}/reconcile-readiness.sh" \
     "${TARGET_ROOT}" \
     "review-ready" \
     "Prepared local closure surface by first reconciling review readiness" >/dev/null
 fi
 
+bash "${SCRIPT_DIR}/persist-review-artifacts.sh" "${TARGET_ROOT}" >/dev/null
+
+perl -0pi -e "s#^ai_review:.*#ai_review: present#m" "${WORKSPACE}/status/evidence-registry.yaml"
+perl -0pi -e "s#^ai_review_artifact:.*#ai_review_artifact: .accelerate/review/ai-review-report.md#m" "${WORKSPACE}/status/evidence-registry.yaml"
+perl -0pi -e "s/^last_updated:.*/last_updated: $(date +%F)/m" "${WORKSPACE}/status/evidence-registry.yaml"
+
 if [ "${closure_readiness}" != "ready" ]; then
-  "${SCRIPT_DIR}/reconcile-readiness.sh" \
+  bash "${SCRIPT_DIR}/reconcile-readiness.sh" \
     "${TARGET_ROOT}" \
     "closure-ready" \
     "Prepared local closure surface from current readiness truth" >/dev/null
 fi
 
-"${SCRIPT_DIR}/persist-review-bundles.sh" "${TARGET_ROOT}" >/dev/null
+bash "${SCRIPT_DIR}/persist-review-bundles.sh" "${TARGET_ROOT}" >/dev/null
 
-"${SCRIPT_DIR}/append-timeline.sh" \
+bash "${SCRIPT_DIR}/append-timeline.sh" \
   "${TARGET_ROOT}" \
   "prepare-closure:completed" \
   "Prepared local review artifacts, bundles, and closure handoff surface" \

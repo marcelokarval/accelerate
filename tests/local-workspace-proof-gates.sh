@@ -80,6 +80,9 @@ assert_contains "$(grep '^review_readiness:' "${ready_target}/.accelerate/status
 closure_target="$(reset_repo closure-blocks-without-ai-review)"
 set_evidence "${closure_target}" "implementation_proof" "present"
 set_evidence "${closure_target}" "qa_proof_lane" "present"
+set_evidence "${closure_target}" "backend_qa" "present"
+set_evidence "${closure_target}" "frontend_qa" "not-applicable"
+set_evidence "${closure_target}" "browser_proof" "present"
 set_evidence "${closure_target}" "requested_vs_implemented" "present"
 bash "${SCRIPTS}/reconcile-readiness.sh" "${closure_target}" review-ready >/dev/null
 closure_gate_output="${WORK_ROOT}/accelerate-closure-gate.out"
@@ -87,6 +90,37 @@ if bash "${SCRIPTS}/reconcile-readiness.sh" "${closure_target}" closure-ready >"
   fail "closure-ready reconciliation succeeded without ai_review evidence"
 fi
 assert_contains "$(cat "${closure_gate_output}")" "evidence gate blocked closure-ready"
+
+lane_target="$(reset_repo closure-blocks-without-browser-proof)"
+set_evidence "${lane_target}" "implementation_proof" "present"
+set_evidence "${lane_target}" "qa_proof_lane" "present"
+set_evidence "${lane_target}" "backend_qa" "present"
+set_evidence "${lane_target}" "frontend_qa" "not-applicable"
+set_evidence "${lane_target}" "requested_vs_implemented" "present"
+set_evidence "${lane_target}" "ai_review" "present"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${lane_target}" review-ready >/dev/null
+lane_gate_output="${WORK_ROOT}/accelerate-lane-gate.out"
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${lane_target}" closure-ready >"${lane_gate_output}" 2>&1; then
+  fail "closure-ready reconciliation succeeded without browser proof"
+fi
+assert_contains "$(cat "${lane_gate_output}")" "evidence gate blocked closure-ready"
+
+lane_packet_output="$(bash "${SCRIPTS}/render-closure-packet.sh" "${lane_target}")"
+assert_contains "${lane_packet_output}" "Browser-Proof=missing"
+assert_contains "${lane_packet_output}" "blocking lane: browser_proof"
+assert_not_contains "${lane_packet_output}" "recommendation: done"
+
+prepare_target="$(reset_repo prepare-closure-renders-ai-review-before-final-gate)"
+set_evidence "${prepare_target}" "implementation_proof" "present"
+set_evidence "${prepare_target}" "qa_proof_lane" "present"
+set_evidence "${prepare_target}" "backend_qa" "present"
+set_evidence "${prepare_target}" "frontend_qa" "not-applicable"
+set_evidence "${prepare_target}" "browser_proof" "present"
+set_evidence "${prepare_target}" "requested_vs_implemented" "present"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${prepare_target}" review-ready >/dev/null
+bash "${SCRIPTS}/prepare-closure.sh" "${prepare_target}" >/dev/null
+assert_contains "$(grep '^closure_readiness:' "${prepare_target}/.accelerate/status/readiness-dashboard.yaml")" "closure_readiness: ready"
+assert_contains "$(grep '^ai_review:' "${prepare_target}/.accelerate/status/evidence-registry.yaml")" "ai_review: present"
 
 packet_target="$(reset_repo closure-packet-uses-evidence)"
 set_yaml_scalar "${packet_target}/.accelerate/status/readiness-dashboard.yaml" "review_readiness" "ready"

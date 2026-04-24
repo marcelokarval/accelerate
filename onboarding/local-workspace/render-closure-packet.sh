@@ -105,11 +105,15 @@ blocking_lane="none"
 for lane in \
   "implementation_proof:${implementation_proof}" \
   "qa_proof_lane:${qa_proof_lane}" \
+  "backend_qa:${backend_qa}" \
+  "frontend_qa:${frontend_qa}" \
+  "browser_proof:${browser_proof}" \
+  "persistent_e2e:${persistent_e2e}" \
   "requested_vs_implemented:${requested_vs_implemented}" \
   "ai_review:${ai_review}"; do
   key="${lane%%:*}"
   value="${lane#*:}"
-  if [ "${value}" != "present" ]; then
+  if [ "${value}" != "present" ] && [ "${value}" != "not-applicable" ]; then
     blocking_lane="${key}"
     break
   fi

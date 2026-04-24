@@ -34,6 +34,13 @@ is_not_applicable_or_present() {
   [ "${value}" = "not-applicable" ] || [ "${value}" = "present" ] || [ "${value}" = "clear" ] || [ "${value}" = "not-needed" ]
 }
 
+is_present_or_not_applicable() {
+  local key="$1"
+  local value
+  value="$(yaml_value "${EVIDENCE_FILE}" "${key}")"
+  [ "${value}" = "present" ] || [ "${value}" = "not-applicable" ]
+}
+
 block() {
   local gate="$1"
   local reason="$2"
@@ -57,6 +64,14 @@ require_optional_clean() {
   fi
 }
 
+require_present_or_not_applicable() {
+  local gate="$1"
+  local key="$2"
+  if ! is_present_or_not_applicable "${key}"; then
+    block "${gate}" "${key} must be present or not-applicable"
+  fi
+}
+
 case "${TARGET_STATE}" in
   review-ready)
     require_present "review-ready" "implementation_proof"
@@ -65,6 +80,10 @@ case "${TARGET_STATE}" in
   closure-ready)
     require_present "closure-ready" "implementation_proof"
     require_present "closure-ready" "qa_proof_lane"
+    require_present_or_not_applicable "closure-ready" "backend_qa"
+    require_present_or_not_applicable "closure-ready" "frontend_qa"
+    require_present_or_not_applicable "closure-ready" "browser_proof"
+    require_present_or_not_applicable "closure-ready" "persistent_e2e"
     require_present "closure-ready" "requested_vs_implemented"
     require_present "closure-ready" "ai_review"
     require_optional_clean "closure-ready" "defect_ledger"

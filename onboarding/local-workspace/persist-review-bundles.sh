@@ -15,11 +15,11 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 mkdir -p "${REVIEW_DIR}"
 
-"${SCRIPT_DIR}/persist-review-artifacts.sh" "${TARGET_ROOT}" >/dev/null
-"${SCRIPT_DIR}/render-pre-review-bundle.sh" "${TARGET_ROOT}" > "${PRE_REVIEW_FILE}"
-"${SCRIPT_DIR}/render-closure-bundle.sh" "${TARGET_ROOT}" > "${CLOSURE_BUNDLE_FILE}"
+bash "${SCRIPT_DIR}/persist-review-artifacts.sh" "${TARGET_ROOT}" >/dev/null
+bash "${SCRIPT_DIR}/render-pre-review-bundle.sh" "${TARGET_ROOT}" > "${PRE_REVIEW_FILE}"
+bash "${SCRIPT_DIR}/render-closure-bundle.sh" "${TARGET_ROOT}" > "${CLOSURE_BUNDLE_FILE}"
 
-"${SCRIPT_DIR}/append-timeline.sh" \
+bash "${SCRIPT_DIR}/append-timeline.sh" \
   "${TARGET_ROOT}" \
   "review-bundles:persisted" \
   "Persisted local pre-review and closure bundles" \

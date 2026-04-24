@@ -13,12 +13,12 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 mkdir -p "${REVIEW_DIR}"
 
-"${SCRIPT_DIR}/render-current-slice-review.sh" "${TARGET_ROOT}" > "${REVIEW_DIR}/current-slice-review.md"
-"${SCRIPT_DIR}/render-current-slice-forensics.sh" "${TARGET_ROOT}" > "${REVIEW_DIR}/current-slice-forensics.md"
-"${SCRIPT_DIR}/render-defect-ledger.sh" "${TARGET_ROOT}" > "${REVIEW_DIR}/defect-ledger.yaml"
-"${SCRIPT_DIR}/render-seam-proof.sh" "${TARGET_ROOT}" > "${REVIEW_DIR}/seam-proof.md"
+bash "${SCRIPT_DIR}/render-current-slice-review.sh" "${TARGET_ROOT}" > "${REVIEW_DIR}/current-slice-review.md"
+bash "${SCRIPT_DIR}/render-current-slice-forensics.sh" "${TARGET_ROOT}" > "${REVIEW_DIR}/current-slice-forensics.md"
+bash "${SCRIPT_DIR}/render-defect-ledger.sh" "${TARGET_ROOT}" > "${REVIEW_DIR}/defect-ledger.yaml"
+bash "${SCRIPT_DIR}/render-seam-proof.sh" "${TARGET_ROOT}" > "${REVIEW_DIR}/seam-proof.md"
 
-"${SCRIPT_DIR}/append-timeline.sh" \
+bash "${SCRIPT_DIR}/append-timeline.sh" \
   "${TARGET_ROOT}" \
   "review-diagnostics:persisted" \
   "Persisted current-slice review, forensics, defect ledger, and seam proof" \
