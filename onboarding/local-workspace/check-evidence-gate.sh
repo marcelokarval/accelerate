@@ -10,6 +10,7 @@ TARGET_ROOT="$(cd "$1" && pwd)"
 TARGET_STATE="$2"
 WORKSPACE="${TARGET_ROOT}/.accelerate"
 EVIDENCE_FILE="${WORKSPACE}/status/evidence-registry.yaml"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ ! -f "${EVIDENCE_FILE}" ]; then
   echo "missing evidence registry: ${EVIDENCE_FILE}" >&2
@@ -98,5 +99,7 @@ case "${TARGET_STATE}" in
     exit 1
     ;;
 esac
+
+bash "${SCRIPT_DIR}/check-evidence-artifacts.sh" "${TARGET_ROOT}" "${TARGET_STATE}" >/dev/null
 
 echo "evidence gate passed ${TARGET_STATE}"

@@ -62,6 +62,22 @@ set_evidence() {
   set_yaml_scalar "${target}/.accelerate/status/evidence-registry.yaml" "${key}" "${value}"
 }
 
+set_artifact() {
+  local target="$1"
+  local key="$2"
+  local value="$3"
+  set_yaml_scalar "${target}/.accelerate/status/evidence-registry.yaml" "${key}_artifact" "${value}"
+}
+
+seed_required_artifacts() {
+  local target="$1"
+  mkdir -p "${target}/.accelerate/proof"
+  for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review; do
+    printf '%s\n' "${key}" > "${target}/.accelerate/proof/${key}.md"
+    set_artifact "${target}" "${key}" ".accelerate/proof/${key}.md"
+  done
+}
+
 mkdir -p "${WORK_ROOT}"
 
 review_target="$(reset_repo review-blocks-without-evidence)"
@@ -74,6 +90,7 @@ assert_contains "$(cat "${review_gate_output}")" "evidence gate blocked review-r
 ready_target="$(reset_repo review-succeeds-with-evidence)"
 set_evidence "${ready_target}" "implementation_proof" "present"
 set_evidence "${ready_target}" "qa_proof_lane" "present"
+seed_required_artifacts "${ready_target}"
 bash "${SCRIPTS}/reconcile-readiness.sh" "${ready_target}" review-ready >/dev/null
 assert_contains "$(grep '^review_readiness:' "${ready_target}/.accelerate/status/readiness-dashboard.yaml")" "review_readiness: ready"
 
@@ -84,6 +101,7 @@ set_evidence "${closure_target}" "backend_qa" "present"
 set_evidence "${closure_target}" "frontend_qa" "not-applicable"
 set_evidence "${closure_target}" "browser_proof" "present"
 set_evidence "${closure_target}" "requested_vs_implemented" "present"
+seed_required_artifacts "${closure_target}"
 bash "${SCRIPTS}/reconcile-readiness.sh" "${closure_target}" review-ready >/dev/null
 closure_gate_output="${WORK_ROOT}/accelerate-closure-gate.out"
 if bash "${SCRIPTS}/reconcile-readiness.sh" "${closure_target}" closure-ready >"${closure_gate_output}" 2>&1; then
@@ -98,6 +116,7 @@ set_evidence "${lane_target}" "backend_qa" "present"
 set_evidence "${lane_target}" "frontend_qa" "not-applicable"
 set_evidence "${lane_target}" "requested_vs_implemented" "present"
 set_evidence "${lane_target}" "ai_review" "present"
+seed_required_artifacts "${lane_target}"
 bash "${SCRIPTS}/reconcile-readiness.sh" "${lane_target}" review-ready >/dev/null
 lane_gate_output="${WORK_ROOT}/accelerate-lane-gate.out"
 if bash "${SCRIPTS}/reconcile-readiness.sh" "${lane_target}" closure-ready >"${lane_gate_output}" 2>&1; then
@@ -117,10 +136,48 @@ set_evidence "${prepare_target}" "backend_qa" "present"
 set_evidence "${prepare_target}" "frontend_qa" "not-applicable"
 set_evidence "${prepare_target}" "browser_proof" "present"
 set_evidence "${prepare_target}" "requested_vs_implemented" "present"
+seed_required_artifacts "${prepare_target}"
+set_evidence "${prepare_target}" "ai_review" "missing"
+set_artifact "${prepare_target}" "ai_review" ""
 bash "${SCRIPTS}/reconcile-readiness.sh" "${prepare_target}" review-ready >/dev/null
-bash "${SCRIPTS}/prepare-closure.sh" "${prepare_target}" >/dev/null
-assert_contains "$(grep '^closure_readiness:' "${prepare_target}/.accelerate/status/readiness-dashboard.yaml")" "closure_readiness: ready"
-assert_contains "$(grep '^ai_review:' "${prepare_target}/.accelerate/status/evidence-registry.yaml")" "ai_review: present"
+if bash "${SCRIPTS}/prepare-closure.sh" "${prepare_target}" >"${WORK_ROOT}/prepare-closure-ai.out" 2>&1; then
+  fail "prepare-closure self-certified ai_review and reached closure-ready"
+fi
+assert_contains "$(cat "${WORK_ROOT}/prepare-closure-ai.out")" "evidence gate blocked closure-ready"
+assert_contains "$(grep '^closure_readiness:' "${prepare_target}/.accelerate/status/readiness-dashboard.yaml")" "closure_readiness: blocked"
+assert_contains "$(grep '^ai_review_rendered:' "${prepare_target}/.accelerate/status/evidence-registry.yaml")" "ai_review_rendered: present"
+assert_contains "$(grep '^ai_review:' "${prepare_target}/.accelerate/status/evidence-registry.yaml")" "ai_review: missing"
+
+artifact_target="$(reset_repo closure-blocks-present-without-artifacts)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review; do
+  set_evidence "${artifact_target}" "${key}" "present"
+done
+set_evidence "${artifact_target}" "frontend_qa" "not-applicable"
+set_evidence "${artifact_target}" "persistent_e2e" "not-applicable"
+mkdir -p "${artifact_target}/.accelerate/proof"
+for key in implementation_proof qa_proof_lane; do
+  printf '%s\n' "${key}" > "${artifact_target}/.accelerate/proof/${key}.md"
+  set_artifact "${artifact_target}" "${key}" ".accelerate/proof/${key}.md"
+done
+bash "${SCRIPTS}/reconcile-readiness.sh" "${artifact_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${artifact_target}" closure-ready >"${WORK_ROOT}/artifact-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded with present statuses but empty artifacts"
+fi
+assert_contains "$(cat "${WORK_ROOT}/artifact-gate.out")" "artifact gate blocked"
+
+stale_target="$(reset_repo stale-readiness-downgrades-after-evidence-regression)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review; do
+  set_evidence "${stale_target}" "${key}" "present"
+done
+set_evidence "${stale_target}" "frontend_qa" "not-applicable"
+set_evidence "${stale_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${stale_target}"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${stale_target}" review-ready >/dev/null
+bash "${SCRIPTS}/reconcile-readiness.sh" "${stale_target}" closure-ready >/dev/null
+set_evidence "${stale_target}" "browser_proof" "missing"
+bash "${SCRIPTS}/refresh-readiness.sh" "${stale_target}" >/dev/null
+assert_contains "$(grep '^closure_readiness:' "${stale_target}/.accelerate/status/readiness-dashboard.yaml")" "closure_readiness: blocked"
+assert_contains "$(grep '^dashboard_verdict:' "${stale_target}/.accelerate/status/readiness-dashboard.yaml")" "dashboard_verdict: ready-for-review"
 
 packet_target="$(reset_repo closure-packet-uses-evidence)"
 set_yaml_scalar "${packet_target}/.accelerate/status/readiness-dashboard.yaml" "review_readiness" "ready"

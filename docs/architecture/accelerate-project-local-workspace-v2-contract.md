@@ -257,6 +257,7 @@ defect_ledger: clear|open-defects-remain|waived-defects-present|missing|blocked
 correction_loop: not-needed|completed|incomplete|missing|blocked
 seam_proof: not-needed|present|missing|insufficient|blocked
 ai_review: missing|present|blocked|not-applicable
+ai_review_rendered: missing|present|blocked|not-applicable
 last_updated: YYYY-MM-DD
 ```
 

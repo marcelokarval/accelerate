@@ -189,6 +189,7 @@ require_key "${WORKSPACE}/status/evidence-registry.yaml" "defect_ledger"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "correction_loop"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "seam_proof"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "ai_review"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "ai_review_rendered"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "last_updated"
 
 require_key "${WORKSPACE}/onboarding/status.yaml" "schema_version"
@@ -258,7 +259,8 @@ for evidence_key in \
   design_implementation_proof \
   product_critical_closure \
   requested_vs_implemented \
-  ai_review; do
+  ai_review \
+  ai_review_rendered; do
   require_enum "${WORKSPACE}/status/evidence-registry.yaml" "${evidence_key}" "missing" "present" "blocked" "not-applicable" "out-of-order"
 done
 require_enum "${WORKSPACE}/status/evidence-registry.yaml" "defect_ledger" "clear" "open-defects-remain" "waived-defects-present" "missing" "blocked"

@@ -27,4 +27,6 @@ seam_proof: not-needed
 seam_proof_artifact: .accelerate/review/seam-proof.md
 ai_review: missing
 ai_review_artifact:
+ai_review_rendered: missing
+ai_review_rendered_artifact:
 last_updated: YYYY-MM-DD

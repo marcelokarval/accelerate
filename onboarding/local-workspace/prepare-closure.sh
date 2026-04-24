@@ -42,8 +42,8 @@ fi
 
 bash "${SCRIPT_DIR}/persist-review-artifacts.sh" "${TARGET_ROOT}" >/dev/null
 
-perl -0pi -e "s#^ai_review:.*#ai_review: present#m" "${WORKSPACE}/status/evidence-registry.yaml"
-perl -0pi -e "s#^ai_review_artifact:.*#ai_review_artifact: .accelerate/review/ai-review-report.md#m" "${WORKSPACE}/status/evidence-registry.yaml"
+perl -0pi -e "s#^ai_review_rendered:.*#ai_review_rendered: present#m" "${WORKSPACE}/status/evidence-registry.yaml"
+perl -0pi -e "s#^ai_review_rendered_artifact:.*#ai_review_rendered_artifact: .accelerate/review/ai-review-report.md#m" "${WORKSPACE}/status/evidence-registry.yaml"
 perl -0pi -e "s/^last_updated:.*/last_updated: $(date +%F)/m" "${WORKSPACE}/status/evidence-registry.yaml"
 
 if [ "${closure_readiness}" != "ready" ]; then

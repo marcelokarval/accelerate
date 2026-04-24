@@ -8,6 +8,7 @@ fi
 
 TARGET_ROOT="$(cd "$1" && pwd)"
 WORKSPACE="${TARGET_ROOT}/.accelerate"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 STATE_FILE="${WORKSPACE}/state.yaml"
 STATUS_FILE="${WORKSPACE}/onboarding/status.yaml"
 PLAN_FILE="${WORKSPACE}/planning/current-plan.md"
@@ -51,6 +52,14 @@ governing_path="$(plan_value "path")"
 bounded_objective="$(plan_value "bounded objective")"
 current_review_readiness="$(yaml_value "${READINESS_FILE}" "review_readiness")"
 current_closure_readiness="$(yaml_value "${READINESS_FILE}" "closure_readiness")"
+review_gate_still_valid="false"
+closure_gate_still_valid="false"
+if [ "${current_review_readiness}" = "ready" ] && bash "${SCRIPT_DIR}/check-evidence-gate.sh" "${TARGET_ROOT}" review-ready >/dev/null 2>&1; then
+  review_gate_still_valid="true"
+fi
+if [ "${current_closure_readiness}" = "ready" ] && bash "${SCRIPT_DIR}/check-evidence-gate.sh" "${TARGET_ROOT}" closure-ready >/dev/null 2>&1; then
+  closure_gate_still_valid="true"
+fi
 previous_governing_artifact="$(yaml_value "${READINESS_FILE}" "governing_artifact_path")"
 if [ -z "${previous_governing_artifact}" ] && [ -f "${BRANCH_ENTRY_PACKET}" ]; then
   previous_governing_artifact="$(sed -n 's/^- current governing artifact=//p' "${BRANCH_ENTRY_PACKET}" | head -n 1)"
@@ -134,13 +143,13 @@ fi
 
 if [ "${#blocking_items[@]}" -gt 0 ]; then
   dashboard_verdict="blocked"
-elif [ "${artifact_changed}" = "false" ] && [ "${current_closure_readiness}" = "ready" ]; then
+elif [ "${artifact_changed}" = "false" ] && [ "${current_closure_readiness}" = "ready" ] && [ "${closure_gate_still_valid}" = "true" ]; then
   current_phase="closure"
   execution_readiness="ready"
   review_readiness="ready"
   closure_readiness="ready"
   dashboard_verdict="ready-for-closure"
-elif [ "${artifact_changed}" = "false" ] && [ "${current_review_readiness}" = "ready" ]; then
+elif [ "${artifact_changed}" = "false" ] && [ "${current_review_readiness}" = "ready" ] && [ "${review_gate_still_valid}" = "true" ]; then
   current_phase="review"
   execution_readiness="ready"
   review_readiness="ready"
