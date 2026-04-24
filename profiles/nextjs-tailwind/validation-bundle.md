@@ -29,6 +29,27 @@ Expected command classes:
 - lint or static check when configured
 - production build
 - unit/component tests when configured
+- server/runtime proof when server actions, route handlers, middleware,
+  auth/session, cache invalidation, database access, or provider callbacks are
+  in scope
+
+## Fullstack Runtime Proof
+
+Next.js work is not automatically frontend-only. When the slice touches server
+or runtime-owned behavior, closure also needs evidence for the affected runtime
+surface:
+
+- route handlers or API-like surfaces: request/response proof with status,
+  redirects, and error shape
+- server actions: mutation proof covering validation, auth/session behavior, and
+  resulting UI state
+- middleware: routing/session/header proof for affected paths
+- auth/session: signed-in, signed-out, and unauthorized state proof when relevant
+- database or provider calls: integration boundary proof or an explicit blocked
+  reason when local credentials are unavailable
+
+Use the Node runtime adapter to resolve concrete commands, and record the exact
+resolved command or browser/runtime artifact in the proof packet.
 
 ## Browser Proof
 

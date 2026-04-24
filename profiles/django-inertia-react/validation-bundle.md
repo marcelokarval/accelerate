@@ -35,6 +35,24 @@ Expected command classes:
 - TypeScript check
 - frontend build or Vite production build
 
+## Default Command Mapping
+
+Use project-native wrappers first. For the default Django + Inertia + React
+layout, map the command classes as follows:
+
+- Django runtime/config check
+  - `uv run python backend/src/manage.py check`
+- Django schema drift check
+  - `uv run python backend/src/manage.py makemigrations --check --dry-run`
+- Django pending migration check
+  - `uv run python backend/src/manage.py migrate --check`
+- React TypeScript contract check
+  - `npm run type-check --prefix frontends/front-react`
+
+If the project uses a different backend path, frontend package path, package
+manager, or Python wrapper, translate through the active runtime adapter and
+record the resolved command in the proof packet.
+
 ## Browser Proof
 
 Use Chrome DevTools first for runtime truth on user-facing flows.

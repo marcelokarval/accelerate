@@ -69,33 +69,39 @@ not a harmless omission.
 
 ## Validation Gate Matrix
 
-Do not treat `manage.py check` as sufficient backend runtime proof.
+Do not treat a single framework check as sufficient backend runtime proof.
 
 Use the validation stack by slice class:
 
 - backend schema/runtime slice
-  - `uv run python backend/src/manage.py check`
-  - `uv run python backend/src/manage.py makemigrations --check --dry-run`
-  - `uv run python backend/src/manage.py migrate --check`
+  - framework runtime/config checks
+  - schema drift checks
+  - pending migration checks
 - frontend TypeScript/runtime slice
-  - `npm run type-check --prefix frontends/front-react`
+  - TypeScript or equivalent contract checks
+  - build/runtime checks when configured
 - full-stack slice
   - both gate sets apply
 
-These commands prove different things:
+These classes prove different things:
 
-- `check`
-  - Django system/config/runtime checks
-- `makemigrations --check --dry-run`
-  - model drift without a generated migration
-- `migrate --check`
-  - unapplied migrations already present in the codebase
+- framework runtime/config checks
+  - application wiring and runtime configuration sanity
+- schema drift checks
+  - model or schema changes that have not been captured in a migration artifact
+- pending migration checks
+  - migration artifacts that exist but are not applied in the target runtime
+- contract checks
+  - typed frontend/backend boundaries and runtime-facing API assumptions
 
-If a run closes with only `check` after backend schema/runtime work, treat that
-as a validation failure.
+Concrete commands belong to stack profiles or runtime adapters, not this core
+matrix.
 
-If a frontend-bearing or TS contract-bearing run closes without `type-check`,
-also treat that as a validation failure.
+If a run closes with only one runtime/config check after backend schema/runtime
+work, treat that as a validation failure.
+
+If a frontend-bearing or typed-contract-bearing run closes without its profile's
+contract check, also treat that as a validation failure.
 
 ## Matrix
 

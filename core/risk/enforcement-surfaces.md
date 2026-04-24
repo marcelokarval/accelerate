@@ -55,9 +55,10 @@ Use it when the question is:
   authoritative
 - no narrative closure without backend validation stack when schema/runtime work
   happened
-  - `uv run python backend/src/manage.py check`
-  - `uv run python backend/src/manage.py makemigrations --check --dry-run`
-  - `uv run python backend/src/manage.py migrate --check`
+  - runtime/config checks
+  - schema drift checks
+  - pending migration checks
+  - project-native tests when behavior changed
 
 ## Frontend Enforcement
 
