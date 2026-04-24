@@ -16,6 +16,9 @@ The root always owns:
 - review readiness judgment
 - checkpoint continuity judgment
 - durable learning registration judgment
+- comparative review posture
+- defect disposition judgment
+- correction-before-promotion judgment
 - issue topology
 - lane opening and closing
 - staffing shape
@@ -67,6 +70,18 @@ The intended order remains:
 3. browser truth
 4. persistent regression proof
 5. forensic closure
+
+Within that ordering, the root should preserve the active correction chain:
+
+1. detect
+2. classify
+3. register defect
+4. correct when in-scope
+5. recapture / reprobe
+6. only then promote
+
+Do not let proof ordering degrade into passive evidence collection with no
+defect disposition.
 
 ## Pre-Agents Rule
 

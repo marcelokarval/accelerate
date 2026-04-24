@@ -9,6 +9,11 @@ reconciliation must be explicit.
 Native authority now starts here:
 
 - `architecture.md`
+- `requested-vs-implemented.md`
+- `defect-ledger.md`
+- `active-correction-loop.md`
+- `review-of-review-gate.md`
+- `seam-proof.md`
 - `persisted-modeling-forensics.md`
 - `persisted-modeling-defect-bias.md`
 - `product-critical-surfaces.md`

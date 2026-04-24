@@ -86,11 +86,27 @@ When rollout planning artifacts exist, the entrypoint handoff must also satisfy:
 7. Separate component anatomy from theme tokens before changing code.
 8. Implement with existing project components first and shared owners before
    page-local overrides.
-9. Validate with type/lint/build gates appropriate to the stack.
-10. Run browser/runtime proof and compare the delivered surface against the
+9. Leave a `Requested-Vs-Implemented Packet` for the active slice, naming:
+   - contract authority
+   - premium authority when active
+   - requested surface changes
+   - actual landed changes
+10. Register concrete visual or contract defects when found:
+   - seam drift
+   - authority bypass
+   - anatomy/token confusion
+   - dark/light parity gap
+   - premium direction miss
+11. Correct in-scope defects before promotion when honest to do so, then rerun
+    proof on the corrected state.
+12. Validate with type/lint/build gates appropriate to the stack.
+13. Run browser/runtime proof and compare the delivered surface against the
    source showcase and premium HTML when active.
-11. Register residual drift instead of hiding it.
-12. If execution starts from an executive rollout plan, verify that the plan
+14. Use seam proof when shell/layout/state joins are likely defect hotspots.
+15. Store temporary screenshots and proof captures under the governed project
+    root `.tmp/` tree.
+16. Register residual drift instead of hiding it.
+17. If execution starts from an executive rollout plan, verify that the plan
     explicitly names:
    - required pre-read artifacts
    - immutable contract authority
@@ -139,6 +155,12 @@ Design-System Application Packet
 - proof plan:
 ```
 
+During or after mutation, the branch should also leave:
+
+- `Requested-Vs-Implemented Packet`
+- defect ledger update when concrete defects are found
+- seam proof when route-level proof would be too coarse
+
 ## Acceptance Gate
 
 The task is not complete unless:
@@ -154,6 +176,10 @@ The task is not complete unless:
 - broad component coverage is honored when the project exposes a broad
   primitive catalog
 - dark mode, when present, is validated as a sibling token system
+- the active slice leaves `Requested-Vs-Implemented`
+- concrete defects are dispositioned instead of buried in prose
+- proof corresponds to the corrected state when in-scope defects were fixed
+- seam proof is used when the likely drift lives at a seam
 - browser/runtime proof compares the result to the design-system artifacts
 - type-check/lint/build gates run according to the target stack
 - residual drift is documented
@@ -174,5 +200,11 @@ Do not close if:
 - component anatomy and theme tokens are mixed without explanation
 - dark mode is visually unrelated to light mode
 - broad component coverage is required but not represented
+- the slice closes with no `Requested-Vs-Implemented Packet`
+- defects are described but not dispositioned
+- corrected-state proof is missing after in-scope fixes
+- seam-sensitive drift is claimed resolved without seam proof
+- temporary capture evidence is normalized into `/tmp` instead of
+  `project-root/.tmp/`
 - final proof is screenshot-only with no artifact comparison
 - final proof is code-only with no runtime/browser evidence

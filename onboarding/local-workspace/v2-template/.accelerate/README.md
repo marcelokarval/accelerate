@@ -31,6 +31,10 @@ The main canonical files here are:
 - `review/handoff-summary.md`
 - `review/pre-review-bundle.md`
 - `review/closure-bundle.md`
+- `review/current-slice-review.md`
+- `review/current-slice-forensics.md`
+- `review/defect-ledger.yaml`
+- `review/seam-proof.md`
 
 ## Summary vs Detailed Authority
 
@@ -46,6 +50,7 @@ The main canonical files here are:
 - `review/*.md` are persisted local handoff and closure artifacts derived from current local status
 - `review/branch-entry-packet.md` and `review/runtime-delta-packet.md` are persisted local runtime observability packets
 - `review/handoff-summary.md` is the compact session reentry view over the persisted review and runtime packet surfaces
+- `review/current-slice-review.md`, `review/current-slice-forensics.md`, `review/defect-ledger.yaml`, and `review/seam-proof.md` are reusable per-project instances of the active review/correction model
 - bundle artifacts group those review surfaces for operator handoff
 
 ## What Accelerate May Rewrite
@@ -83,6 +88,10 @@ For a fresh session, read in this order:
 20. `review/handoff-summary.md`
 21. `review/pre-review-bundle.md`
 22. `review/closure-bundle.md`
+23. `review/current-slice-review.md`
+24. `review/current-slice-forensics.md`
+25. `review/defect-ledger.yaml`
+26. `review/seam-proof.md`
 
 ## Non-Goals
 

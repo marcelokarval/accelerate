@@ -25,6 +25,8 @@ Execute in bounded batches. Do not treat a plan as a vague suggestion.
 Each bounded batch must end with a micro-review checkpoint before the next
 batch begins.
 
+That checkpoint must be comparative and defect-aware, not only descriptive.
+
 This skill executes a plan; it does not replace plan design, issue governance,
 or multi-issue orchestration.
 
@@ -65,6 +67,10 @@ Before moving to the next batch:
 - compare it against the plan and current code reality
 - run a spec-compliance check first
 - then run a broader quality/integration check
+- leave a compact `requested-vs-implemented` comparison
+- register any concrete defects found
+- correct in-scope defects before promotion when honest to do so
+- rerun proof after meaningful correction
 - decide explicitly:
   - continue
   - re-plan
@@ -74,12 +80,16 @@ Use a compact checkpoint packet with at least:
 
 - intended scope
 - files touched
+- requested-vs-implemented judgment
 - validation run
 - spec gaps
+- defects found and disposition
 - quality concerns
 - continue / re-plan / stop decision
 
 Do not let execution turn into a single unbroken pass.
+Do not let the checkpoint degrade into a work recap with no comparative or
+defect posture.
 
 ### 5. Report
 
@@ -87,6 +97,7 @@ At the end of the batch:
 
 - summarize what changed
 - summarize what was verified
+- summarize which defects were corrected, deferred, or disproven
 - identify blockers or uncertainties before continuing
 
 ### 6. Final Integration Review
@@ -133,5 +144,6 @@ This skill is being used correctly if:
 - work is happening in bounded batches
 - verification is run as you go
 - each batch passes through a real micro-review checkpoint
+- each checkpoint leaves requested-vs-implemented plus defect disposition
 - blockers are surfaced early
 - the plan remains the source of sequencing, not guesswork

@@ -23,6 +23,8 @@ ownership drift, or fragmented review make the final result untrustworthy.
 6. The master must revalidate the combined result, not just collect child summaries.
 7. Parallelism is a budgeted decision, not a reflex.
 
+The subagent loop must remain comparative and defect-aware, not summary-only.
+
 ## Required Decisions Before Spawning
 
 Decide explicitly:
@@ -65,21 +67,27 @@ Each subagent should return at least:
 - assigned scope
 - files/evidence touched
 - what was implemented or audited
+- requested-vs-implemented comparison
 - validation performed
 - verdict against the original spec or assigned task text
 - self-review
 - self-forensic review
+- defects found and disposition
 - residual risks
 - recommendation: done / partial / follow-up
 
 For implementation slices, review ordering should be:
 
-1. implementer output + self-review
-2. spec-compliance review
-3. code-quality / forensic review
-4. master integration review
+1. implementer output + requested-vs-implemented
+2. self-review
+3. self-forensic review
+4. defect disposition and reproof when meaningful defects were corrected
+5. spec-compliance review
+6. code-quality / forensic review
+7. master integration review
 
 Do not let implementer self-review substitute for independent review.
+Do not let requested-vs-implemented degrade into a vague recap of work.
 
 ## Master Aggregation Rule
 
@@ -89,6 +97,7 @@ The master must produce a final integrated judgment that includes:
 - ownership map
 - cross-slice contract check
 - review of subagent reviews
+- review of requested-vs-implemented and defect disposition quality
 - forensic review of the combined result
 - final done / partial / follow-up judgment
 
@@ -106,4 +115,5 @@ Prefer parallelism only when slices are meaningfully separable. Do not paralleli
 - Was delegation actually justified?
 - Were nested spawns prevented or explicitly approved?
 - Did every subagent operate inside a bounded scope?
+- Did every subagent leave requested-vs-implemented plus defect disposition?
 - Did the master revalidate the whole instead of trusting child summaries?

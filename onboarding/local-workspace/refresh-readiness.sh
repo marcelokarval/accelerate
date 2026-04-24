@@ -12,6 +12,7 @@ STATE_FILE="${WORKSPACE}/state.yaml"
 STATUS_FILE="${WORKSPACE}/onboarding/status.yaml"
 PLAN_FILE="${WORKSPACE}/planning/current-plan.md"
 READINESS_FILE="${WORKSPACE}/status/readiness-dashboard.yaml"
+BRANCH_ENTRY_PACKET="${WORKSPACE}/review/branch-entry-packet.md"
 
 for required in "${STATE_FILE}" "${STATUS_FILE}" "${PLAN_FILE}" "${READINESS_FILE}"; do
   if [ ! -f "${required}" ]; then
@@ -50,6 +51,10 @@ governing_path="$(plan_value "path")"
 bounded_objective="$(plan_value "bounded objective")"
 current_review_readiness="$(yaml_value "${READINESS_FILE}" "review_readiness")"
 current_closure_readiness="$(yaml_value "${READINESS_FILE}" "closure_readiness")"
+previous_governing_artifact="$(yaml_value "${READINESS_FILE}" "governing_artifact_path")"
+if [ -z "${previous_governing_artifact}" ] && [ -f "${BRANCH_ENTRY_PACKET}" ]; then
+  previous_governing_artifact="$(sed -n 's/^- current governing artifact=//p' "${BRANCH_ENTRY_PACKET}" | head -n 1)"
+fi
 
 current_phase="onboarding"
 dashboard_verdict="blocked"
@@ -115,15 +120,20 @@ else
   [ -n "${bounded_objective}" ] || blocking_items+=("bounded objective not declared yet")
 fi
 
+artifact_changed="false"
+if [ -n "${governing_path}" ] && [ -n "${previous_governing_artifact}" ] && [ "${governing_path}" != "${previous_governing_artifact}" ]; then
+  artifact_changed="true"
+fi
+
 if [ "${#blocking_items[@]}" -gt 0 ]; then
   dashboard_verdict="blocked"
-elif [ "${current_closure_readiness}" = "ready" ]; then
+elif [ "${artifact_changed}" = "false" ] && [ "${current_closure_readiness}" = "ready" ]; then
   current_phase="closure"
   execution_readiness="ready"
   review_readiness="ready"
   closure_readiness="ready"
   dashboard_verdict="ready-for-closure"
-elif [ "${current_review_readiness}" = "ready" ]; then
+elif [ "${artifact_changed}" = "false" ] && [ "${current_review_readiness}" = "ready" ]; then
   current_phase="review"
   execution_readiness="ready"
   review_readiness="ready"
@@ -138,6 +148,7 @@ fi
 cat > "${READINESS_FILE}" <<EOF
 schema_version: 1
 current_phase: ${current_phase}
+governing_artifact_path: ${governing_path}
 dashboard_verdict: ${dashboard_verdict}
 execution_readiness: ${execution_readiness}
 review_readiness: ${review_readiness}

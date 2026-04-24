@@ -56,6 +56,12 @@ Create a short implementation packet before mutation:
 - forbidden patterns for this slice
 - component/state coverage required for closure
 
+During or after mutation, leave:
+
+- a `Requested-Vs-Implemented Packet`
+- defect disposition when concrete defects are found
+- seam proof when the likely drift lives at a shell/layout/state seam
+
 ### 2. Component Mapping
 
 Map every planned UI element to one of:
@@ -98,8 +104,13 @@ Closure requires proof against the artifacts:
 - runtime screenshot or browser proof for the changed surface
 - side-by-side judgment against `design-system.html`
 - side-by-side judgment against `design-system.premium-direction.html` when used
+- corrected-state proof when an in-scope defect was fixed
+- seam proof when shell/layout/state joins are the likely failure surface
 - type-check/lint/build according to the target stack
 - residual drift list if anything remains below contract
+
+Temporary screenshots and captures should live under the governed project root
+`.tmp/` tree, not `/tmp`.
 
 Do not claim design-system compliance from code inspection alone.
 
@@ -124,6 +135,11 @@ Do not close if:
 - component anatomy and theme tokens are mixed without reason
 - dark mode is a disconnected skin instead of a sibling token system
 - broad component coverage is required but only hero/cards/tables were checked
+- the active slice leaves no `Requested-Vs-Implemented Packet`
+- concrete defects are described but not dispositioned
+- the proof still reflects pre-fix state after an in-scope correction
+- seam-sensitive drift is closed without seam proof
+- temporary proof captures are left outside `project-root/.tmp/`
 - the result uses raw framework defaults that the contract forbids
 - there is no runtime/browser visual proof after mutation
 - unresolved drift is hidden instead of registered

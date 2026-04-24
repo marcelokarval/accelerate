@@ -160,6 +160,13 @@ Recent rerun-backed correction promoted after independent replay:
     learning; `local ahead`, scheduled observers, browser/UI runtime proof,
     blind-comparator quality proof, and future agents remain excluded
 
+Current architecture-to-execution handoff for the active review/correction
+hardening track:
+
+- `../../docs/architecture/accelerate-active-review-and-correction-gap-analysis.md`
+- `../../docs/architecture/accelerate-active-review-and-correction-proposal.md`
+- `active-review-and-correction-executive-plan.md`
+
 Recent maturity-control promotion trail:
 
 - `maturity-control-deescalation-rerun-result.md`

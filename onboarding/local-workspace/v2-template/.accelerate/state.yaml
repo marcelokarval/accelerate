@@ -22,4 +22,8 @@ runtime_delta_packet: .accelerate/review/runtime-delta-packet.md
 handoff_summary: .accelerate/review/handoff-summary.md
 pre_review_bundle: .accelerate/review/pre-review-bundle.md
 closure_bundle: .accelerate/review/closure-bundle.md
+current_slice_review: .accelerate/review/current-slice-review.md
+current_slice_forensics: .accelerate/review/current-slice-forensics.md
+defect_ledger: .accelerate/review/defect-ledger.yaml
+seam_proof: .accelerate/review/seam-proof.md
 last_bootstrap_update: YYYY-MM-DD

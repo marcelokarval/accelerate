@@ -27,6 +27,13 @@ The preferred compact reentry read above the individual packet set is the local
 `handoff-summary.md`, which should point the operator back into the persisted
 packet and bundle surfaces without replacing them.
 
+The runtime packet family now also includes explicit packet support for:
+
+- `Requested-Vs-Implemented`
+- `Defect Ledger`
+- `Correction Loop`
+- `Seam Proof`
+
 ## 1. Branch Entry Packet
 
 ```text
@@ -104,7 +111,84 @@ Prompt Hardening Packet
 - full artifact location: <path/issue/comment or n/a>
 ```
 
-## 4. Subagent Return Packet
+## 4. Requested-Vs-Implemented Packet
+
+```text
+Requested-Vs-Implemented Packet
+
+- slice / batch id: <id>
+- assigned scope: <bounded scope>
+- actual scope touched: <scope actually landed>
+- files / evidence touched: <...>
+- authority source:
+  - <path|artifact|contract>
+- requested items:
+  - <item>
+- implemented items:
+  - <item>
+- comparison judgment:
+  - <requested item> -> <met|partial|missed>
+- variance notes: <...>
+- promotion posture: <promotable|blocked|follow-up-required>
+```
+
+## 5. Defect Ledger Packet
+
+```text
+Defect Ledger Packet
+
+- slice / batch id: <id>
+- defect summary:
+  - id=<id>, type=<type>, severity=<severity>, owner=<owner>, status=<status>
+- blocking defects: <ids or none>
+- newly opened defects: <ids or none>
+- defects fixed this slice: <ids or none>
+- defects awaiting reproof: <ids or none>
+- waived defects: <ids or none>
+- evidence roots:
+  - <path|packet|capture>
+- promotion impact: <clear|blocked|follow-up-required>
+```
+
+## 6. Correction Loop Packet
+
+```text
+Correction Loop Packet
+
+- slice / batch id: <id>
+- trigger defect(s): <ids>
+- detection evidence: <path|packet|capture>
+- owner who corrected: <owner>
+- correction summary: <what changed>
+- fresh proof run: <tests|browser capture|runtime output>
+- corrected-state evidence: <path|packet|capture>
+- comparison result: <defect cleared|partial improvement|still failing>
+- promotion posture: <promotable|blocked|follow-up-required>
+```
+
+## 7. Seam Proof Packet
+
+```text
+Seam Proof Packet
+
+- seam id / label: <label>
+- slice / batch id: <id>
+- seam type: <ui|backend|runtime|governance>
+- authorities compared:
+  - <layer|artifact>
+  - <layer|artifact>
+- states compared:
+  - <state>
+  - <state>
+- evidence used:
+  - <capture|packet|output>
+- defect verdict: <none|found>
+- defect ids: <ids or none>
+- residual uncertainty: <...>
+- temporary evidence root: <project-root/.tmp/...|n/a>
+```
+
+## 8. Subagent Return Packet
 
 ```text
 Subagent Return Packet
@@ -112,14 +196,16 @@ Subagent Return Packet
 - scope handled: <bounded scope>
 - files changed / surfaces inspected: <...>
 - evidence used: <...>
+- requested-vs-implemented: <summary or packet reference>
 - tests / verification run: <...>
 - self-review: <summary>
 - self-forensic review: <summary>
+- defects found and disposition: <summary or packet reference>
 - unresolved risks: <...>
 - recommendation: <done|partial|follow-up|blocked>
 ```
 
-## 5. QA / Proof Packet
+## 9. QA / Proof Packet
 
 ```text
 QA / Proof Packet
@@ -129,12 +215,13 @@ QA / Proof Packet
 - intensity / depth: <...>
 - evidence used: <...>
 - failures found: <...>
+- defect ids: <ids or none>
 - residual gaps: <...>
 - readiness impact: <none|moved-to-review-ready|still-blocked>
 - next canonical local action: <prepare-review|prepare-closure|manual-debug-exception|n/a>
 ```
 
-## 6. Closure Packet
+## 10. Closure Packet
 
 ```text
 Closure Packet
@@ -142,6 +229,9 @@ Closure Packet
 - requested vs implemented: <...>
 - promised vs delivered: <...>
 - issue scope vs landing: <...>
+- defect ledger status: <clear|open defects remain|waived defects present>
+- correction loop status: <not-needed|completed|incomplete>
+- seam-proof status: <not-needed|present|missing|insufficient>
 - readiness summary: <status + next blocking gate>
 - timeline closure checkpoint: <present|missing|n/a>
 - learning registration status: <none|ephemeral|candidate|durably-registered|required-before-closure>

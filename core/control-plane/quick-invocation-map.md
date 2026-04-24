@@ -9,6 +9,7 @@ This is the native operator quick map for answering fast:
 - what review still blocks closure
 - what workflow family is running
 - what readiness / timeline / learning state is currently visible
+- what comparative review or defect posture is still missing
 
 Use this before opening deeper modules when the goal is orientation, not full
 study.
@@ -46,6 +47,7 @@ User Request
 - agent-browser bounded browser operations
 - persistent regression authoring
 - UI polishing observer
+- active correction / defect reconciliation
 - adversarial / hostile-path review
 - observability / performance / N+1
 - transport / dependency / legacy doubt
@@ -74,6 +76,7 @@ are:
 - agent-browser bounded browser operations
 - UI polishing observer
 - persistent regression
+- active correction / defect reconciliation
 - governance / contract review
 - external skill vetting
 - skill evaluation lab
@@ -109,20 +112,27 @@ Before starting a non-trivial run, answer:
 11. is this a shared-owner change that should start above page level?
 12. if rollout planning exists, does the entrypoint explicitly name the required pre-read set, contract authority, primary implementation driver, and slicing artifact?
 13. does the run need the UI Mutation Ladder explicitly packeted before editing?
-14. what does the readiness dashboard currently say?
-15. what checkpoint was crossed last and what comes next?
-16. did the run produce a learning that must be registered before closure?
-17. does `current-plan.md` need to be synchronized into local status now?
-18. should a closure packet be rendered from local status already?
-19. should an AI Review Report be rendered from local status already?
-20. should a review-ready packet be rendered now?
-21. should the review artifacts now be persisted canonically under `.accelerate/review/`?
-22. should a pre-review bundle or closure bundle be persisted now?
-23. should `prepare-review.sh` or `prepare-closure.sh` be used now instead of a looser manual sequence?
-24. what does `suggest-next-local-action.sh` say?
-25. should `render-branch-entry-packet.sh` be emitted now?
-26. should `render-runtime-delta-packet.sh` be emitted now?
-27. should `persist-runtime-packets.sh` be used now?
-28. should `persist-handoff-summary.sh` be used now?
-29. what proof lane is next?
-30. what review still blocks closure?
+14. does the active slice need an explicit `Requested-Vs-Implemented Packet`?
+15. have concrete defects already been registered, or is the run still speaking in vague review language?
+16. if a defect is in-scope, has the branch corrected it before promotion?
+17. does the proof reflect the corrected state or a pre-fix state?
+18. is seam proof required instead of a broad route-level claim?
+19. for design-system premium work, are the active comparison authorities loaded and named explicitly?
+20. for screenshot/capture-heavy proof, is temporary evidence going to `project-root/.tmp/`?
+21. what does the readiness dashboard currently say?
+22. what checkpoint was crossed last and what comes next?
+23. did the run produce a learning that must be registered before closure?
+24. does `current-plan.md` need to be synchronized into local status now?
+25. should a closure packet be rendered from local status already?
+26. should an AI Review Report be rendered from local status already?
+27. should a review-ready packet be rendered now?
+28. should the review artifacts now be persisted canonically under `.accelerate/review/`?
+29. should a pre-review bundle or closure bundle be persisted now?
+30. should `prepare-review.sh` or `prepare-closure.sh` be used now instead of a looser manual sequence?
+31. what does `suggest-next-local-action.sh` say?
+32. should `render-branch-entry-packet.sh` be emitted now?
+33. should `render-runtime-delta-packet.sh` be emitted now?
+34. should `persist-runtime-packets.sh` be used now?
+35. should `persist-handoff-summary.sh` be used now?
+36. what proof lane is next?
+37. what review still blocks closure?

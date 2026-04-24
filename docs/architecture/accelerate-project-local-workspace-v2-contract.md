@@ -46,12 +46,16 @@ The minimum V2 implementation must create all of these paths:
 ├── review/
 │   ├── review-ready-packet.md
 │   ├── ai-review-report.md
-│   └── closure-packet.md
+│   ├── closure-packet.md
 │   ├── branch-entry-packet.md
 │   ├── runtime-delta-packet.md
 │   ├── handoff-summary.md
 │   ├── pre-review-bundle.md
-│   └── closure-bundle.md
+│   ├── closure-bundle.md
+│   ├── current-slice-review.md
+│   ├── current-slice-forensics.md
+│   ├── defect-ledger.yaml
+│   └── seam-proof.md
 ├── onboarding/
 │   ├── status.yaml
 │   ├── discovery.yaml
@@ -154,6 +158,10 @@ runtime_delta_packet: .accelerate/review/runtime-delta-packet.md
 handoff_summary: .accelerate/review/handoff-summary.md
 pre_review_bundle: .accelerate/review/pre-review-bundle.md
 closure_bundle: .accelerate/review/closure-bundle.md
+current_slice_review: .accelerate/review/current-slice-review.md
+current_slice_forensics: .accelerate/review/current-slice-forensics.md
+defect_ledger: .accelerate/review/defect-ledger.yaml
+seam_proof: .accelerate/review/seam-proof.md
 last_bootstrap_update: YYYY-MM-DD
 ```
 
@@ -177,6 +185,7 @@ Minimum required keys:
 ```yaml
 schema_version: 1
 current_phase: onboarding|planning|execution|review|closure
+governing_artifact_path: docs/...|.accelerate/...
 dashboard_verdict: blocked|ready-for-execution|ready-for-review|ready-for-closure
 execution_readiness: blocked|ready
 review_readiness: blocked|ready
@@ -192,6 +201,8 @@ Rules:
 - this file is a local synthesis surface, not a replacement for root packets
 - it should stay small and conservative
 - it must not claim review or closure readiness without real upstream proof
+- it must reset inherited review/closure readiness when the governing artifact
+  changes to a new bounded slice
 
 ### `.accelerate/status/timeline.jsonl`
 

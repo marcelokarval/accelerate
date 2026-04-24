@@ -1,0 +1,5 @@
+schema_version: 1
+governing_artifact_path: .accelerate/planning/current-plan.md
+current_phase: planning
+last_updated: YYYY-MM-DD
+defects: []

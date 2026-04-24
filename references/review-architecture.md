@@ -60,6 +60,11 @@ Every review should leave:
 - residual risk
 - recommendation: `done`, `partial`, `follow-up`, or `blocked`
 
+Meaningful slices should also leave:
+
+- `requested-vs-implemented`
+- explicit defect disposition when concrete defects were found
+
 ## Failure Classification Gate
 
 When the work reveals a serious miss, repeated drift, or workflow weakness, the
@@ -95,12 +100,29 @@ It must compare:
 
 This is not optional narrative. It is the point of forensic closure.
 
+Native local review now treats the following as the minimum comparative chain:
+
+1. `requested-vs-implemented`
+2. `self-review`
+3. `self-forensic review`
+4. defect disposition
+5. `review-of-review` when prior reviews exist
+
+Do not collapse that chain into a single summary.
+
 ## Review-Of-Review
 
 When previous reviews exist, the master must judge whether they were serious
 enough and whether they missed real seams, regressions, or drift.
 
 Do not only review the code. Review the quality of prior review claims.
+
+That judgment should ask whether prior reviews:
+
+- captured concrete defects
+- dispositioned those defects honestly
+- proved the corrected state instead of the pre-fix state
+- inspected likely seams instead of only broad surfaces
 
 ## Forensic Depth Model
 

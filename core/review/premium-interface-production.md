@@ -88,6 +88,8 @@ Premium work should leave a visible packet containing:
 - `CTA Map`
 - `Design-System Mapping`
 - `Preserved / Adapted / Discarded`
+- `Requested-Vs-Implemented`
+- `Defect Disposition`
 
 This packet is part of the execution truth, not optional decoration.
 
@@ -150,6 +152,31 @@ The workflow must distinguish:
 
 Do not confuse component correctness with premium visual direction.
 
+## Premium Correction Rule
+
+Premium review is not allowed to stop at "the result still feels weak" or "the
+layout drifted a bit".
+
+When the active premium slice finds concrete defects, it should:
+
+1. classify the defect
+2. decide whether it is in-scope
+3. correct it before promotion when in-scope
+4. rerun proof on the corrected state
+
+Common premium defect classes include:
+
+- `shell-seam-break`
+- `cta-dilution`
+- `flat-hierarchy`
+- `card-soup`
+- `premium-direction-miss`
+- `theme-parity-gap`
+- `authority-bypass`
+
+Do not let premium review become articulate disappointment with no correction
+posture.
+
 ## AI-Slop Premium Direction Protocol
 
 When the premium branch depends on an extracted HTML/URL/app design system, use
@@ -168,8 +195,9 @@ When the task moves from diagnosis/direction into implementation, correction,
 or proposal, route through `design-system-contract-application.md` and
 `apply-design-system-contract`. Premium direction is not allowed to remain a
 pretty reference detached from code. It must become a contract-aware
-implementation packet with component mapping, anatomy/token separation, and
-runtime comparison proof.
+implementation packet with component mapping, anatomy/token separation,
+requested-vs-implemented comparison, defect disposition, and runtime
+comparison proof.
 
 The slop audit should explicitly inspect for:
 
@@ -226,6 +254,9 @@ Final review for premium surfaces must compare side by side:
 - premium direction HTML when premium improvement is in scope
 - delivered implementation
 
+Temporary screenshots and seam captures supporting this comparison should live
+under the governed project root `.tmp/` tree.
+
 Review must explicitly judge:
 
 - CTA dominance
@@ -233,6 +264,9 @@ Review must explicitly judge:
 - preservation of the reference essence
 - premium framing
 - remaining drift
+- whether the corrected-state proof actually matches the claimed fix
+- whether seam-sensitive drift was proved at the seam instead of only at the
+  route level
 
 Verdicts may include:
 

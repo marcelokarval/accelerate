@@ -88,11 +88,21 @@ to be made explicit for backend, frontend, runtime, and governance work.
 - Playwright for persistent regression proof
 - browser-proof comes before Playwright persistence when the flow is not yet
   understood
+- meaningful slices should leave `requested-vs-implemented`
+- meaningful defects should be classified, not buried in prose
+- in-scope defects should be corrected before promotion when honest to do so
+- meaningful correction should leave fresh proof of the corrected state
+- seam-sensitive work should use seam-focused proof instead of route-only claims
 - every bounded batch requires self-review
 - every bounded batch requires self-forensic review
 - every subagent requires self-review and self-forensic review output
 - `type-check` is mandatory for any frontend-bearing or TS contract-bearing
   slice
+
+For screenshot and temporary capture material:
+
+- use `project-root/.tmp/`
+- do not normalize `/tmp` as the governed proof home
 
 ## Multi-Agent Enforcement
 

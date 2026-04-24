@@ -1,5 +1,6 @@
 schema_version: 1
 current_phase: onboarding
+governing_artifact_path:
 dashboard_verdict: blocked
 execution_readiness: blocked
 review_readiness: blocked

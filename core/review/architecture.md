@@ -3,6 +3,14 @@
 This document is the native core home of review shape, review depth, and
 reconciliation logic.
 
+Adjacent native review surfaces:
+
+- `requested-vs-implemented.md`
+- `defect-ledger.md`
+- `active-correction-loop.md`
+- `review-of-review-gate.md`
+- `seam-proof.md`
+
 ## Review Catalog
 
 The review system includes:
@@ -43,12 +51,47 @@ It must compare:
 
 This is not optional narrative. It is the point of forensic closure.
 
+The minimum native comparative backbone is:
+
+1. `requested-vs-implemented`
+2. `self-review`
+3. `self-forensic review`
+4. defect ledger update
+5. review-of-review when prior reviews exist
+
+Do not collapse this chain into one summary paragraph.
+
+## Defect-Oriented Review Rule
+
+Review should not stop at articulate commentary when the branch has already
+surfaced a concrete defect.
+
+Meaningful review should update or inspect the defect ledger and make the
+defect disposition visible:
+
+- fixed
+- fixed pending reproof
+- waived
+- still open
+
+## Active Correction Rule
+
+When a meaningful defect is found inside the active slice scope, the branch
+should normally correct it before promotion and leave fresh proof of the
+corrected state.
+
+Do not let pre-fix proof or "noticed for later" language substitute for real
+correction when the fix belongs to the slice.
+
 ## Review-Of-Review
 
 When previous reviews exist, the master should judge whether they were serious
 enough and whether they missed real seams, regressions, or drift.
 
 Do not only review the code. Review the quality of prior review claims.
+
+Use `review-of-review-gate.md` as the native operational supplement for that
+judgment.
 
 ## Review Profiles
 
@@ -61,6 +104,21 @@ Choose the review profile that matches the work:
 - `delegated-slice review`
 - `product-critical closure review`
 - `persisted-modeling review`
+
+## Seam Proof Rule
+
+When the likely defect lives at a seam, route-level or broad runtime proof may
+be insufficient.
+
+Use seam-focused proof for joins such as:
+
+- shell vs shell sibling
+- layout vs content
+- state A vs state B
+- service vs contract
+- docs claim vs runtime behavior
+
+Use `seam-proof.md` when that focused comparison is the honest proof shape.
 
 ## Persisted-Modeling Review Rule
 

@@ -35,6 +35,10 @@ required_files=(
   "${WORKSPACE}/review/handoff-summary.md"
   "${WORKSPACE}/review/pre-review-bundle.md"
   "${WORKSPACE}/review/closure-bundle.md"
+  "${WORKSPACE}/review/current-slice-review.md"
+  "${WORKSPACE}/review/current-slice-forensics.md"
+  "${WORKSPACE}/review/defect-ledger.yaml"
+  "${WORKSPACE}/review/seam-proof.md"
   "${WORKSPACE}/agents/status.yaml"
   "${WORKSPACE}/agents/candidates.yaml"
   "${WORKSPACE}/agents/gaps.yaml"
@@ -150,9 +154,14 @@ require_key "${WORKSPACE}/state.yaml" "runtime_delta_packet"
 require_key "${WORKSPACE}/state.yaml" "handoff_summary"
 require_key "${WORKSPACE}/state.yaml" "pre_review_bundle"
 require_key "${WORKSPACE}/state.yaml" "closure_bundle"
+require_key "${WORKSPACE}/state.yaml" "current_slice_review"
+require_key "${WORKSPACE}/state.yaml" "current_slice_forensics"
+require_key "${WORKSPACE}/state.yaml" "defect_ledger"
+require_key "${WORKSPACE}/state.yaml" "seam_proof"
 
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "schema_version"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "current_phase"
+require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "governing_artifact_path"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "dashboard_verdict"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "execution_readiness"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "review_readiness"
@@ -351,6 +360,30 @@ fi
 closure_bundle="$(yaml_value "${WORKSPACE}/state.yaml" "closure_bundle")"
 if [ -n "${closure_bundle}" ] && [ ! -f "${TARGET_ROOT}/${closure_bundle}" ]; then
   echo "state.yaml closure_bundle does not exist: ${TARGET_ROOT}/${closure_bundle}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+current_slice_review="$(yaml_value "${WORKSPACE}/state.yaml" "current_slice_review")"
+if [ -n "${current_slice_review}" ] && [ ! -f "${TARGET_ROOT}/${current_slice_review}" ]; then
+  echo "state.yaml current_slice_review does not exist: ${TARGET_ROOT}/${current_slice_review}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+current_slice_forensics="$(yaml_value "${WORKSPACE}/state.yaml" "current_slice_forensics")"
+if [ -n "${current_slice_forensics}" ] && [ ! -f "${TARGET_ROOT}/${current_slice_forensics}" ]; then
+  echo "state.yaml current_slice_forensics does not exist: ${TARGET_ROOT}/${current_slice_forensics}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+defect_ledger="$(yaml_value "${WORKSPACE}/state.yaml" "defect_ledger")"
+if [ -n "${defect_ledger}" ] && [ ! -f "${TARGET_ROOT}/${defect_ledger}" ]; then
+  echo "state.yaml defect_ledger does not exist: ${TARGET_ROOT}/${defect_ledger}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+seam_proof="$(yaml_value "${WORKSPACE}/state.yaml" "seam_proof")"
+if [ -n "${seam_proof}" ] && [ ! -f "${TARGET_ROOT}/${seam_proof}" ]; then
+  echo "state.yaml seam_proof does not exist: ${TARGET_ROOT}/${seam_proof}" >&2
   FAILURES=$((FAILURES + 1))
 fi
 

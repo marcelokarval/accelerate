@@ -19,6 +19,10 @@ BRANCH_ENTRY_FILE="${REVIEW_DIR}/branch-entry-packet.md"
 RUNTIME_DELTA_FILE="${REVIEW_DIR}/runtime-delta-packet.md"
 PRE_REVIEW_FILE="${REVIEW_DIR}/pre-review-bundle.md"
 CLOSURE_BUNDLE_FILE="${REVIEW_DIR}/closure-bundle.md"
+CURRENT_SLICE_REVIEW_FILE="${REVIEW_DIR}/current-slice-review.md"
+CURRENT_SLICE_FORENSICS_FILE="${REVIEW_DIR}/current-slice-forensics.md"
+DEFECT_LEDGER_FILE="${REVIEW_DIR}/defect-ledger.yaml"
+SEAM_PROOF_FILE="${REVIEW_DIR}/seam-proof.md"
 
 for required in \
   "${STATE_FILE}" \
@@ -30,7 +34,11 @@ for required in \
   "${BRANCH_ENTRY_FILE}" \
   "${RUNTIME_DELTA_FILE}" \
   "${PRE_REVIEW_FILE}" \
-  "${CLOSURE_BUNDLE_FILE}"; do
+  "${CLOSURE_BUNDLE_FILE}" \
+  "${CURRENT_SLICE_REVIEW_FILE}" \
+  "${CURRENT_SLICE_FORENSICS_FILE}" \
+  "${DEFECT_LEDGER_FILE}" \
+  "${SEAM_PROOF_FILE}"; do
   if [ ! -f "${required}" ]; then
     echo "missing required file: ${required}" >&2
     exit 1
@@ -65,6 +73,10 @@ branch_entry_path="$(yaml_value "${STATE_FILE}" "branch_entry_packet")"
 runtime_delta_path="$(yaml_value "${STATE_FILE}" "runtime_delta_packet")"
 pre_review_path="$(yaml_value "${STATE_FILE}" "pre_review_bundle")"
 closure_bundle_path="$(yaml_value "${STATE_FILE}" "closure_bundle")"
+current_slice_review_path="$(yaml_value "${STATE_FILE}" "current_slice_review")"
+current_slice_forensics_path="$(yaml_value "${STATE_FILE}" "current_slice_forensics")"
+defect_ledger_path="$(yaml_value "${STATE_FILE}" "defect_ledger")"
+seam_proof_path="$(yaml_value "${STATE_FILE}" "seam_proof")"
 
 current_handoff="review"
 if [ "${closure_readiness}" = "ready" ]; then
@@ -101,6 +113,10 @@ cat <<EOF
 - runtime delta packet: ${runtime_delta_path:-.accelerate/review/runtime-delta-packet.md}
 - pre-review bundle: ${pre_review_path:-.accelerate/review/pre-review-bundle.md}
 - closure bundle: ${closure_bundle_path:-.accelerate/review/closure-bundle.md}
+- current slice review: ${current_slice_review_path:-.accelerate/review/current-slice-review.md}
+- current slice forensics: ${current_slice_forensics_path:-.accelerate/review/current-slice-forensics.md}
+- defect ledger: ${defect_ledger_path:-.accelerate/review/defect-ledger.yaml}
+- seam proof: ${seam_proof_path:-.accelerate/review/seam-proof.md}
 
 ## Reading Order
 
@@ -109,5 +125,9 @@ cat <<EOF
 3. review-ready packet
 4. AI Review Report
 5. closure packet
-6. pre-review or closure bundle, depending on readiness
+6. current slice review
+7. current slice forensics
+8. defect ledger
+9. seam proof
+10. pre-review or closure bundle, depending on readiness
 EOF

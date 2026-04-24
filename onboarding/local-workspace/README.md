@@ -72,7 +72,12 @@ Use:
 - `./onboarding/local-workspace/render-closure-packet.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-ai-review-report.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-review-ready-packet.sh /path/to/target-repo`
+- `./onboarding/local-workspace/render-current-slice-review.sh /path/to/target-repo`
+- `./onboarding/local-workspace/render-current-slice-forensics.sh /path/to/target-repo`
+- `./onboarding/local-workspace/render-defect-ledger.sh /path/to/target-repo`
+- `./onboarding/local-workspace/render-seam-proof.sh /path/to/target-repo`
 - `./onboarding/local-workspace/persist-review-artifacts.sh /path/to/target-repo`
+- `./onboarding/local-workspace/persist-review-diagnostics.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-pre-review-bundle.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-closure-bundle.sh /path/to/target-repo`
 - `./onboarding/local-workspace/persist-review-bundles.sh /path/to/target-repo`
@@ -114,8 +119,18 @@ This now supports the minimum deterministic onboarding loop:
   - renders a local status-backed AI Review Report summary
 - `render-review-ready-packet.sh`
   - renders a compact review-ready packet from local status and current plan
+- `render-current-slice-review.sh`
+  - renders the canonical per-slice review summary from current local truth
+- `render-current-slice-forensics.sh`
+  - renders the canonical per-slice forensic summary from current local truth
+- `render-defect-ledger.sh`
+  - renders the canonical local defect-ledger skeleton from current local truth
+- `render-seam-proof.sh`
+  - renders the canonical local seam-proof summary from current local truth
 - `persist-review-artifacts.sh`
   - persists the local review-ready packet, AI review report, and closure packet into canonical files under `.accelerate/review/`
+- `persist-review-diagnostics.sh`
+  - persists the current-slice review, current-slice forensics, defect ledger, and seam-proof surfaces under `.accelerate/review/`
 - `render-pre-review-bundle.sh`
   - groups the review-ready packet and AI review report into one pre-review bundle
 - `render-closure-bundle.sh`
@@ -123,9 +138,9 @@ This now supports the minimum deterministic onboarding loop:
 - `persist-review-bundles.sh`
   - persists both bundles canonically after refreshing the review artifacts
 - `prepare-review.sh`
-  - synchronizes the plan, reconciles review readiness when the dashboard is not blocked, persists review artifacts, materializes the canonical pre-review bundle, and persists runtime-backed handoff surfaces in one operator step
+  - synchronizes the plan, reconciles review readiness when the dashboard is not blocked, persists review artifacts and diagnostics, materializes the canonical pre-review bundle, and persists runtime-backed handoff surfaces in one operator step
 - `prepare-closure.sh`
-  - synchronizes the plan, reconciles review and closure readiness when the dashboard is not blocked, persists the canonical review bundle set, and persists runtime-backed handoff surfaces in one operator step
+  - synchronizes the plan, reconciles review and closure readiness when the dashboard is not blocked, persists the canonical review bundle set plus review diagnostics, and persists runtime-backed handoff surfaces in one operator step
 - runtime observability / compact reentry
   - `render-branch-entry-packet.sh`
     - renders the local root-facing Branch Entry Packet from persisted workspace truth
