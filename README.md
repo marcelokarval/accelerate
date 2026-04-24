@@ -296,12 +296,17 @@ govern the run.
 The native review authority for high-stakes user surfaces now lives in:
 
 - [product-critical-surfaces.md](./core/review/product-critical-surfaces.md)
+- [ux-ui-fullstack-surface.md](./core/review/ux-ui-fullstack-surface.md)
 - [premium-interface-production.md](./core/review/premium-interface-production.md)
 - [ui-mutation-ladder.md](./core/control-plane/ui-mutation-ladder.md)
 - [design-implementation-proof-gate.md](./core/control-plane/design-implementation-proof-gate.md)
 
 Do not treat these branches as generic frontend work. They require backend
 truth sufficiency, stronger artifact discipline, and stricter closure judgment.
+
+Use the UX/UI fullstack surface profile when the risk is not only visual polish
+or backend correctness, but the reconciliation of backend truth, frontend state,
+UX copy, visual hierarchy, and browser runtime behavior.
 
 For design-system-driven, premium, or broad visual modernization work, default
 to the shared-owner UI mutation order:

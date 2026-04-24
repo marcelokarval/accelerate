@@ -109,32 +109,34 @@ Before starting a non-trivial run, answer:
 9. if `docs/reference/design-system*` exists, is this extraction or
    application?
 10. for UI/design-system work, what is the honest owner layer: `token`, `ui`, `ui-enhanced`, `registry`, `shell`, or `page`?
-11. is this a shared-owner change that should start above page level?
-12. if rollout planning exists, does the entrypoint explicitly name the required pre-read set, contract authority, primary implementation driver, and slicing artifact?
-13. does the run need the UI Mutation Ladder explicitly packeted before editing?
-14. if UI is mutated from a contract, premium direction, or visual reference, is the Design Implementation Proof Gate active?
-15. does the active slice need an explicit `Requested-Vs-Implemented Packet`?
-16. does the active slice need a `Design Implementation Proof Packet`?
-17. have concrete defects already been registered, or is the run still speaking in vague review language?
-18. if a defect is in-scope, has the branch corrected it before promotion?
-19. does the proof reflect the corrected state or a pre-fix state?
-20. is seam proof required instead of a broad route-level claim?
-21. for design-system premium work, are the active comparison authorities loaded and named explicitly?
-22. for screenshot/capture-heavy proof, is temporary evidence going to `project-root/.tmp/`?
-23. what does the readiness dashboard currently say?
-24. what checkpoint was crossed last and what comes next?
-25. did the run produce a learning that must be registered before closure?
-26. does `current-plan.md` need to be synchronized into local status now?
-27. should a closure packet be rendered from local status already?
-28. should an AI Review Report be rendered from local status already?
-29. should a review-ready packet be rendered now?
-30. should the review artifacts now be persisted canonically under `.accelerate/review/`?
-31. should a pre-review bundle or closure bundle be persisted now?
-32. should `prepare-review.sh` or `prepare-closure.sh` be used now instead of a looser manual sequence?
-33. what does `suggest-next-local-action.sh` say?
-34. should `render-branch-entry-packet.sh` be emitted now?
-35. should `render-runtime-delta-packet.sh` be emitted now?
-36. should `persist-runtime-packets.sh` be used now?
-37. should `persist-handoff-summary.sh` be used now?
-38. what proof lane is next?
-39. what review still blocks closure?
+11. is this a UX/UI fullstack surface where backend truth, frontend state, and runtime behavior must be reconciled?
+12. is this a shared-owner change that should start above page level?
+13. if rollout planning exists, does the entrypoint explicitly name the required pre-read set, contract authority, primary implementation driver, and slicing artifact?
+14. does the run need the UI Mutation Ladder explicitly packeted before editing?
+15. if UI is mutated from a contract, premium direction, or visual reference, is the Design Implementation Proof Gate active?
+16. does the active slice need an explicit `Requested-Vs-Implemented Packet`?
+17. does the active slice need a `UX/UI Fullstack Surface Packet`?
+18. does the active slice need a `Design Implementation Proof Packet`?
+19. have concrete defects already been registered, or is the run still speaking in vague review language?
+20. if a defect is in-scope, has the branch corrected it before promotion?
+21. does the proof reflect the corrected state or a pre-fix state?
+22. is seam proof required instead of a broad route-level claim?
+23. for design-system premium work, are the active comparison authorities loaded and named explicitly?
+24. for screenshot/capture-heavy proof, is temporary evidence going to `project-root/.tmp/`?
+25. what does the readiness dashboard currently say?
+26. what checkpoint was crossed last and what comes next?
+27. did the run produce a learning that must be registered before closure?
+28. does `current-plan.md` need to be synchronized into local status now?
+29. should a closure packet be rendered from local status already?
+30. should an AI Review Report be rendered from local status already?
+31. should a review-ready packet be rendered now?
+32. should the review artifacts now be persisted canonically under `.accelerate/review/`?
+33. should a pre-review bundle or closure bundle be persisted now?
+34. should `prepare-review.sh` or `prepare-closure.sh` be used now instead of a looser manual sequence?
+35. what does `suggest-next-local-action.sh` say?
+36. should `render-branch-entry-packet.sh` be emitted now?
+37. should `render-runtime-delta-packet.sh` be emitted now?
+38. should `persist-runtime-packets.sh` be used now?
+39. should `persist-handoff-summary.sh` be used now?
+40. what proof lane is next?
+41. what review still blocks closure?

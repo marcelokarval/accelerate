@@ -17,6 +17,10 @@ Typical examples:
 
 Treat this as a stricter subset of `product-critical-surfaces.md`.
 
+When premium quality depends on backend-driven states, action availability,
+server props, redirects, or runtime behavior, also open
+`ux-ui-fullstack-surface.md` so the branch does not become visual-only polish.
+
 Activate it when:
 
 - the page must feel premium, trustworthy, and intentional

@@ -11,6 +11,8 @@ browser_proof: missing
 browser_proof_artifact:
 persistent_e2e: not-applicable
 persistent_e2e_artifact:
+ux_ui_fullstack_surface: not-applicable
+ux_ui_fullstack_surface_artifact:
 design_implementation_proof: not-applicable
 design_implementation_proof_artifact:
 product_critical_closure: not-applicable

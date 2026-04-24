@@ -17,6 +17,7 @@ Product-Critical Closure Packet
 - copy and trust posture: <clear|ambiguous|unsafe|blocked>
 - visual hierarchy / CTA posture: <clear|diluted|amateur|blocked>
 - browser proof packet: <path or blocked>
+- UX/UI fullstack surface packet: <path|not-needed|blocked>
 - requested-vs-implemented packet: <path or blocked>
 - defect ledger status: <clear|open-defects-remain|waived-defects-present>
 - residual user harm: <none|accepted|blocks closure>
@@ -29,4 +30,6 @@ Product-Critical Closure Packet
 - primary user action is unclear, diluted, or missing
 - error/blocked states are not represented for a critical flow
 - browser proof is absent for a runtime-sensitive path
+- backend truth, frontend state, and UX/UI runtime behavior were not reconciled
+  for a fullstack surface
 - product defects are described but not registered and dispositioned

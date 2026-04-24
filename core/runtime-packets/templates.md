@@ -273,6 +273,7 @@ Closure Packet
   - Frontend QA=<present|missing|blocked>
   - Browser-Proof=<present|missing|blocked>
   - Persistent E2E=<present|missing|blocked|out of order>
+  - UX/UI Fullstack Surface=<present|missing|blocked|not-applicable>
   - Design Implementation Proof=<present|missing|blocked|not-applicable>
   - Product-Critical Closure=<present|missing|blocked|not-applicable>
   - Requested-Vs-Implemented=<present|missing|blocked>

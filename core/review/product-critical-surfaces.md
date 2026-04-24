@@ -27,6 +27,10 @@ This branch is stricter than generic runtime-heavy work.
 If the surface is also conversion-critical, trust-critical, or brand-critical,
 escalate further into `premium-interface-production.md`.
 
+If the immediate risk is the reconciliation between backend truth, frontend
+state, UX behavior, and runtime proof, open `ux-ui-fullstack-surface.md` as the
+fullstack product surface profile.
+
 ## Branch Entry Packet Requirements
 
 Make visible:
@@ -42,6 +46,8 @@ Make visible:
 Load this bundle unless a smaller one is explicitly justified:
 
 - `product-runtime-review`
+- `ux-ui-fullstack-surface.md` when backend truth, frontend state, and UX/UI
+  runtime behavior must be reconciled explicitly
 - `ascii-wireframe`
 - `server-prop-governance`
 - `front-react-shadcn`

@@ -93,6 +93,7 @@ backend_qa="$(evidence_value "backend_qa" "missing")"
 frontend_qa="$(evidence_value "frontend_qa" "missing")"
 browser_proof="$(evidence_value "browser_proof" "missing")"
 persistent_e2e="$(evidence_value "persistent_e2e" "missing")"
+ux_ui_fullstack_surface="$(evidence_value "ux_ui_fullstack_surface" "not-applicable")"
 design_implementation_proof="$(evidence_value "design_implementation_proof" "not-applicable")"
 product_critical_closure="$(evidence_value "product_critical_closure" "not-applicable")"
 requested_vs_implemented="$(evidence_value "requested_vs_implemented" "missing")"
@@ -123,6 +124,7 @@ for lane in \
   "defect_ledger:${defect_ledger}" \
   "correction_loop:${correction_loop}" \
   "seam_proof:${seam_proof}" \
+  "ux_ui_fullstack_surface:${ux_ui_fullstack_surface}" \
   "design_implementation_proof:${design_implementation_proof}" \
   "product_critical_closure:${product_critical_closure}"; do
   key="${lane%%:*}"
@@ -152,6 +154,7 @@ Closure Packet
   - Frontend QA=${frontend_qa}
   - Browser-Proof=${browser_proof}
   - Persistent E2E=${persistent_e2e}
+  - UX/UI Fullstack Surface=${ux_ui_fullstack_surface}
   - Design Implementation Proof=${design_implementation_proof}
   - Product-Critical Closure=${product_critical_closure}
   - Requested-Vs-Implemented=${requested_vs_implemented}

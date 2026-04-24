@@ -37,6 +37,8 @@ Do not collapse these into a single vague `tested` claim.
   - optional agent-browser-style CLI operations after the flow is bounded
   - when exploratory browser QA and issue capture are the main need, `dogfood`
     is a valid lane companion
+  - UX/UI fullstack proof when backend truth, frontend state, and runtime UX all
+    determine closure
 - `E2E Regression Engineer`
   - persistent Playwright scenarios
   - regression protection after the flow is understood
@@ -125,6 +127,8 @@ Before closure, make visible at least:
 - `Frontend QA=<present|missing|blocked>`
 - `Browser-Proof=<present|missing|blocked>`
 - `Persistent E2E=<present|missing|blocked|out of order>`
+- `UX/UI Fullstack Surface=<present|missing|blocked|not-applicable>` when the
+  slice crosses backend truth, frontend state, and runtime UX/UI behavior
 - `Design Implementation Proof=<present|missing|blocked|not-applicable>` when
   design-system or premium UI mutation was active
 - `blocking lane=<lane or none>`

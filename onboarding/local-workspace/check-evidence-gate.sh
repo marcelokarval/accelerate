@@ -89,6 +89,7 @@ case "${TARGET_STATE}" in
     require_optional_clean "closure-ready" "defect_ledger"
     require_optional_clean "closure-ready" "correction_loop"
     require_optional_clean "closure-ready" "seam_proof"
+    require_optional_clean "closure-ready" "ux_ui_fullstack_surface"
     require_optional_clean "closure-ready" "design_implementation_proof"
     require_optional_clean "closure-ready" "product_critical_closure"
     ;;

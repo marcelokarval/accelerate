@@ -17,6 +17,7 @@ Native authority now starts here:
 - `persisted-modeling-forensics.md`
 - `persisted-modeling-defect-bias.md`
 - `product-critical-surfaces.md`
+- `ux-ui-fullstack-surface.md`
 - `premium-interface-production.md`
 - `html-design-system-extraction.md`
 - `design-system-contract-application.md`

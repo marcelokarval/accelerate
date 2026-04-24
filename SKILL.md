@@ -57,6 +57,7 @@ Then open the native surface that actually governs the branch, usually from:
 - `core/runtime-packets/qa-proof-stack.md`
 - `core/workflows/operational-calibration.md`
 - `core/review/product-critical-surfaces.md`
+- `core/review/ux-ui-fullstack-surface.md`
 - `core/review/premium-interface-production.md`
 - `core/risk/enforcement-surfaces.md`
 
@@ -246,6 +247,10 @@ already present, prefer this compact read order:
 
 Use `product-critical user surface` when backend truth and frontend product
 quality are both closure-critical.
+
+Use `UX/UI fullstack surface` when backend state, frontend rendering, UX copy,
+visual hierarchy, and browser runtime behavior must be reconciled before the
+work can honestly close.
 
 Escalate into `premium interface` when:
 

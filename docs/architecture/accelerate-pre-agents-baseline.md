@@ -46,6 +46,7 @@ The current native pre-agents baseline now includes:
 - `core/review/architecture.md`
 - `core/review/persisted-modeling-forensics.md`
 - `core/review/product-critical-surfaces.md`
+- `core/review/ux-ui-fullstack-surface.md`
 - `core/review/premium-interface-production.md`
 - `core/review/html-design-system-extraction.md`
 - `core/review/design-system-contract-application.md`
@@ -57,6 +58,7 @@ The current native pre-agents baseline now includes:
 - `core/runtime-packets/templates.md`
 - `core/runtime-packets/cadence.md`
 - `core/runtime-packets/qa-proof-stack.md`
+- `core/runtime-packets/ux-ui-fullstack-surface-packet.md`
 - `core/runtime-packets/design-implementation-proof-packet.md`
 - `agents/doctrine/empirical-replay.md`
 - `adapters/workflow/adapter-contract.md`

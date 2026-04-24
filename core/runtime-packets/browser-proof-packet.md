@@ -16,6 +16,7 @@ Browser-Proof Packet
 - session/auth posture: <anonymous|seeded user|existing session|blocked>
 - console/runtime errors: <none|list>
 - network/server truth: <responses, redirects, failures, or n/a>
+- backend/frontend state reconciliation: <present|not-needed|missing|blocked>
 - screenshots/captures: <project-root .tmp paths or blocked>
 - defects registered: <ids or none>
 - residual route-family gaps: <...>
@@ -30,3 +31,5 @@ Browser-Proof Packet
   route-family audit`.
 - Capture evidence belongs under the governed project root `.tmp/` tree unless
   the run records an explicit exception.
+- For UX/UI fullstack surfaces, browser proof must connect visible state to the
+  backend/frontend state that produced it.

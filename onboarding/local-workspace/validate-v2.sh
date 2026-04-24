@@ -181,6 +181,7 @@ require_key "${WORKSPACE}/status/evidence-registry.yaml" "backend_qa"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "frontend_qa"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "browser_proof"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "persistent_e2e"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "ux_ui_fullstack_surface"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "design_implementation_proof"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "product_critical_closure"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "requested_vs_implemented"
@@ -253,6 +254,7 @@ for evidence_key in \
   frontend_qa \
   browser_proof \
   persistent_e2e \
+  ux_ui_fullstack_surface \
   design_implementation_proof \
   product_critical_closure \
   requested_vs_implemented \

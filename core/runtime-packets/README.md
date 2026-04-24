@@ -11,6 +11,7 @@ Native authority now starts here:
 - `qa-proof-stack.md`
 - `design-implementation-proof-packet.md`
 - `browser-proof-packet.md`
+- `ux-ui-fullstack-surface-packet.md`
 - `product-critical-closure-packet.md`
 - `requested-vs-implemented-packet.md`
 - `defect-ledger-packet.md`

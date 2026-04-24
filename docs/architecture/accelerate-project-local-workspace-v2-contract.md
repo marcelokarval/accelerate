@@ -249,6 +249,7 @@ backend_qa: missing|present|blocked|not-applicable
 frontend_qa: missing|present|blocked|not-applicable
 browser_proof: missing|present|blocked|not-applicable
 persistent_e2e: missing|present|blocked|not-applicable|out-of-order
+ux_ui_fullstack_surface: missing|present|blocked|not-applicable
 design_implementation_proof: missing|present|blocked|not-applicable
 product_critical_closure: missing|present|blocked|not-applicable
 requested_vs_implemented: missing|present|blocked|not-applicable

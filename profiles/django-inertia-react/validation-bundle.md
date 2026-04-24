@@ -44,6 +44,7 @@ Browser-proof packets should include:
 - route or flow covered
 - console/runtime errors
 - server response or redirect truth
+- backend props/state that produced the visible UI
 - visible UI state
 - residual gaps
 
@@ -63,5 +64,6 @@ Before closure, report:
 - `Backend QA=<present|missing|blocked>`
 - `Frontend QA=<present|missing|blocked>`
 - `Browser-Proof=<present|missing|blocked>`
+- `UX/UI Fullstack Surface=<present|missing|blocked|not-applicable>` when backend state and visible UI behavior both changed
 - `Persistent E2E=<present|missing|blocked|out of order>`
 - `blocking lane=<lane or none>`
