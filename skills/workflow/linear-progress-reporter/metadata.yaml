@@ -1,8 +1,8 @@
 name: linear-progress-reporter
 category: workflow
 status: standalone-adapted
-source: ~/.codex/skills/linear-progress-reporter
-runtime_mirror: ~/.codex/skills/linear-progress-reporter
+source: skills/workflow/linear-progress-reporter
+runtime_export: optional
 local_native_owner: adapters/workflow/linear/
 sync_policy: repo-first
 description: Linear progress, blocker, milestone, and stakeholder-status reporting.

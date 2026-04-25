@@ -8,7 +8,7 @@ Use it to answer:
 - whether any mandatory skill still remains external
 - where a skill came from
 - whether a skill is mandatory runtime law or an optional overlay
-- how root `skills/` mirrors to `~/.codex/skills/`
+- how root `skills/` may be exported to an optional runtime target
 
 Primary files:
 

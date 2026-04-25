@@ -5,6 +5,10 @@
 This document captures the origin story and the already-completed work that led
 to the creation of this repository.
 
+This is historical provenance only. It is not current authority when it conflicts
+with `AGENTS.md`, `README.md`, `SKILL.md`, `core/`, `skills/`, or other native
+Accelerate surfaces.
+
 It exists so a future session can answer:
 
 - what `accelerate` already is
@@ -60,6 +64,10 @@ being adaptable to another project through onboarding, adapters, and profiles.
 
 When this repository was created, the most mature source material lived in the
 Prop4You workspace.
+
+The paths below are origin records, not live dependencies. Do not use them as
+governed inputs unless the material has been imported and adapted into this
+repository.
 
 Primary upstream locations:
 
@@ -238,6 +246,9 @@ The platform should be able to land in a nearly empty repository and bootstrap:
 This is not an afterthought. It is part of the product direction.
 
 ## What Has Not Happened Yet
+
+This section records bootstrap-time state. It is intentionally stale relative to
+the current standalone repository and must not be read as current status.
 
 The following work has not yet happened inside this new repository:
 

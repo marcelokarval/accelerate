@@ -1,8 +1,8 @@
 name: django-pro
 category: backend
 status: standalone-adapted
-source: ~/.codex/skills/django-pro
-runtime_mirror: ~/.codex/skills/django-pro
+source: skills/backend/django-pro
+runtime_export: optional
 local_native_owner: profiles/django-inertia-react/README.md
 sync_policy: repo-first
 description: Broad Django framework guidance for architecture, ORM behavior, middleware, admin, async boundaries, and project structure.

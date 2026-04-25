@@ -1,9 +1,9 @@
 name: architecture
 category: review
 status: standalone-adapted
-source: ~/.codex/skills/architecture
+source: skills/review/architecture
 owner: accelerate
-runtime_mirror: ~/.codex/skills/architecture
+runtime_export: optional
 local_native_owner: core/review/architecture.md
 adaptation_policy: >
   Standalone Accelerate version. Keep decision/tradeoff/ADR discipline and

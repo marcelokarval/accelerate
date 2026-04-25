@@ -1,8 +1,8 @@
 name: stripe-integration
 category: data
 status: standalone-adapted
-source: ~/.codex/skills/stripe-integration
-runtime_mirror: ~/.codex/skills/stripe-integration
+source: skills/data/stripe-integration
+runtime_export: optional
 local_native_owner: agents/envelopes/skill-envelopes.md
 sync_policy: repo-first
 description: Stripe-specific billing, webhook, subscription, refund, invoice, and provider-state guidance.

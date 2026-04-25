@@ -1,9 +1,9 @@
 name: executing-plans
 category: workflow
 status: standalone-adapted
-source: ~/.codex/skills/executing-plans
+source: skills/workflow/executing-plans
 owner: accelerate
-runtime_mirror: ~/.codex/skills/executing-plans
+runtime_export: optional
 local_native_owner: core/workflows/catalog.md
 adaptation_policy: >
   Standalone Accelerate version. Execute written plans in bounded batches,

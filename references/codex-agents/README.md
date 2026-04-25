@@ -88,14 +88,13 @@ User request
 
 ## Runtime Target
 
-The governed runtime target for promoted agents is:
-
-- `~/.codex/agents/*.toml`
+Runtime agent exports are optional deployment artifacts generated from
+repo-owned agent definitions when export is in scope.
 
 The repo sandbox remains the authoring source of truth.
 
-Do not treat the global runtime mirror as the authoring surface for governed
-Prop4You agents.
+Do not treat any user-home runtime export as the authoring surface for governed
+Accelerate agents.
 
 ## Replay Rule
 

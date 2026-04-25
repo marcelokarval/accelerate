@@ -5,6 +5,29 @@ This repository is the standalone home of `accelerate`.
 `accelerate` is not being treated here as a project-local helper. It is the
 product, the control plane, and the subject of the architecture work.
 
+## Self-Contained Authority
+
+`accelerate` must be operationally self-contained.
+
+For governed behavior, use only this repository as source of truth:
+
+- `SKILL.md`
+- `README.md`
+- `core/`
+- `adapters/`
+- `profiles/`
+- `onboarding/`
+- `planning/`
+- `skills/`
+- `references/`
+
+Do not rely on `~/.claude/skills`, `~/.codex/skills`, `~/.agents/skills`, or any
+other user-home catalog as authority for this repository.
+
+Runtime sync/export is allowed only as a generated deployment step from this
+repository outward. If external material is useful, first import, adapt,
+register, and enforce it inside this repository.
+
 ## Root Workflow
 
 Use `accelerate` as the root workflow classifier for engineering work in this
@@ -82,6 +105,27 @@ The accepted target architecture is layered:
 Preserve strong defaults while moving toward that architecture.
 
 Do not weaken the root control plane in the name of flexibility.
+
+## Design-System And Premium Corpus Rule
+
+Design-system extraction, premium UI direction, anti-AI-template review, and
+theme generation must use the repo-local design-system skill corpus.
+
+Required local surfaces include:
+
+- `skills/design-system/extract-html-design-system-v2/`
+- `skills/design-system/apply-design-system-contract/`
+- `skills/design-system/premium-design-benchmark-corpus/`
+- `onboarding/local-workspace/check-design-system-artifact-consistency.sh`
+
+Do not use external `popular-web-designs` or user-home premium design skills as
+governing inputs. The local benchmark corpus must be the enforced source for
+Benchmark Influence Maps, anti-template scoring, and premium/de-AI closure.
+
+Premium design-system artifacts must preserve the `--ds-*` token API, include
+`design-system.theme.css`, include `design-system.premium-theme.css` when
+premium is in scope, include a Benchmark Influence Map, and prove one active
+theme at a time instead of a simultaneous light/dark product composition.
 
 ## Workflow Backend Reality
 

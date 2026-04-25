@@ -113,6 +113,11 @@ Classify each flow against these categories:
 7. require the forensic review to include an `Anti-Abuse` section whenever this
    skill applied
 
+For fixture-driven review, use the repo-local `Abuse-Path Fixture` in
+`core/risk/security-abuse-fixtures.md`. The fixture is required when abuse-path
+evidence needs to be reusable across branch packets, review reports, or follow-up
+work.
+
 When attacker behavior is detected or strongly indicated, explicitly frame the
 response posture:
 
@@ -156,6 +161,10 @@ containment or quarantine of sensitive capabilities.
 
 Use local abuse checklists, stack profiles, threat models, and domain overlays
 when the current project defines sensitive surfaces.
+
+Repo-local fixture authority:
+
+- `core/risk/security-abuse-fixtures.md`
 
 ## Output Discipline
 

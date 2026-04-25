@@ -28,10 +28,11 @@ consolidated design-system reference from the union of components, typography,
 surfaces, layouts, motion, and icons actually present in those sources.
 
 Your task is to create **two coordinated reference artifacts** for this exact
-design:
+design plus one canonical token layer:
 
 - a human-readable visual showcase
 - a machine-readable / LLM-readable implementation contract
+- an implementable theme CSS file with stable `--ds-*` tokens
 
 When the user asks to improve, humanize, premiumize, de-AI, polish, or upgrade
 the extracted design, or when the surface is product-critical,
@@ -49,6 +50,7 @@ explicitly referenced by the user:
 
 - `design-system.html`
 - `design-system.contract.md`
+- `design-system.theme.css`
 
 If `docs/reference/` does not exist, create it.
 
@@ -60,14 +62,21 @@ keyframes, transitions, effects, and layout patterns** — not approximations.
 implementation contract that another AI/agent can follow when building new
 screens. It is not a summary. It is the rulebook.
 
+`design-system.theme.css` must translate observed source tokens into a canonical
+implementation token layer. Use stable `--ds-*` CSS variables so future UI can
+consume the design through theme tokens rather than page-local colors.
+
 For premium or humanization work, also generate:
 
 - `design-system.slop-audit.md`
 - `design-system.premium-direction.md`
 - `design-system.premium-direction.html`
+- `design-system.premium-theme.css`
 
 These premium artifacts are directional. They do not replace the source-truth
-showcase or contract.
+showcase or contract. `design-system.premium-theme.css` must keep the same
+`--ds-*` token names and change values only, so adopting the premium direction is
+a theme swap or token merge rather than a component rewrite.
 
 When the next task is to implement, correct, improve, propose, or generate UI
 from these artifacts, hand off to `apply-design-system-contract`. Do not keep
@@ -101,6 +110,11 @@ using this extraction skill as the implementation workflow.
     against proposed improvement.
 12. Do **not** treat premium direction as a moodboard. It must name concrete
     failures in the baseline and show how the proposed direction corrects them.
+13. Do **not** emit one-off token vocabularies such as `--bg`, `--ledger-bg`, or
+    `--vault-surface` as the implementation API. Map raw/source names into the
+    canonical `--ds-*` theme layer.
+14. Do **not** let `design-system.html`, `design-system.contract.md`, and the
+    generated theme CSS disagree about token names.
 
 ---
 
@@ -158,6 +172,24 @@ component inventory is not artificially thin.
 Build `docs/reference/design-system.html` by reusing real markup fragments and
 class strings from the captured sources.
 
+Build `docs/reference/design-system.theme.css` before finalizing the contract.
+This file is the canonical theme implementation layer.
+
+Minimum token families:
+
+- `--ds-bg`, `--ds-fg`
+- `--ds-surface`, `--ds-surface-muted`, `--ds-border`
+- `--ds-primary`, `--ds-primary-fg`
+- semantic accents such as `--ds-accent-positive`, `--ds-accent-warning`,
+  `--ds-accent-danger`, `--ds-accent-info`, `--ds-accent-ai` when evidenced
+- `--ds-radius-sm`, `--ds-radius-md`, `--ds-radius-lg`
+- `--ds-shadow-sm`, `--ds-shadow-md`, `--ds-shadow-lg` when evidenced
+- `--ds-font-sans`, `--ds-font-mono` when evidenced
+
+For themeable products, use the same token names under sibling selectors such as
+`:root` and `[data-theme="dark"]`. Do not create separate light/dark token
+vocabularies.
+
 Allowed documentation additions:
 
 - section headings
@@ -185,9 +217,10 @@ use as immutable guidance. It must include these sections:
   - non-negotiable visual rules, tone, density, spacing posture, shape posture,
     contrast posture, and interaction posture extracted from evidence
 - `Token Contract`
-  - observed colors, gradients, surfaces, border/radius patterns, typography
-    classes, spacing/container classes, shadows, blur, and z-index/overlay
-    conventions
+  - canonical `--ds-*` theme tokens from `design-system.theme.css`, source alias
+    map for raw tokens/classes, observed colors, gradients, surfaces,
+    border/radius patterns, typography classes, spacing/container classes,
+    shadows, blur, and z-index/overlay conventions
 - `Component Recipes`
   - canonical markup/class recipes for each observed component family
   - required states for each component: default, hover, focus, active, disabled,
@@ -246,6 +279,12 @@ baseline visibly reads as generic AI/template output.
 
 Build `docs/reference/design-system.slop-audit.md`.
 
+For premium/de-AI work, use the repo-local
+`premium-design-benchmark-corpus`. Do not depend on `popular-web-designs`,
+`~/.claude/skills`, `~/.codex/skills`, or any other user-home catalog. If a
+benchmark is needed for governed Accelerate behavior, its selection and impact
+must be expressible from the local corpus.
+
 The audit must evaluate concrete signals such as:
 
 - purple/violet/fuchsia default bias
@@ -270,27 +309,34 @@ The audit must include:
 - priority corrections
 - pass/fail judgment for source truth vs premium product direction
 
-Use benchmark libraries such as `popular-web-designs` when locally available,
-but only as comparison material. Borrow principles, not identities.
+Benchmarks are mandatory for premium/de-AI work. Borrow principles, not
+identities, and carry them into token/component consequences.
 
 ### G) Premium Direction Phase
 
 Run this phase after the audit when premium improvement is in scope.
 
-Build both:
+Build all three:
 
 - `docs/reference/design-system.premium-direction.md`
 - `docs/reference/design-system.premium-direction.html`
+- `docs/reference/design-system.premium-theme.css`
 
 `design-system.premium-direction.md` must include:
 
 - direction name
 - core shift from current baseline to premium target
 - palette and token proposal
+- canonical `--ds-*` token value table that matches
+  `design-system.premium-theme.css`
 - light/dark theme model when the source app supports dark mode or theme
   switching
 - typography direction
 - surface system
+- `Benchmark Influence Map` with at least 2 rows for narrow correction, 3 rows
+  for product screens/dashboards, and 4 rows for broad design-system direction
+- `Single Active Theme Model` explaining how light/dark or theme variants are
+  selected by one active selector/provider at runtime
 - component direction for observed and expected product primitives
 - premium component coverage matrix based on the local stack and relevant
   primitive catalogs such as shadcn/ui and Radix, classifying each family as
@@ -323,6 +369,11 @@ direction. It may introduce proposed premium tokens and styles because it is
 directional, not source truth. It must clearly identify itself as a premium
 direction artifact and must not pretend to be extracted source evidence.
 
+`design-system.premium-theme.css` must be implementable. It must use the same
+`--ds-*` token names as `design-system.theme.css`, changing values rather than
+renaming the token API. If a component has to be structurally rewritten to pick
+up the premium direction, the theme-generator contract failed.
+
 The premium HTML should demonstrate:
 
 - hero or primary product framing
@@ -341,10 +392,12 @@ The premium HTML should demonstrate:
   components were extracted from source truth
 - motion/material intent when practical
 
-When dark mode is supported or requested, the premium HTML must include a
-`Light vs Dark System` section. This section must show equivalent treatment for
-the same component families in both themes, not a single decorative dark block.
-At minimum, demonstrate:
+When dark mode is supported or requested, the premium HTML must not render light
+and dark as a simultaneous product composition. It must demonstrate one active
+theme at a time using the same markup/anatomy and a selector/provider model such
+as `.dark`, `[data-theme="dark"]`, or the target framework's theme provider.
+
+At minimum, the theme model must cover:
 
 - shell/navigation
 - primary/secondary/destructive actions
@@ -356,6 +409,11 @@ At minimum, demonstrate:
 
 If the light version is premium but the dark version looks like an unrelated
 black/neon SaaS moodboard, the premium artifact fails.
+
+Comparison swatches or documentation-only before/after sections are allowed only
+when clearly marked as non-product documentation. They must not be the primary
+rendered product proof, and the artifact must still prove the single active
+theme model.
 
 For projects with broad component catalogs, the premium HTML must behave like a
 theme showroom, not a landing-page moodboard. Use mature systems such as
@@ -374,6 +432,10 @@ The output is invalid if any of these are true:
 - `.tmp/` does not contain captured source files
 - `docs/reference/design-system.html` is missing
 - `docs/reference/design-system.contract.md` is missing
+- `docs/reference/design-system.theme.css` is missing
+- generated theme CSS does not use the `--ds-*` namespace
+- the HTML showcase or contract references CSS custom properties absent from the
+  generated theme CSS
 - the hero is not a direct clone except for text adaptation
 - source assets are not referenced or documented
 - major visible source patterns are absent without explanation
@@ -388,9 +450,17 @@ The output is invalid if any of these are true:
 - the result is merely a moodboard, style sampler, or visual approximation
 - premium/humanization work was requested but `design-system.slop-audit.md`,
   `design-system.premium-direction.md`, or
-  `design-system.premium-direction.html` is missing
+  `design-system.premium-direction.html`, or
+  `design-system.premium-theme.css` is missing
+- premium/humanization work was requested but the repo-local
+  `premium-design-benchmark-corpus` was not used to produce a Benchmark
+  Influence Map
 - the premium audit does not name concrete baseline smells
 - the premium direction fails to reduce the concrete smells named in the audit
+- the premium direction lacks `## Benchmark Influence Map`
+- the premium direction lacks `## Single Active Theme Model`
+- the premium HTML presents `Light vs Dark System` as simultaneous product UI
+  instead of proving one active theme at a time
 - the premium HTML does not render offline
 - the premium HTML is only another generic AI/SaaS moodboard
 - the premium HTML is too thin to compare recomposition across a realistic app
@@ -402,6 +472,8 @@ The output is invalid if any of these are true:
   unrelated to the light system
 - the premium package cannot explain which changes belong in theme tokens
   versus component anatomy, making it unsuitable as a future theme generator
+- the premium package renames the token API instead of preserving `--ds-*` names
+  and changing values
 - a broad primitive catalog exists but the premium HTML would not let an agent
   compare a realistic Bootstrap/theme-kit-like component surface across forms,
   overlays, feedback, navigation, data, and stateful controls

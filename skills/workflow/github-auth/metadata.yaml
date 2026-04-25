@@ -1,8 +1,8 @@
 name: github-auth
 category: workflow
 status: standalone-adapted
-source: ~/.codex/skills/github-auth
-runtime_mirror: ~/.codex/skills/github-auth
+source: skills/workflow/github-auth
+runtime_export: optional
 local_native_owner: adapters/workflow/github/
 sync_policy: repo-first
 description: GitHub authentication and capability detection across MCP, gh, SSH/HTTPS git, and REST fallback.

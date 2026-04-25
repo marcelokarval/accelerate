@@ -1,8 +1,8 @@
 name: dependency-governance
 category: governance
 status: standalone-adapted
-source: ~/.codex/skills/dependency-governance
-runtime_mirror: ~/.codex/skills/dependency-governance
+source: skills/governance/dependency-governance
+runtime_export: optional
 local_native_owner: core/control-plane/branch-enforcement-matrix.md
 sync_policy: repo-first
 description: Dependency legitimacy, overlap, legacy precedent, and stack-posture governance.

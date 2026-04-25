@@ -3,8 +3,8 @@
 This directory is the repo-owned authoring source for standalone `accelerate`
 skills.
 
-Global runtime copies under `~/.codex/skills/` are deployment mirrors, not the
-source of truth.
+Runtime copies outside this repository are optional deployment exports, not the
+source of truth and not required for local governance.
 
 ## Structure
 
@@ -30,4 +30,5 @@ Every mandatory skill referenced by `SKILL.md`, `core/`, `agents/`, `adapters/`,
 `profiles/`, or `references/` must either exist here or be listed as a
 temporary migration gap in `_registry/manifest.md`.
 
-Do not add new global-only governed skills.
+Do not add new global-only governed skills. If a user-home skill is useful,
+import, adapt, register, and enforce it here first.

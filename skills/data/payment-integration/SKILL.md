@@ -47,3 +47,8 @@ Load this skill when the task touches:
 
 Use `evals/` when checking whether an implementation or agent answer preserves
 provider-agnostic payment workflow safety.
+
+For implementation or closure packets, use
+`core/risk/financial-provider-fixtures.md` to capture checkout, subscription,
+webhook, idempotency, retry, and reconciliation evidence without binding the
+core packet to one provider command surface.

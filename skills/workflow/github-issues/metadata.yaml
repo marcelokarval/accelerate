@@ -1,8 +1,8 @@
 name: github-issues
 category: workflow
 status: standalone-adapted
-source: ~/.codex/skills/github-issues
-runtime_mirror: ~/.codex/skills/github-issues
+source: skills/workflow/github-issues
+runtime_export: optional
 local_native_owner: adapters/workflow/github/
 sync_policy: repo-first
 description: GitHub issue creation, reading, triage, linking, and lifecycle operations.

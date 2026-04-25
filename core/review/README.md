@@ -22,6 +22,9 @@ Native authority now starts here:
 - `html-design-system-extraction.md`
 - `design-system-contract-application.md`
 - `ui-polishing-observer.md`
+- `source-observer.md`
+- `i18n-closure-gate.md`
+- `accessibility-closure-gate.md`
 
 Supporting inherited doctrine may still exist in `references/`, but review
 method should no longer be implicit or left primarily to imported modules.

@@ -1,9 +1,9 @@
 name: ascii-wireframe
 category: frontend
 status: standalone-adapted
-source: ~/.codex/skills/ascii-wireframe
+source: skills/frontend/ascii-wireframe
 owner: accelerate
-runtime_mirror: ~/.codex/skills/ascii-wireframe
+runtime_export: optional
 local_native_owner: core/review/product-critical-surfaces.md
 adaptation_policy: >
   Standalone Accelerate version. Keep visual artifact discipline independent of

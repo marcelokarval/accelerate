@@ -27,6 +27,24 @@ the governing execution surfaces.
 - AI review reporting
 - closure traceability
 
+## Capability Contract
+
+Every concrete workflow adapter must describe its backend support for these
+capability families before it can be treated as active runtime truth:
+
+- issue/work-item creation, lookup, update, assignment, labeling, relation, and
+  closure
+- pull-request or merge-request discovery when the backend owns code review, or
+  an explicit external-link substitute when it does not
+- status/state reads and transitions that can be mapped to root lifecycle truth
+- comment, note, or review-report attachment for handoff, AI review, and
+  closure evidence
+- metadata reads sufficient to rehydrate a run after interruption
+
+An adapter may have native support, linked support, or no support for a given
+capability. Missing support is acceptable only when the adapter states the
+substitute evidence model and the control plane can still preserve traceability.
+
 ## Shared Concepts
 
 Every adapter must express:
@@ -38,6 +56,62 @@ Every adapter must express:
 - assignee / ownership
 - review handoff
 - final closure traceability
+
+## Identity Rules
+
+Workflow identity must be stable enough for a zero-context operator to resume a
+run without trusting chat history.
+
+Every adapter must define:
+
+- canonical work-item identifier
+- human-readable work-item URL or equivalent locator
+- owner/assignee representation
+- project, repository, milestone, board, or equivalent grouping identity
+- parent/child, blocking, related, or explicit substitute relation identity
+- author identity for comments, review reports, and automated updates
+
+Do not infer identity from titles alone. Titles are descriptive metadata, not
+stable execution identity.
+
+## Metadata Rehydration
+
+Before closure or resumed execution, an adapter must be able to rehydrate the
+active workflow packet from backend state or from an explicitly named substitute
+artifact.
+
+The minimum rehydrated packet is:
+
+- governing work item and URL/locator
+- current lifecycle state
+- current owner/assignee
+- classification labels/tags
+- parent/child or substitute topology
+- linked branch, commit, pull request, or merge artifact when applicable
+- latest review/closure comment or equivalent evidence attachment
+- known residual risks or follow-up links recorded in the backend
+
+If a backend cannot provide one of these fields, the adapter must mark it as an
+explicit gap instead of manufacturing the value.
+
+## Failure Handling
+
+Adapters must fail closed when backend truth cannot be read or written.
+
+Required failure behavior:
+
+- missing work item blocks issue-driven mutation unless a narrow no-issue
+  exception is explicit
+- missing required metadata blocks active execution when the selected backend is
+  enforced runtime truth
+- failed status transition leaves the previous status visible and records the
+  attempted transition
+- failed comment/review attachment blocks `Done` claims until evidence is placed
+  somewhere traceable
+- backend API/auth/rate-limit failures are reported as workflow failures, not as
+  successful closure with degraded confidence
+- partial updates require a visible recovery packet naming what landed, what did
+  not, and what must be retried
 
 ## Pre-Agents Minimum Contract
 
@@ -65,6 +139,22 @@ In the pre-agents phase:
 
 The root may still choose issue topology, lifecycle shape, and planning gates
 without pretending that the adapter backend is already alive.
+
+## Not-Yet-Implemented Limits
+
+This contract is currently documentation, not an implemented adapter runtime.
+
+The repository does not yet provide:
+
+- a native adapter selection command
+- a shared adapter interface implementation
+- backend credential discovery
+- automated work-item creation or transition enforcement
+- automated metadata rehydration
+- automated AI review placement
+
+Until those pieces exist, adapter docs define the target capability contract and
+the honest pre-agents reading model only.
 
 ## Adapter Selection Rule
 

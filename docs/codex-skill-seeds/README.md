@@ -23,7 +23,7 @@ Do not add a new mandatory skill reference to `core/`, `agents/`, `adapters/`,
 The active state is:
 
 - root `skills/` is source of truth
-- global `~/.codex/skills/` is generated mirror
+- runtime exports are optional generated deployment artifacts
 - required runtime behavior does not depend on global-only skill bodies
 
 Full pre-compaction inventories remain available through git history.

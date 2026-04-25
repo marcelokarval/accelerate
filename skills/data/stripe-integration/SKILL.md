@@ -50,3 +50,8 @@ Load this skill when the task touches:
 
 Use `evals/` when checking whether an implementation or agent answer preserves
 Stripe-specific provider-boundary safety.
+
+For implementation or closure packets, use
+`core/risk/financial-provider-fixtures.md` to capture Stripe charge, refund,
+subscription, webhook signature, idempotency, and reconciliation evidence while
+keeping concrete Stripe command execution outside core doctrine.

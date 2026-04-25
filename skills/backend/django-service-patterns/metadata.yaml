@@ -1,9 +1,9 @@
 name: django-service-patterns
 category: backend
 status: standalone-adapted
-source: ~/.codex/skills/django-service-patterns
+source: skills/backend/django-service-patterns
 owner: accelerate
-runtime_mirror: ~/.codex/skills/django-service-patterns
+runtime_export: optional
 local_native_owner: profiles/django-inertia-react/README.md
 adaptation_policy: >
   Standalone Accelerate Django profile version. Keep service-layer, ownership,

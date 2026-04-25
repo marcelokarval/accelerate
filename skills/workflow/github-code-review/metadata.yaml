@@ -1,8 +1,8 @@
 name: github-code-review
 category: workflow
 status: standalone-adapted
-source: ~/.codex/skills/github-code-review
-runtime_mirror: ~/.codex/skills/github-code-review
+source: skills/workflow/github-code-review
+runtime_export: optional
 local_native_owner: adapters/workflow/github/
 sync_policy: repo-first
 description: GitHub PR and diff review workflow.

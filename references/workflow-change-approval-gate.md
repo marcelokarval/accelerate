@@ -69,7 +69,7 @@ Before approval, the proposal should make these things explicit:
    - why the change belongs at this layer rather than a smaller one
 6. `Validation Plan`
    - how the change will be verified
-   - whether repo seeds and `~/.codex/skills/` must both be updated
+   - whether repo seeds and optional runtime exports must both be updated
 
 ## Approval Rule
 
@@ -98,5 +98,6 @@ The gate is only complete when:
 - the approval is explicit
 - the evidence packet exists
 - the change landed
-- repo seeds and installed runtime mirrors were synchronized when relevant
+- repo seeds were synchronized with optional runtime exports only when export was
+  explicitly in scope
 - the updated docs and runtime references agree on the rule

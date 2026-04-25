@@ -1,9 +1,9 @@
 name: frontend-component-hierarchy
 category: frontend
 status: standalone-adapted
-source: ~/.codex/skills/frontend-component-hierarchy
+source: skills/frontend/frontend-component-hierarchy
 owner: accelerate
-runtime_mirror: ~/.codex/skills/frontend-component-hierarchy
+runtime_export: optional
 local_native_owner: core/control-plane/branch-enforcement-matrix.md
 adaptation_policy: >
   Standalone Accelerate version. Preserve placement/import direction and layer

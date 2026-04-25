@@ -91,8 +91,8 @@ reference URL / HTML / app
 
 ## Benchmark Policy
 
-Use local benchmark systems such as `popular-web-designs` as comparison
-material, not as copy targets.
+Use the repo-local `premium-design-benchmark-corpus` as comparison material, not
+as a copy target.
 
 The pipeline should extract lessons from benchmarks:
 

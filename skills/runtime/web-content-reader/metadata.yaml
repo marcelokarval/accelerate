@@ -1,0 +1,11 @@
+name: web-content-reader
+category: runtime
+status: native
+source: skills/runtime/web-content-reader
+runtime_export: optional
+local_native_owner: adapters/runtime/web-content-reader/README.md
+adaptation_policy: >
+  Preserve the external web-reader pattern as bounded source observation while
+  rejecting provider-specific SDKs, arbitrary URL ingestion, cron behavior, and
+  unbounded raw HTML storage.
+last_reviewed: 2026-04-24

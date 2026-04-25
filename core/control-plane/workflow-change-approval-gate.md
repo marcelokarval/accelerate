@@ -56,8 +56,8 @@ Before approval, make these things explicit:
    - why the change belongs at this layer rather than a smaller one
 6. `Validation Plan`
    - how the change will be verified
-   - include whether native docs, repo seeds, quick maps, and runtime mirrors
-     must all be updated together
+   - include whether native docs, repo seeds, quick maps, and optional runtime
+     exports must all be updated together
 
 ## Approval Rule
 
@@ -83,5 +83,6 @@ This gate is only complete when:
 - approval is explicit
 - the evidence packet exists
 - the change landed
-- repo seeds and installed runtime mirrors were synchronized when relevant
+- repo seeds were synchronized with optional runtime exports only when export was
+  explicitly in scope
 - the updated docs and runtime references agree on the rule

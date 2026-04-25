@@ -1037,7 +1037,8 @@ The gate requires:
 - a visible evidence packet
 - explicit human approval in the session or in already-approved governing issue
   policy that itself has prior explicit human authorization
-- runtime/seed synchronization proof when repo-managed skills were changed
+- repo-local skill validation proof, plus optional runtime export proof when
+  export is explicitly in scope
 
 Agent-authored issue detail is not approval by itself.
 
@@ -1047,16 +1048,16 @@ The control plane lives across:
 
 - repo docs
 - repo-managed skill seeds
-- installed global skills under `~/.codex/skills/`
+- optional runtime exports generated from the repo when a runtime needs them
 
 When a hardening package changes repo-managed skills, final closure should
 verify both:
 
 1. repo seeds are updated
-2. the installed global mirror in `~/.codex/skills/` was synchronized
+2. optional runtime exports were synchronized only when export was in scope
 
 This check belongs in the final parent review when the package affects the
-global skill runtime.
+exported skill runtime.
 
 ## Related Docs
 

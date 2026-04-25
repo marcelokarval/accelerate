@@ -3,7 +3,7 @@ category: design-system
 status: native
 source: skills/design-system/apply-design-system-contract
 owner: accelerate
-runtime_mirror: ~/.codex/skills/apply-design-system-contract
+runtime_export: optional
 local_native_owner: core/review/design-system-contract-application.md
 adaptation_policy: >
   Treat design-system artifacts as implementation law, preserve source-vs-premium

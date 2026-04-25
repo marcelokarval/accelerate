@@ -1,8 +1,8 @@
 name: codex-skill-promotion-protocol
 category: governance
 status: standalone-adapted
-source: ~/.codex/skills/codex-skill-promotion-protocol
-runtime_mirror: ~/.codex/skills/codex-skill-promotion-protocol
+source: skills/governance/codex-skill-promotion-protocol
+runtime_export: optional
 local_native_owner: skills/_registry/sync-policy.md
 sync_policy: repo-first
 description: Repo-first skill promotion, reconciliation, synchronization, parity validation, and closure protocol.

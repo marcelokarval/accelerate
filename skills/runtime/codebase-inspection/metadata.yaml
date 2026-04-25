@@ -1,8 +1,8 @@
 name: codebase-inspection
 category: runtime
 status: standalone-adapted
-source: ~/.codex/skills/codebase-inspection
-runtime_mirror: ~/.codex/skills/codebase-inspection
+source: skills/runtime/codebase-inspection
+runtime_export: optional
 local_native_owner: skills/runtime/README.md
 sync_policy: repo-first
 description: Codebase metrics, LOC, language breakdown, and repository composition inspection.

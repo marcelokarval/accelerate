@@ -1,8 +1,8 @@
 name: legacy-first-protocol
 category: legacy
 status: standalone-adapted
-source: ~/.codex/skills/legacy-first-protocol
-runtime_mirror: ~/.codex/skills/legacy-first-protocol
+source: skills/legacy/legacy-first-protocol
+runtime_export: optional
 local_native_owner: core/control-plane/branch-enforcement-matrix.md
 sync_policy: repo-first
 description: Donor legacy consultation before recreating behavior in existing domains.

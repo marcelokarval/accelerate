@@ -1,9 +1,9 @@
 name: anti-abuse-review
 category: security
 status: standalone-adapted
-source: ~/.codex/skills/anti-abuse-review
+source: skills/security/anti-abuse-review
 owner: accelerate
-runtime_mirror: ~/.codex/skills/anti-abuse-review
+runtime_export: optional
 local_native_owner: references/adjacent-skill-trigger-audit.md
 adaptation_policy: >
   Standalone Accelerate version. Keep misuse-resistance categories independent

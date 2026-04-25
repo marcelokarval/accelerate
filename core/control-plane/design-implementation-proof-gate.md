@@ -45,8 +45,16 @@ Before mutation, name the active authorities:
   - usually `docs/reference/design-system.contract.md`
 - `source visual evidence`
   - usually `docs/reference/design-system.html`
+- `theme CSS authority`
+  - usually `docs/reference/design-system.theme.css`
 - `premium authority`
   - `design-system.premium-direction.md/html` when active
+  - `design-system.premium-theme.css` when active
+  - Benchmark Influence Map from the repo-local premium benchmark corpus when
+    premium/de-AI work is active
+- `artifact consistency proof`
+  - the design-system HTML/markdown package must pass local consistency checks
+    before it can govern mutation
 - `rollout or task driver`
   - sprint plan, issue plan, or explicit bounded task
 - `runtime target`
@@ -66,7 +74,9 @@ Design Implementation Proof Packet
 - active branch:
 - contract authority:
 - source visual evidence:
+- theme CSS authority:
 - premium authority:
+- artifact consistency proof:
 - rollout / task driver:
 - owner layer:
   - token | derived-token | primitive | composite | registry | shell | page
@@ -77,6 +87,9 @@ Design Implementation Proof Packet
   - not-approved-yet:
 - anatomy fixed:
 - token changes allowed:
+- token API preserved:
+- benchmark influence applied:
+- single active theme proof:
 - required states:
 - required viewports:
 - runtime adapter plan:
@@ -95,6 +108,7 @@ should cover the smallest honest matrix:
 | tablet | `768px` when layout changes at tablet widths |
 | desktop | `1024px` or `1440px` depending on target shell |
 | dark mode | required when theme switching exists or was changed |
+| single active theme | required when light/dark or theme variants are in scope |
 | hover / focus | required for changed interactive elements |
 | loading / error / empty | required when those states exist in the slice |
 | seam capture | required when drift is likely at shell/layout/state joins |
@@ -169,6 +183,11 @@ Do not close when:
 
 - UI was mutated from design-system artifacts without this gate being satisfied
 - the implementation packet does not name the visual authorities
+- the design-system source showcase and contract disagree on tokens/classes
+- the generated theme CSS is missing, skipped, or not mapped into the target
+  token layer
+- premium UI work renames the `--ds-*` token API instead of replacing token
+  values through the premium theme CSS
 - the owner layer is omitted or page-local work bypasses the honest shared owner
 - component mapping contains unapproved `not-approved-yet` elements
 - proof is code-only with no runtime/browser comparison
@@ -186,6 +205,9 @@ Do not close when:
 The gate passes only when a fresh reviewer can answer:
 
 - which artifact controlled the implementation
+- whether the source showcase and contract were consistent before mutation
+- whether the generated theme CSS was applied or mapped without renaming its
+  token API
 - which runtime surface changed
 - which shared owner layer was used
 - which browser/runtime evidence proves the current corrected state

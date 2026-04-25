@@ -1,8 +1,8 @@
 name: frontend-chunk-ownership-audit
 category: frontend
 status: standalone-adapted
-source: ~/.codex/skills/frontend-chunk-ownership-audit
-runtime_mirror: ~/.codex/skills/frontend-chunk-ownership-audit
+source: skills/frontend/frontend-chunk-ownership-audit
+runtime_export: optional
 local_native_owner: core/control-plane/branch-enforcement-matrix.md
 sync_policy: repo-first
 description: Vite/Rollup chunk-graph forensics, ownership classification, and bundle-edge remediation.

@@ -18,11 +18,12 @@ Codex/Accelerate runtime rather than another agent ecosystem.
 
 1. Write skills for the active runtime, not for copied tool names or paths.
 2. Keep `SKILL.md` concise; move deep examples into `references/` when needed.
-3. Use metadata for category, provenance, mirror path, and source-of-truth
+3. Use metadata for category, provenance, optional runtime export, and source-of-truth
    policy.
 4. Register every governed skill in `skills/_registry/manifest.md`.
-5. Sync only after repo-local content is correct.
-6. Verify parity with the global runtime mirror before closure.
+5. Export only after repo-local content is correct.
+6. Verify runtime export parity only when the current task explicitly includes
+   runtime export.
 
 ## Required Shape
 
@@ -46,6 +47,6 @@ Each governed skill should include:
 A skill change is closure-ready only when:
 
 - local registry validation passes
-- local skill files mirror into `~/.codex/skills/`
-- support directories required by the skill also mirror correctly
+- local self-containment is preserved
+- optional runtime exports match local files when export is in scope
 - stale references to old paths or foreign runtime assumptions are removed

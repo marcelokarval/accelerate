@@ -24,10 +24,13 @@ Do not collapse these into a single vague `tested` claim.
   - query-shape proof
   - migrations/runtime proof
   - ownership/auth proof
+  - observability/performance packet when performance, logs, metrics, cache, or
+    N+1 behavior is in scope
 - `Frontend Tester`
   - type-check
   - component state proof
-  - i18n proof
+  - i18n proof through `core/review/i18n-closure-gate.md` when copy or locale
+    behavior changes
   - route/view-model proof
 - `Browser-Proof Auditor`
   - interactive truth in Chrome DevTools
@@ -111,6 +114,9 @@ Name the proof failure explicitly when it appears.
     `tested successfully`.
 - `packetless proof`
   - evidence exists, but the lane did not leave an explicit `QA / Proof Packet`.
+- `metricless performance closure`
+  - performance or observability was claimed without baseline/post-change
+    evidence or an explicit no-metric rationale.
 - `pre-fix visual proof`
   - closure proof still shows the state before an in-scope visual defect was
     corrected.
@@ -131,6 +137,8 @@ Before closure, make visible at least:
   slice crosses backend truth, frontend state, and runtime UX/UI behavior
 - `Design Implementation Proof=<present|missing|blocked|not-applicable>` when
   design-system or premium UI mutation was active
+- `Observability/Performance=<present|missing|blocked|not-applicable>` when
+  metrics, logs, query shape, cache, or runtime performance were active
 - `blocking lane=<lane or none>`
 
 If `Browser-Proof` is missing while `Persistent E2E` is already present for a

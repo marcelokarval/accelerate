@@ -20,14 +20,14 @@ The final global-only audit lives in:
 | --- | --- |
 | Root `accelerate` | `root-native exception`; root `SKILL.md` is authoritative and is not duplicated under `skills/root/accelerate/`. |
 | Governed reusable skills | `local-authoritative` under root `skills/`. |
-| Runtime mirror | generated into `~/.codex/skills/`. |
+| Runtime export | optional generated deployment artifact, never source authority. |
 | `using-superpowers` | intentionally replaced by root `accelerate`; not promoted. |
 | Former `role-only` phrases | resolved into concrete backend/frontend/workflow/runtime/domain bundles. |
 | Persistent E2E proof | resolved through `adapters/runtime/playwright/` fixtures plus runtime proof skills. |
 
 ## Active Local Skill Count
 
-Root `skills/` currently owns 73 governed reusable skill bodies.
+Root `skills/` currently owns 75 governed reusable skill bodies.
 
 Validate with:
 

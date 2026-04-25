@@ -7,13 +7,19 @@
 - Each item includes date + "Do instead".
 
 ## Execution & Validation (Highest Priority)
-1. **[2026-04-24] Design-system artifacts need runtime proof before UI closure**
+1. **[2026-04-24] Accelerate must stay self-contained**
+   Do instead: import/adapt/register/enforce useful external skills or corpora inside repo `skills/` before treating them as governed behavior; user-home catalogs are optional exports only.
+2. **[2026-04-24] Design-system packages need canonical theme CSS**
+   Do instead: require `design-system.theme.css` / `design-system.premium-theme.css` with stable `--ds-*` tokens and run `onboarding/local-workspace/check-design-system-artifact-consistency.sh` before using the package as implementation law.
+3. **[2026-04-24] Premium/de-AI design needs benchmark consequences**
+   Do instead: use `skills/design-system/premium-design-benchmark-corpus/`, require a Benchmark Influence Map, and reject benchmark names that do not change tokens/components/states/layout/forbidden patterns.
+4. **[2026-04-24] Design-system artifacts need runtime proof before UI closure**
    Do instead: route mutation-bearing design-system or premium UI work through `core/control-plane/design-implementation-proof-gate.md` and require artifact comparison plus corrected-state browser evidence.
-2. **[2026-04-15] Preserve root laws before reorganizing structure**
+5. **[2026-04-15] Preserve root laws before reorganizing structure**
    Do instead: verify that topology ownership, risk enforcement, closure mode, and agent optionality remain intact before accepting any refactor.
-3. **[2026-04-15] Architecture docs govern implementation here**
+6. **[2026-04-15] Architecture docs govern implementation here**
    Do instead: consult `docs/architecture/` before starting extraction, migration, adapter, or onboarding slices.
-4. **[2026-04-15] Prefer bounded architectural commits**
+7. **[2026-04-15] Prefer bounded architectural commits**
    Do instead: land one coherent migration or doctrine slice per commit instead of mixing import, refactor, and cleanup noise.
 
 ## Repository Structure

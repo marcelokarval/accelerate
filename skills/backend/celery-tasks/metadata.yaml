@@ -1,8 +1,8 @@
 name: celery-tasks
 category: backend
 status: standalone-adapted
-source: ~/.codex/skills/celery-tasks
-runtime_mirror: ~/.codex/skills/celery-tasks
+source: skills/backend/celery-tasks
+runtime_export: optional
 local_native_owner: agents/envelopes/skill-envelopes.md
 sync_policy: repo-first
 description: Celery queue, retry, idempotency, and thin task-to-service delegation guidance.

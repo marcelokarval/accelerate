@@ -16,6 +16,16 @@ It is the control plane that chooses:
 - which proof stack is required
 - which blockers still control closure
 
+`accelerate` is self-contained. Governed behavior must come from files tracked
+in this repository: `SKILL.md`, `README.md`, `core/`, `adapters/`, `profiles/`,
+`onboarding/`, `planning/`, `skills/`, and `references/`.
+
+User-home paths such as `~/.claude/skills`, `~/.codex/skills`, or
+`~/.codex/agents` may exist as runtime exports or local installations, but they
+are not required authority and must not be used as the source for governed
+Accelerate behavior. If useful external material is needed, import and adapt it
+into this repository first.
+
 The short constitutional entry file is:
 
 - [SKILL.md](./SKILL.md)
@@ -208,14 +218,15 @@ Agents are a governed capability, not a structural dependency.
 
 `accelerate` must remain fully functional:
 
-- when no `~/.codex/agents/*.toml` exist
+- when no exported runtime agents exist
 - when the user explicitly disables agents
 - when the current pool has no honest fit
 - when integration cost is higher than the gain from delegation
 
 `accelerate` may:
 
-- suggest a future agent promotion into `~/.codex/agents/*.toml`
+- suggest a future agent promotion into the repo-owned agent factory and then an
+  optional runtime export
 - decide that no agent should be used
 - keep the run fully root-owned
 
@@ -329,6 +340,17 @@ When that package or premium direction mutates real UI, closure also requires
 Design Implementation Proof: the owner layer, runtime target, viewport/state
 coverage, artifact comparison, defect disposition, and corrected-state browser
 evidence must be explicit.
+
+Premium or de-AI design work must also use the repo-local benchmark corpus:
+
+- [premium-design-benchmark-corpus](./skills/design-system/premium-design-benchmark-corpus/SKILL.md)
+
+Do not depend on external `popular-web-designs` skills or user-home design
+libraries. The premium direction must include a `Benchmark Influence Map`, and
+every benchmark must change a token, component family, state rule, layout rule,
+or forbidden pattern. When light/dark themes are in scope, the product proof must
+show one active theme at a time through the same anatomy; split-screen
+`Light vs Dark System` product compositions are closure blockers.
 
 ## Root Authority
 
@@ -661,15 +683,16 @@ For this standalone repository:
 
 - repo source of truth:
   - the files tracked here
-- runtime mirror:
-  - `~/.codex/skills/accelerate` when global sync is intentionally performed
+- runtime export:
+  - optional generated copies created from this repository when a runtime needs
+    them
 
 This README describes the standalone product model first.
 
-Global sync remains a separate step.
+Runtime export remains a separate deployment step.
 
-Do not treat any runtime mirror as the authoring source for governed
-`accelerate` behavior.
+Do not treat any runtime export or user-home path as the authoring source for
+governed `accelerate` behavior.
 
 ## Current Distribution Reality
 

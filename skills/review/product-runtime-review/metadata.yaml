@@ -1,9 +1,9 @@
 name: product-runtime-review
 category: review
 status: standalone-adapted
-source: ~/.codex/skills/product-runtime-review
+source: skills/review/product-runtime-review
 owner: accelerate
-runtime_mirror: ~/.codex/skills/product-runtime-review
+runtime_export: optional
 local_native_owner: core/review/product-critical-surfaces.md
 adaptation_policy: >
   Standalone Accelerate version. Keep user-facing truth, recovery, capability

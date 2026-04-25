@@ -1,8 +1,8 @@
 name: adversarial-security-review
 category: security
 status: standalone-adapted
-source: ~/.codex/skills/adversarial-security-review
-runtime_mirror: ~/.codex/skills/adversarial-security-review
+source: skills/security/adversarial-security-review
+runtime_export: optional
 local_native_owner: core/control-plane/branch-enforcement-matrix.md
 sync_policy: repo-first
 description: Evidence-first hostile-path review, attack-class selection, variant hunting, and bounded remediation.

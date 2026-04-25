@@ -1,9 +1,9 @@
 name: front-react-shadcn
 category: frontend
 status: standalone-adapted
-source: ~/.codex/skills/front-react-shadcn
+source: skills/frontend/front-react-shadcn
 owner: accelerate
-runtime_mirror: ~/.codex/skills/front-react-shadcn
+runtime_export: optional
 local_native_owner: profiles/django-inertia-react/README.md
 adaptation_policy: >
   Standalone Accelerate version. Treat as a React + shadcn/Radix + Tailwind

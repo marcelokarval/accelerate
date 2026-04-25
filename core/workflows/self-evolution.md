@@ -157,6 +157,7 @@ A self-evolution cycle is only complete when:
 
 - explicit approval exists when the promotion changes workflow truth
 - the promoted change actually landed
-- the repo seeds and installed runtime mirrors were aligned when relevant
+- repo-local seeds were updated, and optional runtime exports were aligned only
+  when export was in scope
 - living docs were updated when durable behavior changed
 - the new rule is narrow enough to solve the pattern without overfitting

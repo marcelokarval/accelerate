@@ -1,8 +1,8 @@
 name: sql-optimization-patterns
 category: data
 status: standalone-adapted
-source: ~/.codex/skills/sql-optimization-patterns
-runtime_mirror: ~/.codex/skills/sql-optimization-patterns
+source: skills/data/sql-optimization-patterns
+runtime_export: optional
 local_native_owner: references/adjacent-skill-trigger-audit.md
 sync_policy: repo-first
 description: Slow-query, execution-plan, ORM query-shape, and index-backed optimization guidance.

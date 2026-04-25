@@ -1,8 +1,8 @@
 name: component-extraction
 category: frontend
 status: standalone-adapted
-source: ~/.codex/skills/component-extraction
-runtime_mirror: ~/.codex/skills/component-extraction
+source: skills/frontend/component-extraction
+runtime_export: optional
 local_native_owner: skills/frontend/README.md
 sync_policy: repo-first
 description: React component extraction and DRY convergence guidance for repeated UI, hooks, handlers, and conditional render patterns.

@@ -2,7 +2,7 @@ name: writing-skills
 category: governance
 status: native
 source: skills/governance/writing-skills
-runtime_mirror: ~/.codex/skills/writing-skills
+runtime_export: optional
 local_native_owner: core/workflows/skill-evaluation-lab.md
 sync_policy: repo-first
 description: Methodology for writing discoverable, bounded, progressively disclosed, and verifiable skills.

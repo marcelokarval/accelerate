@@ -1,8 +1,8 @@
 name: payment-integration
 category: data
 status: standalone-adapted
-source: ~/.codex/skills/payment-integration
-runtime_mirror: ~/.codex/skills/payment-integration
+source: skills/data/payment-integration
+runtime_export: optional
 local_native_owner: agents/envelopes/skill-envelopes.md
 sync_policy: repo-first
 description: Provider-agnostic payment workflow guidance for checkout, subscriptions, idempotency, refunds, and provider events.

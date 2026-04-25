@@ -199,8 +199,9 @@ HTML design-system extraction
   -> source-truth showcase + contract
   -> AI-slop / genericity audit
   -> premium direction markdown
+  -> Benchmark Influence Map from repo-local premium corpus
   -> component coverage matrix when a broad primitive catalog exists
-  -> light/dark token-sibling proof when theme switching exists
+  -> single active theme proof when theme switching exists
   -> premium direction HTML proof
   -> broad component gallery proof
   -> theme-generator readiness proof
@@ -332,6 +333,24 @@ frontend mutation
   -> residual frontend packet
 ```
 
+When i18n is in scope, route the i18n proof through
+`core/review/i18n-closure-gate.md` and the locale-pack parity adapter before
+claiming frontend closure.
+
+### 9b. i18n Closure Workflow
+
+```text
+copy / locale / translation-boundary change
+  -> discover active locale sources and supported locales
+  -> update or map keys across the active locale set
+  -> locale-pack parity packet or project-native parity command
+  -> non-default locale runtime proof when UX-relevant
+  -> residual i18n drift or closure
+```
+
+Use this workflow when user-facing text, translation packs, backend error keys,
+locale formatting, or mixed-language runtime behavior changes.
+
 ### 10. Browser-Proof Workflow
 
 ```text
@@ -377,6 +396,22 @@ product-critical / premium surface allowlist
 
 This workflow can support future scheduled observers, but observation must not
 silently mutate code or doctrine.
+
+### 11d. Source-Observer / Web-Content-Reader Workflow
+
+```text
+external source observation need
+  -> source class and downstream-use declaration
+  -> allowlist / denylist and SSRF boundary check
+  -> web-content-reader adapter for bounded one-shot capture
+  -> Source Observer Packet / Web Content Observation Packet
+  -> research, design-system intake, or workflow-evolution decision
+```
+
+Use this workflow when external web content is read as evidence for research,
+documentation drift, benchmark intake, design-system extraction, or workflow
+self-evolution. Recurring scheduled observation is not authorized by this
+workflow without a separate approved observer contract.
 
 ### 12. Security-Review Workflow
 

@@ -1,8 +1,8 @@
 name: postgresql
 category: data
 status: standalone-adapted
-source: ~/.codex/skills/postgresql
-runtime_mirror: ~/.codex/skills/postgresql
+source: skills/data/postgresql
+runtime_export: optional
 local_native_owner: skills/data/README.md
 sync_policy: repo-first
 description: PostgreSQL-specific schema, DDL, data type, constraint, index, and feature guidance.

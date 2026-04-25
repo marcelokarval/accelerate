@@ -2,7 +2,7 @@
 name: i18n-patterns
 description: Use when user-facing text, locale packs, translation boundaries, runtime locale proof, backend/frontend copy ownership, or mixed-language drift are part of the change.
 user-invocable: true
-related-skills: front-react-shadcn, server-prop-governance, django-inertia-integration, auth-form-patterns
+related-skills: front-react-shadcn, server-prop-governance, django-inertia-integration, product-runtime-review
 ---
 
 # i18n-patterns
@@ -16,6 +16,10 @@ This is not only a translation helper. It is the governance layer for:
 - backend/frontend text ownership
 - runtime mixed-language drift prevention
 - non-default locale closure proof
+
+The native closure authority is `core/review/i18n-closure-gate.md`. Runtime
+parity proof should use `adapters/runtime/locale-pack-parity/` when the target
+project has locale packs or message catalogs.
 
 ## Purpose
 
@@ -72,15 +76,17 @@ frontend already owns i18n.
 
 1. Every new user-facing string must be governed by i18n unless a narrow local
    exception is explicitly justified.
-2. Add or update keys across all supported locales: `en`, `pt`, `es`.
-3. Do not treat English fallback text as closure proof.
-4. Do not let fallbacks mask missing keys, namespace drift, or contract drift.
-5. Prefer explicit stable keys over dynamic key construction.
-6. Keep naming grouped by domain, flow, or stable UX region, not by arbitrary
+2. Discover and name the active supported locales from the project or stack
+   profile before editing locale packs.
+3. Add or update keys across all discovered supported locales.
+4. Do not treat default-locale fallback text as closure proof.
+5. Do not let fallbacks mask missing keys, namespace drift, or contract drift.
+6. Prefer explicit stable keys over dynamic key construction.
+7. Keep naming grouped by domain, flow, or stable UX region, not by arbitrary
    component filename.
-7. Backend-fed display strings must be audited before they are accepted into a
+8. Backend-fed display strings must be audited before they are accepted into a
    user-facing surface.
-8. Mixed-language runtime is a regression, not cosmetic noise.
+9. Mixed-language runtime is a regression, not cosmetic noise.
 
 ## Locale Pack Structure
 
@@ -92,6 +98,10 @@ Locate the active project's locale packs before editing. Common examples:
 
 Do not invent a new namespace lightly. First prove the existing namespace split
 cannot absorb the new keys cleanly.
+
+If supported locales cannot be discovered, stop and packet the gap instead of
+assuming a universal locale list. A stack profile may provide defaults, but the
+target project still needs explicit confirmation.
 
 
 ## Fallback Policy
@@ -138,6 +148,9 @@ When backend errors are intentionally translatable on the frontend:
 For non-trivial i18n work, produce an i18n packet with at least:
 
 - affected surfaces
+- active i18n library or convention
+- discovered locale sources
+- supported locales and default locale
 - namespaces touched
 - keys added or changed
 - backend/frontend boundary notes when display data crosses the contract
@@ -165,6 +178,7 @@ Treat these as real i18n smells:
 - If a gap was namespace-wide, was it handled as a structured insert rather than
   scattered patches?
 - Was parity checked with a repeatable command or script?
+- If no parity command exists, was a Locale Pack Parity Packet produced?
 - Was runtime validated in at least one non-default locale when the surface is
   relevant to UX?
 - Is there any mixed-language output left in the changed surface?
@@ -173,6 +187,11 @@ Treat these as real i18n smells:
 
 Use active locale-pack governance, boundary model, runtime review notes, and
 stack profile docs.
+
+Mandatory local references:
+
+- `core/review/i18n-closure-gate.md`
+- `adapters/runtime/locale-pack-parity/README.md`
 
 ## Relationship To Other Skills
 
@@ -184,7 +203,8 @@ Use this skill with:
   - when presenter fields or server props may serialize display labels
 - `front-react-shadcn`
   - when implementation still needs frontend stack guidance
-- `auth-form-patterns`
-  - when auth-specific errors or UX copy are involved
+- `product-runtime-review`
+  - when auth, onboarding, settings, billing, or other user-facing UX copy needs
+    product-quality review in addition to locale correctness
 - `accelerate`
   - when the work is non-trivial and needs i18n closure as a formal gate

@@ -17,6 +17,7 @@ Native authority now starts here:
 - `defect-ledger-packet.md`
 - `correction-loop-packet.md`
 - `seam-proof-packet.md`
+- `observability-performance-packet.md`
 
 Supporting inherited detail may still exist in:
 

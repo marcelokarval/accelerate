@@ -1,29 +1,33 @@
-# Skill Sync Policy
+# Skill Runtime Export Policy
 
 Root `skills/` is the authoring source.
 
-The global runtime mirror is:
+Accelerate is self-contained. Governed skills, references, corpora, gates, and
+examples must live inside this repository before they can be treated as
+Accelerate behavior.
 
-- `~/.codex/skills/`
+User-home skill catalogs are not source of truth and are not required for this
+repository to operate.
 
 ## Direction
 
-Sync direction is one-way by default:
+Runtime export direction is one-way by default:
 
 ```text
-accelerate/skills/ -> ~/.codex/skills/
+accelerate/skills/ -> optional runtime export target
 ```
 
-Global runtime changes must be backported into this repository before they are
-treated as governed Accelerate behavior.
+Runtime changes made outside this repository must be backported into
+`accelerate/skills/` before they are treated as governed Accelerate behavior.
 
-## Mirror Rule
+## Export Rule
 
 For each governed skill:
 
 - local `skills/<category>/<name>/SKILL.md` is canonical
-- global `~/.codex/skills/<name>/SKILL.md` is generated or synchronized
-- divergence is a validation failure unless explicitly documented
+- optional runtime exports are generated from the local canonical file
+- export drift is a deployment concern, not a change in source authority
+- missing runtime exports must not block local repository governance
 
 ## Transitional Location
 
@@ -34,18 +38,19 @@ exists.
 
 ## Verification
 
-After syncing, run:
+Before optional runtime export, run:
 
 ```bash
 bash scripts/validate-skill-registry.sh
-bash scripts/check-global-skill-mirror.sh
 ```
 
-Then run:
+After optional runtime export, run the runtime-export drift check only when the
+target runtime is part of the current task:
 
 ```bash
+bash scripts/check-global-skill-mirror.sh
 git diff --check
 ```
 
-Use `check-global-skill-mirror.sh` in CI or pre-push contexts when the goal is
-to fail on drift without mutating `~/.codex/skills/`.
+Do not use runtime export drift checks as proof that Accelerate itself is
+correct. Accelerate correctness is proved against this repository.

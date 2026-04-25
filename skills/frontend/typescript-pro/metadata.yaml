@@ -1,9 +1,9 @@
 name: typescript-pro
 category: frontend
 status: standalone-adapted
-source: ~/.codex/skills/typescript-pro
+source: skills/frontend/typescript-pro
 owner: accelerate
-runtime_mirror: ~/.codex/skills/typescript-pro
+runtime_export: optional
 local_native_owner: profiles/nextjs-tailwind/README.md
 adaptation_policy: >
   Standalone Accelerate version. Keep strict TypeScript contract discipline

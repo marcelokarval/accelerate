@@ -102,4 +102,8 @@ esac
 
 bash "${SCRIPT_DIR}/check-evidence-artifacts.sh" "${TARGET_ROOT}" "${TARGET_STATE}" >/dev/null
 
+if [ "${TARGET_STATE}" = "closure-ready" ] && [ -f "${TARGET_ROOT}/docs/reference/design-system.html" ]; then
+  bash "${SCRIPT_DIR}/check-design-system-artifact-consistency.sh" "${TARGET_ROOT}" >/dev/null
+fi
+
 echo "evidence gate passed ${TARGET_STATE}"

@@ -1,8 +1,8 @@
 name: postgres-best-practices
 category: data
 status: standalone-adapted
-source: ~/.codex/skills/postgres-best-practices
-runtime_mirror: ~/.codex/skills/postgres-best-practices
+source: skills/data/postgres-best-practices
+runtime_export: optional
 local_native_owner: skills/data/README.md
 sync_policy: repo-first
 description: PostgreSQL indexing, access path, concurrency, migration, and operational safety guidance.

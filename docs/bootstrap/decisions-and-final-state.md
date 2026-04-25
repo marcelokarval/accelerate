@@ -5,7 +5,9 @@
 This document records the decisions that were explicitly discussed and accepted
 before the standalone `accelerate` repository began implementation.
 
-Treat this as the current architectural baseline.
+Treat this as bootstrap historical provenance. Current authority lives in
+`AGENTS.md`, `README.md`, `SKILL.md`, `core/`, `skills/`, and the active
+architecture docs.
 
 ## Final Position
 
@@ -170,8 +172,11 @@ The extraction should first classify material into:
 
 ### D12. Source-of-truth migration should be deliberate
 
-At bootstrap time, the mature source of truth still lives in the Prop4You
+At bootstrap time, the mature source of truth still lived in the Prop4You
 sandbox and promoted runtime mirror.
+
+This was true at bootstrap time only. The standalone repository is now the
+authoring source for governed Accelerate behavior.
 
 This new repository should become the new long-term home, but only after:
 

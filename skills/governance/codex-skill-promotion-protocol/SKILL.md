@@ -1,6 +1,6 @@
 ---
 name: codex-skill-promotion-protocol
-description: Codex-native protocol for promoting, reconciling, and synchronizing skills between the repo-owned root skills tree and ~/.codex/skills, including reference cleanup, public-doc alignment, and parity validation.
+description: Accelerate-native protocol for promoting, reconciling, and optionally exporting skills from the repo-owned skill tree without making user-home catalogs authoritative.
 metadata:
   category: devops
   origin: project-local
@@ -8,17 +8,18 @@ metadata:
 ---
 # codex-skill-promotion-protocol
 
-Use this skill when a skill or skill bundle is being promoted into the Codex
-catalog and you need the result to be operationally true, not just copied.
+Use this skill when a skill or skill bundle is being promoted into the
+Accelerate repository catalog and you need the result to be operationally true,
+not just copied.
 
 ## Purpose
 
-Prevent catalog drift across four surfaces:
+Prevent catalog drift across these surfaces:
 
 1. repo-owned source tree in `skills/`
-2. installed runtime mirror in `~/.codex/skills/`
-3. accelerate/control-plane references
-4. derived docs when the promoted skill changes visible workflow truth
+2. accelerate/control-plane references
+3. derived docs when the promoted skill changes visible workflow truth
+4. optional runtime exports when export is explicitly in scope
 
 ## Core Rule
 
@@ -28,8 +29,9 @@ A promotion is only complete when:
 
 - the target skill content is reconciled with the live Codex runtime model
 - references to the skill catalog are truthful
-- seed and runtime mirrors are synchronized
-- parity is verified
+- optional runtime exports are generated only after the repo-local source is
+  correct
+- local registry/self-containment is verified
 - public docs are updated when the change affects published workflow truth
 
 ## When to Use
@@ -37,7 +39,7 @@ A promotion is only complete when:
 Use this protocol when:
 
 - importing or adapting a skill from another ecosystem
-- promoting a sandbox-only skill into the governed Codex catalog
+- promoting a sandbox-only skill into the governed Accelerate catalog
 - reconciling naming drift between docs and real skills
 - adding a new branch-critical skill to accelerate
 - fixing catalog drift after iterative workflow changes
@@ -55,9 +57,10 @@ Use this precedence order:
 2. governed root skill tree under `skills/`
 3. canonical architecture docs such as `docs/architecture/accelerate-control-plane.md`
 4. derived docs when present
-5. installed runtime mirror `~/.codex/skills/`
+5. optional runtime export, only when the current task explicitly includes
+   export
 
-The runtime mirror is a deployment target, not the authoring source.
+Runtime exports are deployment targets, not authoring sources.
 
 ## Protocol
 
@@ -80,7 +83,7 @@ and evidence discipline.
 Before writing anything, inspect:
 
 - whether the target skill already exists in seed
-- whether it already exists in `~/.codex/skills/`
+- whether an optional runtime export already exists, if export is in scope
 - whether adjacent skills already cover the same lane
 - whether public docs or accelerate references already mention it
 
@@ -136,23 +139,23 @@ Examples of when this is required:
 - new MCP/integration lane skill
 - renamed or removed skill that docs still mention
 
-### 6. Sync seed -> runtime mirror
+### 6. Optionally export repo skill -> runtime target
 
-After the seed is correct, sync to:
+After the repo-owned skill is correct, export only when the current task needs a
+runtime copy.
 
-- `~/.codex/skills/`
-
-Do not hand-edit the runtime mirror as the primary mutation surface.
+Do not hand-edit any runtime export as the primary mutation surface.
 
 ### 7. Verify parity
 
-Parity verification is mandatory.
+Local verification is mandatory. Runtime parity verification is mandatory only
+when runtime export is in scope.
 
 At minimum verify:
 
 - skill exists in seed
-- skill exists in runtime mirror
-- directory contents match for changed skills
+- skill is registered in the repo manifest
+- directory contents match for changed skills when runtime export is in scope
 - references no longer point at nonexistent skill names
 - public docs are not advertising stale workflow truth
 
@@ -173,14 +176,14 @@ Every promotion should leave evidence for:
 - source of imported/adapted material
 - runtime assumptions removed or changed
 - references/docs touched
-- sync target(s)
-- parity verification result
+- export target(s), if any
+- local validation and export parity result, when export is in scope
 
 ## Common Failure Modes
 
 - copying a skill without reconciling runtime assumptions
-- updating `~/.codex/skills/` but not the seed tree
-- updating seed/runtime but leaving accelerate docs stale
+- updating a runtime export but not the repo-owned skill tree
+- updating skills but leaving accelerate docs stale
 - adding a branch-critical skill without updating public workflow docs
 - keeping duplicate lane skills with overlapping names and no explicit boundary
 - improving docs discoverability before catalog truth is reconciled
@@ -222,11 +225,11 @@ A repo with generated artifacts sitting untracked in limbo is not fully closed.
 
 - [ ] classify the promotion type
 - [ ] audit existing catalog state
-- [ ] reconcile content to Codex/runtime truth
+- [ ] reconcile content to Accelerate/runtime truth
 - [ ] write changes in governed seed first
 - [ ] update accelerate/control-plane/public docs when required
-- [ ] sync seed to runtime mirror
-- [ ] verify parity
+- [ ] optionally export only if runtime export is in scope
+- [ ] verify local registry and optional export parity
 - [ ] summarize residual drift or defer reasons honestly
 
 ## Relationship To Other Skills
@@ -240,7 +243,7 @@ A repo with generated artifacts sitting untracked in limbo is not fully closed.
 This protocol is being used correctly if:
 
 - seed remains the authoring source of truth
-- runtime mirror only changes after seed reconciliation
+- runtime export only changes after seed reconciliation
 - no stale skill names remain in active workflow docs
 - the promoted skill is operationally usable in the actual runtime
-- parity between seed and runtime is explicitly checked, not assumed
+- local validation is explicit, and runtime parity is checked when export is in scope

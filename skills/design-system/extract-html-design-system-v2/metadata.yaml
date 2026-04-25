@@ -3,10 +3,10 @@ category: design-system
 status: native
 source: skills/design-system/extract-html-design-system-v2
 owner: accelerate
-runtime_mirror: ~/.codex/skills/extract-html-design-system-v2
+runtime_export: optional
 local_native_owner: core/review/html-design-system-extraction.md
 adaptation_policy: >
   Keep source fidelity, contract generation, premium direction, component
-  coverage, light/dark sibling tokens, and theme-generator readiness aligned
-  with the native Accelerate review module.
+  coverage, single-active-theme proof, benchmark influence mapping, and
+  theme-generator readiness aligned with the native Accelerate review module.
 last_reviewed: 2026-04-22

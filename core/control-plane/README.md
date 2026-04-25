@@ -15,8 +15,12 @@ Native authority now starts here:
 - `root-laws.md`
 - `branch-enforcement-matrix.md`
 - `quick-invocation-map.md`
+- `gate-ownership-index.md`
 - `workflow-change-approval-gate.md`
 - `parity-replacement-gate.md`
+- `truth-ownership-check.md`
+- `failure-classification-gate.md`
+- `artifact-sufficiency-check.md`
 - `design-implementation-proof-gate.md`
 
 Root-facing architectural context still lives in:

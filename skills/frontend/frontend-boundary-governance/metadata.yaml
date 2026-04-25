@@ -1,9 +1,9 @@
 name: frontend-boundary-governance
 category: frontend
 status: standalone-adapted
-source: ~/.codex/skills/frontend-boundary-governance
+source: skills/frontend/frontend-boundary-governance
 owner: accelerate
-runtime_mirror: ~/.codex/skills/frontend-boundary-governance
+runtime_export: optional
 local_native_owner: references/adjacent-skill-trigger-audit.md
 adaptation_policy: >
   Standalone Accelerate version. Preserve backend truth, nonvisual TypeScript,

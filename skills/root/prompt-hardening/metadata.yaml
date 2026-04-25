@@ -1,9 +1,9 @@
 name: prompt-hardening
 category: root
 status: standalone-adapted
-source: ~/.codex/skills/prompt-hardening
+source: skills/root/prompt-hardening
 owner: accelerate
-runtime_mirror: ~/.codex/skills/prompt-hardening
+runtime_export: optional
 local_native_owner: core/hardening/prompt-hardening.md
 adaptation_policy: >
   Standalone Accelerate version. Keep prompt-hardening project-agnostic,

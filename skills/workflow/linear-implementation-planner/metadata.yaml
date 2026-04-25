@@ -1,9 +1,9 @@
 name: linear-implementation-planner
 category: workflow
 status: standalone-adapted
-source: ~/.codex/skills/linear-implementation-planner
+source: skills/workflow/linear-implementation-planner
 owner: accelerate
-runtime_mirror: ~/.codex/skills/linear-implementation-planner
+runtime_export: optional
 local_native_owner: adapters/workflow/linear/README.md
 adaptation_policy: >
   Standalone Accelerate version. Keep Linear-specific planning behavior scoped

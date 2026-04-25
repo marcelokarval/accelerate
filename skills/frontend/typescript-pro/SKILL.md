@@ -2,7 +2,7 @@
 name: typescript-pro
 description: Use when TypeScript work involves strict typing, shared contracts, unions, generics, frontend/backend data boundaries, or pragmatic type-driven refactors.
 user-invocable: true
-related-skills: front-react-shadcn, react-best-practices, javascript-pro
+related-skills: front-react-shadcn, react-best-practices
 ---
 
 # typescript-pro

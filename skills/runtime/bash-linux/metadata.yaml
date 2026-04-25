@@ -1,8 +1,8 @@
 name: bash-linux
 category: runtime
 status: standalone-adapted
-source: ~/.codex/skills/bash-linux
-runtime_mirror: ~/.codex/skills/bash-linux
+source: skills/runtime/bash-linux
+runtime_export: optional
 local_native_owner: skills/runtime/README.md
 sync_policy: repo-first
 description: Safe shell inspection, Bash scripting, log review, and command-line workflow discipline.

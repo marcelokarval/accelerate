@@ -1,0 +1,12 @@
+name: premium-design-benchmark-corpus
+category: design-system
+status: native
+source: skills/design-system/premium-design-benchmark-corpus
+owner: accelerate
+runtime_export: optional
+local_native_owner: core/review/premium-interface-production.md
+adaptation_policy: >
+  Keep premium benchmark judgment self-contained in Accelerate. External design
+  libraries may inspire future imports, but enforced benchmark rules must live
+  in this repository and emit token/component impacts instead of brand clones.
+last_reviewed: 2026-04-24

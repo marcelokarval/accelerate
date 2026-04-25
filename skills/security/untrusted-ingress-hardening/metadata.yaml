@@ -1,8 +1,8 @@
 name: untrusted-ingress-hardening
 category: security
 status: standalone-adapted
-source: ~/.codex/skills/untrusted-ingress-hardening
-runtime_mirror: ~/.codex/skills/untrusted-ingress-hardening
+source: skills/security/untrusted-ingress-hardening
+runtime_export: optional
 local_native_owner: core/control-plane/branch-enforcement-matrix.md
 sync_policy: repo-first
 description: Upload, import, parser, image/media, storage, and serving posture hardening for untrusted ingress.

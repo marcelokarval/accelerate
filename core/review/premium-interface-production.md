@@ -191,9 +191,11 @@ Required comparison set:
 
 - `docs/reference/design-system.html`
 - `docs/reference/design-system.contract.md`
+- `docs/reference/design-system.theme.css`
 - `docs/reference/design-system.slop-audit.md`
 - `docs/reference/design-system.premium-direction.md`
 - `docs/reference/design-system.premium-direction.html`
+- `docs/reference/design-system.premium-theme.css`
 
 When the task moves from diagnosis/direction into implementation, correction,
 or proposal, route through `design-system-contract-application.md` and
@@ -215,6 +217,11 @@ The slop audit should explicitly inspect for:
 - low brand specificity
 - motion with no product intent
 
+For premium/de-AI work, use the repo-local
+`skills/design-system/premium-design-benchmark-corpus/` corpus. Do not depend on
+`popular-web-designs`, `~/.claude/skills`, `~/.codex/skills`, or any other
+user-home design catalog for governed Accelerate behavior.
+
 The premium direction is valid only if it does three things:
 
 - preserves the source-truth extraction as baseline evidence
@@ -229,11 +236,17 @@ The premium direction is valid only if it does three things:
   the light system, not as an unrelated black/neon product
 - separates theme-token changes from immutable component anatomy so the
   direction can become a future theme generator rather than a one-off mockup
+- keeps the same `--ds-*` token API between source and premium theme CSS, so
+  premium can be adopted by swapping values instead of rewriting components
 - covers enough states and primitives to behave like a product UI/theme kit,
   comparable in breadth expectation to Bootstrap or mature component systems
+- includes a Benchmark Influence Map with concrete token/component impacts from
+  the local corpus
+- proves a Single Active Theme Model when theme switching is in scope
 
-Benchmark systems such as `popular-web-designs` may inform the judgment, but
-they are comparison references, not identities to copy.
+Benchmark systems are comparison references, not identities to copy. A benchmark
+that does not change a token, component family, layout rule, state rule, or
+forbidden pattern is not a valid benchmark for Accelerate closure.
 
 Add these premium failure modes when relevant:
 
@@ -245,8 +258,12 @@ Add these premium failure modes when relevant:
 - `premium-html-not-rendered`
 - `premium-component-gallery-too-thin`
 - `dark-mode-as-unrelated-skin`
+- `light-dark-simultaneous-product-composition`
 - `theme-generator-contract-missing`
+- `theme-css-missing-or-renamed`
 - `component-kit-coverage-too-thin`
+- `benchmark-influence-map-missing`
+- `benchmark-influence-without-token-component-impact`
 
 ## Premium Interface Reconciliation
 
@@ -255,6 +272,7 @@ Final review for premium surfaces must compare side by side:
 - source reference
 - target ASCII / approved composition
 - slop audit when the surface came from HTML design-system extraction
+- generated source/premium theme CSS when theming is in scope
 - premium direction HTML when premium improvement is in scope
 - delivered implementation
 

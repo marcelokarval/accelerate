@@ -103,6 +103,11 @@ refunds and reversals exist.
 Use `evals/` when checking whether an implementation or agent answer preserves
 financial source-of-truth rules.
 
+For implementation or closure packets, use
+`core/risk/financial-provider-fixtures.md` to capture charge, refund,
+idempotency, reconciliation, and projection evidence before accepting financial
+correctness claims.
+
 ## Useful Companions
 
 - `payment-integration`

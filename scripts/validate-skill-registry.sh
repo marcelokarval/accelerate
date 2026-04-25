@@ -23,6 +23,18 @@ while IFS= read -r skill_dir; do
     status=1
   }
 
+  if [[ -f "$skill_dir/metadata.yaml" ]]; then
+    if grep -Eq '^source: ~/' "$skill_dir/metadata.yaml"; then
+      echo "Metadata source must be repo-local in $skill_dir/metadata.yaml" >&2
+      status=1
+    fi
+
+    if grep -Eq '^runtime_mirror:' "$skill_dir/metadata.yaml"; then
+      echo "Metadata must use runtime_export, not runtime_mirror, in $skill_dir/metadata.yaml" >&2
+      status=1
+    fi
+  fi
+
   skill_name="$(basename "$skill_dir")"
   if ! grep -Fq "| \`$skill_name\` |" "$manifest"; then
     echo "Skill not registered in manifest: $skill_name" >&2
@@ -40,6 +52,11 @@ fi
 
 if [[ ! -f "$root_runtime_bundle/README.md" ]]; then
   echo "Missing global runtime accelerate README.md in $root_runtime_bundle" >&2
+  status=1
+fi
+
+if grep -Fq '~/.codex/skills/' "$manifest"; then
+  echo "Manifest must not list user-home runtime paths as governed skill authority" >&2
   status=1
 fi
 

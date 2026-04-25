@@ -12,3 +12,4 @@ Current skills:
 | `native-mcp` | Codex-native MCP configuration, transport, approval, secret, and troubleshooting guidance. |
 | `mcporter` | Ad-hoc MCP discovery, schema inspection, auth, direct calls, and CLI generation. |
 | `codebase-inspection` | LOC, language breakdown, and repository composition inspection. |
+| `web-content-reader` | Bounded external URL/content observation with source packets, allowlists, and no provider lock-in. |

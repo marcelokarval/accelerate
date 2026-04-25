@@ -1,9 +1,9 @@
 name: governance-audit
 category: governance
 status: standalone-adapted
-source: ~/.codex/skills/governance-audit
+source: skills/governance/governance-audit
 owner: accelerate
-runtime_mirror: ~/.codex/skills/governance-audit
+runtime_export: optional
 local_native_owner: core/control-plane/branch-enforcement-matrix.md
 adaptation_policy: >
   Standalone Accelerate version. Audit against active local stack/profile docs,

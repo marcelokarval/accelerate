@@ -8,7 +8,7 @@ mix of native, adapted, and externally sourced skills.
 | Status | Meaning |
 | --- | --- |
 | `native` | Authored for standalone `accelerate`. |
-| `adapted-from-global` | Imported from `~/.codex/skills/` and rewritten for local doctrine. |
+| `adapted-from-runtime` | Imported from a runtime/user-home catalog and rewritten for local doctrine. |
 | `adapted-from-external` | Sourced from internet or third-party material and normalized into the Accelerate contract. |
 | `vendor-reference` | Kept as reference material only, not mandatory runtime law. |
 | `overlay-only` | Project/domain-specific and not allowed to become universal core law without promotion. |
@@ -22,7 +22,7 @@ Each skill directory should include `metadata.yaml` with:
 - `status`
 - `source`
 - `owner`
-- `runtime_mirror`
+- `runtime_export`
 - `local_native_owner`
 - `adaptation_policy`
 - `last_reviewed`

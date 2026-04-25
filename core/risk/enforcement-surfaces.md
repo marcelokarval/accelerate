@@ -72,6 +72,8 @@ Use it when the question is:
 - avoid `div soup`
 - enforce modularization and import-boundary discipline
 - mandatory i18n for user-facing text
+- i18n closure requires discovered supported locales, locale-pack parity, and
+  non-default runtime proof when UX-relevant
 - browser/runtime-sensitive structural work should use wireframes when needed
 - `Wireframe Before UI` for structural UI uncertainty
 - `real data readiness`

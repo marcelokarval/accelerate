@@ -1,8 +1,8 @@
 name: validation-governance
 category: governance
 status: standalone-adapted
-source: ~/.codex/skills/validation-governance
-runtime_mirror: ~/.codex/skills/validation-governance
+source: skills/governance/validation-governance
+runtime_export: optional
 local_native_owner: references/adjacent-skill-trigger-audit.md
 sync_policy: repo-first
 description: Backend authority versus frontend convenience validation governance.

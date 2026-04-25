@@ -9,9 +9,9 @@ fidelity work.
 This is the native Accelerate operating surface for the
 `extract-html-design-system-v2` skill.
 
-The skill file itself may live in the repo-managed seed catalog and the global
-runtime mirror, but this module is the local control-plane doctrine that decides
-when and how that skill is used.
+The skill file lives in the repo-managed skill catalog. Optional runtime exports
+may be generated from it, but this module is the local control-plane doctrine
+that decides when and how that skill is used.
 
 ## Activation Trigger
 
@@ -48,6 +48,7 @@ The required local artifacts are:
 
 - `docs/reference/design-system.html`
 - `docs/reference/design-system.contract.md`
+- `docs/reference/design-system.theme.css`
 
 When premium improvement, humanization, de-AI cleanup, visual polish, or
 product-critical visual direction is in scope, the extended artifact set is:
@@ -55,6 +56,7 @@ product-critical visual direction is in scope, the extended artifact set is:
 - `docs/reference/design-system.slop-audit.md`
 - `docs/reference/design-system.premium-direction.md`
 - `docs/reference/design-system.premium-direction.html`
+- `docs/reference/design-system.premium-theme.css`
 
 Temporary files belong under:
 
@@ -71,6 +73,15 @@ separate capture trail under `.tmp/`.
 `design-system.contract.md` is the implementation contract for future AI/agent
 work. It must be prescriptive enough for another agent to build new screens
 without treating the showcase as a loose moodboard.
+
+`design-system.theme.css` is the implementable token layer. It must expose the
+canonical `--ds-*` CSS variables that new UI should consume. The HTML showcase
+and markdown contract must reference those same tokens.
+
+`design-system.premium-theme.css`, when present, is the premium replacement
+theme layer. It must keep the same `--ds-*` token names so a target app can adopt
+the new direction by replacing or importing the CSS token file instead of
+rewriting component anatomy.
 
 ## Workflow
 
@@ -100,15 +111,92 @@ without treating the showcase as a loose moodboard.
    laws, token contract, component recipes, state coverage matrix, layout
    recipes, motion/interaction contract, composition rules, forbidden patterns,
    not-observed component families, rebuild checklist, and source evidence map.
-6. Include visible source evidence for every major section or pattern in the
+6. Generate `docs/reference/design-system.theme.css` as the canonical token
+   layer using `--ds-*` variables. Map source tokens/classes into this layer;
+   do not leave raw source names as the implementation API.
+7. Keep `design-system.html`, `design-system.contract.md`, and
+   `design-system.theme.css` synchronized. Any CSS custom property used by the
+   HTML showcase or named in the contract must be declared in the theme CSS.
+8. Prefix documentation-only wrapper classes with `ds-doc-` so they cannot be
+   mistaken for source-observed component classes.
+9. Include visible source evidence for every major section or pattern in the
    HTML artifact and every major rule/component in the contract artifact.
-7. Treat both files as the design-system evidence package for subsequent UI
+10. Treat the HTML, contract, and theme CSS as the design-system evidence package for subsequent UI
    correction, recreation, or convergence.
-8. When premium improvement is in scope, run the AI-slop audit and premium
-   direction extension before implementation.
-9. Before implementation, hand off to
-   `design-system-contract-application.md` instead of relying on memory or
-   visual vibes.
+11. When premium improvement is in scope, run the AI-slop audit and premium
+    direction extension before implementation.
+12. Run the local consistency gate before implementation or closure:
+    `onboarding/local-workspace/check-design-system-artifact-consistency.sh`.
+13. Before implementation, hand off to
+    `design-system-contract-application.md` instead of relying on memory or
+    visual vibes.
+
+## Artifact Consistency Gate
+
+The source-truth showcase and implementation contract are one atomic package.
+They must not be allowed to describe different systems.
+
+The failure mode to prevent is:
+
+- `design-system.html` visually looks correct and uses one token/class set
+- `design-system.contract.md` describes a different token/class set
+- no canonical CSS token layer exists to implement the system
+- a later agent reads only the markdown and implements the wrong system
+
+Rules:
+
+- `design-system.html` is the visual source-truth showcase.
+- `design-system.contract.md` is the implementation rulebook for that same
+  showcase, not a parallel interpretation.
+- `design-system.theme.css` is the stable implementation API.
+- Theme CSS tokens must use the `--ds-*` namespace.
+- The contract may mention source/raw tokens only as evidence, but the
+  implementation token contract must use `--ds-*` names.
+- The HTML may not use CSS custom properties that are absent from the theme CSS.
+- The contract may not name CSS custom properties that are absent from the theme
+  CSS.
+- Documentation-only scaffolding is allowed only when clearly prefixed, such as
+  `ds-doc-*`.
+- Premium direction artifacts have their own consistency obligation:
+  `design-system.premium-direction.html` and
+  `design-system.premium-direction.md` tokens must be declared in
+  `design-system.premium-theme.css` using the same `--ds-*` names.
+
+## Canonical Theme CSS Contract
+
+The generator must produce a CSS file that can become the app theme layer.
+
+Required source-truth artifact:
+
+- `docs/reference/design-system.theme.css`
+
+Required premium artifact when premium direction exists:
+
+- `docs/reference/design-system.premium-theme.css`
+
+Rules:
+
+- Use stable `--ds-*` tokens, not one-off names like `--bg`, `--ledger-bg`, or
+  `--vault-surface` as the implementation API.
+- Represent light/dark as selectors over the same token names, for example
+  `:root` and `[data-theme="dark"]`, not separate unrelated token vocabularies.
+- Keep semantic meaning in reusable names such as `--ds-bg`, `--ds-fg`,
+  `--ds-surface`, `--ds-border`, `--ds-primary`, `--ds-accent-positive`,
+  `--ds-accent-warning`, `--ds-accent-danger`, `--ds-accent-info`,
+  `--ds-accent-ai`, `--ds-radius-sm`, `--ds-radius-md`, `--ds-radius-lg`,
+  `--ds-shadow-sm`, `--ds-shadow-md`, and `--ds-font-sans`.
+- If the source has project-specific raw tokens, document them as aliases to the
+  canonical token layer instead of making future UI consume the raw names.
+- Premium direction must change token values, not rename the token API.
+
+The intended implementation path is: import or merge the generated theme CSS
+into `global.css`, Tailwind theme variables, or equivalent project token layer;
+then existing components that consume the canonical tokens can reskin without
+component rewrites.
+
+If the gate fails, do not choose whichever artifact looks better. Treat the
+package as stale or split-brained, regenerate or repair the inconsistent
+artifact, then rerun the gate.
 
 ## Premium Extension
 
@@ -121,14 +209,18 @@ styles. Preserve the baseline, then create a separate premium package:
 1. `design-system.slop-audit.md`
    - score concrete AI/genericity smells
    - name evidence from the baseline and contract
-   - compare against local benchmarks such as `popular-web-designs` when useful
+   - compare against the repo-local `premium-design-benchmark-corpus`
    - distinguish source-truth pass/fail from premium-direction pass/fail
 2. `design-system.premium-direction.md`
    - define the proposed premium identity, tokens, surfaces, component
      direction, motion, forbidden patterns, and handoff rules
    - explain exactly how the direction reduces the audit findings
+   - include `## Benchmark Influence Map` with concrete token/component impacts
+     from the repo-local benchmark corpus
+   - include `## Single Active Theme Model` when theme switching is supported or
+     requested
    - when the source supports theme switching, define light and dark as sibling
-     token systems over the same product semantics instead of unrelated skins
+      token systems over the same product semantics instead of unrelated skins
    - separate immutable component anatomy from theme tokens so the artifact can
      seed future theme generation through `global.css`, CSS variables, Tailwind
      tokens, or equivalent configuration
@@ -136,8 +228,8 @@ styles. Preserve the baseline, then create a separate premium package:
    - render a concrete visual proof of the proposed direction
    - label itself as directional, not source truth
    - avoid cloning benchmark brands or pretending invented styles were observed
-   - when dark mode exists or is requested, show a `Light vs Dark System`
-     comparison with equivalent component families in both modes
+   - when dark mode exists or is requested, prove one active theme at a time via
+     the same markup/anatomy and a selector or theme provider model
    - when a broad primitive catalog exists, behave like a theme showroom rather
      than a landing-page moodboard
 
@@ -162,6 +254,12 @@ The extraction is not complete unless all of these are true:
 - the first section is a direct hero clone with text-only adaptation
 - `docs/reference/design-system.contract.md` exists and is contract-shaped, not
   summary-shaped
+- `docs/reference/design-system.theme.css` exists and declares the canonical
+  `--ds-*` token layer
+- `design-system.html` and `design-system.contract.md` pass the artifact
+  consistency gate
+- documentation-only classes are distinguishable from source-observed component
+  classes, preferably with `ds-doc-*`
 - the final artifact includes visible evidence labels that connect sections to
   source files or URLs
 - the contract maps rules/components back to source evidence
@@ -177,7 +275,14 @@ The extraction is not complete unless all of these are true:
 - the next implementation or correction step is explicitly routed through
   `apply-design-system-contract`
 - when premium improvement is active, the audit, premium direction markdown, and
-  premium direction HTML all exist and the premium HTML has render proof
+  premium direction HTML all exist, `design-system.premium-theme.css` exists,
+  and the premium HTML has render proof
+- when premium improvement is active, `design-system.premium-direction.md`
+  includes `## Benchmark Influence Map` and every selected benchmark creates a
+  token, component, state, layout, or forbidden-pattern consequence
+- when theme switching is supported or requested, the premium direction includes
+  `## Single Active Theme Model` and proves one active theme at a time, not a
+  simultaneous light/dark product composition
 - when the local frontend stack exposes a broad primitive catalog such as
   shadcn/ui or Radix, premium direction includes a component coverage matrix and
   the premium HTML includes enough component families to judge recomposition
@@ -203,6 +308,10 @@ Do not close an HTML-reference-driven UI task if:
 - the contract does not define immutable design laws, component recipes, state
   coverage, forbidden patterns, and source evidence
 - the generated artifact invents classes or styles not present in the source
+- the generated artifact and contract declare different token or class systems
+- the source-truth or premium package lacks the required implementable theme CSS
+- generated theme CSS uses non-canonical custom property names outside the
+  `--ds-*` namespace
 - the generated artifact invents component structures, metrics, logos, icons, or
   copy not backed by source markup
 - the generated artifact omits source-evidenced forms, tooltips, modals, alerts,
@@ -223,8 +332,14 @@ Do not close an HTML-reference-driven UI task if:
 - dark mode is supported or requested but the premium direction only mentions
   it textually, shows it as a small decorative block, or makes it visually
   disconnected from the light theme
+- the premium HTML presents `Light vs Dark System` as simultaneous product UI
+  instead of proving one active theme at a time
+- the premium direction omits the Benchmark Influence Map or cites benchmarks
+  without token/component consequences
 - the component gallery is not broad enough to evaluate the design as a future
   theme generator for many interfaces
+- the artifact consistency gate fails for source-truth or premium-direction
+  artifacts
 
 ## Relationship To Premium UI
 

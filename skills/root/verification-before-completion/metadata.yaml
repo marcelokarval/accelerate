@@ -1,9 +1,9 @@
 name: verification-before-completion
 category: root
 status: standalone-adapted
-source: ~/.codex/skills/verification-before-completion
+source: skills/root/verification-before-completion
 owner: accelerate
-runtime_mirror: ~/.codex/skills/verification-before-completion
+runtime_export: optional
 local_native_owner: core/runtime-packets/qa-proof-stack.md
 adaptation_policy: >
   Standalone Accelerate version. Keep closure evidence strict, workflow-backend

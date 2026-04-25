@@ -10,6 +10,8 @@ Examples:
 - Chrome DevTools for browser truth
 - agent-browser-style CLI automation for bounded browser operations
 - Playwright for persistent regression proof
+- web content reader for bounded external source observation
+- locale-pack parity checks for i18n proof
 
 The core should speak in capabilities first. Runtime-specific commands belong
 here or in stack profiles, not in the permanent core law.
@@ -22,3 +24,6 @@ Native pre-agents reading order:
 4. `chrome-devtools/README.md`
 5. `agent-browser/README.md`
 6. `playwright/README.md`
+7. `web-content-reader/README.md`
+8. `locale-pack-parity/README.md`
+9. `proof-fixtures/README.md`

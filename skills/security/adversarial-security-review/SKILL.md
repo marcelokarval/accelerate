@@ -64,6 +64,11 @@ The result should make these things explicit:
 6. variant search scope
 7. remediation or issue follow-up
 
+For fixture-driven review, use the repo-local `Hostile-Path Fixture` in
+`core/risk/security-abuse-fixtures.md`. The fixture is required when hostile-path
+evidence needs to be reusable across branch packets, review reports, or follow-up
+work.
+
 ## Workflow
 
 ### 1. Map The Attack Surface
@@ -159,6 +164,7 @@ If the correction is systemic:
 
 Read these when needed:
 
+- `core/risk/security-abuse-fixtures.md`
 - `references/attack-class-matrix.md`
 - `references/variant-hunting.md`
 - `references/reporting-and-follow-up.md`

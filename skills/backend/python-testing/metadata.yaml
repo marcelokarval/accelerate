@@ -1,9 +1,9 @@
 name: python-testing
 category: backend
 status: standalone-adapted
-source: ~/.codex/skills/python-testing
+source: skills/backend/python-testing
 owner: accelerate
-runtime_mirror: ~/.codex/skills/python-testing
+runtime_export: optional
 local_native_owner: core/personas/mandatory-skills.md
 adaptation_policy: >
   Standalone Accelerate version. Keep pytest and regression discipline aligned
