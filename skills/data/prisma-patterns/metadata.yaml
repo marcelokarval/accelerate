@@ -1,0 +1,8 @@
+name: prisma-patterns
+category: data
+status: native
+source: skills/data/prisma-patterns
+runtime_export: optional
+local_native_owner: skills/data/README.md
+sync_policy: repo-first
+description: Prisma schema, migration, generated client, transaction, query-shape, and deployment guidance for Next.js fullstack profiles.

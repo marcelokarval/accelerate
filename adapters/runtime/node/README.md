@@ -46,6 +46,36 @@ project-native scripts when present:
 - auth/session proof -> backend security/auth test target
 - job/queue proof -> worker/job test target when background work is present
 
+For Next.js + Prisma profiles, also map these classes to project-native scripts
+when present:
+
+- Prisma schema proof -> `prisma validate`, `prisma format --check`, or
+  documented equivalent
+- Prisma migration proof -> `prisma migrate status`, migration dry-run/apply
+  command, or documented equivalent
+- Prisma generated client proof -> `prisma generate` or project wrapper
+- Prisma deploy client-generation proof -> package `postinstall`, build, Docker,
+  CI, or deploy hook evidence that runs or preserves generated client output
+- Prisma database proof -> project-native DB health, integration test, or seed
+  smoke command
+- Prisma query/transaction proof -> data-access test target or filtered test
+  command covering the changed path
+
+For Next.js + Drizzle profiles, also map these classes to project-native scripts
+when present:
+
+- Drizzle schema proof -> TypeScript/schema check or documented Drizzle wrapper
+- Drizzle migration strategy proof -> documented choice of `push`,
+  `generate+migrate`, `pull`, `export`, external migration tool, or runtime
+  migration
+- Drizzle migration generation proof -> `drizzle-kit generate` or project
+  wrapper
+- Drizzle migration apply proof -> `drizzle-kit migrate` or project wrapper
+- Drizzle database proof -> project-native DB health, integration test, or seed
+  smoke command
+- Drizzle SQL/query proof -> data-access test target, migration SQL review, or
+  filtered test command covering the changed path
+
 If the framework has no native check command, record the proof class as
 `blocked` or satisfy it with a documented project smoke test. Do not invent a
 fake framework command.

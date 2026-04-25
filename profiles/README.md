@@ -28,3 +28,5 @@ The bundle must name:
 - `django-inertia-react/`
 - `nextjs-tailwind/`
 - `nextjs-adonis-adminjs/`
+- `nextjs-prisma/`
+- `nextjs-drizzle/`

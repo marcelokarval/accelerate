@@ -76,6 +76,8 @@ The historical migration manifest remains available at:
 | `postgresql` | `data` | `../data/postgresql/` | `standalone-adapted` | optional | `local-authoritative` |
 | `postgres-best-practices` | `data` | `../data/postgres-best-practices/` | `standalone-adapted` | optional | `local-authoritative` |
 | `sql-optimization-patterns` | `data` | `../data/sql-optimization-patterns/` | `standalone-adapted` | optional | `local-authoritative` |
+| `prisma-patterns` | `data` | `../data/prisma-patterns/` | `native` | optional | `local-authoritative` |
+| `drizzle-patterns` | `data` | `../data/drizzle-patterns/` | `native` | optional | `local-authoritative` |
 | `financial-source-truth` | `data` | `../data/financial-source-truth/` | `standalone-adapted` | optional | `local-authoritative` |
 | `payment-integration` | `data` | `../data/payment-integration/` | `standalone-adapted` | optional | `local-authoritative` |
 | `stripe-integration` | `data` | `../data/stripe-integration/` | `standalone-adapted` | optional | `local-authoritative` |

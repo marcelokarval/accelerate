@@ -1,0 +1,8 @@
+name: drizzle-patterns
+category: data
+status: native
+source: skills/data/drizzle-patterns
+runtime_export: optional
+local_native_owner: skills/data/README.md
+sync_policy: repo-first
+description: Drizzle schema, migration, SQL ownership, transaction, query-shape, and runtime driver guidance for Next.js fullstack profiles.
