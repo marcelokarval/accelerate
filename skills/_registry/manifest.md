@@ -39,6 +39,8 @@ The historical migration manifest remains available at:
 | `i18n-patterns` | `frontend` | `../frontend/i18n-patterns/` | `standalone-adapted` | optional | `local-authoritative` |
 | `inertia-runtime-persistence-audit` | `frontend` | `../frontend/inertia-runtime-persistence-audit/` | `standalone-adapted` | optional | `local-authoritative` |
 | `nextjs-app-router-patterns` | `frontend` | `../frontend/nextjs-app-router-patterns/` | `standalone-adapted` | optional | `local-authoritative` |
+| `adonisjs-patterns` | `backend` | `../backend/adonisjs-patterns/` | `native` | optional | `local-authoritative` |
+| `adminjs-patterns` | `backend` | `../backend/adminjs-patterns/` | `native` | optional | `local-authoritative` |
 | `django-pro` | `backend` | `../backend/django-pro/` | `standalone-adapted` | optional | `local-authoritative` |
 | `django-service-patterns` | `backend` | `../backend/django-service-patterns/` | `standalone-adapted` | optional | `local-authoritative` |
 | `django-inertia-integration` | `backend` | `../backend/django-inertia-integration/` | `standalone-adapted` | optional | `local-authoritative` |

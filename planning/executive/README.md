@@ -45,6 +45,10 @@ Active standalone hardening plan:
 - `standalone-hardening-executive-plan.md`
 - `standalone-hardening-execution-ledger.md`
 
+Active stack-profile planning:
+
+- `nextjs-adonis-adminjs-profile-plan.md`
+
 Active planning templates and sublayers:
 
 - `../product/`

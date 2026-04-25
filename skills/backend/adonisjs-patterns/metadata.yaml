@@ -1,0 +1,11 @@
+name: adonisjs-patterns
+category: backend
+status: native
+source: skills/backend/adonisjs-patterns
+owner: accelerate
+runtime_export: optional
+local_native_owner: profiles/nextjs-adonis-adminjs/README.md
+adaptation_policy: >
+  Local AdonisJS backend doctrine adapted from local research corpus and
+  official documentation. Keep concrete commands in profiles or runtime adapters.
+last_reviewed: 2026-04-25

@@ -22,3 +22,9 @@ The bundle must name:
 - browser-proof posture
 - persistent regression posture
 - closure packet requirements
+
+## Active Profiles
+
+- `django-inertia-react/`
+- `nextjs-tailwind/`
+- `nextjs-adonis-adminjs/`

@@ -1,0 +1,11 @@
+name: adminjs-patterns
+category: backend
+status: native
+source: skills/backend/adminjs-patterns
+owner: accelerate
+runtime_export: optional
+local_native_owner: profiles/nextjs-adonis-adminjs/README.md
+adaptation_policy: >
+  Local AdminJS admin/operator doctrine adapted from local research corpus and
+  official documentation. Keep project-specific config in profiles or target repos.
+last_reviewed: 2026-04-25

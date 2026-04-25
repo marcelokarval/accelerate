@@ -11,6 +11,7 @@ This adapter owns:
 
 - package/runtime wrapper posture
 - frontend validation command mapping
+- backend Node validation command mapping
 - evidence expectations
 - failure handling
 
@@ -33,6 +34,21 @@ Map validation classes to project scripts when available:
 - lint/static check -> `lint` or documented equivalent
 - production build -> `build`
 - unit/component tests -> `test`, `test:unit`, or documented equivalent
+
+For backend Node frameworks such as AdonisJS, also map these classes to
+project-native scripts when present:
+
+- server boot/config check -> framework check, dry boot, or documented smoke
+  command
+- database migration check -> migration status/check/dry-run command
+- database connection proof -> project-native DB health or test setup command
+- route/controller/service tests -> backend test script or filtered test command
+- auth/session proof -> backend security/auth test target
+- job/queue proof -> worker/job test target when background work is present
+
+If the framework has no native check command, record the proof class as
+`blocked` or satisfy it with a documented project smoke test. Do not invent a
+fake framework command.
 
 For workspace or monorepo packages, run through the package manager's native
 workspace/filter syntax or an explicit package path. Record the resolved command
