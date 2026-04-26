@@ -1,0 +1,8 @@
+name: supabase-postgres-patterns
+category: data
+status: native
+source: skills/data/supabase-postgres-patterns
+runtime_export: optional
+local_native_owner: skills/data/README.md
+sync_policy: repo-first
+description: Supabase Postgres provider guidance for DB connection, RLS, service keys, migrations, storage adjacency, and proof.

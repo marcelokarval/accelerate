@@ -1,0 +1,8 @@
+name: vercel-deployment-patterns
+category: runtime
+status: native
+source: skills/runtime/vercel-deployment-patterns
+runtime_export: optional
+local_native_owner: skills/runtime/README.md
+sync_policy: repo-first
+description: Vercel build, runtime, env, preview, cache, and deployment proof guidance for Next.js fullstack profiles.

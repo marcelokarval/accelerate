@@ -1,0 +1,8 @@
+name: inngest-patterns
+category: runtime
+status: native
+source: skills/runtime/inngest-patterns
+runtime_export: optional
+local_native_owner: skills/runtime/README.md
+sync_policy: repo-first
+description: Inngest job and event workflow guidance for idempotency, retries, concurrency, observability, and replay proof.

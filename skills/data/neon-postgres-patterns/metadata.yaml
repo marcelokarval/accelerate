@@ -1,0 +1,8 @@
+name: neon-postgres-patterns
+category: data
+status: native
+source: skills/data/neon-postgres-patterns
+runtime_export: optional
+local_native_owner: skills/data/README.md
+sync_policy: repo-first
+description: Neon Postgres provider guidance for connection pooling, branches, preview databases, migrations, backups, and proof.

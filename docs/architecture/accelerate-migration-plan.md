@@ -125,10 +125,18 @@ Initial profile:
 
 - `django-inertia-react`
 
+Current expanded profile set:
+
+- `nextjs-tailwind`
+- `nextjs-prisma`
+- `nextjs-drizzle`
+- `nextjs-adonis-adminjs`
+
 Goal:
 
 - preserve today’s opinionated value without leaking framework assumptions into
   core laws
+- keep concrete runtime/data proof in profiles and adapters rather than core
 
 ## Phase 7. Define workflow adapters
 
@@ -147,6 +155,10 @@ Each adapter should define:
 - parent/child mapping
 - AI review report placement
 - closure traceability
+- task ledger mapping
+- side-by-side review comment placement
+- correction/reproof evidence mapping
+- final forensic reconciliation placement
 
 ## Phase 8. Define runtime adapters
 
@@ -210,6 +222,7 @@ Priority material:
 - maturity control
 - workflow-change approval gate
 - product-critical surface discipline
+- one-shot side-by-side review and correction protocol
 
 Goal:
 
@@ -240,6 +253,26 @@ Outputs:
 - `core/review/product-critical-surfaces.md`
 - `agents/doctrine/empirical-replay.md`
 - `core/review/premium-interface-production.md`
+- `core/review/one-shot-side-by-side-protocol.md`
+
+## Phase 12. Live Workflow Adapter Hardening
+
+Turn the current doctrine-and-packet workflow contracts into live adapter
+behavior without moving workflow authority into core.
+
+Priority material:
+
+- local `.accelerate/` one-shot ledgers and packet persistence
+- Linear issue/comment/status mapping
+- GitHub PR review/check/comment mapping
+- GitHub Issues/Projects field mapping
+- correction/reproof attachment handling
+- final forensic reconciliation posting
+
+Goal:
+
+- keep the one-shot protocol enforceable across local and external workflow
+  backends while preserving root-owned closure authority
 
 ## First Extraction Batches Recommended
 
@@ -265,11 +298,18 @@ Outputs:
 
 - create first stack profile
 - create first runtime adapter contracts
+- expand stack profiles only after each profile has validation and parity proof
 
 ### Batch F
 
 - create workflow adapters
 - create onboarding architecture
+
+### Batch G
+
+- implement local `.accelerate/` live-adapter hardening for one-shot packets
+- implement Linear live adapter first
+- add GitHub PR adapter after Linear semantics stabilize
 
 ## Risks
 
@@ -305,4 +345,6 @@ Migration succeeds when:
 - core laws no longer depend on the old repo
 - the dominant stack is expressed as a profile
 - workflow and runtime integrations are modeled as adapters
+- live workflow adapter gaps are explicit and not confused with doctrine-only
+  governance
 - Prop4You-specific residue is explicitly overlay material

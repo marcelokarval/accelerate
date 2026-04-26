@@ -1,0 +1,8 @@
+name: triggerdev-patterns
+category: runtime
+status: native
+source: skills/runtime/triggerdev-patterns
+runtime_export: optional
+local_native_owner: skills/runtime/README.md
+sync_policy: repo-first
+description: Trigger.dev task guidance for schedules, retries, idempotency, secrets, observability, and proof.

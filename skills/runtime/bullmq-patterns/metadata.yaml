@@ -1,0 +1,8 @@
+name: bullmq-patterns
+category: runtime
+status: native
+source: skills/runtime/bullmq-patterns
+runtime_export: optional
+local_native_owner: skills/runtime/README.md
+sync_policy: repo-first
+description: BullMQ queue and worker guidance for Redis posture, retries, idempotency, concurrency, dead-letter handling, and proof.

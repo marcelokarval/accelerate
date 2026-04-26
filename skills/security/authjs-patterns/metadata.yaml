@@ -1,0 +1,8 @@
+name: authjs-patterns
+category: security
+status: native
+source: skills/security/authjs-patterns
+runtime_export: optional
+local_native_owner: skills/security/README.md
+sync_policy: repo-first
+description: Auth.js provider guidance for Next.js fullstack sessions, callbacks, adapters, provider data, and mutation re-auth proof.

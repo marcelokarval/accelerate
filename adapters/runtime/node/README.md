@@ -84,6 +84,27 @@ For workspace or monorepo packages, run through the package manager's native
 workspace/filter syntax or an explicit package path. Record the resolved command
 in the proof packet instead of hiding it behind the generic class name.
 
+For Vercel-backed Next.js projects, map these classes to project or platform
+evidence when present:
+
+- deployment build proof -> local production build, Vercel build log, or CI build
+  output
+- environment scope proof -> documented local/preview/production env target or
+  platform evidence
+- runtime mode proof -> project config, route segment config, or platform output
+  for Node vs Edge-sensitive code
+- cache/revalidation proof -> runtime/browser evidence that changed data appears
+  after mutation
+
+For hosted Postgres providers such as Neon or Supabase, map these classes to
+project or provider evidence when present:
+
+- connection posture proof -> direct vs pooled connection evidence
+- database target proof -> local/preview/production database target evidence
+- migration target proof -> Prisma/Drizzle migration command plus provider target
+- branch/preview proof -> provider branch/project/environment evidence
+- backup/rollback proof -> documented rollback path for destructive schema work
+
 ## Failure Handling
 
 - Missing script: record `blocked` with the missing script name and package path.

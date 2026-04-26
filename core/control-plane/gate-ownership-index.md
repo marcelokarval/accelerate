@@ -30,6 +30,7 @@ This prevents invisible gate drift and stale mandatory language.
 | `Truth Ownership Check` | `truth-ownership-check.md` | Required when authority, ownership, or stack truth is unclear. |
 | `Failure Classification Gate` | `failure-classification-gate.md` | Required before fixing, auditing, or promoting failure-driven work. |
 | `Artifact Sufficiency Check` | `artifact-sufficiency-check.md` | Required when branch decisions depend on docs, packets, captures, specs, or evidence artifacts. |
+| `One-Shot Side-By-Side Gate` | `../review/one-shot-side-by-side-protocol.md` | Required when a run explicitly asks for one-shot execution, side-by-side task review, auto-correction, delegated correction handoff, and final forensic reconciliation. |
 | `Untrusted Ingress Gate` | `../risk/enforcement-surfaces.md` | Required for uploads, imports, fetched content, and parser/storage risk. |
 | `Secrets & Config Hygiene Check` | `../risk/enforcement-surfaces.md` | Required when environment, provider, credential, or config surfaces are touched. |
 | `Concurrency Integrity Check` | `../risk/enforcement-surfaces.md` | Required when critical mutable state can race. |

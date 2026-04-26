@@ -4,7 +4,7 @@
 
 - status: active baseline
 - phase: pre-agents
-- date: 2026-04-15
+- date: 2026-04-26
 
 ## Purpose
 
@@ -22,7 +22,11 @@ real agent-factory promotion work.
 7. workflow adapters are documented as peers, not accidents
 8. runtime adapters are documented as capabilities-to-tooling layers
 9. onboarding has a native operational surface
-10. the repo remains fully functional with zero promoted agents
+10. stack profiles can own concrete runtime/data proof without leaking commands
+    into core
+11. review protocols can be governed and tested without requiring live workflow
+    adapters
+12. the repo remains fully functional with zero promoted agents
 
 ## Current Native Baseline
 
@@ -50,6 +54,7 @@ The current native pre-agents baseline now includes:
 - `core/review/premium-interface-production.md`
 - `core/review/html-design-system-extraction.md`
 - `core/review/design-system-contract-application.md`
+- `core/review/one-shot-side-by-side-protocol.md`
 - `core/workflows/catalog.md`
 - `core/workflows/operational-calibration.md`
 - `core/workflows/self-evolution.md`
@@ -60,12 +65,19 @@ The current native pre-agents baseline now includes:
 - `core/runtime-packets/qa-proof-stack.md`
 - `core/runtime-packets/ux-ui-fullstack-surface-packet.md`
 - `core/runtime-packets/design-implementation-proof-packet.md`
+- one-shot side-by-side runtime packet shapes in
+  `core/runtime-packets/templates.md`
 - `agents/doctrine/empirical-replay.md`
 - `adapters/workflow/adapter-contract.md`
 - `adapters/workflow/linear/adapter.md`
 - `adapters/workflow/github/adapter.md`
 - `adapters/runtime/adapter-contract.md`
 - runtime adapter shells
+- active stack profiles including Next.js Prisma, Next.js Drizzle, and
+  Next.js + AdonisJS + AdminJS
+- provider skills for auth, authorization, hosted Postgres, deployment, jobs,
+  mail, storage/uploads, and persistent regression
+- profile and one-shot protocol integrity tests
 - onboarding A&Q, discovery, planning, and recommendation docs
 
 ## What Pre-Agents Does Not Require Yet
@@ -73,6 +85,8 @@ The current native pre-agents baseline now includes:
 - promoted `*.toml` agents
 - full rehome of all imported doctrine
 - full adapter implementation breadth
+- live workflow adapters for one-shot task ledgers, comments, correction handoff,
+  and final forensic reconciliation
 - full overlay cleanup
 
 ## Next Phase After Pre-Agents
@@ -81,4 +95,6 @@ Once this baseline is stable, the next major phase is:
 
 1. rehome more doctrine from `references/` into native layers
 2. normalize the default distribution as explicit profile + adapters
-3. evolve `references/codex-agents/` into the native `agent-factory`
+3. harden local `.accelerate/` and live workflow adapters for one-shot packets,
+   task ledgers, correction/reproof evidence, and final forensic closure
+4. evolve `references/codex-agents/` into the native `agent-factory`

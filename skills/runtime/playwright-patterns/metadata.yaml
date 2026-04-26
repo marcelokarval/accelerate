@@ -1,0 +1,8 @@
+name: playwright-patterns
+category: runtime
+status: native
+source: skills/runtime/playwright-patterns
+runtime_export: optional
+local_native_owner: skills/runtime/README.md
+sync_policy: repo-first
+description: Playwright persistent regression guidance for browser-truth-first proof, stable selectors, auth state, fixtures, traces, retries, and flake triage.

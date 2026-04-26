@@ -69,8 +69,24 @@ The historical migration manifest remains available at:
 | `mcporter` | `runtime` | `../runtime/mcporter/` | `standalone-adapted` | optional | `local-authoritative` |
 | `codebase-inspection` | `runtime` | `../runtime/codebase-inspection/` | `standalone-adapted` | optional | `local-authoritative` |
 | `web-content-reader` | `runtime` | `../runtime/web-content-reader/` | `native` | optional | `local-authoritative` |
+| `vercel-deployment-patterns` | `runtime` | `../runtime/vercel-deployment-patterns/` | `native` | optional | `local-authoritative` |
+| `inngest-patterns` | `runtime` | `../runtime/inngest-patterns/` | `native` | optional | `local-authoritative` |
+| `triggerdev-patterns` | `runtime` | `../runtime/triggerdev-patterns/` | `native` | optional | `local-authoritative` |
+| `bullmq-patterns` | `runtime` | `../runtime/bullmq-patterns/` | `native` | optional | `local-authoritative` |
+| `pgboss-patterns` | `runtime` | `../runtime/pgboss-patterns/` | `native` | optional | `local-authoritative` |
+| `qstash-patterns` | `runtime` | `../runtime/qstash-patterns/` | `native` | optional | `local-authoritative` |
+| `resend-patterns` | `runtime` | `../runtime/resend-patterns/` | `native` | optional | `local-authoritative` |
+| `postmark-patterns` | `runtime` | `../runtime/postmark-patterns/` | `native` | optional | `local-authoritative` |
+| `nodemailer-patterns` | `runtime` | `../runtime/nodemailer-patterns/` | `native` | optional | `local-authoritative` |
+| `s3-r2-storage-patterns` | `runtime` | `../runtime/s3-r2-storage-patterns/` | `native` | optional | `local-authoritative` |
+| `uploadthing-patterns` | `runtime` | `../runtime/uploadthing-patterns/` | `native` | optional | `local-authoritative` |
+| `playwright-patterns` | `runtime` | `../runtime/playwright-patterns/` | `native` | optional | `local-authoritative` |
 | `adversarial-security-review` | `security` | `../security/adversarial-security-review/` | `standalone-adapted` | optional | `local-authoritative` |
 | `untrusted-ingress-hardening` | `security` | `../security/untrusted-ingress-hardening/` | `standalone-adapted` | optional | `local-authoritative` |
+| `authorization-policy-patterns` | `security` | `../security/authorization-policy-patterns/` | `native` | optional | `local-authoritative` |
+| `better-auth-patterns` | `security` | `../security/better-auth-patterns/` | `native` | optional | `local-authoritative` |
+| `authjs-patterns` | `security` | `../security/authjs-patterns/` | `native` | optional | `local-authoritative` |
+| `clerk-patterns` | `security` | `../security/clerk-patterns/` | `native` | optional | `local-authoritative` |
 | `database-design` | `data` | `../data/database-design/` | `standalone-adapted` | optional | `local-authoritative` |
 | `database-architect` | `data` | `../data/database-architect/` | `standalone-adapted` | optional | `local-authoritative` |
 | `postgresql` | `data` | `../data/postgresql/` | `standalone-adapted` | optional | `local-authoritative` |
@@ -78,6 +94,8 @@ The historical migration manifest remains available at:
 | `sql-optimization-patterns` | `data` | `../data/sql-optimization-patterns/` | `standalone-adapted` | optional | `local-authoritative` |
 | `prisma-patterns` | `data` | `../data/prisma-patterns/` | `native` | optional | `local-authoritative` |
 | `drizzle-patterns` | `data` | `../data/drizzle-patterns/` | `native` | optional | `local-authoritative` |
+| `neon-postgres-patterns` | `data` | `../data/neon-postgres-patterns/` | `native` | optional | `local-authoritative` |
+| `supabase-postgres-patterns` | `data` | `../data/supabase-postgres-patterns/` | `native` | optional | `local-authoritative` |
 | `financial-source-truth` | `data` | `../data/financial-source-truth/` | `standalone-adapted` | optional | `local-authoritative` |
 | `payment-integration` | `data` | `../data/payment-integration/` | `standalone-adapted` | optional | `local-authoritative` |
 | `stripe-integration` | `data` | `../data/stripe-integration/` | `standalone-adapted` | optional | `local-authoritative` |
@@ -89,6 +107,7 @@ The historical migration manifest remains available at:
 | `extract-html-design-system-v2` | `design-system` | `../design-system/extract-html-design-system-v2/` | `native` | optional | `local-authoritative` |
 | `apply-design-system-contract` | `design-system` | `../design-system/apply-design-system-contract/` | `native` | optional | `local-authoritative` |
 | `premium-design-benchmark-corpus` | `design-system` | `../design-system/premium-design-benchmark-corpus/` | `native` | optional | `local-authoritative` |
+| `design-md-corpus-patterns` | `design-system` | `../design-system/design-md-corpus-patterns/` | `native` | optional | `local-authoritative` |
 
 ## Migration Backlog
 

@@ -141,9 +141,9 @@ installation_mode: greenfield|adoption
 repo_maturity: empty|early|existing|mature
 onboarding_status: not_started|in_progress|partially_stabilized|completed
 reentry_status: clean|light_reentry|partial_reonboarding|structural_reonboarding
-workflow_backend: none-yet|github|linear
-workflow_backend_detected: none-yet|github|linear
-active_profile: unknown|django-inertia-react|nextjs-tailwind
+workflow_backend: none-yet|github|github-projects|linear|jira|notion
+workflow_backend_detected: none-yet|github|github-projects|linear|jira|notion
+active_profile: unknown|django-inertia-react|nextjs-tailwind|nextjs-prisma|nextjs-drizzle|nextjs-adonis-adminjs
 active_runtime_adapters: []
 agent_mode: root-only|agent-eligible
 current_plan: .accelerate/planning/current-plan.md
@@ -155,6 +155,8 @@ evidence_registry: .accelerate/status/evidence-registry.yaml
 review_ready_packet: .accelerate/review/review-ready-packet.md
 ai_review_report: .accelerate/review/ai-review-report.md
 closure_packet: .accelerate/review/closure-packet.md
+one_shot_task_ledger: .accelerate/review/one-shot-task-ledger.md
+final_forensic_reconciliation: .accelerate/review/final-forensic-reconciliation.md
 branch_entry_packet: .accelerate/review/branch-entry-packet.md
 runtime_delta_packet: .accelerate/review/runtime-delta-packet.md
 handoff_summary: .accelerate/review/handoff-summary.md
@@ -384,9 +386,9 @@ Minimum required keys:
 
 ```yaml
 schema_version: 1
-selected_workflow_backend: none-yet|github|linear
-selected_workflow_backend_detected: none-yet|github|linear
-selected_profile: unknown|django-inertia-react|nextjs-tailwind
+selected_workflow_backend: none-yet|github|github-projects|linear|jira|notion
+selected_workflow_backend_detected: none-yet|github|github-projects|linear|jira|notion
+selected_profile: unknown|django-inertia-react|nextjs-tailwind|nextjs-prisma|nextjs-drizzle|nextjs-adonis-adminjs
 selected_runtime_posture: []
 selected_docs_posture: default|custom|none-yet
 explicit_non_goals: []

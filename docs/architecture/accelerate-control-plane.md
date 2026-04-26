@@ -30,6 +30,20 @@ This document does not replace:
 
 It explains how those pieces fit together as one operating system.
 
+## Current Native Extensions
+
+The control plane now includes two important native extensions beyond the first
+pre-agents baseline:
+
+- Next.js fullstack profile routing for Prisma, Drizzle, and AdonisJS/AdminJS
+- one-shot side-by-side execution governance for plan/task/review/correction
+  prompts
+
+These extensions do not weaken core authority. Profiles own stack-specific
+runtime/data proof. The one-shot protocol owns review/correction shape. The root
+still owns classification, issue topology, lane order, delegation budget, proof
+order, and final closure.
+
 ## Canonical Layering
 
 Read the system in this order:
@@ -149,6 +163,19 @@ For full-stack work, both gate sets apply.
 Treat closure without the applicable gate set as workflow failure, not as
 acceptable operator discretion.
 
+Profile integrity and protocol integrity are also first-class doctrine checks
+for governance changes:
+
+- `bash tests/profile-integrity.sh`
+- `bash tests/one-shot-protocol-integrity.sh`
+- `bash tests/one-shot-protocol-semantic.sh`
+- `bash tests/one-shot-protocol-delegation.sh`
+- `bash tests/one-shot-protocol-closure.sh`
+- `bash tests/doctrine-integrity.sh`
+
+These tests do not prove human judgment quality, but they prevent structural and
+semantic drift in the profile and one-shot protocol stacks.
+
 ## Root-Owned Closure Mode
 
 The current control plane now treats closure as a root-owned mode instead of
@@ -171,6 +198,20 @@ Use these roles and skills distinctly:
 Do not collapse these into a single generic "tested/reviewed" claim.
 These are review and verification surfaces, not substitutes for root closure
 authority.
+
+When the `One-Shot Side-By-Side Gate` is active, root closure must also compare:
+
+- executive plan vs final landing
+- task ledger vs completed work
+- requested-vs-implemented packets vs actual artifacts
+- defects found vs corrected, waived, or open defects
+- corrections vs reproof evidence
+- validation expected vs validation run
+- subagent claims vs master review-of-review
+
+Closure remains blocked by open in-scope defects, corrections without reproof,
+missing side-by-side task reviews, missing final forensic reconciliation, or
+subagent success accepted without master integration review.
 
 ## Concrete MCP / Integration Lane
 

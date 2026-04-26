@@ -9,6 +9,7 @@ made the next implementation slice honest.
 ## Native Artifacts
 
 - `task-breakdown-template.md`
+- `one-shot-task-ledger-template.md`
 
 ## Rule
 
@@ -27,3 +28,7 @@ Task breakdown should produce dependency-aware slices that can become:
 - implementation handoff packets
 - QA/proof lanes
 - follow-up work
+
+Use `one-shot-task-ledger-template.md` when the execution style requires
+one-shot execution, side-by-side review, auto-correction, and reproof before
+closure.

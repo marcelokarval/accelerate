@@ -69,6 +69,64 @@ set_artifact() {
   set_yaml_scalar "${target}/.accelerate/status/evidence-registry.yaml" "${key}_artifact" "${value}"
 }
 
+write_valid_browser_proof() {
+  local target="$1"
+  mkdir -p "${target}/.accelerate/proof" "${target}/.tmp/browser"
+  printf '%s\n' "screenshot" > "${target}/.tmp/browser/dashboard.png"
+  cat > "${target}/.accelerate/proof/browser_proof.md" <<'MD'
+Browser-Proof Packet
+
+- surface / route family: /dashboard
+- runtime target: http://localhost:3000/dashboard
+- browser tool: Chrome DevTools
+- intensity: targeted
+- viewport coverage: desktop
+- state coverage: default
+- session/auth posture: seeded user
+- console/runtime errors: none
+- network/server truth: 200 responses
+- backend/frontend state reconciliation: present
+- screenshots/captures: .tmp/browser/dashboard.png
+- defects registered: none
+- residual route-family gaps: none
+- readiness impact: supports-closure
+MD
+  set_artifact "${target}" "browser_proof" ".accelerate/proof/browser_proof.md"
+}
+
+write_valid_design_implementation_proof() {
+  local target="$1"
+  mkdir -p "${target}/.accelerate/proof"
+  cat > "${target}/.accelerate/proof/design_implementation_proof.md" <<'MD'
+Design Implementation Proof Packet
+
+- target surface: /dashboard
+- active branch: visual / artifact-driven frontend
+- contract authority: docs/reference/design-system.contract.md
+- source visual evidence: docs/reference/design-system.html
+- premium authority: none
+- rollout / task driver: .accelerate/planning/current-plan.md
+- owner layer: page
+- component mapping:
+  - source-observed: dashboard card
+  - code-available: page component
+  - premium-proposed: none
+  - not-approved-yet: none
+- anatomy fixed: yes
+- token changes allowed: no
+- viewport coverage: desktop
+- state coverage: default
+- runtime adapter used: Chrome DevTools
+- captures: .tmp/browser/dashboard.png
+- artifact comparison result: aligned
+- defects opened: none
+- defects fixed / reproved: none
+- residual drift: none
+- promotion posture: promotable
+MD
+  set_artifact "${target}" "design_implementation_proof" ".accelerate/proof/design_implementation_proof.md"
+}
+
 seed_required_artifacts() {
   local target="$1"
   mkdir -p "${target}/.accelerate/proof"
@@ -76,6 +134,7 @@ seed_required_artifacts() {
     printf '%s\n' "${key}" > "${target}/.accelerate/proof/${key}.md"
     set_artifact "${target}" "${key}" ".accelerate/proof/${key}.md"
   done
+  write_valid_browser_proof "${target}"
 }
 
 mkdir -p "${WORK_ROOT}"
@@ -164,6 +223,126 @@ if bash "${SCRIPTS}/reconcile-readiness.sh" "${artifact_target}" closure-ready >
   fail "closure-ready reconciliation succeeded with present statuses but empty artifacts"
 fi
 assert_contains "$(cat "${WORK_ROOT}/artifact-gate.out")" "artifact gate blocked"
+
+junk_browser_target="$(reset_repo closure-blocks-junk-browser-proof-artifact)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review; do
+  set_evidence "${junk_browser_target}" "${key}" "present"
+done
+set_evidence "${junk_browser_target}" "frontend_qa" "not-applicable"
+set_evidence "${junk_browser_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${junk_browser_target}"
+printf '%s\n' "browser proof" > "${junk_browser_target}/.accelerate/proof/browser_proof.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${junk_browser_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${junk_browser_target}" closure-ready >"${WORK_ROOT}/junk-browser-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded with junk browser proof artifact"
+fi
+assert_contains "$(cat "${WORK_ROOT}/junk-browser-gate.out")" "artifact gate blocked: browser_proof_artifact missing required marker: Browser-Proof Packet"
+
+partial_browser_target="$(reset_repo closure-blocks-partial-browser-proof-artifact)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review; do
+  set_evidence "${partial_browser_target}" "${key}" "present"
+done
+set_evidence "${partial_browser_target}" "frontend_qa" "not-applicable"
+set_evidence "${partial_browser_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${partial_browser_target}"
+cat > "${partial_browser_target}/.accelerate/proof/browser_proof.md" <<'MD'
+Browser-Proof Packet
+
+- surface / route family: /dashboard
+MD
+bash "${SCRIPTS}/reconcile-readiness.sh" "${partial_browser_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${partial_browser_target}" closure-ready >"${WORK_ROOT}/partial-browser-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded with partial browser proof artifact"
+fi
+assert_contains "$(cat "${WORK_ROOT}/partial-browser-gate.out")" "artifact gate blocked: browser_proof_artifact missing required marker: - runtime target:"
+
+missing_capture_target="$(reset_repo closure-blocks-missing-browser-capture)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review; do
+  set_evidence "${missing_capture_target}" "${key}" "present"
+done
+set_evidence "${missing_capture_target}" "frontend_qa" "not-applicable"
+set_evidence "${missing_capture_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${missing_capture_target}"
+perl -0pi -e 's#\.tmp/browser/dashboard\.png#.tmp/browser/missing.png#g' "${missing_capture_target}/.accelerate/proof/browser_proof.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${missing_capture_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${missing_capture_target}" closure-ready >"${WORK_ROOT}/missing-capture-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded with missing browser capture"
+fi
+assert_contains "$(cat "${WORK_ROOT}/missing-capture-gate.out")" "artifact gate blocked: browser_proof_artifact capture path does not exist: .tmp/browser/missing.png"
+
+outside_capture_target="$(reset_repo closure-blocks-browser-capture-outside-project-tmp)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review; do
+  set_evidence "${outside_capture_target}" "${key}" "present"
+done
+set_evidence "${outside_capture_target}" "frontend_qa" "not-applicable"
+set_evidence "${outside_capture_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${outside_capture_target}"
+mkdir -p "${outside_capture_target}/screenshots"
+printf '%s\n' "screenshot" > "${outside_capture_target}/screenshots/dashboard.png"
+perl -0pi -e 's#\.tmp/browser/dashboard\.png#screenshots/dashboard.png#g' "${outside_capture_target}/.accelerate/proof/browser_proof.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${outside_capture_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${outside_capture_target}" closure-ready >"${WORK_ROOT}/outside-capture-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded with browser capture outside project .tmp"
+fi
+assert_contains "$(cat "${WORK_ROOT}/outside-capture-gate.out")" "artifact gate blocked: browser_proof_artifact capture path must be under project .tmp/: screenshots/dashboard.png"
+
+junk_design_target="$(reset_repo closure-blocks-junk-design-proof-artifact)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review design_implementation_proof; do
+  set_evidence "${junk_design_target}" "${key}" "present"
+done
+set_evidence "${junk_design_target}" "frontend_qa" "not-applicable"
+set_evidence "${junk_design_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${junk_design_target}"
+mkdir -p "${junk_design_target}/.accelerate/proof"
+printf '%s\n' "design proof" > "${junk_design_target}/.accelerate/proof/design_implementation_proof.md"
+set_artifact "${junk_design_target}" "design_implementation_proof" ".accelerate/proof/design_implementation_proof.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${junk_design_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${junk_design_target}" closure-ready >"${WORK_ROOT}/junk-design-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded with junk design implementation proof artifact"
+fi
+assert_contains "$(cat "${WORK_ROOT}/junk-design-gate.out")" "artifact gate blocked: design_implementation_proof_artifact missing required marker: Design Implementation Proof Packet"
+
+missing_design_capture_target="$(reset_repo closure-blocks-missing-design-capture)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review design_implementation_proof; do
+  set_evidence "${missing_design_capture_target}" "${key}" "present"
+done
+set_evidence "${missing_design_capture_target}" "frontend_qa" "not-applicable"
+set_evidence "${missing_design_capture_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${missing_design_capture_target}"
+write_valid_design_implementation_proof "${missing_design_capture_target}"
+perl -0pi -e 's#\.tmp/browser/dashboard\.png#.tmp/browser/missing-design.png#g' "${missing_design_capture_target}/.accelerate/proof/design_implementation_proof.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${missing_design_capture_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${missing_design_capture_target}" closure-ready >"${WORK_ROOT}/missing-design-capture-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded with missing design proof capture"
+fi
+assert_contains "$(cat "${WORK_ROOT}/missing-design-capture-gate.out")" "artifact gate blocked: design_implementation_proof_artifact capture path does not exist: .tmp/browser/missing-design.png"
+
+design_without_browser_target="$(reset_repo closure-blocks-design-proof-without-browser-proof)"
+for key in implementation_proof qa_proof_lane backend_qa requested_vs_implemented ai_review design_implementation_proof; do
+  set_evidence "${design_without_browser_target}" "${key}" "present"
+done
+set_evidence "${design_without_browser_target}" "frontend_qa" "not-applicable"
+set_evidence "${design_without_browser_target}" "browser_proof" "not-applicable"
+set_evidence "${design_without_browser_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${design_without_browser_target}"
+write_valid_design_implementation_proof "${design_without_browser_target}"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${design_without_browser_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${design_without_browser_target}" closure-ready >"${WORK_ROOT}/design-without-browser-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded with design proof but no browser proof"
+fi
+assert_contains "$(cat "${WORK_ROOT}/design-without-browser-gate.out")" "evidence gate blocked closure-ready: design_implementation_proof requires browser_proof present"
+
+valid_design_target="$(reset_repo closure-accepts-valid-browser-and-design-proof-packets)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review design_implementation_proof; do
+  set_evidence "${valid_design_target}" "${key}" "present"
+done
+set_evidence "${valid_design_target}" "frontend_qa" "not-applicable"
+set_evidence "${valid_design_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${valid_design_target}"
+write_valid_design_implementation_proof "${valid_design_target}"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${valid_design_target}" review-ready >/dev/null
+bash "${SCRIPTS}/reconcile-readiness.sh" "${valid_design_target}" closure-ready >/dev/null
+assert_contains "$(grep '^closure_readiness:' "${valid_design_target}/.accelerate/status/readiness-dashboard.yaml")" "closure_readiness: ready"
 
 stale_target="$(reset_repo stale-readiness-downgrades-after-evidence-regression)"
 for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review; do

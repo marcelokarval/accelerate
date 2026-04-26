@@ -1,0 +1,8 @@
+name: authorization-policy-patterns
+category: security
+status: native
+source: skills/security/authorization-policy-patterns
+runtime_export: optional
+local_native_owner: skills/security/README.md
+sync_policy: repo-first
+description: Stack-neutral RBAC, ABAC, ownership, tenancy, membership, and resource authorization guidance for Next.js fullstack profiles.

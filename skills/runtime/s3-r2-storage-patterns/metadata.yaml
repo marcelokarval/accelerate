@@ -1,0 +1,8 @@
+name: s3-r2-storage-patterns
+category: runtime
+status: native
+source: skills/runtime/s3-r2-storage-patterns
+runtime_export: optional
+local_native_owner: skills/runtime/README.md
+sync_policy: repo-first
+description: S3/R2 storage guidance for uploads, ownership, visibility, signed URLs, lifecycle, deletion/export, and untrusted ingress proof.

@@ -1,0 +1,8 @@
+name: clerk-patterns
+category: security
+status: native
+source: skills/security/clerk-patterns
+runtime_export: optional
+local_native_owner: skills/security/README.md
+sync_policy: repo-first
+description: Clerk provider guidance for Next.js fullstack auth, middleware, organization authorization, webhooks, and abuse proof.

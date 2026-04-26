@@ -93,6 +93,9 @@ case "${TARGET_STATE}" in
     require_optional_clean "closure-ready" "ux_ui_fullstack_surface"
     require_optional_clean "closure-ready" "design_implementation_proof"
     require_optional_clean "closure-ready" "product_critical_closure"
+    if is_present "design_implementation_proof" && ! is_present "browser_proof"; then
+      block "closure-ready" "design_implementation_proof requires browser_proof present"
+    fi
     ;;
   *)
     echo "invalid target state: ${TARGET_STATE}" >&2

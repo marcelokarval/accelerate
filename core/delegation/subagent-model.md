@@ -138,6 +138,7 @@ Every subagent must return:
 - tests or verification run
 - self-review
 - self-forensic review
+- correction/reproof status when performing delegated correction
 - unresolved risks
 
 Role-specific returns should add the missing proof, not restate the global
@@ -171,6 +172,15 @@ When multiple outputs come back, the master must check:
 - local correctness vs global correctness
 
 Never trust subagent-local success as proof of integrated correctness.
+
+## One-Shot Correction Handoff
+
+When the `One-Shot Side-By-Side Gate` is active, delegated correction is allowed
+only for bounded defects with clear evidence and write scope.
+
+The subagent return must include correction/reproof status, self-review,
+self-forensic review, and unresolved risks. The master owns integration,
+review-of-review, and final forensic closure.
 
 ## Parallelism Budget
 

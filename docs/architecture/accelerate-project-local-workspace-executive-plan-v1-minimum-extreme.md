@@ -63,8 +63,8 @@ installation_mode: greenfield|adoption
 repo_maturity: empty|early|existing|mature
 onboarding_status: not_started|in_progress|partially_stabilized|completed
 reentry_status: clean|light_reentry|partial_reonboarding|structural_reonboarding
-workflow_backend: none-yet|github|linear
-active_profile: unknown|django-inertia-react|nextjs-tailwind
+workflow_backend: none-yet|github|github-projects|linear|jira|notion
+active_profile: unknown|django-inertia-react|nextjs-tailwind|nextjs-prisma|nextjs-drizzle|nextjs-adonis-adminjs
 agent_mode: root-only|agent-eligible
 last_bootstrap_update: YYYY-MM-DD
 ```

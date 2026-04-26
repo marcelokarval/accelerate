@@ -56,7 +56,7 @@ required, and which gaps must not be hidden by generic fullstack language.
 | --- | --- | --- | --- |
 | Authentication | Project-selected auth provider/library | gap | No baseline equivalent; choose Auth.js, Better Auth, Clerk, custom, or provider explicitly. |
 | Sessions | Project-selected session strategy | gap | Security proof required; do not assume Next.js provides session policy. |
-| Authorization | Project RBAC/ABAC/policy convention | gap | Ownership and permission checks must be explicit and tested. |
+| Authorization | Project RBAC/ABAC/policy convention | gap | Use `authorization-policy-patterns`; ownership and permission checks must be explicit and tested. |
 | Server Action exposure | Direct POST-reachable Server Actions | adapted | Re-check auth/authz inside every action; filter returned data. |
 | CSRF/security headers | Framework/provider/project controls | adapted | Mutation and cookie posture requires `security-patterns`. |
 | Rate limiting | Provider, middleware, edge, or route-level limiter | gap | Protect login, reset, admin, high-cost endpoints, and job triggers explicitly. |

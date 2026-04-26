@@ -37,6 +37,142 @@ artifact_exists() {
   esac
 }
 
+artifact_path() {
+  local artifact="$1"
+  case "${artifact}" in
+    http://*|https://*|external:*|manual:*)
+      printf '\n'
+      ;;
+    /*)
+      printf '%s\n' "${artifact}"
+      ;;
+    *)
+      printf '%s\n' "${TARGET_ROOT}/${artifact}"
+      ;;
+  esac
+}
+
+require_local_artifact() {
+  local key="$1"
+  local artifact="$2"
+  local resolved
+  resolved="$(artifact_path "${artifact}")"
+  if [ -z "${resolved}" ]; then
+    echo "artifact gate blocked: ${key}_artifact must be a local inspectable proof packet" >&2
+    exit 1
+  fi
+  printf '%s\n' "${resolved}"
+}
+
+require_marker() {
+  local label="$1"
+  local path="$2"
+  local marker="$3"
+  if ! grep -Fq -- "${marker}" "${path}"; then
+    echo "artifact gate blocked: ${label} missing required marker: ${marker}" >&2
+    exit 1
+  fi
+}
+
+field_value() {
+  local path="$1"
+  local field="$2"
+  sed -n "s#^- ${field}:[[:space:]]*##p" "${path}" | head -n 1
+}
+
+validate_capture_paths() {
+  local label="$1"
+  local path="$2"
+  local field="$3"
+  local value
+  value="$(field_value "${path}" "${field}")"
+
+  case "${value}" in
+    ""|blocked|n/a|none|not-applicable|manual:*|external:*|http://*|https://*)
+      return 0
+      ;;
+  esac
+
+  value="${value//,/ }"
+  for capture in ${value}; do
+    case "${capture}" in
+      blocked|n/a|none|not-applicable|manual:*|external:*|http://*|https://*)
+        continue
+        ;;
+    esac
+
+    if [[ "${capture}" != .tmp/* ]]; then
+      echo "artifact gate blocked: ${label} capture path must be under project .tmp/: ${capture}" >&2
+      exit 1
+    fi
+
+    if [ ! -e "${TARGET_ROOT}/${capture}" ]; then
+      echo "artifact gate blocked: ${label} capture path does not exist: ${capture}" >&2
+      exit 1
+    fi
+  done
+}
+
+validate_browser_proof_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "browser_proof" "${artifact}")"
+
+  for marker in \
+    "Browser-Proof Packet" \
+    "- surface / route family:" \
+    "- runtime target:" \
+    "- browser tool:" \
+    "- intensity:" \
+    "- viewport coverage:" \
+    "- state coverage:" \
+    "- console/runtime errors:" \
+    "- network/server truth:" \
+    "- screenshots/captures:" \
+    "- residual route-family gaps:" \
+    "- readiness impact:"; do
+    require_marker "browser_proof_artifact" "${path}" "${marker}"
+  done
+
+  if [ "${TARGET_STATE}" = "closure-ready" ]; then
+    require_marker "browser_proof_artifact" "${path}" "- readiness impact: supports-closure"
+  fi
+
+  validate_capture_paths "browser_proof_artifact" "${path}" "screenshots/captures"
+}
+
+validate_design_implementation_proof_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "design_implementation_proof" "${artifact}")"
+
+  for marker in \
+    "Design Implementation Proof Packet" \
+    "- target surface:" \
+    "- contract authority:" \
+    "- source visual evidence:" \
+    "- rollout / task driver:" \
+    "- owner layer:" \
+    "- component mapping:" \
+    "- viewport coverage:" \
+    "- state coverage:" \
+    "- runtime adapter used:" \
+    "- captures:" \
+    "- artifact comparison result:" \
+    "- residual drift:" \
+    "- promotion posture:"; do
+    require_marker "design_implementation_proof_artifact" "${path}" "${marker}"
+  done
+
+  if [ "${TARGET_STATE}" = "closure-ready" ]; then
+    require_marker "design_implementation_proof_artifact" "${path}" "- artifact comparison result: aligned"
+    require_marker "design_implementation_proof_artifact" "${path}" "- residual drift: none"
+    require_marker "design_implementation_proof_artifact" "${path}" "- promotion posture: promotable"
+  fi
+
+  validate_capture_paths "design_implementation_proof_artifact" "${path}" "captures"
+}
+
 case "${TARGET_STATE}" in
   review-ready)
     keys=(implementation_proof qa_proof_lane)
@@ -78,6 +214,15 @@ for key in "${keys[@]}"; do
     echo "artifact gate blocked: ${key}_artifact does not exist: ${artifact}" >&2
     exit 1
   fi
+
+  case "${key}" in
+    browser_proof)
+      validate_browser_proof_artifact "${artifact}"
+      ;;
+    design_implementation_proof)
+      validate_design_implementation_proof_artifact "${artifact}"
+      ;;
+  esac
 done
 
 echo "evidence artifact gate passed"

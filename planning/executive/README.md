@@ -48,6 +48,13 @@ Active standalone hardening plan:
 Active stack-profile planning:
 
 - `nextjs-adonis-adminjs-profile-plan.md`
+- `nextjs-fullstack-provider-profile-plan.md`
+- `nextjs-fullstack-provider-profile-task-ledger.md`
+
+Active execution/review protocol planning:
+
+- `one-shot-side-by-side-protocol-executive-plan.md`
+- `one-shot-side-by-side-protocol-task-ledger.md`
 
 Active planning templates and sublayers:
 

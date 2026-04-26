@@ -1,0 +1,8 @@
+name: resend-patterns
+category: runtime
+status: native
+source: skills/runtime/resend-patterns
+runtime_export: optional
+local_native_owner: skills/runtime/README.md
+sync_policy: repo-first
+description: Resend transactional mail guidance for templates, test sends, bounces, provider events, idempotency, and UI state proof.

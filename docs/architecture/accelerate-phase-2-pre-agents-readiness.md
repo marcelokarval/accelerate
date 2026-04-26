@@ -55,15 +55,33 @@ The standalone repo is now considered pre-agents ready because it already has:
 - a root-only-complete operating model
 - explicit distinction between recommendation, promotion, and future agent work
 
-## What Still Remains
+## What Still Remained At This Slice
 
 - continue rehoming imported doctrine out of `references/`
 - formalize the first profile in deeper detail
 - evolve `references/codex-agents/` into the native `agents/` layer
 - later decide when the platform is ready for real promoted agents
 
+## Later Native Additions
+
+Since this completed slice, the repo has added native surfaces that extend the
+pre-agents baseline:
+
+- Next.js fullstack profiles for Prisma, Drizzle, and AdonisJS/AdminJS
+- provider skills for auth, authorization, hosted Postgres, deployment, jobs,
+  mail, storage/uploads, and Playwright
+- one-shot side-by-side execution/review/correction protocol
+- profile and one-shot protocol integrity tests
+
+These additions do not change the historical status of this slice; they are the
+current continuation of the same pre-agents platform hardening path.
+
 ## Recommended Next Slice
 
 1. first deep rehome of `references/codex-agents/` into `agents/doctrine/`
 2. first detailed profile package under `profiles/django-inertia-react/`
 3. first executable onboarding artifact or manifesto format
+
+This recommendation is historical. Later work added more active profiles and
+protocol hardening; use current README and `profiles/README.md` for present-day
+profile selection.

@@ -1,0 +1,8 @@
+name: uploadthing-patterns
+category: runtime
+status: native
+source: skills/runtime/uploadthing-patterns
+runtime_export: optional
+local_native_owner: skills/runtime/README.md
+sync_policy: repo-first
+description: UploadThing guidance for upload routes, auth middleware, callbacks, validation, lifecycle, visibility, and UI state proof.

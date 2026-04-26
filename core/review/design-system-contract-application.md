@@ -47,6 +47,8 @@ Usually pair with:
 - `frontend-componentization-audit` when reuse or component mapping matters
 - `product-runtime-review` when the target surface is user-facing
 - `premium-interface-production.md` when premium direction is active
+- `design-md-corpus.md` when local DESIGN.md corpus examples are used as
+  benchmark or influence material
 
 ## Required Artifacts
 
@@ -83,7 +85,10 @@ When the task mutates UI, the implementation/proof handoff must also satisfy:
    target surface.
 3. Inspect the visual showcase for concrete source examples.
 4. If premium artifacts exist and the task is improvement/polish/premium work,
-   read the slop audit and premium direction artifacts.
+    read the slop audit and premium direction artifacts.
+   If a DESIGN.md corpus selection is active, read the selected
+   `references/design-md/<slug>/DESIGN.md` and `metadata.md` files and keep them
+   separate from source-truth artifacts.
 5. Inspect the target codebase for real components, tokens, routes, and runtime
    states.
 6. Create a component mapping matrix:
@@ -169,6 +174,9 @@ When the task mutates UI, the implementation/proof handoff must also satisfy:
 - Do not collapse a broad component system into hero/cards/tables only.
 - Do not accept raw framework defaults when the contract defines a different
   product identity.
+- Do not treat DESIGN.md corpus entries as direct implementation law. They must
+  influence the local contract, theme tokens, component consequences, or
+  Benchmark Influence Map.
 - Do not silently translate token names between artifacts during implementation.
   If aliases are needed, they must be explicit in the contract and visible in the
   showcase evidence.

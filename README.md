@@ -123,6 +123,24 @@ At a high level, `accelerate` works like this:
 
 The control plane should be visible, not implied.
 
+## Current Native Additions
+
+The standalone repository now has additional native surfaces beyond the initial
+pre-agents baseline:
+
+- Next.js fullstack stack profiles:
+  - `profiles/nextjs-prisma/`
+  - `profiles/nextjs-drizzle/`
+  - `profiles/nextjs-adonis-adminjs/`
+- provider and runtime skills for auth, hosted Postgres, Vercel, jobs, mail,
+  storage/uploads, and Playwright regression
+- a native one-shot side-by-side execution and review protocol
+- a repo-local curated DESIGN.md corpus for premium design examples
+- profile and one-shot protocol integrity tests integrated into doctrine checks
+
+These are repo-local authorities. They must not be sourced from user-home skill
+catalogs or external design/runtime libraries.
+
 ## Prompt Hardening
 
 `accelerate` must decide whether prompt hardening is required before execution
@@ -171,9 +189,14 @@ The minimum mutation path is:
 
 Mutation must not jump directly from request to implementation.
 
+When the user asks for one-shot execution with task-by-task review,
+auto-correction, delegated correction, and final forensic reconciliation, the
+mutation path also opens the `One-Shot Side-By-Side Gate`.
+
 See:
 
 - [issue-driven-mutation-stack.md](./core/issue-topology/issue-driven-mutation-stack.md)
+- [one-shot-side-by-side-protocol.md](./core/review/one-shot-side-by-side-protocol.md)
 
 ## Enforcement And Branching
 
@@ -198,6 +221,14 @@ Use them to decide:
 - whether `prepare-review.sh` or `prepare-closure.sh` is now the canonical local next step
 - which proof and artifacts closure requires
 
+The branch matrix also wires the `One-Shot Side-By-Side Gate` for requests that
+explicitly ask for a one-shot batch, side-by-side task review, auto-correction,
+delegated correction handoff, and final forensic review.
+
+The gate owner is:
+
+- [one-shot-side-by-side-protocol.md](./core/review/one-shot-side-by-side-protocol.md)
+
 ## Proof Stack
 
 The native proof-order and lane-ownership authority now lives in:
@@ -211,6 +242,78 @@ Proof ordering is:
 3. browser truth
 4. persistent regression proof
 5. forensic closure
+
+When the one-shot protocol is active, proof also requires:
+
+- a task ledger
+- task-level side-by-side review packets
+- requested-vs-implemented comparison
+- defect ledger updates when defects exist
+- correction loop packets for fixed defects
+- fresh reproof after every correction
+- final forensic reconciliation before closure
+
+The packet authority is:
+
+- [templates.md](./core/runtime-packets/templates.md)
+
+The reusable task-ledger template is:
+
+- [one-shot-task-ledger-template.md](./planning/execution/one-shot-task-ledger-template.md)
+
+## One-Shot Side-By-Side Protocol
+
+The one-shot side-by-side protocol is a native Accelerate workflow for prompts
+that ask the system to plan, execute, review, correct, and forensically close a
+batch in one governed run.
+
+It is activated by requests that combine signals such as:
+
+- executive plan
+- tasks or task ledger
+- one-shot execution
+- review 1:1 or side-by-side review
+- auto-correction
+- subagent correction handoff
+- final forensic review
+
+The required chain is:
+
+1. create or identify the executive plan
+2. create the task ledger
+3. execute bounded tasks in the one-shot batch
+4. review each task side by side
+5. compare requested vs implemented
+6. record defects and drift
+7. auto-correct every in-scope defect
+8. run reproof after each correction
+9. delegate correction only when the fix is bounded and delegation helps
+10. perform master review-of-review
+11. perform final forensic reconciliation
+12. block closure until the ledger, proof, correction, and forensic packets agree
+
+Closure blockers include:
+
+- open in-scope defects
+- corrections without reproof
+- missing side-by-side task review
+- missing final forensic reconciliation
+- validation stack under-run
+- subagent success accepted without master integration review
+
+Native surfaces:
+
+- [one-shot-side-by-side-protocol.md](./core/review/one-shot-side-by-side-protocol.md)
+- [one-shot-task-ledger-template.md](./planning/execution/one-shot-task-ledger-template.md)
+- [templates.md](./core/runtime-packets/templates.md)
+- [subagent-model.md](./core/delegation/subagent-model.md)
+
+Regression tests:
+
+- `tests/one-shot-protocol-integrity.sh`
+- `tests/one-shot-protocol-semantic.sh`
+- `tests/one-shot-protocol-delegation.sh`
+- `tests/one-shot-protocol-closure.sh`
 
 ## Agent Optionality
 
@@ -239,6 +342,155 @@ Agents are a governed capability, not a structural dependency.
 The native bounded-delegation authority now lives in:
 
 - [subagent-model.md](./core/delegation/subagent-model.md)
+
+When delegated correction is used under the one-shot protocol, subagents must
+return correction/reproof status, self-review, self-forensic review, unresolved
+risk, and the bounded scope handled. The root still owns integration,
+review-of-review, final forensic closure, and `Done`.
+
+## Stack Profiles
+
+Profiles are stack-specific authority bundles. They own concrete stack posture,
+validation expectations, and profile-local parity matrices. Core should remain
+capability-oriented and avoid embedding raw framework command strings unless the
+command belongs to a runtime adapter or profile.
+
+Active profiles include:
+
+- `profiles/django-inertia-react/`
+- `profiles/nextjs-tailwind/`
+- `profiles/nextjs-prisma/`
+- `profiles/nextjs-drizzle/`
+- `profiles/nextjs-adonis-adminjs/`
+
+Use the smallest honest profile:
+
+- simple Next.js data app -> `nextjs-prisma`
+- SQL-heavy, tenant/RLS, or query-control-heavy app -> `nextjs-drizzle`
+- backend/admin/operator-heavy app -> `nextjs-adonis-adminjs`
+- UI-only or marketing-only Next.js work -> `nextjs-tailwind` when no durable
+  data authority is needed
+
+Do not combine Prisma and Drizzle as equal baseline data authorities in one
+profile. The active profile must choose one schema/migration authority.
+
+Relevant profile artifacts:
+
+- [nextjs-prisma](./profiles/nextjs-prisma/README.md)
+- [nextjs-drizzle](./profiles/nextjs-drizzle/README.md)
+- [nextjs-adonis-adminjs](./profiles/nextjs-adonis-adminjs/README.md)
+
+## Provider And Runtime Skills
+
+The Next.js fullstack expansion added optional provider skills. These skills
+govern provider posture without turning any provider into a universal baseline.
+
+Auth and authorization:
+
+- `skills/security/better-auth-patterns/`
+- `skills/security/authjs-patterns/`
+- `skills/security/clerk-patterns/`
+- `skills/security/authorization-policy-patterns/`
+
+Data and hosted Postgres:
+
+- `skills/data/prisma-patterns/`
+- `skills/data/drizzle-patterns/`
+- `skills/data/neon-postgres-patterns/`
+- `skills/data/supabase-postgres-patterns/`
+
+Deployment:
+
+- `skills/runtime/vercel-deployment-patterns/`
+
+Jobs and queues:
+
+- `skills/runtime/inngest-patterns/`
+- `skills/runtime/triggerdev-patterns/`
+- `skills/runtime/bullmq-patterns/`
+- `skills/runtime/pgboss-patterns/`
+- `skills/runtime/qstash-patterns/`
+
+Mail:
+
+- `skills/runtime/resend-patterns/`
+- `skills/runtime/postmark-patterns/`
+- `skills/runtime/nodemailer-patterns/`
+
+Storage/uploads:
+
+- `skills/runtime/s3-r2-storage-patterns/`
+- `skills/runtime/uploadthing-patterns/`
+
+Persistent regression:
+
+- `skills/runtime/playwright-patterns/`
+
+Provider skills must prove ownership, lifecycle, failure behavior, idempotency,
+replay posture, validation boundaries, and closure evidence appropriate to the
+provider class.
+
+## Workflow Adapter Live Direction
+
+The one-shot protocol and issue-driven stack are currently governed by native
+doctrine, planning artifacts, runtime packets, and shell validation. They do not
+yet have a complete live workflow adapter that automatically creates, updates,
+reviews, corrects, and closes work in an external system.
+
+That is intentional for the current standalone pre-agents phase. The next
+platform step is to build live workflow adapters that map the same conceptual
+model to concrete backends.
+
+Candidate tools and adapters:
+
+- Linear:
+  - best fit for parent/child issue topology, execution-ready issue bodies,
+    status transitions, review comments, and delivery workflows
+  - recommended first adapter when team execution and issue state matter most
+- GitHub Issues + Pull Requests:
+  - best fit for open-source or repo-native workflows where code review,
+    commits, checks, and PR closure are the primary lifecycle
+  - useful for binding `Requested-Vs-Implemented`, `AI Review`, and final
+    forensic packets to PR comments
+- GitHub Projects:
+  - useful when GitHub Issues/PRs are present but board-level prioritization and
+    project fields are needed
+- Jira:
+  - useful for enterprise teams with existing sprint, release, and compliance
+    workflows
+  - likely higher integration cost than Linear or GitHub
+- Notion databases:
+  - useful for lightweight planning and artifact indexes, but weaker as a strict
+    execution backend unless paired with GitHub or Linear
+- Local `.accelerate/` workspace:
+  - best for repo-local review/closure bundles, handoff summaries, readiness
+    dashboards, and offline continuity
+  - should remain a first-class adapter even when an external backend exists
+
+A live adapter should implement these operations without changing core doctrine:
+
+- issue bootstrap
+- metadata rehydration
+- post-issue planning attachment
+- task ledger creation or linking
+- per-task side-by-side review comments
+- defect ledger updates
+- delegated correction handoff packets
+- reproof evidence attachment
+- final forensic reconciliation comment
+- closure blocker detection
+- final status transition only after root closure mode
+
+The recommended build order is:
+
+1. local `.accelerate/` adapter hardening for one-shot packets and ledgers
+2. Linear live adapter for issue topology and status/comment lifecycle
+3. GitHub PR adapter for code-review-bound forensic closure
+4. GitHub Issues/Projects adapter for repo-native planning
+5. Jira/Notion adapters only after the core live-adapter contract stabilizes
+
+Until a live adapter exists, do not pretend one does. Use the native planning
+artifacts, packet templates, and tests as the source of truth.
 
 ### Suggestion vs Promotion
 
@@ -345,6 +597,16 @@ Premium or de-AI design work must also use the repo-local benchmark corpus:
 
 - [premium-design-benchmark-corpus](./skills/design-system/premium-design-benchmark-corpus/SKILL.md)
 
+Accelerate also carries a repo-local curated DESIGN.md corpus:
+
+- [DESIGN.md corpus](./references/design-md/README.md)
+
+That corpus provides concrete premium examples such as Airbnb, Stripe, Linear,
+Vercel, and Notion. It is reference material and influence material, not direct
+implementation authority. Corpus influence must be mapped into local
+`design-system.contract.md`, `design-system.theme.css`, and stable `--ds-*`
+tokens before implementation.
+
 Do not depend on external `popular-web-designs` skills or user-home design
 libraries. The premium direction must include a `Benchmark Influence Map`, and
 every benchmark must change a token, component family, state rule, layout rule,
@@ -387,6 +649,7 @@ They may:
 - perform self-review and self-forensic review
 - comment on the issue with evidence
 - move an issue to `In Review`
+- return correction/reproof status when correcting a delegated one-shot defect
 
 They must not, by default:
 
@@ -396,6 +659,7 @@ They must not, by default:
 - restaff or respawn the run
 - claim closure authority
 - move an issue to `Done`
+- treat delegated correction success as integrated closure
 
 ### Accelerate Inside A Bounded Agent
 
@@ -634,6 +898,25 @@ Expected behavior:
 - it prefers `prepare-closure.sh` for the closure handoff lane
 - ad hoc manual sequencing is reserved for debugging the local workspace layer
 
+### Example 11. One-shot side-by-side execution
+
+The user asks to create a plan, create tasks, execute them in one shot, review
+each task side by side, auto-correct gaps, delegate bounded correction when
+useful, and perform a final forensic review.
+
+Expected behavior:
+
+- `accelerate` classifies the run as orchestrated non-trivial work
+- `One-Shot Side-By-Side Gate` opens
+- an executive plan and one-shot task ledger are created or identified
+- each task receives a side-by-side requested-vs-implemented review
+- in-scope defects are corrected and reproved
+- delegated corrections return self-review, self-forensic review, and
+  correction/reproof status
+- the root performs review-of-review and final forensic reconciliation
+- closure is blocked until all required packets, proof, and defect dispositions
+  agree
+
 ## Common Usage Guidance
 
 Use `accelerate` whenever the request may involve:
@@ -672,6 +955,17 @@ Then use the governed reference tree for supporting authority:
 - [branch-enforcement-matrix.md](./references/branch-enforcement-matrix.md)
 - [issue-stack.md](./references/issue-stack.md)
 - [qa-proof-stack.md](./references/qa-proof-stack.md)
+
+Current native execution/review protocol additions:
+
+- [one-shot-side-by-side-protocol.md](./core/review/one-shot-side-by-side-protocol.md)
+- [one-shot-task-ledger-template.md](./planning/execution/one-shot-task-ledger-template.md)
+
+Current native fullstack profile additions:
+
+- [nextjs-prisma](./profiles/nextjs-prisma/README.md)
+- [nextjs-drizzle](./profiles/nextjs-drizzle/README.md)
+- [nextjs-adonis-adminjs](./profiles/nextjs-adonis-adminjs/README.md)
 
 For the governed future-agent ecosystem:
 
@@ -723,9 +1017,23 @@ The first standalone shell of the target architecture now exists:
 - `agents/`
 - `onboarding/`
 - `overlays/`
+- `planning/`
+- `skills/`
+- `tests/`
 
 These directories currently act as contract-bearing shells while the inherited
 doctrine is still being rehomed out of `references/`.
+
+The repository also now carries executable doctrine checks for profile and
+one-shot protocol integrity. Run the relevant suite before claiming closure on
+governance changes:
+
+- `bash tests/doctrine-integrity.sh`
+- `bash tests/profile-integrity.sh`
+- `bash tests/one-shot-protocol-integrity.sh`
+- `bash tests/one-shot-protocol-semantic.sh`
+- `bash tests/one-shot-protocol-delegation.sh`
+- `bash tests/one-shot-protocol-closure.sh`
 
 ## Repository Bootstrap Context
 

@@ -95,7 +95,10 @@ accelerate/
 │       └── docusaurus/
 ├── profiles/
 │   ├── django-inertia-react/
-│   └── nextjs-tailwind/
+│   ├── nextjs-tailwind/
+│   ├── nextjs-prisma/
+│   ├── nextjs-drizzle/
+│   └── nextjs-adonis-adminjs/
 ├── agents/
 │   ├── doctrine/
 │   ├── envelopes/
@@ -162,6 +165,11 @@ Every workflow adapter should support the same conceptual model:
 - lifecycle state transitions
 - AI review reporting
 - traceable closure
+- task ledger linking
+- requested-vs-implemented review surfaces
+- defect ledger updates
+- correction/reproof evidence
+- final forensic reconciliation
 
 Initial adapters:
 
@@ -206,6 +214,16 @@ Initial intended profiles:
 
 - `django-inertia-react`
 - `nextjs-tailwind`
+
+Current expanded profiles:
+
+- `nextjs-prisma`
+- `nextjs-drizzle`
+- `nextjs-adonis-adminjs`
+
+Profiles must own concrete stack proof without leaking raw framework command
+strings into core. Prisma and Drizzle must not be treated as equal baseline data
+authorities in the same profile.
 
 ### 5. Agent Factory
 

@@ -1,0 +1,8 @@
+name: postmark-patterns
+category: runtime
+status: native
+source: skills/runtime/postmark-patterns
+runtime_export: optional
+local_native_owner: skills/runtime/README.md
+sync_policy: repo-first
+description: Postmark transactional mail guidance for message streams, templates, webhooks, bounces, idempotency, and UI state proof.

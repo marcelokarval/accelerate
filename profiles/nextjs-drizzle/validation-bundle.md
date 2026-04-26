@@ -130,6 +130,8 @@ Use:
 - `adapters/runtime/proof-fixtures/runtime-proof-packet-template.md`
 - `adapters/runtime/proof-fixtures/browser-truth-template.md`
 
+Use `playwright-patterns` when adding or changing persisted Playwright scenarios.
+
 ## Closure Requirements
 
 Before closure, report:

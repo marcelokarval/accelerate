@@ -1,0 +1,8 @@
+name: nodemailer-patterns
+category: runtime
+status: native
+source: skills/runtime/nodemailer-patterns
+runtime_export: optional
+local_native_owner: skills/runtime/README.md
+sync_policy: repo-first
+description: Nodemailer SMTP guidance for transport config, secrets, test/fake proof, retries, templates, and failure handling.

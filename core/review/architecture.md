@@ -10,6 +10,7 @@ Adjacent native review surfaces:
 - `active-correction-loop.md`
 - `review-of-review-gate.md`
 - `seam-proof.md`
+- `one-shot-side-by-side-protocol.md`
 
 ## Review Catalog
 
@@ -60,6 +61,10 @@ The minimum native comparative backbone is:
 5. review-of-review when prior reviews exist
 
 Do not collapse this chain into one summary paragraph.
+
+When a run explicitly asks for one-shot execution, task-by-task side-by-side
+review, auto-correction, delegated correction, and final forensic review, use
+`one-shot-side-by-side-protocol.md` as the operational protocol.
 
 ## Defect-Oriented Review Rule
 

@@ -1,0 +1,8 @@
+name: qstash-patterns
+category: runtime
+status: native
+source: skills/runtime/qstash-patterns
+runtime_export: optional
+local_native_owner: skills/runtime/README.md
+sync_policy: repo-first
+description: QStash HTTP job guidance for signatures, retries, idempotency, replay protection, and endpoint proof.

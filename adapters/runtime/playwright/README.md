@@ -40,6 +40,21 @@ The fixture records:
 - rerun command
 - residual gaps
 
+## Scenario Quality
+
+Persistent scenarios should prefer:
+
+- user-facing locators and accessible names
+- stable app-owned selectors when accessible locators are insufficient
+- explicit fixture setup and teardown
+- explicit auth/session state ownership
+- minimal assertions that protect real behavior instead of DOM trivia
+- network, trace, video, or screenshot artifacts when failures are
+  runtime-sensitive
+
+Do not hide auth state, seed data, or provider mocks behind unexplained global
+setup. If global setup is used, the scenario fixture must point to it.
+
 ## Proof Packet
 
 Every Playwright rerun used for closure should leave a packet using:
@@ -71,3 +86,18 @@ For closure-relevant runtime work, the Playwright packet must state:
 
 If the source browser-proof packet is missing, mark the Playwright lane
 `out of order`.
+
+## Flake Triage
+
+When a Playwright scenario fails intermittently, classify the failure before
+closure:
+
+- product bug
+- selector fragility
+- fixture/data race
+- auth/session setup drift
+- provider/network instability
+- infrastructure timeout
+
+Do not rerun until green and call that proof. Record the rerun count and the
+classification in the proof packet.

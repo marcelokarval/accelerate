@@ -149,8 +149,9 @@ Everything else is selected around them.
 
 ## Default Distribution
 
-Until more adapters and profiles exist, the default distribution should remain
-close to the current mature ecosystem:
+The default distribution remains close to the mature incubator ecosystem, but
+onboarding can now choose among more local stack profiles when discovery proves a
+better fit:
 
 - workflow adapter:
   - `linear`
@@ -161,10 +162,20 @@ close to the current mature ecosystem:
   - `playwright`
 - stack profile:
   - `django-inertia-react`
+- additional active profiles:
+  - `nextjs-tailwind`
+  - `nextjs-prisma`
+  - `nextjs-drizzle`
+  - `nextjs-adonis-adminjs`
 - docs adapter:
   - `docusaurus`
 
 This is a default distribution, not a universal lock.
+
+Profile selection should keep data authority explicit. Simple Next.js data apps
+usually fit `nextjs-prisma`; SQL-heavy or tenant/RLS apps usually fit
+`nextjs-drizzle`; backend/admin/operator-heavy apps usually fit
+`nextjs-adonis-adminjs`.
 
 ## Skill Recommendation Model
 

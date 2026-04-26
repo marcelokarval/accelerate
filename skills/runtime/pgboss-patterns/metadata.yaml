@@ -1,0 +1,8 @@
+name: pgboss-patterns
+category: runtime
+status: native
+source: skills/runtime/pgboss-patterns
+runtime_export: optional
+local_native_owner: skills/runtime/README.md
+sync_policy: repo-first
+description: pg-boss Postgres job guidance for transactional enqueue, retries, idempotency, worker proof, and job-table query posture.

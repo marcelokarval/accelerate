@@ -28,6 +28,13 @@ require_file "core/control-plane/gate-ownership-index.md"
 require_file "core/control-plane/failure-classification-gate.md"
 require_file "core/control-plane/truth-ownership-check.md"
 require_file "core/control-plane/artifact-sufficiency-check.md"
+require_file "tests/profile-integrity.sh"
+require_file "tests/one-shot-protocol-integrity.sh"
+require_file "tests/one-shot-protocol-semantic.sh"
+require_file "tests/one-shot-protocol-delegation.sh"
+require_file "tests/one-shot-protocol-closure.sh"
+require_file "tests/design-md-corpus-integrity.sh"
+require_file "tests/design-md-corpus-semantic.sh"
 
 python3 - <<'PY'
 from pathlib import Path
@@ -145,3 +152,10 @@ require_no_match 'runtime_mirror:' 'skills'
 require_no_match 'popular-web-designs.*authority|authority.*popular-web-designs' 'README.md' 'AGENTS.md' 'core' 'skills' 'onboarding' 'planning'
 
 printf 'doctrine integrity passed\n'
+
+bash tests/one-shot-protocol-integrity.sh
+bash tests/one-shot-protocol-semantic.sh
+bash tests/one-shot-protocol-delegation.sh
+bash tests/one-shot-protocol-closure.sh
+bash tests/design-md-corpus-integrity.sh
+bash tests/design-md-corpus-semantic.sh

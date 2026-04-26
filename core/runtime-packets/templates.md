@@ -18,6 +18,8 @@ The platform uses:
 - `Seam Proof Packet`
 - `Subagent Return Packet`
 - `QA / Proof Packet`
+- `One-Shot Side-By-Side Review Packet`
+- `Final Forensic Reconciliation Packet`
 - `Closure Packet`
 
 ## Rule
@@ -252,6 +254,44 @@ QA / Proof Packet
 - readiness impact: <none|moved-to-review-ready|still-blocked>
 - next canonical local action: <prepare-review|prepare-closure|manual-debug-exception|n/a>
 ```
+
+## One-Shot Side-By-Side Review Packet
+
+```text
+One-Shot Side-By-Side Review Packet
+
+- task id: <id>
+- requested outcome: <what the task required>
+- implemented evidence: <files|packets|runtime evidence>
+- expected proof: <proof required by the plan/profile/gate>
+- actual proof: <proof actually run>
+- requested vs implemented: <met|partial|missed|not-applicable>
+- defects found: <ids or none>
+- correction owner: <master|subagent|n/a>
+- correction summary: <summary or n/a>
+- reproof evidence: <fresh proof or n/a>
+- open defects: <ids or none>
+- closure status: <closed|blocked|waived>
+```
+
+Use this packet for task-level side-by-side review in one-shot execution runs.
+
+## Final Forensic Reconciliation Packet
+
+```text
+Final Forensic Reconciliation Packet
+
+- executive plan vs final landing: <met|partial|missed + evidence>
+- task ledger vs completed work: <met|partial|missed + evidence>
+- requested-vs-implemented packets: <complete|incomplete|blocked>
+- defects found vs disposition: <clear|open defects|waived defects>
+- corrections without reproof: <ids or none>
+- validation expected vs validation run: <met|partial|missed>
+- subagent claims vs master review-of-review: <accepted|corrected|blocked|n/a>
+- final closure judgment: <done|blocked|follow-up-required>
+```
+
+Use this packet before closure when the `One-Shot Side-By-Side Gate` is active.
 
 ## Closure Packet
 

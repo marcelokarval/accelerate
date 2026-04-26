@@ -34,6 +34,7 @@ Native pre-agents authority now starts here:
 - `risk/risk-enforcement-matrix.md`
 - `risk/enforcement-surfaces.md`
 - `review/architecture.md`
+- `review/one-shot-side-by-side-protocol.md`
 - `review/persisted-modeling-forensics.md`
 - `review/product-critical-surfaces.md`
 - `review/premium-interface-production.md`

@@ -41,6 +41,8 @@ Usually pair with:
 - `product-runtime-review` when user-facing or runtime-sensitive
 - `premium-interface-production.md` when the surface is brand-critical,
   conversion-critical, or quality-critical
+- `design-md-corpus.md` when the extraction or premium direction should be
+  compared against the repo-local curated DESIGN.md corpus
 
 ## Output Contract
 
@@ -124,9 +126,12 @@ rewriting component anatomy.
 10. Treat the HTML, contract, and theme CSS as the design-system evidence package for subsequent UI
    correction, recreation, or convergence.
 11. When premium improvement is in scope, run the AI-slop audit and premium
-    direction extension before implementation.
+     direction extension before implementation.
+    Use the DESIGN.md corpus as local example material only when selected entries
+    are named and their influence is mapped into concrete token/component/layout
+    consequences.
 12. Run the local consistency gate before implementation or closure:
-    `onboarding/local-workspace/check-design-system-artifact-consistency.sh`.
+     `onboarding/local-workspace/check-design-system-artifact-consistency.sh`.
 13. Before implementation, hand off to
     `design-system-contract-application.md` instead of relying on memory or
     visual vibes.
@@ -161,6 +166,8 @@ Rules:
   `design-system.premium-direction.html` and
   `design-system.premium-direction.md` tokens must be declared in
   `design-system.premium-theme.css` using the same `--ds-*` names.
+- DESIGN.md corpus entries are not a replacement token API. Any imported or
+  selected corpus pattern must be normalized into the canonical `--ds-*` layer.
 
 ## Canonical Theme CSS Contract
 
