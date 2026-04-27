@@ -13,7 +13,8 @@ for script in \
   probe-linear-adapter.sh read-github-pr-adapter.sh attach-github-pr-artifact.sh \
   read-linear-adapter.sh attach-linear-artifact.sh require-export-approved.sh \
   validate-linear-issue-response.sh validate-linear-comment-response.sh \
-  capture-browser-proof.sh; do
+  capture-browser-proof.sh create-github-pr-adapter.sh \
+  rehydrate-github-pr-adapter.sh write-github-pr-recovery.sh; do
   path="${ROOT}/onboarding/local-workspace/${script}"
   [ -x "${path}" ] || { echo "missing executable script: ${path}" >&2; exit 1; }
 done

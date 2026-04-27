@@ -131,10 +131,14 @@ for manifest in adapters/workflow/*/capabilities.yaml; do
     require_file "onboarding/local-workspace/probe-github-pr-adapter.sh"
     require_file "onboarding/local-workspace/read-github-pr-adapter.sh"
     require_file "onboarding/local-workspace/attach-github-pr-artifact.sh"
+    require_file "onboarding/local-workspace/create-github-pr-adapter.sh"
+    require_file "onboarding/local-workspace/rehydrate-github-pr-adapter.sh"
+    require_file "onboarding/local-workspace/write-github-pr-recovery.sh"
     runtime_truth="$(yaml_value "${manifest}" "runtime_truth")"
     [ "${runtime_truth}" = "remote" ] || fail "github-pr adapter runtime_truth must be remote"
     if [ "${status}" = "implemented" ]; then
-      fail "github-pr adapter must not be implemented until API read/write behavior is tested"
+      [ "$(yaml_value "${manifest}" "live_read_result")" = "passed" ] || fail "github-pr implemented adapter requires live read proof"
+      [ "$(yaml_value "${manifest}" "live_attachment_result")" = "passed" ] || fail "github-pr implemented adapter requires live attachment proof"
     fi
   fi
 done

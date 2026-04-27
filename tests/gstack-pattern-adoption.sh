@@ -155,6 +155,10 @@ if bash "${SCRIPTS}/probe-github-pr-adapter.sh" "${WORK_ROOT}/repo" --dry-run-ta
 fi
 git -C "${WORK_ROOT}/repo" remote set-url origin https://github.com/example/repo.git
 bash "${SCRIPTS}/read-github-pr-adapter.sh" "${WORK_ROOT}/repo" --dry-run >/dev/null
+bash "${SCRIPTS}/create-github-pr-adapter.sh" "${WORK_ROOT}/repo" "Test PR" ".accelerate/review/qa-report.md" --dry-run >/dev/null
+bash "${SCRIPTS}/rehydrate-github-pr-adapter.sh" "${WORK_ROOT}/repo" ".accelerate/workflow/github-pr-rehydration.json" --dry-run >/dev/null
+recovery_packet="$(bash "${SCRIPTS}/write-github-pr-recovery.sh" "${WORK_ROOT}/repo" "comment" "test failure")"
+[ -f "${WORK_ROOT}/repo/${recovery_packet}" ] || fail "GitHub PR recovery packet not written"
 bash "${SCRIPTS}/attach-github-pr-artifact.sh" "${WORK_ROOT}/repo" ".accelerate/review/qa-report.md" "QA Report" --dry-run >/dev/null
 perl -0pi -e 's#export: approved#export: blocked-unless-approved#' "${WORK_ROOT}/repo/.accelerate/status/privacy-map.yaml"
 if bash "${SCRIPTS}/attach-github-pr-artifact.sh" "${WORK_ROOT}/repo" ".accelerate/review/qa-report.md" "QA Report" --dry-run >"${WORK_ROOT}/blocked-gh-attach.out" 2>&1; then

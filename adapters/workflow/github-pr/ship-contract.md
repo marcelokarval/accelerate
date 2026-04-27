@@ -22,3 +22,18 @@ On 2026-04-27, the helper layer was live-tested against
 This proves the read/comment helper layer. The adapter remains `planned` as a
 full workflow adapter until PR create/update, failure recovery, and closure
 truth are adopted as governed workflow behavior.
+
+## Implemented Helper Set
+
+The GitHub PR adapter is implemented as a remote workflow adapter when `gh` is
+authenticated and the target repository has a GitHub `origin` remote:
+
+- create: `create-github-pr-adapter.sh`
+- read: `read-github-pr-adapter.sh`
+- attach review/closure artifact: `attach-github-pr-artifact.sh`
+- rehydrate: `rehydrate-github-pr-adapter.sh`
+- recovery packet: `write-github-pr-recovery.sh`
+
+Lifecycle/topology are `linked`, not fully native, because GitHub PRs do not own
+the whole issue hierarchy by themselves. The adapter must still preserve closure
+truth by attaching governed artifacts and rehydrating PR metadata before closure.
