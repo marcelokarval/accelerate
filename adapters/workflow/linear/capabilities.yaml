@@ -3,13 +3,13 @@ adapter: linear
 status: planned
 identity: native
 work_item_create: blocked
-work_item_lookup: native
+work_item_lookup: planned
 work_item_update: blocked
 lifecycle_transition: blocked
 topology: planned
 review_attachment: blocked
 closure_attachment: blocked
-metadata_rehydration: native
+metadata_rehydration: planned
 failure_recovery: native
 external_api: native
 substitute_evidence: .accelerate/workflow/

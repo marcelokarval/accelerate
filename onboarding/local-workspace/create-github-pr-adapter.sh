@@ -13,6 +13,9 @@ mode="${4:-}"
 
 case "${body_file}" in /*|*..*) echo "body file must be relative and cannot contain '..': ${body_file}" >&2; exit 1 ;; esac
 [ -f "${root}/${body_file}" ] || { echo "missing body file: ${body_file}" >&2; exit 1; }
+body_real="$(readlink -f "${root}/${body_file}")"
+case "${body_real}" in "${root}"|"${root}"/*) ;; *) echo "resolved body file escapes target repo: ${body_file}" >&2; exit 1 ;; esac
+bash "$(dirname "${BASH_SOURCE[0]}")/require-export-approved.sh" "${root}" "${body_file}"
 
 origin_url="$(git -C "${root}" remote get-url origin 2>/dev/null || true)"
 case "${origin_url}" in git@github.com:*|https://github.com/*) ;; *) echo "origin is not a GitHub remote: ${origin_url}" >&2; exit 1 ;; esac
@@ -33,4 +36,4 @@ if ! git -C "${root}" rev-parse --abbrev-ref --symbolic-full-name '@{u}' >/dev/n
   git -C "${root}" push -u origin "${branch}"
 fi
 
-gh -R "${repo_slug}" pr create --head "${branch}" --base main --title "${title}" --body-file "${root}/${body_file}"
+gh -R "${repo_slug}" pr create --head "${branch}" --base main --title "${title}" --body-file "${body_real}"

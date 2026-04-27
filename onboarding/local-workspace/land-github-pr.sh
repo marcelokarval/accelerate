@@ -39,4 +39,4 @@ fresh_readiness="$(mktemp)"
 trap 'rm -f "${fresh_readiness}"' EXIT
 bash "$(dirname "${BASH_SOURCE[0]}")/check-ship-readiness.sh" "${root}" "${readiness_path}" >/dev/null
 python3 -c 'import json,sys; data=json.load(open(sys.argv[1])); sys.exit(0 if data.get("ready") is True else 2)' "${root}/${readiness_path}" || { echo "fresh ship readiness is not ready; refusing land" >&2; exit 2; }
-gh -R "${repo_slug}" pr merge "${pr_number}" --squash --delete-branch
+gh -R "${repo_slug}" pr merge "${pr_number}" --squash --delete-branch --match-head-commit "${head_ref_oid}"

@@ -64,6 +64,19 @@ async function main() {
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
   const page = await browser.newPage();
+  const allowedHosts = new Set(['localhost', '127.0.0.1', '0.0.0.0', '[::1]', '::1']);
+  await page.setRequestInterception(true);
+  page.on('request', (request) => {
+    try {
+      const parsed = new URL(request.url());
+      if (!allowedHosts.has(parsed.hostname)) {
+        return request.abort('blockedbyclient');
+      }
+    } catch (_) {
+      return request.abort('blockedbyclient');
+    }
+    return request.continue();
+  });
   const consoleEvents = [];
   const networkEvents = [];
   page.on('console', (msg) => {

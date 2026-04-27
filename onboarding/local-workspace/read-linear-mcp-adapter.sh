@@ -22,7 +22,5 @@ if [ "${mode}" = "--dry-run" ]; then
 fi
 
 command -v opencode >/dev/null 2>&1 || { echo "opencode is required for Linear MCP adapter" >&2; exit 1; }
-opencode mcp auth list | grep -Fq "linear" || { echo "linear MCP auth is not available" >&2; exit 1; }
-mkdir -p "$(dirname "${root}/${output_path}")"
-opencode run --format json --agent build "Use the linear MCP server only. Read issue ${issue_id}. Do not create or update anything. Return concise JSON with id, title, url, status, assignee, project, team." >"${root}/${output_path}"
-printf '%s\n' "${output_path}"
+echo "Linear MCP reads through an LLM host are blocked until a structured read binding exists" >&2
+exit 2
