@@ -125,4 +125,16 @@ Write live test:
 
 This proves OpenCode-hosted Linear MCP read/write capability. It does not prove
 the GraphQL helper scripts, which still require `LINEAR_API_KEY`; therefore the
-adapter remains `planned` as a full workflow adapter.
+GraphQL helpers remain secondary.
+
+## Implemented MCP Helper Set
+
+The implemented Linear adapter path is MCP-hosted through OpenCode global auth:
+
+- read: `read-linear-mcp-adapter.sh`
+- create: `create-linear-mcp-issue.sh`
+- attach review/closure artifact: `attach-linear-mcp-artifact.sh`
+- recovery packet: `write-linear-mcp-recovery.sh`
+
+The older GraphQL helpers remain available for environments that provide
+`LINEAR_API_KEY`, but they are not the primary implemented path.

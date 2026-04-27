@@ -120,10 +120,15 @@ for manifest in adapters/workflow/*/capabilities.yaml; do
     require_file "onboarding/local-workspace/probe-linear-adapter.sh"
     require_file "onboarding/local-workspace/read-linear-adapter.sh"
     require_file "onboarding/local-workspace/attach-linear-artifact.sh"
+    require_file "onboarding/local-workspace/read-linear-mcp-adapter.sh"
+    require_file "onboarding/local-workspace/create-linear-mcp-issue.sh"
+    require_file "onboarding/local-workspace/attach-linear-mcp-artifact.sh"
+    require_file "onboarding/local-workspace/write-linear-mcp-recovery.sh"
     runtime_truth="$(yaml_value "${manifest}" "runtime_truth")"
     [ "${runtime_truth}" = "remote" ] || fail "linear adapter runtime_truth must be remote"
     if [ "${status}" = "implemented" ]; then
-      fail "linear adapter must not be implemented until API read/write behavior is tested"
+      [ "$(yaml_value "${manifest}" "mcp_live_read_result")" = "passed" ] || fail "linear implemented adapter requires MCP read proof"
+      [ "$(yaml_value "${manifest}" "mcp_live_write_result")" = "passed" ] || fail "linear implemented adapter requires MCP write proof"
     fi
   fi
 

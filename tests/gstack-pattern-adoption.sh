@@ -168,6 +168,11 @@ perl -0pi -e 's#export: blocked-unless-approved#export: approved#' "${WORK_ROOT}
 bash "${SCRIPTS}/probe-linear-adapter.sh" "${WORK_ROOT}/repo" --dry-run >/dev/null
 bash "${SCRIPTS}/read-linear-adapter.sh" "${WORK_ROOT}/repo" "P4Y-123" --dry-run >/dev/null
 bash "${SCRIPTS}/attach-linear-artifact.sh" "${WORK_ROOT}/repo" "P4Y-123" ".accelerate/review/qa-report.md" "QA Report" --dry-run >/dev/null
+bash "${SCRIPTS}/read-linear-mcp-adapter.sh" "${WORK_ROOT}/repo" "P4Y-123" ".accelerate/workflow/linear-mcp-read.jsonl" --dry-run >/dev/null
+bash "${SCRIPTS}/create-linear-mcp-issue.sh" "${WORK_ROOT}/repo" "P4Y" "Prop4You" "marcelokarval@gmail.com" "Test" ".accelerate/workflow/linear-mcp-create.jsonl" --dry-run >/dev/null
+bash "${SCRIPTS}/attach-linear-mcp-artifact.sh" "${WORK_ROOT}/repo" "P4Y-123" ".accelerate/review/qa-report.md" "QA Report" ".accelerate/workflow/linear-mcp-comment.jsonl" --dry-run >/dev/null
+linear_recovery_packet="$(bash "${SCRIPTS}/write-linear-mcp-recovery.sh" "${WORK_ROOT}/repo" "comment" "test failure")"
+[ -f "${WORK_ROOT}/repo/${linear_recovery_packet}" ] || fail "Linear MCP recovery packet not written"
 
 mkdir -p "${WORK_ROOT}/repo/.accelerate/freeform"
 if bash "${SCRIPTS}/validate-v2.sh" "${WORK_ROOT}/repo" >"${WORK_ROOT}/bad-layout.out" 2>&1; then
