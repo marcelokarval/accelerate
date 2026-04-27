@@ -8,5 +8,5 @@ Screenshot-only proof is insufficient for UI/runtime behavior.
 `onboarding/local-workspace/capture-browser-proof.sh` is the repo-local browser
 proof helper. It defaults to localhost-only URLs, writes a JSON proof packet, and
 records screenshot, console, network, viewport, URL, and privacy metadata. Remote
-URLs require `ACCELERATE_ALLOW_REMOTE_BROWSER=1` because browser captures can
-expose cookies, page content, and third-party request metadata.
+URLs are blocked until a request-intercepting adapter can prevent page-triggered
+private network and metadata-host subresource requests.

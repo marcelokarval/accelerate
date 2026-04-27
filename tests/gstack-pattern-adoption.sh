@@ -107,6 +107,9 @@ bash "${SCRIPTS}/capture-browser-proof.sh" "${WORK_ROOT}/repo" "http://localhost
 if bash "${SCRIPTS}/capture-browser-proof.sh" "${WORK_ROOT}/repo" "https://example.com" ".accelerate/review/browser-proof.json" --dry-run >"${WORK_ROOT}/remote-browser.out" 2>&1; then
   fail "remote browser proof URL accepted without opt-in"
 fi
+if ACCELERATE_ALLOW_REMOTE_BROWSER=1 bash "${SCRIPTS}/capture-browser-proof.sh" "${WORK_ROOT}/repo" "https://example.com" ".accelerate/review/browser-proof.json" --dry-run >"${WORK_ROOT}/remote-browser-opt-in.out" 2>&1; then
+  fail "remote browser proof URL accepted before request interception exists"
+fi
 bash "${SCRIPTS}/render-proof-document.sh" "${WORK_ROOT}/repo" ".accelerate/review/qa-report.md" ".accelerate/review/qa-report-copy.md" >/dev/null
 [ -f "${WORK_ROOT}/repo/.accelerate/review/qa-report-copy.md" ] || fail "proof document not rendered"
 if bash "${SCRIPTS}/export-proof-document.sh" "${WORK_ROOT}/repo" ".accelerate/review/qa-report.md" ".accelerate/review/qa-report.html" >"${WORK_ROOT}/blocked-export.out" 2>&1; then

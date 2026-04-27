@@ -37,3 +37,7 @@ authenticated and the target repository has a GitHub `origin` remote:
 Lifecycle/topology are `linked`, not fully native, because GitHub PRs do not own
 the whole issue hierarchy by themselves. The adapter must still preserve closure
 truth by attaching governed artifacts and rehydrating PR metadata before closure.
+
+Real PR creation is blocked unless `ACCELERATE_ALLOW_GITHUB_PR_CREATE=1` is set
+because creating a PR is an external provider write and the full adapter remains
+planned as workflow truth.

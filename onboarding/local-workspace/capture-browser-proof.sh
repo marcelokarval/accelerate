@@ -20,49 +20,8 @@ case "${url}" in
   http://localhost:*|http://127.0.0.1:*|http://0.0.0.0:*|http://[::1]:*) ;;
   https://localhost:*|https://127.0.0.1:*|https://0.0.0.0:*|https://[::1]:*) ;;
   *)
-    if [ "${ACCELERATE_ALLOW_REMOTE_BROWSER:-}" != "1" ]; then
-      echo "browser proof defaults to localhost-only; set ACCELERATE_ALLOW_REMOTE_BROWSER=1 for remote URL: ${url}" >&2
-      exit 2
-    fi
-    case "${url}" in http://*|https://*) ;; *) echo "browser proof allows only http(s) URLs" >&2; exit 2 ;; esac
-    URL_TO_CHECK="${url}" python3 - <<'PY'
-import ipaddress
-import os
-import socket
-import sys
-from urllib.parse import urlparse
-
-url = os.environ["URL_TO_CHECK"]
-parsed = urlparse(url)
-if parsed.scheme not in {"http", "https"} or not parsed.hostname:
-    print("browser proof allows only http(s) URLs with a hostname", file=sys.stderr)
-    sys.exit(2)
-host = parsed.hostname
-blocked_names = {"metadata", "metadata.google.internal"}
-if host in blocked_names:
-    print(f"browser proof blocks metadata target: {host}", file=sys.stderr)
-    sys.exit(2)
-
-def blocked_ip(value: str) -> bool:
-    ip = ipaddress.ip_address(value)
-    return ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_multicast or ip.is_reserved or value == "169.254.169.254"
-
-try:
-    if blocked_ip(host):
-        print(f"browser proof blocks private/metadata target: {host}", file=sys.stderr)
-        sys.exit(2)
-except ValueError:
-    pass
-
-try:
-    resolved = {item[4][0] for item in socket.getaddrinfo(host, None)}
-except socket.gaierror:
-    resolved = set()
-for address in resolved:
-    if blocked_ip(address):
-        print(f"browser proof blocks resolved private/metadata target: {host} -> {address}", file=sys.stderr)
-        sys.exit(2)
-PY
+    echo "browser proof currently supports localhost-only targets; remote browser capture requires a request-intercepting adapter" >&2
+    exit 2
     ;;
 esac
 

@@ -27,6 +27,7 @@ fi
 
 command -v gh >/dev/null 2>&1 || { echo "gh CLI is not installed" >&2; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "gh auth is not available" >&2; exit 1; }
+[ "${ACCELERATE_ALLOW_GITHUB_PR_CREATE:-}" = "1" ] || { echo "GitHub PR creation is blocked unless ACCELERATE_ALLOW_GITHUB_PR_CREATE=1" >&2; exit 2; }
 
 if ! git -C "${root}" rev-parse --abbrev-ref --symbolic-full-name '@{u}' >/dev/null 2>&1; then
   git -C "${root}" push -u origin "${branch}"

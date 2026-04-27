@@ -35,4 +35,8 @@ pr_number="$(printf '%s' "${current_pr}" | python3 -c 'import json,sys; print(js
 head_ref_oid="$(printf '%s' "${current_pr}" | python3 -c 'import json,sys; print(json.load(sys.stdin).get("headRefOid") or "")')"
 [ -n "${pr_number}" ] || { echo "no GitHub PR found for branch: ${branch}" >&2; exit 2; }
 python3 -c 'import json,sys; data=json.load(open(sys.argv[1])); assert data.get("repo") == sys.argv[2] and data.get("branch") == sys.argv[3] and str(data.get("pr_number")) == sys.argv[4] and data.get("head_ref_oid") == sys.argv[5]' "${root}/${readiness_path}" "${repo_slug}" "${branch}" "${pr_number}" "${head_ref_oid}" || { echo "ship readiness does not match current repo/branch/PR/head" >&2; exit 2; }
+fresh_readiness="$(mktemp)"
+trap 'rm -f "${fresh_readiness}"' EXIT
+bash "$(dirname "${BASH_SOURCE[0]}")/check-ship-readiness.sh" "${root}" "${readiness_path}" >/dev/null
+python3 -c 'import json,sys; data=json.load(open(sys.argv[1])); sys.exit(0 if data.get("ready") is True else 2)' "${root}/${readiness_path}" || { echo "fresh ship readiness is not ready; refusing land" >&2; exit 2; }
 gh -R "${repo_slug}" pr merge "${pr_number}" --squash --delete-branch
