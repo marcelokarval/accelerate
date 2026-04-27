@@ -32,6 +32,19 @@ case "${url}" in
         exit 2
         ;;
     esac
+    if command -v getent >/dev/null 2>&1; then
+      while read -r resolved _; do
+        [ -n "${resolved}" ] || continue
+        case "${resolved}" in
+          127.*|10.*|192.168.*|169.254.*|172.1[6-9].*|172.2[0-9].*|172.3[0-1].*|::1|fc*|fd*|fe80:*)
+            echo "browser proof blocks resolved private/metadata target: ${host} -> ${resolved}" >&2
+            exit 2
+            ;;
+        esac
+      done <<EOF
+$(getent ahosts "${host}" || true)
+EOF
+    fi
     ;;
 esac
 

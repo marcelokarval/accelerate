@@ -35,7 +35,8 @@ roadmap:
 - Browser helper is available and locally executable, but real capture depends on
   Node plus Puppeteer/Puppeteer Core availability in the target environment.
 - GitHub land helper is fail-closed and requires `ACCELERATE_ALLOW_LAND=1` for
-  real merge.
+  real merge plus a matching ship-readiness artifact for the current repo,
+  branch, and PR number.
 - Deploy remains outside GitHub PR land unless a separate deploy target adapter
   is added.
 - Linear GraphQL helpers remain secondary.

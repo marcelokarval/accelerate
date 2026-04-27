@@ -32,4 +32,5 @@ command -v gh >/dev/null 2>&1 || { echo "gh CLI is not installed" >&2; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "gh auth is not available" >&2; exit 1; }
 pr_number="$(gh -R "${repo_slug}" pr view "${branch}" --json number --jq .number)"
 [ -n "${pr_number}" ] || { echo "no GitHub PR found for branch: ${branch}" >&2; exit 2; }
+python3 -c 'import json,sys; data=json.load(open(sys.argv[1])); assert data.get("repo") == sys.argv[2] and data.get("branch") == sys.argv[3] and str(data.get("pr_number")) == sys.argv[4]' "${root}/${readiness_path}" "${repo_slug}" "${branch}" "${pr_number}" || { echo "ship readiness does not match current repo/branch/PR" >&2; exit 2; }
 gh -R "${repo_slug}" pr merge "${pr_number}" --squash --delete-branch

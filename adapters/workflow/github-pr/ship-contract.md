@@ -19,9 +19,8 @@ On 2026-04-27, the helper layer was live-tested against
 - attach: `attach-github-pr-artifact.sh .tmp/github-live-pr .accelerate/review/qa-report.md ...`
   posted `https://github.com/marcelokarval/accelerate/pull/1#issuecomment-4329141970`
 
-This proves the read/comment helper layer. The adapter remains `planned` as a
-full workflow adapter until PR create/update, failure recovery, and closure
-truth are adopted as governed workflow behavior.
+This proved the initial read/comment helper layer before the create,
+rehydration, recovery, and guarded land helpers were added.
 
 ## Implemented Helper Set
 
