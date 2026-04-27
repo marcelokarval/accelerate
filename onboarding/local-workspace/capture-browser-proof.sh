@@ -16,14 +16,20 @@ fi
 output_path="${3:-.accelerate/review/browser-proof.json}"
 
 case "${output_path}" in /*|*..*) echo "output path must be relative and cannot contain '..': ${output_path}" >&2; exit 1 ;; esac
-case "${url}" in
-  http://localhost:*|http://127.0.0.1:*|http://0.0.0.0:*|http://[::1]:*) ;;
-  https://localhost:*|https://127.0.0.1:*|https://0.0.0.0:*|https://[::1]:*) ;;
-  *)
-    echo "browser proof currently supports localhost-only targets; remote browser capture requires a request-intercepting adapter" >&2
-    exit 2
-    ;;
-esac
+URL_TO_CHECK="${url}" python3 - <<'PY'
+import os
+import sys
+from urllib.parse import urlparse
+
+parsed = urlparse(os.environ["URL_TO_CHECK"])
+allowed_hosts = {"localhost", "127.0.0.1", "0.0.0.0", "::1"}
+if parsed.scheme not in {"http", "https"} or parsed.hostname not in allowed_hosts:
+    print("browser proof currently supports localhost-only targets; remote browser capture requires a request-intercepting adapter", file=sys.stderr)
+    sys.exit(2)
+if parsed.username or parsed.password:
+    print("browser proof URL must not contain userinfo", file=sys.stderr)
+    sys.exit(2)
+PY
 
 output_abs="${root}/${output_path}"
 output_real_dir="$(dirname "${output_abs}")"

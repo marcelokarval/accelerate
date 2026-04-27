@@ -35,8 +35,10 @@ import json, sys
 import os
 data = json.load(sys.stdin)
 checks = data.get("statusCheckRollup") or []
-bad = [c for c in checks if c.get("conclusion") in {"FAILURE", "ERROR", "CANCELLED", "TIMED_OUT"}]
-pending = [c for c in checks if not c.get("conclusion") and c.get("status") not in {"COMPLETED", None}]
+bad_states = {"FAILURE", "ERROR", "CANCELLED", "TIMED_OUT", "FAILED"}
+pending_states = {"PENDING", "QUEUED", "IN_PROGRESS", "WAITING", "REQUESTED"}
+bad = [c for c in checks if c.get("conclusion") in bad_states or c.get("state") in bad_states]
+pending = [c for c in checks if (not c.get("conclusion") and c.get("status") not in {"COMPLETED", None}) or c.get("state") in pending_states]
 repo = os.environ["REPO_SLUG"]
 branch = os.environ["BRANCH"]
 missing = []
