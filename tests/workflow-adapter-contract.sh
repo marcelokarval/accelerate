@@ -39,6 +39,7 @@ require_enum() {
 }
 
 require_file "adapters/workflow/adapter-contract.md"
+require_file "core/control-plane/manifest-truth-gate.md"
 require_file "adapters/workflow/local/README.md"
 require_file "adapters/workflow/local/capabilities.yaml"
 

@@ -1,0 +1,62 @@
+schema_version: 1
+writes:
+  - id: github-pr-create
+    command: onboarding/local-workspace/create-github-pr-adapter.sh
+    provider: github
+    operation: create-pr
+    status: planned
+    requires_opt_in: ACCELERATE_ALLOW_GITHUB_PR_CREATE
+    privacy_gate: required
+    recovery: onboarding/local-workspace/write-github-pr-recovery.sh
+    live_proof: none
+    structured_write: yes
+  - id: github-pr-comment-artifact
+    command: onboarding/local-workspace/attach-github-pr-artifact.sh
+    provider: github
+    operation: comment-artifact
+    status: available
+    requires_opt_in: none
+    privacy_gate: required
+    recovery: onboarding/local-workspace/write-github-pr-recovery.sh
+    live_proof: https://github.com/marcelokarval/accelerate/pull/1#issuecomment-4329141970
+    structured_write: yes
+  - id: github-pr-land
+    command: onboarding/local-workspace/land-github-pr.sh
+    provider: github
+    operation: merge-pr
+    status: planned
+    requires_opt_in: ACCELERATE_ALLOW_LAND
+    privacy_gate: none
+    recovery: onboarding/local-workspace/write-github-pr-recovery.sh
+    live_proof: none
+    structured_write: yes
+  - id: linear-graphql-comment-artifact
+    command: onboarding/local-workspace/attach-linear-artifact.sh
+    provider: linear
+    operation: comment-artifact
+    status: planned
+    requires_opt_in: LINEAR_API_KEY
+    privacy_gate: required
+    recovery: none
+    live_proof: none
+    structured_write: yes
+  - id: linear-mcp-create
+    command: onboarding/local-workspace/create-linear-mcp-issue.sh
+    provider: linear
+    operation: create-issue
+    status: blocked
+    requires_opt_in: none
+    privacy_gate: none
+    recovery: onboarding/local-workspace/write-linear-mcp-recovery.sh
+    live_proof: https://linear.app/botrei/issue/P4Y-1270/temp-accelerate-linear-mcp-live-adapter-validation
+    structured_write: no
+  - id: linear-mcp-comment-artifact
+    command: onboarding/local-workspace/attach-linear-mcp-artifact.sh
+    provider: linear
+    operation: comment-artifact
+    status: blocked
+    requires_opt_in: none
+    privacy_gate: required
+    recovery: onboarding/local-workspace/write-linear-mcp-recovery.sh
+    live_proof: https://linear.app/botrei/issue/P4Y-1270/temp-accelerate-linear-mcp-live-adapter-validation
+    structured_write: no

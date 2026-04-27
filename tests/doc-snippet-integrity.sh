@@ -23,5 +23,6 @@ for script in \
 done
 
 [ -x "${ROOT}/scripts/export-runtime-host.sh" ] || { echo "missing executable script: ${ROOT}/scripts/export-runtime-host.sh" >&2; exit 1; }
+[ -f "${ROOT}/adapters/workflow/remote-write-registry.yaml" ] || { echo "missing remote write registry" >&2; exit 1; }
 
 echo "doc snippet integrity passed"
