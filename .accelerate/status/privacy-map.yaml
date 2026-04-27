@@ -1,0 +1,6 @@
+schema_version: 1
+default_policy: fail-closed
+artifacts:
+  - path: .accelerate/review/qa-report.md
+    class: generated-export
+    export: approved
