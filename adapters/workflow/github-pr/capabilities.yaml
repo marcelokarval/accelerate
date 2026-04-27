@@ -1,10 +1,10 @@
 schema_version: 1
 adapter: github-pr
-status: implemented
+status: planned
 identity: native
-work_item_create: native
+work_item_create: planned
 work_item_lookup: native
-work_item_update: native
+work_item_update: planned
 lifecycle_transition: linked
 topology: linked
 review_attachment: native

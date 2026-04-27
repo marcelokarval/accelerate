@@ -29,7 +29,7 @@ fi
 command -v gh >/dev/null 2>&1 || { echo "gh CLI is not installed" >&2; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "gh auth is not available" >&2; exit 1; }
 mkdir -p "$(dirname "${root}/${output_path}")"
-pr_json="$(gh -R "${repo_slug}" pr view "${branch}" --json number,url,state,mergeable,reviewDecision,statusCheckRollup,headRefName,baseRefName)"
+pr_json="$(gh -R "${repo_slug}" pr view "${branch}" --json number,url,state,mergeable,reviewDecision,statusCheckRollup,headRefName,headRefOid,baseRefName)"
 printf '%s\n' "${pr_json}" | REPO_SLUG="${repo_slug}" BRANCH="${branch}" python3 -c '
 import json, sys
 import os
@@ -40,7 +40,7 @@ pending = [c for c in checks if not c.get("conclusion") and c.get("status") not 
 repo = os.environ["REPO_SLUG"]
 branch = os.environ["BRANCH"]
 ready = data.get("state") == "OPEN" and data.get("mergeable") == "MERGEABLE" and data.get("headRefName") == branch and not bad and not pending
-json.dump({"schema_version": 1, "adapter": "github-pr", "repo": repo, "branch": branch, "pr_number": data.get("number"), "ready": ready, "pr": data, "blocking_checks": bad, "pending_checks": pending}, sys.stdout, indent=2)
+json.dump({"schema_version": 1, "adapter": "github-pr", "repo": repo, "branch": branch, "head_ref_oid": data.get("headRefOid"), "pr_number": data.get("number"), "ready": ready, "pr": data, "blocking_checks": bad, "pending_checks": pending}, sys.stdout, indent=2)
 sys.stdout.write("\n")
 ' >"${root}/${output_path}"
 printf '%s\n' "${output_path}"

@@ -19,8 +19,9 @@ On 2026-04-27, the helper layer was live-tested against
 - attach: `attach-github-pr-artifact.sh .tmp/github-live-pr .accelerate/review/qa-report.md ...`
   posted `https://github.com/marcelokarval/accelerate/pull/1#issuecomment-4329141970`
 
-This proved the initial read/comment helper layer before the create,
-rehydration, recovery, and guarded land helpers were added.
+This proves the read/comment helper layer. Create, rehydration, recovery, and
+guarded land helpers exist, but the adapter remains `planned` as full workflow
+truth until those helper classes have their own live proof and recovery drills.
 
 ## Implemented Helper Set
 

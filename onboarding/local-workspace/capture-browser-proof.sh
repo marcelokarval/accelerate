@@ -25,26 +25,44 @@ case "${url}" in
       exit 2
     fi
     case "${url}" in http://*|https://*) ;; *) echo "browser proof allows only http(s) URLs" >&2; exit 2 ;; esac
-    host="$(printf '%s' "${url}" | sed -E 's#^[a-z]+://([^/:]+).*#\1#')"
-    case "${host}" in
-      169.254.169.254|metadata.google.internal|metadata|10.*|192.168.*|172.1[6-9].*|172.2[0-9].*|172.3[0-1].*)
-        echo "browser proof blocks metadata and private network targets: ${host}" >&2
-        exit 2
-        ;;
-    esac
-    if command -v getent >/dev/null 2>&1; then
-      while read -r resolved _; do
-        [ -n "${resolved}" ] || continue
-        case "${resolved}" in
-          127.*|10.*|192.168.*|169.254.*|172.1[6-9].*|172.2[0-9].*|172.3[0-1].*|::1|fc*|fd*|fe80:*)
-            echo "browser proof blocks resolved private/metadata target: ${host} -> ${resolved}" >&2
-            exit 2
-            ;;
-        esac
-      done <<EOF
-$(getent ahosts "${host}" || true)
-EOF
-    fi
+    URL_TO_CHECK="${url}" python3 - <<'PY'
+import ipaddress
+import os
+import socket
+import sys
+from urllib.parse import urlparse
+
+url = os.environ["URL_TO_CHECK"]
+parsed = urlparse(url)
+if parsed.scheme not in {"http", "https"} or not parsed.hostname:
+    print("browser proof allows only http(s) URLs with a hostname", file=sys.stderr)
+    sys.exit(2)
+host = parsed.hostname
+blocked_names = {"metadata", "metadata.google.internal"}
+if host in blocked_names:
+    print(f"browser proof blocks metadata target: {host}", file=sys.stderr)
+    sys.exit(2)
+
+def blocked_ip(value: str) -> bool:
+    ip = ipaddress.ip_address(value)
+    return ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_multicast or ip.is_reserved or value == "169.254.169.254"
+
+try:
+    if blocked_ip(host):
+        print(f"browser proof blocks private/metadata target: {host}", file=sys.stderr)
+        sys.exit(2)
+except ValueError:
+    pass
+
+try:
+    resolved = {item[4][0] for item in socket.getaddrinfo(host, None)}
+except socket.gaierror:
+    resolved = set()
+for address in resolved:
+    if blocked_ip(address):
+        print(f"browser proof blocks resolved private/metadata target: {host} -> {address}", file=sys.stderr)
+        sys.exit(2)
+PY
     ;;
 esac
 

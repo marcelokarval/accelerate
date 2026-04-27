@@ -25,8 +25,5 @@ if [ "${mode}" = "--dry-run" ]; then
 fi
 
 command -v opencode >/dev/null 2>&1 || { echo "opencode is required for Linear MCP adapter" >&2; exit 1; }
-[ "${ACCELERATE_ALLOW_LLM_MCP_WRITE:-}" = "1" ] || { echo "Linear MCP writes through an LLM host require ACCELERATE_ALLOW_LLM_MCP_WRITE=1" >&2; exit 2; }
-opencode mcp auth list | grep -Fq "linear" || { echo "linear MCP auth is not available" >&2; exit 1; }
-mkdir -p "$(dirname "${root}/${output_path}")"
-opencode run --format json --agent build "Use the linear MCP server only. Create one Linear issue in team ${team}, project ${project}, assigned to ${assignee}, title exactly '${title}'. Do not touch any other issue. Return concise JSON with created issue id, url, assignee, project, team, status." >"${root}/${output_path}"
-printf '%s\n' "${output_path}"
+echo "Linear MCP issue creation is blocked until a structured non-LLM write binding exists" >&2
+exit 2

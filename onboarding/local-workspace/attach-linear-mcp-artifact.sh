@@ -27,9 +27,5 @@ if [ "${mode}" = "--dry-run" ]; then
 fi
 
 command -v opencode >/dev/null 2>&1 || { echo "opencode is required for Linear MCP adapter" >&2; exit 1; }
-[ "${ACCELERATE_ALLOW_LLM_MCP_WRITE:-}" = "1" ] || { echo "Linear MCP writes through an LLM host require ACCELERATE_ALLOW_LLM_MCP_WRITE=1" >&2; exit 2; }
-opencode mcp auth list | grep -Fq "linear" || { echo "linear MCP auth is not available" >&2; exit 1; }
-mkdir -p "$(dirname "${root}/${output_path}")"
-body="## ${comment_title}\n\nSource artifact: ${artifact_path}\n\n$(sed -n '1,120p' "${root}/${artifact_path}")"
-opencode run --format json --agent build "Use the linear MCP server only. Add one comment to Linear issue ${issue_id} with this exact body: ${body}. Do not touch any other issue. Return concise JSON with issue id and comment write success." >"${root}/${output_path}"
-printf '%s\n' "${output_path}"
+echo "Linear MCP artifact attachment is blocked until a structured non-LLM write binding exists" >&2
+exit 2
