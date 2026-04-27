@@ -81,6 +81,51 @@ The emitted `.accelerate/` workspace must remain:
 The local workspace must persist project-specific control-plane state, not a
 copy of standalone `accelerate` doctrine.
 
+## Directory Allowlist
+
+The emitted `.accelerate/` workspace is schema-governed. New directories are not
+free-form. The currently allowed directories are:
+
+| Directory | Purpose |
+| --- | --- |
+| `.accelerate/` | Workspace root containing `README.md` and `state.yaml`. |
+| `.accelerate/onboarding/` | Discovery, decisions, onboarding status, and visual config discovery. |
+| `.accelerate/status/` | Readiness dashboard, evidence registry, timeline, and durable learnings. |
+| `.accelerate/status/checkpoints/` | Context checkpoints for session restore and interruption recovery. |
+| `.accelerate/planning/` | Current plan and local planning ladder. |
+| `.accelerate/planning/history/` | Archived or historical planning references. |
+| `.accelerate/review/` | Review, closure, proof, forensic, and handoff artifacts. |
+| `.accelerate/review/componentization/` | Deep componentization audit reports. |
+| `.accelerate/review/componentization/pages/` | Per-page componentization reports. |
+| `.accelerate/agents/` | Local agent status/candidates/gaps for pre-agent readiness. |
+| `.accelerate/workflow/` | Local workflow adapter state, events, work items, and topology. |
+| `.accelerate/proof/` | Small local proof packets referenced by the evidence registry. |
+
+Temporary captures, screenshots, traces, logs, and scratch files belong under the
+target repository `.tmp/`, not under `.accelerate/`.
+
+Any new `.accelerate/` directory must be added to this contract and
+`check-workspace-layout.sh` in the same change.
+
+## GStack-Inspired Operational State
+
+The workspace persists Accelerate-native versions of the useful gstack operating
+patterns without adopting gstack as authority:
+
+| File | Purpose |
+| --- | --- |
+| `.accelerate/status/questions.jsonl` | Append-only question log with door type and source. |
+| `.accelerate/status/question-preferences.json` | Trusted low-risk question preferences. |
+| `.accelerate/status/privacy-map.yaml` | Privacy/export classification map. |
+| `.accelerate/status/safety-overlay.yaml` | Current careful/freeze/guard overlay state. |
+| `.accelerate/planning/task-ledger.md` | Durable task execution state. |
+| `.accelerate/planning/review-pipeline.md` | Required/contextual review lane state. |
+| `.accelerate/review/findings.jsonl` | Structured review findings. |
+| `.accelerate/review/qa-report.md` | Structured QA/browser proof report. |
+| `.accelerate/review/design-feedback.json` | Design feedback packet. |
+| `.accelerate/review/design-approved.json` | Design approval packet. |
+| `.accelerate/review/design-baseline.json` | Design baseline packet. |
+
 ## Scope Boundary
 
 The V2 materialization must not silently expand into V3.

@@ -13,6 +13,10 @@ SUMMARY="${3:-transitioned local work item}"
 WORKFLOW="${TARGET_ROOT}/.accelerate/workflow"
 ACTIVE="${WORKFLOW}/active-work-item.yaml"
 
+json_escape() {
+  printf '%s' "$1" | perl -MJSON::PP -0777 -ne 'print encode_json($_)' | sed 's/^"//; s/"$//'
+}
+
 case "${STATE}" in
   planned|ready|in_progress|review|closure|done|blocked|cancelled)
     ;;
@@ -42,7 +46,7 @@ if [ "${STATE}" = "done" ]; then
 fi
 perl -0pi -e "s/^last_event_id:.*/last_event_id: ${EVENT_ID}/m; s/^last_updated:.*/last_updated: $(date +%F)/m" "${WORKFLOW}/adapter.yaml"
 
-printf '{"event_id":"%s","event":"work_item_transitioned","id":"%s","state":"%s","summary":"%s","at":"%s"}\n' "${EVENT_ID}" "${ID}" "${STATE}" "${SUMMARY}" "${STAMP}" >> "${WORKFLOW}/events.jsonl"
+printf '{"event_id":"%s","event":"work_item_transitioned","id":"%s","state":"%s","summary":"%s","at":"%s"}\n' "${EVENT_ID}" "${ID}" "${STATE}" "$(json_escape "${SUMMARY}")" "${STAMP}" >> "${WORKFLOW}/events.jsonl"
 bash "${SCRIPT_DIR}/append-timeline.sh" "${TARGET_ROOT}" "local_work_item_transitioned" "${ID} -> ${STATE}: ${SUMMARY}" "info" "transition-local-work-item.sh" >/dev/null
 
 echo "transitioned ${ID} to ${STATE}"

@@ -42,7 +42,12 @@ The minimum V2 implementation must create all of these paths:
 ├── status/
 │   ├── readiness-dashboard.yaml
 │   ├── timeline.jsonl
-│   └── learnings.jsonl
+│   ├── learnings.jsonl
+│   ├── questions.jsonl
+│   ├── question-preferences.json
+│   ├── privacy-map.yaml
+│   ├── safety-overlay.yaml
+│   └── checkpoints/
 ├── review/
 │   ├── review-ready-packet.md
 │   ├── ai-review-report.md
@@ -55,7 +60,12 @@ The minimum V2 implementation must create all of these paths:
 │   ├── current-slice-review.md
 │   ├── current-slice-forensics.md
 │   ├── defect-ledger.yaml
-│   └── seam-proof.md
+│   ├── seam-proof.md
+│   ├── findings.jsonl
+│   ├── qa-report.md
+│   ├── design-feedback.json
+│   ├── design-approved.json
+│   └── design-baseline.json
 ├── workflow/
 │   ├── README.md
 │   ├── adapter.yaml
@@ -75,6 +85,8 @@ The minimum V2 implementation must create all of these paths:
 │   ├── sdd.md
 │   ├── executive-plan.md
 │   ├── task-breakdown.md
+│   ├── task-ledger.md
+│   ├── review-pipeline.md
 │   ├── open-questions.md
 │   └── history/
 └── agents/
@@ -105,7 +117,13 @@ When two V2 files appear to overlap, precedence is:
    - append-only continuity chronology
 8. `.accelerate/status/learnings.jsonl`
    - append-only durable learnings
-9. `.accelerate/review/*.md`
+9. `.accelerate/status/questions.jsonl` and `question-preferences.json`
+   - recurring question log and trusted low-risk preferences
+10. `.accelerate/review/findings.jsonl`
+   - structured review finding truth
+11. `.accelerate/planning/task-ledger.md`
+   - task execution state
+12. `.accelerate/review/*.md`
    - persisted local handoff and closure artifacts derived from current local state
 
 ### Precedence Rule
@@ -159,6 +177,9 @@ readiness_dashboard: .accelerate/status/readiness-dashboard.yaml
 timeline_file: .accelerate/status/timeline.jsonl
 learnings_file: .accelerate/status/learnings.jsonl
 evidence_registry: .accelerate/status/evidence-registry.yaml
+visual_config: .accelerate/onboarding/visual-config.yaml
+componentization_exceptions: .accelerate/componentization-exceptions.txt
+deep_componentization_summary: .accelerate/review/componentization/executive-summary.md
 review_ready_packet: .accelerate/review/review-ready-packet.md
 ai_review_report: .accelerate/review/ai-review-report.md
 closure_packet: .accelerate/review/closure-packet.md

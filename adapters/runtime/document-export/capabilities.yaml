@@ -1,0 +1,10 @@
+name: document-export
+type: runtime
+status: available
+authority_boundary: runtime-adapter
+allowed_tools: []
+suppressed_capabilities: []
+validation_command: onboarding/local-workspace/export-proof-document.sh
+proof_artifacts:
+  - document-export-packet
+privacy_notes: exports require privacy allowlist validation

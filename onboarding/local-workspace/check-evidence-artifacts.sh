@@ -177,6 +177,130 @@ validate_design_implementation_proof_artifact() {
   validate_capture_paths "design_implementation_proof_artifact" "${path}" "captures"
 }
 
+validate_theme_template_portability_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "theme_template_portability" "${artifact}")"
+
+  for marker in \
+    "Theme / Template Portability Packet" \
+    "- target stack:" \
+    "- visual config discovery artifact:" \
+    "- token authority file:" \
+    "- derived token config:" \
+    "- Tailwind mode:" \
+    "- desired change class:" \
+    "- minimum honest owner layer:" \
+    "- theme consumption audit:" \
+    "- swap proof packet:" \
+    "- residual non-portable surfaces:"; do
+    require_marker "theme_template_portability_artifact" "${path}" "${marker}"
+  done
+}
+
+validate_theme_swap_proof_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "theme_swap_proof" "${artifact}")"
+
+  for marker in \
+    "Theme Swap Proof Packet" \
+    "- target route/state:" \
+    "- token authority file:" \
+    "- baseline capture:" \
+    "- swapped capture:" \
+    "- console evidence:" \
+    "- network evidence:" \
+    "- expected changed values:" \
+    "- expected unchanged anatomy/data/state:" \
+    "- primitive token consumption proof:" \
+    "- readiness impact:"; do
+    require_marker "theme_swap_proof_artifact" "${path}" "${marker}"
+  done
+
+  if [ "${TARGET_STATE}" = "closure-ready" ]; then
+    require_marker "theme_swap_proof_artifact" "${path}" "- readiness impact: supports-closure"
+  fi
+
+  validate_capture_paths "theme_swap_proof_artifact" "${path}" "baseline capture"
+  validate_capture_paths "theme_swap_proof_artifact" "${path}" "swapped capture"
+  validate_capture_paths "theme_swap_proof_artifact" "${path}" "console evidence"
+  validate_capture_paths "theme_swap_proof_artifact" "${path}" "network evidence"
+}
+
+validate_template_swap_proof_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "template_swap_proof" "${artifact}")"
+
+  for marker in \
+    "Template Swap Proof Packet" \
+    "- target route family:" \
+    "- template authority artifact:" \
+    "- minimum owner layer:" \
+    "- anatomy changed:" \
+    "- primitives affected:" \
+    "- composites affected:" \
+    "- shells/layouts affected:" \
+    "- baseline capture:" \
+    "- swapped capture:" \
+    "- console evidence:" \
+    "- network evidence:" \
+    "- theme-token compatibility:" \
+    "- readiness impact:"; do
+    require_marker "template_swap_proof_artifact" "${path}" "${marker}"
+  done
+
+  if [ "${TARGET_STATE}" = "closure-ready" ]; then
+    require_marker "template_swap_proof_artifact" "${path}" "- readiness impact: supports-closure"
+  fi
+
+  validate_capture_paths "template_swap_proof_artifact" "${path}" "baseline capture"
+  validate_capture_paths "template_swap_proof_artifact" "${path}" "swapped capture"
+  validate_capture_paths "template_swap_proof_artifact" "${path}" "console evidence"
+  validate_capture_paths "template_swap_proof_artifact" "${path}" "network evidence"
+}
+
+validate_componentization_audit_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "componentization_audit" "${artifact}")"
+
+  for marker in \
+    "Componentization Enforcement Packet" \
+    "- central component owners:" \
+    "- ui primitives reused/adapted:" \
+    "- second-layer primitives reused/adapted:" \
+    "- enhanced/composites reused/adapted:" \
+    "- third-party/adapt-first search:" \
+    "- page-local exceptions:" \
+    "- div/className/direct-class audit:" \
+    "- readiness impact:"; do
+    require_marker "componentization_audit_artifact" "${path}" "${marker}"
+  done
+
+  if [ "${TARGET_STATE}" = "closure-ready" ]; then
+    require_marker "componentization_audit_artifact" "${path}" "- readiness impact: supports-closure"
+  fi
+}
+
+validate_deep_componentization_audit_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "deep_componentization_audit" "${artifact}")"
+
+  for marker in \
+    "Deep Componentization Executive Summary" \
+    "- pages scanned:" \
+    "- components scanned:" \
+    "- TypeScript modules scanned:" \
+    "## Related Reports" \
+    "## Highest-Risk Pages" \
+    "## Report -> Executive Plan"; do
+    require_marker "deep_componentization_audit_artifact" "${path}" "${marker}"
+  done
+}
+
 case "${TARGET_STATE}" in
   review-ready)
     keys=(implementation_proof qa_proof_lane)
@@ -191,6 +315,13 @@ case "${TARGET_STATE}" in
       persistent_e2e
       ux_ui_fullstack_surface
       design_implementation_proof
+      theme_template_portability
+      visual_config_discovery
+      theme_consumption_audit
+      theme_swap_proof
+      template_swap_proof
+      componentization_audit
+      deep_componentization_audit
       product_critical_closure
       requested_vs_implemented
       ai_review
@@ -225,6 +356,21 @@ for key in "${keys[@]}"; do
       ;;
     design_implementation_proof)
       validate_design_implementation_proof_artifact "${artifact}"
+      ;;
+    theme_template_portability)
+      validate_theme_template_portability_artifact "${artifact}"
+      ;;
+    theme_swap_proof)
+      validate_theme_swap_proof_artifact "${artifact}"
+      ;;
+    template_swap_proof)
+      validate_template_swap_proof_artifact "${artifact}"
+      ;;
+    componentization_audit)
+      validate_componentization_audit_artifact "${artifact}"
+      ;;
+    deep_componentization_audit)
+      validate_deep_componentization_audit_artifact "${artifact}"
       ;;
   esac
 done

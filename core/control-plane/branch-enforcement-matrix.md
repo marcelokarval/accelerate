@@ -143,6 +143,23 @@ change values, not rename the token API. UI implementation should first apply or
 map that generated CSS into the project token layer before resorting to
 component anatomy changes.
 
+When the work claims theme or template portability through `global.css`,
+`globals.css`, Tailwind config, CSS-first `@theme`, or equivalent visual config,
+it also inherits `Theme / Template Portability Gate` and `Componentization
+Enforcement Gate`. Closure must include visual config discovery, theme
+consumption audit, componentization audit, a Theme / Template Portability Packet,
+and either a Theme Swap Proof Packet or Template Swap Proof Packet according to
+the minimum honest owner layer. Page-local `div` soup, excessive `className`, and
+direct visual classes require extraction to central owners or explicit bounded
+exceptions.
+
+When the user asks to prove extreme componentization, audit every page, compare
+components against shared-owner rules, or analyze `.tsx` and `.ts` responsibility
+separation, the work also inherits `Deep Componentization Audit Gate`. Closure
+must include per-page reports, component inventory report, TypeScript
+responsibility report, and a condensed executive summary with report-to-plan
+recommendations.
+
 Premium/de-AI design-system work must also use the repo-local
 `premium-design-benchmark-corpus`, include a Benchmark Influence Map, and prove
 one active theme at a time when light/dark or theme variants are in scope.
@@ -179,6 +196,9 @@ These gates should stay visible from `accelerate` itself:
 - `Component Source Ladder`
 - `Design-System Rollout Entry Gate`
 - `Design Implementation Proof Gate`
+- `Theme / Template Portability Gate`
+- `Componentization Enforcement Gate`
+- `Deep Componentization Audit Gate`
 - `UI Mutation Ladder`
 - `Real Data Readiness Gate`
 - `Sidebar / Public Docs Update Gate`

@@ -14,6 +14,7 @@ Examples:
 - locale-pack parity checks for i18n proof
 - Node runtime proof for Next.js, AdonisJS, Prisma, Drizzle, Vercel, and hosted
   Postgres slices
+- Tailwind theme-token mapping for CSS-variable-driven visual systems
 
 The core should speak in capabilities first. Runtime-specific commands belong
 here or in stack profiles, not in the permanent core law.
@@ -29,6 +30,7 @@ Native pre-agents reading order:
 7. `web-content-reader/README.md`
 8. `locale-pack-parity/README.md`
 9. `proof-fixtures/README.md`
+10. `tailwind/theme-token-mapping.md`
 
 ## Current Runtime Expansion
 

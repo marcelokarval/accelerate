@@ -38,6 +38,9 @@ This prevents invisible gate drift and stale mandatory language.
 | `Component Source Ladder` | `ui-mutation-ladder.md` | Required for visual/component source decisions. |
 | `Design-System Rollout Entry Gate` | `design-system-rollout-entry-gate.md` | Required before executing design-system rollout plans. |
 | `Design Implementation Proof Gate` | `design-implementation-proof-gate.md` | Required when UI implementation is mutated. |
+| `Theme / Template Portability Gate` | `theme-template-portability-gate.md` | Required when visual work claims theme/template portability through global CSS, Tailwind, or equivalent config. |
+| `Componentization Enforcement Gate` | `componentization-enforcement-gate.md` | Required when UI/template/theme portability work could drift into page-local markup, div soup, or direct class sprawl. |
+| `Deep Componentization Audit Gate` | `deep-componentization-audit-gate.md` | Required when componentization quality must be proven page-by-page and across `.tsx`/`.ts` boundaries. |
 | `UI Mutation Ladder` | `ui-mutation-ladder.md` | Required for design-system-driven UI mutation order. |
 | `Real Data Readiness Gate` | `artifact-sufficiency-check.md` | Required when realistic runtime data is necessary for trustworthy UI/product proof. |
 | `Sidebar / Public Docs Update Gate` | `artifact-sufficiency-check.md` | Required when capability changes affect discoverability or docs navigation. |

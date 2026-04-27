@@ -90,3 +90,39 @@ Unknown states must produce a gap, not a guessed lifecycle value.
 `capabilities.yaml` must remain `status: planned` until the adapter has tested
 commands for read/rehydration and at least one safe write class. Read-only
 rehydration alone is not enough to claim full implementation.
+## Read Probe
+
+`onboarding/local-workspace/probe-linear-adapter.sh` is a read/probe helper. It
+checks local state and auth presence only. It does not create, update, comment on,
+or transition Linear issues, and does not make the Linear adapter implemented.
+
+`read-linear-adapter.sh` can read issue metadata through the Linear GraphQL API.
+`attach-linear-artifact.sh` can attach a local artifact as a Linear comment when
+`LINEAR_API_KEY` is provided. These commands are executable helpers, but the
+adapter remains `planned` until live read/write behavior is tested and adopted as
+workflow truth.
+
+## MCP Live Test Evidence
+
+On 2026-04-27, Linear's remote MCP server was configured in the global OpenCode
+config as `linear` using `https://mcp.linear.app/mcp` and authenticated through
+`opencode mcp auth linear`.
+
+Read live test:
+
+- `opencode mcp list` reported `linear connected`
+- an OpenCode run invoked `linear_get_user` and `linear_list_issues`
+- the authenticated user was `marcelokarval@gmail.com`
+- returned issues were assigned to project `Prop4You`
+
+Write live test:
+
+- created temporary issue `P4Y-1270`
+- project: `Prop4You`
+- assignee: `marcelokarval@gmail.com`
+- comment write succeeded with body `Accelerate Linear MCP live attach validation: non-sensitive temporary test comment.`
+- issue was transitioned to canceled status after the test
+
+This proves OpenCode-hosted Linear MCP read/write capability. It does not prove
+the GraphQL helper scripts, which still require `LINEAR_API_KEY`; therefore the
+adapter remains `planned` as a full workflow adapter.

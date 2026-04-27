@@ -36,6 +36,11 @@ require_file "tests/one-shot-protocol-closure.sh"
 require_file "tests/design-md-corpus-integrity.sh"
 require_file "tests/design-md-corpus-semantic.sh"
 require_file "tests/workflow-adapter-contract.sh"
+require_file "tests/theme-template-portability.sh"
+require_file "tests/gstack-pattern-adoption.sh"
+require_file "tests/generated-docs-integrity.sh"
+require_file "tests/doc-snippet-integrity.sh"
+require_file "tests/classification-golden.sh"
 
 python3 - <<'PY'
 from pathlib import Path
@@ -162,3 +167,8 @@ bash tests/design-md-corpus-integrity.sh
 bash tests/design-md-corpus-semantic.sh
 bash tests/local-workflow-adapter.sh
 bash tests/workflow-adapter-contract.sh
+bash tests/theme-template-portability.sh
+bash tests/gstack-pattern-adoption.sh
+bash tests/generated-docs-integrity.sh
+bash tests/doc-snippet-integrity.sh
+bash tests/classification-golden.sh

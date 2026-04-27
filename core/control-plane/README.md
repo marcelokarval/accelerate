@@ -22,6 +22,9 @@ Native authority now starts here:
 - `failure-classification-gate.md`
 - `artifact-sufficiency-check.md`
 - `design-implementation-proof-gate.md`
+- `theme-template-portability-gate.md`
+- `componentization-enforcement-gate.md`
+- `deep-componentization-audit-gate.md`
 
 Root-facing architectural context still lives in:
 

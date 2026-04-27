@@ -15,6 +15,20 @@ ux_ui_fullstack_surface: not-applicable
 ux_ui_fullstack_surface_artifact:
 design_implementation_proof: not-applicable
 design_implementation_proof_artifact:
+theme_template_portability: not-applicable
+theme_template_portability_artifact:
+visual_config_discovery: not-applicable
+visual_config_discovery_artifact:
+theme_consumption_audit: not-applicable
+theme_consumption_audit_artifact:
+theme_swap_proof: not-applicable
+theme_swap_proof_artifact:
+template_swap_proof: not-applicable
+template_swap_proof_artifact:
+componentization_audit: not-applicable
+componentization_audit_artifact:
+deep_componentization_audit: not-applicable
+deep_componentization_audit_artifact:
 product_critical_closure: not-applicable
 product_critical_closure_artifact:
 requested_vs_implemented: missing

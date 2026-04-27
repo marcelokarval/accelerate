@@ -8,6 +8,7 @@ fi
 
 TARGET_ROOT="$1"
 WORKSPACE="${TARGET_ROOT}/.accelerate"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 FAILURES=0
 
 required_files=(
@@ -17,6 +18,11 @@ required_files=(
   "${WORKSPACE}/status/evidence-registry.yaml"
   "${WORKSPACE}/status/timeline.jsonl"
   "${WORKSPACE}/status/learnings.jsonl"
+  "${WORKSPACE}/status/questions.jsonl"
+  "${WORKSPACE}/status/question-preferences.json"
+  "${WORKSPACE}/status/privacy-map.yaml"
+  "${WORKSPACE}/status/safety-overlay.yaml"
+  "${WORKSPACE}/status/checkpoints/README.md"
   "${WORKSPACE}/onboarding/status.yaml"
   "${WORKSPACE}/onboarding/discovery.yaml"
   "${WORKSPACE}/onboarding/decisions.yaml"
@@ -27,9 +33,16 @@ required_files=(
   "${WORKSPACE}/planning/sdd.md"
   "${WORKSPACE}/planning/executive-plan.md"
   "${WORKSPACE}/planning/task-breakdown.md"
+  "${WORKSPACE}/planning/task-ledger.md"
+  "${WORKSPACE}/planning/review-pipeline.md"
   "${WORKSPACE}/planning/open-questions.md"
   "${WORKSPACE}/review/review-ready-packet.md"
   "${WORKSPACE}/review/ai-review-report.md"
+  "${WORKSPACE}/review/findings.jsonl"
+  "${WORKSPACE}/review/qa-report.md"
+  "${WORKSPACE}/review/design-feedback.json"
+  "${WORKSPACE}/review/design-approved.json"
+  "${WORKSPACE}/review/design-baseline.json"
   "${WORKSPACE}/review/closure-packet.md"
   "${WORKSPACE}/review/branch-entry-packet.md"
   "${WORKSPACE}/review/runtime-delta-packet.md"
@@ -130,6 +143,11 @@ warn_drift() {
 if [ ! -d "${WORKSPACE}" ]; then
   echo "missing .accelerate workspace: ${WORKSPACE}" >&2
   exit 1
+fi
+
+if ! bash "${SCRIPT_DIR}/check-workspace-layout.sh" "${TARGET_ROOT}" >/dev/null; then
+  bash "${SCRIPT_DIR}/check-workspace-layout.sh" "${TARGET_ROOT}" >&2 || true
+  FAILURES=$((FAILURES + 1))
 fi
 
 for file in "${required_files[@]}"; do
@@ -403,6 +421,24 @@ if [ -n "${learnings_file}" ] && [ ! -f "${TARGET_ROOT}/${learnings_file}" ]; th
   echo "state.yaml learnings_file does not exist: ${TARGET_ROOT}/${learnings_file}" >&2
   FAILURES=$((FAILURES + 1))
 fi
+
+for state_ref_key in \
+  questions_file \
+  question_preferences \
+  privacy_map \
+  safety_overlay \
+  task_ledger \
+  review_findings \
+  qa_report \
+  design_feedback \
+  design_approved \
+  design_baseline; do
+  state_ref="$(yaml_value "${WORKSPACE}/state.yaml" "${state_ref_key}")"
+  if [ -n "${state_ref}" ] && [ ! -f "${TARGET_ROOT}/${state_ref}" ]; then
+    echo "state.yaml ${state_ref_key} does not exist: ${TARGET_ROOT}/${state_ref}" >&2
+    FAILURES=$((FAILURES + 1))
+  fi
+done
 
 evidence_registry="$(yaml_value "${WORKSPACE}/state.yaml" "evidence_registry")"
 if [ -n "${evidence_registry}" ] && [ ! -f "${TARGET_ROOT}/${evidence_registry}" ]; then

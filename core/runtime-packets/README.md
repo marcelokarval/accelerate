@@ -18,6 +18,8 @@ Native authority now starts here:
 - `correction-loop-packet.md`
 - `seam-proof-packet.md`
 - `observability-performance-packet.md`
+- `theme-swap-proof-packet.md`
+- `template-swap-proof-packet.md`
 
 Supporting inherited detail may still exist in:
 

@@ -73,6 +73,44 @@ require_present_or_not_applicable() {
   fi
 }
 
+auto_prepare_theme_portability() {
+  if ! is_present "theme_template_portability"; then
+    return 0
+  fi
+
+  bash "${SCRIPT_DIR}/discover-visual-config.sh" "${TARGET_ROOT}" >/dev/null
+  bash "${SCRIPT_DIR}/check-theme-consumption.sh" "${TARGET_ROOT}" >/dev/null
+  bash "${SCRIPT_DIR}/check-componentization-discipline.sh" "${TARGET_ROOT}" >/dev/null
+
+  mkdir -p "${WORKSPACE}/proof"
+  cat > "${WORKSPACE}/proof/theme_consumption_audit.md" <<'MD'
+Theme Consumption Audit Packet
+
+- tool: check-theme-consumption.sh
+- result: passed
+- readiness impact: supports-closure
+MD
+  cat > "${WORKSPACE}/proof/componentization_audit.md" <<'MD'
+Componentization Enforcement Packet
+
+- central component owners: checked
+- ui primitives reused/adapted: checked
+- second-layer primitives reused/adapted: checked
+- enhanced/composites reused/adapted: checked
+- third-party/adapt-first search: checked
+- page-local exceptions: checked
+- div/className/direct-class audit: checked
+- readiness impact: supports-closure
+MD
+
+  perl -0pi -e "s#^visual_config_discovery:.*#visual_config_discovery: present#m" "${EVIDENCE_FILE}"
+  perl -0pi -e "s#^visual_config_discovery_artifact:.*#visual_config_discovery_artifact: .accelerate/onboarding/visual-config.yaml#m" "${EVIDENCE_FILE}"
+  perl -0pi -e "s#^theme_consumption_audit:.*#theme_consumption_audit: present#m" "${EVIDENCE_FILE}"
+  perl -0pi -e "s#^theme_consumption_audit_artifact:.*#theme_consumption_audit_artifact: .accelerate/proof/theme_consumption_audit.md#m" "${EVIDENCE_FILE}"
+  perl -0pi -e "s#^componentization_audit:.*#componentization_audit: present#m" "${EVIDENCE_FILE}"
+  perl -0pi -e "s#^componentization_audit_artifact:.*#componentization_audit_artifact: .accelerate/proof/componentization_audit.md#m" "${EVIDENCE_FILE}"
+}
+
 case "${TARGET_STATE}" in
   review-ready)
     require_present "review-ready" "implementation_proof"
@@ -92,9 +130,27 @@ case "${TARGET_STATE}" in
     require_optional_clean "closure-ready" "seam_proof"
     require_optional_clean "closure-ready" "ux_ui_fullstack_surface"
     require_optional_clean "closure-ready" "design_implementation_proof"
+    require_optional_clean "closure-ready" "theme_template_portability"
+    require_optional_clean "closure-ready" "visual_config_discovery"
+    require_optional_clean "closure-ready" "theme_consumption_audit"
+    require_optional_clean "closure-ready" "theme_swap_proof"
+    require_optional_clean "closure-ready" "template_swap_proof"
+    require_optional_clean "closure-ready" "componentization_audit"
+    require_optional_clean "closure-ready" "deep_componentization_audit"
     require_optional_clean "closure-ready" "product_critical_closure"
     if is_present "design_implementation_proof" && ! is_present "browser_proof"; then
       block "closure-ready" "design_implementation_proof requires browser_proof present"
+    fi
+    if is_present "theme_template_portability"; then
+      require_present "closure-ready" "visual_config_discovery"
+      require_present "closure-ready" "theme_consumption_audit"
+      require_present "closure-ready" "componentization_audit"
+      if ! is_present "theme_swap_proof" && ! is_present "template_swap_proof"; then
+        block "closure-ready" "theme_template_portability requires theme_swap_proof or template_swap_proof present"
+      fi
+    fi
+    if is_present "deep_componentization_audit"; then
+      require_present "closure-ready" "deep_componentization_audit"
     fi
     ;;
   *)

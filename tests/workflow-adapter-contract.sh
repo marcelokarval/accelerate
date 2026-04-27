@@ -117,10 +117,24 @@ for manifest in adapters/workflow/*/capabilities.yaml; do
 
   if [ "${adapter}" = "linear" ]; then
     require_file "adapters/workflow/linear/operational-contract.md"
+    require_file "onboarding/local-workspace/probe-linear-adapter.sh"
+    require_file "onboarding/local-workspace/read-linear-adapter.sh"
+    require_file "onboarding/local-workspace/attach-linear-artifact.sh"
     runtime_truth="$(yaml_value "${manifest}" "runtime_truth")"
     [ "${runtime_truth}" = "remote" ] || fail "linear adapter runtime_truth must be remote"
     if [ "${status}" = "implemented" ]; then
       fail "linear adapter must not be implemented until API read/write behavior is tested"
+    fi
+  fi
+
+  if [ "${adapter}" = "github-pr" ]; then
+    require_file "onboarding/local-workspace/probe-github-pr-adapter.sh"
+    require_file "onboarding/local-workspace/read-github-pr-adapter.sh"
+    require_file "onboarding/local-workspace/attach-github-pr-artifact.sh"
+    runtime_truth="$(yaml_value "${manifest}" "runtime_truth")"
+    [ "${runtime_truth}" = "remote" ] || fail "github-pr adapter runtime_truth must be remote"
+    if [ "${status}" = "implemented" ]; then
+      fail "github-pr adapter must not be implemented until API read/write behavior is tested"
     fi
   fi
 done

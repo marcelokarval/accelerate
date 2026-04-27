@@ -155,6 +155,10 @@ Rules:
   showcase, not a parallel interpretation.
 - `design-system.theme.css` is the stable implementation API.
 - Theme CSS tokens must use the `--ds-*` namespace.
+- `--ds-*` is the Accelerate interchange namespace for generated artifacts. A
+  target app may keep an established runtime token API, such as shadcn/Tailwind
+  `--background` and `--primary`, when a Token Alias Map explicitly proves the
+  semantic equivalence.
 - The contract may mention source/raw tokens only as evidence, but the
   implementation token contract must use `--ds-*` names.
 - The HTML may not use CSS custom properties that are absent from the theme CSS.
@@ -185,6 +189,9 @@ Rules:
 
 - Use stable `--ds-*` tokens, not one-off names like `--bg`, `--ledger-bg`, or
   `--vault-surface` as the implementation API.
+- In generated Accelerate artifacts, use stable `--ds-*` tokens. In target app
+  runtime code, a mature local token API may remain the implementation API when
+  it is explicitly mapped to the `--ds-*` interchange contract.
 - Represent light/dark as selectors over the same token names, for example
   `:root` and `[data-theme="dark"]`, not separate unrelated token vocabularies.
 - Keep semantic meaning in reusable names such as `--ds-bg`, `--ds-fg`,
@@ -195,11 +202,20 @@ Rules:
 - If the source has project-specific raw tokens, document them as aliases to the
   canonical token layer instead of making future UI consume the raw names.
 - Premium direction must change token values, not rename the token API.
+- Premium direction must change token values, not silently rename the token API.
+  If the target app uses a local API, the alias map must remain stable across
+  source and premium themes.
 
 The intended implementation path is: import or merge the generated theme CSS
 into `global.css`, Tailwind theme variables, or equivalent project token layer;
 then existing components that consume the canonical tokens can reskin without
 component rewrites.
+
+This path is a portability claim, not a guarantee. Before closing real app
+implementation on that claim, use
+`../control-plane/theme-template-portability-gate.md` to prove whether the change
+is `token-only`, derived-token wiring, primitive wiring, or a deeper template
+change.
 
 If the gate fails, do not choose whichever artifact looks better. Treat the
 package as stale or split-brained, regenerate or repair the inconsistent

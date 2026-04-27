@@ -70,6 +70,27 @@ Browser-proof packets should include:
 Use runtime proof fixtures from `adapters/runtime/proof-fixtures/` when the
 branch needs a reusable packet shape instead of a one-off note.
 
+## Theme / Template Portability Proof
+
+When the slice touches `global.css`, `globals.css`, Tailwind config, CSS-first
+`@theme`, component theme configuration, or claims theme/template portability,
+use:
+
+- `core/control-plane/theme-template-portability-gate.md`
+- `onboarding/local-workspace/discover-visual-config.sh`
+- `onboarding/local-workspace/check-theme-consumption.sh`
+- `core/runtime-packets/theme-swap-proof-packet.md` for token/theme swaps
+- `core/runtime-packets/template-swap-proof-packet.md` for shell/template swaps
+- `core/control-plane/componentization-enforcement-gate.md`
+- `onboarding/local-workspace/check-componentization-discipline.sh`
+
+Tailwind v3 config and Tailwind v4 `@theme` must derive semantic visual values
+from the canonical token API or an explicit local Token Alias Map when a
+design-system package is active. Do not claim that replacing `globals.css` is
+enough unless the real primitives consume the accepted token layer, central
+component owners contain reusable anatomy/variants, and a swap proof covers the
+changed route/state.
+
 ## Accessibility Proof
 
 When user-facing UI changes, use `core/review/accessibility-closure-gate.md`.
@@ -118,4 +139,5 @@ Before closure, report:
 - `Accessibility=<present|missing|blocked|not-applicable>` when user-facing UI changed
 - `Observability/Performance=<present|missing|blocked|not-applicable>` when metrics, logs, cache, or runtime performance were active
 - `Persistent E2E=<present|missing|blocked|out of order>`
+- `Theme/Template Portability=<present|missing|blocked|not-applicable>` when visual config, theme, or template portability is in scope
 - `blocking lane=<lane or none>`

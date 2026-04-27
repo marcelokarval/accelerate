@@ -49,6 +49,12 @@ Usually pair with:
 - `premium-interface-production.md` when premium direction is active
 - `design-md-corpus.md` when local DESIGN.md corpus examples are used as
   benchmark or influence material
+- `../control-plane/theme-template-portability-gate.md` when theme/template
+  portability through global CSS, Tailwind, or equivalent config is claimed
+- `../control-plane/componentization-enforcement-gate.md` when implementation
+  could duplicate primitives, composites, variants, or page-local markup
+- `../control-plane/deep-componentization-audit-gate.md` when page-by-page or
+  `.tsx`/`.ts` componentization proof is requested
 
 ## Required Artifacts
 
@@ -81,8 +87,9 @@ When the task mutates UI, the implementation/proof handoff must also satisfy:
    as implementation authority:
    `onboarding/local-workspace/check-design-system-artifact-consistency.sh`.
 1. Read the contract before editing only after the consistency gate passes.
-2. Read the canonical theme CSS and identify which `--ds-*` tokens apply to the
-   target surface.
+2. Read the canonical theme CSS and identify which `--ds-*` interchange tokens
+   apply to the target surface, then identify whether the app consumes those
+   tokens directly or through a local Token Alias Map.
 3. Inspect the visual showcase for concrete source examples.
 4. If premium artifacts exist and the task is improvement/polish/premium work,
     read the slop audit and premium direction artifacts.
@@ -105,8 +112,10 @@ When the task mutates UI, the implementation/proof handoff must also satisfy:
    - `page`
 8. Separate component anatomy from theme tokens before changing code.
 9. Prefer applying the generated theme CSS to the project token layer before
-   changing component anatomy. If components do not consume tokens yet, make the
-   smallest shared-token wiring change first.
+    changing component anatomy. If components do not consume tokens yet, make the
+    smallest shared-token wiring change first.
+   When the claim is portable theming, run visual config discovery and theme
+   consumption audit before closure.
 10. Implement with existing project components first and shared owners before
     page-local overrides.
 11. Leave a `Requested-Vs-Implemented Packet` for the active slice, naming:
@@ -160,6 +169,9 @@ When the task mutates UI, the implementation/proof handoff must also satisfy:
 - Prefer token/config changes for theme generation.
 - Keep the generated `--ds-*` token names stable. Premium direction may change
   token values, not rename the theme API.
+- `--ds-*` is mandatory for Accelerate-generated design-system artifacts, but a
+  target app may keep a mature local runtime token API when the mapping is
+  explicit, stable, and validated.
 - Keep light and dark themes as sibling token systems over the same component
   semantics.
 - Render one active theme at a time. Do not ship split-screen light/dark product
@@ -180,8 +192,21 @@ When the task mutates UI, the implementation/proof handoff must also satisfy:
 - Do not silently translate token names between artifacts during implementation.
   If aliases are needed, they must be explicit in the contract and visible in the
   showcase evidence.
+- Do not force a mature shadcn/Tailwind token system to rename itself to
+  `--ds-*` when an alias map would preserve portability with less churn.
 - Do not solve theming by spreading new colors through page-local classes. Wire
   components to the canonical theme tokens instead.
+- Do not claim that swapping `global.css`, Tailwind config, or a theme file is
+  sufficient until the Theme / Template Portability Gate proves the real app
+  consumes that token layer.
+- Do not rewrite components in every page. Prefer foundation, UI primitives,
+  second-layer primitives, enhanced/composites, shared product components, and
+  shells/templates before page consumers.
+- Prefer adapting mature third-party/open-source components when they fit the
+  product and license. Once adapted, they become first-party and must obey local
+  tokens, variants, tests, and ownership.
+- Treat excessive `div`, excessive `className`, and repeated direct classes as a
+  componentization defect unless a bounded exception is recorded.
 
 ## Application Packet
 
@@ -221,6 +246,7 @@ The task is not complete unless:
 - the design-system artifact consistency gate passed before mutation
 - the generated theme CSS was read and either applied or explicitly mapped to the
   project's token layer
+- any local runtime token API is named and mapped to the `--ds-*` interchange API
 - any executive rollout entrypoint explicitly declared the required pre-read
   set, constraint artifact, primary implementation driver, and slicing artifact
 - every changed UI element maps to `source-observed`, `code-available`,
@@ -241,6 +267,11 @@ The task is not complete unless:
 - the Design Implementation Proof Gate is satisfied when UI was mutated
 - type-check/lint/build gates run according to the target stack
 - residual drift is documented
+- theme/template portability is packeted and proved when the branch claims it
+- componentization audit is present when theme/template portability or broad UI
+  mutation is claimed
+- deep componentization audit is present when the branch claims extreme
+  componentization across pages/components/TypeScript modules
 
 ## Closure Blockers
 
@@ -256,6 +287,8 @@ Do not close if:
   `design-system.premium-theme.css`
 - implementation renames generated `--ds-*` tokens instead of applying or
   mapping them
+- implementation rejects a mature local token API without need, or accepts one
+  without a Token Alias Map
 - premium artifacts existed but were ignored for improvement/premium work
 - the implementation invents unsupported colors, gradients, components, states,
   metrics, or layouts
@@ -277,3 +310,10 @@ Do not close if:
 - final proof is screenshot-only with no artifact comparison
 - final proof is code-only with no runtime/browser evidence
 - runtime proof shows pre-fix state after in-scope visual defects were corrected
+- the branch claims a theme or template swap without visual config discovery,
+  theme consumption audit, and the corresponding swap proof packet
+- broad UI or template work leaves page-local component rewrites, `div` soup,
+  excessive `className`, or direct class sprawl without central owners or
+  recorded exceptions
+- requested page-by-page componentization findings are not emitted in the final
+  response and mapped to an executive plan

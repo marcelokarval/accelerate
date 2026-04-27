@@ -115,6 +115,14 @@ done
 
 bash "${SCRIPTS}/validate-v2.sh" "${target}" >/dev/null
 
+mkdir -p "${target}/.accelerate/random-output"
+if bash "${SCRIPTS}/validate-v2.sh" "${target}" >"${WORK_ROOT}/bad-layout.out" 2>&1; then
+  fail "unknown .accelerate directory was accepted"
+fi
+assert_contains "$(cat "${WORK_ROOT}/bad-layout.out")" "unregistered .accelerate directory: .accelerate/random-output"
+rm -rf "${target}/.accelerate/random-output"
+bash "${SCRIPTS}/validate-v2.sh" "${target}" >/dev/null
+
 create_output="$(bash "${SCRIPTS}/create-local-work-item.sh" "${target}" "live-workflow-adapter" "Build live workflow adapter")"
 assert_contains "${create_output}" "created local work item LWI-"
 assert_contains "$(grep '^active_work_item_id:' "${target}/.accelerate/workflow/adapter.yaml")" "LWI-"

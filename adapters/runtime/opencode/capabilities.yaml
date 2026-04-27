@@ -1,0 +1,9 @@
+name: opencode
+type: host-export
+status: available
+authority_boundary: generated-export
+allowed_tools: []
+suppressed_capabilities: []
+validation_command: scripts/export-runtime-host.sh opencode .tmp/host-export
+proof_artifacts: []
+privacy_notes: generated outward only; not source authority

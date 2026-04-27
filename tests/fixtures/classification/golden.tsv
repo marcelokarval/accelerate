@@ -1,0 +1,4 @@
+fix-readme-typo	trivial bounded engineering work	docs-only
+add-auth-flow	orchestrated non-trivial work	security-review
+change-homepage-theme	orchestrated non-trivial work	design-system-review
+add-browser-runtime	orchestrated non-trivial work	runtime-adapter

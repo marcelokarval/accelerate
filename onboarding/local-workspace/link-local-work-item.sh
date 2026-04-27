@@ -12,6 +12,10 @@ shift
 WORKFLOW="${TARGET_ROOT}/.accelerate/workflow"
 ACTIVE="${WORKFLOW}/active-work-item.yaml"
 
+json_escape() {
+  printf '%s' "$1" | perl -MJSON::PP -0777 -ne 'print encode_json($_)' | sed 's/^"//; s/"$//'
+}
+
 if [ ! -f "${ACTIVE}" ]; then
   echo "missing active work item: ${ACTIVE}" >&2
   exit 1
@@ -125,7 +129,7 @@ if [ -n "${task_ledger}" ]; then
       ;;
   esac
   perl -0pi -e "s#^one_shot_task_ledger:.*#one_shot_task_ledger: ${task_ledger}#m; s/^updated_at:.*/updated_at: ${STAMP}/m" "${ACTIVE}"
-  printf '{"event":"work_item_task_ledger_linked","id":"%s","task_ledger":"%s","at":"%s"}\n' "${active_id}" "${task_ledger}" "${STAMP}" >> "${WORKFLOW}/topology.jsonl"
+  printf '{"event":"work_item_task_ledger_linked","id":"%s","task_ledger":"%s","at":"%s"}\n' "${active_id}" "$(json_escape "${task_ledger}")" "${STAMP}" >> "${WORKFLOW}/topology.jsonl"
 fi
 
 bash "${SCRIPT_DIR}/append-timeline.sh" "${TARGET_ROOT}" "local_work_item_topology_linked" "Updated topology for ${active_id}" "info" "link-local-work-item.sh" >/dev/null

@@ -1,0 +1,10 @@
+name: model-voice
+type: runtime
+status: planned
+authority_boundary: runtime-adapter
+allowed_tools: []
+suppressed_capabilities: []
+validation_command: none-yet
+proof_artifacts:
+  - review-finding-schema
+privacy_notes: model outputs are advisory until root-reviewed

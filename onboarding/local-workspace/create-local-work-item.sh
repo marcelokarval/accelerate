@@ -13,6 +13,10 @@ shift 2
 TITLE="$*"
 WORKFLOW="${TARGET_ROOT}/.accelerate/workflow"
 
+json_escape() {
+  printf '%s' "$1" | perl -MJSON::PP -0777 -ne 'print encode_json($_)' | sed 's/^"//; s/"$//'
+}
+
 case "${SLUG}" in
   *[!a-z0-9-]*|""|-*)
     echo "invalid slug: ${SLUG}. use lowercase kebab-case" >&2
@@ -51,8 +55,8 @@ YAML
 
 perl -0pi -e "s/^active_work_item_id:.*/active_work_item_id: ${ID}/m; s/^active_work_item_locator:.*/active_work_item_locator: ${LOCATOR}/m; s/^last_event_id:.*/last_event_id: ${EVENT_ID}/m; s/^last_updated:.*/last_updated: $(date +%F)/m" "${WORKFLOW}/adapter.yaml"
 
-printf '{"event":"work_item_created","id":"%s","locator":"%s","slug":"%s","title":"%s","state":"planned","at":"%s"}\n' "${ID}" "${LOCATOR}" "${SLUG}" "${TITLE}" "${STAMP}" >> "${WORKFLOW}/work-items.jsonl"
-printf '{"event_id":"%s","event":"work_item_created","id":"%s","state":"planned","summary":"%s","at":"%s"}\n' "${EVENT_ID}" "${ID}" "${TITLE}" "${STAMP}" >> "${WORKFLOW}/events.jsonl"
+printf '{"event":"work_item_created","id":"%s","locator":"%s","slug":"%s","title":"%s","state":"planned","at":"%s"}\n' "${ID}" "${LOCATOR}" "${SLUG}" "$(json_escape "${TITLE}")" "${STAMP}" >> "${WORKFLOW}/work-items.jsonl"
+printf '{"event_id":"%s","event":"work_item_created","id":"%s","state":"planned","summary":"%s","at":"%s"}\n' "${EVENT_ID}" "${ID}" "$(json_escape "${TITLE}")" "${STAMP}" >> "${WORKFLOW}/events.jsonl"
 
 bash "${SCRIPT_DIR}/append-timeline.sh" "${TARGET_ROOT}" "local_work_item_created" "${ID} ${TITLE}" "info" "create-local-work-item.sh" >/dev/null
 

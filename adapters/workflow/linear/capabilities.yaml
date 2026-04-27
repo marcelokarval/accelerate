@@ -14,3 +14,13 @@ failure_recovery: planned
 external_api: planned
 substitute_evidence: .accelerate/workflow/
 runtime_truth: remote
+read_probe: onboarding/local-workspace/probe-linear-adapter.sh
+read_command: onboarding/local-workspace/read-linear-adapter.sh
+attachment_command: onboarding/local-workspace/attach-linear-artifact.sh
+mcp_remote_url: https://mcp.linear.app/mcp
+mcp_auth_host: opencode-global
+mcp_live_tested_at: 2026-04-27
+mcp_live_read_result: passed
+mcp_live_write_result: passed
+mcp_live_test_issue: https://linear.app/botrei/issue/P4Y-1270/temp-accelerate-linear-mcp-live-adapter-validation
+graphql_helper_live_result: blocked-without-linear-api-key

@@ -74,6 +74,11 @@ Use:
 - `./onboarding/local-workspace/render-local-work-item.sh /path/to/target-repo`
 - `./onboarding/local-workspace/reconcile-readiness.sh /path/to/target-repo review-ready|closure-ready [summary]`
 - `./onboarding/local-workspace/check-evidence-gate.sh /path/to/target-repo review-ready|closure-ready`
+- `./onboarding/local-workspace/check-workspace-layout.sh /path/to/target-repo`
+- `./onboarding/local-workspace/discover-visual-config.sh /path/to/target-repo`
+- `./onboarding/local-workspace/check-theme-consumption.sh /path/to/target-repo`
+- `./onboarding/local-workspace/check-componentization-discipline.sh /path/to/target-repo`
+- `./onboarding/local-workspace/run-deep-componentization-audit.sh /path/to/target-repo`
 - `./onboarding/local-workspace/sync-plan-status.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-closure-packet.sh /path/to/target-repo`
 - `./onboarding/local-workspace/render-ai-review-report.sh /path/to/target-repo`
