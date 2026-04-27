@@ -16,7 +16,8 @@ for script in \
   capture-browser-proof.sh create-github-pr-adapter.sh \
   rehydrate-github-pr-adapter.sh write-github-pr-recovery.sh \
   read-linear-mcp-adapter.sh create-linear-mcp-issue.sh \
-  attach-linear-mcp-artifact.sh write-linear-mcp-recovery.sh; do
+  attach-linear-mcp-artifact.sh write-linear-mcp-recovery.sh \
+  check-ship-readiness.sh land-github-pr.sh; do
   path="${ROOT}/onboarding/local-workspace/${script}"
   [ -x "${path}" ] || { echo "missing executable script: ${path}" >&2; exit 1; }
 done

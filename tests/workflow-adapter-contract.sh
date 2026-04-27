@@ -139,6 +139,8 @@ for manifest in adapters/workflow/*/capabilities.yaml; do
     require_file "onboarding/local-workspace/create-github-pr-adapter.sh"
     require_file "onboarding/local-workspace/rehydrate-github-pr-adapter.sh"
     require_file "onboarding/local-workspace/write-github-pr-recovery.sh"
+    require_file "onboarding/local-workspace/check-ship-readiness.sh"
+    require_file "onboarding/local-workspace/land-github-pr.sh"
     runtime_truth="$(yaml_value "${manifest}" "runtime_truth")"
     [ "${runtime_truth}" = "remote" ] || fail "github-pr adapter runtime_truth must be remote"
     if [ "${status}" = "implemented" ]; then

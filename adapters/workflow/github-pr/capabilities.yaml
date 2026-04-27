@@ -20,6 +20,8 @@ attachment_command: onboarding/local-workspace/attach-github-pr-artifact.sh
 create_command: onboarding/local-workspace/create-github-pr-adapter.sh
 rehydrate_command: onboarding/local-workspace/rehydrate-github-pr-adapter.sh
 recovery_command: onboarding/local-workspace/write-github-pr-recovery.sh
+ship_readiness_command: onboarding/local-workspace/check-ship-readiness.sh
+land_command: onboarding/local-workspace/land-github-pr.sh
 live_tested_at: 2026-04-27
 live_test_target: https://github.com/marcelokarval/accelerate/pull/1
 live_read_result: passed
