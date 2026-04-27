@@ -40,6 +40,16 @@ if [ "${review_readiness}" != "ready" ]; then
     "Prepared local closure surface by first reconciling review readiness" >/dev/null
 fi
 
+if [ -f "${WORKSPACE}/workflow/active-work-item.yaml" ]; then
+  active_work_item_id="$(sed -n 's/^id:[[:space:]]*//p' "${WORKSPACE}/workflow/active-work-item.yaml" | head -n 1)"
+  if [ -n "${active_work_item_id}" ] && [ "${active_work_item_id}" != "none" ]; then
+    bash "${SCRIPT_DIR}/transition-local-work-item.sh" \
+      "${TARGET_ROOT}" \
+      "closure" \
+      "Prepared local closure surface" >/dev/null
+  fi
+fi
+
 bash "${SCRIPT_DIR}/persist-review-artifacts.sh" "${TARGET_ROOT}" >/dev/null
 
 perl -0pi -e "s#^ai_review_rendered:.*#ai_review_rendered: present#m" "${WORKSPACE}/status/evidence-registry.yaml"

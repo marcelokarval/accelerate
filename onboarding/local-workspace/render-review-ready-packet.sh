@@ -11,6 +11,7 @@ WORKSPACE="${TARGET_ROOT}/.accelerate"
 READINESS_FILE="${WORKSPACE}/status/readiness-dashboard.yaml"
 TIMELINE_FILE="${WORKSPACE}/status/timeline.jsonl"
 PLAN_FILE="${WORKSPACE}/planning/current-plan.md"
+WORK_ITEM_FILE="${WORKSPACE}/workflow/active-work-item.yaml"
 
 for required in "${READINESS_FILE}" "${TIMELINE_FILE}" "${PLAN_FILE}"; do
   if [ ! -f "${required}" ]; then
@@ -23,6 +24,17 @@ yaml_value() {
   local path="$1"
   local key="$2"
   sed -n "s/^${key}:[[:space:]]*//p" "${path}" | head -n 1
+}
+
+workflow_value() {
+  local key="$1"
+  if [ ! -f "${WORK_ITEM_FILE}" ]; then
+    printf 'none\n'
+    return
+  fi
+  local value
+  value="$(yaml_value "${WORK_ITEM_FILE}" "${key}")"
+  printf '%s\n' "${value:-none}"
 }
 
 plan_value() {
@@ -58,6 +70,9 @@ cat <<EOF
 Review-Ready Packet
 
 - governing artifact: ${governing_path:-n/a}
+- workflow work item: $(workflow_value "id")
+- workflow locator: $(workflow_value "locator")
+- workflow lifecycle state: $(workflow_value "lifecycle_state")
 - bounded objective: ${bounded_objective:-n/a}
 - current phase: ${phase}
 - dashboard verdict: ${dashboard_verdict}

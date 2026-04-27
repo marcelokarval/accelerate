@@ -1,0 +1,16 @@
+schema_version: 1
+id: none
+locator: none
+title: none
+slug: none
+lifecycle_state: none
+owner: local
+parent_id: none
+related_ids: []
+child_ids: []
+labels: []
+governing_artifact: .accelerate/planning/current-plan.md
+one_shot_task_ledger: none
+created_at: none
+updated_at: none
+closure_summary: none

@@ -16,6 +16,7 @@ before closure.
 | T4 | Implement artifact content validation | `check-evidence-artifacts.sh`, `check-evidence-gate.sh` | Junk/partial packets fail; valid packets pass | marker validation and cross-lane browser/design rule added | met | none after implementation | n/a | n/a | local proof gate passed | closed |
 | T5 | Validate and forensic-review delivery | validation outputs and review log | All relevant tests pass and final side-by-side reconciliation is complete | all shell tests passed | met | none open | n/a | n/a | full shell test suite passed | closed |
 | T6 | Validate proof capture paths exist and stay under project `.tmp/` | `check-evidence-artifacts.sh`, `tests/local-workspace-proof-gates.sh` | Missing captures and captures outside `.tmp/` fail; valid captures pass | red then green | met | gate accepted missing capture before fix | master | parse capture fields and require existing `.tmp/` paths | full shell test suite passed | closed |
+| T7 | Require console and network evidence in browser proof | `browser-proof-packet.md`, `check-evidence-artifacts.sh`, proof gate tests | Missing console/network evidence files fail; valid proof includes captured logs | red then green | met | gate accepted missing console evidence before fix | master | require `console evidence` and `network evidence` fields and existing `.tmp/` files | full shell test suite passed | closed |
 
 ## Review Log
 
@@ -133,3 +134,33 @@ Reproof:
 | `for test_file in tests/*.sh; do bash "$test_file"; done` | passed |
 
 No open in-scope defects remain after capture path hardening.
+
+## Console And Network Evidence Follow-Up Review
+
+### T7 Side-By-Side Review
+
+| Requested | Implemented | Judgment |
+| --- | --- | --- |
+| Console log must be inspected | `Browser-Proof Packet` now requires `- console evidence:` plus `- console/runtime errors:` | met |
+| Network log must be inspected when relevant | `Browser-Proof Packet` now requires `- network evidence:` plus `- network/server truth:` | met |
+| Missing console evidence fails | `closure-blocks-missing-console-evidence` covers missing `.tmp/browser/console.jsonl` | met |
+| Missing network evidence fails | `closure-blocks-missing-network-evidence` covers missing `.tmp/browser/network.jsonl` | met |
+| Valid browser proof still passes | Valid fixtures now create `.tmp/browser/console.jsonl` and `.tmp/browser/network.jsonl` | met |
+| Design proof gate reflects the risk | `design-implementation-proof-gate.md` blocks closure when console/network evidence is absent | met |
+
+Defect proven: before this correction, a formal browser-proof packet with a
+missing console evidence file could pass closure.
+
+Correction: `check-evidence-artifacts.sh` now requires `- console evidence:` and
+`- network evidence:` markers and validates their local paths through the same
+`.tmp/` existence rule used for screenshots/captures.
+
+Reproof:
+
+| Validation | Result |
+| --- | --- |
+| `bash tests/local-workspace-proof-gates.sh` | passed |
+| `bash tests/doctrine-integrity.sh && bash tests/local-workflow-adapter.sh && bash tests/local-workspace-proof-gates.sh && bash tests/profile-integrity.sh && git diff --check` | passed |
+| `for test_file in tests/*.sh; do bash "$test_file"; done` | passed |
+
+No open in-scope defects remain after console/network evidence hardening.

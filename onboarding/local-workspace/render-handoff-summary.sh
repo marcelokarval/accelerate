@@ -23,6 +23,7 @@ CURRENT_SLICE_REVIEW_FILE="${REVIEW_DIR}/current-slice-review.md"
 CURRENT_SLICE_FORENSICS_FILE="${REVIEW_DIR}/current-slice-forensics.md"
 DEFECT_LEDGER_FILE="${REVIEW_DIR}/defect-ledger.yaml"
 SEAM_PROOF_FILE="${REVIEW_DIR}/seam-proof.md"
+WORK_ITEM_FILE="${WORKSPACE}/workflow/active-work-item.yaml"
 
 for required in \
   "${STATE_FILE}" \
@@ -49,6 +50,17 @@ yaml_value() {
   local path="$1"
   local key="$2"
   sed -n "s/^${key}:[[:space:]]*//p" "${path}" | head -n 1
+}
+
+workflow_value() {
+  local key="$1"
+  if [ ! -f "${WORK_ITEM_FILE}" ]; then
+    printf 'none\n'
+    return
+  fi
+  local value
+  value="$(yaml_value "${WORK_ITEM_FILE}" "${key}")"
+  printf '%s\n' "${value:-none}"
 }
 
 last_jsonl_field() {
@@ -103,6 +115,13 @@ cat <<EOF
 - current handoff surface: ${current_handoff}
 - latest timeline event: ${last_event:-n/a}
 - summary recommendation: ${summary_recommendation}
+
+## Workflow Identity
+
+- workflow work item: $(workflow_value "id")
+- workflow locator: $(workflow_value "locator")
+- workflow lifecycle state: $(workflow_value "lifecycle_state")
+- workflow title: $(workflow_value "title")
 
 ## Canonical Review Surface
 

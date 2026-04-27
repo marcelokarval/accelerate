@@ -35,6 +35,7 @@ require_file "tests/one-shot-protocol-delegation.sh"
 require_file "tests/one-shot-protocol-closure.sh"
 require_file "tests/design-md-corpus-integrity.sh"
 require_file "tests/design-md-corpus-semantic.sh"
+require_file "tests/workflow-adapter-contract.sh"
 
 python3 - <<'PY'
 from pathlib import Path
@@ -159,3 +160,5 @@ bash tests/one-shot-protocol-delegation.sh
 bash tests/one-shot-protocol-closure.sh
 bash tests/design-md-corpus-integrity.sh
 bash tests/design-md-corpus-semantic.sh
+bash tests/local-workflow-adapter.sh
+bash tests/workflow-adapter-contract.sh

@@ -45,6 +45,49 @@ An adapter may have native support, linked support, or no support for a given
 capability. Missing support is acceptable only when the adapter states the
 substitute evidence model and the control plane can still preserve traceability.
 
+## Capability Manifest
+
+Every concrete adapter must include a machine-readable capability manifest at:
+
+```text
+adapters/workflow/<adapter>/capabilities.yaml
+```
+
+The manifest is the shared adapter contract stabilization point. It lets the
+root compare adapters without assuming that Linear, GitHub, local files, Jira,
+or Notion expose the same primitives.
+
+Required keys:
+
+```yaml
+schema_version: 1
+adapter: local|linear|github-pr|github-issues|github-projects|jira|notion
+status: implemented|planned|blocked
+identity: native|linked|substitute|none
+work_item_create: native|linked|substitute|planned|blocked|none
+work_item_lookup: native|linked|substitute|planned|blocked|none
+work_item_update: native|linked|substitute|planned|blocked|none
+lifecycle_transition: native|linked|substitute|planned|blocked|none
+topology: native|linked|substitute|planned|blocked|none
+review_attachment: native|linked|substitute|planned|blocked|none
+closure_attachment: native|linked|substitute|planned|blocked|none
+metadata_rehydration: native|linked|substitute|planned|blocked|none
+failure_recovery: native|linked|substitute|planned|blocked|none
+external_api: native|linked|substitute|planned|blocked|none
+substitute_evidence: <path or none>
+runtime_truth: local|remote|hybrid|none
+```
+
+Rules:
+
+- `status: implemented` requires at least substitute identity, lifecycle, topology,
+  review/closure attachment, metadata rehydration, and failure recovery.
+- `external_api: none` is valid for the local adapter only when
+  `runtime_truth: local` and `substitute_evidence` points to concrete local files.
+- A remote adapter must not claim `implemented` until its API read/write behavior
+  is tested.
+- Gaps must be represented as `none` or `blocked`, not hidden in prose.
+
 ## Shared Concepts
 
 Every adapter must express:

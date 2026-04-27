@@ -1,0 +1,16 @@
+schema_version: 1
+adapter: linear
+status: planned
+identity: native
+work_item_create: planned
+work_item_lookup: planned
+work_item_update: planned
+lifecycle_transition: planned
+topology: planned
+review_attachment: planned
+closure_attachment: planned
+metadata_rehydration: planned
+failure_recovery: planned
+external_api: planned
+substitute_evidence: .accelerate/workflow/
+runtime_truth: remote

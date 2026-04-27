@@ -73,6 +73,8 @@ write_valid_browser_proof() {
   local target="$1"
   mkdir -p "${target}/.accelerate/proof" "${target}/.tmp/browser"
   printf '%s\n' "screenshot" > "${target}/.tmp/browser/dashboard.png"
+  printf '%s\n' '{"level":"info","message":"no console errors observed"}' > "${target}/.tmp/browser/console.jsonl"
+  printf '%s\n' '{"url":"/dashboard","status":200}' > "${target}/.tmp/browser/network.jsonl"
   cat > "${target}/.accelerate/proof/browser_proof.md" <<'MD'
 Browser-Proof Packet
 
@@ -84,7 +86,9 @@ Browser-Proof Packet
 - state coverage: default
 - session/auth posture: seeded user
 - console/runtime errors: none
+- console evidence: .tmp/browser/console.jsonl
 - network/server truth: 200 responses
+- network evidence: .tmp/browser/network.jsonl
 - backend/frontend state reconciliation: present
 - screenshots/captures: .tmp/browser/dashboard.png
 - defects registered: none
@@ -285,6 +289,34 @@ if bash "${SCRIPTS}/reconcile-readiness.sh" "${outside_capture_target}" closure-
   fail "closure-ready reconciliation succeeded with browser capture outside project .tmp"
 fi
 assert_contains "$(cat "${WORK_ROOT}/outside-capture-gate.out")" "artifact gate blocked: browser_proof_artifact capture path must be under project .tmp/: screenshots/dashboard.png"
+
+missing_console_evidence_target="$(reset_repo closure-blocks-missing-console-evidence)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review; do
+  set_evidence "${missing_console_evidence_target}" "${key}" "present"
+done
+set_evidence "${missing_console_evidence_target}" "frontend_qa" "not-applicable"
+set_evidence "${missing_console_evidence_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${missing_console_evidence_target}"
+perl -0pi -e 's#\.tmp/browser/console\.jsonl#.tmp/browser/missing-console.jsonl#g' "${missing_console_evidence_target}/.accelerate/proof/browser_proof.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${missing_console_evidence_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${missing_console_evidence_target}" closure-ready >"${WORK_ROOT}/missing-console-evidence-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded with missing console evidence"
+fi
+assert_contains "$(cat "${WORK_ROOT}/missing-console-evidence-gate.out")" "artifact gate blocked: browser_proof_artifact capture path does not exist: .tmp/browser/missing-console.jsonl"
+
+missing_network_evidence_target="$(reset_repo closure-blocks-missing-network-evidence)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review; do
+  set_evidence "${missing_network_evidence_target}" "${key}" "present"
+done
+set_evidence "${missing_network_evidence_target}" "frontend_qa" "not-applicable"
+set_evidence "${missing_network_evidence_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${missing_network_evidence_target}"
+perl -0pi -e 's#\.tmp/browser/network\.jsonl#.tmp/browser/missing-network.jsonl#g' "${missing_network_evidence_target}/.accelerate/proof/browser_proof.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${missing_network_evidence_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${missing_network_evidence_target}" closure-ready >"${WORK_ROOT}/missing-network-evidence-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded with missing network evidence"
+fi
+assert_contains "$(cat "${WORK_ROOT}/missing-network-evidence-gate.out")" "artifact gate blocked: browser_proof_artifact capture path does not exist: .tmp/browser/missing-network.jsonl"
 
 junk_design_target="$(reset_repo closure-blocks-junk-design-proof-artifact)"
 for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review design_implementation_proof; do

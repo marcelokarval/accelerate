@@ -13,6 +13,7 @@ EVIDENCE_FILE="${WORKSPACE}/status/evidence-registry.yaml"
 TIMELINE_FILE="${WORKSPACE}/status/timeline.jsonl"
 LEARNINGS_FILE="${WORKSPACE}/status/learnings.jsonl"
 PLAN_FILE="${WORKSPACE}/planning/current-plan.md"
+WORK_ITEM_FILE="${WORKSPACE}/workflow/active-work-item.yaml"
 
 for required in "${READINESS_FILE}" "${TIMELINE_FILE}" "${LEARNINGS_FILE}" "${PLAN_FILE}"; do
   if [ ! -f "${required}" ]; then
@@ -37,6 +38,17 @@ evidence_value() {
   local value
   value="$(yaml_value "${EVIDENCE_FILE}" "${key}")"
   printf '%s\n' "${value:-${default}}"
+}
+
+workflow_value() {
+  local key="$1"
+  if [ ! -f "${WORK_ITEM_FILE}" ]; then
+    printf 'none\n'
+    return
+  fi
+  local value
+  value="$(yaml_value "${WORK_ITEM_FILE}" "${key}")"
+  printf '%s\n' "${value:-none}"
 }
 
 plan_value() {
@@ -138,6 +150,9 @@ cat <<EOF
 Closure Packet
 
 - requested vs implemented: ${bounded_objective:-n/a} -> local status-backed closure summary
+- workflow work item: $(workflow_value "id")
+- workflow locator: $(workflow_value "locator")
+- workflow lifecycle state: $(workflow_value "lifecycle_state")
 - promised vs delivered: dashboard_verdict=${dashboard_verdict}, execution=${execution_readiness}, review=${review_readiness}, closure=${closure_readiness}
 - issue scope vs landing: ${governing_path:-n/a}
 - defect ledger status: ${defect_ledger}

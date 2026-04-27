@@ -1,0 +1,7 @@
+schema_version: 1
+adapter: local
+adapter_status: initialized
+active_work_item_id: none
+active_work_item_locator: none
+last_event_id: none
+last_updated: YYYY-MM-DD

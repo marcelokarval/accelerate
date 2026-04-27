@@ -43,6 +43,16 @@ if [ "${review_readiness}" != "ready" ]; then
     "Prepared local review surface from current plan and readiness truth" >/dev/null
 fi
 
+if [ -f "${WORKSPACE}/workflow/active-work-item.yaml" ]; then
+  active_work_item_id="$(sed -n 's/^id:[[:space:]]*//p' "${WORKSPACE}/workflow/active-work-item.yaml" | head -n 1)"
+  if [ -n "${active_work_item_id}" ] && [ "${active_work_item_id}" != "none" ]; then
+    bash "${SCRIPT_DIR}/transition-local-work-item.sh" \
+      "${TARGET_ROOT}" \
+      "review" \
+      "Prepared local review surface" >/dev/null
+  fi
+fi
+
 "${SCRIPT_DIR}/persist-review-artifacts.sh" "${TARGET_ROOT}" >/dev/null
 "${SCRIPT_DIR}/render-pre-review-bundle.sh" "${TARGET_ROOT}" > "${PRE_REVIEW_FILE}"
 

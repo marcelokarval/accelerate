@@ -192,6 +192,9 @@ Do not close when:
 - component mapping contains unapproved `not-approved-yet` elements
 - proof is code-only with no runtime/browser comparison
 - proof is screenshot-only with no comparison against active artifacts
+- proof lacks console evidence for browser/runtime errors
+- proof lacks network evidence when server responses, redirects, data loading,
+  mutations, auth, billing, or state reconciliation are relevant
 - viewport or state coverage is missing without a bounded exception
 - dark mode changed but sibling parity was not inspected
 - in-scope visual defects were found but not registered
@@ -211,5 +214,7 @@ The gate passes only when a fresh reviewer can answer:
 - which runtime surface changed
 - which shared owner layer was used
 - which browser/runtime evidence proves the current corrected state
+- which console and network evidence were inspected, and what defects or clean
+  results they showed
 - which visual defects were opened, fixed, waived, or deferred
 - what residual drift remains

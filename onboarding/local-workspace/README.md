@@ -67,6 +67,11 @@ Use:
 - `./onboarding/local-workspace/render-handoff-summary.sh /path/to/target-repo`
 - `./onboarding/local-workspace/persist-handoff-summary.sh /path/to/target-repo`
 - `./onboarding/local-workspace/mark-checkpoint.sh /path/to/target-repo <checkpoint> <summary>`
+- `./onboarding/local-workspace/init-local-workflow.sh /path/to/target-repo`
+- `./onboarding/local-workspace/create-local-work-item.sh /path/to/target-repo <slug> <title>`
+- `./onboarding/local-workspace/link-local-work-item.sh /path/to/target-repo [--parent ID] [--child ID] [--related ID] [--task-ledger path]`
+- `./onboarding/local-workspace/transition-local-work-item.sh /path/to/target-repo <state> [summary]`
+- `./onboarding/local-workspace/render-local-work-item.sh /path/to/target-repo`
 - `./onboarding/local-workspace/reconcile-readiness.sh /path/to/target-repo review-ready|closure-ready [summary]`
 - `./onboarding/local-workspace/check-evidence-gate.sh /path/to/target-repo review-ready|closure-ready`
 - `./onboarding/local-workspace/sync-plan-status.sh /path/to/target-repo`
@@ -110,6 +115,12 @@ This now supports the minimum deterministic onboarding loop:
   - derives the next canonical local handoff action from readiness and timeline truth
 - `mark-checkpoint.sh`
   - appends a semantic checkpoint into the local continuity timeline
+- local workflow adapter
+  - `init-local-workflow.sh` materializes `.accelerate/workflow/`
+  - `create-local-work-item.sh` creates stable local work-item identity
+  - `link-local-work-item.sh` records parent, child, related, and one-shot task-ledger links
+  - `transition-local-work-item.sh` records lifecycle transitions
+  - `render-local-work-item.sh` rehydrates the active local workflow packet
 - `reconcile-readiness.sh`
   - promotes the local dashboard into `review-ready` or `closure-ready` only after `check-evidence-gate.sh` confirms the required proof state
 - `check-evidence-gate.sh`

@@ -127,7 +127,9 @@ validate_browser_proof_artifact() {
     "- viewport coverage:" \
     "- state coverage:" \
     "- console/runtime errors:" \
+    "- console evidence:" \
     "- network/server truth:" \
+    "- network evidence:" \
     "- screenshots/captures:" \
     "- residual route-family gaps:" \
     "- readiness impact:"; do
@@ -139,6 +141,8 @@ validate_browser_proof_artifact() {
   fi
 
   validate_capture_paths "browser_proof_artifact" "${path}" "screenshots/captures"
+  validate_capture_paths "browser_proof_artifact" "${path}" "console evidence"
+  validate_capture_paths "browser_proof_artifact" "${path}" "network evidence"
 }
 
 validate_design_implementation_proof_artifact() {

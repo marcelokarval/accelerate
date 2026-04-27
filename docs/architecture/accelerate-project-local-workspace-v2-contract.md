@@ -56,6 +56,13 @@ The minimum V2 implementation must create all of these paths:
 │   ├── current-slice-forensics.md
 │   ├── defect-ledger.yaml
 │   └── seam-proof.md
+├── workflow/
+│   ├── README.md
+│   ├── adapter.yaml
+│   ├── active-work-item.yaml
+│   ├── work-items.jsonl
+│   ├── events.jsonl
+│   └── topology.jsonl
 ├── onboarding/
 │   ├── status.yaml
 │   ├── discovery.yaml
@@ -166,6 +173,11 @@ current_slice_review: .accelerate/review/current-slice-review.md
 current_slice_forensics: .accelerate/review/current-slice-forensics.md
 defect_ledger: .accelerate/review/defect-ledger.yaml
 seam_proof: .accelerate/review/seam-proof.md
+workflow_adapter: .accelerate/workflow/adapter.yaml
+active_work_item: .accelerate/workflow/active-work-item.yaml
+workflow_events: .accelerate/workflow/events.jsonl
+workflow_work_items: .accelerate/workflow/work-items.jsonl
+workflow_topology: .accelerate/workflow/topology.jsonl
 last_bootstrap_update: YYYY-MM-DD
 ```
 

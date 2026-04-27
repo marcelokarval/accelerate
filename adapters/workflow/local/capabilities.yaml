@@ -1,0 +1,16 @@
+schema_version: 1
+adapter: local
+status: implemented
+identity: substitute
+work_item_create: substitute
+work_item_lookup: substitute
+work_item_update: substitute
+lifecycle_transition: substitute
+topology: substitute
+review_attachment: substitute
+closure_attachment: substitute
+metadata_rehydration: substitute
+failure_recovery: substitute
+external_api: none
+substitute_evidence: .accelerate/workflow/
+runtime_truth: local

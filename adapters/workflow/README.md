@@ -5,17 +5,18 @@ backends.
 
 ## Current Stage
 
-In the `standalone pre-agents` phase, this layer is documented natively but not
-yet fully implemented as a runtime backend.
+In the `standalone pre-agents` phase, this layer is now moving from documented
+contract toward progressive live adapters.
 
 Read it as:
 
 - current contract truth
 - current default distribution shape
 - future backend targets
+- active local adapter foundation for `.accelerate/workflow/`
 
-Do not read it as proof that a concrete workflow backend is already enforced in
-this repository.
+Do not read local adapter support as proof that Linear, GitHub, Jira, or Notion
+are already live. The local adapter is the first concrete substitute backend.
 
 Every workflow adapter should support:
 
@@ -48,15 +49,17 @@ The intended posture is:
 Native pre-agents reading order:
 
 1. `adapter-contract.md`
-2. `linear/README.md`
-3. `github/README.md`
-4. `linear/adapter.md` and `github/adapter.md` as supporting transition notes
+2. `local/README.md`
+3. `linear/README.md`
+4. `github/README.md`
+5. `linear/adapter.md` and `github/adapter.md` as supporting transition notes
 
 ## Not-Yet-Implemented Limits
 
-This layer is not yet a runtime adapter stack. It currently does not provide:
+This layer is not yet a complete remote runtime adapter stack. It currently does
+not provide:
 
-- adapter discovery or selection
+- remote adapter discovery or selection
 - backend API clients
 - issue, pull-request, status, or comment writers
 - automated metadata rehydration
@@ -66,8 +69,8 @@ This layer is not yet a runtime adapter stack. It currently does not provide:
 - automatic correction/reproof comment flows
 - automatic final forensic reconciliation posting
 
-Until those pieces exist, workflow adapter files define capability contracts and
-honest pre-agents reading order only.
+The local adapter provides local work-item identity and lifecycle state, but
+remote workflow automation remains intentionally unclaimed.
 
 ## Live Adapter Direction
 
@@ -77,8 +80,8 @@ same core concepts to concrete systems without changing core doctrine.
 
 Recommended build order:
 
-1. local `.accelerate/` workspace adapter for packets, ledgers, readiness, and
-   closure bundles
+1. local `.accelerate/` workspace adapter for work-item identity, packets,
+   ledgers, readiness, and closure bundles
 2. Linear adapter for parent/child issue topology, comments, review state, and
    delivery status
 3. GitHub Pull Request adapter for code-review-bound requested-vs-implemented

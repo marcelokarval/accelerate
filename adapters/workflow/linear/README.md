@@ -4,7 +4,7 @@ This directory defines the Linear workflow adapter capability contract.
 
 ## Current Status
 
-- status: default-shaped workflow doctrine
+- status: planned remote workflow adapter
 - phase: standalone pre-agents
 - runtime implementation: not yet implemented as a native adapter in this
   repository
@@ -21,6 +21,19 @@ Those files are supporting doctrine. This adapter contract is the intended local
 adapter surface for future implementation.
 
 ## Capability Contract
+
+The machine-readable capability manifest lives at:
+
+- `capabilities.yaml`
+
+It currently declares Linear as `planned`, not implemented. This is intentional:
+the adapter has a target contract, but no tested API read/write runtime here yet.
+
+The implementation sequence is defined in:
+
+- `operational-contract.md`
+
+## Linear Capability Contract
 
 The Linear adapter must satisfy the shared workflow contract through Linear
 objects and explicit external links where Linear does not own the artifact:

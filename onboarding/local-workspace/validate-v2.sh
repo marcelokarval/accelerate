@@ -40,6 +40,12 @@ required_files=(
   "${WORKSPACE}/review/current-slice-forensics.md"
   "${WORKSPACE}/review/defect-ledger.yaml"
   "${WORKSPACE}/review/seam-proof.md"
+  "${WORKSPACE}/workflow/README.md"
+  "${WORKSPACE}/workflow/adapter.yaml"
+  "${WORKSPACE}/workflow/active-work-item.yaml"
+  "${WORKSPACE}/workflow/work-items.jsonl"
+  "${WORKSPACE}/workflow/events.jsonl"
+  "${WORKSPACE}/workflow/topology.jsonl"
   "${WORKSPACE}/agents/status.yaml"
   "${WORKSPACE}/agents/candidates.yaml"
   "${WORKSPACE}/agents/gaps.yaml"
@@ -161,6 +167,36 @@ require_key "${WORKSPACE}/state.yaml" "current_slice_review"
 require_key "${WORKSPACE}/state.yaml" "current_slice_forensics"
 require_key "${WORKSPACE}/state.yaml" "defect_ledger"
 require_key "${WORKSPACE}/state.yaml" "seam_proof"
+require_key "${WORKSPACE}/state.yaml" "workflow_adapter"
+require_key "${WORKSPACE}/state.yaml" "active_work_item"
+require_key "${WORKSPACE}/state.yaml" "workflow_events"
+require_key "${WORKSPACE}/state.yaml" "workflow_work_items"
+require_key "${WORKSPACE}/state.yaml" "workflow_topology"
+
+require_key "${WORKSPACE}/workflow/adapter.yaml" "schema_version"
+require_key "${WORKSPACE}/workflow/adapter.yaml" "adapter"
+require_key "${WORKSPACE}/workflow/adapter.yaml" "adapter_status"
+require_key "${WORKSPACE}/workflow/adapter.yaml" "active_work_item_id"
+require_key "${WORKSPACE}/workflow/adapter.yaml" "active_work_item_locator"
+require_key "${WORKSPACE}/workflow/adapter.yaml" "last_event_id"
+require_key "${WORKSPACE}/workflow/adapter.yaml" "last_updated"
+
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "schema_version"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "id"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "locator"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "title"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "slug"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "lifecycle_state"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "owner"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "parent_id"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "related_ids"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "child_ids"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "labels"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "governing_artifact"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "one_shot_task_ledger"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "created_at"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "updated_at"
+require_key "${WORKSPACE}/workflow/active-work-item.yaml" "closure_summary"
 
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "schema_version"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "current_phase"
@@ -236,6 +272,15 @@ require_enum "${WORKSPACE}/state.yaml" "workflow_backend_detected" "none-yet" "g
 require_enum "${WORKSPACE}/state.yaml" "active_profile" "unknown" "django-inertia-react" "nextjs-tailwind"
 require_enum "${WORKSPACE}/state.yaml" "agent_mode" "root-only" "agent-eligible"
 require_listish "${WORKSPACE}/state.yaml" "active_runtime_adapters"
+
+require_exact_value "${WORKSPACE}/workflow/adapter.yaml" "schema_version" "1"
+require_exact_value "${WORKSPACE}/workflow/adapter.yaml" "adapter" "local"
+require_enum "${WORKSPACE}/workflow/adapter.yaml" "adapter_status" "initialized" "active" "blocked"
+require_exact_value "${WORKSPACE}/workflow/active-work-item.yaml" "schema_version" "1"
+require_enum "${WORKSPACE}/workflow/active-work-item.yaml" "lifecycle_state" "none" "planned" "ready" "in_progress" "review" "closure" "done" "blocked" "cancelled"
+require_listish "${WORKSPACE}/workflow/active-work-item.yaml" "related_ids"
+require_listish "${WORKSPACE}/workflow/active-work-item.yaml" "child_ids"
+require_listish "${WORKSPACE}/workflow/active-work-item.yaml" "labels"
 
 require_exact_value "${WORKSPACE}/status/readiness-dashboard.yaml" "schema_version" "1"
 require_enum "${WORKSPACE}/status/readiness-dashboard.yaml" "current_phase" "onboarding" "planning" "execution" "review" "closure"
@@ -434,6 +479,36 @@ fi
 seam_proof="$(yaml_value "${WORKSPACE}/state.yaml" "seam_proof")"
 if [ -n "${seam_proof}" ] && [ ! -f "${TARGET_ROOT}/${seam_proof}" ]; then
   echo "state.yaml seam_proof does not exist: ${TARGET_ROOT}/${seam_proof}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+workflow_adapter="$(yaml_value "${WORKSPACE}/state.yaml" "workflow_adapter")"
+if [ -n "${workflow_adapter}" ] && [ ! -f "${TARGET_ROOT}/${workflow_adapter}" ]; then
+  echo "state.yaml workflow_adapter does not exist: ${TARGET_ROOT}/${workflow_adapter}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+active_work_item="$(yaml_value "${WORKSPACE}/state.yaml" "active_work_item")"
+if [ -n "${active_work_item}" ] && [ ! -f "${TARGET_ROOT}/${active_work_item}" ]; then
+  echo "state.yaml active_work_item does not exist: ${TARGET_ROOT}/${active_work_item}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+workflow_events="$(yaml_value "${WORKSPACE}/state.yaml" "workflow_events")"
+if [ -n "${workflow_events}" ] && [ ! -f "${TARGET_ROOT}/${workflow_events}" ]; then
+  echo "state.yaml workflow_events does not exist: ${TARGET_ROOT}/${workflow_events}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+workflow_work_items="$(yaml_value "${WORKSPACE}/state.yaml" "workflow_work_items")"
+if [ -n "${workflow_work_items}" ] && [ ! -f "${TARGET_ROOT}/${workflow_work_items}" ]; then
+  echo "state.yaml workflow_work_items does not exist: ${TARGET_ROOT}/${workflow_work_items}" >&2
+  FAILURES=$((FAILURES + 1))
+fi
+
+workflow_topology="$(yaml_value "${WORKSPACE}/state.yaml" "workflow_topology")"
+if [ -n "${workflow_topology}" ] && [ ! -f "${TARGET_ROOT}/${workflow_topology}" ]; then
+  echo "state.yaml workflow_topology does not exist: ${TARGET_ROOT}/${workflow_topology}" >&2
   FAILURES=$((FAILURES + 1))
 fi
 
