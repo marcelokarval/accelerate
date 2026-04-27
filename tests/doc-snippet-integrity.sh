@@ -12,7 +12,8 @@ for script in \
   export-proof-document.sh check-export-allowlist.sh probe-github-pr-adapter.sh \
   probe-linear-adapter.sh read-github-pr-adapter.sh attach-github-pr-artifact.sh \
   read-linear-adapter.sh attach-linear-artifact.sh require-export-approved.sh \
-  validate-linear-issue-response.sh validate-linear-comment-response.sh; do
+  validate-linear-issue-response.sh validate-linear-comment-response.sh \
+  capture-browser-proof.sh; do
   path="${ROOT}/onboarding/local-workspace/${script}"
   [ -x "${path}" ] || { echo "missing executable script: ${path}" >&2; exit 1; }
 done

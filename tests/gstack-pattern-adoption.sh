@@ -70,7 +70,7 @@ done
 
 assert_contains "${ROOT}/core/control-plane/one-way-door-policy.md" "One-way-door decisions require explicit user approval"
 assert_contains "${ROOT}/core/runtime-packets/qa-report-packet.md" "Screenshot-only QA proof is insufficient"
-assert_contains "${ROOT}/adapters/runtime/browser/capabilities.yaml" "status: planned"
+assert_contains "${ROOT}/adapters/runtime/browser/capabilities.yaml" "status: available"
 
 rm -rf "${WORK_ROOT}"
 mkdir -p "${WORK_ROOT}/repo"
@@ -103,6 +103,10 @@ bash "${SCRIPTS}/check-qa-report.sh" "${WORK_ROOT}/repo" >/dev/null
 bash "${SCRIPTS}/set-safety-overlay.sh" "${WORK_ROOT}/repo" "guard" "root" "test" ".accelerate" >/dev/null
 bash "${SCRIPTS}/check-safety-overlay.sh" "${WORK_ROOT}/repo" >/dev/null
 bash "${SCRIPTS}/check-runtime-adapters.sh" >/dev/null
+bash "${SCRIPTS}/capture-browser-proof.sh" "${WORK_ROOT}/repo" "http://localhost:3000" ".accelerate/review/browser-proof.json" --dry-run | grep -Fq '"adapter":"browser"' || fail "browser proof dry-run failed"
+if bash "${SCRIPTS}/capture-browser-proof.sh" "${WORK_ROOT}/repo" "https://example.com" ".accelerate/review/browser-proof.json" --dry-run >"${WORK_ROOT}/remote-browser.out" 2>&1; then
+  fail "remote browser proof URL accepted without opt-in"
+fi
 bash "${SCRIPTS}/render-proof-document.sh" "${WORK_ROOT}/repo" ".accelerate/review/qa-report.md" ".accelerate/review/qa-report-copy.md" >/dev/null
 [ -f "${WORK_ROOT}/repo/.accelerate/review/qa-report-copy.md" ] || fail "proof document not rendered"
 if bash "${SCRIPTS}/export-proof-document.sh" "${WORK_ROOT}/repo" ".accelerate/review/qa-report.md" ".accelerate/review/qa-report.html" >"${WORK_ROOT}/blocked-export.out" 2>&1; then

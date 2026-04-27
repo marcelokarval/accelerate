@@ -1,11 +1,14 @@
 name: browser
 type: runtime
-status: planned
+status: available
 authority_boundary: runtime-adapter
-allowed_tools: []
+allowed_tools:
+  - node
+  - puppeteer
 suppressed_capabilities: []
-validation_command: none-yet
+validation_command: onboarding/local-workspace/capture-browser-proof.sh /tmp http://localhost:3000 .accelerate/review/browser-proof.json --dry-run
 proof_artifacts:
   - browser-proof-packet
   - qa-report-packet
 privacy_notes: browser cookies, tokens, screenshots, and traces are sensitive local proof
+command: onboarding/local-workspace/capture-browser-proof.sh
