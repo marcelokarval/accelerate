@@ -7,8 +7,12 @@ if [ "$#" -lt 1 ]; then
 fi
 
 root="$(cd "$1" && pwd)"
+mode=""
+if [ "${@: -1}" = "--dry-run" ]; then
+  mode="--dry-run"
+  set -- "${@:1:$(($#-1))}"
+fi
 output_path="${2:-.accelerate/review/ship-readiness.json}"
-mode="${3:-}"
 case "${output_path}" in /*|*..*) echo "output path must be relative and cannot contain '..': ${output_path}" >&2; exit 1 ;; esac
 
 origin_url="$(git -C "${root}" remote get-url origin 2>/dev/null || true)"
@@ -26,5 +30,14 @@ command -v gh >/dev/null 2>&1 || { echo "gh CLI is not installed" >&2; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "gh auth is not available" >&2; exit 1; }
 mkdir -p "$(dirname "${root}/${output_path}")"
 pr_json="$(gh -R "${repo_slug}" pr view "${branch}" --json number,url,state,mergeable,reviewDecision,statusCheckRollup)"
-printf '%s\n' "${pr_json}" >"${root}/${output_path}"
+printf '%s\n' "${pr_json}" | python3 -c '
+import json, sys
+data = json.load(sys.stdin)
+checks = data.get("statusCheckRollup") or []
+bad = [c for c in checks if c.get("conclusion") in {"FAILURE", "ERROR", "CANCELLED", "TIMED_OUT"}]
+pending = [c for c in checks if not c.get("conclusion") and c.get("status") not in {"COMPLETED", None}]
+ready = data.get("state") == "OPEN" and data.get("mergeable") == "MERGEABLE" and not bad and not pending
+json.dump({"schema_version": 1, "adapter": "github-pr", "ready": ready, "pr": data, "blocking_checks": bad, "pending_checks": pending}, sys.stdout, indent=2)
+sys.stdout.write("\n")
+' >"${root}/${output_path}"
 printf '%s\n' "${output_path}"

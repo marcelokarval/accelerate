@@ -8,8 +8,12 @@ fi
 
 root="$(cd "$1" && pwd)"
 url="$2"
+mode=""
+if [ "${@: -1}" = "--dry-run" ]; then
+  mode="--dry-run"
+  set -- "${@:1:$(($#-1))}"
+fi
 output_path="${3:-.accelerate/review/browser-proof.json}"
-mode="${4:-}"
 
 case "${output_path}" in /*|*..*) echo "output path must be relative and cannot contain '..': ${output_path}" >&2; exit 1 ;; esac
 case "${url}" in
@@ -20,6 +24,14 @@ case "${url}" in
       echo "browser proof defaults to localhost-only; set ACCELERATE_ALLOW_REMOTE_BROWSER=1 for remote URL: ${url}" >&2
       exit 2
     fi
+    case "${url}" in http://*|https://*) ;; *) echo "browser proof allows only http(s) URLs" >&2; exit 2 ;; esac
+    host="$(printf '%s' "${url}" | sed -E 's#^[a-z]+://([^/:]+).*#\1#')"
+    case "${host}" in
+      169.254.169.254|metadata.google.internal|metadata|10.*|192.168.*|172.1[6-9].*|172.2[0-9].*|172.3[0-1].*)
+        echo "browser proof blocks metadata and private network targets: ${host}" >&2
+        exit 2
+        ;;
+    esac
     ;;
 esac
 

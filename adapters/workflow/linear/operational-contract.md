@@ -127,9 +127,9 @@ This proves OpenCode-hosted Linear MCP read/write capability. It does not prove
 the GraphQL helper scripts, which still require `LINEAR_API_KEY`; therefore the
 GraphQL helpers remain secondary.
 
-## Implemented MCP Helper Set
+## MCP Helper Set
 
-The implemented Linear adapter path is MCP-hosted through OpenCode global auth:
+The preferred Linear adapter path is MCP-hosted through OpenCode global auth:
 
 - read: `read-linear-mcp-adapter.sh`
 - create: `create-linear-mcp-issue.sh`
@@ -138,3 +138,9 @@ The implemented Linear adapter path is MCP-hosted through OpenCode global auth:
 
 The older GraphQL helpers remain available for environments that provide
 `LINEAR_API_KEY`, but they are not the primary implemented path.
+
+Because OpenCode MCP writes are currently mediated through an LLM prompt instead
+of a structured direct tool call from these shell helpers, write helpers are
+guarded by `ACCELERATE_ALLOW_LLM_MCP_WRITE=1` and the adapter remains `planned`
+until a structured non-LLM write binding or API-key-backed implementation is
+available.

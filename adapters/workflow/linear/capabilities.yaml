@@ -1,6 +1,6 @@
 schema_version: 1
 adapter: linear
-status: implemented
+status: planned
 identity: native
 work_item_create: native
 work_item_lookup: native
@@ -28,3 +28,4 @@ mcp_live_read_result: passed
 mcp_live_write_result: passed
 mcp_live_test_issue: https://linear.app/botrei/issue/P4Y-1270/temp-accelerate-linear-mcp-live-adapter-validation
 graphql_helper_live_result: blocked-without-linear-api-key
+implementation_blocker: structured_non_llm_mcp_write_binding_required

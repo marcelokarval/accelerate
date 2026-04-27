@@ -8,8 +8,12 @@ fi
 
 root="$(cd "$1" && pwd)"
 issue_id="$2"
+mode=""
+if [ "${@: -1}" = "--dry-run" ]; then
+  mode="--dry-run"
+  set -- "${@:1:$(($#-1))}"
+fi
 output_path="${3:-.accelerate/workflow/linear-mcp-read.jsonl}"
-mode="${4:-}"
 case "${output_path}" in /*|*..*) echo "output path must be relative and cannot contain '..': ${output_path}" >&2; exit 1 ;; esac
 
 if [ "${mode}" = "--dry-run" ]; then

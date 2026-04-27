@@ -2,12 +2,18 @@
 set -euo pipefail
 
 if [ "$#" -lt 1 ]; then
-  echo "usage: $0 /path/to/target-repo [--dry-run]" >&2
+  echo "usage: $0 /path/to/target-repo [ship-readiness-json] [--dry-run]" >&2
   exit 1
 fi
 
 root="$(cd "$1" && pwd)"
-mode="${2:-}"
+mode=""
+if [ "${@: -1}" = "--dry-run" ]; then
+  mode="--dry-run"
+  set -- "${@:1:$(($#-1))}"
+fi
+readiness_path="${2:-.accelerate/review/ship-readiness.json}"
+case "${readiness_path}" in /*|*..*) echo "readiness path must be relative and cannot contain '..': ${readiness_path}" >&2; exit 1 ;; esac
 origin_url="$(git -C "${root}" remote get-url origin 2>/dev/null || true)"
 case "${origin_url}" in git@github.com:*|https://github.com/*) ;; *) echo "origin is not a GitHub remote: ${origin_url}" >&2; exit 1 ;; esac
 repo_slug="$(printf '%s' "${origin_url}" | sed -E 's#(git@github.com:|https://github.com/)##; s#\.git$##')"
@@ -20,6 +26,8 @@ if [ "${mode}" = "--dry-run" ]; then
 fi
 
 [ "${ACCELERATE_ALLOW_LAND:-}" = "1" ] || { echo "land is blocked unless ACCELERATE_ALLOW_LAND=1" >&2; exit 2; }
+[ -f "${root}/${readiness_path}" ] || { echo "missing ship readiness artifact: ${readiness_path}" >&2; exit 2; }
+python3 -c 'import json,sys; data=json.load(open(sys.argv[1])); sys.exit(0 if data.get("ready") is True else 2)' "${root}/${readiness_path}" || { echo "ship readiness is not ready; refusing land" >&2; exit 2; }
 command -v gh >/dev/null 2>&1 || { echo "gh CLI is not installed" >&2; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "gh auth is not available" >&2; exit 1; }
 pr_number="$(gh -R "${repo_slug}" pr view "${branch}" --json number --jq .number)"

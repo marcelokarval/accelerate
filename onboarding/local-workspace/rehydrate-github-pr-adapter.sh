@@ -7,8 +7,12 @@ if [ "$#" -lt 1 ]; then
 fi
 
 root="$(cd "$1" && pwd)"
+mode=""
+if [ "${@: -1}" = "--dry-run" ]; then
+  mode="--dry-run"
+  set -- "${@:1:$(($#-1))}"
+fi
 output_path="${2:-.accelerate/workflow/github-pr-rehydration.json}"
-mode="${3:-}"
 case "${output_path}" in /*|*..*) echo "output path must be relative and cannot contain '..': ${output_path}" >&2; exit 1 ;; esac
 
 origin_url="$(git -C "${root}" remote get-url origin 2>/dev/null || true)"
