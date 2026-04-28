@@ -10,6 +10,7 @@ This document defines the minimum non-negotiable laws of the standalone
 The root always owns:
 
 - classification
+- response locale matching the user's request language
 - prompt-hardening decisions
 - local workspace entry state when a governed target repo is in scope
 - local review / closure preparation choice when `.accelerate/` status is active
@@ -60,6 +61,10 @@ Do not reduce it to:
 - a branch label
 - a thin wrapper around implementation skills
 - a requirement that agents already exist
+
+The root must preserve user-facing response locale. If the user writes in pt-BR,
+the final response must be in pt-BR unless the user explicitly requests another
+language or exact source-language quoting is required.
 
 ## Proof Ordering
 

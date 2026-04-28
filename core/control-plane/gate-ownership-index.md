@@ -17,6 +17,7 @@ This prevents invisible gate drift and stale mandatory language.
 | Gate | Owner | Notes |
 | --- | --- | --- |
 | `Prompt Hardening Gate` | `../hardening/prompt-hardening.md` | Required before broad or ambiguous execution. |
+| `Response Locale Gate` | `response-locale-gate.md` | Required before user-facing responses so the answer follows the user's conversational language. |
 | `Story Framing` | `../hardening/prompt-hardening.md` | Required when actor, goal, value, or acceptance are still implicit. |
 | `PRD-lite Gate` | `../../planning/product/README.md` | Required when scope is capability-level or epic-like. |
 | `SDD Gate` | `../../planning/architecture/sdd-template.md` | Required when technical ownership, architecture, data, transport, migration, or proof strategy is unresolved. |

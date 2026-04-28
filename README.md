@@ -110,18 +110,24 @@ have native homes under `core/`.
 At a high level, `accelerate` works like this:
 
 1. classify the run
-2. decide whether prompt hardening is mandatory
-3. when a governed target repository is in scope, decide local `.accelerate/`
+2. preserve the user's response locale
+3. decide whether prompt hardening is mandatory
+4. when a governed target repository is in scope, decide local `.accelerate/`
    entry state
-4. decide the honest issue topology
-5. decide which lanes and skills are required
-6. decide whether the work should stay root-only or use bounded agents
-7. execute with visible runtime packets and active gates
-8. keep readiness, timeline, and learning disposition visible when local workspace state is active
-9. force proof in the correct order
-10. enter root closure mode before `Done`
+5. decide the honest issue topology
+6. decide which lanes and skills are required
+7. decide whether the work should stay root-only or use bounded agents
+8. execute with visible runtime packets and active gates
+9. keep readiness, timeline, and learning disposition visible when local workspace state is active
+10. force proof in the correct order
+11. enter root closure mode before `Done`
 
 The control plane should be visible, not implied.
+
+User-facing responses must follow the user's conversational language. For pt-BR
+requests, Accelerate must answer in pt-BR even when repository doctrine,
+commands, code identifiers, and tool output are in English. See
+`core/control-plane/response-locale-gate.md`.
 
 ## Current Native Additions
 

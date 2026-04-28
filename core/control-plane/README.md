@@ -25,6 +25,7 @@ Native authority now starts here:
 - `theme-template-portability-gate.md`
 - `componentization-enforcement-gate.md`
 - `deep-componentization-audit-gate.md`
+- `response-locale-gate.md`
 
 Root-facing architectural context still lives in:
 

@@ -66,6 +66,7 @@ Then open the native surface that actually governs the branch, usually from:
 `accelerate` always owns:
 
 - classification
+- response locale matching the user's request language
 - prompt-hardening decision
 - issue topology
 - lane opening order
@@ -84,17 +85,23 @@ authority.
 Run `accelerate` in this order:
 
 1. decide whether the task is actually engineering work
-2. decide whether prompt hardening is mandatory
-3. when a governed target repository is in scope, decide local workspace entry
+2. detect and preserve the user's response locale
+3. decide whether prompt hardening is mandatory
+4. when a governed target repository is in scope, decide local workspace entry
    state first
-4. classify the run honestly
-5. open the required branch, skills, gates, and artifacts
-6. keep runtime state visible with explicit packets
-7. enforce proof in the correct order
-8. block closure until the branch contract is truly satisfied
+5. classify the run honestly
+6. open the required branch, skills, gates, and artifacts
+7. keep runtime state visible with explicit packets
+8. enforce proof in the correct order
+9. block closure until the branch contract is truly satisfied
 
 Do not treat `accelerate` as a label. Treat it as the visible team operating
 system for the run.
+
+Use `core/control-plane/response-locale-gate.md` for user-facing language. If
+the user writes in pt-BR, respond in pt-BR unless they explicitly request another
+language. English docs, tool output, paths, and code identifiers do not override
+the user's conversational language.
 
 ## Classification Contract
 
