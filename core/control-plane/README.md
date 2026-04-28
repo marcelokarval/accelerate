@@ -26,6 +26,10 @@ Native authority now starts here:
 - `componentization-enforcement-gate.md`
 - `deep-componentization-audit-gate.md`
 - `response-locale-gate.md`
+- `django-backend-safety-gate.md`
+- `django-orm-query-shape-gate.md`
+- `ownership-idor-gate.md`
+- `backend-subagent-readiness-contract.md`
 
 Root-facing architectural context still lives in:
 

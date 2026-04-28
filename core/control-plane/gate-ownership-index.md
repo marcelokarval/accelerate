@@ -74,6 +74,11 @@ This prevents invisible gate drift and stale mandatory language.
 | `Persistent Regression Gate` | `../runtime-packets/qa-proof-stack.md` | Required for persisted E2E/regression authoring. |
 | `Product-Correctness` | `../review/product-critical-surfaces.md` | Governs product behavior beyond technical correctness. |
 | `Observability / Performance Packet` | `../runtime-packets/observability-performance-packet.md` | Governs metrics, logs, query-shape, cache, and performance proof. |
+| `Django Backend Safety Gate` | `django-backend-safety-gate.md` | Governs Django ownership, query-shape, validation, and service-boundary proof. |
+| `Django ORM Query Shape Gate` | `django-orm-query-shape-gate.md` | Blocks N+1 and unbounded ORM promotion. |
+| `Ownership / IDOR Gate` | `ownership-idor-gate.md` | Requires scoped object access and negative cross-owner tests. |
+| `Backend Subagent Readiness Contract` | `backend-subagent-readiness-contract.md` | Blocks backend subagent promotion until backend rails are enforceable. |
+| `Django Service Layer Contract` | `../review/django-service-layer-contract.md` | Requires Django business logic and mutations to stay behind service/query boundaries. |
 
 ## Lightweight Inline Gates
 
