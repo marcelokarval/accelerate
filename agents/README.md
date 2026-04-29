@@ -36,6 +36,8 @@ The first native doctrine rehome now lives under:
 - `doctrine/empirical-replay.md`
 - `envelopes/skill-envelopes.md`
 - `promotion/execution-contract.md`
+- `promotion/promotion-contract.md`
+- `promotion/return-contract.md`
 
 The runtime configuration artifact `openai.yaml` remains here because it is
 already part of the current surface.
@@ -84,10 +86,12 @@ For a fresh session trying to understand the agents layer, read in this order:
 8. `doctrine/gap-detection.md`
 9. `doctrine/empirical-replay.md`
 10. `promotion/README.md`
-11. `promotion/execution-contract.md`
-12. `envelopes/README.md`
-13. `envelopes/skill-envelopes.md`
-14. `templates/README.md`
+11. `promotion/promotion-contract.md`
+12. `promotion/execution-contract.md`
+13. `promotion/return-contract.md`
+14. `envelopes/README.md`
+15. `envelopes/skill-envelopes.md`
+16. `templates/README.md`
 
 If deeper doctrine is needed before the native rehome is complete, continue
 into:

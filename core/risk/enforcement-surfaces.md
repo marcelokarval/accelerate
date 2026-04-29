@@ -117,8 +117,11 @@ Use it when the question is:
 - non-trivial work may stay root-owned when delegation has no honest fit or
   adds more integration cost than execution clarity; staying fully
   single-threaded still requires an explicit exception packet
+- absence of promoted agents is never a runtime blocker for Accelerate; it is a
+  planning or promotion signal only
 - each subagent loads `accelerate` first before layer-specific work
 - each subagent stays bounded and leaves explicit output
+- executor subagent self-review is not acceptance proof
 - the master performs review-of-review and final integration closure
 
 ## Governance Enforcement

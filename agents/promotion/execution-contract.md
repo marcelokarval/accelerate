@@ -8,6 +8,9 @@ bounded agent promoted by this platform.
 Every future bounded agent must behave like a disciplined slice executor or
 reviewer, not a free-form helper.
 
+Execution authority and review authority are separate. An implementation agent's
+self-review is not acceptance proof for its own work.
+
 ## Current Phase Note
 
 The repository is still in `standalone pre-agents`.
@@ -26,6 +29,7 @@ Every future bounded agent should receive:
 - write scope or explicit read-only scope
 - required validations
 - completion contract
+- review isolation requirement
 
 ## Mandatory Work
 
@@ -39,6 +43,7 @@ Every future bounded agent must:
 - produce self-forensic review
 - identify residual risks
 - return evidence in the required packet shape
+- explicitly state that final closure remains root-owned
 
 When a live workflow backend exists, the contract may also require evidence to
 be posted back into that backend.
@@ -66,6 +71,7 @@ Every future bounded agent must not:
 - restaff the run
 - silently expand scope
 - claim final closure authority
+- act as acceptance reviewer for its own implementation
 
 ## Status Rule
 
@@ -73,3 +79,6 @@ Even after promotion becomes real, the highest completion posture of a bounded
 agent remains review-ready, not final closure.
 
 `Done` stays root-owned.
+
+If no promoted agent is available, the root must execute or review through the
+normal root-only path with an explicit single-threaded exception when required.

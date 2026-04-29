@@ -17,6 +17,8 @@ The platform uses:
 - `Correction Loop Packet`
 - `Seam Proof Packet`
 - `Subagent Return Packet`
+- `Agent Promotion Packet`
+- `Agent Return Packet`
 - `QA / Proof Packet`
 - `Prompt Upgrade Approval Packet`
 - `One-Shot Side-By-Side Review Packet`
@@ -244,6 +246,54 @@ Subagent Return Packet
 
 Subagent packets never replace root review. They are inputs to root-owned
 integration and closure.
+
+## Agent Promotion Packet
+
+```text
+Agent Promotion Packet
+
+- candidate family: <...>
+- current state: <gap-detected|recommendation|candidate-defined|contract-approved|runtime-adapter-bound|empirically-replayed|promoted>
+- recurring task class: <...>
+- bounded ownership: <...>
+- non-authority boundaries: <...>
+- input contract: <present|missing>
+- return contract: <present|missing>
+- skill envelope: <path|missing>
+- review isolation plan: <present|missing>
+- runtime adapter binding: <present|missing|not-yet>
+- empirical replay evidence: <path|missing|not-yet>
+- root-only fallback: <documented|missing>
+- promotion verdict: <not-ready|candidate|approved|promoted|blocked>
+```
+
+Use this packet when an agent gap is being considered for promotion.
+
+## Agent Return Packet
+
+```text
+Agent Return Packet
+
+- agent family / role: <...>
+- assigned task or slice id: <...>
+- assigned scope: <...>
+- actual scope touched: <...>
+- write scope used: <paths|read-only|none>
+- files / surfaces inspected or changed: <...>
+- evidence roots: <...>
+- validations / proof run: <...>
+- requested-vs-implemented: <met|partial|missed|blocked + notes>
+- self-review: <summary>
+- self-forensic review: <summary>
+- defects found and disposition suggestion: <...>
+- residual risks: <...>
+- recommendation: <done|partial|follow-up|blocked>
+- final closure authority statement: <root-owned|missing>
+- orchestrator handling: <accepted-for-integration|needs-review|needs-correction|conflicts-with-other-return|rejected-out-of-scope|blocked>
+```
+
+Use this packet for promoted or candidate bounded agent returns. It never
+substitutes for independent review or final forensic closure.
 
 ## Prompt Upgrade Approval Packet
 

@@ -1,7 +1,7 @@
 # Agent Promotion
 
-Reserved for promotion criteria, suggestion-vs-promotion rules, and runtime
-installation policy for governed agents.
+Native home for promotion criteria, suggestion-vs-promotion rules, return
+contracts, and runtime installation policy for governed agents.
 
 In the current `standalone pre-agents` phase, this sublayer must remain
 strictly conservative.
@@ -26,4 +26,12 @@ This is where the platform should later define the real transition from:
 
 The first native contract artifact now lives in:
 
+- `promotion-contract.md`
 - `execution-contract.md`
+- `return-contract.md`
+
+Read in this order:
+
+1. `promotion-contract.md`
+2. `execution-contract.md`
+3. `return-contract.md`
