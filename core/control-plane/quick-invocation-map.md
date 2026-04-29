@@ -37,6 +37,7 @@ User Request
 - prompt upgrade approval
 - execution-to-spec loop
 - systemic UI inconsistency audit
+- document cohesion / Markdown size audit
 - bug / failure / regression
 - architecture / governance doubt
 - backend implementation
@@ -94,6 +95,7 @@ are:
 - prompt upgrade approval
 - execution-to-spec loop
 - systemic UI inconsistency audit
+- document cohesion / Markdown size audit
 - agent-browser bounded browser operations
 - UI polishing observer
 - persistent regression

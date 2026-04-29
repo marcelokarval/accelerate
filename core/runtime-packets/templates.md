@@ -18,8 +18,14 @@ The platform uses:
 - `Seam Proof Packet`
 - `Subagent Return Packet`
 - `QA / Proof Packet`
+- `Prompt Upgrade Approval Packet`
 - `One-Shot Side-By-Side Review Packet`
+- `Review Isolation Packet`
 - `Final Forensic Reconciliation Packet`
+- `Execution-To-Spec Loop Packet`
+- `Systemic UI Inconsistency Audit Packet`
+- `Document Cohesion Size Packet`
+- `Manual Review Contradiction Packet`
 - `Closure Packet`
 
 ## Rule
@@ -286,6 +292,9 @@ One-Shot Side-By-Side Review Packet
 
 - task id: <id>
 - requested outcome: <what the task required>
+- executor identity/role: <...>
+- reviewer identity/role: <...>
+- review independence: <independent|same-agent-exception|missing>
 - implemented evidence: <files|packets|runtime evidence>
 - expected proof: <proof required by the plan/profile/gate>
 - actual proof: <proof actually run>
@@ -300,6 +309,26 @@ One-Shot Side-By-Side Review Packet
 
 Use this packet for task-level side-by-side review in one-shot execution runs.
 
+## Review Isolation Packet
+
+```text
+Review Isolation Packet
+
+- task or slice id: <id>
+- executor: <agent/persona/root role>
+- executor self-review: <present|missing|n/a>
+- skeptical reviewer: <agent/persona/root role|missing>
+- reviewer independence: <independent|same-agent-exception|not-provided>
+- reviewer posture: <skeptical|summary-only|unclear>
+- orchestrator final reviewer: <agent/persona/root role>
+- orchestrator review-of-review: <accepted|corrected|blocked|missing>
+- isolation exception: <none|reason>
+- residual risk: <...>
+- closure impact: <clear|blocked|waived-with-risk>
+```
+
+Use this packet when review independence affects closure confidence.
+
 ## Final Forensic Reconciliation Packet
 
 ```text
@@ -312,6 +341,8 @@ Final Forensic Reconciliation Packet
 - corrections without reproof: <ids or none>
 - validation expected vs validation run: <met|partial|missed>
 - subagent claims vs master review-of-review: <accepted|corrected|blocked|n/a>
+- review isolation: <independent|exception|missing|blocked>
+- manual review contradictions: <none|classified|unclassified|reopened-loop>
 - final closure judgment: <done|blocked|follow-up-required>
 ```
 
@@ -375,6 +406,62 @@ Systemic UI Inconsistency Audit Packet
 ```
 
 Use this packet when the `Systemic UI Inconsistency Audit Gate` is active.
+
+## Document Cohesion Size Packet
+
+```text
+Document Cohesion Size Packet
+
+- audit scope: <all md|core md|changed docs|specific paths>
+- line-count source: <command|tool|manual>
+- largest live doctrine files:
+  - <path>: <lines>, classification=<single-authority|aggregator|reference-corpus|archive/plan|mixed-authority|duplicated-authority>
+- size-band thresholds applied: <yes|no>
+- split candidates:
+  - <path>: <reason|none>
+- merge/pointer candidates:
+  - <path>: <reason|none>
+- duplicated authority findings:
+  - <paths + owner decision|none>
+- context preservation risks:
+  - <risk|none>
+- index/README updates required:
+  - <path|none>
+- action taken: <none|split|merged|pointer-added|index-updated>
+- residual gaps: <...>
+```
+
+Use this packet when the `Document Cohesion Size Gate` is active.
+
+## Manual Review Contradiction Packet
+
+```text
+Manual Review Contradiction Packet
+
+- prior closure claim: <done|complete|loop-converged|other>
+- review source: <manual review|code review|QA|operator audit|other>
+- original task ids affected:
+  - <id>
+- contradiction findings:
+  - id: <finding-id>
+    task: <task-id|new-defect>
+    reviewer claim: <summary>
+    evidence cited: <file/line/runtime/path>
+    classification: <valid-reopen|valid-new-defect|already-covered-with-evidence|false-positive|out-of-scope|blocked>
+    required status change: <reopen|partial|new-defect|none>
+    correction proof required: <code|test|browser|data|cross-view|cleanup>
+- coverage reconciliation:
+  - routes required vs inventoried: <...>
+  - views/modes required vs inspected: <...>
+  - data cases required vs proved: <...>
+  - temporary artifacts expected removed vs present: <...>
+- reopened tasks: <ids|none>
+- new defects: <ids|none>
+- false positives with evidence: <ids|none>
+- loop verdict: <reopen-loop|closure-still-valid|blocked|scope-change-required>
+```
+
+Use this packet when the `Manual Review Contradiction Gate` is active.
 
 ## Closure Packet
 

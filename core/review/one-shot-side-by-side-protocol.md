@@ -35,7 +35,7 @@ The required chain is:
 1. create or identify the executive plan
 2. create a task ledger
 3. execute the bounded tasks in the one-shot execution batch
-4. perform side-by-side task review for each task
+4. perform independent side-by-side task review for each task
 5. compare requested vs implemented for each task
 6. record defects, gaps, and drift
 7. perform auto-correction for every in-scope defect
@@ -61,11 +61,24 @@ correction, and reproof before the master integrates it into final closure.
 The master owns task ordering, conflict detection, integrated proof, and final
 side-by-side reconciliation. Subagent success is never closure by itself.
 
+## Review Isolation Rule
+
+The executor of a task must not be the acceptance reviewer for that same task.
+
+Executor self-review may be collected, but it is not acceptance proof. Each
+non-trivial task needs an independent skeptical review or an explicit review
+isolation exception with residual risk. The final forensic reviewer is the
+orchestrator and must not trust either the executor or the reviewer without
+review-of-review.
+
 ## Per-Task Review Rule
 
 Each task must have a side-by-side judgment that compares:
 
 - requested outcome
+- executor identity/role
+- reviewer identity/role
+- review independence: <independent|same-agent-exception|missing>
 - implemented evidence
 - expected proof
 - actual proof
@@ -73,9 +86,14 @@ Each task must have a side-by-side judgment that compares:
 - correction owner
 - reproof evidence
 - closure status
+- contradiction status from any later manual/code/QA review
 
 The review must classify each requested item as `met`, `partial`, `missed`, or
 `not-applicable`.
+
+If later review evidence shows a `met` item is actually partial or missed, update
+the task status. The side-by-side packet is not immutable once stronger evidence
+arrives.
 
 ## Correction Rule
 
@@ -121,10 +139,13 @@ present:
 - open in-scope defects
 - corrections without reproof
 - missing side-by-side task review
+- executor reviewed own work without isolation exception
 - missing final forensic reconciliation
 - validation stack under-run
 - subagent success accepted without master integration review
+- skeptical review accepted without orchestrator review-of-review
 - parallel tasks wrote overlapping surfaces without master conflict review
+- later manual review contradicts `done` status and no task was reopened
 
 ## Packet Surfaces
 
@@ -137,6 +158,8 @@ Use these packet shapes from `../runtime-packets/templates.md`:
 - `Final Forensic Reconciliation Packet`
 - `Closure Packet`
 - `Execution-To-Spec Loop Packet`
+- `Manual Review Contradiction Packet`
+- `Review Isolation Packet`
 
 ## Task Ledger Surface
 

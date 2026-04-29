@@ -17,6 +17,10 @@ The master always owns:
 - final review
 - final forensic closure
 
+The master also owns review isolation: an implementation worker's self-review is
+not an acceptance review, and a reviewer sidecar's conclusion is not final
+closure.
+
 ## Safe Role Catalog
 
 Useful subagent shapes:
@@ -156,10 +160,12 @@ plan:
 1. subagent executes
 2. subagent self-reviews
 3. subagent self-forensic-reviews
-4. master reviews the returned slice
-5. master reviews the subagent review quality
-6. master integrates the combined result
-7. master performs final forensic closure
+4. independent skeptical reviewer inspects the returned slice when the task is
+   non-trivial or closure-sensitive
+5. master reviews the returned slice
+6. master reviews the skeptical review quality
+7. master integrates the combined result
+8. master performs final forensic closure
 
 ## Master Integration Protocol
 
@@ -172,6 +178,10 @@ When multiple outputs come back, the master must check:
 - local correctness vs global correctness
 
 Never trust subagent-local success as proof of integrated correctness.
+
+Never treat an executor subagent's self-review as acceptance. If no independent
+review sidecar exists, packet a review isolation exception and keep residual risk
+visible through closure.
 
 ## One-Shot Correction Handoff
 

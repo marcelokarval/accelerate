@@ -14,6 +14,8 @@ Native authority now starts here:
 - `browser-proof-packet.md`
 - `execution-to-spec-loop-packet.md`
 - `systemic-ui-inconsistency-audit-packet.md`
+- `document-cohesion-size-packet.md`
+- `manual-review-contradiction-packet.md`
 - `ux-ui-fullstack-surface-packet.md`
 - `product-critical-closure-packet.md`
 - `requested-vs-implemented-packet.md`

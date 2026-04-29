@@ -22,6 +22,8 @@ Native authority now starts here:
 - `truth-ownership-check.md`
 - `failure-classification-gate.md`
 - `artifact-sufficiency-check.md`
+- `document-cohesion-size-gate.md`
+- `manual-review-contradiction-gate.md`
 - `design-implementation-proof-gate.md`
 - `visual-regression-proof-gate.md`
 - `execution-to-spec-loop-gate.md`

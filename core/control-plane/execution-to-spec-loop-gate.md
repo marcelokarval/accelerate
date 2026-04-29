@@ -27,6 +27,10 @@ Closure requires the loop to converge:
 8. task-by-task side-by-side review completed
 9. final forensic reconciliation completed
 
+If a later manual review contradicts the closure claim, reopen the loop through
+`Manual Review Contradiction Gate`. A prior browser-proof or test pass does not
+override concrete contradictory evidence.
+
 If any in-scope task remains `partial` or `missed`, the loop remains open unless
 the user explicitly accepts a narrowed scope or a documented deferral.
 
@@ -84,6 +88,9 @@ fields in the active handoff artifact.
 - visual proof inspected before/after findings when UI was mutated
 - every in-scope defect has correction status and reproof
 - final forensic reconciliation states what remains and why
+- broad tasks have coverage proof for each required route, view/mode, data case,
+  and temporary-artifact cleanup claim
+- manual review contradictions, when present, are classified and reconciled
 
 ## Loop Exit Conditions
 
@@ -107,6 +114,8 @@ Do not close when:
 - UI work has screenshots but no written visual comparison
 - the final answer summarizes effort instead of reconciling plan vs landing
 - the loop stops because the first attempt was "good enough" without comparison
+- broad scope is marked done while route/view/data coverage remains partial
+- manual review findings contradict done status and are not packeted
 
 ## Failure Labels
 
@@ -117,3 +126,5 @@ Do not close when:
 - `correction-without-reproof`
 - `final-forensics-missing`
 - `planned-outcome-not-reconciled`
+- `done-optimism-contradicted`
+- `coverage-proof-incomplete`

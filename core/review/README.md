@@ -14,6 +14,7 @@ Native authority now starts here:
 - `defect-ledger.md`
 - `active-correction-loop.md`
 - `review-of-review-gate.md`
+- `segregated-review-authority.md`
 - `seam-proof.md`
 - `persisted-modeling-forensics.md`
 - `persisted-modeling-defect-bias.md`

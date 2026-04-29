@@ -98,6 +98,25 @@ Use UI/product review for patterns such as:
 Source search is not enough. Browser proof must validate runtime surfaces and
 viewports when the local app is available.
 
+## Completeness Proof
+
+When the task says `all routes`, `all views`, `all modals`, or equivalent, the
+inventory must list expected surfaces and residual gaps. A partial route family
+inventory cannot close a task whose acceptance criteria required complete
+coverage.
+
+When the task concerns analogous UI views, prove parity across every relevant
+view mode. Fixing grid cards does not prove Kanban, table, modal, dashboard, or
+detail views unless each is named and inspected.
+
+When the task concerns absent data, prove the absent-data path in every
+analogous component that formats or derives the value. Do not treat one card fix
+as a system-wide fix.
+
+When temporary specs or scratch artifacts are replaced by persistent tests,
+closure must include cleanup or an explicit reason those temporary artifacts
+remain.
+
 ## Viewport Requirements
 
 For visual inconsistency claims, inspect at least:
@@ -142,6 +161,7 @@ intentionally reused.
 Do not close when:
 
 - no route/surface inventory exists
+- route/surface inventory is partial while complete coverage was claimed
 - modals/popups/sheets were requested but not inventoried
 - hard-coded or mock-data search was skipped
 - database/data-truth claims were made without source or runtime evidence
@@ -149,6 +169,9 @@ Do not close when:
 - AI smell was requested but not assessed
 - wireframes were requested but not produced or grouped with justification
 - browser proof did not feed the correction loop
+- browser proof is used as substitute for logic/data/cross-view proof
+- analogous views were not checked after fixing one view
+- temporary audit specs remain after persistent replacement was claimed
 - defects were fixed without corrected-state proof
 - final summary lacks unresolved defects and residual scope gaps
 
@@ -164,3 +187,6 @@ Do not close when:
 - `ai-smell-untriaged`
 - `wireframe-skipped-before-implementation`
 - `broad-audit-claimed-from-sample`
+- `cross-view-parity-missed`
+- `browser-proof-missed-logic`
+- `temporary-artifact-left-behind`

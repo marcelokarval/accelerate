@@ -25,6 +25,9 @@ At minimum, ask:
 - were open defects fixed, waived, or explicitly carried forward?
 - did the proof correspond to the corrected state instead of an earlier pass?
 - did the review claim more certainty than the evidence supports?
+- was the reviewer independent from the executor?
+- did the reviewer actively try to disprove the executor's done claim?
+- did the final orchestrator inspect review quality instead of trusting it?
 
 ## Failure Patterns
 
@@ -36,6 +39,9 @@ Treat these as serious review-of-review failures:
 - screenshot or proof from pre-fix state
 - review says "done" while `requested-vs-implemented` still shows misses
 - review ignores a seam that is a likely defect hotspot
+- executor reviewed their own work and treated it as acceptance
+- reviewer paraphrased executor claims without adversarial checks
+- orchestrator accepted a reviewer report without review-of-review
 
 ## Output
 
