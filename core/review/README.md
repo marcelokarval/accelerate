@@ -9,6 +9,7 @@ reconciliation must be explicit.
 Native authority now starts here:
 
 - `architecture.md`
+- `one-shot-side-by-side-protocol.md`
 - `requested-vs-implemented.md`
 - `defect-ledger.md`
 - `active-correction-loop.md`
@@ -25,6 +26,10 @@ Native authority now starts here:
 - `source-observer.md`
 - `i18n-closure-gate.md`
 - `accessibility-closure-gate.md`
+- `virtualized-list-visual-contract.md`
+- `product-copy-domain-semantics.md`
+- `premium-operational-density.md`
+- `component-style-authority-gate.md`
 
 Supporting inherited doctrine may still exist in `references/`, but review
 method should no longer be implicit or left primarily to imported modules.

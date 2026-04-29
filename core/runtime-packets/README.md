@@ -8,9 +8,12 @@ Native authority now starts here:
 
 - `templates.md`
 - `cadence.md`
+- `prompt-upgrade-approval-packet.md`
 - `qa-proof-stack.md`
 - `design-implementation-proof-packet.md`
 - `browser-proof-packet.md`
+- `execution-to-spec-loop-packet.md`
+- `systemic-ui-inconsistency-audit-packet.md`
 - `ux-ui-fullstack-surface-packet.md`
 - `product-critical-closure-packet.md`
 - `requested-vs-implemented-packet.md`

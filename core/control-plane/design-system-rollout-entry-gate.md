@@ -69,3 +69,18 @@ Treat the handoff as invalid when:
 ## Closure Rule
 
 Do not claim design-system rollout readiness until this gate is satisfied.
+
+## Phase Checkpoint Rule
+
+Do not advance from one visual rollout phase to the next solely because tests or
+type-check passed.
+
+Each mutation phase that changes runtime UI must finish with:
+
+- browser/runtime proof for the changed route or component family
+- before/after visual comparison findings
+- in-scope visual defects fixed or explicitly deferred
+- corrected-state proof after fixes
+
+If a phase is token-only, shell-only, or otherwise does not have a runtime
+surface, record that bounded exception before continuing.

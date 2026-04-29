@@ -34,6 +34,9 @@ User Request
 
 - issue-driven delivery
 - product spec to execution
+- prompt upgrade approval
+- execution-to-spec loop
+- systemic UI inconsistency audit
 - bug / failure / regression
 - architecture / governance doubt
 - backend implementation
@@ -55,6 +58,21 @@ User Request
 - skill / workflow evaluation lab
 - benchmark rerun / result registration
 
+## Prompt Wildcards
+
+Use these operator shortcuts when the user wants Accelerate to turn a raw or
+implicit broad request into an approval-gated execution-ready prompt:
+
+- `upgrade-prompt`
+- `prompt-to-plan`
+- `harden-and-wait`
+- `upgrade-and-wait`
+- `prompt-coringa`
+
+These activate `Prompt Upgrade Approval Gate`: improve and present the prompt,
+wait for explicit approval, then generate persisted report/plan/tasks before any
+implementation unless execution authorization is also explicit.
+
 ## Workflow Families
 
 Use the named workflow catalog for exact sequencing, but the common families
@@ -73,6 +91,9 @@ are:
 - backend QA
 - frontend QA
 - browser proof
+- prompt upgrade approval
+- execution-to-spec loop
+- systemic UI inconsistency audit
 - agent-browser bounded browser operations
 - UI polishing observer
 - persistent regression

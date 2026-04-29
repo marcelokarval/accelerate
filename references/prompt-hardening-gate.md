@@ -40,6 +40,14 @@ When the gate is active, the run should visibly expose:
 - explicit non-goals
 - next branch or persona route
 
+## Approval-Boundary Variant
+
+When the user asks to improve a prompt and then wait for approval before running
+it, use `core/control-plane/prompt-upgrade-approval-gate.md`.
+
+That variant is stricter than ordinary prompt hardening: the upgraded prompt must
+be presented first, and execution must wait for explicit approval.
+
 ## Anti-Failure Rule
 
 Do not let the run jump from weak prompt -> implementation merely because the

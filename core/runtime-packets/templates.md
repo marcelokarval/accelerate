@@ -239,6 +239,30 @@ Subagent Return Packet
 Subagent packets never replace root review. They are inputs to root-owned
 integration and closure.
 
+## Prompt Upgrade Approval Packet
+
+```text
+Prompt Upgrade Approval Packet
+
+- raw prompt source: <inline|path|summary>
+- target repo / project: <...>
+- stack basis: <...>
+- active Accelerate gates inferred: <...>
+- ambiguity removed: <...>
+- scope added: <...>
+- non-goals added: <...>
+- proof lanes added: <...>
+- persisted artifacts required: <...>
+- approval boundary phrase: <...>
+- improved prompt presented: <yes|no>
+- approval status: <waiting|approved|rejected|rework-requested>
+- post-approval artifacts: <paths|missing|n/a>
+- execution authorization: <not-requested|requested|approved|blocked>
+- commit/push authorization: <not-requested|requested|approved|blocked>
+```
+
+Use this packet when the `Prompt Upgrade Approval Gate` is active.
+
 ## QA / Proof Packet
 
 ```text
@@ -292,6 +316,65 @@ Final Forensic Reconciliation Packet
 ```
 
 Use this packet before closure when the `One-Shot Side-By-Side Gate` is active.
+
+## Execution-To-Spec Loop Packet
+
+```text
+Execution-To-Spec Loop Packet
+
+- user operating mode requested: <...>
+- active plan artifact: <path|inline|missing>
+- active task ledger artifact: <path|inline|missing>
+- one-shot batch scope: <...>
+- planned task count: <n>
+- implemented task count: <n>
+- task-by-task review status: <complete|partial|missing>
+- requested-vs-implemented status: <met|partial|missed|blocked>
+- QA proof run: <commands|blocked|n/a>
+- browser proof run: <captures|blocked|n/a>
+- visual proof run: <required-present|required-missing|not-needed>
+- defects detected: <ids|none>
+- correction loop status: <not-needed|open|complete|blocked>
+- corrected-state reproof: <evidence|missing|n/a>
+- remaining partial/missed tasks: <ids|none>
+- waived/deferred items: <ids|none>
+- final forensic reconciliation: <present|missing|blocked>
+- loop verdict: <converged|continue-loop|blocked|user-scope-change-required>
+```
+
+Use this packet when the `Execution-To-Spec Loop Gate` is active.
+
+## Systemic UI Inconsistency Audit Packet
+
+```text
+Systemic UI Inconsistency Audit Packet
+
+- audit scope requested: <...>
+- route inventory source: <path|runtime|manual|blocked>
+- route count discovered: <n|unknown>
+- modal/dialog/sheet/popover inventory source: <path|runtime|manual|blocked>
+- interactive surface count discovered: <n|unknown>
+- source search patterns used: <patterns>
+- viewport matrix: <desktop|tablet|mobile + evidence paths>
+- browser proof intensity: <sampled|targeted|broad sweep|full route-family audit>
+- hard-coded/mock data findings: <ids|none|untriaged>
+- data-truth unknowns: <ids|none>
+- missing-info findings: <ids|none>
+- visual/layout findings: <ids|none>
+- analogous-surface comparisons: <summary|missing>
+- AI smell findings: <ids|none|not-requested>
+- dashboard/professionalism findings: <ids|none>
+- strategic improvements by screen/screen family: <summary|missing>
+- wireframes produced: <paths|inline|grouped|not-requested|missing>
+- defects opened: <ids|none>
+- defects fixed in loop: <ids|none>
+- corrected-state proof: <paths|missing|n/a>
+- deferred/out-of-scope items: <ids|none>
+- residual route/modal/viewport gaps: <...>
+- loop verdict: <continue-loop|converged|blocked|scope-narrowed>
+```
+
+Use this packet when the `Systemic UI Inconsistency Audit Gate` is active.
 
 ## Closure Packet
 

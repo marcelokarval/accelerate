@@ -161,6 +161,11 @@ Use these labels before inventing new ones:
 - `shell-seam-break`
 - `token-anatomy-confusion`
 - `shared-owner-bypass`
+- `visual-proof-console-only`
+- `virtualized-row-overlap`
+- `operational-density-regression`
+- `domain-copy-noise`
+- `style-authority-bypass`
 
 ## Agent-Browser Compatibility
 
@@ -193,6 +198,13 @@ Do not close when:
 - proof is code-only with no runtime/browser comparison
 - proof is screenshot-only with no comparison against active artifacts
 - proof lacks console evidence for browser/runtime errors
+- UI mutation proof reports console/network status but no visual comparison
+- screenshots were captured but not inspected in a written findings packet
+- virtualized rows/cards changed without row-height proof
+- operational list/table density regressed without explicit approval
+- domain-copy noise was added to rows, cards, or tables for decorative polish
+- component-specific styling was patched through brittle global selectors while
+  component source was editable
 - proof lacks network evidence when server responses, redirects, data loading,
   mutations, auth, billing, or state reconciliation are relevant
 - viewport or state coverage is missing without a bounded exception

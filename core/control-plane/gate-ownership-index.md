@@ -17,6 +17,7 @@ This prevents invisible gate drift and stale mandatory language.
 | Gate | Owner | Notes |
 | --- | --- | --- |
 | `Prompt Hardening Gate` | `../hardening/prompt-hardening.md` | Required before broad or ambiguous execution. |
+| `Prompt Upgrade Approval Gate` | `prompt-upgrade-approval-gate.md` | Required when the user asks to improve a raw prompt and wait for approval before analysis/planning/execution. |
 | `Response Locale Gate` | `response-locale-gate.md` | Required before user-facing responses so the answer follows the user's conversational language. |
 | `Story Framing` | `../hardening/prompt-hardening.md` | Required when actor, goal, value, or acceptance are still implicit. |
 | `PRD-lite Gate` | `../../planning/product/README.md` | Required when scope is capability-level or epic-like. |
@@ -32,6 +33,8 @@ This prevents invisible gate drift and stale mandatory language.
 | `Failure Classification Gate` | `failure-classification-gate.md` | Required before fixing, auditing, or promoting failure-driven work. |
 | `Artifact Sufficiency Check` | `artifact-sufficiency-check.md` | Required when branch decisions depend on docs, packets, captures, specs, or evidence artifacts. |
 | `One-Shot Side-By-Side Gate` | `../review/one-shot-side-by-side-protocol.md` | Required when a run explicitly asks for one-shot execution, side-by-side task review, auto-correction, delegated correction handoff, and final forensic reconciliation. |
+| `Execution-To-Spec Loop Gate` | `execution-to-spec-loop-gate.md` | Required when a run asks for plan + tasks + one-shot implementation + QA/browser correction loop until the planned outcome is delivered. |
+| `Systemic UI Inconsistency Audit Gate` | `systemic-ui-inconsistency-audit-gate.md` | Required for broad route/modal/viewport/hard-coded-data UI inconsistency audits with correction loops. |
 | `Untrusted Ingress Gate` | `../risk/enforcement-surfaces.md` | Required for uploads, imports, fetched content, and parser/storage risk. |
 | `Secrets & Config Hygiene Check` | `../risk/enforcement-surfaces.md` | Required when environment, provider, credential, or config surfaces are touched. |
 | `Concurrency Integrity Check` | `../risk/enforcement-surfaces.md` | Required when critical mutable state can race. |
@@ -39,6 +42,7 @@ This prevents invisible gate drift and stale mandatory language.
 | `Component Source Ladder` | `ui-mutation-ladder.md` | Required for visual/component source decisions. |
 | `Design-System Rollout Entry Gate` | `design-system-rollout-entry-gate.md` | Required before executing design-system rollout plans. |
 | `Design Implementation Proof Gate` | `design-implementation-proof-gate.md` | Required when UI implementation is mutated. |
+| `Visual Regression Proof Gate` | `visual-regression-proof-gate.md` | Required when UI mutation uses screenshots/browser proof for closure. |
 | `Theme / Template Portability Gate` | `theme-template-portability-gate.md` | Required when visual work claims theme/template portability through global CSS, Tailwind, or equivalent config. |
 | `Componentization Enforcement Gate` | `componentization-enforcement-gate.md` | Required when UI/template/theme portability work could drift into page-local markup, div soup, or direct class sprawl. |
 | `Deep Componentization Audit Gate` | `deep-componentization-audit-gate.md` | Required when componentization quality must be proven page-by-page and across `.tsx`/`.ts` boundaries. |
@@ -63,6 +67,10 @@ This prevents invisible gate drift and stale mandatory language.
 | `TS/TSX Boundary Audit` | `../review/design-system-contract-application.md` | Governs visual vs non-visual frontend boundary drift. |
 | `Design-System Fidelity` | `../review/design-system-contract-application.md` | Governs implementation against local design-system artifacts. |
 | `Design-System Application Gate` | `../review/design-system-contract-application.md` | Required when existing design-system artifacts drive work. |
+| `Virtualized List Visual Contract` | `../review/virtualized-list-visual-contract.md` | Governs row/card height, overlap, and density proof inside virtualized lists. |
+| `Product Copy Domain Semantics` | `../review/product-copy-domain-semantics.md` | Governs domain-accurate, non-redundant UI copy in product surfaces. |
+| `Premium Operational Density` | `../review/premium-operational-density.md` | Governs premium passes on CRM/list/table/dashboard operational surfaces. |
+| `Component Style Authority Gate` | `../review/component-style-authority-gate.md` | Requires component-source fixes before brittle global CSS overrides. |
 | `Premium Direction Gate` | `../review/premium-interface-production.md` | Required for premium/de-AI design direction. |
 | `Product-Critical Closure Protocol` | `../runtime-packets/product-critical-closure-packet.md` | Governs closure on product-critical surfaces. |
 | `UX/UI Fullstack Surface Gate` | `../review/ux-ui-fullstack-surface.md` | Governs backend truth + frontend state + UX/UI runtime behavior. |

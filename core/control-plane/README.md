@@ -16,12 +16,16 @@ Native authority now starts here:
 - `branch-enforcement-matrix.md`
 - `quick-invocation-map.md`
 - `gate-ownership-index.md`
+- `prompt-upgrade-approval-gate.md`
 - `workflow-change-approval-gate.md`
 - `parity-replacement-gate.md`
 - `truth-ownership-check.md`
 - `failure-classification-gate.md`
 - `artifact-sufficiency-check.md`
 - `design-implementation-proof-gate.md`
+- `visual-regression-proof-gate.md`
+- `execution-to-spec-loop-gate.md`
+- `systemic-ui-inconsistency-audit-gate.md`
 - `theme-template-portability-gate.md`
 - `componentization-enforcement-gate.md`
 - `deep-componentization-audit-gate.md`

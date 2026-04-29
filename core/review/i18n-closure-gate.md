@@ -69,6 +69,7 @@ i18n Closure Packet
 - default locale:
 - namespaces touched:
 - keys added / changed / removed:
+- removed-copy cleanup:
 - backend/frontend copy boundary notes:
 - formatting changes:
 - fallback behavior:
@@ -82,12 +83,17 @@ i18n Closure Packet
 Locale-pack parity means every changed key is accounted for across the active
 locale set.
 
+When user-facing copy is removed during the same branch, newly introduced or
+now-unused keys must be removed consistently unless the branch records why the
+key remains intentionally reusable.
+
 Allowed states:
 
 - translated value present
 - intentionally same-as-default value with reason
 - blocked translation with explicit placeholder policy and follow-up owner
 - deleted consistently across all locales
+- removed as unused copy cleanup in the same branch
 
 Not allowed:
 
@@ -95,6 +101,7 @@ Not allowed:
 - dynamic key construction with no parity proof
 - one locale updated while others silently fall back
 - backend display string substituted for frontend translation work
+- removed UI copy leaves stale keys in only some locale packs
 
 ## Runtime Proof
 
@@ -116,6 +123,7 @@ Do not close if:
 - supported locales were assumed instead of discovered or profile-declared
 - changed user-facing strings are hardcoded without exception
 - locale-pack parity was not checked
+- removed copy was not cleaned up across touched locale packs
 - fallback behavior masks missing keys
 - backend-owned localized copy appears in frontend props without justification
 - mixed-language runtime remains

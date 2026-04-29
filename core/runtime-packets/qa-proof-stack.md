@@ -17,6 +17,10 @@ Truth moves through five distinct layers:
 
 Do not collapse these into a single vague `tested` claim.
 
+When `Execution-To-Spec Loop Gate` is active, QA failures, browser proof
+failures, and visual proof failures must feed the correction loop. They are not
+terminal notes unless the loop is explicitly blocked or narrowed.
+
 ## Lane Ownership
 
 - `Backend Tester`
@@ -120,6 +124,9 @@ Name the proof failure explicitly when it appears.
 - `pre-fix visual proof`
   - closure proof still shows the state before an in-scope visual defect was
     corrected.
+- `proof-not-fed-into-loop`
+  - QA/browser/visual proof found a defect but the run did not register,
+    correct, reproof, or explicitly waive it before closure.
 
 These are closure-relevant failures, not optional cleanup notes.
 

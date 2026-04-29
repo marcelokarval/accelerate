@@ -21,6 +21,7 @@ Browser-Proof Packet
 - backend/frontend state reconciliation: <present|not-needed|missing|blocked>
 - screenshots/captures: <project-root .tmp paths or blocked>
 - defects registered: <ids or none>
+- visual comparison packet: <path|included|not-needed|blocked>
 - residual route-family gaps: <...>
 - readiness impact: <supports-review|supports-closure|still-blocked>
 ```
@@ -41,3 +42,15 @@ Browser-Proof Packet
   the run records an explicit exception.
 - For UX/UI fullstack surfaces, browser proof must connect visible state to the
   backend/frontend state that produced it.
+- For UI mutation, browser proof must include or reference a visual comparison
+  packet. Console and network evidence prove runtime health; they do not prove
+  visual correctness.
+- A screenshot path without written visual findings is evidence capture, not
+  visual proof.
+- When `Execution-To-Spec Loop Gate` is active, browser proof findings must feed
+  the correction loop until fixed, waived, or blocked. Do not treat browser proof
+  as a passive report while claiming the loop converged.
+- When `Systemic UI Inconsistency Audit Gate` is active, browser proof must name
+  whether route/modal/viewport coverage was sampled, targeted, broad, or full.
+  Do not imply all routes, all modals, or all viewports were covered unless the
+  inventory and evidence prove it.

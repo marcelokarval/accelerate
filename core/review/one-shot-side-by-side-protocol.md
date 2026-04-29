@@ -8,6 +8,10 @@ correction when useful, and final forensic closure.
 
 It turns a strong prompt pattern into native Accelerate governance.
 
+When the request also asks the agent to stay in a QA/browser correction loop
+until the planned outcome is delivered, this protocol is governed by
+`../control-plane/execution-to-spec-loop-gate.md`.
+
 ## Activation
 
 Open the `One-Shot Side-By-Side Gate` when the request includes any strong
@@ -18,6 +22,7 @@ combination of:
 - review 1:1 or side-by-side review
 - auto-correction
 - subagent correction handoff
+- sequential task execution with parallel subagents where safe
 - final forensic review
 
 Do not apply this gate to truly trivial bounded edits unless the user explicitly
@@ -38,6 +43,23 @@ The required chain is:
 9. hand correction back to a subagent only when the correction is bounded and
    delegation lowers risk or latency
 10. perform final forensic side-by-side reconciliation before closure
+
+When `Execution-To-Spec Loop Gate` is active, steps 6 through 9 repeat until the
+loop converges, is explicitly narrowed by the user, or is blocked by packeted
+external/runtime constraints.
+
+## Sequential / Parallel Execution Rule
+
+Tasks may be executed in parallel only when they are independent, have bounded
+write scopes, and do not depend on the same runtime state, files, migrations,
+design artifacts, or browser session assumptions.
+
+Sequential dependencies must stay sequential. Parallel subagents may inspect or
+implement bounded slices, but each slice still requires its own review,
+correction, and reproof before the master integrates it into final closure.
+
+The master owns task ordering, conflict detection, integrated proof, and final
+side-by-side reconciliation. Subagent success is never closure by itself.
 
 ## Per-Task Review Rule
 
@@ -102,6 +124,7 @@ present:
 - missing final forensic reconciliation
 - validation stack under-run
 - subagent success accepted without master integration review
+- parallel tasks wrote overlapping surfaces without master conflict review
 
 ## Packet Surfaces
 
@@ -113,6 +136,7 @@ Use these packet shapes from `../runtime-packets/templates.md`:
 - `One-Shot Side-By-Side Review Packet`
 - `Final Forensic Reconciliation Packet`
 - `Closure Packet`
+- `Execution-To-Spec Loop Packet`
 
 ## Task Ledger Surface
 
