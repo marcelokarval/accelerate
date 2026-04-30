@@ -9,6 +9,8 @@ Native authority now starts here:
 - `templates.md`
 - `cadence.md`
 - `prompt-upgrade-approval-packet.md`
+- `agent-promotion-packet.md`
+- `agent-return-packet.md`
 - `qa-proof-stack.md`
 - `design-implementation-proof-packet.md`
 - `browser-proof-packet.md`
