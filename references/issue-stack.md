@@ -22,12 +22,14 @@ of the execution model.
 
 - `accelerate`
 - `Issue Bootstrap Gate`
-- active workflow adapter
-- `linear-implementation-planner` when sequencing or parent/child structure is
+- active workflow adapter when implemented/available, otherwise local planning
+  artifact
+- adapter-specific planner when sequencing or parent/child structure is
   non-trivial
 - planning artifact (`planning-with-files` or equivalent execution-ready plan)
 - `executing-plans` when the execution packet is accepted
-- `linear-progress-reporter` for longer runs
+- adapter-specific progress reporter for longer runs when a remote adapter is
+  active
 - `AI Review Report` before `Done`
 
 ## Flow
@@ -39,8 +41,8 @@ User Request
         -> no  -> analysis path
         -> yes -> Issue Bootstrap Gate
                  -> missing issue     -> BLOCK
-                 -> existing issue    -> validate with active workflow adapter
-                 -> new issue needed  -> create with active workflow adapter
+                 -> existing issue    -> validate with active workflow adapter when available, otherwise local planning artifact
+                 -> new issue needed  -> create with active workflow adapter when available, otherwise local planning artifact
                       -> planning gate
                          -> missing plan -> BLOCK
                          -> plan present -> execute

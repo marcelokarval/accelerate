@@ -1,0 +1,12 @@
+name: locale-pack-parity
+type: runtime
+status: planned
+authority_boundary: runtime-adapter
+allowed_tools:
+  - shell
+suppressed_capabilities: []
+validation_command: none-yet
+proof_artifacts:
+  - i18n-closure-packet
+privacy_notes: locale files may contain user-facing copy, legal text, and product claims
+command: planned-adapter

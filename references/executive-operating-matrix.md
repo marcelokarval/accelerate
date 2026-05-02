@@ -30,7 +30,7 @@ Use this module when the operator needs a single executive view of the full
 ║ AGENT POSTURE: non-trivial -> use bounded subagent(s) when they create honest value; root-only remains legitimate       ║
 ║ SUBAGENT RULE: each subagent loads `accelerate` first, stays bounded, returns self-review + self-forensic review         ║
 ║ PROOF ORDER: implementation -> backend/frontend QA -> browser truth (Chrome DevTools) -> persistent E2E (Playwright)     ║
-║ ISSUE ORDER: bootstrap -> active workflow adapter -> planning artifact -> execution -> AI Review Report -> real closure   ║
+║ ISSUE ORDER: bootstrap -> adapter/local planning -> planning artifact -> execution -> AI Review Report -> real closure    ║
 ╚══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╝
 ```
 

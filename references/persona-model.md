@@ -350,8 +350,8 @@ Common mappings:
 
 - `Specification PM` -> `prompt-hardening`, `architecture`, active workflow
   adapter when issue structure matters
-- `Product Planner` -> active workflow adapter, `linear-implementation-planner`
-  when sequencing is non-trivial in the current default distribution
+- `Product Planner` -> active workflow adapter when available, or an
+  adapter-specific planner when sequencing is non-trivial
 - `Implementation Designer` -> `planning-with-files`, `executing-plans`
 - `Implementer / Developer` -> stack skills for the active layer plus
   implementation verification skills when needed

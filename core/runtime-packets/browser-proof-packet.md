@@ -10,6 +10,8 @@ Browser-Proof Packet
 - surface / route family: <...>
 - runtime target: <local URL, environment, or blocked reason>
 - browser tool: <Chrome DevTools|agent-browser|other>
+- browser session posture: <fresh|isolated|existing-intentional|profile-conflict-blocked>
+- browser profile / isolation: <profile path|--isolated|dedicated userDataDir|n/a|blocked reason>
 - intensity: <sampled|targeted|broad sweep|full route-family audit>
 - viewport coverage: <desktop|mobile|both|blocked>
 - state coverage: <default|loading|empty|error|auth|role|other>
@@ -54,3 +56,33 @@ Browser-Proof Packet
   whether route/modal/viewport coverage was sampled, targeted, broad, or full.
   Do not imply all routes, all modals, or all viewports were covered unless the
   inventory and evidence prove it.
+
+## Chrome DevTools Profile Conflict Routing
+
+When Chrome DevTools reports a profile conflict like:
+
+```text
+The browser is already running for .../chrome-devtools-mcp/chrome-profile. Use --isolated to run multiple browser instances.
+Cause: The browser is already running for .../chrome-profile. Use a different `userDataDir` or stop the running browser first.
+```
+
+do not treat that as a normal browser-proof failure and do not silently reuse the
+busy profile.
+
+Route in this order:
+
+1. Use an isolated browser session (`--isolated`) when the runtime adapter
+   supports it.
+2. Use a dedicated temporary `userDataDir` under the governed project root
+   `.tmp/` when adapter configuration allows it.
+3. Intentionally attach to the existing session only when the proof requires the
+   existing authenticated state and the packet records `existing-intentional`.
+4. If none of the above is possible, mark browser proof as
+   `profile-conflict-blocked` and continue with non-browser validation only as a
+   partial result.
+
+Never close browser-required work from a `profile-conflict-blocked` state. A
+blocked browser session can support a residual-risk report, not closure.
+
+Record the decision in `browser session posture` and `browser profile /
+isolation`.

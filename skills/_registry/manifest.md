@@ -123,3 +123,14 @@ The next packaging and proof tasks are:
 8. optional runtime export drift gate
 
 Do not add new mandatory skill references without registering them here.
+
+## Virtual Profile-Resolved Aliases
+
+These names are not standalone skill directories. They are valid metadata aliases
+only when resolved through the active stack profile:
+
+| Alias | Resolution |
+| --- | --- |
+| `active-frontend-stack` | Use the frontend skills declared by the selected profile. |
+| `active-backend-stack` | Use the backend skills declared by the selected profile. |
+| `active-test-stack` | Use the validation/testing skills declared by the selected profile. |

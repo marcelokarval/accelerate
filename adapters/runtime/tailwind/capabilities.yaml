@@ -1,0 +1,13 @@
+name: tailwind
+type: runtime
+status: planned
+authority_boundary: runtime-adapter
+allowed_tools:
+  - node
+  - tailwindcss
+suppressed_capabilities: []
+validation_command: none-yet
+proof_artifacts:
+  - design-implementation-proof-packet
+privacy_notes: generated CSS and build logs may expose local paths and design tokens
+command: planned-adapter

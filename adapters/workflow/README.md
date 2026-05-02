@@ -15,8 +15,9 @@ Read it as:
 - future backend targets
 - active local adapter foundation for `.accelerate/workflow/`
 
-Do not read local adapter support as proof that Linear, GitHub, Jira, or Notion
-are already live. The local adapter is the first concrete substitute backend.
+Do not read local adapter support or one-off remote helpers as proof that
+Linear, GitHub, Jira, or Notion are complete live workflow adapters. The local
+adapter is the first concrete substitute backend.
 
 Every workflow adapter should support:
 
@@ -56,12 +57,14 @@ Native pre-agents reading order:
 
 ## Not-Yet-Implemented Limits
 
-This layer is not yet a complete remote runtime adapter stack. It currently does
-not provide:
+This layer is not yet a complete remote runtime adapter stack. Specific helpers
+may be available when their capability manifests and remote-write registry say
+so, but the complete adapter stack does not yet provide:
 
 - remote adapter discovery or selection
 - backend API clients
-- issue, pull-request, status, or comment writers
+- generalized issue, pull-request, status, or comment writers across all
+  backends
 - automated metadata rehydration
 - automated failure recovery
 - live one-shot side-by-side execution orchestration
@@ -69,8 +72,14 @@ not provide:
 - automatic correction/reproof comment flows
 - automatic final forensic reconciliation posting
 
-The local adapter provides local work-item identity and lifecycle state, but
-remote workflow automation remains intentionally unclaimed.
+The local adapter provides local work-item identity and lifecycle state. Remote
+workflow automation remains intentionally unclaimed except for explicitly named,
+capability-registered helpers such as GitHub PR artifact attachment.
+
+In `.accelerate/state.yaml`, `workflow_backend: none-yet` means no remote
+workflow backend is selected. It can coexist with `.accelerate/workflow/adapter.yaml`
+using `adapter: local`; the former describes remote backend selection, while the
+latter describes the local substitute adapter.
 
 ## Live Adapter Direction
 

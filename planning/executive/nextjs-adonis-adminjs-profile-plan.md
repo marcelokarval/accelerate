@@ -86,10 +86,9 @@ Expected result:
 
 ### R3 - Local Adonis Research Corpus Search
 
-Use the existing local research corpus as a primary research input before online
-lookup:
-
-- `/home/marcelo-karval/Backup/Projetos/adonisjs-likely-django/`
+Use the existing adjacent research corpus as a primary research input before
+online lookup when available. It is provenance, not a portable repository
+dependency.
 
 Important known surfaces include:
 

@@ -38,14 +38,14 @@ When any of those evolve, this matrix must be reviewed for drift.
 |---|---|---|---|---|
 | `Specification PM` | `prompt-hardening`, `architecture`; active workflow adapter when issue structure matters | domain/context skills as needed | actor/goal ambiguity, weak request framing | `Specification Handoff Packet` |
 | `Prompt Hardening Editor` | `prompt-hardening` | `architecture` when shaping affects design/structure | weak prompt shape | `Prompt Hardening Packet` |
-| `Product Planner` | active workflow adapter; `linear-implementation-planner` when sequencing is non-trivial in the current default distribution | `planning-with-files`, `executing-plans` when a bounded plan already exists | scope split, rollout shape, slices | `Planning Handoff Packet` |
-| `Issue Architect / Workflow Adapter` | active workflow adapter | `linear-progress-reporter` in the current default distribution | issue creation, metadata repair, hierarchy | issue packet / metadata proof |
+| `Product Planner` | active workflow adapter when available; adapter-specific planner when sequencing is non-trivial | `planning-with-files`, `executing-plans` when a bounded plan already exists | scope split, rollout shape, slices | `Planning Handoff Packet` |
+| `Issue Architect / Workflow Adapter` | active workflow adapter when available, otherwise local planning artifact | adapter-specific progress reporter when a remote adapter is active | issue creation, metadata repair, hierarchy | issue packet / metadata proof |
 | `Implementation Designer` | `planning-with-files`, `executing-plans` when accepted | `ascii-wireframe`, contract/governance sidecars | execution design | `Implementation Design Packet` |
 | `Wireframe / Design Contract Extractor` | `ascii-wireframe` | `figma-node-fidelity`, `front-react-shadcn`, `product-runtime-review` | structural UI uncertainty | design / wireframe packet |
 | `Implementer / Developer` | concrete active profile skills from `skills/_registry/manifest.md` | verification/review companions as needed | bounded implementation | `Implementation Handoff Packet` |
 | `Backend Implementer` | `django-service-patterns`, `django-pro`, `security-patterns` | `sql-optimization-patterns`, `financial-source-truth`, `validation-governance` | backend-heavy mutation | backend implementation packet |
 | `Frontend Implementer` | `front-react-shadcn`, `frontend-boundary-governance`, `i18n-patterns` | `ascii-wireframe`, `frontend-componentization-audit`, `react-best-practices`, `server-prop-governance` | frontend-heavy mutation | frontend implementation packet |
-| `Delivery PM` | none fixed globally | `linear-progress-reporter`, `executing-plans` | cadence/checkpoints | `Delivery Packet` |
+| `Delivery PM` | none fixed globally | adapter-specific progress reporter, `executing-plans` | cadence/checkpoints | `Delivery Packet` |
 | `Backend Tester` | `python-testing`, backend profile bundle, data/query skills as needed | `django-service-patterns`, `security-patterns`, `sql-optimization-patterns`, `financial-source-truth` | backend QA lane | `QA / Proof Packet` |
 | `Frontend Tester` | frontend profile bundle, `i18n-patterns` | `frontend-componentization-audit`, `react-best-practices` | frontend QA lane | `QA / Proof Packet` |
 | `Browser-Proof Auditor` | `product-runtime-review`; active stack skills as needed | `ascii-wireframe`, `server-prop-governance` | browser truth / route-family audit | `Browser-Proof Packet` / `QA / Proof Packet` |

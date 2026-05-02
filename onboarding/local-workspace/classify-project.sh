@@ -55,6 +55,12 @@ reentry_status="clean"
 
 if list_contains "${framework_signals}" "django" && list_contains "${framework_signals}" "inertia" && list_contains "${framework_signals}" "react"; then
   selected_profile="django-inertia-react"
+elif list_contains "${framework_signals}" "nextjs" && list_contains "${framework_signals}" "adonisjs" && list_contains "${framework_signals}" "adminjs"; then
+  selected_profile="nextjs-adonis-adminjs"
+elif list_contains "${framework_signals}" "nextjs" && list_contains "${framework_signals}" "drizzle"; then
+  selected_profile="nextjs-drizzle"
+elif list_contains "${framework_signals}" "nextjs" && list_contains "${framework_signals}" "prisma"; then
+  selected_profile="nextjs-prisma"
 elif list_contains "${framework_signals}" "nextjs" && list_contains "${framework_signals}" "tailwind"; then
   selected_profile="nextjs-tailwind"
 fi

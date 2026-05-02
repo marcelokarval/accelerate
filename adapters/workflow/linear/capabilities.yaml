@@ -23,9 +23,10 @@ mcp_attachment_command: onboarding/local-workspace/attach-linear-mcp-artifact.sh
 mcp_recovery_command: onboarding/local-workspace/write-linear-mcp-recovery.sh
 mcp_remote_url: https://mcp.linear.app/mcp
 mcp_auth_host: opencode-global
-mcp_live_tested_at: 2026-04-27
-mcp_live_read_result: passed
-mcp_live_write_result: passed
-mcp_live_test_issue: https://linear.app/botrei/issue/P4Y-1270/temp-accelerate-linear-mcp-live-adapter-validation
-graphql_helper_live_result: blocked-without-linear-api-key
+mcp_external_host_live_tested_at: 2026-04-27
+mcp_external_host_read_result: passed
+mcp_external_host_write_result: passed
+mcp_external_host_test_evidence: dated-proof-appendix
+mcp_helper_runtime_result: blocked
+graphql_helper_runtime_result: blocked-without-linear-api-key
 implementation_blocker: structured_non_llm_mcp_write_binding_required

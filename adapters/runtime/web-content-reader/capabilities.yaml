@@ -1,0 +1,13 @@
+name: web-content-reader
+type: runtime
+status: planned
+authority_boundary: runtime-adapter
+allowed_tools:
+  - webfetch
+suppressed_capabilities:
+  - remote-write
+validation_command: none-yet
+proof_artifacts:
+  - source-observer-packet
+privacy_notes: fetched content may include private URLs, redirects, and source metadata
+command: planned-adapter

@@ -25,9 +25,14 @@ The final global-only audit lives in:
 | Former `role-only` phrases | resolved into concrete backend/frontend/workflow/runtime/domain bundles. |
 | Persistent E2E proof | resolved through `adapters/runtime/playwright/` fixtures plus runtime proof skills. |
 
-## Active Local Skill Count
+## Active Local Skill Registry
 
-Root `skills/` currently owns 75 governed reusable skill bodies.
+Root `skills/` ownership is defined by the canonical registry, not by a
+hardcoded count in this historical seed document.
+
+See:
+
+- `../../skills/_registry/manifest.md`
 
 Validate with:
 

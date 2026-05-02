@@ -55,6 +55,7 @@ This prevents invisible gate drift and stale mandatory language.
 | `Sidebar / Public Docs Update Gate` | `artifact-sufficiency-check.md` | Required when capability changes affect discoverability or docs navigation. |
 | `Active Correction / Defect Disposition` | `../review/active-correction-loop.md` | Required when concrete in-scope defects are found. |
 | `Seam Proof Requirement` | `../review/seam-proof.md` | Required when layout/state/shell seams are plausible. |
+| `AI Review Report` | `../runtime-packets/templates.md` | Required closure artifact in the Closure Packet when AI review is part of the proof lane. |
 
 ## Adjacent-Skill-Owned Gates
 
@@ -83,6 +84,7 @@ This prevents invisible gate drift and stale mandatory language.
 | `Source Observer Gate` | `../review/source-observer.md` | Governs source/web content observation packets. |
 | `External Skill Vetting Gate` | `../risk/external-skill-vetting-gate.md` | Required before adapting external skills/tooling. |
 | `Browser Truth Gate` | `../runtime-packets/browser-proof-packet.md` | Required when browser runtime is a closure condition. |
+| `Chrome DevTools Profile Conflict Routing` | `../runtime-packets/browser-proof-packet.md` | Required when the shared Chrome DevTools profile is already running; use isolated/dedicated profile or block closure. |
 | `Audit Intensity Disclosure` | `../runtime-packets/browser-proof-packet.md` | Required when browser audit breadth could be overstated. |
 | `Persistent Regression Gate` | `../runtime-packets/qa-proof-stack.md` | Required for persisted E2E/regression authoring. |
 | `Product-Correctness` | `../review/product-critical-surfaces.md` | Governs product behavior beyond technical correctness. |

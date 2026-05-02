@@ -10,6 +10,7 @@ Current skills:
 | `extract-html-design-system-v2` | Extract URL/HTML/app visual evidence into a reusable local design-system package. |
 | `apply-design-system-contract` | Apply an existing design-system package as implementation law for UI work. |
 | `premium-design-benchmark-corpus` | Provide the repo-local anti-AI-template benchmark corpus and influence-map rules for premium UI work. |
+| `design-md-corpus-patterns` | Govern local `DESIGN.md` corpus adoption and benchmark pattern reuse. |
 
 The native operating modules are:
 

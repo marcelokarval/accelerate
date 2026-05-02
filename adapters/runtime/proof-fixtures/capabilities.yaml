@@ -1,0 +1,12 @@
+name: proof-fixtures
+type: runtime
+status: planned
+authority_boundary: runtime-fixture
+allowed_tools:
+  - shell
+suppressed_capabilities: []
+validation_command: none-yet
+proof_artifacts:
+  - proof-fixture
+privacy_notes: fixtures must not include real secrets, tokens, or private production data
+command: planned-fixture

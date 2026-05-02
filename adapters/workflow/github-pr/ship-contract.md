@@ -11,22 +11,23 @@ can attach a local artifact as a PR comment when `gh` auth is available.
 
 ## Live Test Evidence
 
-On 2026-04-27, the helper layer was live-tested against
-`https://github.com/marcelokarval/accelerate/pull/1`:
+On 2026-04-27, the helper layer was live-tested against a temporary repository
+PR recorded in the dated proof appendix:
 
 - read: `read-github-pr-adapter.sh .tmp/github-live-pr` returned PR metadata
   for PR `#1`
 - attach: `attach-github-pr-artifact.sh .tmp/github-live-pr .accelerate/review/qa-report.md ...`
-  posted `https://github.com/marcelokarval/accelerate/pull/1#issuecomment-4329141970`
+  posted a non-sensitive validation comment
 
 This proves the read/comment helper layer. Create, rehydration, recovery, and
 guarded land helpers exist, but the adapter remains `planned` as full workflow
 truth until those helper classes have their own live proof and recovery drills.
 
-## Implemented Helper Set
+## Helper Set
 
-The GitHub PR adapter is implemented as a remote workflow adapter when `gh` is
-authenticated and the target repository has a GitHub `origin` remote:
+The GitHub PR helper set is available when `gh` is authenticated and the target
+repository has a GitHub `origin` remote. Full workflow adapter truth remains
+planned until every helper class has live proof and recovery drills:
 
 - create: `create-github-pr-adapter.sh`
 - read: `read-github-pr-adapter.sh`

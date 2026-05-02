@@ -154,7 +154,8 @@ onboarding can now choose among more local stack profiles when discovery proves 
 better fit:
 
 - workflow adapter:
-  - `linear`
+  - `none-yet` locally by default, with `linear` as a planned/preferred first
+    remote target when a live adapter is available
 - runtime adapters:
   - `python-uv`
   - `node`

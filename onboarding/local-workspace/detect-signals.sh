@@ -145,6 +145,18 @@ if has_path "package.json"; then
   if file_contains "package.json" '"inertia"' || file_contains "package.json" '@inertiajs/'; then
     append_unique framework_signals "inertia"
   fi
+  if has_path "prisma/schema.prisma" || has_path "schema.prisma" || file_contains "package.json" '"prisma"' || file_contains "package.json" '"@prisma/client"'; then
+    append_unique framework_signals "prisma"
+  fi
+  if has_path "drizzle.config.ts" || has_path "drizzle.config.js" || has_path "drizzle.config.mjs" || file_contains "package.json" '"drizzle-orm"' || file_contains "package.json" '"drizzle-kit"'; then
+    append_unique framework_signals "drizzle"
+  fi
+  if has_path "adonisrc.ts" || has_path ".adonisrc.json" || file_contains "package.json" '"@adonisjs/core"'; then
+    append_unique framework_signals "adonisjs"
+  fi
+  if file_contains "package.json" '"adminjs"' || file_contains "package.json" '"@adminjs/'; then
+    append_unique framework_signals "adminjs"
+  fi
 fi
 
 if has_path "manage.py"; then

@@ -446,6 +446,7 @@ Execution-To-Spec Loop Packet
 - requested-vs-implemented status: <met|partial|missed|blocked>
 - QA proof run: <commands|blocked|n/a>
 - browser proof run: <captures|blocked|n/a>
+- browser session posture: <fresh|isolated|existing-intentional|profile-conflict-blocked|n/a>
 - visual proof run: <required-present|required-missing|not-needed>
 - defects detected: <ids|none>
 - correction loop status: <not-needed|open|complete|blocked>
@@ -471,6 +472,7 @@ Systemic UI Inconsistency Audit Packet
 - source search patterns used: <patterns>
 - viewport matrix: <desktop|tablet|mobile + evidence paths>
 - browser proof intensity: <sampled|targeted|broad sweep|full route-family audit>
+- browser session posture: <fresh|isolated|existing-intentional|profile-conflict-blocked|n/a>
 - hard-coded/mock data findings: <ids|none|untriaged>
 - data-truth unknowns: <ids|none>
 - missing-info findings: <ids|none>

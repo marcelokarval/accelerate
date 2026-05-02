@@ -112,20 +112,21 @@ Read live test:
 
 - `opencode mcp list` reported `linear connected`
 - an OpenCode run invoked `linear_get_user` and `linear_list_issues`
-- the authenticated user was `marcelokarval@gmail.com`
-- returned issues were assigned to project `Prop4You`
+- the authenticated user matched the operator account configured for the test
+- returned issues were assigned to the configured validation project
 
 Write live test:
 
-- created temporary issue `P4Y-1270`
-- project: `Prop4You`
-- assignee: `marcelokarval@gmail.com`
+- created a temporary validation issue
+- project: configured validation project
+- assignee: configured operator account
 - comment write succeeded with body `Accelerate Linear MCP live attach validation: non-sensitive temporary test comment.`
 - issue was transitioned to canceled status after the test
 
-This proves OpenCode-hosted Linear MCP read/write capability. It does not prove
-the GraphQL helper scripts, which still require `LINEAR_API_KEY`; therefore the
-GraphQL helpers remain secondary.
+This proves OpenCode-hosted Linear MCP read/write capability for the dated test
+environment. It does not prove the repo-local MCP helper scripts as operational
+runtime truth; those still fail closed until structured non-LLM MCP binding is
+available. The GraphQL helpers remain secondary and require `LINEAR_API_KEY`.
 
 ## MCP Helper Set
 

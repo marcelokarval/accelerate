@@ -1,0 +1,17 @@
+name: node
+type: runtime
+status: planned
+authority_boundary: runtime-adapter
+allowed_tools:
+  - node
+  - npm
+  - pnpm
+  - yarn
+  - bun
+suppressed_capabilities: []
+validation_command: none-yet
+proof_artifacts:
+  - frontend-qa
+  - build-proof
+privacy_notes: package scripts may expose environment variables, logs, and local paths
+command: project-script-resolved-by-profile

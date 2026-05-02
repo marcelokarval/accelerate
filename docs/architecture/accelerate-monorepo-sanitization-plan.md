@@ -63,7 +63,7 @@ Treatment:
 Primary files:
 
 - `frontends/docusaurus/docs/ai/accelerate-operational-model.md`
-- `frontends/docusaurus/docs/ai/accelerate-based-codex-agents.md`
+- historical Docusaurus AI docs for accelerate-based Codex agents
 
 Treatment:
 

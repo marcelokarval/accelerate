@@ -2,6 +2,8 @@
 
 Browser truth should include screenshots/captures, console evidence, network
 evidence, target route/URL, viewport, auth/session posture, and residual gaps.
+It should also record browser session posture and profile/isolation strategy
+whenever the browser tool exposes shared profile behavior.
 
 Screenshot-only proof is insufficient for UI/runtime behavior.
 
@@ -10,3 +12,10 @@ proof helper. It defaults to localhost-only URLs, writes a JSON proof packet, an
 records screenshot, console, network, viewport, URL, and privacy metadata. Remote
 URLs are blocked until a request-intercepting adapter can prevent page-triggered
 private network and metadata-host subresource requests.
+
+When Chrome DevTools reports that its shared `chrome-profile` is already
+running, route through `core/runtime-packets/browser-proof-packet.md` profile
+conflict rules. Prefer `--isolated`, then a dedicated temporary `userDataDir`
+under project `.tmp/`, then intentional existing-session attachment only when
+the proof requires that session state. Otherwise mark browser proof blocked and
+do not close browser-required work.

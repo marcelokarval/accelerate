@@ -126,7 +126,7 @@ written canonically into the local workspace.
 ```text
 accelerate
   -> Issue Bootstrap Gate
-  -> active workflow adapter
+  -> active workflow adapter when available, otherwise local planning artifact
   -> issue-ready validation
 ```
 

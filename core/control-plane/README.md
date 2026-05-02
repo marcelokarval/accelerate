@@ -38,6 +38,21 @@ Native authority now starts here:
 - `django-orm-query-shape-gate.md`
 - `ownership-idor-gate.md`
 - `backend-subagent-readiness-contract.md`
+- `manifest-truth-gate.md`
+- `remote-write-registry.md`
+- `land-deploy-gate.md`
+- `ship-readiness-gate.md`
+- `export-allowlist-policy.md`
+- `privacy-classification.md`
+- `one-way-door-policy.md`
+- `question-registry.md`
+- `decision-taxonomy.md`
+- `local-workspace-entry-gate.md`
+- `review-readiness-gate.md`
+- `timeline-continuity-gate.md`
+- `durable-learning-registration-gate.md`
+- `ui-mutation-ladder.md`
+- `design-system-rollout-entry-gate.md`
 
 Root-facing architectural context still lives in:
 

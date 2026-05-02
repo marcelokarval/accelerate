@@ -18,18 +18,19 @@ roadmap:
 - baseline commit: `b0c5116 Add gstack-inspired workflow governance`
 - browser helper commit: `45c3397 Add browser proof runtime helper`
 - GitHub PR helper expansion commit: `8563a5c Implement GitHub PR workflow adapter`
+  (helper/probe expansion, not complete workflow adapter truth)
 - Linear MCP adapter commit: `4ce84ef Implement Linear MCP workflow adapter`
+  (MCP proof/helper exploration, not complete workflow adapter truth)
 - safety correction: Linear remains `planned` because shell helpers currently
   route MCP writes through an LLM prompt rather than a structured direct binding
 - ship/land commit: `4347d06 Add guarded ship and land helpers`
 
 ## Live Proof Already Captured
 
-- GitHub PR read/attach live proof used temporary PR `#1` and comment
-  `https://github.com/marcelokarval/accelerate/pull/1#issuecomment-4329141970`
-- Linear MCP read/write live proof used temporary issue `P4Y-1270`, assigned to
-  `marcelokarval@gmail.com`, under project `Prop4You`, then canceled it after
-  comment proof
+- GitHub PR read/attach live proof used a temporary repository PR and a
+  non-sensitive validation comment recorded in the dated proof appendix
+- Linear MCP read/write live proof used a temporary validation issue in the
+  configured validation project, then canceled it after comment proof
 
 ## Boundaries
 

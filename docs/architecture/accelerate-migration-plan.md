@@ -1,5 +1,8 @@
 # Accelerate Migration Plan
 
+Status: historical migration plan. Use current `README.md`, `AGENTS.md`, and
+adapter capability manifests for present-day adapter status.
+
 ## Purpose
 
 This document defines the phased migration path from the Prop4You incubation
@@ -308,8 +311,10 @@ Goal:
 ### Batch G
 
 - implement local `.accelerate/` live-adapter hardening for one-shot packets
-- implement Linear live adapter first
-- add GitHub PR adapter after Linear semantics stabilize
+- implement local workflow hardening first
+- implement a Linear live adapter only after structured write binding exists
+- add GitHub PR adapter coverage according to helper capability manifests and
+  recovery proof
 
 ## Risks
 

@@ -20,7 +20,8 @@ authority is the adapted content in this repository.
 
 ## Local Adonis Research Corpus
 
-Source root: `/home/marcelo-karval/Backup/Projetos/adonisjs-likely-django/`
+Source root: external adjacent research corpus, not a portable repository
+dependency.
 
 Accepted backend parity findings are materialized in:
 

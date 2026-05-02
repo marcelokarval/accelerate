@@ -1,7 +1,14 @@
 # Codex Agents Module
 
+Status: historical/supporting reference. Native agent governance now lives under
+`../../agents/` and root delegation law under `../../core/delegation/`.
+
+This pack preserves inherited doctrine for comparison and provenance. Do not use
+it as primary authority for promoted agents, runtime installation, or Prop4You
+specific agent decisions.
+
 Use this module when the question is not merely "should we use subagents?" but
-"what governed agent ecosystem should `accelerate` own for Prop4You?"
+"what governed agent ecosystem should `accelerate` own?"
 
 This module belongs to `accelerate`.
 
@@ -24,7 +31,7 @@ Its job is to give the root control plane explicit intelligence for:
 
 Read this module when the work involves one or more of:
 
-- designing global Codex agents for `~/.codex/agents/*.toml`
+- designing future promoted agent families after native contracts are satisfied
 - deciding whether a role should be master-owned or delegate-possible
 - mapping `accelerate` personas/workflows into stable agent families
 - deciding which skills a family should carry
@@ -33,7 +40,7 @@ Read this module when the work involves one or more of:
 This module does not replace:
 
 - `docs/architecture/accelerate-control-plane.md`
-- `frontends/docusaurus/docs/ai/accelerate-based-codex-agents.md`
+- native `agents/` doctrine
 - the root `accelerate` skill body
 
 Those remain the public and canonical explanations of the control plane.

@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This document is the canonical architecture source for the standalone
+This document is the canonical architecture explainer for the standalone
 `accelerate` control plane.
 
 It exists to stop the full operating model from living only in:
@@ -49,9 +49,11 @@ order, and final closure.
 Read the system in this order:
 
 1. repo policy in [AGENTS.md](../../AGENTS.md)
-2. this control-plane architecture doc
-3. the installed `accelerate` root skill
-4. adjacent workflow docs and specialized skills
+2. the root skill in [SKILL.md](../../SKILL.md)
+3. the richer operating guide in [README.md](../../README.md)
+4. native `core/` surfaces for the active branch
+5. this control-plane architecture explainer and adjacent architecture docs
+6. supporting references, workflow docs, and specialized skills
 
 The corresponding public-facing docs should point back here instead of becoming
 their own competing source of truth.
@@ -587,8 +589,9 @@ accelerate
 ├── ambiguous / long / epic-like
 │   └── prompt-hardening
 ├── issue-driven delivery
-│   ├── active workflow adapter
-│   ├── linear-implementation-planner
+│   ├── active workflow adapter when available
+│   ├── local planning artifact fallback
+│   ├── adapter-specific planner when sequencing is non-trivial
 │   └── executing-plans
 ├── bug / failure / regression
 │   └── systematic-debugging + stack lenses
@@ -749,8 +752,9 @@ This gate is enforced through:
 
 - the root `accelerate` skill
 - the branch enforcement matrix
-- active workflow adapter
-- `linear-execution`
+- active workflow adapter when implemented/available
+- local planning artifacts when no remote workflow adapter is active
+- adapter-specific execution skills when a remote adapter is active
 - the workflow execution manifest
 
 ## Private Route Family Audit
@@ -1110,13 +1114,14 @@ exported skill runtime.
 - [AI Review Recursive Scan Protocol](ai-review-recursive-scan-protocol.md)
 - [Quality Stack and Runtime Review](quality-stack-and-runtime-review.md)
 - [Accelerate Operational Model](../../frontends/docusaurus/docs/ai/accelerate-operational-model.md)
-- [Accelerate-Based Codex Agents](../../frontends/docusaurus/docs/ai/accelerate-based-codex-agents.md)
+- native `agents/` doctrine and `references/codex-agents/` historical/supporting
+  references
 ### Issue Stack Workflow
 
 ```text
 accelerate
   -> Issue Bootstrap Gate
-  -> active workflow adapter
+  -> active workflow adapter when available, otherwise local planning artifact
   -> planning artifact gate
   -> executing-plans
   -> QA / browser-proof / E2E

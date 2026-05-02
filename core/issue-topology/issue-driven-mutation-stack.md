@@ -20,11 +20,14 @@ of the execution model.
 3. `Prompt Hardening Gate` when the request is ambiguous, multi-phase,
    governance-heavy, or not execution-ready yet
 4. `Issue Bootstrap Gate`
-5. active workflow adapter
-6. `linear-implementation-planner` when sequencing or hierarchy is non-trivial
+5. active workflow adapter when implemented/available, otherwise native planning
+   artifacts and runtime packets
+6. adapter-specific planner when a remote adapter is active and sequencing or
+   hierarchy is non-trivial
 7. planning artifact
 8. `executing-plans` when the execution packet is accepted
-9. `linear-progress-reporter` for longer runs
+9. adapter-specific progress reporter for longer runs when a remote adapter is
+   active
 10. proof stack
 11. local review / closure preparation when `.accelerate/` local status is active
 12. `AI Review Report`
@@ -48,8 +51,8 @@ User Request
                          -> shaped request ready -> Issue Bootstrap Gate
                  -> yes -> Issue Bootstrap Gate
                            -> missing issue     -> BLOCK
-                           -> existing issue    -> validate with active workflow adapter
-                           -> new issue needed  -> create with active workflow adapter
+                           -> existing issue    -> validate with active workflow adapter when available, otherwise local planning artifact
+                           -> new issue needed  -> create with active workflow adapter when available, otherwise local planning artifact
                                 -> planning gate
                                    -> missing plan -> BLOCK
                                    -> plan present -> execute

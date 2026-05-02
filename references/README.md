@@ -32,6 +32,8 @@ supporting doctrine:
   - primary: `../core/control-plane/quick-invocation-map.md`
 - `issue-stack.md`
   - primary: `../core/issue-topology/issue-driven-mutation-stack.md`
+- `prompt-hardening-gate.md`
+  - primary: `../core/hardening/prompt-hardening.md`
 - `local-workspace-entry-gate.md`
   - primary: `../core/control-plane/local-workspace-entry-gate.md`
 - `maturity-control.md`
@@ -59,6 +61,8 @@ supporting doctrine:
   - primary: `../planning/execution/task-breakdown-template.md`
 - `subagent-model.md`
   - primary: `../core/delegation/subagent-model.md`
+- `ui-mutation-ladder.md`
+  - primary: `../core/control-plane/ui-mutation-ladder.md`
 - `workflow-catalog.md`
   - primary: `../core/workflows/catalog.md`
 - `workflow-change-approval-gate.md`

@@ -49,17 +49,19 @@ This repository is in the standalone pre-agents phase.
 
 The current source-of-truth stack for continuing work is:
 
-1. [README.md](./README.md)
-2. [docs/architecture/accelerate-pre-agents-baseline.md](./docs/architecture/accelerate-pre-agents-baseline.md)
+1. [SKILL.md](./SKILL.md)
+2. [README.md](./README.md)
 3. [core/README.md](./core/README.md)
-4. [adapters/workflow/README.md](./adapters/workflow/README.md)
-5. [adapters/runtime/README.md](./adapters/runtime/README.md)
-6. [onboarding/README.md](./onboarding/README.md)
-7. [planning/README.md](./planning/README.md)
-8. [docs/architecture/accelerate-sdd-v1.md](./docs/architecture/accelerate-sdd-v1.md)
-9. [docs/architecture/accelerate-classification-matrix.md](./docs/architecture/accelerate-classification-matrix.md)
-10. [docs/architecture/accelerate-migration-plan.md](./docs/architecture/accelerate-migration-plan.md)
-11. [docs/architecture/accelerate-onboarding-model.md](./docs/architecture/accelerate-onboarding-model.md)
+4. [docs/architecture/accelerate-pre-agents-baseline.md](./docs/architecture/accelerate-pre-agents-baseline.md)
+5. [docs/architecture/accelerate-control-plane.md](./docs/architecture/accelerate-control-plane.md)
+6. [adapters/workflow/README.md](./adapters/workflow/README.md)
+7. [adapters/runtime/README.md](./adapters/runtime/README.md)
+8. [onboarding/README.md](./onboarding/README.md)
+9. [planning/README.md](./planning/README.md)
+10. [docs/architecture/accelerate-sdd-v1.md](./docs/architecture/accelerate-sdd-v1.md)
+11. [docs/architecture/accelerate-classification-matrix.md](./docs/architecture/accelerate-classification-matrix.md)
+12. [docs/architecture/accelerate-migration-plan.md](./docs/architecture/accelerate-migration-plan.md)
+13. [docs/architecture/accelerate-onboarding-model.md](./docs/architecture/accelerate-onboarding-model.md)
 
 ## Migration Rule
 

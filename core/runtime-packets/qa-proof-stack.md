@@ -72,6 +72,12 @@ Do not invert these roles.
 
 If the flow is not yet understood, start in Chrome DevTools.
 
+If Chrome DevTools cannot start because its shared `chrome-profile` is already
+running, route through the browser-proof profile conflict rule: prefer
+`--isolated`, then a dedicated temporary `userDataDir`, then an explicitly
+recorded existing-session attachment only when that state is required. Otherwise
+mark browser proof blocked; do not close browser-required work from that state.
+
 Use an `agent-browser` adapter only after browser truth is bounded enough that
 its higher automation power will not hide the real user path.
 

@@ -1144,7 +1144,9 @@ No artifact in this graph depends on chat history for its truth.
 - `tests/qa-report-schema.sh`
 - `tests/browser-runtime-adapter-contract.sh`
 - `tests/design-workflow-packets.sh`
-- `tests/safety-overlays.sh`
+- `tests/doctrine-integrity.sh` covers the active safety/governance overlays;
+  the earlier standalone safety-overlay test name was planned only and is not an
+  active file.
 - `tests/runtime-adapter-registry.sh`
 - `tests/ship-land-contract.sh`
 - `tests/document-export-contract.sh`

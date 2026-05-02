@@ -1,0 +1,13 @@
+name: playwright
+type: runtime
+status: planned
+authority_boundary: runtime-adapter
+allowed_tools:
+  - playwright
+  - node
+suppressed_capabilities: []
+validation_command: none-yet
+proof_artifacts:
+  - persistent-regression-packet
+privacy_notes: traces, videos, screenshots, cookies, and storage state are sensitive local proof
+command: adapters/runtime/playwright/scenario-fixture-template.md

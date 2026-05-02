@@ -14,11 +14,12 @@ Profiles may define:
 Every active profile should expose a `validation-bundle.md` before agents or
 operators treat it as execution-ready.
 
-The bundle must name:
+The bundle must name either concrete commands or command classes with adapter
+resolution rules:
 
 - mandatory skills
 - default implementation proof
-- backend/frontend QA commands
+- backend/frontend QA commands or command classes
 - browser-proof posture
 - persistent regression posture
 - closure packet requirements

@@ -9,7 +9,8 @@ to narrate that work is happening.
 It is the control plane that chooses:
 
 - whether the run is trivial or non-trivial
-- whether prompt hardening is required
+- which prompt-hardening level is required
+- which reasoning effort is sufficient
 - which issue topology is honest
 - which lanes and skills must be open
 - whether delegation is useful at all
@@ -111,16 +112,17 @@ At a high level, `accelerate` works like this:
 
 1. classify the run
 2. preserve the user's response locale
-3. decide whether prompt hardening is mandatory
-4. when a governed target repository is in scope, decide local `.accelerate/`
+3. decide the prompt-hardening level
+4. decide the lowest safe reasoning effort
+5. when a governed target repository is in scope, decide local `.accelerate/`
    entry state
-5. decide the honest issue topology
-6. decide which lanes and skills are required
-7. decide whether the work should stay root-only or use bounded agents
-8. execute with visible runtime packets and active gates
-9. keep readiness, timeline, and learning disposition visible when local workspace state is active
-10. force proof in the correct order
-11. enter root closure mode before `Done`
+6. decide the honest issue topology
+7. decide which lanes and skills are required
+8. decide whether the work should stay root-only or use bounded agents
+9. execute with visible runtime packets and active gates
+10. keep readiness, timeline, and learning disposition visible when local workspace state is active
+11. force proof in the correct order
+12. enter root closure mode before `Done`
 
 The control plane should be visible, not implied.
 
@@ -228,7 +230,8 @@ The minimum mutation path is:
 1. `accelerate`
 2. `Local Workspace Entry Gate` when a governed target repo is in scope
 3. `Issue Bootstrap Gate`
-4. active workflow adapter
+4. active workflow adapter when a live adapter is available, otherwise native
+   planning artifacts and runtime packets
 5. planning artifact
 6. execution
 7. proof stack
@@ -668,12 +671,19 @@ show one active theme at a time through the same anatomy; split-screen
 The root owns:
 
 - classification
+- response locale matching
 - prompt-hardening decisions
+- reasoning-effort decisions
+- local workspace entry state when relevant
 - issue topology
 - lane opening and closing
 - staffing shape
 - delegation budget
 - risk enforcement
+- proof ordering
+- review readiness and checkpoint continuity
+- durable learning disposition
+- correction-before-promotion
 - final AI review
 - root closure mode
 - `Done`
@@ -682,9 +692,9 @@ This authority is not delegated by default.
 
 See:
 
-- [root-vs-agent-authority-boundary.md](./references/codex-agents/root-vs-agent-authority-boundary.md)
-- [issue-topology-policy.md](./references/codex-agents/issue-topology-policy.md)
-- [risk-enforcement-matrix.md](./references/codex-agents/risk-enforcement-matrix.md)
+- [root-laws.md](./core/control-plane/root-laws.md)
+- [authority-boundary.md](./core/closure/authority-boundary.md)
+- [subagent-model.md](./core/delegation/subagent-model.md)
 
 ## Future Bounded Agent Authority
 
@@ -994,7 +1004,9 @@ forward path:
 - [accelerate-control-plane.md](./docs/architecture/accelerate-control-plane.md)
 - [accelerate-sdd-v1.md](./docs/architecture/accelerate-sdd-v1.md)
 
-Then use the governed reference tree for supporting authority:
+Then use native `core/`, `planning/`, `profiles/`, `adapters/`, and `skills/`
+surfaces for current authority. Use the governed reference tree only for
+supporting historical depth or side-by-side comparison:
 
 - [team-operating-model.md](./references/team-operating-model.md)
 - [executive-operating-matrix.md](./references/executive-operating-matrix.md)

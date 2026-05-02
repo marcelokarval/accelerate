@@ -1,0 +1,12 @@
+name: chrome-devtools
+type: runtime
+status: planned
+authority_boundary: runtime-adapter
+allowed_tools:
+  - chrome-devtools
+suppressed_capabilities: []
+validation_command: none-yet
+proof_artifacts:
+  - browser-proof-packet
+privacy_notes: browser cookies, authenticated sessions, screenshots, console logs, and network traces are sensitive local proof
+command: planned-adapter

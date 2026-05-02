@@ -113,6 +113,16 @@ contract check, also treat that as a validation failure.
 
 ## Matrix
 
+Skill names in this matrix must resolve to repo-local `skills/`, native `core/`,
+`planning/`, `profiles/`, or `adapters/` surfaces. If a named skill is only
+available from a user-home catalog, treat it as a migration gap or
+adapter-specific future dependency before making it mandatory.
+
+When a row says `active workflow adapter`, read that as `active workflow adapter
+when implemented and capability-registered; otherwise use native planning
+artifacts, runtime packets, and the local `.accelerate/` adapter`. Do not infer a
+live Linear/GitHub remote adapter from that phrase alone.
+
 | Branch | Mandatory skills | Mandatory gates | Expected artifacts | Expected evidence | Typical closure blockers |
 | --- | --- | --- | --- | --- | --- |
 | trivial bounded | none beyond the directly relevant stack skill | honest classification; `Local Workspace Entry Gate` when a governed target repo is mutated; `Issue Bootstrap Gate` when the slice mutates code, workflow seeds, or living docs; `Review Readiness Gate` and `Timeline Continuity Gate` when the slice stops being a one-shot bounded change; validation gate matrix when backend/frontend runtime is in scope; comparative review posture when the slice ceases to be obviously one-shot | bounded scope statement; governing issue when mutating; local workspace decision when target repo governance applies; readiness dashboard when local workspace status is active; `Requested-Vs-Implemented Packet` when the slice is review-bearing or multi-step; defect disposition when concrete defects were found | direct code/test/runtime proof; required validation commands for the slice class; commit traceability when mutating; corrected-state proof when an in-scope defect was fixed | hidden cross-surface drift; local workspace skipped in a governed target repo; trivial run attempted without governing issue; readiness/timeline ignored after the slice became multi-step; validation stack under-run; slice promoted on recap language with no comparative or defect posture |
@@ -230,6 +240,7 @@ These gates should stay visible from `accelerate` itself:
 - `Sidebar / Public Docs Update Gate`
 - `Active Correction / Defect Disposition`
 - `Seam Proof Requirement`
+- `AI Review Report`
 
 ### Adjacent-Skill-Owned
 
@@ -247,6 +258,17 @@ skills:
 - `TS/TSX Boundary Audit`
 - `Design-System Fidelity`
 - `Product-Critical Closure Protocol`
+- `UX/UI Fullstack Surface Gate`
+- `Accessibility Closure Gate`
+- `Source Observer Gate`
+- `External Skill Vetting Gate`
+- `Browser Truth Gate`
+- `Chrome DevTools Profile Conflict Routing`
+- `Audit Intensity Disclosure`
+- `Persistent Regression Gate`
+- `Product-Correctness`
+- `Observability / Performance Packet`
+- `Django Service Layer Contract`
 
 ### Lightweight Inline
 
@@ -257,6 +279,7 @@ These can stay inline in root/control-plane docs:
 - `Ready-for-Execution Revalidation`
 - `Repo Hygiene / Platform Hygiene`
 - `Living Docs Obligation`
+- `Stack Adherence`
 
 ## Enforcement Note
 

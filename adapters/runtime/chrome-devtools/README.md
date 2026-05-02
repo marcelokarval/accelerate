@@ -4,6 +4,10 @@
 
 This adapter documents the browser-truth runtime layer.
 
+`chrome-devtools` is the canonical selectable adapter name for first-pass
+interactive browser truth. The sibling `browser/` directory is the generic local
+capture helper contract.
+
 ## Role
 
 This adapter owns the first interactive browser-truth pass for runtime-sensitive

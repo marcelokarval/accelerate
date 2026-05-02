@@ -4,6 +4,8 @@
 
 - status: completed one-shot slice
 - date: 2026-04-15
+- current-use: historical completed slice; use current README, profiles, and
+  adapter capability manifests for present-day routing
 - intent: move the standalone repository from architecture shell to native
   pre-agents baseline
 
@@ -27,9 +29,9 @@ This slice had three concrete goals:
   - risk enforcement
   - authority boundary
   - runtime packet templates and cadence
-- the repo now has native workflow adapter docs for:
+- the repo created native workflow adapter docs for:
   - shared adapter contract
-  - Linear as current default backend
+  - Linear as the preferred first remote target at that time
   - GitHub as planned peer backend
 - the repo now has native runtime adapter docs for:
   - Python via `uv`

@@ -210,11 +210,17 @@ check_slop_audit_structure() {
 check_premium_benchmark_map() {
   local md="$1"
   local row_count
+  local minimum_rows=2
 
   require_literal "${md}" "## Benchmark Influence Map" "premium direction"
   row_count="$(count_benchmark_influence_rows "${md}")"
-  if [ "${row_count}" -lt 2 ]; then
-    report "premium direction Benchmark Influence Map must include at least 2 benchmark rows"
+  if contains_literal "${md}" "broad design-system" || contains_literal "${md}" "theme-generator" || contains_literal "${md}" "broad theme"; then
+    minimum_rows=4
+  elif contains_literal "${md}" "product screen" || contains_literal "${md}" "dashboard"; then
+    minimum_rows=3
+  fi
+  if [ "${row_count}" -lt "${minimum_rows}" ]; then
+    report "premium direction Benchmark Influence Map must include at least ${minimum_rows} benchmark rows for its declared scope"
   fi
 }
 

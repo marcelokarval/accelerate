@@ -2,8 +2,13 @@
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-for file in "${ROOT}"/adapters/runtime/*/capabilities.yaml; do
-  [ -f "${file}" ] || continue
+for dir in "${ROOT}"/adapters/runtime/*/; do
+  [ -d "${dir}" ] || continue
+  file="${dir%/}/capabilities.yaml"
+  if [ ! -f "${file}" ]; then
+    echo "runtime adapter missing capabilities.yaml: ${dir%/}" >&2
+    exit 1
+  fi
   for key in name type status authority_boundary validation_command privacy_notes; do
     if ! grep -Eq "^${key}:" "${file}"; then
       echo "adapter manifest missing ${key}: ${file}" >&2

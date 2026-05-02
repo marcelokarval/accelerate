@@ -213,7 +213,7 @@ The selection order is:
 
 ## Adapter Reality
 
-The current default backend is still Linear-shaped, but the contract is not
+The current preferred first remote target is still Linear-shaped, but the contract is not
 Linear-only.
 
 GitHub is the first intended peer adapter.

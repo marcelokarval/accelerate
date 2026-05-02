@@ -1,0 +1,12 @@
+name: agent-browser
+type: runtime
+status: planned
+authority_boundary: runtime-adapter
+allowed_tools:
+  - browser-automation
+suppressed_capabilities: []
+validation_command: none-yet
+proof_artifacts:
+  - browser-proof-packet
+privacy_notes: automated browser sessions may capture cookies, screenshots, videos, and authenticated state
+command: planned-adapter

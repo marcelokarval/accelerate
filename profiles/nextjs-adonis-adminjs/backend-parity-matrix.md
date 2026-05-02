@@ -7,9 +7,8 @@ This is the living backend parity matrix for the `nextjs-adonis-adminjs` profile
 It tracks how Django backend capabilities map to the AdonisJS-based stack and
 what governance Accelerate must enforce when this stack is used.
 
-This file is local Accelerate authority. Source material from
-`/home/marcelo-karval/Backup/Projetos/adonisjs-likely-django/` was research
-input only.
+This file is local Accelerate authority. External AdonisJS/Django comparison
+material was research input only and is not a portable repository dependency.
 
 ## Status Legend
 

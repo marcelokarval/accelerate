@@ -1,6 +1,11 @@
 # GitHub Adapter
 
-This directory defines the planned GitHub workflow adapter capability contract.
+This directory defines umbrella doctrine for the planned GitHub workflow adapter
+family.
+
+Concrete sub-adapters currently live in sibling directories such as
+`github-pr/` and `github-issues/`. Do not treat this directory as a competing
+implementation authority for those sub-adapters.
 
 ## Current Status
 

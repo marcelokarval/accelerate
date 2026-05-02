@@ -8,6 +8,7 @@ Examples:
 - Python via `uv`
 - Node package/runtime commands
 - Chrome DevTools for browser truth
+- generic browser proof helpers for local screenshot/console/network capture
 - agent-browser-style CLI automation for bounded browser operations
 - Playwright for persistent regression proof
 - web content reader for bounded external source observation

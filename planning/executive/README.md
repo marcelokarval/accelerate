@@ -56,6 +56,11 @@ Active execution/review protocol planning:
 - `one-shot-side-by-side-protocol-executive-plan.md`
 - `one-shot-side-by-side-protocol-task-ledger.md`
 
+Recent closure/evidence artifacts:
+
+- `2026-04-27-runtime-adapter-implementation-closure.md`
+- `2026-04-27-gstack-pattern-adoption-executive-plan.md`
+
 Active planning templates and sublayers:
 
 - `../product/`

@@ -28,6 +28,10 @@ Native authority now starts here:
 - `theme-swap-proof-packet.md`
 - `template-swap-proof-packet.md`
 
+Additional packet schemas live inside `templates.md`, including Branch Entry,
+Runtime Delta, Prompt Hardening, One-Shot Side-By-Side Review, Review Isolation,
+Final Forensic Reconciliation, and Closure Packet shapes.
+
 Supporting inherited detail may still exist in:
 
 - `references/runtime-packet-templates.md`

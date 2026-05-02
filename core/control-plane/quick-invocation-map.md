@@ -34,31 +34,28 @@ User Request
 ## Active Branch Families
 
 - issue-driven delivery
-- product spec to execution
+- ambiguous / long / epic-like
 - prompt upgrade approval
 - execution-to-spec loop
+- manual review contradiction
 - systemic UI inconsistency audit
 - document cohesion / Markdown size audit
+- agent promotion / bounded agent candidate
 - bug / failure / regression
+- adversarial security audit / hostile-path review
 - architecture / governance doubt
-- backend implementation
-- frontend implementation
-- full-stack delivery
-- product-critical surface
+- admin / operator surface
+- runtime / product-heavy flow
+- untrusted ingress / upload / import / media ingestion
+- source observation / web content reading
+- copy / locale / translation-boundary
+- product-critical user surface
 - visual / artifact-driven frontend
-- design-system application / recomposition
 - query / contract-sensitive backend
+- transport / dependency / legacy-adaptation doubt
 - browser-proof audit
-- agent-browser bounded browser operations
-- persistent regression authoring
-- UI polishing observer
-- active correction / defect reconciliation
-- adversarial / hostile-path review
+- persistent E2E / regression authoring
 - observability / performance / N+1
-- transport / dependency / legacy doubt
-- external skill / adapter vetting
-- skill / workflow evaluation lab
-- benchmark rerun / result registration
 
 ## Prompt Wildcards
 
