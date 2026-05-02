@@ -16,6 +16,7 @@ Native authority now starts here:
 - `branch-enforcement-matrix.md`
 - `quick-invocation-map.md`
 - `gate-ownership-index.md`
+- `outcome-preamble-gate.md`
 - `prompt-upgrade-approval-gate.md`
 - `workflow-change-approval-gate.md`
 - `parity-replacement-gate.md`

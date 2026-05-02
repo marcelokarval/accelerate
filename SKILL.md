@@ -86,14 +86,17 @@ Run `accelerate` in this order:
 
 1. decide whether the task is actually engineering work
 2. detect and preserve the user's response locale
-3. decide whether prompt hardening is mandatory
+3. decide the prompt-hardening level: micro for trivial, full for non-trivial or
+   ambiguous
 4. when a governed target repository is in scope, decide local workspace entry
    state first
 5. classify the run honestly
-6. open the required branch, skills, gates, and artifacts
-7. keep runtime state visible with explicit packets
-8. enforce proof in the correct order
-9. block closure until the branch contract is truly satisfied
+6. state the outcome preamble: goal, success criteria, constraints, expected
+   output, and stop rules
+7. open the required branch, skills, gates, and artifacts
+8. keep runtime state visible with explicit packets
+9. enforce proof in the correct order
+10. block closure until the branch contract is truly satisfied
 
 Do not treat `accelerate` as a label. Treat it as the visible team operating
 system for the run.
@@ -113,7 +116,15 @@ The top-level outcomes are:
 - trivial bounded engineering work
 - orchestrated non-trivial work
 
-`prompt-hardening` is mandatory when the request is:
+All engineering runs need outcome clarity.
+
+Use micro-hardening for trivial bounded work:
+
+- `goal`
+- `done means`
+- material constraints, when any exist
+
+Use full `prompt-hardening` when the request is:
 
 - long
 - ambiguous
@@ -121,6 +132,8 @@ The top-level outcomes are:
 - multi-phase
 - architecture-heavy
 - likely to drift without shaping
+- security-, billing-, auth-, data-, governance-, workflow-, runtime-, external
+  side-effect-, or product/visual-acceptance-sensitive
 
 Do not skip hardening only because the task later turns out to be bounded.
 

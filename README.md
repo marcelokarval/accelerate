@@ -149,10 +149,18 @@ catalogs or external design/runtime libraries.
 
 ## Prompt Hardening
 
-`accelerate` must decide whether prompt hardening is required before execution
-starts.
+`accelerate` must decide the prompt-hardening level before execution starts.
 
-Hardening is not cosmetic rewriting. It is a blocking gate when the request is:
+Every engineering run needs outcome clarity.
+
+For trivial bounded work, use micro-hardening:
+
+- `goal`
+- `done means`
+- material constraints, when any exist
+
+For non-trivial or ambiguous work, use full prompt hardening. Hardening is not
+cosmetic rewriting. It is a blocking gate when the request is:
 
 - long
 - ambiguous
@@ -161,14 +169,26 @@ Hardening is not cosmetic rewriting. It is a blocking gate when the request is:
 - architecture-heavy
 - likely to drift into issue creation, planning, runtime proof, or multi-surface
   work
+- security-, billing-, auth-, data-, governance-, workflow-, runtime-, external
+  side-effect-, or product/visual-acceptance-sensitive
 
-When hardening is active, the run should visibly expose:
+When full hardening is active, the run should visibly expose:
+
+- `goal`
+- `success criteria`
+- `constraints`
+- `output`
+- `stop rules`
+- `explicit non-goals`
+- `risks or ambiguity resolved`
+- `proof required`
+
+When transformation traceability matters, also expose:
 
 - `Prompt A`
 - `Prompt B`
 - material changes
 - bounded scope
-- explicit non-goals
 - next branch or persona route
 
 See:

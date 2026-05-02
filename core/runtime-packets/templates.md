@@ -43,6 +43,14 @@ code, docs, workflow seeds, or runtime governance.
 Branch Entry Packet
 
 - classification: <conversational|trivial bounded engineering work|orchestrated non-trivial work>
+- goal: <user-visible outcome>
+- success criteria:
+  - <observable criterion>
+- constraints:
+  - <policy|safety|business|evidence|side-effect limit>
+- expected output: <artifact|answer|implementation|review shape>
+- stop rules:
+  - <when to continue|stop|ask|block|refuse closure>
 - active branch: <branch name>
 - active persona: <persona or root owner>
 - active stack: <layers/surfaces>
@@ -128,6 +136,22 @@ noise.
 ```text
 Prompt Hardening Packet
 
+- level: <micro|full>
+- goal: <user-visible outcome>
+- done means: <observable result, required for micro>
+- success criteria:
+  - <observable criterion, required for full>
+- constraints:
+  - <material constraint>
+- output: <expected response/artifact shape>
+- stop rules:
+  - <when to continue|ask|block|stop>
+- explicit non-goals:
+  - <excluded scope>
+- risks or ambiguity resolved:
+  - <risk|ambiguity -> resolution>
+- proof required:
+  - <validation|evidence>
 - hardened artifact: <present|missing>
 - Prompt A: <raw/minimally normalized prompt>
 - Prompt B: <execution-ready prompt>
@@ -138,8 +162,10 @@ Prompt Hardening Packet
 - full artifact location: <path/issue/comment or n/a>
 ```
 
-Use this packet when prompt hardening is active. If hardening is waived, the
-Branch Entry Packet should say why.
+Use this packet when full prompt hardening is active or when micro-hardening
+needs explicit runtime visibility. If full hardening is not used, the Branch
+Entry Packet should state the micro-hardening contract or say why hardening is
+not applicable for non-engineering work.
 
 ## Requested-Vs-Implemented Packet
 

@@ -5,8 +5,16 @@ whether execution should be blocked until the request is bounded enough to trust
 
 ## Core Rule
 
-Prefer running `prompt-hardening` before beginning work unless the prompt is
-already clearly bounded, low-ambiguity, and single-objective.
+Every engineering run requires outcome clarity before beginning work.
+
+Use micro-hardening for clearly bounded, low-ambiguity, single-objective work:
+
+- `goal`
+- `done means`
+- `material constraints`, when any exist
+
+Use full prompt hardening when execution should be blocked until the request is
+bounded enough to trust.
 
 ## Mandatory Triggers
 
@@ -20,6 +28,9 @@ Run `prompt-hardening` when any of these are true:
 - the prompt is architecture-heavy
 - the prompt may turn into issue creation, planning, runtime proof, or
   multi-surface work even if it initially looks small
+- the prompt touches security, billing, authentication, authorization,
+  persistent data, governance, workflow behavior, external side effects, or
+  product/visual acceptance criteria that are not obvious
 
 ## Important Clarification
 
@@ -31,14 +42,27 @@ That does not make the gate unnecessary.
 
 ## Output Requirement
 
-When the gate is active, the run should visibly expose:
+When full prompt hardening is active, the run should visibly expose:
+
+- `goal`
+- `success criteria`
+- `constraints`
+- `output`
+- `stop rules`
+- `explicit non-goals`
+- `risks or ambiguity resolved`
+- `proof required`
+
+When transformation traceability matters, also expose:
 
 - `Prompt A`
 - `Prompt B`
 - what changed materially
 - bounded scope now
-- explicit non-goals
 - next branch or persona route
+
+For micro-hardening, do not emit a heavy artifact. State the compact outcome
+contract in the Branch Entry Packet or visible runtime preamble.
 
 ## Approval-Boundary Variant
 
@@ -52,3 +76,6 @@ be presented first, and execution must wait for explicit approval.
 
 Do not let the run jump from weak prompt -> implementation merely because the
 operator believes they already understand the intent.
+
+Do not confuse micro-hardening with no hardening. If a trivial run cannot state
+`goal` and `done means`, it is either ambiguous or not ready to execute.

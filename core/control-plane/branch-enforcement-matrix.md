@@ -22,6 +22,10 @@ Each row defines:
 - expected evidence
 - typical closure blockers
 
+Every orchestrated non-trivial row also inherits `Outcome Preamble Gate` before
+branch-specific process detail. The preamble must declare goal, success criteria,
+constraints, expected output, and stop rules in concise outcome-first terms.
+
 For any engineering run expected to mutate code, workflow seeds, or living
 docs, `Issue Bootstrap Gate` is inherited even when the row is not primarily an
 issue-management branch.
@@ -184,6 +188,7 @@ Promote gates into one of these classes:
 These gates should stay visible from `accelerate` itself:
 
 - `Prompt Hardening Gate`
+- `Outcome Preamble Gate`
 - `Prompt Upgrade Approval Gate`
 - `Local Workspace Entry Gate`
 - `Issue Bootstrap Gate`
