@@ -87,6 +87,18 @@ For non-trivial work, prefer bounded delegation when it creates honest value.
 Root-only execution remains legitimate when delegation would add more
 integration cost than execution clarity.
 
+Delegation should trace back to the `Reasoning Effort Gate`:
+
+- `low`: root-only by default
+- `medium`: root-only or one bounded sidecar when it improves proof or latency
+- `high`: consider specialized implementation, review, governance, security, or
+  browser/proof sidecars when slices are independent
+- `xhigh`: keep root orchestration explicit and use specialists only for bounded
+  evidence gathering or review
+
+Agent count is not reasoning effort. Do not spawn agents merely because effort is
+high, and do not use a vague agent to compensate for unclear criteria.
+
 Default expectation:
 
 - if there is an independent implementation slice with clear bounded value ->

@@ -11,17 +11,19 @@
    Do instead: import/adapt/register/enforce useful external skills or corpora inside repo `skills/` before treating them as governed behavior; user-home catalogs are optional exports only.
 2. **[2026-05-02] Non-trivial runs need outcome-first preambles**
    Do instead: declare goal, observable success criteria, constraints, expected output, and stop rules before branch-specific process detail; `done` must trace back to those criteria.
-3. **[2026-04-24] Design-system packages need canonical theme CSS**
+3. **[2026-05-02] Reasoning effort is not task size or agent count**
+   Do instead: choose the lowest safe effort from success criteria, risk, and evidence needs; re-evaluate `low`/`medium` before escalating and trace future agent selection back to the effort rationale.
+4. **[2026-04-24] Design-system packages need canonical theme CSS**
    Do instead: require `design-system.theme.css` / `design-system.premium-theme.css` with stable `--ds-*` tokens and run `onboarding/local-workspace/check-design-system-artifact-consistency.sh` before using the package as implementation law.
-4. **[2026-04-24] Premium/de-AI design needs benchmark consequences**
+5. **[2026-04-24] Premium/de-AI design needs benchmark consequences**
    Do instead: use `skills/design-system/premium-design-benchmark-corpus/`, require a Benchmark Influence Map, and reject benchmark names that do not change tokens/components/states/layout/forbidden patterns.
-5. **[2026-04-24] Design-system artifacts need runtime proof before UI closure**
+6. **[2026-04-24] Design-system artifacts need runtime proof before UI closure**
    Do instead: route mutation-bearing design-system or premium UI work through `core/control-plane/design-implementation-proof-gate.md` and require artifact comparison plus corrected-state browser evidence.
-6. **[2026-04-15] Preserve root laws before reorganizing structure**
+7. **[2026-04-15] Preserve root laws before reorganizing structure**
    Do instead: verify that topology ownership, risk enforcement, closure mode, and agent optionality remain intact before accepting any refactor.
-7. **[2026-04-15] Architecture docs govern implementation here**
+8. **[2026-04-15] Architecture docs govern implementation here**
    Do instead: consult `docs/architecture/` before starting extraction, migration, adapter, or onboarding slices.
-8. **[2026-04-15] Prefer bounded architectural commits**
+9. **[2026-04-15] Prefer bounded architectural commits**
    Do instead: land one coherent migration or doctrine slice per commit instead of mixing import, refactor, and cleanup noise.
 
 ## Repository Structure

@@ -11,6 +11,7 @@ The root always owns:
 
 - classification
 - outcome-first preamble for non-trivial runs
+- reasoning-effort decisions before escalation or delegation
 - response locale matching the user's request language
 - prompt-hardening decisions
 - local workspace entry state when a governed target repo is in scope
@@ -97,6 +98,8 @@ In the pre-agents phase, the platform must already be complete enough to:
 - shape prompts
 - state goal, success criteria, constraints, output, and stop rules before
   process-heavy execution detail
+- choose the lowest safe reasoning effort before escalating to high effort or
+  staffing specialists
 - detect and reconcile local `.accelerate/` workspace truth when relevant
 - choose topology
 - document adapters and profiles

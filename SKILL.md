@@ -93,10 +93,12 @@ Run `accelerate` in this order:
 5. classify the run honestly
 6. state the outcome preamble: goal, success criteria, constraints, expected
    output, and stop rules
-7. open the required branch, skills, gates, and artifacts
-8. keep runtime state visible with explicit packets
-9. enforce proof in the correct order
-10. block closure until the branch contract is truly satisfied
+7. choose reasoning effort and delegation posture from success criteria, risk,
+   and available evidence
+8. open the required branch, skills, gates, and artifacts
+9. keep runtime state visible with explicit packets
+10. enforce proof in the correct order
+11. block closure until the branch contract is truly satisfied
 
 Do not treat `accelerate` as a label. Treat it as the visible team operating
 system for the run.
@@ -136,6 +138,19 @@ Use full `prompt-hardening` when the request is:
   side-effect-, or product/visual-acceptance-sensitive
 
 Do not skip hardening only because the task later turns out to be bounded.
+
+Reasoning effort is a separate decision from branch size and agent count. Choose
+the lowest effort that can safely satisfy success criteria:
+
+- `low` for simple bounded answers or mechanical changes
+- `medium` for ordinary bounded engineering and familiar review
+- `high` for architecture, sensitive data, security, billing, auth, cross-layer,
+  contradictory, or product/visual-risk work
+- `xhigh` only for irreversible, financial/source-of-truth, incident,
+  adversarial, broad migration, or final high-impact forensic closure work
+
+Re-evaluate `low` and `medium` before escalating. Future agent selection must
+trace back to this effort decision, but final closure remains root-owned.
 
 ## Branch Selection
 

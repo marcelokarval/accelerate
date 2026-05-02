@@ -51,6 +51,13 @@ Branch Entry Packet
 - expected output: <artifact|answer|implementation|review shape>
 - stop rules:
   - <when to continue|stop|ask|block|refuse closure>
+- reasoning effort: <low|medium|high|xhigh>
+- effort rationale: <why this effort is enough>
+- escalation triggers:
+  - <condition that would raise effort>
+- de-escalation triggers:
+  - <condition that would lower effort>
+- agent / delegation implication: <root-only|sidecar|bounded implementation worker|specialist reviewer|n/a>
 - active branch: <branch name>
 - active persona: <persona or root owner>
 - active stack: <layers/surfaces>

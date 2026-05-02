@@ -24,6 +24,7 @@ Every future bounded agent should receive:
 
 - governing work-item id when a workflow backend exists, or explicit no-issue
   exception when it does not
+- reasoning effort selected by the root and the implication for the agent's role
 - selected family
 - bounded scope
 - write scope or explicit read-only scope
@@ -53,6 +54,8 @@ be posted back into that backend.
 Every future bounded return must include:
 
 - assigned scope
+- root-selected reasoning effort and whether the agent observed escalation or
+  de-escalation evidence
 - files or evidence touched
 - implementation or audit summary
 - validations run

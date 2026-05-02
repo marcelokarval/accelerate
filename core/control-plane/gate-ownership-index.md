@@ -18,6 +18,7 @@ This prevents invisible gate drift and stale mandatory language.
 | --- | --- | --- |
 | `Prompt Hardening Gate` | `../hardening/prompt-hardening.md` | Every engineering run needs outcome clarity: micro-hardening for trivial work, full hardening before broad, ambiguous, sensitive, or drift-prone execution. |
 | `Outcome Preamble Gate` | `outcome-preamble-gate.md` | Required for non-trivial engineering runs so goal, success criteria, constraints, output, and stop rules are visible before process detail. |
+| `Reasoning Effort Gate` | `reasoning-effort-gate.md` | Required for non-trivial engineering runs and agent/delegation decisions; choose the lowest safe effort before escalating. |
 | `Prompt Upgrade Approval Gate` | `prompt-upgrade-approval-gate.md` | Required when the user asks to improve a raw prompt and wait for approval before analysis/planning/execution. |
 | `Response Locale Gate` | `response-locale-gate.md` | Required before user-facing responses so the answer follows the user's conversational language. |
 | `Story Framing` | `../hardening/prompt-hardening.md` | Required when actor, goal, value, or acceptance are still implicit. |

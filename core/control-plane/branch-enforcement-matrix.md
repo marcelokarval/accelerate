@@ -26,6 +26,10 @@ Every orchestrated non-trivial row also inherits `Outcome Preamble Gate` before
 branch-specific process detail. The preamble must declare goal, success criteria,
 constraints, expected output, and stop rules in concise outcome-first terms.
 
+Every orchestrated non-trivial row also inherits `Reasoning Effort Gate`. The
+run must choose `low`, `medium`, `high`, or `xhigh` from success criteria, risk,
+evidence needs, and future delegation implications instead of task size alone.
+
 For any engineering run expected to mutate code, workflow seeds, or living
 docs, `Issue Bootstrap Gate` is inherited even when the row is not primarily an
 issue-management branch.
@@ -189,6 +193,7 @@ These gates should stay visible from `accelerate` itself:
 
 - `Prompt Hardening Gate`
 - `Outcome Preamble Gate`
+- `Reasoning Effort Gate`
 - `Prompt Upgrade Approval Gate`
 - `Local Workspace Entry Gate`
 - `Issue Bootstrap Gate`

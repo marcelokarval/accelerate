@@ -195,6 +195,29 @@ See:
 
 - [prompt-hardening.md](./core/hardening/prompt-hardening.md)
 
+## Reasoning Effort
+
+`accelerate` must choose reasoning effort separately from branch size, prompt
+hardening level, and future agent count.
+
+Use the lowest effort that can safely satisfy the declared success criteria:
+
+- `low` for simple answers, mechanical edits, and tiny bounded corrections
+- `medium` for ordinary bounded engineering, familiar bug work, and routine
+  review
+- `high` for architecture, sensitive data, security, billing, auth, cross-layer,
+  contradictory, or product/visual-risk work
+- `xhigh` only for irreversible, financial/source-of-truth, incident,
+  adversarial, broad migration, or final high-impact forensic closure work
+
+Before escalating, re-evaluate whether `low` or `medium` can satisfy the success
+criteria with available evidence. If agents are available later, agent selection
+must trace back to this effort decision, but final closure remains root-owned.
+
+See:
+
+- [reasoning-effort-gate.md](./core/control-plane/reasoning-effort-gate.md)
+
 ## Issue-Driven Mutation Stack
 
 When the work mutates code, docs, workflow seeds, or runtime governance, the
