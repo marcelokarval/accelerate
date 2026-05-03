@@ -134,6 +134,91 @@ MD
   set_artifact "${target}" "design_implementation_proof" ".accelerate/proof/design_implementation_proof.md"
 }
 
+write_valid_orchestrator_first_proof() {
+  local target="$1"
+  mkdir -p "${target}/.accelerate/proof"
+  cat > "${target}/.accelerate/proof/orchestrator_first.md" <<'MD'
+Orchestrator-First Packet
+
+- mode: virtual-subagents
+- orchestrator identity / role: master session
+- executive plan: .accelerate/planning/current-plan.md
+- task ledger: .accelerate/planning/task-breakdown.md
+- execution authority: virtual executor packet
+- skeptical review authority: virtual skeptical reviewer packet
+- review-of-review authority: master session
+- idle/returned agent cleanup: not-applicable
+- virtual isolation declared: yes
+- residual risk: none
+- closure impact: supports-closure
+MD
+  set_artifact "${target}" "orchestrator_first" ".accelerate/proof/orchestrator_first.md"
+}
+
+write_valid_virtual_subagent_assignments_proof() {
+  local target="$1"
+  mkdir -p "${target}/.accelerate/proof"
+  cat > "${target}/.accelerate/proof/virtual_subagent_assignments.md" <<'MD'
+Virtual Subagent Assignment Packet
+
+- task id: task-1
+- virtual role: executor
+- selected role family: governance
+- assigned scope: implement bounded slice
+- required skills / profiles: core/delegation/subagent-model.md
+- write scope: .accelerate/proof
+- required evidence: implementation proof and requested-vs-implemented packet
+- prohibited authority: acceptance review and final closure
+- return contract: implementation evidence and self-review disclosure
+- cleanup expectation after return: complete
+MD
+  set_artifact "${target}" "virtual_subagent_assignments" ".accelerate/proof/virtual_subagent_assignments.md"
+}
+
+write_valid_skeptical_review_proof() {
+  local target="$1"
+  mkdir -p "${target}/.accelerate/proof"
+  cat > "${target}/.accelerate/proof/skeptical_review.md" <<'MD'
+Skeptical Review Packet
+
+- task id: task-1
+- reviewer mode: virtual skeptical reviewer
+- executor evidence inspected: implementation proof and requested-vs-implemented packet
+- independent checks performed: artifact markers and closure blockers reviewed
+- requested-vs-implemented judgment: met
+- recommendation: accept with no findings
+MD
+  set_artifact "${target}" "skeptical_review" ".accelerate/proof/skeptical_review.md"
+}
+
+write_valid_review_of_review_proof() {
+  local target="$1"
+  mkdir -p "${target}/.accelerate/proof"
+  cat > "${target}/.accelerate/proof/review_of_review.md" <<'MD'
+Review-Of-Review Packet
+
+- task id: task-1
+- orchestrator identity / role: master session
+- reviewer evidence inspected: skeptical review packet
+- review quality: sufficient
+- overlooked risk found by orchestrator: none
+- conflict with executor claim: no
+- idle/returned agent cleanup verified: not-applicable
+- correction required: no
+- reproof required: no
+- final task posture: closed
+MD
+  set_artifact "${target}" "review_of_review" ".accelerate/proof/review_of_review.md"
+}
+
+seed_orchestrator_first_artifacts() {
+  local target="$1"
+  write_valid_orchestrator_first_proof "${target}"
+  write_valid_virtual_subagent_assignments_proof "${target}"
+  write_valid_skeptical_review_proof "${target}"
+  write_valid_review_of_review_proof "${target}"
+}
+
 seed_required_artifacts() {
   local target="$1"
   mkdir -p "${target}/.accelerate/proof"
@@ -419,6 +504,248 @@ write_valid_design_implementation_proof "${valid_design_target}"
 bash "${SCRIPTS}/reconcile-readiness.sh" "${valid_design_target}" review-ready >/dev/null
 bash "${SCRIPTS}/reconcile-readiness.sh" "${valid_design_target}" closure-ready >/dev/null
 assert_contains "$(grep '^closure_readiness:' "${valid_design_target}/.accelerate/status/readiness-dashboard.yaml")" "closure_readiness: ready"
+
+orchestrator_missing_review_target="$(reset_repo closure-blocks-orchestrator-first-without-skeptical-review)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review orchestrator_first virtual_subagent_assignments; do
+  set_evidence "${orchestrator_missing_review_target}" "${key}" "present"
+done
+set_evidence "${orchestrator_missing_review_target}" "frontend_qa" "not-applicable"
+set_evidence "${orchestrator_missing_review_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${orchestrator_missing_review_target}"
+write_valid_orchestrator_first_proof "${orchestrator_missing_review_target}"
+write_valid_virtual_subagent_assignments_proof "${orchestrator_missing_review_target}"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${orchestrator_missing_review_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${orchestrator_missing_review_target}" closure-ready >"${WORK_ROOT}/orchestrator-missing-review-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded with orchestrator_first but no skeptical review"
+fi
+assert_contains "$(cat "${WORK_ROOT}/orchestrator-missing-review-gate.out")" "evidence gate blocked closure-ready: skeptical_review must be present"
+
+orchestrator_virtual_without_assignment_target="$(reset_repo closure-blocks-orchestrator-virtual-mode-without-assignment)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review orchestrator_first skeptical_review review_of_review; do
+  set_evidence "${orchestrator_virtual_without_assignment_target}" "${key}" "present"
+done
+set_evidence "${orchestrator_virtual_without_assignment_target}" "frontend_qa" "not-applicable"
+set_evidence "${orchestrator_virtual_without_assignment_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${orchestrator_virtual_without_assignment_target}"
+write_valid_orchestrator_first_proof "${orchestrator_virtual_without_assignment_target}"
+write_valid_skeptical_review_proof "${orchestrator_virtual_without_assignment_target}"
+write_valid_review_of_review_proof "${orchestrator_virtual_without_assignment_target}"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${orchestrator_virtual_without_assignment_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${orchestrator_virtual_without_assignment_target}" closure-ready >"${WORK_ROOT}/orchestrator-virtual-without-assignment-gate.out" 2>&1; then
+  fail "closure-ready reconciliation accepted virtual orchestrator mode without virtual assignment evidence"
+fi
+assert_contains "$(cat "${WORK_ROOT}/orchestrator-virtual-without-assignment-gate.out")" "artifact gate blocked: orchestrator_first_artifact virtual or mixed mode requires virtual_subagent_assignments present"
+
+orchestrator_missing_cleanup_target="$(reset_repo closure-blocks-orchestrator-first-without-idle-agent-cleanup)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review orchestrator_first skeptical_review review_of_review; do
+  set_evidence "${orchestrator_missing_cleanup_target}" "${key}" "present"
+done
+set_evidence "${orchestrator_missing_cleanup_target}" "frontend_qa" "not-applicable"
+set_evidence "${orchestrator_missing_cleanup_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${orchestrator_missing_cleanup_target}"
+write_valid_skeptical_review_proof "${orchestrator_missing_cleanup_target}"
+write_valid_review_of_review_proof "${orchestrator_missing_cleanup_target}"
+cat > "${orchestrator_missing_cleanup_target}/.accelerate/proof/orchestrator_first.md" <<'MD'
+Orchestrator-First Packet
+
+- mode: physical-subagents
+- orchestrator identity / role: master session
+- executive plan: .accelerate/planning/current-plan.md
+- task ledger: .accelerate/planning/task-breakdown.md
+- execution authority: physical
+- skeptical review authority: physical
+- review-of-review authority: orchestrator
+- virtual isolation declared: not-needed
+- residual risk: none
+- closure impact: supports-closure
+MD
+set_artifact "${orchestrator_missing_cleanup_target}" "orchestrator_first" ".accelerate/proof/orchestrator_first.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${orchestrator_missing_cleanup_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${orchestrator_missing_cleanup_target}" closure-ready >"${WORK_ROOT}/orchestrator-missing-cleanup-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded without idle agent cleanup evidence"
+fi
+assert_contains "$(cat "${WORK_ROOT}/orchestrator-missing-cleanup-gate.out")" "artifact gate blocked: orchestrator_first_artifact missing required marker: - idle/returned agent cleanup:"
+
+orchestrator_blocked_cleanup_target="$(reset_repo closure-blocks-orchestrator-first-with-idle-open-agents)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review orchestrator_first virtual_subagent_assignments skeptical_review review_of_review; do
+  set_evidence "${orchestrator_blocked_cleanup_target}" "${key}" "present"
+done
+set_evidence "${orchestrator_blocked_cleanup_target}" "frontend_qa" "not-applicable"
+set_evidence "${orchestrator_blocked_cleanup_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${orchestrator_blocked_cleanup_target}"
+write_valid_orchestrator_first_proof "${orchestrator_blocked_cleanup_target}"
+write_valid_virtual_subagent_assignments_proof "${orchestrator_blocked_cleanup_target}"
+write_valid_skeptical_review_proof "${orchestrator_blocked_cleanup_target}"
+write_valid_review_of_review_proof "${orchestrator_blocked_cleanup_target}"
+perl -0pi -e 's#idle/returned agent cleanup: not-applicable#idle/returned agent cleanup: idle-open#g' "${orchestrator_blocked_cleanup_target}/.accelerate/proof/orchestrator_first.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${orchestrator_blocked_cleanup_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${orchestrator_blocked_cleanup_target}" closure-ready >"${WORK_ROOT}/orchestrator-blocked-cleanup-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded with idle-open returned agents"
+fi
+assert_contains "$(cat "${WORK_ROOT}/orchestrator-blocked-cleanup-gate.out")" "artifact gate blocked: orchestrator_first_artifact idle/returned agent cleanup is not closed, completed, retained-with-reason, or not-applicable"
+
+orchestrator_invalid_mode_target="$(reset_repo closure-blocks-orchestrator-first-invalid-mode)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review orchestrator_first virtual_subagent_assignments skeptical_review review_of_review; do
+  set_evidence "${orchestrator_invalid_mode_target}" "${key}" "present"
+done
+set_evidence "${orchestrator_invalid_mode_target}" "frontend_qa" "not-applicable"
+set_evidence "${orchestrator_invalid_mode_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${orchestrator_invalid_mode_target}"
+write_valid_orchestrator_first_proof "${orchestrator_invalid_mode_target}"
+write_valid_virtual_subagent_assignments_proof "${orchestrator_invalid_mode_target}"
+write_valid_skeptical_review_proof "${orchestrator_invalid_mode_target}"
+write_valid_review_of_review_proof "${orchestrator_invalid_mode_target}"
+perl -0pi -e 's#mode: virtual-subagents#mode: virtual subagent isolation#g' "${orchestrator_invalid_mode_target}/.accelerate/proof/orchestrator_first.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${orchestrator_invalid_mode_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${orchestrator_invalid_mode_target}" closure-ready >"${WORK_ROOT}/orchestrator-invalid-mode-gate.out" 2>&1; then
+  fail "closure-ready reconciliation accepted invalid orchestrator-first mode"
+fi
+assert_contains "$(cat "${WORK_ROOT}/orchestrator-invalid-mode-gate.out")" "artifact gate blocked: orchestrator_first_artifact has invalid mode"
+
+virtual_without_orchestrator_target="$(reset_repo closure-blocks-virtual-subagents-without-orchestrator-first)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review virtual_subagent_assignments; do
+  set_evidence "${virtual_without_orchestrator_target}" "${key}" "present"
+done
+set_evidence "${virtual_without_orchestrator_target}" "frontend_qa" "not-applicable"
+set_evidence "${virtual_without_orchestrator_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${virtual_without_orchestrator_target}"
+write_valid_virtual_subagent_assignments_proof "${virtual_without_orchestrator_target}"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${virtual_without_orchestrator_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${virtual_without_orchestrator_target}" closure-ready >"${WORK_ROOT}/virtual-without-orchestrator-gate.out" 2>&1; then
+  fail "closure-ready reconciliation succeeded with virtual assignments but no orchestrator_first"
+fi
+assert_contains "$(cat "${WORK_ROOT}/virtual-without-orchestrator-gate.out")" "evidence gate blocked closure-ready: virtual_subagent_assignments requires orchestrator_first present"
+
+virtual_assignment_missing_role_target="$(reset_repo closure-blocks-virtual-assignment-without-role-routing)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review orchestrator_first virtual_subagent_assignments skeptical_review review_of_review; do
+  set_evidence "${virtual_assignment_missing_role_target}" "${key}" "present"
+done
+set_evidence "${virtual_assignment_missing_role_target}" "frontend_qa" "not-applicable"
+set_evidence "${virtual_assignment_missing_role_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${virtual_assignment_missing_role_target}"
+write_valid_orchestrator_first_proof "${virtual_assignment_missing_role_target}"
+write_valid_skeptical_review_proof "${virtual_assignment_missing_role_target}"
+write_valid_review_of_review_proof "${virtual_assignment_missing_role_target}"
+cat > "${virtual_assignment_missing_role_target}/.accelerate/proof/virtual_subagent_assignments.md" <<'MD'
+Virtual Subagent Assignment Packet
+
+- task id: task-1
+- virtual role: executor
+- assigned scope: implement bounded slice
+- prohibited authority: acceptance review and final closure
+- return contract: implementation evidence and self-review disclosure
+MD
+set_artifact "${virtual_assignment_missing_role_target}" "virtual_subagent_assignments" ".accelerate/proof/virtual_subagent_assignments.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${virtual_assignment_missing_role_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${virtual_assignment_missing_role_target}" closure-ready >"${WORK_ROOT}/virtual-assignment-missing-role-gate.out" 2>&1; then
+  fail "closure-ready reconciliation accepted virtual assignment without role routing"
+fi
+assert_contains "$(cat "${WORK_ROOT}/virtual-assignment-missing-role-gate.out")" "artifact gate blocked: virtual_subagent_assignments_artifact missing required marker: - selected role family:"
+
+self_review_target="$(reset_repo closure-blocks-self-review-as-skeptical-review)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review orchestrator_first virtual_subagent_assignments skeptical_review review_of_review; do
+  set_evidence "${self_review_target}" "${key}" "present"
+done
+set_evidence "${self_review_target}" "frontend_qa" "not-applicable"
+set_evidence "${self_review_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${self_review_target}"
+write_valid_orchestrator_first_proof "${self_review_target}"
+write_valid_virtual_subagent_assignments_proof "${self_review_target}"
+write_valid_review_of_review_proof "${self_review_target}"
+cat > "${self_review_target}/.accelerate/proof/skeptical_review.md" <<'MD'
+Skeptical Review Packet
+
+- task id: task-1
+- reviewer mode: executor self-review
+- executor evidence inspected: implementation proof
+- independent checks performed: none
+- requested-vs-implemented judgment: met
+- recommendation: accept
+MD
+set_artifact "${self_review_target}" "skeptical_review" ".accelerate/proof/skeptical_review.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${self_review_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${self_review_target}" closure-ready >"${WORK_ROOT}/self-review-gate.out" 2>&1; then
+  fail "closure-ready reconciliation accepted executor self-review as skeptical review"
+fi
+assert_contains "$(cat "${WORK_ROOT}/self-review-gate.out")" "artifact gate blocked: skeptical_review_artifact must not be executor self-review"
+
+skeptical_invalid_judgment_target="$(reset_repo closure-blocks-skeptical-review-invalid-judgment)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review orchestrator_first virtual_subagent_assignments skeptical_review review_of_review; do
+  set_evidence "${skeptical_invalid_judgment_target}" "${key}" "present"
+done
+set_evidence "${skeptical_invalid_judgment_target}" "frontend_qa" "not-applicable"
+set_evidence "${skeptical_invalid_judgment_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${skeptical_invalid_judgment_target}"
+write_valid_orchestrator_first_proof "${skeptical_invalid_judgment_target}"
+write_valid_virtual_subagent_assignments_proof "${skeptical_invalid_judgment_target}"
+write_valid_skeptical_review_proof "${skeptical_invalid_judgment_target}"
+write_valid_review_of_review_proof "${skeptical_invalid_judgment_target}"
+perl -0pi -e 's#requested-vs-implemented judgment: met#requested-vs-implemented judgment: aligned#g' "${skeptical_invalid_judgment_target}/.accelerate/proof/skeptical_review.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${skeptical_invalid_judgment_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${skeptical_invalid_judgment_target}" closure-ready >"${WORK_ROOT}/skeptical-invalid-judgment-gate.out" 2>&1; then
+  fail "closure-ready reconciliation accepted invalid skeptical review judgment"
+fi
+assert_contains "$(cat "${WORK_ROOT}/skeptical-invalid-judgment-gate.out")" "artifact gate blocked: skeptical_review_artifact has invalid requested-vs-implemented judgment"
+
+review_of_review_invalid_posture_target="$(reset_repo closure-blocks-review-of-review-invalid-posture)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review orchestrator_first virtual_subagent_assignments skeptical_review review_of_review; do
+  set_evidence "${review_of_review_invalid_posture_target}" "${key}" "present"
+done
+set_evidence "${review_of_review_invalid_posture_target}" "frontend_qa" "not-applicable"
+set_evidence "${review_of_review_invalid_posture_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${review_of_review_invalid_posture_target}"
+write_valid_orchestrator_first_proof "${review_of_review_invalid_posture_target}"
+write_valid_virtual_subagent_assignments_proof "${review_of_review_invalid_posture_target}"
+write_valid_skeptical_review_proof "${review_of_review_invalid_posture_target}"
+write_valid_review_of_review_proof "${review_of_review_invalid_posture_target}"
+perl -0pi -e 's#final task posture: closed#final task posture: accepted for closure#g' "${review_of_review_invalid_posture_target}/.accelerate/proof/review_of_review.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${review_of_review_invalid_posture_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${review_of_review_invalid_posture_target}" closure-ready >"${WORK_ROOT}/review-of-review-invalid-posture-gate.out" 2>&1; then
+  fail "closure-ready reconciliation accepted invalid review-of-review posture"
+fi
+assert_contains "$(cat "${WORK_ROOT}/review-of-review-invalid-posture-gate.out")" "artifact gate blocked: review_of_review_artifact has invalid final task posture"
+
+review_of_review_blocked_cleanup_target="$(reset_repo closure-blocks-review-of-review-blocked-cleanup)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review orchestrator_first virtual_subagent_assignments skeptical_review review_of_review; do
+  set_evidence "${review_of_review_blocked_cleanup_target}" "${key}" "present"
+done
+set_evidence "${review_of_review_blocked_cleanup_target}" "frontend_qa" "not-applicable"
+set_evidence "${review_of_review_blocked_cleanup_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${review_of_review_blocked_cleanup_target}"
+seed_orchestrator_first_artifacts "${review_of_review_blocked_cleanup_target}"
+perl -0pi -e 's#idle/returned agent cleanup verified: not-applicable#idle/returned agent cleanup verified: blocked#g' "${review_of_review_blocked_cleanup_target}/.accelerate/proof/review_of_review.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${review_of_review_blocked_cleanup_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${review_of_review_blocked_cleanup_target}" closure-ready >"${WORK_ROOT}/review-of-review-blocked-cleanup-gate.out" 2>&1; then
+  fail "closure-ready reconciliation accepted blocked agent cleanup in review-of-review"
+fi
+assert_contains "$(cat "${WORK_ROOT}/review-of-review-blocked-cleanup-gate.out")" "artifact gate blocked: review_of_review_artifact idle/returned agent cleanup is blocked"
+
+review_of_review_thin_quality_target="$(reset_repo closure-blocks-review-of-review-thin-quality)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review orchestrator_first virtual_subagent_assignments skeptical_review review_of_review; do
+  set_evidence "${review_of_review_thin_quality_target}" "${key}" "present"
+done
+set_evidence "${review_of_review_thin_quality_target}" "frontend_qa" "not-applicable"
+set_evidence "${review_of_review_thin_quality_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${review_of_review_thin_quality_target}"
+seed_orchestrator_first_artifacts "${review_of_review_thin_quality_target}"
+perl -0pi -e 's#review quality: sufficient#review quality: thin#g' "${review_of_review_thin_quality_target}/.accelerate/proof/review_of_review.md"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${review_of_review_thin_quality_target}" review-ready >/dev/null
+if bash "${SCRIPTS}/reconcile-readiness.sh" "${review_of_review_thin_quality_target}" closure-ready >"${WORK_ROOT}/review-of-review-thin-quality-gate.out" 2>&1; then
+  fail "closure-ready reconciliation accepted thin review-of-review quality"
+fi
+assert_contains "$(cat "${WORK_ROOT}/review-of-review-thin-quality-gate.out")" "artifact gate blocked: review_of_review_artifact review quality must be sufficient for closure"
+
+valid_orchestrator_target="$(reset_repo closure-accepts-valid-orchestrator-first-virtual-packets)"
+for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review orchestrator_first virtual_subagent_assignments skeptical_review review_of_review; do
+  set_evidence "${valid_orchestrator_target}" "${key}" "present"
+done
+set_evidence "${valid_orchestrator_target}" "frontend_qa" "not-applicable"
+set_evidence "${valid_orchestrator_target}" "persistent_e2e" "not-applicable"
+seed_required_artifacts "${valid_orchestrator_target}"
+seed_orchestrator_first_artifacts "${valid_orchestrator_target}"
+bash "${SCRIPTS}/reconcile-readiness.sh" "${valid_orchestrator_target}" review-ready >/dev/null
+bash "${SCRIPTS}/reconcile-readiness.sh" "${valid_orchestrator_target}" closure-ready >/dev/null
+assert_contains "$(grep '^closure_readiness:' "${valid_orchestrator_target}/.accelerate/status/readiness-dashboard.yaml")" "closure_readiness: ready"
 
 stale_target="$(reset_repo stale-readiness-downgrades-after-evidence-regression)"
 for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review; do

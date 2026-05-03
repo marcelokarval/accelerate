@@ -17,6 +17,11 @@ The platform uses:
 - `Correction Loop Packet`
 - `Seam Proof Packet`
 - `Subagent Return Packet`
+- `Orchestrator-First Packet`
+- `Virtual Subagent Assignment Packet`
+- `Task Execution Return Packet`
+- `Skeptical Review Packet`
+- `Review-Of-Review Packet`
 - `Agent Promotion Packet`
 - `Agent Return Packet`
 - `QA / Proof Packet`
@@ -196,6 +201,109 @@ Requested-Vs-Implemented Packet
 ```
 
 Use this packet to keep slice-level comparison explicit.
+
+## Orchestrator-First Packet
+
+```text
+Orchestrator-First Packet
+
+- mode: <physical-subagents|virtual-subagents|mixed|single-threaded-exception>
+- orchestrator identity / role: <master session>
+- executive plan: <path|inline|missing>
+- task ledger: <path|inline|missing>
+- execution authority: <physical|virtual|exception>
+- skeptical review authority: <physical|virtual|missing>
+- review-of-review authority: <orchestrator|missing>
+- idle/returned agent cleanup: <closed|completed|retained-with-reason|not-applicable>
+- virtual isolation declared: <yes|no|not-needed>
+- residual risk: <...>
+- closure impact: <supports-review|supports-closure|blocked>
+```
+
+Use this packet whenever the master session is operating as orchestrator rather
+than executor.
+
+## Virtual Subagent Assignment Packet
+
+```text
+Virtual Subagent Assignment Packet
+
+- task id: <id>
+- virtual role: <executor|skeptical-reviewer>
+- selected role family: <architecture|backend|frontend|qa-regression|security|governance|provider-boundary|product-runtime|other>
+- assigned scope: <bounded scope>
+- required skills / profiles: <...>
+- write scope: <paths|read-only|n/a>
+- required evidence: <tests|packets|proof>
+- prohibited authority: <acceptance-review|closure|scope-expansion>
+- return contract: <packet shape>
+- cleanup expectation after return: <close|complete|retain-with-reason|not-applicable>
+```
+
+Use this packet when no physical subagent exists but role separation is still
+required.
+
+## Task Execution Return Packet
+
+```text
+Task Execution Return Packet
+
+- task id: <id>
+- executor mode: <physical|virtual>
+- executor identity / role: <...>
+- assigned scope: <...>
+- actual scope touched: <...>
+- files / surfaces changed: <...>
+- implementation evidence: <...>
+- validations run: <...>
+- self-review: <summary>
+- self-forensic review: <summary>
+- residual risks: <...>
+- recommendation: <done|partial|follow-up|blocked>
+```
+
+Executor returns are disclosure artifacts, not acceptance review.
+
+## Skeptical Review Packet
+
+```text
+Skeptical Review Packet
+
+- task id: <id>
+- reviewer mode: <physical|virtual>
+- reviewer identity / role: <...>
+- executor evidence inspected: <...>
+- independent checks performed: <...>
+- requested-vs-implemented judgment: <met|partial|missed|blocked>
+- defects found: <ids|none>
+- missing proof: <items|none>
+- stale/pre-fix proof risk: <yes|no>
+- reviewer confidence: <low|medium|high>
+- recommendation: <accept|correct|block|waive-with-risk>
+```
+
+Skeptical review must assume executor claims may be wrong until evidence proves
+otherwise.
+
+## Review-Of-Review Packet
+
+```text
+Review-Of-Review Packet
+
+- task id: <id>
+- orchestrator identity / role: <master session>
+- reviewer evidence inspected: <...>
+- review quality: <sufficient|thin|repeated-executor|missing>
+- overlooked risk found by orchestrator: <items|none>
+- conflict with executor claim: <yes|no|details>
+- idle/returned agent cleanup verified: <yes|not-applicable|blocked>
+- correction required: <yes|no>
+- reproof required: <yes|no>
+- final task posture: <closed|blocked|follow-up|waived>
+```
+
+Use this before final forensic reconciliation whenever task review is part of the
+closure path.
 
 ## Defect Ledger Packet
 

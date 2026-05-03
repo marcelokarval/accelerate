@@ -199,6 +199,123 @@ validate_ai_review_artifact() {
   done
 }
 
+validate_orchestrator_first_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "orchestrator_first" "${artifact}")"
+  for marker in "Orchestrator-First Packet" "- mode:" "- orchestrator identity / role:" "- executive plan:" "- task ledger:" "- execution authority:" "- skeptical review authority:" "- review-of-review authority:" "- idle/returned agent cleanup:" "- virtual isolation declared:" "- residual risk:" "- closure impact:"; do
+    require_marker "orchestrator_first_artifact" "${path}" "${marker}"
+  done
+
+  if ! grep -Eq 'mode:[[:space:]]*(physical-subagents|virtual-subagents|mixed|single-threaded-exception)' "${path}"; then
+    echo "artifact gate blocked: orchestrator_first_artifact has invalid mode" >&2
+    exit 1
+  fi
+
+  if ! grep -Eq 'virtual isolation declared:[[:space:]]*(yes|no|not-needed)' "${path}"; then
+    echo "artifact gate blocked: orchestrator_first_artifact has invalid virtual isolation declared" >&2
+    exit 1
+  fi
+
+  if grep -Eq 'mode:[[:space:]]*(virtual-subagents|mixed)' "${path}"; then
+    if [ "$(yaml_value "${EVIDENCE_FILE}" "virtual_subagent_assignments")" != "present" ]; then
+      echo "artifact gate blocked: orchestrator_first_artifact virtual or mixed mode requires virtual_subagent_assignments present" >&2
+      exit 1
+    fi
+    if ! grep -Eq 'virtual isolation declared:[[:space:]]*yes' "${path}"; then
+      echo "artifact gate blocked: orchestrator_first_artifact virtual or mixed mode requires virtual isolation declared: yes" >&2
+      exit 1
+    fi
+  fi
+
+  if grep -Eq 'idle/returned agent cleanup:[[:space:]]*(missing|blocked|idle-open|not-checked)' "${path}"; then
+    echo "artifact gate blocked: orchestrator_first_artifact idle/returned agent cleanup is not closed, completed, retained-with-reason, or not-applicable" >&2
+    exit 1
+  fi
+
+  if ! grep -Eq 'idle/returned agent cleanup:[[:space:]]*(closed|completed|retained-with-reason|not-applicable)' "${path}"; then
+    echo "artifact gate blocked: orchestrator_first_artifact has invalid idle/returned agent cleanup" >&2
+    exit 1
+  fi
+}
+
+validate_virtual_subagent_assignments_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "virtual_subagent_assignments" "${artifact}")"
+  for marker in "Virtual Subagent Assignment Packet" "- task id:" "- virtual role:" "- selected role family:" "- assigned scope:" "- required skills / profiles:" "- write scope:" "- required evidence:" "- prohibited authority:" "- return contract:" "- cleanup expectation after return:"; do
+    require_marker "virtual_subagent_assignments_artifact" "${path}" "${marker}"
+  done
+
+  if ! grep -Eq 'virtual role:[[:space:]]*(executor|skeptical-reviewer)' "${path}"; then
+    echo "artifact gate blocked: virtual_subagent_assignments_artifact has invalid virtual role" >&2
+    exit 1
+  fi
+
+  if ! grep -Eq 'selected role family:[[:space:]]*(architecture|backend|frontend|qa-regression|security|governance|provider-boundary|product-runtime|other)' "${path}"; then
+    echo "artifact gate blocked: virtual_subagent_assignments_artifact has invalid selected role family" >&2
+    exit 1
+  fi
+
+  if ! grep -Eq 'cleanup expectation after return:[[:space:]]*(close|complete|retain-with-reason|not-applicable)' "${path}"; then
+    echo "artifact gate blocked: virtual_subagent_assignments_artifact has invalid cleanup expectation after return" >&2
+    exit 1
+  fi
+}
+
+validate_skeptical_review_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "skeptical_review" "${artifact}")"
+  for marker in "Skeptical Review Packet" "- task id:" "- reviewer mode:" "- executor evidence inspected:" "- independent checks performed:" "- requested-vs-implemented judgment:" "- recommendation:"; do
+    require_marker "skeptical_review_artifact" "${path}" "${marker}"
+  done
+
+  if ! grep -Eq 'requested-vs-implemented judgment:[[:space:]]*(met|partial|missed|blocked)' "${path}"; then
+    echo "artifact gate blocked: skeptical_review_artifact has invalid requested-vs-implemented judgment" >&2
+    exit 1
+  fi
+
+  if grep -Eiq 'reviewer mode:[[:space:]]*.*self-review|independent checks performed:[[:space:]]*none|self-certified' "${path}"; then
+    echo "artifact gate blocked: skeptical_review_artifact must not be executor self-review" >&2
+    exit 1
+  fi
+}
+
+validate_review_of_review_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "review_of_review" "${artifact}")"
+  for marker in "Review-Of-Review Packet" "- task id:" "- orchestrator identity / role:" "- reviewer evidence inspected:" "- review quality:" "- overlooked risk found by orchestrator:" "- conflict with executor claim:" "- idle/returned agent cleanup verified:" "- correction required:" "- reproof required:" "- final task posture:"; do
+    require_marker "review_of_review_artifact" "${path}" "${marker}"
+  done
+
+  if ! grep -Eq 'review quality:[[:space:]]*(sufficient|thin|repeated-executor|missing)' "${path}"; then
+    echo "artifact gate blocked: review_of_review_artifact has invalid review quality" >&2
+    exit 1
+  fi
+
+  if [ "${TARGET_STATE}" = "closure-ready" ] && ! grep -Eq 'review quality:[[:space:]]*sufficient' "${path}"; then
+    echo "artifact gate blocked: review_of_review_artifact review quality must be sufficient for closure" >&2
+    exit 1
+  fi
+
+  if ! grep -Eq 'idle/returned agent cleanup verified:[[:space:]]*(yes|not-applicable|blocked)' "${path}"; then
+    echo "artifact gate blocked: review_of_review_artifact has invalid idle/returned agent cleanup verified" >&2
+    exit 1
+  fi
+
+  if [ "${TARGET_STATE}" = "closure-ready" ] && grep -Eq 'idle/returned agent cleanup verified:[[:space:]]*blocked' "${path}"; then
+    echo "artifact gate blocked: review_of_review_artifact idle/returned agent cleanup is blocked" >&2
+    exit 1
+  fi
+
+  if ! grep -Eq 'final task posture:[[:space:]]*(closed|blocked|follow-up|waived)' "${path}"; then
+    echo "artifact gate blocked: review_of_review_artifact has invalid final task posture" >&2
+    exit 1
+  fi
+}
+
 validate_generic_lane_artifact() {
   local key="$1"
   local artifact="$2"
@@ -389,6 +506,10 @@ case "${TARGET_STATE}" in
       i18n_closure
       observability_performance
       query_shape
+      orchestrator_first
+      virtual_subagent_assignments
+      skeptical_review
+      review_of_review
       requested_vs_implemented
       ai_review
     )
@@ -434,6 +555,18 @@ for key in "${keys[@]}"; do
       ;;
     ai_review)
       validate_ai_review_artifact "${artifact}"
+      ;;
+    orchestrator_first)
+      validate_orchestrator_first_artifact "${artifact}"
+      ;;
+    virtual_subagent_assignments)
+      validate_virtual_subagent_assignments_artifact "${artifact}"
+      ;;
+    skeptical_review)
+      validate_skeptical_review_artifact "${artifact}"
+      ;;
+    review_of_review)
+      validate_review_of_review_artifact "${artifact}"
       ;;
     accessibility|i18n_closure|observability_performance|query_shape)
       validate_generic_lane_artifact "${key}" "${artifact}"

@@ -52,6 +52,35 @@ It is strongest when work is:
 - abuse-sensitive
 - ambiguous enough to drift without shaping
 
+## User Locale Boundary
+
+Accelerate preserves the user's conversational language at the outer interface.
+If the user is speaking pt-BR, the master session should report progress,
+blockers, and closure in pt-BR unless the user asks otherwise.
+
+That does not force every internal artifact into pt-BR. Agent prompts, virtual
+subagent packets, code identifiers, test output, and repo documentation may stay
+in English when English is the project/runtime convention or clearer for tooling.
+The boundary is: English can be used inside execution, but the orchestrator must
+translate the outcome back into the active user-facing locale.
+
+## Orchestrator-First Execution
+
+For non-trivial execution, the preferred posture is orchestrator-first. The main
+session plans, assigns, integrates, reviews the review, and owns final forensic
+closure. It should not act as both task executor and acceptance reviewer.
+
+When physical subagents exist, use them for bounded execution or skeptical
+review. When they do not exist, use virtual subagent packets: a virtual executor
+pass returns implementation evidence and self-review, then a separate virtual
+skeptical reviewer pass checks that evidence as if the executor is wrong until
+proof says otherwise. The master session then performs review-of-review before
+closure.
+
+This is the native form of prompts that ask for a complete executive plan,
+complete task ledger, execution, subagent task review, and final confirmation by
+the main session.
+
 ## What It Is Not
 
 `accelerate` is not:

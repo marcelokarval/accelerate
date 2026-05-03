@@ -336,6 +336,10 @@ for evidence_key in \
   i18n_closure \
   observability_performance \
   query_shape \
+  orchestrator_first \
+  virtual_subagent_assignments \
+  skeptical_review \
+  review_of_review \
   requested_vs_implemented \
   ai_review \
   ai_review_rendered; do

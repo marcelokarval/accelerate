@@ -18,6 +18,7 @@ Native authority now starts here:
 - `gate-ownership-index.md`
 - `outcome-preamble-gate.md`
 - `reasoning-effort-gate.md`
+- `orchestrator-first-execution-gate.md`
 - `prompt-upgrade-approval-gate.md`
 - `workflow-change-approval-gate.md`
 - `parity-replacement-gate.md`

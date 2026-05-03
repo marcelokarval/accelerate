@@ -96,9 +96,12 @@ Run `accelerate` in this order:
 7. choose reasoning effort and delegation posture from success criteria, risk,
    and available evidence
 8. open the required branch, skills, gates, and artifacts
-9. keep runtime state visible with explicit packets
-10. enforce proof in the correct order
-11. block closure until the branch contract is truly satisfied
+9. when execution and acceptance review are both in scope, keep the master
+   session as orchestrator/final reviewer and separate executor/reviewer
+   authority through physical or virtual subagent packets
+10. keep runtime state visible with explicit packets
+11. enforce proof in the correct order
+12. block closure until the branch contract is truly satisfied
 
 Do not treat `accelerate` as a label. Treat it as the visible team operating
 system for the run.
@@ -107,6 +110,12 @@ Use `core/control-plane/response-locale-gate.md` for user-facing language. If
 the user writes in pt-BR, respond in pt-BR unless they explicitly request another
 language. English docs, tool output, paths, and code identifiers do not override
 the user's conversational language.
+
+This locale rule governs communication with the user. Agent assignments,
+runtime packets, code identifiers, validation output, and repo documentation may
+remain in English when that is the repo/runtime convention or improves precision.
+Do not let English agent work leak into the user-facing summary when the active
+conversation locale is pt-BR.
 
 ## Classification Contract
 
@@ -138,6 +147,14 @@ Use full `prompt-hardening` when the request is:
   side-effect-, or product/visual-acceptance-sensitive
 
 Do not skip hardening only because the task later turns out to be bounded.
+
+When the user asks for an executive plan, full task ledger, execution, subagent
+review, correction, and final confirmation by the main session, open
+`core/control-plane/orchestrator-first-execution-gate.md` and
+`core/review/one-shot-side-by-side-protocol.md`. The main session is the
+orchestrator and final forensic reviewer. Executors and skeptical reviewers may
+be physical subagents or virtual packeted role passes, but executor self-review
+is never acceptance proof.
 
 Reasoning effort is a separate decision from branch size and agent count. Choose
 the lowest effort that can safely satisfy success criteria:

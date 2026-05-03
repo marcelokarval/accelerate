@@ -10,6 +10,12 @@ be governed.
 Subagents are bounded collaborators. They do not replace the master
 orchestrator.
 
+For non-trivial execution, the default posture is orchestrator-first: the master
+session plans, assigns, integrates, reviews the review, and owns closure. Task
+execution should be assigned to a physical subagent when available and honest;
+otherwise it must be represented as a virtual executor pass with packeted scope
+and evidence.
+
 The master always owns:
 
 - the global plan
@@ -25,13 +31,67 @@ closure.
 
 Useful subagent shapes:
 
+- architecture / design reviewer
 - implementation worker
 - decomposition or planner sidecar
 - governance auditor
 - trust / anti-abuse reviewer
 - runtime or browser reviewer
 - verification sidecar
+- QA / regression reviewer
 - source or provider-boundary observer candidate
+
+## Orchestrator Routing Flow
+
+When Accelerate is called as an orchestrator, it does not hand work to generic
+agents first. It routes each task from the executive plan or task ledger through
+this sequence:
+
+1. classify the task surface: architecture, backend, frontend, data, security,
+   QA/proof, docs, workflow, product/runtime, or provider-boundary
+2. classify the task phase: planning, implementation, review, correction,
+   reproof, or closure
+3. classify the dominant risk: integration, runtime correctness, security,
+   performance/query shape, UX/product, governance, or release safety
+4. choose the smallest honest role family that owns that surface, phase, and risk
+5. bind the role to a physical subagent only when a matching promoted agent or
+   runtime adapter exists
+6. otherwise emit a virtual subagent assignment packet with the chosen role family
+7. keep master-owned architecture and closure decisions out of delegated
+   acceptance authority
+
+The routing output must name:
+
+- task id
+- selected role family
+- physical agent, virtual role, or root-owned exception
+- required skills or profile surfaces
+- write scope or read-only scope
+- return contract
+- review counterpart
+- cleanup expectation after return
+
+Do not route by title alone. For example, a task named "review dashboard" may be
+QA/proof, product/runtime, accessibility, or architecture depending on the proof
+needed.
+
+## Role Family Routing Matrix
+
+Use this matrix as the default routing policy:
+
+| Task signal | Preferred role family | Typical authority | Review counterpart |
+| --- | --- | --- | --- |
+| architecture boundary, ADR, migration shape, dependency direction | architecture / design reviewer | read-only analysis or design packet | governance auditor or master review-of-review |
+| backend behavior, services, data contracts, migrations, query shape | backend implementation worker or backend reviewer | bounded code change or backend proof | QA/proof or security reviewer |
+| frontend UI, state, component hierarchy, visual contract | frontend implementation worker or frontend reviewer | bounded code change or visual proof | QA/browser reviewer or product/runtime reviewer |
+| tests, regression, validation commands, browser proof, closure evidence | QA / regression reviewer | read-only or test-only proof | master review-of-review |
+| auth, billing, ownership, abuse, untrusted ingress, secrets | security / anti-abuse reviewer | read-only skeptical review unless correction is explicitly bounded | master plus affected stack reviewer |
+| docs, workflow seeds, runtime packets, local workspace gates | governance auditor | bounded docs/workflow edit or audit | master review-of-review |
+| external provider, source observation, runtime adapter gap | provider-boundary observer candidate | read-only observation or gap packet | architecture/governance reviewer |
+
+If two role families are plausible, prefer the one that owns the dominant risk,
+not the one that matches the file extension. If no role owns the dominant risk,
+use the `No-Honest-Family Rule` instead of inventing an agent.
 
 ## Persona-To-Subagent Mapping
 
@@ -58,6 +118,7 @@ Before assigning a subagent, score the fit across:
 - surface fit
 - phase fit
 - risk fit
+- profile/skill fit
 - write-scope fit
 - integration cost
 
@@ -83,9 +144,12 @@ scheduled-runtime, rollout, and migration-stewardship risks.
 ## Spawn Criteria
 
 For non-trivial work, prefer bounded delegation when it creates honest value.
+When no physical subagent is available, use virtual delegation packets instead
+of collapsing execution, review, and acceptance into one authority.
 
-Root-only execution remains legitimate when delegation would add more
-integration cost than execution clarity.
+Root-only execution remains legitimate only with an explicit exception when
+delegation or virtual separation would add more integration cost than execution
+clarity.
 
 Delegation should trace back to the `Reasoning Effort Gate`:
 
@@ -105,8 +169,32 @@ Default expectation:
   spawn an implementation worker
 - if there is no safe implementation split but there is clear proof/review value
   -> spawn a review, browser, governance, or verification sidecar
-- if neither shape is honest -> keep the run root-owned and emit an explicit
-  `single-threaded exception`
+- if neither physical nor virtual separation is honest -> keep the run
+  root-owned and emit an explicit `single-threaded exception`
+
+## Virtual Subagent Rule
+
+A virtual subagent is not a claim that a live agent exists. It is a packeted role
+pass used to preserve review isolation in standalone or pre-agents runtime.
+
+Virtual executor passes must include:
+
+- assigned task scope
+- write scope or read-only scope
+- implementation evidence
+- self-review
+- self-forensic review
+- residual risks
+
+Virtual reviewer passes must include:
+
+- reviewed task scope
+- executor evidence inspected
+- independent skeptical checks
+- findings or no-finding rationale
+- `met|partial|missed|blocked` judgment
+
+The master must still review the virtual review quality before closure.
 
 Prefer bounded delegation when all are true:
 
@@ -157,6 +245,11 @@ Every subagent must return:
 - correction/reproof status when performing delegated correction
 - unresolved risks
 
+After a subagent returns, the master must actively close or complete the agent
+when the runtime supports it. If the agent remains open because further work is
+intended, record the retained-agent reason. Idle returned agents are runtime
+leaks, not harmless background state.
+
 Role-specific returns should add the missing proof, not restate the global
 plan:
 
@@ -176,8 +269,9 @@ plan:
    non-trivial or closure-sensitive
 5. master reviews the returned slice
 6. master reviews the skeptical review quality
-7. master integrates the combined result
-8. master performs final forensic closure
+7. master closes/completes returned idle agents or records why they are retained
+8. master integrates the combined result
+9. master performs final forensic closure
 
 ## Master Integration Protocol
 
@@ -208,8 +302,10 @@ review-of-review, and final forensic closure.
 
 Use explicit budgets:
 
-- `0` subagents for trivial bounded work, root-only execution by honest fit, or
-  explicit single-threaded exception
+- `0` physical subagents for trivial bounded work, with no virtual separation
+  required unless review-bearing
+- `0` physical subagents plus virtual executor/reviewer passes for non-trivial
+  work when no honest physical agent exists
 - `1` subagent for a single meaningful sidecar
 - `2-3` subagents for independent bounded slices
 

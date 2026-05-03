@@ -32,6 +32,8 @@ require_file "tests/profile-integrity.sh"
 require_file "tests/one-shot-protocol-integrity.sh"
 require_file "tests/one-shot-protocol-semantic.sh"
 require_file "tests/one-shot-protocol-delegation.sh"
+require_file "tests/subagent-routing-policy.sh"
+require_file "tests/base-agent-contract.sh"
 require_file "tests/one-shot-protocol-closure.sh"
 require_file "tests/design-md-corpus-integrity.sh"
 require_file "tests/design-md-corpus-semantic.sh"
@@ -45,6 +47,7 @@ require_file "tests/remote-write-registry.sh"
 require_file "tests/manifest-truth-gate.sh"
 require_file "tests/response-locale-gate.sh"
 require_file "tests/django-backend-safety.sh"
+require_file "tests/local-workspace-scenario-matrix.sh"
 
 python3 - <<'PY'
 from pathlib import Path
@@ -166,6 +169,8 @@ printf 'doctrine integrity passed\n'
 bash tests/one-shot-protocol-integrity.sh
 bash tests/one-shot-protocol-semantic.sh
 bash tests/one-shot-protocol-delegation.sh
+bash tests/subagent-routing-policy.sh
+bash tests/base-agent-contract.sh
 bash tests/one-shot-protocol-closure.sh
 bash tests/design-md-corpus-integrity.sh
 bash tests/design-md-corpus-semantic.sh
@@ -184,6 +189,7 @@ bash tests/profile-integrity.sh
 bash tests/i18n-doctrine.sh
 bash tests/design-system-artifact-consistency.sh
 bash tests/local-workspace-proof-gates.sh
+bash tests/local-workspace-scenario-matrix.sh
 bash tests/core-command-boundary.sh
 bash tests/linear-helper-python-parse.sh
 bash tests/markdown-link-integrity.sh

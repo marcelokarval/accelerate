@@ -112,6 +112,10 @@ accessibility="$(evidence_value "accessibility" "not-applicable")"
 i18n_closure="$(evidence_value "i18n_closure" "not-applicable")"
 observability_performance="$(evidence_value "observability_performance" "not-applicable")"
 query_shape="$(evidence_value "query_shape" "not-applicable")"
+orchestrator_first="$(evidence_value "orchestrator_first" "not-applicable")"
+virtual_subagent_assignments="$(evidence_value "virtual_subagent_assignments" "not-applicable")"
+skeptical_review="$(evidence_value "skeptical_review" "not-applicable")"
+review_of_review="$(evidence_value "review_of_review" "not-applicable")"
 requested_vs_implemented="$(evidence_value "requested_vs_implemented" "missing")"
 defect_ledger="$(evidence_value "defect_ledger" "missing")"
 correction_loop="$(evidence_value "correction_loop" "missing")"
@@ -146,7 +150,11 @@ for lane in \
   "accessibility:${accessibility}" \
   "i18n_closure:${i18n_closure}" \
   "observability_performance:${observability_performance}" \
-  "query_shape:${query_shape}"; do
+  "query_shape:${query_shape}" \
+  "orchestrator_first:${orchestrator_first}" \
+  "virtual_subagent_assignments:${virtual_subagent_assignments}" \
+  "skeptical_review:${skeptical_review}" \
+  "review_of_review:${review_of_review}"; do
   key="${lane%%:*}"
   value="${lane#*:}"
   if [ "${blocking_lane}" = "none" ] && [ "${value}" != "present" ] && [ "${value}" != "not-applicable" ] && [ "${value}" != "clear" ] && [ "${value}" != "not-needed" ]; then
@@ -184,6 +192,10 @@ Closure Packet
   - i18n Closure=${i18n_closure}
   - Observability/Performance=${observability_performance}
   - Query Shape=${query_shape}
+  - Orchestrator-First=${orchestrator_first}
+  - Virtual Subagent Assignments=${virtual_subagent_assignments}
+  - Skeptical Review=${skeptical_review}
+  - Review-Of-Review=${review_of_review}
   - Requested-Vs-Implemented=${requested_vs_implemented}
   - AI Review=${ai_review}
 - blocking lane: ${blocking_lane}

@@ -39,6 +39,14 @@ observability_performance: not-applicable
 observability_performance_artifact:
 query_shape: not-applicable
 query_shape_artifact:
+orchestrator_first: not-applicable
+orchestrator_first_artifact:
+virtual_subagent_assignments: not-applicable
+virtual_subagent_assignments_artifact:
+skeptical_review: not-applicable
+skeptical_review_artifact:
+review_of_review: not-applicable
+review_of_review_artifact:
 requested_vs_implemented: missing
 requested_vs_implemented_artifact:
 defect_ledger: clear

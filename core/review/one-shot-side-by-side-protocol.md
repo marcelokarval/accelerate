@@ -6,7 +6,9 @@ Use this protocol when a mutation-bearing run explicitly asks for an executive
 plan, tasks, one-shot execution, side-by-side review, auto-correction, delegated
 correction when useful, and final forensic closure.
 
-It turns a strong prompt pattern into native Accelerate governance.
+It turns a strong prompt pattern into native Accelerate governance. The master
+session is the orchestrator and final forensic reviewer, not the acceptance
+reviewer for its own execution.
 
 When the request also asks the agent to stay in a QA/browser correction loop
 until the planned outcome is delivered, this protocol is governed by
@@ -25,6 +27,10 @@ combination of:
 - sequential task execution with parallel subagents where safe
 - final forensic review
 
+This includes the canonical user intent: "build the executive plan, build the
+tasks, execute, use subagents for task review, and keep the main session as
+orchestrator and final reviewer".
+
 Do not apply this gate to truly trivial bounded edits unless the user explicitly
 requests the technique.
 
@@ -42,7 +48,9 @@ The required chain is:
 8. run reproof after each correction
 9. hand correction back to a subagent only when the correction is bounded and
    delegation lowers risk or latency
-10. perform final forensic side-by-side reconciliation before closure
+10. close or complete returned idle agents, or record why any agent remains
+    intentionally retained
+11. perform final forensic side-by-side reconciliation before closure
 
 When `Execution-To-Spec Loop Gate` is active, steps 6 through 9 repeat until the
 loop converges, is explicitly narrowed by the user, or is blocked by packeted
@@ -58,8 +66,13 @@ Sequential dependencies must stay sequential. Parallel subagents may inspect or
 implement bounded slices, but each slice still requires its own review,
 correction, and reproof before the master integrates it into final closure.
 
-The master owns task ordering, conflict detection, integrated proof, and final
-side-by-side reconciliation. Subagent success is never closure by itself.
+The master owns task ordering, conflict detection, integrated proof, review of
+review, and final side-by-side reconciliation. Subagent success is never closure
+by itself.
+
+When no physical subagent is available, the task must still use virtual executor
+and skeptical reviewer passes. This preserves authority separation without
+pretending a live agent catalog exists.
 
 ## Review Isolation Rule
 
@@ -144,6 +157,7 @@ present:
 - validation stack under-run
 - subagent success accepted without master integration review
 - skeptical review accepted without orchestrator review-of-review
+- returned agents left idle/open without close/completion or retained-agent reason
 - parallel tasks wrote overlapping surfaces without master conflict review
 - later manual review contradicts `done` status and no task was reopened
 

@@ -30,6 +30,12 @@ Every orchestrated non-trivial row also inherits `Reasoning Effort Gate`. The
 run must choose `low`, `medium`, `high`, or `xhigh` from success criteria, risk,
 evidence needs, and future delegation implications instead of task size alone.
 
+Every non-trivial execution row also inherits `Orchestrator-First Execution Gate`
+when task execution and acceptance review both occur in the same run. The master
+session orchestrates, integrates, and reviews the review. Execution and skeptical
+acceptance review must remain separated through physical subagents or explicit
+virtual subagent packets.
+
 For any engineering run expected to mutate code, workflow seeds, or living
 docs, `Issue Bootstrap Gate` is inherited even when the row is not primarily an
 issue-management branch.
@@ -217,6 +223,7 @@ These gates should stay visible from `accelerate` itself:
 - `Document Cohesion Size Gate`
 - `Manual Review Contradiction Gate`
 - `One-Shot Side-By-Side Gate`
+- `Orchestrator-First Execution Gate`
 - `Execution-To-Spec Loop Gate`
 - `Systemic UI Inconsistency Audit Gate`
 - `Untrusted Ingress Gate`

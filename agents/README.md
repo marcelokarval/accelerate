@@ -22,6 +22,7 @@ doctrine into a first-class module that owns:
 - capability matrix
 - pooling model
 - skill envelopes
+- base agent contract
 - promotion criteria
 - authority boundary
 
@@ -33,6 +34,7 @@ The first native doctrine rehome now lives under:
 - `doctrine/gap-detection.md`
 - `doctrine/authority-boundary.md`
 - `doctrine/pooling-model.md`
+- `base-agent-contract.md`
 - `doctrine/empirical-replay.md`
 - `envelopes/skill-envelopes.md`
 - `promotion/execution-contract.md`
@@ -84,14 +86,15 @@ For a fresh session trying to understand the agents layer, read in this order:
 6. `doctrine/capability-matrix.md`
 7. `doctrine/selection-policy.md`
 8. `doctrine/gap-detection.md`
-9. `doctrine/empirical-replay.md`
-10. `promotion/README.md`
-11. `promotion/promotion-contract.md`
-12. `promotion/execution-contract.md`
-13. `promotion/return-contract.md`
-14. `envelopes/README.md`
-15. `envelopes/skill-envelopes.md`
-16. `templates/README.md`
+9. `base-agent-contract.md`
+10. `doctrine/empirical-replay.md`
+11. `promotion/README.md`
+12. `promotion/promotion-contract.md`
+13. `promotion/execution-contract.md`
+14. `promotion/return-contract.md`
+15. `envelopes/README.md`
+16. `envelopes/skill-envelopes.md`
+17. `templates/README.md`
 
 If deeper doctrine is needed before the native rehome is complete, continue
 into:

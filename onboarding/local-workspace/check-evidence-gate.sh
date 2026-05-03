@@ -142,6 +142,17 @@ case "${TARGET_STATE}" in
     require_optional_clean "closure-ready" "i18n_closure"
     require_optional_clean "closure-ready" "observability_performance"
     require_optional_clean "closure-ready" "query_shape"
+    require_optional_clean "closure-ready" "orchestrator_first"
+    require_optional_clean "closure-ready" "virtual_subagent_assignments"
+    require_optional_clean "closure-ready" "skeptical_review"
+    require_optional_clean "closure-ready" "review_of_review"
+    if is_present "orchestrator_first"; then
+      require_present "closure-ready" "skeptical_review"
+      require_present "closure-ready" "review_of_review"
+    fi
+    if is_present "virtual_subagent_assignments" && ! is_present "orchestrator_first"; then
+      block "closure-ready" "virtual_subagent_assignments requires orchestrator_first present"
+    fi
     if is_present "design_implementation_proof" && ! is_present "browser_proof"; then
       block "closure-ready" "design_implementation_proof requires browser_proof present"
     fi

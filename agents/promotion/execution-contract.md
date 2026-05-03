@@ -3,6 +3,10 @@
 Use this module to define the minimum operating contract for any future
 bounded agent promoted by this platform.
 
+This contract extends `../base-agent-contract.md`. Promotion may add runtime
+binding and replay requirements, but it must not weaken the base authority
+boundary.
+
 ## Core Rule
 
 Every future bounded agent must behave like a disciplined slice executor or
@@ -25,11 +29,13 @@ Every future bounded agent should receive:
 - governing work-item id when a workflow backend exists, or explicit no-issue
   exception when it does not
 - reasoning effort selected by the root and the implication for the agent's role
-- selected family
+- selected role family
 - bounded scope
+- required skills / profiles
 - write scope or explicit read-only scope
 - required validations
 - completion contract
+- cleanup expectation after return
 - review isolation requirement
 
 ## Mandatory Work
@@ -84,4 +90,5 @@ agent remains review-ready, not final closure.
 `Done` stays root-owned.
 
 If no promoted agent is available, the root must execute or review through the
-normal root-only path with an explicit single-threaded exception when required.
+orchestrator-first path with virtual executor/reviewer packets, or use an
+explicit single-threaded exception when virtual separation is not honest.

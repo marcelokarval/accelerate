@@ -7,9 +7,9 @@ side-by-side review, auto-correction, and reproof before closure.
 
 ## Task Ledger
 
-| Task ID | Requested Outcome | Implemented Evidence | Expected Proof | Actual Proof | Side-By-Side Judgment | Defects Found | Correction Owner | Correction Summary | Reproof Evidence | Closure Status |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| T1 | `<what was requested>` | `<files/packets/proof landed>` | `<required proof>` | `<proof actually run>` | `<met|partial|missed|not-applicable>` | `<ids or none>` | `<master|subagent|n/a>` | `<summary or n/a>` | `<evidence or n/a>` | `<closed|blocked|waived>` |
+| Task ID | Requested Outcome | Executor Mode | Executor Identity | Implemented Evidence | Expected Proof | Actual Proof | Reviewer Mode | Reviewer Identity | Review Independence | Side-By-Side Judgment | Review-Of-Review Status | Defects Found | Correction Owner | Correction Summary | Reproof Evidence | Closure Status |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| T1 | `<what was requested>` | `<physical|virtual>` | `<agent/persona/pass>` | `<files/packets/proof landed>` | `<required proof>` | `<proof actually run>` | `<physical|virtual>` | `<agent/persona/pass>` | `<independent|virtual-isolated|exception|missing>` | `<met|partial|missed|not-applicable>` | `<sufficient|thin|missing>` | `<ids or none>` | `<master|subagent|virtual-pass|n/a>` | `<summary or n/a>` | `<evidence or n/a>` | `<closed|blocked|waived>` |
 
 ## Defect Ledger
 
@@ -30,4 +30,5 @@ side-by-side review, auto-correction, and reproof before closure.
 ## Closure Rule
 
 Closure is blocked while any task has an open in-scope defect, any correction is
-missing reproof, or the final forensic reconciliation is absent.
+missing reproof, skeptical review is missing, review-of-review is missing, or the
+final forensic reconciliation is absent.

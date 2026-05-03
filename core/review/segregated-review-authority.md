@@ -22,6 +22,10 @@ documented constrained runtime, but the authority boundaries must remain
 separate in the packets. If no independent reviewer is available, closure must
 state a review isolation exception and carry residual risk.
 
+In standalone or pre-agents runtime, virtual executor and reviewer passes are the
+preferred fallback. A virtual pass is acceptable only when the packet explicitly
+names the role boundary and the orchestrator performs review-of-review.
+
 ## Non-Trust Rule
 
 Self-review is useful but insufficient.
@@ -49,6 +53,7 @@ Packets that close tasks must identify:
 - reviewer identity/role
 - whether executor and reviewer are independent
 - review isolation exception, if any
+- physical or virtual isolation mode
 - orchestrator final judgment
 
 ## Closure Blockers

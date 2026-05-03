@@ -56,6 +56,7 @@ This prevents invisible gate drift and stale mandatory language.
 | `Active Correction / Defect Disposition` | `../review/active-correction-loop.md` | Required when concrete in-scope defects are found. |
 | `Seam Proof Requirement` | `../review/seam-proof.md` | Required when layout/state/shell seams are plausible. |
 | `AI Review Report` | `../runtime-packets/templates.md` | Required closure artifact in the Closure Packet when AI review is part of the proof lane. |
+| `Orchestrator-First Execution Gate` | `orchestrator-first-execution-gate.md` | Required when non-trivial execution and acceptance review happen in one run; separates executor, skeptical reviewer, and final orchestrator authority. |
 
 ## Adjacent-Skill-Owned Gates
 
