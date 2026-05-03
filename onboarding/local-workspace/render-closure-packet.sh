@@ -108,6 +108,10 @@ persistent_e2e="$(evidence_value "persistent_e2e" "missing")"
 ux_ui_fullstack_surface="$(evidence_value "ux_ui_fullstack_surface" "not-applicable")"
 design_implementation_proof="$(evidence_value "design_implementation_proof" "not-applicable")"
 product_critical_closure="$(evidence_value "product_critical_closure" "not-applicable")"
+accessibility="$(evidence_value "accessibility" "not-applicable")"
+i18n_closure="$(evidence_value "i18n_closure" "not-applicable")"
+observability_performance="$(evidence_value "observability_performance" "not-applicable")"
+query_shape="$(evidence_value "query_shape" "not-applicable")"
 requested_vs_implemented="$(evidence_value "requested_vs_implemented" "missing")"
 defect_ledger="$(evidence_value "defect_ledger" "missing")"
 correction_loop="$(evidence_value "correction_loop" "missing")"
@@ -138,7 +142,11 @@ for lane in \
   "seam_proof:${seam_proof}" \
   "ux_ui_fullstack_surface:${ux_ui_fullstack_surface}" \
   "design_implementation_proof:${design_implementation_proof}" \
-  "product_critical_closure:${product_critical_closure}"; do
+  "product_critical_closure:${product_critical_closure}" \
+  "accessibility:${accessibility}" \
+  "i18n_closure:${i18n_closure}" \
+  "observability_performance:${observability_performance}" \
+  "query_shape:${query_shape}"; do
   key="${lane%%:*}"
   value="${lane#*:}"
   if [ "${blocking_lane}" = "none" ] && [ "${value}" != "present" ] && [ "${value}" != "not-applicable" ] && [ "${value}" != "clear" ] && [ "${value}" != "not-needed" ]; then
@@ -172,6 +180,10 @@ Closure Packet
   - UX/UI Fullstack Surface=${ux_ui_fullstack_surface}
   - Design Implementation Proof=${design_implementation_proof}
   - Product-Critical Closure=${product_critical_closure}
+  - Accessibility=${accessibility}
+  - i18n Closure=${i18n_closure}
+  - Observability/Performance=${observability_performance}
+  - Query Shape=${query_shape}
   - Requested-Vs-Implemented=${requested_vs_implemented}
   - AI Review=${ai_review}
 - blocking lane: ${blocking_lane}

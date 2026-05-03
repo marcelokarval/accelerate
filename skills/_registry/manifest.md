@@ -73,6 +73,8 @@ The historical migration manifest remains available at:
 | `inngest-patterns` | `runtime` | `../runtime/inngest-patterns/` | `native` | optional | `local-authoritative` |
 | `triggerdev-patterns` | `runtime` | `../runtime/triggerdev-patterns/` | `native` | optional | `local-authoritative` |
 | `bullmq-patterns` | `runtime` | `../runtime/bullmq-patterns/` | `native` | optional | `local-authoritative` |
+| `redis-patterns` | `runtime` | `../runtime/redis-patterns/` | `native` | optional | `local-authoritative` |
+| `rabbitmq-patterns` | `runtime` | `../runtime/rabbitmq-patterns/` | `native` | optional | `local-authoritative` |
 | `pgboss-patterns` | `runtime` | `../runtime/pgboss-patterns/` | `native` | optional | `local-authoritative` |
 | `qstash-patterns` | `runtime` | `../runtime/qstash-patterns/` | `native` | optional | `local-authoritative` |
 | `resend-patterns` | `runtime` | `../runtime/resend-patterns/` | `native` | optional | `local-authoritative` |

@@ -6,9 +6,9 @@ This artifact records the first real external workflow-learning event for the
 standalone `accelerate` repository after the self-evolution surface was kept at
 `near parity`.
 
-The inspected source was:
+The inspected source is recorded as a redacted provenance label:
 
-- `/home/marcelo-karval/Backup/Projetos/all-agrelli-projects/ht-agrelli-com-bot-telegram-dashboard/skills/`
+- `<external-telegram-dashboard>/skills/`
 
 The goal was not to mirror the Z.ai / GLM stack. The goal was to extract
 operationally useful patterns that can improve the local `accelerate` control

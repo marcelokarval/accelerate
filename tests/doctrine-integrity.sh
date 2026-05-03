@@ -180,3 +180,10 @@ bash tests/remote-write-registry.sh
 bash tests/manifest-truth-gate.sh
 bash tests/response-locale-gate.sh
 bash tests/django-backend-safety.sh
+bash tests/profile-integrity.sh
+bash tests/i18n-doctrine.sh
+bash tests/design-system-artifact-consistency.sh
+bash tests/local-workspace-proof-gates.sh
+bash tests/core-command-boundary.sh
+bash tests/linear-helper-python-parse.sh
+bash tests/markdown-link-integrity.sh

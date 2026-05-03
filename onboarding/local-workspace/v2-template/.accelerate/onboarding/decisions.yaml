@@ -3,5 +3,7 @@ selected_workflow_backend: none-yet
 selected_workflow_backend_detected: none-yet
 selected_profile: unknown
 selected_runtime_posture: []
+selected_provider_overlays: []
+selected_runtime_overlays: []
 selected_docs_posture: none-yet
 explicit_non_goals: []

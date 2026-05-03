@@ -138,6 +138,10 @@ case "${TARGET_STATE}" in
     require_optional_clean "closure-ready" "componentization_audit"
     require_optional_clean "closure-ready" "deep_componentization_audit"
     require_optional_clean "closure-ready" "product_critical_closure"
+    require_optional_clean "closure-ready" "accessibility"
+    require_optional_clean "closure-ready" "i18n_closure"
+    require_optional_clean "closure-ready" "observability_performance"
+    require_optional_clean "closure-ready" "query_shape"
     if is_present "design_implementation_proof" && ! is_present "browser_proof"; then
       block "closure-ready" "design_implementation_proof requires browser_proof present"
     fi

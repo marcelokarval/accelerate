@@ -257,6 +257,8 @@ require_key "${WORKSPACE}/onboarding/discovery.yaml" "framework_signals"
 require_key "${WORKSPACE}/onboarding/discovery.yaml" "workflow_tool_signals"
 require_key "${WORKSPACE}/onboarding/discovery.yaml" "docs_posture_signals"
 require_key "${WORKSPACE}/onboarding/discovery.yaml" "proof_runtime_signals"
+require_key "${WORKSPACE}/onboarding/discovery.yaml" "provider_signals"
+require_key "${WORKSPACE}/onboarding/discovery.yaml" "runtime_overlay_signals"
 require_key "${WORKSPACE}/onboarding/discovery.yaml" "package_manager_signals"
 require_key "${WORKSPACE}/onboarding/discovery.yaml" "repo_notes"
 
@@ -265,6 +267,8 @@ require_key "${WORKSPACE}/onboarding/decisions.yaml" "selected_workflow_backend"
 require_key "${WORKSPACE}/onboarding/decisions.yaml" "selected_workflow_backend_detected"
 require_key "${WORKSPACE}/onboarding/decisions.yaml" "selected_profile"
 require_key "${WORKSPACE}/onboarding/decisions.yaml" "selected_runtime_posture"
+require_key "${WORKSPACE}/onboarding/decisions.yaml" "selected_provider_overlays"
+require_key "${WORKSPACE}/onboarding/decisions.yaml" "selected_runtime_overlays"
 require_key "${WORKSPACE}/onboarding/decisions.yaml" "selected_docs_posture"
 require_key "${WORKSPACE}/onboarding/decisions.yaml" "explicit_non_goals"
 
@@ -320,7 +324,18 @@ for evidence_key in \
   persistent_e2e \
   ux_ui_fullstack_surface \
   design_implementation_proof \
+  theme_template_portability \
+  visual_config_discovery \
+  theme_consumption_audit \
+  theme_swap_proof \
+  template_swap_proof \
+  componentization_audit \
+  deep_componentization_audit \
   product_critical_closure \
+  accessibility \
+  i18n_closure \
+  observability_performance \
+  query_shape \
   requested_vs_implemented \
   ai_review \
   ai_review_rendered; do
@@ -340,6 +355,8 @@ require_listish "${WORKSPACE}/onboarding/discovery.yaml" "framework_signals"
 require_listish "${WORKSPACE}/onboarding/discovery.yaml" "workflow_tool_signals"
 require_listish "${WORKSPACE}/onboarding/discovery.yaml" "docs_posture_signals"
 require_listish "${WORKSPACE}/onboarding/discovery.yaml" "proof_runtime_signals"
+require_listish "${WORKSPACE}/onboarding/discovery.yaml" "provider_signals"
+require_listish "${WORKSPACE}/onboarding/discovery.yaml" "runtime_overlay_signals"
 require_listish "${WORKSPACE}/onboarding/discovery.yaml" "package_manager_signals"
 require_listish "${WORKSPACE}/onboarding/discovery.yaml" "repo_notes"
 
@@ -349,6 +366,8 @@ require_enum "${WORKSPACE}/onboarding/decisions.yaml" "selected_workflow_backend
 require_enum "${WORKSPACE}/onboarding/decisions.yaml" "selected_profile" "unknown" "django-inertia-react" "nextjs-tailwind" "nextjs-prisma" "nextjs-drizzle" "nextjs-adonis-adminjs"
 require_enum "${WORKSPACE}/onboarding/decisions.yaml" "selected_docs_posture" "default" "custom" "none-yet"
 require_listish "${WORKSPACE}/onboarding/decisions.yaml" "selected_runtime_posture"
+require_listish "${WORKSPACE}/onboarding/decisions.yaml" "selected_provider_overlays"
+require_listish "${WORKSPACE}/onboarding/decisions.yaml" "selected_runtime_overlays"
 require_listish "${WORKSPACE}/onboarding/decisions.yaml" "explicit_non_goals"
 
 require_exact_value "${WORKSPACE}/agents/status.yaml" "schema_version" "1"

@@ -28,10 +28,10 @@ whole framework manually.
 
 ## Source
 
-Inspected external artifact:
+Inspected external artifact, recorded as redacted provenance labels:
 
-- `/home/marcelo-karval/Backup/Projetos/all-agrelli-projects/ht-agrelli-com-bot-telegram-dashboard/skills/web-reader/SKILL.md`
-- `/home/marcelo-karval/Backup/Projetos/all-agrelli-projects/ht-agrelli-com-bot-telegram-dashboard/skills/web-reader/scripts/web-reader.ts`
+- `<external-telegram-dashboard>/skills/web-reader/SKILL.md`
+- `<external-telegram-dashboard>/skills/web-reader/scripts/web-reader.ts`
 
 ## External Skill Vetting Packet
 

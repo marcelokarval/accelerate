@@ -7,8 +7,8 @@ bounded rollout plan for the standalone `accelerate` product.
 
 It governs the next architectural hardening slice after:
 
-- [accelerate-active-review-and-correction-gap-analysis.md](/home/marcelo-karval/Backup/Projetos/accelerate/docs/architecture/accelerate-active-review-and-correction-gap-analysis.md)
-- [accelerate-active-review-and-correction-proposal.md](/home/marcelo-karval/Backup/Projetos/accelerate/docs/architecture/accelerate-active-review-and-correction-proposal.md)
+- [accelerate-active-review-and-correction-gap-analysis.md](../../docs/architecture/accelerate-active-review-and-correction-gap-analysis.md)
+- [accelerate-active-review-and-correction-proposal.md](../../docs/architecture/accelerate-active-review-and-correction-proposal.md)
 
 ## Governing Scenario
 

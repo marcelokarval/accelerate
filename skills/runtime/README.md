@@ -13,3 +13,5 @@ Current skills:
 | `mcporter` | Ad-hoc MCP discovery, schema inspection, auth, direct calls, and CLI generation. |
 | `codebase-inspection` | LOC, language breakdown, and repository composition inspection. |
 | `web-content-reader` | Bounded external URL/content observation with source packets, allowlists, and no provider lock-in. |
+| `redis-patterns` | Redis cache, locks, sessions, rate limits, pub/sub, and queue-adjacent proof. |
+| `rabbitmq-patterns` | RabbitMQ/AMQP topology, acknowledgements, retries, DLQ, workers, and broker proof. |

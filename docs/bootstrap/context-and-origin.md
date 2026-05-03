@@ -69,12 +69,13 @@ The paths below are origin records, not live dependencies. Do not use them as
 governed inputs unless the material has been imported and adapted into this
 repository.
 
-Primary upstream locations:
+Primary upstream locations are retained as redacted provenance labels, not live
+paths:
 
 ```text
-/home/marcelo-karval/Backup/Projetos/prop4you/prop4you-inertia/docs/codex-skill-seeds/skills/accelerate/
-/home/marcelo-karval/Backup/Projetos/prop4you/prop4you-inertia/docs/architecture/accelerate-control-plane.md
-/home/marcelo-karval/.codex/skills/accelerate/
+<prop4you-workspace>/docs/codex-skill-seeds/skills/accelerate/
+<prop4you-workspace>/docs/architecture/accelerate-control-plane.md
+<runtime-skill-export>/accelerate/
 ```
 
 Important upstream modules at bootstrap time included:

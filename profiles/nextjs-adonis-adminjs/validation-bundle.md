@@ -88,6 +88,23 @@ Cross-cutting:
   or runtime performance are in scope
 - browser truth before persistent Playwright regression
 
+## Optional Overlay Activation
+
+When onboarding detects provider or runtime overlays, load the matching local
+skills before closure:
+
+- Redis cache, locks, sessions, or rate limits: `redis-patterns`
+- RabbitMQ/AMQP or Celery broker behavior: `rabbitmq-patterns` and/or
+  `celery-tasks`
+- BullMQ, Inngest, Trigger.dev, pg-boss, or QStash: the matching runtime skill
+- Stripe/payment: `financial-source-truth`, `payment-integration`, and
+  `stripe-integration` according to money/source-of-truth risk
+- Resend, Postmark, or Nodemailer: the matching mail runtime skill
+- S3/R2 or UploadThing: the matching storage/upload runtime skill
+
+Overlay proof must name whether the provider was detected, selected, blocked, or
+not-applicable.
+
 ## Closure Requirements
 
 Before closure, report:

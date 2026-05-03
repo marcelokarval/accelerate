@@ -35,8 +35,7 @@ semantic recovery matters.
 
 ### Target
 
-- repository:
-  `/home/marcelo-karval/Backup/Projetos/prop4you/prop4you-inertia/backend/src`
+- repository: `<prop4you-workspace>/backend/src`
 
 ### Requested Task
 

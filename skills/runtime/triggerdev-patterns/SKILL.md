@@ -17,3 +17,12 @@ Use when a project chooses Trigger.dev for background tasks or scheduled work.
 - secret/environment boundary proof
 - failure visibility and replay proof
 - user-visible state proof when tasks affect UX
+
+## Operational Closure
+
+- local/dev execution path or explicit blocked reason
+- deploy topology, task ownership, and environment secrets
+- trigger source, schedule ownership, and replay/disable posture
+- poison-run disposition after retry exhaustion
+- observability: run IDs, logs, metrics, dashboard link, or manual packet
+- fake/test strategy for deterministic regression proof

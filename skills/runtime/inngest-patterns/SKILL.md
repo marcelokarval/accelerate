@@ -17,3 +17,12 @@ Use when a project chooses Inngest for background jobs or event workflows.
 - auth/ownership proof for user-triggered jobs
 - failure visibility and replay safety
 - user-visible state or notification proof when applicable
+
+## Operational Closure
+
+- local/dev execution path or explicit blocked reason
+- deploy topology, function ownership, and environment secrets
+- trigger source, schedule ownership, and replay/disable posture
+- poison-event disposition after retry exhaustion
+- observability: run IDs, logs, metrics, dashboard link, or manual packet
+- fake/test strategy for deterministic regression proof

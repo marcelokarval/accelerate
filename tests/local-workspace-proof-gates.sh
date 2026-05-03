@@ -81,6 +81,8 @@ Browser-Proof Packet
 - surface / route family: /dashboard
 - runtime target: http://localhost:3000/dashboard
 - browser tool: Chrome DevTools
+- browser session posture: isolated
+- browser profile / isolation: --isolated
 - intensity: targeted
 - viewport coverage: desktop
 - state coverage: default
@@ -92,6 +94,7 @@ Browser-Proof Packet
 - backend/frontend state reconciliation: present
 - screenshots/captures: .tmp/browser/dashboard.png
 - defects registered: none
+- visual comparison packet: not-needed
 - residual route-family gaps: none
 - readiness impact: supports-closure
 MD
@@ -134,10 +137,51 @@ MD
 seed_required_artifacts() {
   local target="$1"
   mkdir -p "${target}/.accelerate/proof"
-  for key in implementation_proof qa_proof_lane backend_qa browser_proof requested_vs_implemented ai_review; do
-    printf '%s\n' "${key}" > "${target}/.accelerate/proof/${key}.md"
-    set_artifact "${target}" "${key}" ".accelerate/proof/${key}.md"
-  done
+  cat > "${target}/.accelerate/proof/implementation_proof.md" <<'MD'
+Implementation Proof
+
+- validation: passed
+- readiness impact: supports-closure
+MD
+  set_artifact "${target}" "implementation_proof" ".accelerate/proof/implementation_proof.md"
+  cat > "${target}/.accelerate/proof/qa_proof_lane.md" <<'MD'
+QA Proof Lane
+
+- validation: passed
+- readiness impact: supports-closure
+MD
+  set_artifact "${target}" "qa_proof_lane" ".accelerate/proof/qa_proof_lane.md"
+  cat > "${target}/.accelerate/proof/backend_qa.md" <<'MD'
+Backend QA
+
+- validation: passed
+- ownership: checked
+- query: checked
+- readiness impact: supports-closure
+MD
+  set_artifact "${target}" "backend_qa" ".accelerate/proof/backend_qa.md"
+  cat > "${target}/.accelerate/proof/requested_vs_implemented.md" <<'MD'
+Requested vs Implemented
+
+- Requested: prove evidence gates
+- Implemented: evidence gates proved
+- status: met
+- omissions: none
+MD
+  set_artifact "${target}" "requested_vs_implemented" ".accelerate/proof/requested_vs_implemented.md"
+  cat > "${target}/.accelerate/proof/ai_review.md" <<'MD'
+AI Review
+
+## Findings
+None.
+
+## Omissions
+None.
+
+## Recommendation
+Proceed.
+MD
+  set_artifact "${target}" "ai_review" ".accelerate/proof/ai_review.md"
   write_valid_browser_proof "${target}"
 }
 

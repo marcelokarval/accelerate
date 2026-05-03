@@ -488,8 +488,9 @@ In that state, `accelerate` should classify the event as a host/runtime
 sandbox bootstrap failure and stop narrating it as if each individual command
 had been denied on sensitivity grounds.
 
-The canonical host remediation lives in
-[codex-sandbox-bootstrap-apparmor-playbook.md](/home/marcelo-karval/Backup/Projetos/prop4you/prop4you-inertia/docs/operations/codex-sandbox-bootstrap-apparmor-playbook.md).
+Canonical host remediation must live in this repository before it is treated as
+Accelerate authority. Until that playbook is imported locally, treat host
+bootstrap remediation as external operational context, not control-plane law.
 
 ## Repeatable Issue Hygiene Audits
 
@@ -568,7 +569,7 @@ The root skill is the control-plane entrypoint.
 
 The primary authority for branch enforcement is:
 
-- [Accelerate Branch Enforcement Matrix](accelerate-branch-enforcement-matrix.md)
+- [Branch Enforcement Matrix](../../core/control-plane/branch-enforcement-matrix.md)
 
 Use the matrix as the source of truth for:
 
@@ -725,9 +726,9 @@ If subagents participate, also declare:
 
 See also:
 
-- [Accelerate Branch Enforcement Matrix](accelerate-branch-enforcement-matrix.md)
-- [Workflow Execution Chain Manifest](workflow-execution-chain-manifest.md)
-- [Subagent Delegation and Master Revalidation](subagent-delegation-and-master-revalidation.md)
+- [Branch Enforcement Matrix](../../core/control-plane/branch-enforcement-matrix.md)
+- [Workflow Catalog](../../core/workflows/catalog.md)
+- [Subagent Model](../../core/delegation/subagent-model.md)
 
 ## Issue Bootstrap Gate
 
@@ -904,7 +905,7 @@ Master run
 
 See also:
 
-- [Subagent Delegation and Master Revalidation](subagent-delegation-and-master-revalidation.md)
+- [Subagent Model](../../core/delegation/subagent-model.md)
 
 ## Skill Activation Rule
 
@@ -1011,8 +1012,8 @@ The final reconciliation must compare:
 
 See also:
 
-- [AI Review Recursive Scan Protocol](ai-review-recursive-scan-protocol.md)
-- [Quality Stack and Runtime Review](quality-stack-and-runtime-review.md)
+- [Segregated Review Authority](../../core/review/segregated-review-authority.md)
+- [QA And Proof Stack](../../core/runtime-packets/qa-proof-stack.md)
 
 ## Product-Critical And Runtime-Sensitive Work
 
@@ -1106,14 +1107,14 @@ exported skill runtime.
 
 ## Related Docs
 
-- [Accelerate Adjacent Skill Trigger Audit](accelerate-adjacent-skill-trigger-audit.md)
-- [Accelerate Branch Enforcement Matrix](accelerate-branch-enforcement-matrix.md)
-- [Accelerate Workflow Change Approval Gate](accelerate-workflow-change-approval-gate.md)
-- [Workflow Execution Chain Manifest](workflow-execution-chain-manifest.md)
-- [Subagent Delegation and Master Revalidation](subagent-delegation-and-master-revalidation.md)
-- [AI Review Recursive Scan Protocol](ai-review-recursive-scan-protocol.md)
-- [Quality Stack and Runtime Review](quality-stack-and-runtime-review.md)
-- [Accelerate Operational Model](../../frontends/docusaurus/docs/ai/accelerate-operational-model.md)
+- [Quick Invocation Map](../../core/control-plane/quick-invocation-map.md)
+- [Branch Enforcement Matrix](../../core/control-plane/branch-enforcement-matrix.md)
+- [Workflow Change Approval Gate](../../references/workflow-change-approval-gate.md)
+- [Workflow Catalog](../../core/workflows/catalog.md)
+- [Subagent Model](../../core/delegation/subagent-model.md)
+- [Segregated Review Authority](../../core/review/segregated-review-authority.md)
+- [QA And Proof Stack](../../core/runtime-packets/qa-proof-stack.md)
+- [Accelerate Operational Model](accelerate-pre-agents-baseline.md)
 - native `agents/` doctrine and `references/codex-agents/` historical/supporting
   references
 ### Issue Stack Workflow

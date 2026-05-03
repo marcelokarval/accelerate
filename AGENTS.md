@@ -131,16 +131,21 @@ theme at a time instead of a simultaneous light/dark product composition.
 
 ## Workflow Backend Reality
 
-This standalone repository does not yet have its own implemented workflow
-adapter stack.
+This standalone repository does not yet have a complete implemented remote
+workflow adapter stack.
 
-Until that exists:
+It does have a local workflow adapter for `.accelerate/workflow/` status,
+packets, and substitute evidence.
 
-- planning docs and architecture docs are the governing artifacts
+Until complete remote adapters exist:
+
+- planning docs, architecture docs, and the local workflow adapter are the
+  governing artifacts
 - do not invent fake adapter behavior
 - do not assume Linear is the permanent execution backend of this repository
 
-When workflow adapters land here, the repo can adopt a stricter issue policy.
+When remote workflow adapters land here, the repo can adopt a stricter remote
+issue policy.
 
 ## Napkin Policy
 

@@ -31,6 +31,14 @@ deep_componentization_audit: not-applicable
 deep_componentization_audit_artifact:
 product_critical_closure: not-applicable
 product_critical_closure_artifact:
+accessibility: not-applicable
+accessibility_artifact:
+i18n_closure: not-applicable
+i18n_closure_artifact:
+observability_performance: not-applicable
+observability_performance_artifact:
+query_shape: not-applicable
+query_shape_artifact:
 requested_vs_implemented: missing
 requested_vs_implemented_artifact:
 defect_ledger: clear

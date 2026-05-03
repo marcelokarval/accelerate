@@ -17,3 +17,12 @@ Use when a project chooses BullMQ for queue and worker execution.
 - retry, backoff, concurrency, and dead-letter/failure handling
 - worker boot and job execution proof
 - replay and abuse controls for user-triggered jobs
+
+## Operational Closure
+
+- local/dev execution path or explicit blocked reason
+- deployment topology and worker ownership
+- poison-job disposition and retry exhaustion behavior
+- schedule or producer ownership when jobs are scheduled
+- observability: job IDs, logs, metrics, failure dashboard, or manual packet
+- fake/test strategy for deterministic regression proof

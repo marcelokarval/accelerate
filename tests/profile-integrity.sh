@@ -61,13 +61,13 @@ for bundle in (root / 'profiles').glob('*/validation-bundle.md'):
             in_skills = False
         if not in_skills or not line.startswith('- '):
             continue
-        match = re.search(r'`([^`]+)`', line)
-        if not match:
+        skills = re.findall(r'`([^`]+)`', line)
+        if not skills:
             continue
-        skill = match.group(1)
-        if skill not in registered:
-            print(f"profile-integrity failed: {bundle.relative_to(root)} references unregistered skill `{skill}`", file=sys.stderr)
-            raise SystemExit(1)
+        for skill in skills:
+            if skill not in registered:
+                print(f"profile-integrity failed: {bundle.relative_to(root)} references unregistered skill `{skill}`", file=sys.stderr)
+                raise SystemExit(1)
 
 for profile in ['nextjs-prisma', 'nextjs-drizzle']:
     text = ''.join(path.read_text() for path in (root / 'profiles' / profile).glob('*.md'))

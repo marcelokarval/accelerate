@@ -195,7 +195,7 @@ The intention is to capture:
 
 ### Target Path
 
-- `/home/marcelo-karval/Backup/Projetos/prop4you/prop4you-inertia/backend/src`
+- `<target-workspace>/backend/src`
 
 ### Real Scope Outcome
 

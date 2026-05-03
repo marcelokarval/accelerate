@@ -87,6 +87,23 @@ surface:
 Use the Node runtime adapter to resolve concrete commands, and record the exact
 resolved command or browser/runtime artifact in the proof packet.
 
+## Optional Overlay Activation
+
+When onboarding detects provider or runtime overlays, load the matching local
+skills before closure:
+
+- Neon or Supabase Postgres: `neon-postgres-patterns` or
+  `supabase-postgres-patterns`
+- Redis cache, locks, sessions, or rate limits: `redis-patterns`
+- BullMQ, Inngest, Trigger.dev, pg-boss, or QStash: the matching runtime skill
+- Stripe/payment: `financial-source-truth`, `payment-integration`, and
+  `stripe-integration` according to money/source-of-truth risk
+- Resend, Postmark, or Nodemailer: the matching mail runtime skill
+- S3/R2 or UploadThing: the matching storage/upload runtime skill
+
+Overlay proof must name whether the provider was detected, selected, blocked, or
+not-applicable.
+
 ## Drizzle-Specific Closure
 
 Before closure on data-affecting work, report:

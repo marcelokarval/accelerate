@@ -101,6 +101,8 @@ framework_signals=()
 workflow_tool_signals=()
 docs_posture_signals=()
 proof_runtime_signals=()
+provider_signals=()
+runtime_overlay_signals=()
 package_manager_signals=()
 repo_notes=()
 
@@ -157,10 +159,62 @@ if has_path "package.json"; then
   if file_contains "package.json" '"adminjs"' || file_contains "package.json" '"@adminjs/'; then
     append_unique framework_signals "adminjs"
   fi
+  if file_contains "package.json" '"@neondatabase/serverless"' || file_contains "package.json" '"neon"'; then
+    append_unique provider_signals "neon"
+  fi
+  if file_contains "package.json" '"@supabase/supabase-js"' || file_contains "package.json" '"supabase"'; then
+    append_unique provider_signals "supabase"
+  fi
+  if file_contains "package.json" '"stripe"'; then
+    append_unique provider_signals "stripe"
+  fi
+  if file_contains "package.json" '"resend"'; then
+    append_unique provider_signals "resend"
+  fi
+  if file_contains "package.json" '"postmark"'; then
+    append_unique provider_signals "postmark"
+  fi
+  if file_contains "package.json" '"nodemailer"'; then
+    append_unique provider_signals "nodemailer"
+  fi
+  if file_contains "package.json" '"uploadthing"'; then
+    append_unique provider_signals "uploadthing"
+  fi
+  if file_contains "package.json" '"@aws-sdk/client-s3"' || file_contains "package.json" '"aws-sdk"'; then
+    append_unique provider_signals "s3-compatible-storage"
+  fi
+  if file_contains "package.json" '"redis"' || file_contains "package.json" '"ioredis"'; then
+    append_unique runtime_overlay_signals "redis"
+  fi
+  if file_contains "package.json" '"bullmq"'; then
+    append_unique runtime_overlay_signals "bullmq"
+  fi
+  if file_contains "package.json" '"inngest"'; then
+    append_unique runtime_overlay_signals "inngest"
+  fi
+  if file_contains "package.json" '"@trigger.dev/'; then
+    append_unique runtime_overlay_signals "triggerdev"
+  fi
+  if file_contains "package.json" '"pg-boss"'; then
+    append_unique runtime_overlay_signals "pgboss"
+  fi
+  if file_contains "package.json" '"@upstash/qstash"'; then
+    append_unique runtime_overlay_signals "qstash"
+  fi
 fi
 
 if has_path "manage.py"; then
   append_unique framework_signals "django"
+fi
+
+if has_path "celery.py" || has_glob "celery.py" || has_glob "tasks.py"; then
+  if rg -n "Celery\(" "${TARGET_ROOT}" -g '*.py' >/dev/null 2>&1; then
+    append_unique runtime_overlay_signals "celery"
+  fi
+fi
+
+if rg -n "rabbitmq|amqp://|pyamqp" "${TARGET_ROOT}" -g '*.py' -g '*.ts' -g '*.js' -g '.env*' >/dev/null 2>&1; then
+  append_unique runtime_overlay_signals "rabbitmq"
 fi
 
 if has_path "pnpm-workspace.yaml" || has_path "turbo.json" || has_path "nx.json"; then
@@ -267,6 +321,8 @@ framework_signals: $(yaml_inline_list "${framework_signals[@]}")
 workflow_tool_signals: $(yaml_inline_list "${workflow_tool_signals[@]}")
 docs_posture_signals: $(yaml_inline_list "${docs_posture_signals[@]}")
 proof_runtime_signals: $(yaml_inline_list "${proof_runtime_signals[@]}")
+provider_signals: $(yaml_inline_list "${provider_signals[@]}")
+runtime_overlay_signals: $(yaml_inline_list "${runtime_overlay_signals[@]}")
 package_manager_signals: $(yaml_inline_list "${package_manager_signals[@]}")
 repo_notes: $(yaml_inline_list "${repo_notes[@]}")
 EOF

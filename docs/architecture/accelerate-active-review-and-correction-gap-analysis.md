@@ -69,10 +69,10 @@ The new doctrine must prevent review from collapsing into:
 
 ## Compared Inputs
 
-External skill stacks inspected:
+External skill stacks inspected as redacted provenance labels:
 
-- `/home/marcelo-karval/Backup/Projetos/nextjs/launch-fullstack/skills`
-- `/home/marcelo-karval/Backup/Projetos/nextjs/sistema-financeiro/skills`
+- `<external-nextjs-launch-stack>/skills`
+- `<external-nextjs-finance-stack>/skills`
 
 Most relevant compared surfaces:
 

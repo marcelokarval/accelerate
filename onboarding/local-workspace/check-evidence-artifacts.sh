@@ -123,6 +123,8 @@ validate_browser_proof_artifact() {
     "- surface / route family:" \
     "- runtime target:" \
     "- browser tool:" \
+    "- browser session posture:" \
+    "- browser profile / isolation:" \
     "- intensity:" \
     "- viewport coverage:" \
     "- state coverage:" \
@@ -130,7 +132,10 @@ validate_browser_proof_artifact() {
     "- console evidence:" \
     "- network/server truth:" \
     "- network evidence:" \
+    "- backend/frontend state reconciliation:" \
     "- screenshots/captures:" \
+    "- defects registered:" \
+    "- visual comparison packet:" \
     "- residual route-family gaps:" \
     "- readiness impact:"; do
     require_marker "browser_proof_artifact" "${path}" "${marker}"
@@ -138,11 +143,68 @@ validate_browser_proof_artifact() {
 
   if [ "${TARGET_STATE}" = "closure-ready" ]; then
     require_marker "browser_proof_artifact" "${path}" "- readiness impact: supports-closure"
+    if grep -Eq 'browser session posture:[[:space:]]*profile-conflict-blocked' "${path}"; then
+      echo "browser_proof_artifact blocked: profile-conflict-blocked cannot support closure" >&2
+      exit 1
+    fi
   fi
 
   validate_capture_paths "browser_proof_artifact" "${path}" "screenshots/captures"
   validate_capture_paths "browser_proof_artifact" "${path}" "console evidence"
   validate_capture_paths "browser_proof_artifact" "${path}" "network evidence"
+}
+
+validate_backend_qa_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "backend_qa" "${artifact}")"
+  for marker in "Backend QA" "validation" "ownership" "query" "readiness impact:"; do
+    require_marker "backend_qa_artifact" "${path}" "${marker}"
+  done
+}
+
+validate_frontend_qa_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "frontend_qa" "${artifact}")"
+  for marker in "Frontend QA" "type" "state" "readiness impact:"; do
+    require_marker "frontend_qa_artifact" "${path}" "${marker}"
+  done
+}
+
+validate_persistent_e2e_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "persistent_e2e" "${artifact}")"
+  for marker in "Playwright" "scenario" "browser truth" "readiness impact:"; do
+    require_marker "persistent_e2e_artifact" "${path}" "${marker}"
+  done
+}
+
+validate_requested_vs_implemented_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "requested_vs_implemented" "${artifact}")"
+  for marker in "Requested" "Implemented" "status" "omissions"; do
+    require_marker "requested_vs_implemented_artifact" "${path}" "${marker}"
+  done
+}
+
+validate_ai_review_artifact() {
+  local artifact="$1"
+  local path
+  path="$(require_local_artifact "ai_review" "${artifact}")"
+  for marker in "AI Review" "Findings" "Omissions" "Recommendation"; do
+    require_marker "ai_review_artifact" "${path}" "${marker}"
+  done
+}
+
+validate_generic_lane_artifact() {
+  local key="$1"
+  local artifact="$2"
+  local path
+  path="$(require_local_artifact "${key}" "${artifact}")"
+  require_marker "${key}_artifact" "${path}" "readiness impact:"
 }
 
 validate_design_implementation_proof_artifact() {
@@ -323,6 +385,10 @@ case "${TARGET_STATE}" in
       componentization_audit
       deep_componentization_audit
       product_critical_closure
+      accessibility
+      i18n_closure
+      observability_performance
+      query_shape
       requested_vs_implemented
       ai_review
     )
@@ -353,6 +419,24 @@ for key in "${keys[@]}"; do
   case "${key}" in
     browser_proof)
       validate_browser_proof_artifact "${artifact}"
+      ;;
+    backend_qa)
+      validate_backend_qa_artifact "${artifact}"
+      ;;
+    frontend_qa)
+      validate_frontend_qa_artifact "${artifact}"
+      ;;
+    persistent_e2e)
+      validate_persistent_e2e_artifact "${artifact}"
+      ;;
+    requested_vs_implemented)
+      validate_requested_vs_implemented_artifact "${artifact}"
+      ;;
+    ai_review)
+      validate_ai_review_artifact "${artifact}"
+      ;;
+    accessibility|i18n_closure|observability_performance|query_shape)
+      validate_generic_lane_artifact "${key}" "${artifact}"
       ;;
     design_implementation_proof)
       validate_design_implementation_proof_artifact "${artifact}"

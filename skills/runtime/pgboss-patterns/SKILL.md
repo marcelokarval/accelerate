@@ -17,3 +17,12 @@ Use when a project chooses pg-boss for Postgres-backed jobs.
 - retry, timeout, and dead-letter handling
 - worker execution and connection proof
 - query/index posture for job tables
+
+## Operational Closure
+
+- local/dev execution path or explicit blocked reason
+- Postgres ownership, schema/table posture, and migration expectations
+- schedule ownership, dedupe key, retry policy, and concurrency limits
+- poison-job disposition after retry exhaustion
+- observability: job IDs, logs, metrics/query evidence, or manual packet
+- fake/test strategy for deterministic regression proof

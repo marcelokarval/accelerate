@@ -428,6 +428,8 @@ profile. The active profile must choose one schema/migration authority.
 
 Relevant profile artifacts:
 
+- [django-inertia-react](./profiles/django-inertia-react/README.md)
+- [nextjs-tailwind](./profiles/nextjs-tailwind/README.md)
 - [nextjs-prisma](./profiles/nextjs-prisma/README.md)
 - [nextjs-drizzle](./profiles/nextjs-drizzle/README.md)
 - [nextjs-adonis-adminjs](./profiles/nextjs-adonis-adminjs/README.md)

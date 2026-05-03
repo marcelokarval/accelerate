@@ -45,11 +45,22 @@ stabilize_for_execution() {
 seed_review_evidence() {
   local repo="$1"
   mkdir -p "${repo}/.accelerate/proof"
-  for key in implementation_proof qa_proof_lane; do
-    printf '%s\n' "${key}" > "${repo}/.accelerate/proof/${key}.md"
-    set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "${key}" "present"
-    set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "${key}_artifact" ".accelerate/proof/${key}.md"
-  done
+  cat > "${repo}/.accelerate/proof/implementation_proof.md" <<'MD'
+Implementation Proof
+
+- validation: passed
+- readiness impact: supports-closure
+MD
+  set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "implementation_proof" "present"
+  set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "implementation_proof_artifact" ".accelerate/proof/implementation_proof.md"
+  cat > "${repo}/.accelerate/proof/qa_proof_lane.md" <<'MD'
+QA Proof Lane
+
+- validation: passed
+- readiness impact: supports-closure
+MD
+  set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "qa_proof_lane" "present"
+  set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "qa_proof_lane_artifact" ".accelerate/proof/qa_proof_lane.md"
 }
 
 write_valid_browser_proof() {
@@ -64,6 +75,8 @@ Browser-Proof Packet
 - surface / route family: /dashboard
 - runtime target: http://localhost:3000/dashboard
 - browser tool: Chrome DevTools
+- browser session posture: isolated
+- browser profile / isolation: --isolated
 - intensity: targeted
 - viewport coverage: desktop
 - state coverage: default
@@ -75,6 +88,7 @@ Browser-Proof Packet
 - backend/frontend state reconciliation: present
 - screenshots/captures: .tmp/browser/dashboard.png
 - defects registered: none
+- visual comparison packet: not-needed
 - residual route-family gaps: none
 - readiness impact: supports-closure
 MD
@@ -86,11 +100,40 @@ seed_closure_evidence() {
   local repo="$1"
   seed_review_evidence "${repo}"
   write_valid_browser_proof "${repo}"
-  for key in backend_qa requested_vs_implemented ai_review; do
-    printf '%s\n' "${key}" > "${repo}/.accelerate/proof/${key}.md"
-    set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "${key}" "present"
-    set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "${key}_artifact" ".accelerate/proof/${key}.md"
-  done
+  cat > "${repo}/.accelerate/proof/backend_qa.md" <<'MD'
+Backend QA
+
+- validation: passed
+- ownership: checked
+- query: checked
+- readiness impact: supports-closure
+MD
+  set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "backend_qa" "present"
+  set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "backend_qa_artifact" ".accelerate/proof/backend_qa.md"
+  cat > "${repo}/.accelerate/proof/requested_vs_implemented.md" <<'MD'
+Requested vs Implemented
+
+- Requested: prove workflow identity attachment
+- Implemented: workflow identity attachment proved
+- status: met
+- omissions: none
+MD
+  set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "requested_vs_implemented" "present"
+  set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "requested_vs_implemented_artifact" ".accelerate/proof/requested_vs_implemented.md"
+  cat > "${repo}/.accelerate/proof/ai_review.md" <<'MD'
+AI Review
+
+## Findings
+None.
+
+## Omissions
+None.
+
+## Recommendation
+Proceed.
+MD
+  set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "ai_review" "present"
+  set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "ai_review_artifact" ".accelerate/proof/ai_review.md"
   set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "frontend_qa" "not-applicable"
   set_yaml_scalar "${repo}/.accelerate/status/evidence-registry.yaml" "persistent_e2e" "not-applicable"
 }
