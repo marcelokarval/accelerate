@@ -17,3 +17,10 @@ It should already make clear:
 - runtime catalog growth needs explicit planning
 
 It must not imply that promotion is already an active runtime workflow here.
+
+## Current Planning Packets
+
+- `template-promotion-readiness-packet.md`
+
+Use this packet before moving any governed agent template beyond
+`template-only`.

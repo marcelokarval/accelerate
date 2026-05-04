@@ -29,3 +29,7 @@ Every template must:
 - avoid claiming final closure or `Done`
 
 Templates become live only through a runtime adapter and promotion process.
+
+Before any template moves beyond `template-only`, complete
+`../../planning/promotion/template-promotion-readiness-packet.md` and satisfy
+`../promotion/template-promotion-readiness.md`.

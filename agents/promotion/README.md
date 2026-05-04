@@ -27,11 +27,13 @@ This is where the platform should later define the real transition from:
 The first native contract artifact now lives in:
 
 - `promotion-contract.md`
+- `template-promotion-readiness.md`
 - `execution-contract.md`
 - `return-contract.md`
 
 Read in this order:
 
 1. `promotion-contract.md`
-2. `execution-contract.md`
-3. `return-contract.md`
+2. `template-promotion-readiness.md`
+3. `execution-contract.md`
+4. `return-contract.md`
