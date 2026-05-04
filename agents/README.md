@@ -40,6 +40,7 @@ The first native doctrine rehome now lives under:
 - `promotion/execution-contract.md`
 - `promotion/promotion-contract.md`
 - `promotion/return-contract.md`
+- `templates/README.md`
 
 The runtime configuration artifact `openai.yaml` remains here because it is
 already part of the current surface.
