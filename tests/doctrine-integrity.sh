@@ -38,6 +38,7 @@ require_file "tests/agent-family-compatibility.sh"
 require_file "tests/physical-agent-runtime-adapter.sh"
 require_file "tests/agent-template-integrity.sh"
 require_file "tests/template-promotion-readiness.sh"
+require_file "tests/promotion-replay-fixtures.sh"
 require_file "tests/one-shot-protocol-closure.sh"
 require_file "tests/design-md-corpus-integrity.sh"
 require_file "tests/design-md-corpus-semantic.sh"
@@ -179,6 +180,7 @@ bash tests/agent-family-compatibility.sh
 bash tests/physical-agent-runtime-adapter.sh
 bash tests/agent-template-integrity.sh
 bash tests/template-promotion-readiness.sh
+bash tests/promotion-replay-fixtures.sh
 bash tests/one-shot-protocol-closure.sh
 bash tests/design-md-corpus-integrity.sh
 bash tests/design-md-corpus-semantic.sh

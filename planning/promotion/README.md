@@ -21,6 +21,9 @@ It must not imply that promotion is already an active runtime workflow here.
 ## Current Planning Packets
 
 - `template-promotion-readiness-packet.md`
+- `replay-fixtures/`
 
 Use this packet before moving any governed agent template beyond
 `template-only`.
+
+Use replay fixtures before claiming `empirically-replayed` for any template.
