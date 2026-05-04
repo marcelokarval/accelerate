@@ -23,6 +23,32 @@ outside this table.
 | `trust-anti-abuse-reviewer` | review / prove | auth, session, billing, export, deletion, upload, ownership-sensitive flows | misuse, replay, enumeration, privilege drift | read-only by default | delegate-possible reviewer | anti-abuse and security review skills |
 | `legacy-truth-analyst` | frame / plan | donor-system or legacy truth extraction | adaptation drift, false rewrites | read-only | specialist sidecar | `legacy-first-protocol`, `legacy-transplant` |
 
+## Role Family Compatibility Map
+
+The older capability families above are concrete candidate families. The newer
+orchestrator routing layer uses normalized role families in assignment packets.
+Adapters must preserve both truths:
+
+- `role family` is the portable routing category
+- `capability family` is the concrete promoted or candidate agent family
+
+Use this map when binding a normalized role family to a physical agent:
+
+| Normalized role family | Compatible capability families |
+| --- | --- |
+| `architecture` | `django-inertia-technical-planner`, `django-inertia-contract-integrator`, `legacy-truth-analyst` when legacy architecture truth is active |
+| `backend` | `django-domain-implementer`, `django-inertia-contract-integrator` |
+| `frontend` | `inertia-react-ui-implementer`, `django-inertia-contract-integrator` when prop/page contracts dominate |
+| `qa-regression` | `runtime-proof-auditor` |
+| `security` | `trust-anti-abuse-reviewer` |
+| `governance` | `lifecycle-product-manager`, `django-inertia-technical-planner` when planning/governance is bounded |
+| `provider-boundary` | `legacy-truth-analyst` only when provider/legacy truth extraction is the bounded slice; otherwise treat as a gap |
+| `product-runtime` | `runtime-proof-auditor`, `lifecycle-product-manager` for read-only product acceptance framing |
+
+If a role family maps to more than one capability family, choose by dominant
+risk and write scope. Do not select a concrete capability family that cannot
+honor the base agent contract.
+
 ## Ownership Classes
 
 ### Root-owned

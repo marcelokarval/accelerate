@@ -10,6 +10,7 @@ Examples:
 - Chrome DevTools for browser truth
 - generic browser proof helpers for local screenshot/console/network capture
 - agent-browser-style CLI automation for bounded browser operations
+- physical agent runtime delegation when a real agent runtime exists
 - Playwright for persistent regression proof
 - web content reader for bounded external source observation
 - locale-pack parity checks for i18n proof
@@ -27,11 +28,12 @@ Native pre-agents reading order:
 3. `node/README.md`
 4. `chrome-devtools/README.md`
 5. `agent-browser/README.md`
-6. `playwright/README.md`
-7. `web-content-reader/README.md`
-8. `locale-pack-parity/README.md`
-9. `proof-fixtures/README.md`
-10. `tailwind/theme-token-mapping.md`
+6. `physical-agent/README.md`
+7. `playwright/README.md`
+8. `web-content-reader/README.md`
+9. `locale-pack-parity/README.md`
+10. `proof-fixtures/README.md`
+11. `tailwind/theme-token-mapping.md`
 
 ## Current Runtime Expansion
 

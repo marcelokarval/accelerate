@@ -74,6 +74,11 @@ Choose based on the real center of gravity:
 
 Ownership and risk outrank the task title.
 
+When the runtime uses normalized role families from assignment packets, map them
+through `capability-matrix.md#role-family-compatibility-map` before binding a
+physical agent. The selected physical family must still honor the base agent
+contract, write scope, return contract, and cleanup expectation.
+
 ## Composition Rules
 
 Prefer two-family compositions only when they materially improve honesty:

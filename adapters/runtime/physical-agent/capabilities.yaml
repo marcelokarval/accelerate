@@ -1,0 +1,20 @@
+name: physical-agent
+type: runtime
+status: planned
+authority_boundary: runtime-adapter-subordinate-to-accelerate
+allowed_tools: []
+suppressed_capabilities:
+  - final-closure
+  - issue-topology
+  - role-family-selection
+  - review-of-review
+validation_command: tests/physical-agent-runtime-adapter.sh
+proof_artifacts:
+  - physical-agent-runtime-proof-packet
+  - task-execution-return-packet
+  - skeptical-review-packet
+  - agent-return-packet
+fallback:
+  - virtual-subagent-packets
+privacy_notes: physical agent transcripts, handles, evidence roots, and returned artifacts may contain sensitive local proof
+command: not-implemented-yet
