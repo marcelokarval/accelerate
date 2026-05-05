@@ -33,5 +33,7 @@ fi
 command -v gh >/dev/null 2>&1 || { echo "gh CLI is not installed" >&2; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "gh auth is not available" >&2; exit 1; }
 mkdir -p "$(dirname "${root}/${output_path}")"
-gh -R "${repo_slug}" pr view "${branch}" --json number,url,headRefName,baseRefName,state,title,author,mergeable,reviewDecision,statusCheckRollup,comments >"${root}/${output_path}"
+pr_json="$(gh -R "${repo_slug}" pr view "${branch}" --json number,url,headRefName,baseRefName,state,title,author,mergeable,reviewDecision,statusCheckRollup,comments)"
+printf '%s\n' "${pr_json}" | "$(dirname "${BASH_SOURCE[0]}")/validate-github-pr-response.sh" "${branch}" >/dev/null
+printf '%s\n' "${pr_json}" >"${root}/${output_path}"
 printf '%s\n' "${output_path}"

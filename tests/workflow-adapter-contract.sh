@@ -139,6 +139,7 @@ for manifest in adapters/workflow/*/capabilities.yaml; do
     require_file "onboarding/local-workspace/attach-github-pr-artifact.sh"
     require_file "onboarding/local-workspace/create-github-pr-adapter.sh"
     require_file "onboarding/local-workspace/rehydrate-github-pr-adapter.sh"
+    require_file "onboarding/local-workspace/validate-github-pr-response.sh"
     require_file "onboarding/local-workspace/write-github-pr-recovery.sh"
     require_file "onboarding/local-workspace/check-ship-readiness.sh"
     require_file "onboarding/local-workspace/check-production-readiness.sh"
