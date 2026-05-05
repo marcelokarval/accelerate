@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "adapter": "github-pr",
+  "ready": false,
+  "template": true,
+  "missing_requirements": [
+    "run check-ship-readiness.sh against a real GitHub PR before production readiness"
+  ]
+}

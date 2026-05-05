@@ -16,3 +16,9 @@ adapter and explicit production-risk approval when production state may change.
 
 Core docs may define this gate, but executable land/deploy behavior belongs in
 workflow/runtime adapters.
+
+The local production preflight is
+`onboarding/local-workspace/check-production-readiness.sh`. It does not deploy
+or merge. It composes closure evidence, ship readiness, deploy verification, and
+explicit production-risk approval before any adapter may claim production-ready
+posture.
