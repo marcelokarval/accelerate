@@ -41,6 +41,7 @@ require_file "tests/subagent-assignment-builder.sh"
 require_file "tests/template-promotion-readiness.sh"
 require_file "tests/promotion-replay-fixtures.sh"
 require_file "tests/production-readiness-gate.sh"
+require_file "tests/github-pr-adapter-safety.sh"
 require_file "tests/one-shot-protocol-closure.sh"
 require_file "tests/design-md-corpus-integrity.sh"
 require_file "tests/design-md-corpus-semantic.sh"
@@ -185,6 +186,7 @@ bash tests/subagent-assignment-builder.sh
 bash tests/template-promotion-readiness.sh
 bash tests/promotion-replay-fixtures.sh
 bash tests/production-readiness-gate.sh
+bash tests/github-pr-adapter-safety.sh
 bash tests/one-shot-protocol-closure.sh
 bash tests/design-md-corpus-integrity.sh
 bash tests/design-md-corpus-semantic.sh

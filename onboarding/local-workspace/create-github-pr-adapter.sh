@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [ "$#" -lt 3 ]; then
+if [ "$#" -lt 3 ] || [ "$#" -gt 4 ]; then
   echo "usage: $0 /path/to/target-repo title body-file [--dry-run]" >&2
   exit 1
 fi
@@ -10,6 +10,10 @@ root="$(cd "$1" && pwd)"
 title="$2"
 body_file="$3"
 mode="${4:-}"
+if [ -n "${mode}" ] && [ "${mode}" != "--dry-run" ]; then
+  echo "invalid mode: ${mode}. expected --dry-run" >&2
+  exit 1
+fi
 
 case "${body_file}" in /*|*..*) echo "body file must be relative and cannot contain '..': ${body_file}" >&2; exit 1 ;; esac
 [ -f "${root}/${body_file}" ] || { echo "missing body file: ${body_file}" >&2; exit 1; }

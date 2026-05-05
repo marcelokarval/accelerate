@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [ "$#" -lt 3 ]; then
+if [ "$#" -lt 3 ] || [ "$#" -gt 4 ]; then
   echo "usage: $0 /path/to/target-repo artifact-path comment-title [--dry-run]" >&2
   exit 1
 fi
@@ -10,6 +10,10 @@ root="$(cd "$1" && pwd)"
 artifact_path="$2"
 comment_title="$3"
 mode="${4:-}"
+if [ -n "${mode}" ] && [ "${mode}" != "--dry-run" ]; then
+  echo "invalid mode: ${mode}. expected --dry-run" >&2
+  exit 1
+fi
 
 case "${artifact_path}" in /*|*..*) echo "artifact path must be relative and cannot contain '..': ${artifact_path}" >&2; exit 1 ;; esac
 artifact_abs="${root}/${artifact_path}"

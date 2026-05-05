@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+WORK_ROOT="${ROOT}/.tmp/github-pr-adapter-safety"
+SCRIPTS="${ROOT}/onboarding/local-workspace"
+
+fail() {
+  printf 'github-pr-adapter-safety failed: %s\n' "$1" >&2
+  exit 1
+}
+
+assert_contains() {
+  local output="$1"
+  local expected="$2"
+  printf '%s\n' "${output}" | rg -F -- "${expected}" >/dev/null || fail "missing expected text: ${expected}"
+}
+
+assert_blocks() {
+  local name="$1"
+  local expected="$2"
+  shift 2
+  if "$@" >"${WORK_ROOT}/${name}.out" 2>&1; then
+    fail "${name} unexpectedly passed"
+  fi
+  assert_contains "$(<"${WORK_ROOT}/${name}.out")" "${expected}"
+}
+
+rm -rf "${WORK_ROOT}"
+mkdir -p "${WORK_ROOT}/repo"
+
+bash "${SCRIPTS}/emit-v2.sh" "${WORK_ROOT}/repo" greenfield >/dev/null
+git -C "${WORK_ROOT}/repo" init >/dev/null
+git -C "${WORK_ROOT}/repo" remote add origin https://github.com/example/repo.git
+perl -0pi -e 's#export: blocked-unless-approved#export: approved#' "${WORK_ROOT}/repo/.accelerate/status/privacy-map.yaml"
+
+bash "${SCRIPTS}/read-github-pr-adapter.sh" "${WORK_ROOT}/repo" --dry-run >/dev/null
+bash "${SCRIPTS}/create-github-pr-adapter.sh" "${WORK_ROOT}/repo" "Test PR" ".accelerate/review/qa-report.md" --dry-run >/dev/null
+bash "${SCRIPTS}/attach-github-pr-artifact.sh" "${WORK_ROOT}/repo" ".accelerate/review/qa-report.md" "QA Report" --dry-run >/dev/null
+bash "${SCRIPTS}/rehydrate-github-pr-adapter.sh" "${WORK_ROOT}/repo" ".accelerate/workflow/github-pr-rehydration.json" --dry-run >/dev/null
+bash "${SCRIPTS}/check-ship-readiness.sh" "${WORK_ROOT}/repo" ".accelerate/review/ship-readiness.json" --dry-run >/dev/null
+bash "${SCRIPTS}/land-github-pr.sh" "${WORK_ROOT}/repo" ".accelerate/review/ship-readiness.json" --dry-run >/dev/null
+
+assert_blocks "read-extra" "usage:" bash "${SCRIPTS}/read-github-pr-adapter.sh" "${WORK_ROOT}/repo" --dry-run extra
+assert_blocks "read-invalid-mode" "invalid mode:" bash "${SCRIPTS}/read-github-pr-adapter.sh" "${WORK_ROOT}/repo" --bad-mode
+
+assert_blocks "create-extra" "usage:" bash "${SCRIPTS}/create-github-pr-adapter.sh" "${WORK_ROOT}/repo" "Test PR" ".accelerate/review/qa-report.md" --dry-run extra
+assert_blocks "create-invalid-mode" "invalid mode:" bash "${SCRIPTS}/create-github-pr-adapter.sh" "${WORK_ROOT}/repo" "Test PR" ".accelerate/review/qa-report.md" --bad-mode
+
+assert_blocks "attach-extra" "usage:" bash "${SCRIPTS}/attach-github-pr-artifact.sh" "${WORK_ROOT}/repo" ".accelerate/review/qa-report.md" "QA Report" --dry-run extra
+assert_blocks "attach-invalid-mode" "invalid mode:" bash "${SCRIPTS}/attach-github-pr-artifact.sh" "${WORK_ROOT}/repo" ".accelerate/review/qa-report.md" "QA Report" --bad-mode
+
+assert_blocks "rehydrate-extra" "usage:" bash "${SCRIPTS}/rehydrate-github-pr-adapter.sh" "${WORK_ROOT}/repo" ".accelerate/workflow/github-pr-rehydration.json" --dry-run extra
+assert_blocks "rehydrate-dash-path" "cannot start with '-'" bash "${SCRIPTS}/rehydrate-github-pr-adapter.sh" "${WORK_ROOT}/repo" --bad-mode
+
+assert_blocks "ship-extra" "usage:" bash "${SCRIPTS}/check-ship-readiness.sh" "${WORK_ROOT}/repo" ".accelerate/review/ship-readiness.json" --dry-run extra
+assert_blocks "ship-dash-path" "cannot start with '-'" bash "${SCRIPTS}/check-ship-readiness.sh" "${WORK_ROOT}/repo" --bad-mode
+
+assert_blocks "land-extra" "usage:" bash "${SCRIPTS}/land-github-pr.sh" "${WORK_ROOT}/repo" ".accelerate/review/ship-readiness.json" --dry-run extra
+assert_blocks "land-dash-path" "cannot start with '-'" bash "${SCRIPTS}/land-github-pr.sh" "${WORK_ROOT}/repo" --bad-mode
+
+printf 'github pr adapter safety passed\n'

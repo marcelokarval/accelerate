@@ -1,13 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [ "$#" -lt 1 ]; then
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
   echo "usage: $0 /path/to/target-repo [--dry-run]" >&2
   exit 1
 fi
 
 root="$(cd "$1" && pwd)"
 mode="${2:-}"
+if [ -n "${mode}" ] && [ "${mode}" != "--dry-run" ]; then
+  echo "invalid mode: ${mode}. expected --dry-run" >&2
+  exit 1
+fi
 
 git -C "${root}" rev-parse --is-inside-work-tree >/dev/null 2>&1 || { echo "target is not a git repository" >&2; exit 1; }
 origin_url="$(git -C "${root}" remote get-url origin 2>/dev/null || true)"

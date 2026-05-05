@@ -160,6 +160,12 @@ make_ready_repo() {
   seed_production_artifacts "${repo}"
 }
 
+clone_ready_repo() {
+  local repo="$1"
+  rm -rf "${repo}"
+  cp -R "${ready_repo}" "${repo}"
+}
+
 rm -rf "${WORK_ROOT}"
 mkdir -p "${WORK_ROOT}"
 
@@ -176,7 +182,7 @@ make_ready_repo "${ready_repo}"
 assert_contains "$(bash "${SCRIPTS}/check-production-readiness.sh" "${ready_repo}")" "production readiness passed"
 
 missing_ship_repo="${WORK_ROOT}/missing-ship"
-make_ready_repo "${missing_ship_repo}"
+clone_ready_repo "${missing_ship_repo}"
 rm -f "${missing_ship_repo}/.accelerate/review/ship-readiness.json"
 if bash "${SCRIPTS}/check-production-readiness.sh" "${missing_ship_repo}" >"${WORK_ROOT}/missing-ship.out" 2>&1; then
   fail "missing ship readiness unexpectedly passed"
@@ -184,7 +190,7 @@ fi
 assert_contains "$(<"${WORK_ROOT}/missing-ship.out")" "missing ship readiness packet"
 
 false_ship_repo="${WORK_ROOT}/false-ship"
-make_ready_repo "${false_ship_repo}"
+clone_ready_repo "${false_ship_repo}"
 printf '%s\n' '{"schema_version":1,"ready":false}' > "${false_ship_repo}/.accelerate/review/ship-readiness.json"
 if bash "${SCRIPTS}/check-production-readiness.sh" "${false_ship_repo}" >"${WORK_ROOT}/false-ship.out" 2>&1; then
   fail "false ship readiness unexpectedly passed"
@@ -192,7 +198,7 @@ fi
 assert_contains "$(<"${WORK_ROOT}/false-ship.out")" "ship readiness ready must be true"
 
 dry_ship_repo="${WORK_ROOT}/dry-ship"
-make_ready_repo "${dry_ship_repo}"
+clone_ready_repo "${dry_ship_repo}"
 printf '%s\n' '{"schema_version":1,"mode":"dry-run","ready":true}' > "${dry_ship_repo}/.accelerate/review/ship-readiness.json"
 if bash "${SCRIPTS}/check-production-readiness.sh" "${dry_ship_repo}" >"${WORK_ROOT}/dry-ship.out" 2>&1; then
   fail "dry-run ship readiness unexpectedly passed"
@@ -200,7 +206,7 @@ fi
 assert_contains "$(<"${WORK_ROOT}/dry-ship.out")" "ship readiness cannot be dry-run"
 
 missing_deploy_repo="${WORK_ROOT}/missing-deploy"
-make_ready_repo "${missing_deploy_repo}"
+clone_ready_repo "${missing_deploy_repo}"
 rm -f "${missing_deploy_repo}/.accelerate/review/deploy-verification-packet.md"
 if bash "${SCRIPTS}/check-production-readiness.sh" "${missing_deploy_repo}" >"${WORK_ROOT}/missing-deploy.out" 2>&1; then
   fail "missing deploy packet unexpectedly passed"
@@ -208,7 +214,7 @@ fi
 assert_contains "$(<"${WORK_ROOT}/missing-deploy.out")" "missing deploy verification packet"
 
 incomplete_deploy_repo="${WORK_ROOT}/incomplete-deploy"
-make_ready_repo "${incomplete_deploy_repo}"
+clone_ready_repo "${incomplete_deploy_repo}"
 printf '%s\n' '# Deploy Verification Packet' '- provider adapter: github-pr' > "${incomplete_deploy_repo}/.accelerate/review/deploy-verification-packet.md"
 if bash "${SCRIPTS}/check-production-readiness.sh" "${incomplete_deploy_repo}" >"${WORK_ROOT}/incomplete-deploy.out" 2>&1; then
   fail "incomplete deploy packet unexpectedly passed"
@@ -216,7 +222,7 @@ fi
 assert_contains "$(<"${WORK_ROOT}/incomplete-deploy.out")" "deploy verification packet missing marker"
 
 placeholder_deploy_repo="${WORK_ROOT}/placeholder-deploy"
-make_ready_repo "${placeholder_deploy_repo}"
+clone_ready_repo "${placeholder_deploy_repo}"
 cat > "${placeholder_deploy_repo}/.accelerate/review/deploy-verification-packet.md" <<'MD'
 # Deploy Verification Packet
 
@@ -234,7 +240,7 @@ fi
 assert_contains "$(<"${WORK_ROOT}/placeholder-deploy.out")" "deploy verification packet contains blocked marker"
 
 blocked_deploy_repo="${WORK_ROOT}/blocked-deploy"
-make_ready_repo "${blocked_deploy_repo}"
+clone_ready_repo "${blocked_deploy_repo}"
 perl -0pi -e 's#production readiness result: ready#production readiness result: blocked#m' "${blocked_deploy_repo}/.accelerate/review/deploy-verification-packet.md"
 if bash "${SCRIPTS}/check-production-readiness.sh" "${blocked_deploy_repo}" >"${WORK_ROOT}/blocked-deploy.out" 2>&1; then
   fail "blocked deploy result unexpectedly passed"
@@ -242,7 +248,7 @@ fi
 assert_contains "$(<"${WORK_ROOT}/blocked-deploy.out")" "production readiness result: ready"
 
 missing_approval_repo="${WORK_ROOT}/missing-approval"
-make_ready_repo "${missing_approval_repo}"
+clone_ready_repo "${missing_approval_repo}"
 rm -f "${missing_approval_repo}/.accelerate/review/production-risk-approval.md"
 if bash "${SCRIPTS}/check-production-readiness.sh" "${missing_approval_repo}" >"${WORK_ROOT}/missing-approval.out" 2>&1; then
   fail "missing approval unexpectedly passed"
@@ -250,7 +256,7 @@ fi
 assert_contains "$(<"${WORK_ROOT}/missing-approval.out")" "missing production risk approval"
 
 bad_approval_repo="${WORK_ROOT}/bad-approval"
-make_ready_repo "${bad_approval_repo}"
+clone_ready_repo "${bad_approval_repo}"
 printf '%s\n' '# Production Risk Approval' '- production-risk approval: pending' > "${bad_approval_repo}/.accelerate/review/production-risk-approval.md"
 if bash "${SCRIPTS}/check-production-readiness.sh" "${bad_approval_repo}" >"${WORK_ROOT}/bad-approval.out" 2>&1; then
   fail "bad approval unexpectedly passed"
