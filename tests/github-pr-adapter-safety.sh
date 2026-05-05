@@ -46,6 +46,9 @@ assert_blocks "read-invalid-mode" "invalid mode:" bash "${SCRIPTS}/read-github-p
 
 assert_blocks "create-extra" "usage:" bash "${SCRIPTS}/create-github-pr-adapter.sh" "${WORK_ROOT}/repo" "Test PR" ".accelerate/review/qa-report.md" --dry-run extra
 assert_blocks "create-invalid-mode" "invalid mode:" bash "${SCRIPTS}/create-github-pr-adapter.sh" "${WORK_ROOT}/repo" "Test PR" ".accelerate/review/qa-report.md" --bad-mode
+git -C "${WORK_ROOT}/repo" branch -M main
+assert_blocks "create-from-main" "refusing to create a PR from protected base branch" env ACCELERATE_ALLOW_GITHUB_PR_CREATE=1 bash "${SCRIPTS}/create-github-pr-adapter.sh" "${WORK_ROOT}/repo" "Test PR" ".accelerate/review/qa-report.md"
+git -C "${WORK_ROOT}/repo" checkout -B feature/adapter-safety >/dev/null 2>&1
 
 assert_blocks "attach-extra" "usage:" bash "${SCRIPTS}/attach-github-pr-artifact.sh" "${WORK_ROOT}/repo" ".accelerate/review/qa-report.md" "QA Report" --dry-run extra
 assert_blocks "attach-invalid-mode" "invalid mode:" bash "${SCRIPTS}/attach-github-pr-artifact.sh" "${WORK_ROOT}/repo" ".accelerate/review/qa-report.md" "QA Report" --bad-mode

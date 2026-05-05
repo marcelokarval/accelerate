@@ -32,6 +32,7 @@ if [ "${mode}" = "--dry-run" ]; then
   exit 0
 fi
 
+[ "${branch}" != "main" ] && [ "${branch}" != "master" ] || { echo "refusing to create a PR from protected base branch: ${branch}" >&2; exit 2; }
 command -v gh >/dev/null 2>&1 || { echo "gh CLI is not installed" >&2; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "gh auth is not available" >&2; exit 1; }
 [ "${ACCELERATE_ALLOW_GITHUB_PR_CREATE:-}" = "1" ] || { echo "GitHub PR creation is blocked unless ACCELERATE_ALLOW_GITHUB_PR_CREATE=1" >&2; exit 2; }
