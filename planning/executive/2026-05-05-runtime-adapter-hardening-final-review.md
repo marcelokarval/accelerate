@@ -157,7 +157,7 @@ Resolution:
 - No real GitHub, Linear, or production remote writes were executed. This is intentional and aligned with the plan: remote writes remain opt-in and require live provider proof before statuses can be promoted.
 - Some capability manifests still contain planned/blocked/substitute states. This is correct honesty, not unfinished implementation, because live adapter proof is absent.
 - Production readiness is now semantically stricter, but it still validates packet text/contracts rather than observing a real provider deployment. Promotion to live production automation still requires provider-side proof.
-- The worktree remains intentionally dirty/uncommitted; no commit was requested or performed.
+- The hardening run was later committed and pushed as `4ba97bb Harden runtime adapter governance`; the repository-local proof boundary still remains separate from live remote-provider proof.
 
 ## Final Verdict
 
