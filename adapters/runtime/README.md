@@ -34,6 +34,7 @@ Native pre-agents reading order:
 9. `locale-pack-parity/README.md`
 10. `proof-fixtures/README.md`
 11. `tailwind/theme-token-mapping.md`
+12. `host-export-contract.md`
 
 ## Current Runtime Expansion
 

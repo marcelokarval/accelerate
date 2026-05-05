@@ -67,9 +67,21 @@ Branch Entry Packet
 - active persona: <persona or root owner>
 - active stack: <layers/surfaces>
 - active skills: <skills actually active>
-- active ADRs / references:
-  - <path>
-  - <path>
+- authority set:
+  - governing-authority:
+    - <path>
+  - supporting-reference:
+    - <path|none>
+  - decision-artifact:
+    - <path|none>
+  - backend-authority:
+    - <adapter/state path|none>
+  - generated-export:
+    - <path|none>
+  - forbidden-authority:
+    - <source excluded|none>
+- authority decision: <what this set is allowed to decide>
+- authority gaps: <missing governing source|none>
 - local workspace:
   - .accelerate=<present|absent|n/a>
   - action=<none|required-init|required-reentry|required-reonboarding|reused>
@@ -120,10 +132,15 @@ Runtime Delta Packet
 
 - skills added: <...>
 - skills removed: <...>
-- ADRs / references added:
-  - <path>
-- ADRs / references removed:
-  - <path>
+- authority set added:
+  - governing-authority: <...>
+  - supporting-reference: <...>
+  - decision-artifact: <...>
+  - backend-authority: <...>
+  - generated-export: <...>
+  - forbidden-authority: <...>
+- authority set removed:
+  - <class>: <path|source>
 - gates opened: <...>
 - gates passed: <...>
 - gates failed: <...>

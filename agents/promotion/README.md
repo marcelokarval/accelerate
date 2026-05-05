@@ -28,6 +28,7 @@ The first native contract artifact now lives in:
 
 - `promotion-contract.md`
 - `template-promotion-readiness.md`
+- `install-export-contract.md`
 - `execution-contract.md`
 - `return-contract.md`
 
@@ -35,5 +36,6 @@ Read in this order:
 
 1. `promotion-contract.md`
 2. `template-promotion-readiness.md`
-3. `execution-contract.md`
-4. `return-contract.md`
+3. `install-export-contract.md`
+4. `execution-contract.md`
+5. `return-contract.md`

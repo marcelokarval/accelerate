@@ -125,6 +125,17 @@ patterns without adopting gstack as authority:
 | `.accelerate/review/design-feedback.json` | Design feedback packet. |
 | `.accelerate/review/design-approved.json` | Design approval packet. |
 | `.accelerate/review/design-baseline.json` | Design baseline packet. |
+| `.accelerate/review/deploy-verification-packet.md` | Optional production/deploy verification packet; required only when production readiness is in scope. |
+| `.accelerate/review/ship-readiness.json` | Optional provider ship-readiness packet; required only when production readiness is in scope. |
+| `.accelerate/review/production-risk-approval.md` | Optional production risk approval packet; required only when production readiness is in scope. |
+
+Production readiness is a V2-visible status surface but not a default closure
+requirement. Ordinary local closure continues to be governed by the evidence
+registry and closure gate. When deploy/production is explicitly in scope,
+`production_readiness` and `deploy_verification` must be promoted from
+`not-applicable`/`not-requested` to `present`/`ready` only after the production
+readiness checker validates ship readiness, the deploy verification packet, and
+the production risk approval packet.
 
 ## Scope Boundary
 
@@ -132,7 +143,7 @@ The V2 materialization must not silently expand into V3.
 
 Before V3 is explicitly adopted, do not add persisted local surfaces for:
 
-- workflow mapping
+- remote workflow mapping
 - runtime capability registry
 - profile overrides
 - long-form local memory beyond the minimal `status/` layer

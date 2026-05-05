@@ -20,6 +20,16 @@ writes:
     recovery: onboarding/local-workspace/write-github-pr-recovery.sh
     live_proof: dated-proof-appendix/github-pr-comment-artifact-2026-04-27
     structured_write: yes
+  - id: github-pr-closure-comment
+    command: onboarding/local-workspace/comment-github-pr-closure.sh
+    provider: github
+    operation: closure-comment
+    status: planned
+    requires_opt_in: ACCELERATE_ALLOW_GITHUB_PR_CLOSURE_COMMENT
+    privacy_gate: required
+    recovery: onboarding/local-workspace/write-github-pr-recovery.sh
+    live_proof: none
+    structured_write: yes
   - id: github-pr-land
     command: onboarding/local-workspace/land-github-pr.sh
     provider: github

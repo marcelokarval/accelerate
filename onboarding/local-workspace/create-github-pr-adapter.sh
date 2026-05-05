@@ -21,18 +21,19 @@ body_real="$(readlink -f "${root}/${body_file}")"
 case "${body_real}" in "${root}"|"${root}"/*) ;; *) echo "resolved body file escapes target repo: ${body_file}" >&2; exit 1 ;; esac
 bash "$(dirname "${BASH_SOURCE[0]}")/require-export-approved.sh" "${root}" "${body_file}"
 
-origin_url="$(git -C "${root}" remote get-url origin 2>/dev/null || true)"
-case "${origin_url}" in git@github.com:*|https://github.com/*) ;; *) echo "origin is not a GitHub remote: ${origin_url}" >&2; exit 1 ;; esac
-repo_slug="$(printf '%s' "${origin_url}" | sed -E 's#(git@github.com:|https://github.com/)##; s#\.git$##')"
+repo_slug="$("$(dirname "${BASH_SOURCE[0]}")/resolve-github-repo-slug.sh" "${root}")"
 branch="$(git -C "${root}" branch --show-current 2>/dev/null || true)"
 [ -n "${branch}" ] || { echo "cannot determine current branch" >&2; exit 1; }
 
+base_branch="${ACCELERATE_GITHUB_PR_BASE:-main}"
+case "${base_branch}" in -*|*..*|*/*|"") echo "invalid base branch: ${base_branch}" >&2; exit 1 ;; esac
+
 if [ "${mode}" = "--dry-run" ]; then
-  printf '{"adapter":"github-pr","mode":"dry-run","repo":"%s","branch":"%s","title":"%s","remote_calls":false}\n' "${repo_slug}" "${branch}" "${title}"
+  printf '{"adapter":"github-pr","mode":"dry-run","repo":"%s","branch":"%s","base":"%s","title":"%s","remote_calls":false}\n' "${repo_slug}" "${branch}" "${base_branch}" "${title}"
   exit 0
 fi
 
-[ "${branch}" != "main" ] && [ "${branch}" != "master" ] || { echo "refusing to create a PR from protected base branch: ${branch}" >&2; exit 2; }
+[ "${branch}" != "${base_branch}" ] && [ "${branch}" != "main" ] && [ "${branch}" != "master" ] || { echo "refusing to create a PR from protected base branch: ${branch}" >&2; exit 2; }
 command -v gh >/dev/null 2>&1 || { echo "gh CLI is not installed" >&2; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "gh auth is not available" >&2; exit 1; }
 [ "${ACCELERATE_ALLOW_GITHUB_PR_CREATE:-}" = "1" ] || { echo "GitHub PR creation is blocked unless ACCELERATE_ALLOW_GITHUB_PR_CREATE=1" >&2; exit 2; }
@@ -41,4 +42,4 @@ if ! git -C "${root}" rev-parse --abbrev-ref --symbolic-full-name '@{u}' >/dev/n
   git -C "${root}" push -u origin "${branch}"
 fi
 
-gh -R "${repo_slug}" pr create --head "${branch}" --base main --title "${title}" --body-file "${body_real}"
+gh -R "${repo_slug}" pr create --head "${branch}" --base "${base_branch}" --title "${title}" --body-file "${body_real}"

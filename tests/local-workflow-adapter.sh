@@ -182,14 +182,28 @@ assert_contains "${transition_output}" "to in_progress"
 assert_contains "$(grep '^lifecycle_state:' "${target}/.accelerate/workflow/active-work-item.yaml")" "in_progress"
 assert_contains "$(cat "${target}/.accelerate/workflow/events.jsonl")" "work_item_transitioned"
 assert_contains "$(cat "${target}/.accelerate/status/timeline.jsonl")" "local_work_item_transitioned"
+assert_contains "$(bash "${SCRIPTS}/list-local-work-items.sh" "${target}")" "| in_progress | live-workflow-adapter | Build live workflow adapter"
+bash "${SCRIPTS}/select-local-work-item.sh" "${target}" "$(sed -n 's/^id:[[:space:]]*//p' "${target}/.accelerate/workflow/active-work-item.yaml" | head -n 1)" >/dev/null
+assert_contains "$(grep '^lifecycle_state:' "${target}/.accelerate/workflow/active-work-item.yaml")" "in_progress"
 
 if bash "${SCRIPTS}/transition-local-work-item.sh" "${target}" "shipped" "Invalid transition" >"${WORK_ROOT}/invalid.out" 2>&1; then
   fail "invalid lifecycle state was accepted"
 fi
 assert_contains "$(cat "${WORK_ROOT}/invalid.out")" "invalid lifecycle state: shipped"
 
-bash "${SCRIPTS}/transition-local-work-item.sh" "${target}" "done" "Phase 1 complete" >/dev/null
-assert_contains "$(grep '^closure_summary:' "${target}/.accelerate/workflow/active-work-item.yaml")" "Phase 1 complete"
+direct_done_target="${WORK_ROOT}/direct-done-repo"
+mkdir -p "${direct_done_target}"
+bash "${SCRIPTS}/emit-v2.sh" "${direct_done_target}" greenfield >/dev/null
+bash "${SCRIPTS}/create-local-work-item.sh" "${direct_done_target}" "direct-done" "Direct done should block" >/dev/null
+if bash "${SCRIPTS}/transition-local-work-item.sh" "${direct_done_target}" "done" "Unsafe direct done" >"${WORK_ROOT}/direct-done.out" 2>&1; then
+  fail "unsafe planned->done transition was accepted"
+fi
+assert_contains "$(cat "${WORK_ROOT}/direct-done.out")" "invalid lifecycle transition: planned -> done"
+
+if bash "${SCRIPTS}/transition-local-work-item.sh" "${target}" "done" "Phase 1 complete" >"${WORK_ROOT}/in-progress-done.out" 2>&1; then
+  fail "unsafe in_progress->done transition was accepted"
+fi
+assert_contains "$(cat "${WORK_ROOT}/in-progress-done.out")" "done transition requires closure-ready evidence gate"
 
 bash "${SCRIPTS}/validate-v2.sh" "${target}" >/dev/null
 
@@ -217,6 +231,18 @@ assert_contains "${topology_render}" "- related ids: [${related_id}]"
 assert_contains "${topology_render}" "- one-shot task ledger: planning/executive/live-workflow-adapter-progressive-task-ledger.md"
 assert_contains "$(cat "${topology_target}/.accelerate/workflow/topology.jsonl")" "work_item_parent_linked"
 assert_contains "$(cat "${topology_target}/.accelerate/workflow/topology.jsonl")" "work_item_task_ledger_linked"
+
+list_output="$(bash "${SCRIPTS}/list-local-work-items.sh" "${topology_target}")"
+assert_contains "${list_output}" "${parent_id}"
+assert_contains "${list_output}" "${child_id}"
+bash "${SCRIPTS}/select-local-work-item.sh" "${topology_target}" "${related_id}" >/dev/null
+assert_contains "$(grep '^id:' "${topology_target}/.accelerate/workflow/active-work-item.yaml")" "${related_id}"
+assert_contains "$(grep '^parent_id:' "${topology_target}/.accelerate/workflow/active-work-item.yaml")" "${parent_id}"
+assert_contains "$(grep '^child_ids:' "${topology_target}/.accelerate/workflow/active-work-item.yaml")" "[${child_id}]"
+assert_contains "$(grep '^related_ids:' "${topology_target}/.accelerate/workflow/active-work-item.yaml")" "[${related_id}]"
+assert_contains "$(grep '^one_shot_task_ledger:' "${topology_target}/.accelerate/workflow/active-work-item.yaml")" "planning/executive/live-workflow-adapter-progressive-task-ledger.md"
+bash "${SCRIPTS}/select-local-work-item.sh" "${topology_target}" "${parent_id}" >/dev/null
+assert_contains "$(grep '^id:' "${topology_target}/.accelerate/workflow/active-work-item.yaml")" "${parent_id}"
 
 if bash "${SCRIPTS}/link-local-work-item.sh" "${topology_target}" --parent "bad-id" >"${WORK_ROOT}/bad-link.out" 2>&1; then
   fail "invalid topology parent id was accepted"
@@ -251,5 +277,18 @@ assert_contains "$(cat "${closure_target}/.accelerate/review/closure-packet.md")
 assert_contains "$(cat "${closure_target}/.accelerate/review/closure-packet.md")" "- workflow lifecycle state: closure"
 assert_contains "$(cat "${closure_target}/.accelerate/review/closure-bundle.md")" "- workflow locator: local:LWI-"
 assert_contains "$(cat "${closure_target}/.accelerate/review/handoff-summary.md")" "- workflow lifecycle state: closure"
+bash "${SCRIPTS}/transition-local-work-item.sh" "${closure_target}" "done" "Closure complete" >/dev/null
+assert_contains "$(grep '^lifecycle_state:' "${closure_target}/.accelerate/workflow/active-work-item.yaml")" "done"
+assert_contains "$(grep '^closure_summary:' "${closure_target}/.accelerate/workflow/active-work-item.yaml")" "Closure complete"
+
+review_done_target="${WORK_ROOT}/review-done-repo"
+mkdir -p "${review_done_target}"
+bash "${SCRIPTS}/emit-v2.sh" "${review_done_target}" greenfield >/dev/null
+bash "${SCRIPTS}/create-local-work-item.sh" "${review_done_target}" "review-done" "Review done should block" >/dev/null
+bash "${SCRIPTS}/transition-local-work-item.sh" "${review_done_target}" "review" "Review without closure proof" >/dev/null
+if bash "${SCRIPTS}/transition-local-work-item.sh" "${review_done_target}" "done" "Unsafe review done" >"${WORK_ROOT}/review-done.out" 2>&1; then
+  fail "unsafe review->done transition was accepted"
+fi
+assert_contains "$(cat "${WORK_ROOT}/review-done.out")" "done transition requires closure-ready evidence gate"
 
 echo "local workflow adapter tests passed"

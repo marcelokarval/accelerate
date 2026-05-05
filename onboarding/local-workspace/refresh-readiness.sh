@@ -13,6 +13,7 @@ STATE_FILE="${WORKSPACE}/state.yaml"
 STATUS_FILE="${WORKSPACE}/onboarding/status.yaml"
 PLAN_FILE="${WORKSPACE}/planning/current-plan.md"
 READINESS_FILE="${WORKSPACE}/status/readiness-dashboard.yaml"
+EVIDENCE_FILE="${WORKSPACE}/status/evidence-registry.yaml"
 BRANCH_ENTRY_PACKET="${WORKSPACE}/review/branch-entry-packet.md"
 
 for required in "${STATE_FILE}" "${STATUS_FILE}" "${PLAN_FILE}" "${READINESS_FILE}"; do
@@ -26,6 +27,18 @@ yaml_value() {
   local path="$1"
   local key="$2"
   sed -n "s/^${key}:[[:space:]]*//p" "${path}" | head -n 1
+}
+
+evidence_value() {
+  local key="$1"
+  local default="$2"
+  if [ ! -f "${EVIDENCE_FILE}" ]; then
+    printf '%s\n' "${default}"
+    return
+  fi
+  local value
+  value="$(yaml_value "${EVIDENCE_FILE}" "${key}")"
+  printf '%s\n' "${value:-${default}}"
 }
 
 plan_value() {
@@ -70,6 +83,20 @@ dashboard_verdict="blocked"
 execution_readiness="blocked"
 review_readiness="blocked"
 closure_readiness="blocked"
+production_readiness="not-requested"
+deploy_verification="not-requested"
+
+case "$(evidence_value "production_readiness" "not-applicable")" in
+  present) production_readiness="ready" ;;
+  blocked|missing|out-of-order) production_readiness="blocked" ;;
+  *) production_readiness="not-requested" ;;
+esac
+
+case "$(evidence_value "deploy_verification" "not-applicable")" in
+  present) deploy_verification="ready" ;;
+  blocked|missing|out-of-order) deploy_verification="blocked" ;;
+  *) deploy_verification="not-requested" ;;
+esac
 
 required_gates=(
   "local-workspace-entry"
@@ -169,6 +196,8 @@ dashboard_verdict: ${dashboard_verdict}
 execution_readiness: ${execution_readiness}
 review_readiness: ${review_readiness}
 closure_readiness: ${closure_readiness}
+production_readiness: ${production_readiness}
+deploy_verification: ${deploy_verification}
 required_gates:
 $(write_list "  " "${required_gates[@]}")
 completed_gates:

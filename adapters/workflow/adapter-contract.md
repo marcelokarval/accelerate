@@ -27,6 +27,23 @@ the governing execution surfaces.
 - AI review reporting
 - closure traceability
 
+## Backend-Neutral Lifecycle Vocabulary
+
+Accelerate core lifecycle semantics are backend-neutral:
+
+- `shaping`
+- `planned`
+- `ready-for-execution`
+- `in-progress`
+- `ready-for-review`
+- `changes-requested`
+- `ready-for-closure`
+- `closed`
+- `blocked`
+
+Adapters must map provider-specific state names into this vocabulary without
+making their provider shape the core default.
+
 ## Capability Contract
 
 Every concrete workflow adapter must describe its backend support for these
@@ -57,36 +74,50 @@ The manifest is the shared adapter contract stabilization point. It lets the
 root compare adapters without assuming that Linear, GitHub, local files, Jira,
 or Notion expose the same primitives.
 
-Required keys:
+Required keys are defined by [Capability Schema V2](./capability-schema-v2.md).
+The exact capability matrix is:
 
 ```yaml
-schema_version: 1
+schema_version: 2
 adapter: local|linear|github-pr|github-issues|github-projects|jira|notion
 status: implemented|planned|blocked
-identity: native|linked|substitute|none
-work_item_create: native|linked|substitute|planned|blocked|none
-work_item_lookup: native|linked|substitute|planned|blocked|none
-work_item_update: native|linked|substitute|planned|blocked|none
-lifecycle_transition: native|linked|substitute|planned|blocked|none
-topology: native|linked|substitute|planned|blocked|none
-review_attachment: native|linked|substitute|planned|blocked|none
-closure_attachment: native|linked|substitute|planned|blocked|none
-metadata_rehydration: native|linked|substitute|planned|blocked|none
-failure_recovery: native|linked|substitute|planned|blocked|none
-external_api: native|linked|substitute|planned|blocked|none
-substitute_evidence: <path or none>
 runtime_truth: local|remote|hybrid|none
+substitute_evidence: <path or none>
+read_lookup: native|linked|substitute|planned|blocked|none
+read_lookup_command: <repo-relative command or none>
+read_lookup_proof: <proof label/path or none>
+create_update: native|linked|substitute|planned|blocked|none
+create_update_command: <repo-relative command or none>
+create_update_proof: <proof label/path or none>
+review_artifact_attachment: native|linked|substitute|planned|blocked|none
+review_artifact_attachment_command: <repo-relative command or none>
+review_artifact_attachment_proof: <proof label/path or none>
+rehydration: native|linked|substitute|planned|blocked|none
+rehydration_command: <repo-relative command or none>
+rehydration_proof: <proof label/path or none>
+write_recovery: native|linked|substitute|planned|blocked|none
+write_recovery_command: <repo-relative command or none>
+write_recovery_proof: <proof label/path or none>
+closure_comment: native|linked|substitute|planned|blocked|none
+closure_comment_command: <repo-relative command or none>
+closure_comment_proof: <proof label/path or none>
+status_transition: native|linked|substitute|planned|blocked|none
+status_transition_command: <repo-relative command or none>
+status_transition_proof: <proof label/path or none>
+production_merge_land_gate: native|linked|substitute|planned|blocked|none
+production_merge_land_gate_command: <repo-relative command or none>
+production_merge_land_gate_proof: <proof label/path or none>
 ```
 
 Rules:
-
-- `status: implemented` requires at least substitute identity, lifecycle, topology,
-  review/closure attachment, metadata rehydration, and failure recovery.
-- `external_api: none` is valid for the local adapter only when
-  `runtime_truth: local` and `substitute_evidence` points to concrete local files.
-- A remote adapter must not claim `implemented` until its API read/write behavior
-  is tested.
-- Gaps must be represented as `none` or `blocked`, not hidden in prose.
+- `native`, `linked`, and `substitute` capabilities require concrete command and
+  proof fields.
+- Planned/blocked capabilities must not claim live proof.
+- Remote native write commands must be present in
+  `adapters/workflow/remote-write-registry.yaml`.
+- `status: implemented` requires proof for the essential capability set; planned
+  remote create/land/closure surfaces must stay `planned` until live proof exists.
+- Gaps must be represented as `none`, `planned`, or `blocked`, not hidden in prose.
 
 ## Shared Concepts
 
@@ -175,7 +206,7 @@ Do not claim an adapter exists just because the architecture already names it.
 
 In the pre-agents phase:
 
-- `linear` may exist as the current default-shaped doctrine
+- `linear` may exist as an adapter-specific mapping target for inherited doctrine
 - `github` may exist as a peer architectural target
 - neither should be treated as enforced runtime truth for this repo until the
   backend is actually implemented and adopted here
@@ -189,8 +220,7 @@ This contract is currently documentation, not an implemented adapter runtime.
 
 The repository does not yet provide:
 
-- a native adapter selection command
-- a shared adapter interface implementation
+- a full shared adapter interface implementation beyond capability read/select helpers
 - backend credential discovery
 - automated work-item creation or transition enforcement
 - automated metadata rehydration
@@ -213,10 +243,12 @@ The selection order is:
 
 ## Adapter Reality
 
-The current preferred first remote target is still Linear-shaped, but the contract is not
-Linear-only.
+There is no unqualified default remote workflow backend in core. Linear, GitHub,
+local files, Jira, Notion, or any later provider become active only through an
+implemented selected adapter and its capability manifest.
 
-GitHub is the first intended peer adapter.
+GitHub is the first intended peer code-review adapter target; Linear remains an
+adapter-specific mapping target for inherited issue-topology doctrine.
 
 ## Transition Rule
 

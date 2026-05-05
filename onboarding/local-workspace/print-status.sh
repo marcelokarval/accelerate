@@ -62,6 +62,8 @@ printf 'dashboard_verdict: %s\n' "$(yaml_value "${READINESS_FILE}" "dashboard_ve
 printf 'execution_readiness: %s\n' "$(yaml_value "${READINESS_FILE}" "execution_readiness")"
 printf 'review_readiness: %s\n' "$(yaml_value "${READINESS_FILE}" "review_readiness")"
 printf 'closure_readiness: %s\n' "$(yaml_value "${READINESS_FILE}" "closure_readiness")"
+printf 'production_readiness: %s\n' "$(yaml_value "${READINESS_FILE}" "production_readiness")"
+printf 'deploy_verification: %s\n' "$(yaml_value "${READINESS_FILE}" "deploy_verification")"
 printf 'timeline_events: %s\n' "$(count_jsonl "${TIMELINE_FILE}")"
 printf 'last_timeline_event: %s\n' "$(last_jsonl_field "${TIMELINE_FILE}" "event")"
 printf 'learning_count: %s\n' "$(count_jsonl "${LEARNINGS_FILE}")"

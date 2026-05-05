@@ -96,13 +96,51 @@ for marker in \
 done
 reject_packet_marker "<"
 reject_packet_marker "deployment action: not-requested"
-if ! rg -i -F -- "production readiness result: ready" "${TARGET_ROOT}/${DEPLOY_PACKET_PATH}" >/dev/null; then
-  block "deploy verification packet must contain: production readiness result: ready"
-fi
+require_packet_field() {
+  local label="$1"
+  local expected="$2"
+  if ! grep -i -F -x -- "- ${label}: ${expected}" "${TARGET_ROOT}/${DEPLOY_PACKET_PATH}" >/dev/null; then
+    block "deploy verification packet must contain: ${label}: ${expected}"
+  fi
+}
+
+require_any_packet_field() {
+  local label="$1"
+  shift
+  local expected
+  for expected in "$@"; do
+    if grep -i -F -x -- "- ${label}: ${expected}" "${TARGET_ROOT}/${DEPLOY_PACKET_PATH}" >/dev/null; then
+      return 0
+    fi
+  done
+  block "deploy verification packet ${label} must be one of: $*"
+}
+
+reject_any_packet_field() {
+  local label="$1"
+  shift
+  local blocked
+  for blocked in "$@"; do
+    if grep -i -F -x -- "- ${label}: ${blocked}" "${TARGET_ROOT}/${DEPLOY_PACKET_PATH}" >/dev/null; then
+      block "deploy verification packet contains blocked ${label}: ${blocked}"
+    fi
+  done
+}
+
+require_any_packet_field "CI/check status" passed green success not-applicable-with-rationale
+reject_any_packet_field "deployment action" not-requested none placeholder todo tbd unknown
+reject_any_packet_field "canary evidence" none placeholder todo tbd unknown not-applicable
+reject_any_packet_field "rollback posture" none placeholder todo tbd unknown not-documented
+require_packet_field "production readiness result" ready
 
 require_file "production risk approval" "${TARGET_ROOT}/${APPROVAL_PATH}"
 if ! rg -i -F -- "production-risk approval: approved" "${TARGET_ROOT}/${APPROVAL_PATH}" >/dev/null; then
   block "production risk approval must contain: production-risk approval: approved"
+fi
+
+perl -0pi -e "s#^production_readiness:.*#production_readiness: present#m; s#^production_readiness_artifact:.*#production_readiness_artifact: ${SHIP_READINESS_PATH}#m; s#^deploy_verification:.*#deploy_verification: present#m; s#^deploy_verification_artifact:.*#deploy_verification_artifact: ${DEPLOY_PACKET_PATH}#m; s/^last_updated:.*/last_updated: $(date +%F)/m" "${WORKSPACE}/status/evidence-registry.yaml"
+if grep -q '^production_readiness:' "${READINESS_FILE}"; then
+  perl -0pi -e "s#^production_readiness:.*#production_readiness: ready#m; s#^deploy_verification:.*#deploy_verification: ready#m; s/^last_updated:.*/last_updated: $(date +%F)/m" "${READINESS_FILE}"
 fi
 
 echo "production readiness passed"

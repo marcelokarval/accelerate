@@ -226,6 +226,8 @@ require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "dashboard_verdict"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "execution_readiness"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "review_readiness"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "closure_readiness"
+require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "production_readiness"
+require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "deploy_verification"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "required_gates"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "completed_gates"
 require_key "${WORKSPACE}/status/readiness-dashboard.yaml" "blocking_items"
@@ -241,6 +243,8 @@ require_key "${WORKSPACE}/status/evidence-registry.yaml" "persistent_e2e"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "ux_ui_fullstack_surface"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "design_implementation_proof"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "product_critical_closure"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "production_readiness"
+require_key "${WORKSPACE}/status/evidence-registry.yaml" "deploy_verification"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "requested_vs_implemented"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "defect_ledger"
 require_key "${WORKSPACE}/status/evidence-registry.yaml" "correction_loop"
@@ -313,6 +317,8 @@ require_enum "${WORKSPACE}/status/readiness-dashboard.yaml" "dashboard_verdict" 
 require_enum "${WORKSPACE}/status/readiness-dashboard.yaml" "execution_readiness" "blocked" "ready"
 require_enum "${WORKSPACE}/status/readiness-dashboard.yaml" "review_readiness" "blocked" "ready"
 require_enum "${WORKSPACE}/status/readiness-dashboard.yaml" "closure_readiness" "blocked" "ready"
+require_enum "${WORKSPACE}/status/readiness-dashboard.yaml" "production_readiness" "not-requested" "blocked" "ready"
+require_enum "${WORKSPACE}/status/readiness-dashboard.yaml" "deploy_verification" "not-requested" "blocked" "ready"
 require_listish "${WORKSPACE}/status/readiness-dashboard.yaml" "required_gates"
 require_listish "${WORKSPACE}/status/readiness-dashboard.yaml" "completed_gates"
 require_listish "${WORKSPACE}/status/readiness-dashboard.yaml" "blocking_items"
@@ -335,6 +341,8 @@ for evidence_key in \
   componentization_audit \
   deep_componentization_audit \
   product_critical_closure \
+  production_readiness \
+  deploy_verification \
   accessibility \
   i18n_closure \
   observability_performance \

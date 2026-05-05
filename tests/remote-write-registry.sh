@@ -58,6 +58,7 @@ for raw in entries[1:]:
 known_remote_write_scripts = {
     "onboarding/local-workspace/create-github-pr-adapter.sh",
     "onboarding/local-workspace/attach-github-pr-artifact.sh",
+    "onboarding/local-workspace/comment-github-pr-closure.sh",
     "onboarding/local-workspace/land-github-pr.sh",
     "onboarding/local-workspace/attach-linear-artifact.sh",
     "onboarding/local-workspace/create-linear-mcp-issue.sh",

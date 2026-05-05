@@ -111,8 +111,27 @@ If subagents are spawned:
 - each subagent returns a bounded implementation or review packet
 - the master remains accountable for final issue closure
 
-## Current Default Adapter
+## Backend-Neutral Lifecycle
 
-The current default workflow backend is still Linear-shaped.
+The core issue stack is backend-neutral. Accelerate owns the lifecycle semantics;
+workflow adapters map those semantics into their own providers only after they
+are implemented and selected.
 
-That remains a distribution fact, not a permanent law of the core.
+Minimum lifecycle vocabulary:
+
+- `shaping`
+- `planned`
+- `ready-for-execution`
+- `in-progress`
+- `ready-for-review`
+- `changes-requested`
+- `ready-for-closure`
+- `closed`
+- `blocked`
+
+Provider names such as Linear workflow states, GitHub issue states, pull-request
+review states, Jira statuses, or local `.accelerate/` fields are adapter
+mappings. They are not core defaults.
+
+If no remote workflow adapter is implemented and selected, native planning
+artifacts and local runtime packets are the substitute execution record.

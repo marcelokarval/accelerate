@@ -114,8 +114,10 @@ authority.
 See also:
 
 - [references/README.md](./references/README.md)
+- [authority-set-gate.md](./core/control-plane/authority-set-gate.md)
 
-for the explicit native-vs-supporting authority map inside the reference layer.
+for the explicit native-vs-supporting authority map inside the reference layer
+and the run-level authority classification packet.
 
 
 ## Pre-Agents Baseline

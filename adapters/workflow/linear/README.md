@@ -9,7 +9,7 @@ This directory defines the Linear workflow adapter capability contract.
 - runtime implementation: not yet implemented as a native adapter in this
   repository
 
-Linear remains the strongest inherited workflow shape, but this repository does
+Linear remains an inherited workflow mapping target, but this repository does
 not yet provide an enforced Linear backend runtime. Until the adapter is fully
 rehomed, inherited Linear-shaped doctrine lives primarily in:
 
@@ -52,6 +52,26 @@ objects and explicit external links where Linear does not own the artifact:
 The adapter must not treat a Linear issue moved to `Done` as sufficient closure
 if implementation proof, review evidence, or residual follow-up linkage is
 missing.
+
+## Linear Lifecycle Mapping
+
+Linear-specific workflow states must be mapped into the backend-neutral lifecycle
+vocabulary from [`../adapter-contract.md`](../adapter-contract.md):
+
+- `shaping`
+- `planned`
+- `ready-for-execution`
+- `in-progress`
+- `ready-for-review`
+- `changes-requested`
+- `ready-for-closure`
+- `closed`
+- `blocked`
+
+A future Linear implementation may preserve the raw provider state as metadata,
+but root packets must also expose the normalized lifecycle state. Moving a Linear
+issue to a provider-specific done state is not sufficient closure without proof
+and root review.
 
 ## Identity Rules
 

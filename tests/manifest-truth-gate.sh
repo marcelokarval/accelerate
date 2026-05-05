@@ -35,11 +35,11 @@ for raw in re.split(r"\n\s*- id:\s*", registry_text)[1:]:
     registry_by_command[values.get("command", "")] = values
 
 write_capability_commands = {
-    "work_item_create": "create_command",
-    "work_item_update": "update_command",
-    "review_attachment": "attachment_command",
-    "closure_attachment": "attachment_command",
-    "lifecycle_transition": "transition_command",
+    "create_update": "create_update_command",
+    "review_artifact_attachment": "review_artifact_attachment_command",
+    "closure_comment": "closure_comment_command",
+    "status_transition": "status_transition_command",
+    "production_merge_land_gate": "production_merge_land_gate_command",
 }
 
 for manifest in (root / "adapters/workflow").glob("*/capabilities.yaml"):
@@ -49,6 +49,8 @@ for manifest in (root / "adapters/workflow").glob("*/capabilities.yaml"):
     runtime_truth = values.get("runtime_truth")
     if status not in {"implemented", "planned", "blocked"}:
         fail(f"{adapter} has invalid status {status}")
+    if values.get("schema_version") != "2":
+        fail(f"{adapter} must use capability schema_version 2")
 
     if runtime_truth == "remote":
         for capability, command_key in write_capability_commands.items():
@@ -67,16 +69,16 @@ for manifest in (root / "adapters/workflow").glob("*/capabilities.yaml"):
                 fail(f"{adapter}.{capability} implemented without live proof: {command}")
 
     if runtime_truth == "remote" and status == "implemented":
-        essential = ["identity", "work_item_lookup", "review_attachment", "closure_attachment", "metadata_rehydration", "failure_recovery", "external_api"]
+        essential = ["read_lookup", "review_artifact_attachment", "rehydration", "write_recovery", "external_api"]
         for capability in essential:
             if values.get(capability) in {"planned", "blocked", "none", ""}:
                 fail(f"{adapter} implemented while essential capability {capability} is {values.get(capability)}")
-        write_essentials = ["work_item_create", "work_item_update", "lifecycle_transition"]
+        write_essentials = ["create_update", "closure_comment", "status_transition", "production_merge_land_gate"]
         if all(values.get(capability) in {"planned", "blocked", "none", ""} for capability in write_essentials):
             fail(f"{adapter} implemented without any governed write capability")
 
     if adapter == "linear":
-        for capability in ["work_item_create", "work_item_update", "review_attachment", "closure_attachment", "lifecycle_transition"]:
+        for capability in ["create_update", "review_artifact_attachment", "closure_comment", "status_transition"]:
             if values.get(capability) == "native":
                 fail(f"linear must not claim native {capability} while MCP writes are fail-closed")
 

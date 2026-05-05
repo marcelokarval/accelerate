@@ -77,6 +77,8 @@ dashboard_verdict="$(yaml_value "${READINESS_FILE}" "dashboard_verdict")"
 execution_readiness="$(yaml_value "${READINESS_FILE}" "execution_readiness")"
 review_readiness="$(yaml_value "${READINESS_FILE}" "review_readiness")"
 closure_readiness="$(yaml_value "${READINESS_FILE}" "closure_readiness")"
+production_readiness="$(yaml_value "${READINESS_FILE}" "production_readiness")"
+deploy_verification="$(yaml_value "${READINESS_FILE}" "deploy_verification")"
 last_event="$(last_jsonl_field "${TIMELINE_FILE}" "event")"
 review_ready_path="$(yaml_value "${STATE_FILE}" "review_ready_packet")"
 ai_review_path="$(yaml_value "${STATE_FILE}" "ai_review_report")"
@@ -112,6 +114,8 @@ cat <<EOF
 - execution readiness: ${execution_readiness}
 - review readiness: ${review_readiness}
 - closure readiness: ${closure_readiness}
+- production readiness: ${production_readiness:-not-requested}
+- deploy verification: ${deploy_verification:-not-requested}
 - current handoff surface: ${current_handoff}
 - latest timeline event: ${last_event:-n/a}
 - summary recommendation: ${summary_recommendation}

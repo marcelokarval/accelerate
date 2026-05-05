@@ -11,7 +11,7 @@ contract toward progressive live adapters.
 Read it as:
 
 - current contract truth
-- current default distribution shape
+- inherited distribution context while adapter boundaries stabilize
 - future backend targets
 - active local adapter foundation for `.accelerate/workflow/`
 
@@ -37,9 +37,9 @@ Every workflow adapter should support:
 - final forensic reconciliation comments
 - closure blocker detection
 
-The current imported doctrine still reflects a strong Linear-shaped default.
-That material remains valid as the current default distribution, but it is no
-longer the only acceptable architectural target.
+Some inherited transition material still uses Linear-oriented examples and
+operational notes. Treat that material as supporting migration context, not as
+a repository-wide default distribution or permanent backend selection.
 
 The intended posture is:
 

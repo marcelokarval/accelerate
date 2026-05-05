@@ -19,6 +19,7 @@ The core owns:
 
 Native pre-agents authority now starts here:
 
+- `control-plane/authority-set-gate.md`
 - `control-plane/root-laws.md`
 - `control-plane/branch-enforcement-matrix.md`
 - `control-plane/quick-invocation-map.md`

@@ -143,7 +143,7 @@ if bash "${SCRIPTS}/require-export-approved.sh" "${WORK_ROOT}/repo" ".accelerate
 fi
 perl -0pi -e 's#\n  - path: \.accelerate/review/qa-report\.md\n    class: secret-prohibited\n    export: never\n##' "${WORK_ROOT}/repo/.accelerate/status/privacy-map.yaml"
 bash "${SCRIPTS}/check-export-allowlist.sh" "${WORK_ROOT}/repo" >/dev/null
-host_export="$(bash "${ROOT}/scripts/export-runtime-host.sh" codex "${WORK_ROOT}/host-export")"
+host_export="$(bash "${ROOT}/scripts/export-runtime-host.sh" codex "${WORK_ROOT}/host-export" | head -n 1)"
 [ -f "${host_export}" ] || fail "host export not generated"
 if bash "${ROOT}/scripts/export-runtime-host.sh" "../bad" "${WORK_ROOT}/host-export" >"${WORK_ROOT}/bad-host.out" 2>&1; then
   fail "invalid host name accepted"

@@ -5,6 +5,13 @@ repo.
 
 It remains useful, but it is no longer a flat source of equal authority.
 
+## Authority Classification
+
+`references/` files are `supporting-reference` inputs under
+[`core/control-plane/authority-set-gate.md`](../core/control-plane/authority-set-gate.md).
+They are not unqualified governing authority when a native `core/`, `adapters/`,
+`profiles/`, `skills/`, or accepted planning artifact covers the same surface.
+
 ## Rule
 
 When a method surface already has a native home under `core/`, prefer the local

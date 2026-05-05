@@ -142,7 +142,8 @@ For engineering runs, keep visible:
 
 - active branch
 - active skills
-- active references
+- authority set (governing authorities, supporting references, decision artifacts,
+  backend authority, generated exports, and forbidden authority exclusions)
 - local workspace status / action
 - readiness status
 - timeline checkpoint status

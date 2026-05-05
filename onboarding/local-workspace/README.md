@@ -19,9 +19,14 @@ In the current `standalone pre-agents` phase, this module owns:
 It does not yet own:
 
 - a V3 local control surface
-- a native workflow adapter backend
+- a remote workflow adapter backend
 - a broad runtime capability registry
 - a full automatic installer
+
+V2 now includes the implemented `local` workflow adapter under
+`.accelerate/workflow/`. That adapter is local runtime truth only: it creates
+stable local work-item identity, lifecycle events, and topology hints without
+claiming that GitHub, Linear, Jira, or any other remote backend is active.
 
 ## Reading Order
 
@@ -69,9 +74,12 @@ Use:
 - `./onboarding/local-workspace/mark-checkpoint.sh /path/to/target-repo <checkpoint> <summary>`
 - `./onboarding/local-workspace/init-local-workflow.sh /path/to/target-repo`
 - `./onboarding/local-workspace/create-local-work-item.sh /path/to/target-repo <slug> <title>`
+- `./onboarding/local-workspace/list-local-work-items.sh /path/to/target-repo`
+- `./onboarding/local-workspace/select-local-work-item.sh /path/to/target-repo <local-work-item-id>`
 - `./onboarding/local-workspace/link-local-work-item.sh /path/to/target-repo [--parent ID] [--child ID] [--related ID] [--task-ledger path]`
 - `./onboarding/local-workspace/transition-local-work-item.sh /path/to/target-repo <state> [summary]`
 - `./onboarding/local-workspace/render-local-work-item.sh /path/to/target-repo`
+- `./onboarding/local-workspace/render-deploy-verification-packet.sh /path/to/target-repo [--persist] [provider-adapter] [deploy-target] [ci-check-status] [deployment-action] [canary-evidence] [rollback-posture]`
 - `./onboarding/local-workspace/reconcile-readiness.sh /path/to/target-repo review-ready|closure-ready [summary]`
 - `./onboarding/local-workspace/check-evidence-gate.sh /path/to/target-repo review-ready|closure-ready`
 - `./onboarding/local-workspace/check-workspace-layout.sh /path/to/target-repo`
@@ -123,9 +131,15 @@ This now supports the minimum deterministic onboarding loop:
 - local workflow adapter
   - `init-local-workflow.sh` materializes `.accelerate/workflow/`
   - `create-local-work-item.sh` creates stable local work-item identity
+  - `list-local-work-items.sh` lists discoverable local work items without changing active state
+  - `select-local-work-item.sh` restores a prior local work item as active state
   - `link-local-work-item.sh` records parent, child, related, and one-shot task-ledger links
-  - `transition-local-work-item.sh` records lifecycle transitions
+  - `transition-local-work-item.sh` records lifecycle transitions and blocks unsafe direct `planned -> done` closure
   - `render-local-work-item.sh` rehydrates the active local workflow packet
+- production/deploy readiness
+  - ordinary local closure does not require production readiness
+  - when production is in scope, `render-deploy-verification-packet.sh --persist` writes the deterministic packet consumed by `check-production-readiness.sh`
+  - successful production readiness checks surface `production_readiness` and `deploy_verification` in the evidence registry, readiness dashboard, handoff summary, and closure packet
 - `reconcile-readiness.sh`
   - promotes the local dashboard into `review-ready` or `closure-ready` only after `check-evidence-gate.sh` confirms the required proof state
 - `check-evidence-gate.sh`

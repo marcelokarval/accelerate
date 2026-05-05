@@ -37,6 +37,50 @@ if [ -z "${ID}" ] || [ "${ID}" = "none" ]; then
   exit 1
 fi
 
+CURRENT_STATE="$(sed -n 's/^lifecycle_state:[[:space:]]*//p' "${ACTIVE}" | head -n 1)"
+CURRENT_STATE="${CURRENT_STATE:-none}"
+
+allowed_transition() {
+  local from="$1"
+  local to="$2"
+  case "${from}->${to}" in
+    none-\>planned|planned-\>ready|planned-\>in_progress|planned-\>review|planned-\>closure|planned-\>blocked|planned-\>cancelled|\
+    ready-\>in_progress|ready-\>review|ready-\>closure|ready-\>blocked|ready-\>cancelled|\
+    in_progress-\>review|in_progress-\>closure|in_progress-\>done|in_progress-\>blocked|in_progress-\>cancelled|\
+    review-\>in_progress|review-\>closure|review-\>done|review-\>blocked|review-\>cancelled|\
+    closure-\>review|closure-\>done|closure-\>blocked|closure-\>cancelled|\
+    blocked-\>planned|blocked-\>ready|blocked-\>in_progress|blocked-\>review|blocked-\>closure|blocked-\>cancelled|\
+    done-\>done|cancelled-\>cancelled)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+if ! allowed_transition "${CURRENT_STATE}" "${STATE}"; then
+  echo "invalid lifecycle transition: ${CURRENT_STATE} -> ${STATE}" >&2
+  echo "allowed policy: planned may enter ready/in_progress/review/closure/blocked/cancelled; done requires in_progress, review, or closure proof posture" >&2
+  exit 1
+fi
+
+if [ "${STATE}" = "done" ] && [ "${CURRENT_STATE}" != "done" ]; then
+  CLOSURE_PACKET="${TARGET_ROOT}/.accelerate/review/closure-packet.md"
+  if ! bash "${SCRIPT_DIR}/check-evidence-gate.sh" "${TARGET_ROOT}" closure-ready >/dev/null; then
+    echo "done transition requires closure-ready evidence gate" >&2
+    exit 1
+  fi
+  if [ ! -f "${CLOSURE_PACKET}" ]; then
+    echo "done transition requires closure packet: .accelerate/review/closure-packet.md" >&2
+    exit 1
+  fi
+  if ! rg -F -- "Closure Packet" "${CLOSURE_PACKET}" >/dev/null; then
+    echo "done transition requires valid closure packet marker" >&2
+    exit 1
+  fi
+fi
+
 STAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
 EVENT_ID="event-$(date +%Y%m%d%H%M%S)-${STATE}"
 

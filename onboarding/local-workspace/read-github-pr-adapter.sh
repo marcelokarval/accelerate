@@ -13,10 +13,7 @@ if [ -n "${mode}" ] && [ "${mode}" != "--dry-run" ]; then
   exit 1
 fi
 
-git -C "${root}" rev-parse --is-inside-work-tree >/dev/null 2>&1 || { echo "target is not a git repository" >&2; exit 1; }
-origin_url="$(git -C "${root}" remote get-url origin 2>/dev/null || true)"
-case "${origin_url}" in git@github.com:*|https://github.com/*) ;; *) echo "origin is not a GitHub remote: ${origin_url}" >&2; exit 1 ;; esac
-repo_slug="$(printf '%s' "${origin_url}" | sed -E 's#(git@github.com:|https://github.com/)##; s#\.git$##')"
+repo_slug="$("$(dirname "${BASH_SOURCE[0]}")/resolve-github-repo-slug.sh" "${root}")"
 branch="$(git -C "${root}" branch --show-current 2>/dev/null || true)"
 [ -n "${branch}" ] || { echo "cannot determine current branch" >&2; exit 1; }
 

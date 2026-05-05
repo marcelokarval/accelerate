@@ -228,7 +228,8 @@ At minimum, runtime packets should expose:
 
 - active branch
 - active skills
-- active references
+- authority set (governing authorities, supporting references, decision artifacts,
+  backend authority, generated exports, and forbidden authority exclusions)
 - local workspace status / action
 - readiness status
 - timeline checkpoint status
@@ -332,6 +333,7 @@ reason.
 Use these native authorities first:
 
 - branch routing:
+  - `core/control-plane/authority-set-gate.md`
   - `core/control-plane/branch-enforcement-matrix.md`
   - `core/control-plane/quick-invocation-map.md`
   - `core/control-plane/local-workspace-entry-gate.md`

@@ -45,6 +45,12 @@ Active standalone hardening plan:
 - `standalone-hardening-executive-plan.md`
 - `standalone-hardening-execution-ledger.md`
 
+Active runtime / adapter / promotion hardening plan:
+
+- `2026-05-05-runtime-adapter-hardening-executive-plan.md`
+- `2026-05-05-runtime-adapter-hardening-task-ledger.md`
+- `2026-05-05-runtime-adapter-hardening-final-review.md`
+
 Active stack-profile planning:
 
 - `nextjs-adonis-adminjs-profile-plan.md`

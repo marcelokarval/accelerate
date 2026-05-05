@@ -5,6 +5,8 @@ dashboard_verdict: blocked
 execution_readiness: blocked
 review_readiness: blocked
 closure_readiness: blocked
+production_readiness: not-requested
+deploy_verification: not-requested
 required_gates:
   - local-workspace-entry
   - planning-artifact-sufficiency

@@ -37,20 +37,25 @@ last_updated: $(date +%F)
 YAML
 fi
 
-if [ ! -f "${WORKFLOW}/active-work-item.yaml" ]; then
-  cat > "${WORKFLOW}/active-work-item.yaml" <<'YAML'
+if [ ! -f "${WORKFLOW}/active-work-item.yaml" ] || grep -q '^id:[[:space:]]*none$' "${WORKFLOW}/active-work-item.yaml"; then
+  STAMP="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+  BOOTSTRAP_ID="LWI-$(date +%Y%m%d)-000"
+  cat > "${WORKFLOW}/active-work-item.yaml" <<YAML
 schema_version: 1
-id: none
-locator: none
-title: none
-slug: none
-lifecycle_state: none
+id: ${BOOTSTRAP_ID}
+locator: local:${BOOTSTRAP_ID}
+title: Local workspace bootstrap
+slug: local-workspace-bootstrap
+lifecycle_state: planned
 owner: local
 parent_id: none
+related_ids: []
+child_ids: []
 labels: []
 governing_artifact: .accelerate/planning/current-plan.md
-created_at: none
-updated_at: none
+one_shot_task_ledger: none
+created_at: ${STAMP}
+updated_at: ${STAMP}
 closure_summary: none
 YAML
 fi
@@ -58,5 +63,13 @@ fi
 touch "${WORKFLOW}/work-items.jsonl"
 touch "${WORKFLOW}/events.jsonl"
 touch "${WORKFLOW}/topology.jsonl"
+
+if [ -f "${WORKFLOW}/active-work-item.yaml" ]; then
+  active_id="$(sed -n 's/^id:[[:space:]]*//p' "${WORKFLOW}/active-work-item.yaml" | head -n 1)"
+  active_locator="$(sed -n 's/^locator:[[:space:]]*//p' "${WORKFLOW}/active-work-item.yaml" | head -n 1)"
+  if [ -n "${active_id}" ] && [ "${active_id}" != "none" ]; then
+    perl -0pi -e "s/^active_work_item_id:.*/active_work_item_id: ${active_id}/m; s/^active_work_item_locator:.*/active_work_item_locator: ${active_locator}/m; s/^last_updated:.*/last_updated: $(date +%F)/m" "${WORKFLOW}/adapter.yaml"
+  fi
+fi
 
 echo "local workflow adapter initialized at ${WORKFLOW}"

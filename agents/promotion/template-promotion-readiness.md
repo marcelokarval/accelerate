@@ -16,6 +16,8 @@ Every template promotion candidate must declare exactly one state:
 - `candidate-defined`
 - `contract-approved`
 - `runtime-adapter-bound`
+- `installed` (host deployment fact; not promotion)
+- `exported` (generated outward copy; not authority)
 - `empirically-replayed`
 - `promoted`
 
@@ -38,6 +40,9 @@ Packet exists with:
 - review isolation plan
 - root integration plan
 - runtime adapter binding status
+- install/export contract status
+- install state
+- export state
 - empirical replay status
 - root-only or virtual fallback
 - promotion state
@@ -80,6 +85,14 @@ The binding must name:
 - cleanup mechanism
 - fallback when unavailable
 
+### `runtime-adapter-bound` -> `installed` / `exported`
+
+Allowed only as a deployment/export fact under
+[`install-export-contract.md`](./install-export-contract.md). These states must
+name source artifact, target host, target path, privacy classification,
+validation command, rollback, and fallback mode. They do not imply empirical
+replay or promotion.
+
 ### `runtime-adapter-bound` -> `empirically-replayed`
 
 Allowed only after replay proves:
@@ -109,6 +122,8 @@ Do not promote when:
 - return contract is missing
 - cleanup behavior is missing
 - runtime adapter is `planned` or `not-implemented-yet`
+- install/export contract status is missing when `installed` or `exported` is claimed
+- install or export is described as promotion
 - empirical replay is missing
 - root-only or virtual fallback is missing
 - template claims final closure or `Done`
@@ -119,6 +134,8 @@ Do not promote when:
 - `template-promoted-without-base-contract`
 - `template-promoted-without-capability-family`
 - `template-promoted-with-planned-runtime`
+- `template-installed-treated-as-promoted`
+- `template-exported-treated-as-authority`
 - `template-promoted-without-replay`
 - `template-promoted-without-fallback`
 - `template-claims-root-authority`

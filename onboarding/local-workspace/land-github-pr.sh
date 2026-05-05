@@ -18,9 +18,7 @@ if [ "$#" -gt 2 ]; then
 fi
 readiness_path="${2:-.accelerate/review/ship-readiness.json}"
 case "${readiness_path}" in -*|/*|*..*) echo "readiness path must be relative, cannot start with '-', and cannot contain '..': ${readiness_path}" >&2; exit 1 ;; esac
-origin_url="$(git -C "${root}" remote get-url origin 2>/dev/null || true)"
-case "${origin_url}" in git@github.com:*|https://github.com/*) ;; *) echo "origin is not a GitHub remote: ${origin_url}" >&2; exit 1 ;; esac
-repo_slug="$(printf '%s' "${origin_url}" | sed -E 's#(git@github.com:|https://github.com/)##; s#\.git$##')"
+repo_slug="$("$(dirname "${BASH_SOURCE[0]}")/resolve-github-repo-slug.sh" "${root}")"
 branch="$(git -C "${root}" branch --show-current 2>/dev/null || true)"
 [ -n "${branch}" ] || { echo "cannot determine current branch" >&2; exit 1; }
 
@@ -32,6 +30,10 @@ fi
 [ "${ACCELERATE_ALLOW_LAND:-}" = "1" ] || { echo "land is blocked unless ACCELERATE_ALLOW_LAND=1" >&2; exit 2; }
 [ -f "${root}/${readiness_path}" ] || { echo "missing ship readiness artifact: ${readiness_path}" >&2; exit 2; }
 python3 -c 'import json,sys; data=json.load(open(sys.argv[1])); sys.exit(0 if data.get("ready") is True else 2)' "${root}/${readiness_path}" || { echo "ship readiness is not ready; refusing land" >&2; exit 2; }
+closure_artifact="$(python3 -c 'import json,sys; data=json.load(open(sys.argv[1])); print(data.get("closure_comment_proof") or data.get("closure_artifact") or "")' "${root}/${readiness_path}")"
+[ -n "${closure_artifact}" ] || { echo "closure proof is required before land" >&2; exit 2; }
+bash "$(dirname "${BASH_SOURCE[0]}")/validate-closure-comment-artifact.sh" "${root}" "${closure_artifact}" >/dev/null || { echo "closure proof is invalid before land" >&2; exit 2; }
+bash "$(dirname "${BASH_SOURCE[0]}")/require-export-approved.sh" "${root}" "${closure_artifact}" >/dev/null || { echo "closure proof is not export-approved before land" >&2; exit 2; }
 bash "$(dirname "${BASH_SOURCE[0]}")/check-production-readiness.sh" "${root}" "${readiness_path}" >/dev/null
 command -v gh >/dev/null 2>&1 || { echo "gh CLI is not installed" >&2; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "gh auth is not available" >&2; exit 1; }

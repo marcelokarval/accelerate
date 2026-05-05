@@ -131,17 +131,15 @@ seed_production_artifacts() {
   cat > "${repo}/.accelerate/review/ship-readiness.json" <<'JSON'
 {"schema_version":1,"adapter":"github-pr","ready":true,"pr":{"state":"OPEN"}}
 JSON
-  cat > "${repo}/.accelerate/review/deploy-verification-packet.md" <<'MD'
-# Deploy Verification Packet
-
-- provider adapter: github-pr
-- deploy target: production
-- CI/check status: passed
-- deployment action: manual adapter handoff
-- canary evidence: not-applicable with rationale
-- rollback posture: rollback path documented
-- production readiness result: ready
-MD
+  bash "${SCRIPTS}/render-deploy-verification-packet.sh" \
+    "${repo}" \
+    --persist \
+    github-pr \
+    production \
+    passed \
+    "manual adapter handoff" \
+    "not-applicable with rationale" \
+    "rollback path documented" >/dev/null
   cat > "${repo}/.accelerate/review/production-risk-approval.md" <<'MD'
 # Production Risk Approval
 
@@ -180,6 +178,11 @@ assert_contains "$(<"${WORK_ROOT}/not-closed.out")" "closure_readiness must be r
 ready_repo="${WORK_ROOT}/ready"
 make_ready_repo "${ready_repo}"
 assert_contains "$(bash "${SCRIPTS}/check-production-readiness.sh" "${ready_repo}")" "production readiness passed"
+assert_contains "$(grep '^production_readiness:' "${ready_repo}/.accelerate/status/readiness-dashboard.yaml")" "production_readiness: ready"
+assert_contains "$(grep '^deploy_verification:' "${ready_repo}/.accelerate/status/readiness-dashboard.yaml")" "deploy_verification: ready"
+assert_contains "$(grep '^production_readiness:' "${ready_repo}/.accelerate/status/evidence-registry.yaml")" "production_readiness: present"
+assert_contains "$(bash "${SCRIPTS}/render-handoff-summary.sh" "${ready_repo}")" "- production readiness: ready"
+assert_contains "$(bash "${SCRIPTS}/render-closure-packet.sh" "${ready_repo}")" "- Production Readiness=present"
 
 missing_ship_repo="${WORK_ROOT}/missing-ship"
 clone_ready_repo "${missing_ship_repo}"
@@ -246,6 +249,39 @@ if bash "${SCRIPTS}/check-production-readiness.sh" "${blocked_deploy_repo}" >"${
   fail "blocked deploy result unexpectedly passed"
 fi
 assert_contains "$(<"${WORK_ROOT}/blocked-deploy.out")" "production readiness result: ready"
+
+failed_ci_repo="${WORK_ROOT}/failed-ci-deploy"
+clone_ready_repo "${failed_ci_repo}"
+bash "${SCRIPTS}/render-deploy-verification-packet.sh" \
+  "${failed_ci_repo}" \
+  --persist \
+  github-pr \
+  production \
+  failed \
+  "manual adapter handoff" \
+  "not-applicable with rationale" \
+  "rollback path documented" >/dev/null
+assert_contains "$(cat "${failed_ci_repo}/.accelerate/review/deploy-verification-packet.md")" "production readiness result: blocked"
+if bash "${SCRIPTS}/check-production-readiness.sh" "${failed_ci_repo}" >"${WORK_ROOT}/failed-ci-deploy.out" 2>&1; then
+  fail "failed CI deploy packet unexpectedly passed"
+fi
+assert_contains "$(<"${WORK_ROOT}/failed-ci-deploy.out")" "CI/check status must be one of"
+
+weak_canary_repo="${WORK_ROOT}/weak-canary-deploy"
+clone_ready_repo "${weak_canary_repo}"
+perl -0pi -e 's#canary evidence: not-applicable with rationale#canary evidence: placeholder#m' "${weak_canary_repo}/.accelerate/review/deploy-verification-packet.md"
+if bash "${SCRIPTS}/check-production-readiness.sh" "${weak_canary_repo}" >"${WORK_ROOT}/weak-canary-deploy.out" 2>&1; then
+  fail "weak canary deploy packet unexpectedly passed"
+fi
+assert_contains "$(<"${WORK_ROOT}/weak-canary-deploy.out")" "blocked canary evidence: placeholder"
+
+weak_rollback_repo="${WORK_ROOT}/weak-rollback-deploy"
+clone_ready_repo "${weak_rollback_repo}"
+perl -0pi -e 's#rollback posture: rollback path documented#rollback posture: not-documented#m' "${weak_rollback_repo}/.accelerate/review/deploy-verification-packet.md"
+if bash "${SCRIPTS}/check-production-readiness.sh" "${weak_rollback_repo}" >"${WORK_ROOT}/weak-rollback-deploy.out" 2>&1; then
+  fail "weak rollback deploy packet unexpectedly passed"
+fi
+assert_contains "$(<"${WORK_ROOT}/weak-rollback-deploy.out")" "blocked rollback posture: not-documented"
 
 missing_approval_repo="${WORK_ROOT}/missing-approval"
 clone_ready_repo "${missing_approval_repo}"

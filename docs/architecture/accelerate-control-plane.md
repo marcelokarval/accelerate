@@ -51,7 +51,9 @@ Read the system in this order:
 1. repo policy in [AGENTS.md](../../AGENTS.md)
 2. the root skill in [SKILL.md](../../SKILL.md)
 3. the richer operating guide in [README.md](../../README.md)
-4. native `core/` surfaces for the active branch
+4. native `core/` surfaces for the active branch, including the
+   [Authority Set Gate](../../core/control-plane/authority-set-gate.md) when
+   cited sources need classification
 5. this control-plane architecture explainer and adjacent architecture docs
 6. supporting references, workflow docs, and specialized skills
 

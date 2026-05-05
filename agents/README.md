@@ -38,6 +38,7 @@ The first native doctrine rehome now lives under:
 - `doctrine/empirical-replay.md`
 - `envelopes/skill-envelopes.md`
 - `promotion/execution-contract.md`
+- `promotion/install-export-contract.md`
 - `promotion/promotion-contract.md`
 - `promotion/return-contract.md`
 - `templates/README.md`
@@ -91,11 +92,13 @@ For a fresh session trying to understand the agents layer, read in this order:
 10. `doctrine/empirical-replay.md`
 11. `promotion/README.md`
 12. `promotion/promotion-contract.md`
-13. `promotion/execution-contract.md`
-14. `promotion/return-contract.md`
-15. `envelopes/README.md`
-16. `envelopes/skill-envelopes.md`
-17. `templates/README.md`
+13. `promotion/template-promotion-readiness.md`
+14. `promotion/install-export-contract.md`
+15. `promotion/execution-contract.md`
+16. `promotion/return-contract.md`
+17. `envelopes/README.md`
+18. `envelopes/skill-envelopes.md`
+19. `templates/README.md`
 
 If deeper doctrine is needed before the native rehome is complete, continue
 into:

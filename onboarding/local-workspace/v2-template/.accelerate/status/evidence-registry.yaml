@@ -31,6 +31,10 @@ deep_componentization_audit: not-applicable
 deep_componentization_audit_artifact:
 product_critical_closure: not-applicable
 product_critical_closure_artifact:
+production_readiness: not-applicable
+production_readiness_artifact:
+deploy_verification: not-applicable
+deploy_verification_artifact: .accelerate/review/deploy-verification-packet.md
 accessibility: not-applicable
 accessibility_artifact:
 i18n_closure: not-applicable

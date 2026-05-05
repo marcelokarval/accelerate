@@ -24,12 +24,18 @@ This contract defines:
 
 It does not yet define:
 
-- full workflow adapter persistence
+- remote workflow adapter persistence
 - runtime capability registry persistence
 - profile override persistence
 - long-form local memory persistence beyond a minimal status layer
 
 Those remain V3 concerns.
+
+The implemented V2 local workflow adapter is intentionally narrower than a
+remote workflow backend. `.accelerate/workflow/` is local work-item identity,
+lifecycle, event, and topology truth for pre-agents execution. It must not be
+read as proof that a remote GitHub/Linear/Jira/Notion adapter is implemented or
+enforced.
 
 ## Required V2 Files
 
@@ -52,6 +58,9 @@ The minimum V2 implementation must create all of these paths:
 │   ├── review-ready-packet.md
 │   ├── ai-review-report.md
 │   ├── closure-packet.md
+│   ├── ship-readiness.json
+│   ├── deploy-verification-packet.md
+│   ├── production-risk-approval.md
 │   ├── branch-entry-packet.md
 │   ├── runtime-delta-packet.md
 │   ├── handoff-summary.md
@@ -229,6 +238,8 @@ dashboard_verdict: blocked|ready-for-execution|ready-for-review|ready-for-closur
 execution_readiness: blocked|ready
 review_readiness: blocked|ready
 closure_readiness: blocked|ready
+production_readiness: not-requested|blocked|ready
+deploy_verification: not-requested|blocked|ready
 required_gates: []
 completed_gates: []
 blocking_items: []
@@ -244,6 +255,9 @@ Rules:
   `.accelerate/status/evidence-registry.yaml` satisfies the relevant gate
 - it must reset inherited review/closure readiness when the governing artifact
   changes to a new bounded slice
+- `production_readiness` and `deploy_verification` are visible cockpit fields,
+  but they are `not-requested` for ordinary closure unless production/deploy is
+  explicitly in scope
 
 ### `.accelerate/status/timeline.jsonl`
 
@@ -287,6 +301,8 @@ persistent_e2e: missing|present|blocked|not-applicable|out-of-order
 ux_ui_fullstack_surface: missing|present|blocked|not-applicable
 design_implementation_proof: missing|present|blocked|not-applicable
 product_critical_closure: missing|present|blocked|not-applicable
+production_readiness: missing|present|blocked|not-applicable|out-of-order
+deploy_verification: missing|present|blocked|not-applicable|out-of-order
 requested_vs_implemented: missing|present|blocked|not-applicable
 defect_ledger: clear|open-defects-remain|waived-defects-present|missing|blocked
 correction_loop: not-needed|completed|incomplete|missing|blocked
@@ -310,6 +326,11 @@ They persist the current local:
 - handoff summary
 - pre-review bundle
 - closure bundle
+
+Production/deploy packets are part of this surface only when production is in
+scope. A normal local closure must not be blocked just because
+`ship-readiness.json`, `deploy-verification-packet.md`, or
+`production-risk-approval.md` remain template-shaped or `not-requested`.
 
 They are derived artifacts, but they are still canonical local handoff outputs
 once written.
