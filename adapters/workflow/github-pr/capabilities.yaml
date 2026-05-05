@@ -5,13 +5,13 @@ runtime_truth: remote
 substitute_evidence: .accelerate/workflow/
 read_lookup: native
 read_lookup_command: onboarding/local-workspace/read-github-pr-adapter.sh
-read_lookup_proof: dated-proof-appendix/github-pr-read-2026-04-27
+read_lookup_proof: planning/evidence/dated-proof-appendix/github-pr-read-2026-04-27.md
 create_update: planned
 create_update_command: onboarding/local-workspace/create-github-pr-adapter.sh
 create_update_proof: planned
 review_artifact_attachment: native
 review_artifact_attachment_command: onboarding/local-workspace/attach-github-pr-artifact.sh
-review_artifact_attachment_proof: dated-proof-appendix/github-pr-comment-artifact-2026-04-27
+review_artifact_attachment_proof: planning/evidence/dated-proof-appendix/github-pr-comment-artifact-2026-04-27.md
 rehydration: native
 rehydration_command: onboarding/local-workspace/rehydrate-github-pr-adapter.sh
 rehydration_proof: dry-run-and-live-read-normalizer
@@ -47,6 +47,6 @@ recovery_command: onboarding/local-workspace/write-github-pr-recovery.sh
 ship_readiness_command: onboarding/local-workspace/check-ship-readiness.sh
 land_command: onboarding/local-workspace/land-github-pr.sh
 live_tested_at: 2026-04-27
-live_test_target: dated-proof-appendix/github-pr-comment-artifact-2026-04-27
+live_test_target: planning/evidence/dated-proof-appendix/github-pr-comment-artifact-2026-04-27.md
 live_read_result: passed
 live_attachment_result: passed

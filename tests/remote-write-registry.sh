@@ -48,7 +48,12 @@ for raw in entries[1:]:
         raise SystemExit(f"remote-write-registry failed: invalid structured_write for {command}")
     if values["structured_write"] == "no" and values["status"] == "available":
         raise SystemExit(f"remote-write-registry failed: unstructured write cannot be available: {command}")
-    if values["status"] == "available" and values["requires_opt_in"] == "none" and values["privacy_gate"] == "none" and values["live_proof"] == "none":
+    live_proof = values["live_proof"]
+    if live_proof.startswith("dated-proof-appendix"):
+        raise SystemExit(f"remote-write-registry failed: bare dated-proof-appendix locator is not durable: {command}")
+    if live_proof.startswith("planning/evidence/") and not (root / live_proof).is_file():
+        raise SystemExit(f"remote-write-registry failed: live proof locator missing: {live_proof}")
+    if values["status"] == "available" and values["requires_opt_in"] == "none" and values["privacy_gate"] == "none" and live_proof == "none":
         raise SystemExit(f"remote-write-registry failed: available write lacks guard/proof: {command}")
     if values["privacy_gate"] == "required" and "artifact" in values["operation"]:
         script = (root / command).read_text()

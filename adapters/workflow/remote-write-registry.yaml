@@ -18,7 +18,7 @@ writes:
     requires_opt_in: none
     privacy_gate: required
     recovery: onboarding/local-workspace/write-github-pr-recovery.sh
-    live_proof: dated-proof-appendix/github-pr-comment-artifact-2026-04-27
+    live_proof: planning/evidence/dated-proof-appendix/github-pr-comment-artifact-2026-04-27.md
     structured_write: yes
   - id: github-pr-closure-comment
     command: onboarding/local-workspace/comment-github-pr-closure.sh
@@ -58,7 +58,7 @@ writes:
     requires_opt_in: none
     privacy_gate: none
     recovery: onboarding/local-workspace/write-linear-mcp-recovery.sh
-    live_proof: dated-proof-appendix/linear-mcp-live-validation-2026-04-27
+    live_proof: planning/evidence/dated-proof-appendix/linear-mcp-live-validation-2026-04-27.md
     structured_write: no
   - id: linear-mcp-comment-artifact
     command: onboarding/local-workspace/attach-linear-mcp-artifact.sh
@@ -68,5 +68,5 @@ writes:
     requires_opt_in: none
     privacy_gate: required
     recovery: onboarding/local-workspace/write-linear-mcp-recovery.sh
-    live_proof: dated-proof-appendix/linear-mcp-live-validation-2026-04-27
+    live_proof: planning/evidence/dated-proof-appendix/linear-mcp-live-validation-2026-04-27.md
     structured_write: no

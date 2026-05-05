@@ -50,6 +50,7 @@ Active runtime / adapter / promotion hardening plan:
 - `2026-05-05-runtime-adapter-hardening-executive-plan.md`
 - `2026-05-05-runtime-adapter-hardening-task-ledger.md`
 - `2026-05-05-runtime-adapter-hardening-final-review.md`
+- `2026-05-05-search-phase-hardening-final-review.md`
 
 Active stack-profile planning:
 

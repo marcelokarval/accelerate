@@ -50,7 +50,7 @@ mcp_auth_host: opencode-global
 mcp_external_host_live_tested_at: 2026-04-27
 mcp_external_host_read_result: passed
 mcp_external_host_write_result: passed
-mcp_external_host_test_evidence: dated-proof-appendix
+mcp_external_host_test_evidence: planning/evidence/dated-proof-appendix/linear-mcp-live-validation-2026-04-27.md
 mcp_helper_runtime_result: blocked
 graphql_helper_runtime_result: blocked-without-linear-api-key
 implementation_blocker: structured_non_llm_mcp_write_binding_required

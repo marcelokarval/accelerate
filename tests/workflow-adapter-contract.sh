@@ -118,7 +118,7 @@ for manifest in (root / "adapters/workflow").glob("*/capabilities.yaml"):
                 fail(f"{adapter}.{capability} is {status} but lacks honest proof")
             if not (root / command).is_file():
                 fail(f"{adapter}.{capability} command missing: {command}")
-        if status in {"planned", "blocked", "none"} and proof.startswith("dated-proof-appendix"):
+        if status in {"planned", "blocked", "none"} and proof.startswith("planning/evidence/dated-proof-appendix/"):
             fail(f"{adapter}.{capability} is {status} but claims live proof")
         if values.get("runtime_truth") == "remote" and status == "native" and capability in REMOTE_WRITE_CAPABILITIES:
             if command not in registry_commands:

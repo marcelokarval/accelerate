@@ -40,6 +40,7 @@ This layer owns the explicit artifacts that shape work before execution:
 - migration plans
 - onboarding bootstrap plans
 - promotion planning for future agents
+- non-sensitive evidence appendices when manifests need durable proof locators
 
 Planning is not:
 
