@@ -84,6 +84,23 @@ Regression:
 - `bash tests/proof-locator-integrity.sh` passed.
 - `bash tests/remote-write-registry.sh` passed.
 
+### S4 — First remote CI run exposed a missing Ubuntu dependency
+
+After publishing the workflow, GitHub Actions queued and ran the new
+`Accelerate Tests` workflow for commit `97d83a8`. The first remote run failed
+because Ubuntu did not have `rg`/ripgrep installed, while many shell tests use
+it.
+
+Correction:
+
+- added a CI dependency install step for `ripgrep`.
+- strengthened `tests/ci-contract.sh` so future workflow edits must keep that
+  dependency visible.
+
+Regression:
+
+- local `bash tests/ci-contract.sh` passed after the workflow update.
+
 ## Verification
 
 Commands run after corrections:

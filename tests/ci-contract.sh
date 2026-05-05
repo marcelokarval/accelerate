@@ -17,6 +17,7 @@ grep -Fq 'push:' "${WORKFLOW}" || fail "workflow must run on push"
 grep -Fq 'branches: [main]' "${WORKFLOW}" || fail "workflow must target main branch"
 grep -Fq 'bash tests/all.sh' "${WORKFLOW}" || fail "workflow must run canonical full test suite"
 grep -Fq 'actions/checkout@v4' "${WORKFLOW}" || fail "workflow must checkout repository"
+grep -Fq 'ripgrep' "${WORKFLOW}" || fail "workflow must install ripgrep for shell tests"
 
 if grep -Eiq 'TOKEN|SECRET|PASSWORD|API_KEY|LINEAR_API_KEY|GH_TOKEN|GITHUB_TOKEN' "${WORKFLOW}"; then
   fail "workflow must not declare or reference external provider credentials"
