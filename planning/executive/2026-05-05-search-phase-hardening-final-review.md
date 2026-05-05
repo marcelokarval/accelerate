@@ -101,6 +101,23 @@ Regression:
 
 - local `bash tests/ci-contract.sh` passed after the workflow update.
 
+### S5 — Second remote CI run exposed pipefail fragility around host export output
+
+The second GitHub Actions run for commit `4effbf8` reached the host export
+coverage and failed with `printf: write error: Broken pipe`. The local script was
+correctly generating both export paths, but `tests/gstack-pattern-adoption.sh`
+consumed it through `| head -n 1` under `set -euo pipefail`, allowing a normal
+short-read pipeline to become a CI failure.
+
+Correction:
+
+- changed the test to capture the full host-export output first and then select
+  the first line with `sed -n '1p'`, avoiding an early-closing pipe.
+
+Regression:
+
+- local `bash tests/gstack-pattern-adoption.sh` passed after the update.
+
 ## Verification
 
 Commands run after corrections:
