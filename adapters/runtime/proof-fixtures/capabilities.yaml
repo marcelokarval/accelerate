@@ -1,12 +1,12 @@
 name: proof-fixtures
 type: runtime
-status: planned
+status: available
 authority_boundary: runtime-fixture
 allowed_tools:
   - shell
 suppressed_capabilities: []
-validation_command: none-yet
+validation_command: bash tests/runtime-proof-fixtures.sh
 proof_artifacts:
   - proof-fixture
 privacy_notes: fixtures must not include real secrets, tokens, or private production data
-command: planned-fixture
+command: adapters/runtime/proof-fixtures/
