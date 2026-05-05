@@ -164,8 +164,14 @@ for manifest in (root / "adapters/workflow").glob("*/capabilities.yaml"):
         ]:
             if not (root / path).is_file():
                 fail(f"github-pr missing required helper {path}")
-        if values.get("create_update") == "native" or values.get("production_merge_land_gate") == "native":
-            fail("github-pr create/land must remain non-native without live create/land proof")
+        if values.get("create_update") == "native":
+            proof = values.get("create_update_proof", "")
+            if not proof.startswith("planning/evidence/dated-proof-appendix/") or not (root / proof).is_file():
+                fail("github-pr create cannot be native without durable live create proof")
+        if values.get("production_merge_land_gate") == "native":
+            proof = values.get("production_merge_land_gate_proof", "")
+            if not proof.startswith("planning/evidence/dated-proof-appendix/") or not (root / proof).is_file():
+                fail("github-pr land cannot be native without durable live land proof")
 
 # Capability reader/select smoke checks.
 read = subprocess.run([str(root / "onboarding/local-workspace/read-workflow-capabilities.sh"), "github-pr"], cwd=root, text=True, stdout=subprocess.PIPE, check=True)
