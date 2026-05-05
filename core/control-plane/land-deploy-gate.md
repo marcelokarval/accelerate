@@ -22,3 +22,5 @@ The local production preflight is
 or merge. It composes closure evidence, ship readiness, deploy verification, and
 explicit production-risk approval before any adapter may claim production-ready
 posture.
+
+GitHub PR land/merge helpers must call this preflight before merge execution.

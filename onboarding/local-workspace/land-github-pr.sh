@@ -32,6 +32,7 @@ fi
 [ "${ACCELERATE_ALLOW_LAND:-}" = "1" ] || { echo "land is blocked unless ACCELERATE_ALLOW_LAND=1" >&2; exit 2; }
 [ -f "${root}/${readiness_path}" ] || { echo "missing ship readiness artifact: ${readiness_path}" >&2; exit 2; }
 python3 -c 'import json,sys; data=json.load(open(sys.argv[1])); sys.exit(0 if data.get("ready") is True else 2)' "${root}/${readiness_path}" || { echo "ship readiness is not ready; refusing land" >&2; exit 2; }
+bash "$(dirname "${BASH_SOURCE[0]}")/check-production-readiness.sh" "${root}" "${readiness_path}" >/dev/null
 command -v gh >/dev/null 2>&1 || { echo "gh CLI is not installed" >&2; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "gh auth is not available" >&2; exit 1; }
 current_pr="$(gh -R "${repo_slug}" pr view "${branch}" --json number,headRefOid)"

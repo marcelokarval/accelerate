@@ -58,5 +58,7 @@ assert_blocks "ship-dash-path" "cannot start with '-'" bash "${SCRIPTS}/check-sh
 
 assert_blocks "land-extra" "usage:" bash "${SCRIPTS}/land-github-pr.sh" "${WORK_ROOT}/repo" ".accelerate/review/ship-readiness.json" --dry-run extra
 assert_blocks "land-dash-path" "cannot start with '-'" bash "${SCRIPTS}/land-github-pr.sh" "${WORK_ROOT}/repo" --bad-mode
+printf '%s\n' '{"schema_version":1,"adapter":"github-pr","repo":"example/repo","branch":"main","pr_number":1,"head_ref_oid":"abc","ready":true}' > "${WORK_ROOT}/repo/.accelerate/review/ship-readiness.json"
+assert_blocks "land-production-preflight" "production readiness blocked" env ACCELERATE_ALLOW_LAND=1 bash "${SCRIPTS}/land-github-pr.sh" "${WORK_ROOT}/repo" ".accelerate/review/ship-readiness.json"
 
 printf 'github pr adapter safety passed\n'
