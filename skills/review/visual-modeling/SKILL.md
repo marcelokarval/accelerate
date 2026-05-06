@@ -87,7 +87,11 @@ Use templates from `references/templates/` for the concrete diagram family.
 | state machine | lifecycle transitions and terminal states matter |
 | swimlane/journey | actor responsibility over time matters |
 | agent communication | delegation, return contracts, and closure authority matter |
+| C4/topology | system, container, component, or ownership topology matters |
+| deployment/runtime | deployed units, provider boundaries, data stores, or observability surfaces matter |
+| queue topology | producers, workers, retries, DLQ, and idempotency matter |
 | trust boundary/dataflow | sensitive data crosses auth/provider/upload/payment boundaries |
+| governance topology | issue trees, proof lanes, closure authority, or control-plane flow matter |
 
 ## Output Packet Shape
 

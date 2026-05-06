@@ -15,3 +15,15 @@ references:
   - references/notation-vocabulary.md
   - references/diagram-quality-bar.md
   - references/stack-trigger-matrix.md
+  - references/templates/erd.md
+  - references/templates/orm-lifecycle.md
+  - references/templates/class-module.md
+  - references/templates/sequence.md
+  - references/templates/state-machine.md
+  - references/templates/swimlane-journey.md
+  - references/templates/agent-communication.md
+  - references/templates/c4-topology.md
+  - references/templates/deployment-topology.md
+  - references/templates/queue-topology.md
+  - references/templates/trust-boundary-dataflow.md
+  - references/templates/governance-topology.md

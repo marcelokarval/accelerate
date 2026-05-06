@@ -16,11 +16,13 @@ flow.
 | --- | --- |
 | schema/database/table/constraint change | ERD |
 | ORM/data-access/service boundary ambiguity | ORM lifecycle |
+| class/module/function ownership or dependency ambiguity | class/module relationship diagram |
 | provider callback, payment, webhook, queue, auth flow | sequence diagram |
 | lifecycle/status/terminal-state change | state machine |
 | user/lead/owner/operator/provider path | swimlane/journey |
 | multi-agent delegation or lane handoff | agent communication topology |
 | security-sensitive auth/upload/export/billing/PII path | trust boundary/dataflow |
+| async producer/worker/retry/DLQ path | queue topology |
 | infrastructure/provider/runtime shape | deployment/runtime topology |
 | issue/proof/control-plane change | governance topology |
 | product-critical UI | UI wireframe, usually after the system model when backend truth constrains UI |

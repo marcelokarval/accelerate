@@ -34,6 +34,7 @@ This prevents invisible gate drift and stale mandatory language.
 | `Truth Ownership Check` | `truth-ownership-check.md` | Required when authority, ownership, or stack truth is unclear. |
 | `Failure Classification Gate` | `failure-classification-gate.md` | Required before fixing, auditing, or promoting failure-driven work. |
 | `Artifact Sufficiency Check` | `artifact-sufficiency-check.md` | Required when branch decisions depend on docs, packets, captures, specs, or evidence artifacts. |
+| `Visual Modeling Gate` | `visual-modeling-gate.md` | Required when structural truth needs a diagram before implementation or closure: ERD, sequence, state machine, swimlane, agent communication, trust boundary, runtime topology, or governance topology. |
 | `Document Cohesion Size Gate` | `document-cohesion-size-gate.md` | Required when Markdown size, split/merge decisions, duplicated doctrine, or documentation authority boundaries are in scope. |
 | `Manual Review Contradiction Gate` | `manual-review-contradiction-gate.md` | Required when later manual/code/QA review contradicts a prior done or converged closure claim. |
 | `One-Shot Side-By-Side Gate` | `../review/one-shot-side-by-side-protocol.md` | Required when a run explicitly asks for one-shot execution, side-by-side task review, auto-correction, delegated correction handoff, and final forensic reconciliation. |

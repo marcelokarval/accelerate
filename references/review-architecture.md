@@ -164,6 +164,20 @@ For critical user-facing surfaces, closure must explicitly reconcile:
 
 Do not close these flows on technical correctness alone.
 
+## Visual Modeling Reconciliation
+
+When a visual model exists, final review must say:
+
+- which diagram family was required or why no diagram was required;
+- what source truth the diagram claimed;
+- what implementation/review surface it bound;
+- whether the landed work followed the model;
+- what changed intentionally;
+- what drift remains;
+- whether a `Visual Modeling Packet` is present when `Visual Modeling Gate` was active.
+
+A visual model is not illustration. Treat it as contract evidence.
+
 ## Visual And Product Reconciliation
 
 When a visual reference or approved wireframe exists, the final review must say:

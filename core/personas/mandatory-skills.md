@@ -14,6 +14,7 @@ runtime packet unless an explicit branch exception is recorded.
 | `Prompt Hardening Editor` | `prompt-hardening` | weak prompt shape |
 | `Product Planner` | active workflow adapter or planning surface | issue tree, rollout, slices |
 | `Implementation Designer` | `planning-with-files`, `executing-plans` when accepted | execution design |
+| `Visual Modeler` | `visual-modeling`; `ascii-wireframe` only when UI/product surface is the model | ERD, sequence, state machine, swimlane, agent communication, trust boundary, or topology needed before implementation/review |
 | `Implementer / Developer` | concrete active profile skills from `skills/_registry/manifest.md` | generic code mutation |
 | `Backend Implementer` | backend profile bundle: `django-pro`, `django-service-patterns`, `django-inertia-integration`, `python-pro`, plus data/test skills as needed | backend mutation |
 | `Frontend Implementer` | frontend profile bundle: `front-react-shadcn`, `react-best-practices`, `typescript-pro`, `frontend-boundary-governance`, `tailwind-patterns`, plus profile-specific skills | frontend mutation |

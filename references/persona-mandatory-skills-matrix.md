@@ -27,6 +27,7 @@ runtime packet unless an explicit branch exception is recorded.
 | `Product Planner` | active workflow adapter when available; adapter-specific planner when sequencing is non-trivial | issue tree, rollout, slices |
 | `Issue Architect / Workflow Adapter` | active workflow adapter when available, otherwise local planning artifact | issue creation or issue repair |
 | `Implementation Designer` | `planning-with-files`, `executing-plans` when execution packet is accepted | execution design |
+| `Visual Modeler` | `visual-modeling`; `ascii-wireframe` only when UI/product surface is the model | ERD, sequence, state machine, swimlane, agent communication, trust boundary, or topology needed before implementation/review |
 | `Wireframe / Design Contract Extractor` | `ascii-wireframe` | structural UI uncertainty |
 | `Implementer / Developer` | concrete active profile skills from `skills/_registry/manifest.md` | generic code mutation |
 | `Backend Implementer` | `django-service-patterns`, `django-pro`, `security-patterns` | backend mutation |

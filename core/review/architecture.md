@@ -133,6 +133,22 @@ artifacts, DTO truth, or contract-heavy domain storage, use
 
 That profile should not collapse into generic prose review.
 
+## Visual Modeling Reconciliation
+
+When a visual model exists, review must reconcile the model against the branch truth.
+
+The reviewer should state:
+
+- which diagram family was required or why no diagram was required;
+- what source truth the diagram claimed;
+- whether the implementation or documentation diff followed the modeled structure;
+- what changed intentionally;
+- what drift remains;
+- whether the branch can close without a `Visual Modeling Packet`.
+
+Do not treat diagrams as decorative attachments. A required visual model is a
+contract artifact and must be reviewed like any other packet.
+
 ## Semantic Scope Recovery
 
 When the requested target does not exist literally, review should not stop at a

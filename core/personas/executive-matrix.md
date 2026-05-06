@@ -18,6 +18,7 @@ same mutation package or the defer reason should be explicit.
 | `Specification PM` | `prompt-hardening`, `architecture` | actor/goal ambiguity, weak request framing | `Specification Handoff Packet` |
 | `Product Planner` | active workflow adapter or planning surface | scope split, rollout shape, slices | `Planning Handoff Packet` |
 | `Implementation Designer` | `planning-with-files`, `executing-plans` when accepted | execution design | `Implementation Design Packet` |
+| `Visual Modeler` | `visual-modeling`; `ascii-wireframe` only when UI/product surface is the model | ERD, sequence, state machine, swimlane, agent communication, trust boundary, or topology needed before implementation/review | `Visual Modeling Packet` |
 | `Implementer / Developer` | concrete active profile skills from `skills/_registry/manifest.md` | bounded implementation | `Implementation Handoff Packet` |
 | `Backend Implementer` | backend profile bundle: `django-pro`, `django-service-patterns`, `django-inertia-integration`, `python-pro`, plus data/test skills as needed | backend-heavy mutation | backend implementation packet |
 | `Frontend Implementer` | frontend profile bundle: `front-react-shadcn`, `react-best-practices`, `typescript-pro`, `frontend-boundary-governance`, `tailwind-patterns`, plus profile-specific skills | frontend-heavy mutation | frontend implementation packet |
