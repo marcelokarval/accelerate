@@ -8,4 +8,8 @@ local_native_owner: core/review/product-critical-surfaces.md
 adaptation_policy: >
   Standalone Accelerate version. Keep visual artifact discipline independent of
   one frontend stack.
-last_reviewed: 2026-04-22
+last_reviewed: 2026-05-06
+references:
+  - references/visual-modeling-boundary.md
+  - references/diagram-pattern-catalog.md
+  - references/stack-diagram-selection.md

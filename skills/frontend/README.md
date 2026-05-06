@@ -11,7 +11,7 @@ Current skills:
 | `frontend-boundary-governance` | `.ts` / `.tsx` / backend-truth boundary discipline. |
 | `tailwind-design-system` | Tailwind token, variant, and shared visual-language governance. |
 | `server-prop-governance` | Server-to-frontend page contract and shared prop governance. |
-| `ascii-wireframe` | ASCII wireframes and diagrams for UI/flow/architecture decisions. |
+| `ascii-wireframe` | ASCII wireframes for UI/product surfaces, with references for broader visual modeling selection. |
 | `frontend-componentization-audit` | Reuse, duplicate convergence, and adopt-vs-extract frontend audit. |
 | `frontend-component-hierarchy` | Component placement, import direction, and layer ownership. |
 | `typescript-pro` | TypeScript contract and strict typing discipline. |

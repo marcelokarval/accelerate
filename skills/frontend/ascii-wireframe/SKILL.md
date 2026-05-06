@@ -2,13 +2,24 @@
 name: ascii-wireframe
 description: Codex-native high-fidelity ASCII wireframe and diagram skill for UI proposals, modal reviews, flows, and architecture sketches. Use whenever the task benefits from a visual artifact, not just textual explanation.
 user-invocable: true
-related-skills: architecture, active-frontend-stack
+related-skills: architecture, database-design, subagent-governance, product-runtime-review, active-frontend-stack
 ---
 
 # ascii-wireframe
 
-Use this skill for wireframes, flow diagrams, before/after proposals, modal
-comparisons, page layout sketches, and architecture visuals.
+Use this skill for UI/product wireframes, flow diagrams, before/after proposals,
+modal comparisons, page layout sketches, and lightweight architecture visuals.
+
+For broader system modeling, consult the local references first:
+
+- `references/visual-modeling-boundary.md`
+- `references/diagram-pattern-catalog.md`
+- `references/stack-diagram-selection.md`
+
+Those references cover when the artifact should be an ERD, ORM lifecycle, UML-lite
+class/function relationship, sequence diagram, state machine, swimlane/journey,
+agent communication map, deployment topology, queue topology, trust boundary, or
+Accelerate governance diagram instead of a UI wireframe.
 
 ## Mandatory Protocol
 
@@ -39,6 +50,12 @@ Load this skill when the task involves:
 - layout comparisons
 - architecture sketches
 - state visualization
+
+Use the broader visual-modeling references when the requested artifact is
+primarily a system model rather than a UI surface: ERD, ORM lifecycle,
+UML/class/function graph, sequence diagram, state machine, swimlane/journey,
+org chart, agent communication, deployment topology, queue/dataflow/trust
+boundary, or governance/proof topology.
 
 ## Required Sequence
 
@@ -179,6 +196,9 @@ Spacious example:
 
 - Use this skill before coding when UI shape or interaction boundary is still
   under discussion.
+- If persisted truth, lifecycle, actor responsibility, provider order, or agent
+  authority constrains the UI, draw the system diagram first using the broader
+  references, then draw the UI wireframe.
 - For billing, onboarding, settings, and modal-family decisions, prefer
   `normal` or `spacious` wireframes.
 - When comparing current vs legacy or modal vs page ownership, draw both sides.
