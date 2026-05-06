@@ -2,7 +2,7 @@
 name: ascii-wireframe
 description: Codex-native high-fidelity ASCII wireframe and diagram skill for UI proposals, modal reviews, flows, and architecture sketches. Use whenever the task benefits from a visual artifact, not just textual explanation.
 user-invocable: true
-related-skills: architecture, database-design, subagent-governance, product-runtime-review, active-frontend-stack
+related-skills: architecture, visual-modeling, database-design, subagent-governance, product-runtime-review, active-frontend-stack
 ---
 
 # ascii-wireframe

@@ -15,6 +15,7 @@ The historical migration manifest remains available at:
 | `product-runtime-review` | `review` | `../review/product-runtime-review/` | `standalone-adapted` | optional | `local-authoritative` |
 | `systematic-debugging` | `review` | `../review/systematic-debugging/` | `standalone-adapted` | optional | `local-authoritative` |
 | `architecture` | `review` | `../review/architecture/` | `standalone-adapted` | optional | `local-authoritative` |
+| `visual-modeling` | `review` | `../review/visual-modeling/` | `native` | optional | `local-authoritative` |
 | `requesting-code-review` | `review` | `../review/requesting-code-review/` | `standalone-adapted` | optional | `local-authoritative` |
 | `code-audit` | `review` | `../review/code-audit/` | `standalone-adapted` | optional | `local-authoritative` |
 | `governance-audit` | `governance` | `../governance/governance-audit/` | `standalone-adapted` | optional | `local-authoritative` |

@@ -1,0 +1,17 @@
+name: visual-modeling
+category: review
+status: native
+source: skills/review/visual-modeling
+owner: accelerate
+runtime_export: optional
+local_native_owner: core/control-plane/visual-modeling-gate.md
+adaptation_policy: >
+  Accelerate-native visual modeling layer. Keep it stack-neutral and use stack
+  references to select the concrete diagram family before implementation or
+  review.
+last_reviewed: 2026-05-06
+references:
+  - references/diagram-selection.md
+  - references/notation-vocabulary.md
+  - references/diagram-quality-bar.md
+  - references/stack-trigger-matrix.md

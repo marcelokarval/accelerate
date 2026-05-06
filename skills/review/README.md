@@ -10,5 +10,6 @@ Current skills:
 | `product-runtime-review` | Review user-facing runtime/product correctness. |
 | `systematic-debugging` | Diagnose bugs and regressions with repro-first discipline. |
 | `architecture` | Make and record architectural decisions. |
+| `visual-modeling` | Produce Accelerate-grade structural diagrams for ERDs, sequences, state machines, journeys, agents, and trust boundaries. |
 | `requesting-code-review` | Pre-commit verification, static scan, reviewer pass, and bounded auto-fix loop. |
 | `code-audit` | P0-P3 security, architecture, maintainability, docs, and quality-gate audit. |
