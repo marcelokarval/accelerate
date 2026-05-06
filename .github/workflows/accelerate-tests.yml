@@ -9,6 +9,11 @@ on:
 permissions:
   contents: read
 
+env:
+  # GitHub is deprecating Node.js 20 for JavaScript actions. Opt in early so
+  # workflow drift is detected before the platform default changes.
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   tests:
     name: Shell contract suite
