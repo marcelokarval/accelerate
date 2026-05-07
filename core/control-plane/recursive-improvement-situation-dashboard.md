@@ -29,7 +29,7 @@ agent factory promotion pipeline.
 
 | Situation | Status | Evidence | Residual | Next task | Owner lane |
 | --- | --- | --- | --- | --- | --- |
-| GitHub land proof | `planned` | `core/control-plane/capability-maturity-dashboard.md` keeps `PR land/merge` and `github-pr-land` as `planned`; live merge proof is absent. | Only dry-run/fail-closed proof exists; no disposable playground PR has been actually landed for this repo's adapter stack. | Create a bounded GitHub PR land/merge live-proof task using a non-sensitive disposable playground PR, closure proof, export approval, and remote CI watch. | workflow adapter implementation subagent + proof sidecar + root review-of-review |
+| GitHub land proof | `available` | `planning/evidence/dated-proof-appendix/github-pr-land-live-validation-2026-05-07.md` proves PR `#2` in `marcelokarval/accelerate-playground` was landed through `land-github-pr.sh`; `core/control-plane/capability-maturity-dashboard.md` records `PR land/merge` as `native` and `github-pr-land` as `available`. | Proof is bounded to guarded GitHub PR land/merge in the playground repository; it does not prove deploys, Linear writes, or ungated production merges. | Preserve proof locator and keep land execution behind `ACCELERATE_ALLOW_LAND`, readiness, closure, export, production-readiness, and head revalidation gates. | workflow adapter maintenance + root review-of-review |
 | Linear MCP writes | `blocked` | `core/control-plane/capability-maturity-dashboard.md` keeps Linear create/update, artifact attachment, closure comment, and status transition as `blocked` by `structured_non_llm_mcp_write_binding_required`. | Structured non-LLM MCP write binding is missing; existing evidence is not enough to treat Linear writes as available. | Implement structured non-LLM Linear MCP write binding and prove create/comment/status update on a non-sensitive fixture before any status promotion. | workflow adapter implementation subagent + provider-boundary/governance reviewer |
 | `.accelerate/` dogfood | `planned` | Executive plan states local `.accelerate/` workspace exists as target-repo mechanism but is not yet persistently dogfooded in this repo. | Accelerate cannot yet claim persistent self-dogfood of its local workflow adapter state. | Create guarded persistent `.accelerate/` dogfood workspace for this repo with local status, packet, cleanup, and substitute-evidence boundaries. | governance implementation subagent + root integration review |
 | Semantic negative gates | `planned` | Recursive plan names weak semantic negative fixture coverage; existing test suite is green but this slice does not add negative fixtures. | Positive-path and presence checks can pass while semantic status-promotion regressions remain possible. | Add contract tests/fixtures that fail if blocked/planned/substitute states are promoted without proof, including dashboard and packet cases. | QA/proof subagent + governance reviewer |
@@ -49,7 +49,7 @@ agent factory promotion pipeline.
 
 ## Status Honesty Rules
 
-- GitHub land proof remains `planned` until live land/merge proof exists.
+- GitHub land proof is `available` only within the 2026-05-07 proof boundary and guarded adapter path; do not generalize it to deploys or ungated merges.
 - Linear MCP writes remain `blocked` until `structured_non_llm_mcp_write_binding_required` is removed by implementation and fixture proof.
 - `.accelerate/` dogfood remains `planned` until persistent repo-local dogfood state exists and is validated.
 - Semantic negative gates remain `planned` until negative fixtures prove status-promotion failures are caught.
@@ -65,13 +65,12 @@ accepts the promotion.
 
 The next recursive cycle should prioritize:
 
-1. GitHub PR land/merge live proof.
-2. Linear structured MCP write binding.
-3. Persistent `.accelerate/` dogfood workspace for this repo.
-4. Semantic negative fixtures for packets and gates.
-5. Runtime adapter maturity dashboard.
-6. Skill sync topology.
-7. Agent factory promotion pipeline.
+1. Linear structured MCP write binding.
+2. Persistent `.accelerate/` dogfood workspace for this repo.
+3. Semantic negative fixtures for packets and gates.
+4. Runtime adapter maturity dashboard.
+5. Skill sync topology.
+6. Agent factory promotion pipeline.
 
 Each queue item must be shaped as a bounded task before execution, with owner
 lane, allowed files, forbidden files, proof, reviewer, stop rules, and residual

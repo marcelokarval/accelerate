@@ -30,9 +30,12 @@ fi
 
 command -v gh >/dev/null 2>&1 || { echo "gh CLI is not installed" >&2; exit 1; }
 gh auth status >/dev/null 2>&1 || { echo "gh auth is not available" >&2; exit 1; }
-mkdir -p "$(dirname "${root}/${output_path}")"
+output_abs="${root}/${output_path}"
+mkdir -p "$(dirname "${output_abs}")"
+output_tmp="${output_abs}.tmp.$$"
+trap 'rm -f "${output_tmp}"' EXIT
 pr_json="$(gh -R "${repo_slug}" pr view "${branch}" --json number,url,state,mergeable,reviewDecision,statusCheckRollup,headRefName,headRefOid,baseRefName)"
-printf '%s\n' "${pr_json}" | REPO_SLUG="${repo_slug}" BRANCH="${branch}" python3 -c '
+printf '%s\n' "${pr_json}" | REPO_SLUG="${repo_slug}" BRANCH="${branch}" OUTPUT_FILE="${output_abs}" python3 -c '
 import json, sys
 import os
 data = json.load(sys.stdin)
@@ -56,10 +59,27 @@ branch = os.environ["BRANCH"]
 missing = []
 if not checks:
     missing.append("status_checks")
-if data.get("reviewDecision") != "APPROVED":
+review_decision = data.get("reviewDecision")
+if isinstance(review_decision, str):
+    review_decision = review_decision.strip()
+if review_decision and review_decision != "APPROVED":
     missing.append("approved_review")
 ready = data.get("state") == "OPEN" and data.get("mergeable") == "MERGEABLE" and data.get("headRefName") == branch and not bad and not pending and not missing
-json.dump({"schema_version": 1, "adapter": "github-pr", "repo": repo, "branch": branch, "head_ref_oid": data.get("headRefOid"), "pr_number": data.get("number"), "ready": ready, "pr": data, "blocking_checks": bad, "pending_checks": pending, "missing_requirements": missing}, sys.stdout, indent=2)
+result = {"schema_version": 1, "adapter": "github-pr", "repo": repo, "branch": branch, "head_ref_oid": data.get("headRefOid"), "pr_number": data.get("number"), "ready": ready, "pr": data, "blocking_checks": bad, "pending_checks": pending, "missing_requirements": missing}
+existing_path = os.environ["OUTPUT_FILE"]
+try:
+    with open(existing_path, encoding="utf-8") as fh:
+        existing = json.load(fh)
+except (FileNotFoundError, json.JSONDecodeError, OSError):
+    existing = {}
+if isinstance(existing, dict):
+    for key in ("closure_comment_proof", "closure_artifact"):
+        value = existing.get(key)
+        if isinstance(value, str) and value.strip():
+            result[key] = value
+json.dump(result, sys.stdout, indent=2)
 sys.stdout.write("\n")
-' >"${root}/${output_path}"
+' >"${output_tmp}"
+mv "${output_tmp}" "${output_abs}"
+trap - EXIT
 printf '%s\n' "${output_path}"

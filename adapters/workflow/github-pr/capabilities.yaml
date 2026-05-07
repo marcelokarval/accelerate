@@ -24,9 +24,9 @@ closure_comment_proof: planning/evidence/dated-proof-appendix/github-playground-
 status_transition: linked
 status_transition_command: onboarding/local-workspace/check-ship-readiness.sh
 status_transition_proof: local-readiness-artifact
-production_merge_land_gate: planned
+production_merge_land_gate: native
 production_merge_land_gate_command: onboarding/local-workspace/land-github-pr.sh
-production_merge_land_gate_proof: planned
+production_merge_land_gate_proof: planning/evidence/dated-proof-appendix/github-pr-land-live-validation-2026-05-07.md
 external_api: native
 identity: native
 work_item_create: planned
@@ -53,3 +53,6 @@ live_attachment_result: passed
 live_create_result: passed
 live_closure_comment_result: passed
 live_rehydration_result: passed
+live_land_tested_at: 2026-05-07
+live_land_target: planning/evidence/dated-proof-appendix/github-pr-land-live-validation-2026-05-07.md
+live_land_result: passed

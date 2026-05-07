@@ -96,8 +96,37 @@ assert_blocks "rehydrate-dash-path" "cannot start with '-'" bash "${SCRIPTS}/reh
 assert_blocks "ship-extra" "usage:" bash "${SCRIPTS}/check-ship-readiness.sh" "${WORK_ROOT}/repo" ".accelerate/review/ship-readiness.json" --dry-run extra
 assert_blocks "ship-dash-path" "cannot start with '-'" bash "${SCRIPTS}/check-ship-readiness.sh" "${WORK_ROOT}/repo" --bad-mode
 
+mkdir -p "${WORK_ROOT}/bin"
+cat >"${WORK_ROOT}/bin/gh" <<'EOF'
+#!/usr/bin/env bash
+printf '%s\n' "$*" >>"${GH_STUB_LOG:?}"
+if [ "${1:-}" = "auth" ] && [ "${2:-}" = "status" ]; then
+  exit 0
+fi
+if [ "${1:-}" = "-R" ] && [ "${3:-}" = "pr" ] && [ "${4:-}" = "view" ]; then
+  printf '%s\n' '{"number":1,"url":"https://github.com/example/repo/pull/1","state":"OPEN","mergeable":"MERGEABLE","reviewDecision":"APPROVED","statusCheckRollup":[{"conclusion":"SUCCESS","status":"COMPLETED"}],"headRefName":"feature/adapter-safety","headRefOid":"abc","baseRefName":"main"}'
+  exit 0
+fi
+if [ "${1:-}" = "-R" ] && [ "${3:-}" = "pr" ] && [ "${4:-}" = "merge" ]; then
+  echo "unexpected live merge in safety test" >&2
+  exit 70
+fi
+echo "unexpected gh invocation: $*" >&2
+exit 64
+EOF
+chmod +x "${WORK_ROOT}/bin/gh"
+export PATH="${WORK_ROOT}/bin:${PATH}"
+export GH_STUB_LOG="${WORK_ROOT}/gh-stub.log"
+
 assert_blocks "land-extra" "usage:" bash "${SCRIPTS}/land-github-pr.sh" "${WORK_ROOT}/repo" ".accelerate/review/ship-readiness.json" --dry-run extra
 assert_blocks "land-dash-path" "cannot start with '-'" bash "${SCRIPTS}/land-github-pr.sh" "${WORK_ROOT}/repo" --bad-mode
+rm -f "${WORK_ROOT}/repo/.accelerate/review/ship-readiness.json" "${GH_STUB_LOG}"
+assert_blocks "land-missing-readiness" "missing ship readiness artifact" env ACCELERATE_ALLOW_LAND=1 bash "${SCRIPTS}/land-github-pr.sh" "${WORK_ROOT}/repo" ".accelerate/review/ship-readiness.json"
+[ ! -s "${GH_STUB_LOG}" ] || fail "missing readiness should block before refreshing ship readiness"
+printf '%s\n' '{"schema_version":1,"adapter":"github-pr","repo":"example/repo","branch":"feature/adapter-safety","pr_number":1,"head_ref_oid":"abc","ready":false,"missing_requirements":["approved_review"]}' > "${WORK_ROOT}/repo/.accelerate/review/ship-readiness.json"
+assert_blocks "land-stale-readiness-refresh" "closure proof is required before land" env ACCELERATE_ALLOW_LAND=1 bash "${SCRIPTS}/land-github-pr.sh" "${WORK_ROOT}/repo" ".accelerate/review/ship-readiness.json"
+python3 -c 'import json,sys; data=json.load(open(sys.argv[1])); sys.exit(0 if data.get("ready") is True else 1)' "${WORK_ROOT}/repo/.accelerate/review/ship-readiness.json" || fail "stale ready=false readiness was not refreshed to ready=true before later land gates"
+assert_contains "$(<"${GH_STUB_LOG}")" "pr view"
 printf '%s\n' '{"schema_version":1,"adapter":"github-pr","repo":"example/repo","branch":"feature/adapter-safety","pr_number":1,"head_ref_oid":"abc","ready":true}' > "${WORK_ROOT}/repo/.accelerate/review/ship-readiness.json"
 assert_blocks "land-closure-preflight" "closure proof is required before land" env ACCELERATE_ALLOW_LAND=1 bash "${SCRIPTS}/land-github-pr.sh" "${WORK_ROOT}/repo" ".accelerate/review/ship-readiness.json"
 printf '%s\n' '{"schema_version":1,"adapter":"github-pr","repo":"example/repo","branch":"feature/adapter-safety","pr_number":1,"head_ref_oid":"abc","ready":true,"closure_comment_proof":".accelerate/review/unapproved-closure-packet.md"}' > "${WORK_ROOT}/repo/.accelerate/review/ship-readiness.json"

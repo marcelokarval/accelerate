@@ -71,9 +71,41 @@ for term in \
   require_match "$term" "$DASHBOARD"
 done
 
-require_match 'production_merge_land_gate: planned' "$GITHUB_CAPS"
+require_match 'production_merge_land_gate: native' "$GITHUB_CAPS"
+require_match 'production_merge_land_gate_proof: planning/evidence/dated-proof-appendix/github-pr-land-live-validation-2026-05-07.md' "$GITHUB_CAPS"
 require_match 'create_update: blocked' "$LINEAR_CAPS"
 require_match 'structured_write: no' "$REMOTE_REGISTRY"
 require_match 'github-pr-land' "$REMOTE_REGISTRY"
+require_match 'status: available' "$REMOTE_REGISTRY"
+require_match 'live_proof: planning/evidence/dated-proof-appendix/github-pr-land-live-validation-2026-05-07.md' "$REMOTE_REGISTRY"
+
+python3 - "$ROOT" "$GITHUB_CAPS" "$REMOTE_REGISTRY" <<'PY'
+from pathlib import Path
+import re
+import sys
+
+root = Path(sys.argv[1])
+github_caps = Path(sys.argv[2]).read_text()
+registry = Path(sys.argv[3]).read_text()
+proof = "planning/evidence/dated-proof-appendix/github-pr-land-live-validation-2026-05-07.md"
+
+if f"production_merge_land_gate_proof: {proof}" not in github_caps:
+    raise SystemExit("governance maintenance pack test failed: github land proof locator missing")
+if not (root / proof).is_file():
+    raise SystemExit("governance maintenance pack test failed: github land proof file missing")
+
+blocks = re.split(r"\n\s*- id:\s*", registry)
+land = None
+for raw in blocks[1:]:
+    block = "id: " + raw
+    if re.search(r"^id:\s*github-pr-land\s*$", block, re.M):
+        land = block
+        break
+if land is None:
+    raise SystemExit("governance maintenance pack test failed: github-pr-land registry block missing")
+for expected in ["status: available", f"live_proof: {proof}", "requires_opt_in: ACCELERATE_ALLOW_LAND"]:
+    if expected not in land:
+        raise SystemExit(f"governance maintenance pack test failed: github-pr-land block missing {expected}")
+PY
 
 echo "governance maintenance pack tests passed"

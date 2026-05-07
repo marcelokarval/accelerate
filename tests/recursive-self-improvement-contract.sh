@@ -80,7 +80,6 @@ require_terms(dashboard, required_situations, "recursive improvement dashboard")
 require_terms(dashboard, ["status", "evidence", "residual", "next task", "owner lane"], "recursive improvement dashboard")
 
 honest_status_expectations = [
-    (("GitHub", "land"), {"planned", "blocked"}),
     (("Linear", "MCP"), {"blocked"}),
     ((".accelerate", "dogfood"), {"planned", "blocked"}),
     (("semantic", "negative"), {"planned", "blocked"}),
@@ -88,6 +87,18 @@ honest_status_expectations = [
     (("skill", "sync", "topology"), {"planned", "blocked"}),
     (("agent", "factory", "promotion", "pipeline"), {"planned", "blocked"}),
 ]
+github_land_proof = "planning/evidence/dated-proof-appendix/github-pr-land-live-validation-2026-05-07.md"
+github_land_matches = lines_containing(dashboard, "GitHub", "land")
+if not github_land_matches:
+    fail("dashboard missing row containing: GitHub / land")
+github_land_honest = False
+for line in github_land_matches:
+    cells = [cell.strip().strip("`").lower() for cell in line.strip().strip("|").split("|")]
+    if len(cells) >= 4 and cells[1] == "available" and github_land_proof in line and (root / github_land_proof).is_file():
+        github_land_honest = True
+if not github_land_honest:
+    fail("dashboard GitHub land row must be available only with durable 2026-05-07 live proof locator")
+
 for needles, allowed_statuses in honest_status_expectations:
     matches = lines_containing(dashboard, *needles)
     if not matches:
