@@ -42,6 +42,7 @@ keep a branch rehydratable.
 | `document-cohesion-size-packet.md` | Document split/merge/cohesion matters | file, size, cohesion claim, action | Document Cohesion Size Gate | `tests/doc-snippet-integrity.sh` |
 | `manual-review-contradiction-packet.md` | Manual review contradicts automation | contradiction, source, resolution | Review architecture | `tests/all.sh` indirect integrity |
 | `execution-to-spec-loop-packet.md` | Implementation must reconcile to spec | spec, implementation, mismatch, proof | Execution/spec loop | `tests/all.sh` indirect integrity |
+| `recursive-improvement-cycle-packet.md` | Recursive self-improvement cycle opens | cycle id, trigger, inventory scope, detected situations, task ledger link, subagent assignment map, review map, proof map, closure verdict, next-cycle queue | Recursive improvement root control plane | `tests/recursive-self-improvement-contract.sh` |
 | `systemic-ui-inconsistency-audit-packet.md` | UI inconsistency audit is required | surface, inconsistency, correction, proof | Premium/product review | `tests/all.sh` indirect integrity |
 | `document-export-packet.md` | Document export/publication is required | source, target, verification, residual | Document export | `tests/all.sh` indirect integrity |
 | `design-baseline-packet.md` | Baseline design truth is captured | benchmark, tokens, reference, residual | Design baseline | `tests/design-md-corpus-integrity.sh` |
