@@ -31,9 +31,10 @@ require_file "$GITHUB_CAPS"
 require_file "$LINEAR_CAPS"
 require_file "$REMOTE_REGISTRY"
 
-require_match '^env:$' "$WORKFLOW"
-require_match 'FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true' "$WORKFLOW"
-require_match 'GitHub is deprecating Node.js 20' "$WORKFLOW"
+require_match 'uses: actions/checkout@v5' "$WORKFLOW"
+if grep -Eq 'actions/checkout@v4|FORCE_JAVASCRIPT_ACTIONS_TO_NODE24|GitHub is deprecating Node.js 20' "$WORKFLOW"; then
+  fail "workflow still carries Node 20 compatibility fallback instead of native checkout@v5"
+fi
 
 for packet in \
   templates.md \

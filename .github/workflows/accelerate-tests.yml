@@ -9,18 +9,13 @@ on:
 permissions:
   contents: read
 
-env:
-  # GitHub is deprecating Node.js 20 for JavaScript actions. Opt in early so
-  # workflow drift is detected before the platform default changes.
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   tests:
     name: Shell contract suite
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install shell test dependencies
         run: sudo apt-get update && sudo apt-get install -y ripgrep
