@@ -18,9 +18,13 @@ detail, optional server PID/stdout/stderr liveness detail from
 `ACCELERATE_BROWSER_PROOF_SERVER_*`, cleanup ownership detail, and a correction
 signal so the execution-to-spec loop can start or fix the server before retrying.
 `ACCELERATE_BROWSER_PROOF_READINESS_ONLY=1` writes a `readiness-only` packet and
-never launches the browser. If readiness passes but browser automation is missing
-or fails, the helper writes `capture-failed` instead of conflating it with server
-readiness. Capture-failed packets re-check supplied server PID liveness; if a
+never launches the browser. A supplied server PID that is dead blocks before
+browser launch even if another process responds at the target URL; this prevents
+capture from silently proving the wrong process. If readiness passes but browser
+automation is missing or fails, the helper writes `capture-failed` instead of
+conflating it with server readiness, and includes bounded browser capture
+stdout/stderr tails plus whether launch was skipped or capture failed.
+Capture-failed packets re-check supplied server PID liveness; if a
 server that passed preflight has exited, the correction signal points to
 restarting/fixing the local server rather than to browser installation. Successful
 one-off capture writes `browser-capture`, includes the same server monitor tails,

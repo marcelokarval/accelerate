@@ -17,11 +17,23 @@ The generated/private boundary is enforced by `.accelerate/.gitignore` and by `t
 
 ## Current Dogfood Cycle
 
-- cycle: recursive cycle 18..22
-- governing plan: `planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md`
-- task ledger: `planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md`
+- cycle: linear OAuth MCP + runtime proof gates, RC24..RC27
+- governing Linear parent: `P4Y-1298`
+- governing Linear child for this handoff: `P4Y-1302`
+- governing plan: `planning/executive/2026-05-08-linear-oauth-runtime-proof-executive-plan.md`
+- task ledger: `planning/executive/2026-05-08-linear-oauth-runtime-proof-task-ledger.md`
 - execution model: root orchestrator with bounded subagent implementation/review packets
 - local status: `.accelerate/status/readiness-dashboard.yaml`
 - active work item: `.accelerate/workflow/active-work-item.yaml`
 
-This workspace is not a provider cache and must not contain tokens, private provider payloads, screenshots, or customer data.
+## Previous Dogfood Cycle Pointer
+
+The prior dogfood cycle was `recursive cycle 18..22` and used:
+
+- previous cycle id: `recursive-cycle-2026-05-08-18-22`
+- previous governing plan: `planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md`
+- previous task ledger: `planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md`
+
+This pointer exists only to keep historical contract tests and migration traceability readable; the active cycle above governs current work.
+
+This workspace is not a provider cache and must not contain tokens, private provider payloads, screenshots, or customer data. It is a no secrets surface for committed governance state.

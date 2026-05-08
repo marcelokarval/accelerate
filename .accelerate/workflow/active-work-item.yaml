@@ -1,25 +1,33 @@
 schema_version: 1
 kind: accelerate-local-dogfood-active-work-item
-id: recursive-cycle-2026-05-08-18-22
+id: linear-oauth-runtime-proof-2026-05-08-rc24-rc27
 status: active
 classification: orchestrated-non-trivial-recursive-self-improvement
 execution_model: root-orchestrator-with-bounded-subagents
-plan: planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md
-ledger: planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md
+root_orchestrator: Claw
+governing_linear_parent: P4Y-1298
+governing_linear_child: P4Y-1302
+plan: planning/executive/2026-05-08-linear-oauth-runtime-proof-executive-plan.md
+ledger: planning/executive/2026-05-08-linear-oauth-runtime-proof-task-ledger.md
+previous_cycle:
+  id: recursive-cycle-2026-05-08-18-22
+  plan: planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md
+  ledger: planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md
 assigned_scope:
-  - RC18 Linear live fixture proof readiness and provider-live negatives (Subagent A)
-  - RC19 Browser-proof server monitoring and capture correction (Subagent B)
-  - RC20 Persistent regression separation and E2E handoff proof (Subagent B)
-  - RC21 Generated host skill export and bounded agent runtime candidate (Subagent C)
-  - RC22 Governance integration, dogfood, semantic negatives, next queue (Subagent C)
-  - RC23 Root final integration review, process cleanup, commit/push, CI watch
+  - RC24 Linear OAuth MCP lane proof and dashboard correction (Subagent A; implementation evidence present, pending independent review/root acceptance)
+  - RC25 Browser-proof server readiness, capture, and correction hardening (Subagent B; implementation evidence present, pending independent review/root acceptance)
+  - RC26 Persistent E2E, generated-host export, and agent-runtime boundary preservation (Subagent C; implementation evidence present, pending independent review/root acceptance)
+  - RC27 Governance integration, dogfood state, task ledger, and final next queue (Subagent D; active in this handoff)
 review_model:
-  root: orchestrator and final forensic reviewer
+  root: root orchestrator and final forensic reviewer
   subagents: bounded implementation plus task-level self-review only
   acceptance: root must inspect actual diffs and proof; subagent self-review is not final acceptance
-provider_boundary: local-fixture-only-for-rc18; provider-live-proof-is-credential-gated-and-sanitized-by-assigned-scope
-remote_calls_allowed: false
-secret_policy: no secrets, tokens, screenshots, private browser captures, or provider responses in committed dogfood files
+provider_boundary: linear-oauth-mcp is host-authenticated and privacy-gated for bounded governing issues; linear-api-key-graphql shell fallback remains planned until safe credentialed fixture proof exists
+remote_calls_allowed: true
+remote_call_scope:
+  - bounded Linear OAuth MCP read/discovery or approved governing issue operations only
+  - no raw provider payloads, emails, tokens, screenshots, or private issue bodies in committed dogfood files
+secret_policy: no secrets, tokens, screenshots, private browser captures, credential env names, or provider responses in committed dogfood files
 generated_private_outputs:
   - .accelerate/review/*.json
   - .accelerate/review/*.jsonl
@@ -30,9 +38,12 @@ generated_private_outputs:
   - .accelerate/proof/
   - .accelerate/tmp/
 proof_commands:
-  - bash tests/control-plane-rc4-rc6.sh
-  - bash tests/recursive-self-improvement-contract.sh
+  - bash tests/linear-structured-mcp-binding.sh
+  - bash tests/linear-oauth-status-honesty.sh
   - bash tests/browser-proof-monitoring.sh
-  - bash tests/dogfood-workspace-contract.sh
   - bash tests/semantic-negative-fixtures.sh
+  - bash tests/dogfood-workspace-contract.sh
+  - bash tests/recursive-self-improvement-contract.sh
+  - bash tests/all.sh
   - git diff --check
+next_queue_source: core/control-plane/recursive-improvement-situation-dashboard.md#next-queue-seed

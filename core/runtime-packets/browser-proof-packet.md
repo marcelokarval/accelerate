@@ -15,6 +15,7 @@ Browser-Proof Packet
 - cleanup: <browser closed; helper-owned server killed or external server not owned; fixture leak-check result>
 - correction signal: <none|start-or-fix-server|fix-route|install-readiness-checker|inspect-browser-runtime|other>
 - browser launched: <yes|no; readiness failures must be no>
+- browser capture: <launch-skipped yes/no; capture-failed yes/no; stdout/stderr tail paths or packet tails when failed>
 - browser tool: <Chrome DevTools|agent-browser|other>
 - browser session posture: <fresh|isolated|existing-intentional|profile-conflict-blocked>
 - browser profile / isolation: <profile path|--isolated|dedicated userDataDir|n/a|blocked reason>
@@ -48,8 +49,9 @@ Browser-Proof Packet
   actively checked. If the local server is absent, unreachable, returning a
   server error, or a supplied server PID is already dead, write a structured
   `server-readiness` failure packet with `browser launched: no`, HTTP
-  code/probe detail, server liveness/stdout/stderr detail when supplied, cleanup
-  ownership detail, and an explicit correction signal instead of producing
+  code/probe detail, server liveness/stdout/stderr detail when supplied, browser
+  launch-skipped/capture-failed fields, cleanup ownership detail, and an explicit
+  correction signal instead of producing
   screenshot-only or empty proof.
 - Use `readiness-only` only for server monitoring/preflight evidence that did
   not launch a browser. It can support review of server availability, but it

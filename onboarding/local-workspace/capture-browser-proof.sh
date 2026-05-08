@@ -79,6 +79,9 @@ write_packet() {
   ACCELERATE_BROWSER_PROOF_SERVER_PID="${ACCELERATE_BROWSER_PROOF_SERVER_PID:-}" \
   ACCELERATE_BROWSER_PROOF_SERVER_STDOUT="${ACCELERATE_BROWSER_PROOF_SERVER_STDOUT:-}" \
   ACCELERATE_BROWSER_PROOF_SERVER_STDERR="${ACCELERATE_BROWSER_PROOF_SERVER_STDERR:-}" \
+  ACCELERATE_BROWSER_PROOF_CAPTURE_STDOUT="${capture_stdout:-}" \
+  ACCELERATE_BROWSER_PROOF_CAPTURE_STDERR="${capture_stderr:-}" \
+  ACCELERATE_BROWSER_PROOF_CAPTURE_PROFILE_DIR="${capture_profile_dir:-}" \
   python3 - <<'PY'
 import datetime
 import json
@@ -138,6 +141,9 @@ if detail_path.exists():
 pid_value = os.environ.get("ACCELERATE_BROWSER_PROOF_SERVER_PID", "")
 stdout_path = os.environ.get("ACCELERATE_BROWSER_PROOF_SERVER_STDOUT", "")
 stderr_path = os.environ.get("ACCELERATE_BROWSER_PROOF_SERVER_STDERR", "")
+capture_stdout_path = os.environ.get("ACCELERATE_BROWSER_PROOF_CAPTURE_STDOUT", "")
+capture_stderr_path = os.environ.get("ACCELERATE_BROWSER_PROOF_CAPTURE_STDERR", "")
+capture_profile_dir = os.environ.get("ACCELERATE_BROWSER_PROOF_CAPTURE_PROFILE_DIR", "")
 status = os.environ["STATUS"]
 phase = os.environ["PHASE"]
 browser_launched = os.environ["BROWSER_LAUNCHED"] == "true"
@@ -168,10 +174,18 @@ packet = {
         "stderr_tail": tail(stderr_path),
         "http_code": http_code,
     },
+    "browser_capture": {
+        "launch_skipped": not browser_launched,
+        "capture_failed": phase == "capture-failed",
+        "stdout_tail": tail(capture_stdout_path),
+        "stderr_tail": tail(capture_stderr_path),
+    },
     "cleanup": {
-        "performed": False,
+        "performed": bool(capture_profile_dir) and phase == "capture-failed",
         "owned_by_helper": False,
-        "detail": "capture-browser-proof.sh does not own external server processes; fixture tests must kill and leak-check their servers",
+        "browser_profile_dir": capture_profile_dir or None,
+        "profile_dir_removed_by_trap": bool(capture_profile_dir) if phase == "capture-failed" else None,
+        "detail": "capture-browser-proof.sh does not own external server processes; fixture tests must kill and leak-check their servers. Temporary browser profile cleanup is handled by the helper EXIT trap when allocated.",
     },
     "browser_session": {
         "posture": "fresh" if browser_launched else "not-launched",
@@ -207,6 +221,12 @@ if command -v curl >/dev/null 2>&1; then
     exit 3
   fi
   printf 'http_code=%s\n' "${http_code}" >"${readiness_detail}"
+  if [ -n "${ACCELERATE_BROWSER_PROOF_SERVER_PID:-}" ] && ! kill -0 "${ACCELERATE_BROWSER_PROOF_SERVER_PID}" 2>/dev/null; then
+    printf 'server_pid=%s not_alive_after_successful_http_probe\n' "${ACCELERATE_BROWSER_PROOF_SERVER_PID}" >>"${readiness_detail}"
+    write_packet "blocked" "server-readiness" "false" "server_process_not_alive" "restart_crashed_local_server_before_requesting_browser_proof" "${readiness_detail}" "${http_code}"
+    printf 'browser proof blocked before launch: supplied server process is not alive; wrote %s\n' "${output_path}" >&2
+    exit 3
+  fi
 else
   printf 'curl unavailable; cannot verify server readiness before browser launch\n' >"${readiness_detail}"
   write_packet "blocked" "server-readiness" "false" "server_readiness_checker_unavailable" "install_curl_or_use_a_runtime_adapter_with_an_equivalent_readiness_probe" "${readiness_detail}" ""
@@ -337,6 +357,12 @@ async function main() {
         stdout_tail: tail(serverStdout),
         stderr_tail: tail(serverStderr),
         http_code: Number(httpCode),
+      },
+      browser_capture: {
+        launch_skipped: false,
+        capture_failed: false,
+        stdout_tail: '',
+        stderr_tail: '',
       },
       viewport: { width: 1440, height: 1000 },
       title,

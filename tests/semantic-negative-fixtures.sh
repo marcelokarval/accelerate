@@ -5,17 +5,27 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 DASHBOARD="${ROOT}/core/control-plane/recursive-improvement-situation-dashboard.md"
 DOGFOOD_DASHBOARD="${ROOT}/.accelerate/status/readiness-dashboard.yaml"
 ACTIVE_WORK_ITEM="${ROOT}/.accelerate/workflow/active-work-item.yaml"
+RUNTIME_DASHBOARD="${ROOT}/core/control-plane/runtime-adapter-maturity-dashboard.md"
+SKILL_TOPOLOGY="${ROOT}/core/control-plane/skill-sync-topology.md"
+AGENT_PIPELINE="${ROOT}/core/control-plane/agent-factory-promotion-pipeline.md"
 
-python3 - "${DASHBOARD}" "${DOGFOOD_DASHBOARD}" "${ACTIVE_WORK_ITEM}" <<'PY'
+python3 - "${DASHBOARD}" "${DOGFOOD_DASHBOARD}" "${ACTIVE_WORK_ITEM}" "${RUNTIME_DASHBOARD}" "${SKILL_TOPOLOGY}" "${AGENT_PIPELINE}" <<'PY'
 from pathlib import Path
 import sys
+import re
 
 dashboard = Path(sys.argv[1])
 dogfood_dashboard = Path(sys.argv[2])
 active_work_item = Path(sys.argv[3])
+runtime_dashboard = Path(sys.argv[4])
+skill_topology = Path(sys.argv[5])
+agent_pipeline = Path(sys.argv[6])
 text = dashboard.read_text()
 dogfood_text = dogfood_dashboard.read_text()
 active_text = active_work_item.read_text()
+runtime_text = runtime_dashboard.read_text()
+skill_text = skill_topology.read_text()
+agent_text = agent_pipeline.read_text()
 
 PROMOTED = {"available", "native", "done", "implemented"}
 WEAK_TERMS = {
@@ -43,6 +53,7 @@ STRONG_TERMS = {
     "proof:",
     "proof locator",
     "bash tests/",
+    "tests/",
 }
 NEGATED_PROOF_TERMS = {
     "without proof locator",
@@ -137,9 +148,37 @@ def reject_yaml_optimistic_promotion(source: str) -> list[str]:
 def reject_optimistic_promotion(source: str) -> list[str]:
     return reject_markdown_optimistic_promotion(source) + reject_yaml_optimistic_promotion(source)
 
-real_errors = reject_optimistic_promotion(text) + reject_optimistic_promotion(dogfood_text)
+
+def require_contains(source: str, needle: str, surface: str) -> None:
+    normalized_source = re.sub(r"\s+", " ", source.lower())
+    normalized_needle = re.sub(r"\s+", " ", needle.lower())
+    if normalized_needle not in normalized_source:
+        fail(f"missing RC26 boundary phrase in {surface}: {needle}")
+
+real_errors = (
+    reject_optimistic_promotion(text)
+    + reject_optimistic_promotion(dogfood_text)
+    + reject_optimistic_promotion(runtime_text)
+    + reject_optimistic_promotion(skill_text)
+    + reject_optimistic_promotion(agent_text)
+)
 if real_errors:
     fail("current dashboards violate semantic promotion gate: " + "; ".join(real_errors))
+
+require_contains(runtime_text, "persistent browser/E2E availability remains planned/unpromoted", "runtime adapter maturity dashboard")
+require_contains(runtime_text, "one-off browser capture", "runtime adapter maturity dashboard")
+require_contains(runtime_text, "actual runtime adapter invocation", "runtime adapter maturity dashboard")
+require_contains(runtime_text, "demotion route", "runtime adapter maturity dashboard")
+require_contains(runtime_text, "root acceptance proof", "runtime adapter maturity dashboard")
+require_contains(skill_text, "temp/approved generated host-runtime target", "skill sync topology")
+require_contains(skill_text, "does not mean user-home installation", "skill sync topology")
+require_contains(skill_text, "approved targets must be temporary/generated and non-user-home", "skill sync topology")
+require_contains(agent_text, "planned physical-agent adapter are not runtime availability", "agent factory promotion pipeline")
+require_contains(agent_text, "actual adapter invocation", "agent factory promotion pipeline")
+require_contains(agent_text, "lifecycle monitoring", "agent factory promotion pipeline")
+require_contains(agent_text, "idle cleanup", "agent factory promotion pipeline")
+require_contains(agent_text, "demotion routing", "agent factory promotion pipeline")
+require_contains(agent_text, "root acceptance", "agent factory promotion pipeline")
 
 required_cycle_markers = [
     "recursive-cycle-2026-05-08-18-22",
@@ -203,6 +242,13 @@ entries:
     status: available
     evidence: planned helper shape exists, but provider mutation evidence is missing and provider mutation is absent.
     residual: without proof locator for non-sensitive Linear fixture.
+""",
+    "linear-oauth-host-proof-conflated-with-api-key-fallback": """
+entries:
+  linear_api_key_graphql_fallback:
+    status: available
+    evidence: OAuth MCP host proof exists, but LINEAR_API_KEY is missing and repo-local shell proof is absent.
+    residual: without proof locator for API-key GraphQL live fixture.
 """,
     "generated-host-user-home-promoted-without-approved-proof": """
 entries:

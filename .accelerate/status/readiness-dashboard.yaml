@@ -1,18 +1,20 @@
 schema_version: 1
 kind: accelerate-local-dogfood-readiness-dashboard
-cycle: recursive-cycle-2026-05-08-18-22
-plan: planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md
-ledger: planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md
+cycle: linear-oauth-runtime-proof-2026-05-08-rc24-rc27
+plan: planning/executive/2026-05-08-linear-oauth-runtime-proof-executive-plan.md
+ledger: planning/executive/2026-05-08-linear-oauth-runtime-proof-task-ledger.md
+governing_linear_parent: P4Y-1298
+governing_linear_child: P4Y-1302
 status: active
 entries:
   dogfood_workspace:
     status: available
     proof: bash tests/dogfood-workspace-contract.sh
-    boundary: committed non-secret fixture/state only; generated/private proof outputs ignored
+    boundary: committed non-secret fixture/state only; generated/private proof outputs ignored; active state points to P4Y-1298 and the RC24..RC27 cycle
   semantic_negative_gates:
     status: available
     proof: bash tests/semantic-negative-fixtures.sh
-    boundary: rejects blocked/planned/substitute optimistic promotion unless current proof locators support the promoted status for new cycle surfaces
+    boundary: rejects blocked/planned/substitute optimistic promotion unless current proof locators support the promoted status for new cycle surfaces; RC26 coverage includes persistent E2E, generated-host export, and agent-runtime overpromotion
   browser_proof_server_monitoring:
     status: available
     proof: bash tests/browser-proof-monitoring.sh
@@ -21,14 +23,18 @@ entries:
     status: conditional
     proof: bash tests/browser-proof-monitoring.sh
     boundary: real capture depends on local Node plus Puppeteer/Chromium availability; helper uses a dedicated project .tmp browser profile and emits capture-failed when runtime or route/server crash blocks closure
-  linear_live_fixture:
+  linear_oauth_mcp_host_lane:
+    status: conditional
+    proof: planning/evidence/dated-proof-appendix/linear-mcp-oauth-validation-2026-05-08.md
+    boundary: linear-oauth-mcp host-authenticated OAuth MCP read/discovery for bounded governing issues only; not portable repo-local shell or CI proof; no raw provider payloads, emails, or tokens committed
+  linear_api_key_graphql_fallback:
     status: planned
     proof: planning/evidence/dated-proof-appendix/linear-mcp-live-validation-2026-05-08.md
-    boundary: RC18 credential-safe live preflight and structured helper checks passed locally, but no provider mutation ran because credential, explicit opt-in, and safe fixture settings were absent
+    boundary: RC18 credential-safe live preflight and structured helper checks passed locally, but no repo-local provider mutation ran because the API-key credential, explicit opt-in, and safe fixture settings were absent; linear-api-key-graphql remains planned and OAuth MCP host proof does not promote this fallback
   skill_generated_host_runtime_export:
     status: available
     proof: bash tests/skill-export-proof.sh; planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md
-    boundary: RC21 reconfirmed temp/approved generated host-runtime proof only; generated target was cleaned up and user-home catalogs are refused/non-authoritative
+    boundary: RC21/RC26 reconfirmed temp/approved generated host-runtime proof only; generated target was cleaned up and user-home catalogs are refused/non-authoritative
   bounded_proof_auditor_candidate:
     status: blocked
     proof: planning/evidence/dated-proof-appendix/agent-factory-replay-2026-05-08.md; bash tests/promotion-replay-fixtures.sh
@@ -39,6 +45,7 @@ entries:
     boundary: browser-capture packets set persistent_regression_handoff.required_before_persistent_e2e_claim=true and must not promote persistent E2E without separate repo-owned proof
 residuals:
   - remote provider payloads remain out of committed .accelerate state
+  - Linear OAuth MCP is host-authenticated and conditional only; portable repo-local shell and CI availability remain unproven
   - Linear live fixture proof still requires a safe credential and explicit non-sensitive fixture configuration outside committed dogfood state
   - live full browser capture still depends on local server health plus installed Puppeteer/Chromium runtime; capture-failed is honest evidence, not closure
   - persistent Playwright/E2E remains unpromoted unless a separate proof locator is added

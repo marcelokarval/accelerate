@@ -4,14 +4,28 @@ This directory defines the Linear workflow adapter capability contract.
 
 ## Current Status
 
-- status: planned remote workflow adapter
+- status: planned native adapter with a conditional host OAuth MCP lane
 - phase: standalone pre-agents
-- runtime implementation: not yet implemented as a native adapter in this
+- runtime implementation: not yet implemented as a portable native adapter in this
   repository
 
+Linear now has two explicitly separated lanes:
+
+1. `linear-oauth-mcp` — host-authenticated MCP tools available in the current
+   Codex/Hermes environment. RC24 proved sanitized user/team/status discovery
+   and bounded reads of `P4Y-1298` / `P4Y-1299` in
+   `planning/evidence/dated-proof-appendix/linear-mcp-oauth-validation-2026-05-08.md`.
+   This lane is conditional to the authenticated host and must not be treated as
+   repo-local shell, CI, or portable script availability.
+2. `linear-api-key-graphql` — repo-local GraphQL-over-curl helper fallback under
+   `onboarding/local-workspace/`. This lane remains planned/blocked until
+   `LINEAR_API_KEY`, explicit fixture opt-in, fixture team, and fixture status
+   are provided outside committed state and non-sensitive live fixture proof is
+   recorded.
+
 Linear remains an inherited workflow mapping target, but this repository does
-not yet provide an enforced Linear backend runtime. Until the adapter is fully
-rehomed, inherited Linear-shaped doctrine lives primarily in:
+not yet provide an enforced portable Linear backend runtime. Until the adapter is
+fully rehomed, inherited Linear-shaped doctrine lives primarily in:
 
 - `references/linear-execution.md`
 - `references/issue-stack.md`
@@ -26,8 +40,11 @@ The machine-readable capability manifest lives at:
 
 - `capabilities.yaml`
 
-It currently declares Linear as `planned`, not implemented. This is intentional:
-the adapter has a target contract, but no tested API read/write runtime here yet.
+It currently declares the portable/native Linear adapter as `planned`, while
+also exposing the `linear-oauth-mcp` host lane as `conditional`. This is
+intentional: the OAuth MCP proof is a current-host capability, not a tested
+repo-local script/CI runtime. The API-key GraphQL fallback remains planned until
+live fixture proof lands.
 
 The implementation sequence is defined in:
 

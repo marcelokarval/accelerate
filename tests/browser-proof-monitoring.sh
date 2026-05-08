@@ -80,8 +80,41 @@ for _ in $(seq 1 50); do
   sleep 0.1
 done
 curl --silent --show-error --max-time 1 --output /dev/null "http://127.0.0.1:${port}" 2>/dev/null || fail "fixture server did not become ready"
-printf 'Authorization: Bearer server-secret-token\nLINEAR_API_KEY=lin_secret\n' >>"${workdir}/server.stdout"
+printf 'Authorization: Bearer server...t\n' >>"${workdir}/server.stdout"
 printf 'token: stderr-secret\nghp_abcdef1234567890\n' >>"${workdir}/server.stderr"
+
+dead_pid=999999
+while kill -0 "${dead_pid}" 2>/dev/null; do
+  dead_pid=$((dead_pid - 1))
+done
+set +e
+ACCELERATE_BROWSER_PROOF_SERVER_PID="${dead_pid}" \
+ACCELERATE_BROWSER_PROOF_SERVER_STDOUT="${workdir}/server.stdout" \
+ACCELERATE_BROWSER_PROOF_SERVER_STDERR="${workdir}/server.stderr" \
+ACCELERATE_BROWSER_PROOF_READINESS_ONLY=1 bash "${script}" "${workdir}/app" "http://127.0.0.1:${port}" ".accelerate/review/dead-supplied-pid.json" >"${workdir}/dead-pid.stdout" 2>"${workdir}/dead-pid.stderr"
+dead_pid_status=$?
+set -e
+[ "${dead_pid_status}" -ne 0 ] || fail "dead supplied server pid proof unexpectedly succeeded"
+python3 - "${workdir}/app/.accelerate/review/dead-supplied-pid.json" "${dead_pid}" <<'PY'
+import json
+import sys
+from pathlib import Path
+packet = json.loads(Path(sys.argv[1]).read_text())
+dead_pid = int(sys.argv[2])
+assert packet["status"] == "blocked", packet
+assert packet["phase"] == "server-readiness", packet
+assert packet["browser_launched"] is False, packet
+assert packet["reason"] == "server_process_not_alive", packet
+assert packet["server_readiness"]["checked"] is True, packet
+assert packet["server_readiness"]["passed"] is False, packet
+assert 200 <= packet["server_readiness"]["http_code"] < 500, packet
+assert packet["server_monitor"]["process"]["tracked"] is True, packet
+assert packet["server_monitor"]["process"]["pid"] == dead_pid, packet
+assert packet["server_monitor"]["process"]["alive"] is False, packet
+assert packet["browser_capture"]["launch_skipped"] is True, packet
+assert packet["correction_signal"] == "restart_crashed_local_server_before_requesting_browser_proof", packet
+assert "not_alive_after_successful_http_probe" in packet["server_readiness"]["detail"], packet
+PY
 
 ACCELERATE_BROWSER_PROOF_SERVER_PID="${server_pid}" \
 ACCELERATE_BROWSER_PROOF_SERVER_STDOUT="${workdir}/server.stdout" \

@@ -1,6 +1,24 @@
 schema_version: 2
 adapter: linear
 status: planned
+portable_native_adapter_status: planned
+lanes:
+  linear-oauth-mcp:
+    status: conditional
+    auth_boundary: host-authenticated-oauth-mcp
+    proof: planning/evidence/dated-proof-appendix/linear-mcp-oauth-validation-2026-05-08.md
+    host_portability: not-portable-ci-or-shell-proof
+    proven_operations:
+      - sanitized-user-discovery
+      - sanitized-team-status-discovery
+      - bounded-governing-issue-read
+    privacy_boundary: no raw provider JSON, OAuth tokens, API keys, emails, or private issue bodies committed
+  linear-api-key-graphql:
+    status: planned
+    auth_boundary: repo-local LINEAR_API_KEY env plus explicit non-sensitive fixture opt-in
+    proof: planning/evidence/dated-proof-appendix/linear-mcp-live-validation-2026-05-08.md
+    blocker: missing LINEAR_API_KEY and safe fixture env in committed proof
+    host_portability: shell-helper-fail-closed-until-proof
 runtime_truth: remote
 substitute_evidence: .accelerate/workflow/
 read_lookup: planned
@@ -46,8 +64,11 @@ mcp_create_command: onboarding/local-workspace/create-linear-mcp-issue.sh
 mcp_attachment_command: onboarding/local-workspace/attach-linear-mcp-artifact.sh
 mcp_recovery_command: onboarding/local-workspace/write-linear-mcp-recovery.sh
 mcp_remote_url: https://mcp.linear.app/mcp
-mcp_auth_host: opencode-global
+mcp_auth_host: host-authenticated-oauth-mcp
 mcp_external_host_live_tested_at: 2026-04-27
+mcp_current_host_oauth_tested_at: 2026-05-08
+mcp_current_host_oauth_result: conditional-read-discovery-passed
+mcp_current_host_oauth_evidence: planning/evidence/dated-proof-appendix/linear-mcp-oauth-validation-2026-05-08.md
 mcp_external_host_read_result: passed
 mcp_external_host_write_result: passed
 mcp_external_host_test_evidence: planning/evidence/dated-proof-appendix/linear-mcp-live-validation-2026-04-27.md

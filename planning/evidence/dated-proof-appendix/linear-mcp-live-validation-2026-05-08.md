@@ -74,7 +74,9 @@ Covered local guarantees:
 
 ## Promotion Decision
 
-Do **not** promote Linear helper capabilities to `available` from this appendix. The correct status remains `planned` until a future run supplies all of the following and records sanitized durable evidence:
+RC24 correction: this appendix governs only the repo-local `linear-api-key-graphql` shell fallback. It must not be used to imply that Linear is unavailable in a host that has OAuth MCP authentication. The separate current-host OAuth MCP proof is recorded in `planning/evidence/dated-proof-appendix/linear-mcp-oauth-validation-2026-05-08.md`.
+
+Do **not** promote the repo-local Linear API-key GraphQL helper capabilities to `available` from this appendix. The correct fallback status remains `planned` until a future run supplies all of the following and records sanitized durable evidence:
 
 1. `LINEAR_API_KEY` in the repo-local helper environment;
 2. explicit live-fixture opt-in via `ACCELERATE_LINEAR_LIVE_FIXTURE=1`;

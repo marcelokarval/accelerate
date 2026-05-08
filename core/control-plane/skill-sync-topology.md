@@ -1,8 +1,12 @@
 # Skill Sync Topology
 
 This topology makes Accelerate's repo-local skill authority operational. Skills
-may be exported from this repository to runtime hosts, but user-home catalogs are
-not governing authority for this repository.
+may be exported from this repository to runtime hosts only as generated
+deployment artifacts, but user-home catalogs are not governing authority for this
+repository. RC26 preserves the generated-host boundary: "available" export proof
+means repo-local generation plus temp/approved generated host-runtime target
+validation; it does not mean user-home installation, user-home source authority,
+or broad host runtime availability.
 
 ## Source-Of-Truth Rule
 
@@ -24,7 +28,7 @@ enforced in this repository before it can govern Accelerate.
 
 | Edge | Status | Direction | Boundary | Proof locator | Promotion condition | Demotion condition |
 | --- | --- | --- | --- | --- | --- | --- |
-| Repo skill source to generated runtime export | `available` for repo-local proof export and temp/approved generated host-runtime proof only; real user-home host installation remains `planned` | `repo -> generated export -> host runtime` | generated bundles are deployment artifacts; generated export and generated host target are not source truth. | `scripts/export-skill-proof.sh`; `tests/skill-export-proof.sh`; `planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md`; `skills/_registry/manifest.md` | Host runtime export can be promoted beyond temp proof only when the same repo-local provenance/drift proof is run against an explicitly approved generated target and rollback/cleanup rules are accepted. | Demote if generated files differ from repo source, provenance is missing, rollback/cleanup proof is missing, or user-home catalogs are treated as source authority. |
+| Repo skill source to generated runtime export | `available` for repo-local proof export and temp/approved generated host-runtime proof only; real user-home host installation remains `planned` | `repo -> generated export -> host runtime` | generated bundles are deployment artifacts; generated export and generated host target are not source truth; approved targets must be temporary/generated and non-user-home. | `scripts/export-skill-proof.sh`; `tests/skill-export-proof.sh`; `planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md`; `skills/_registry/manifest.md` | Host runtime export can be promoted beyond temp proof only when the same repo-local provenance/drift proof is run against an explicitly approved generated target and rollback/cleanup rules are accepted; user-home catalog installation remains outside this promotion. | Demote if generated files differ from repo source, provenance is missing, rollback/cleanup proof is missing, generated host proof is not explicitly approved, or user-home catalogs are treated as source authority. |
 | User-home skill catalog to repo | `blocked` | `external candidate -> import review -> repo-local source` | No direct authority transfer from user home. | `AGENTS.md`; `skills/README.md`; this topology | Promote only through an import task that adapts content, registers it locally, and adds tests/contracts if it becomes mandatory. | Demote/remove if a repo doc relies on a user-home path as governing authority. |
 | Repo skill source to project overlay | `substitute` | `repo -> overlay draft` | Overlay drafts may specialize behavior but cannot rewrite core law. | `skills/overlays/`; `core/control-plane/authority-set-gate.md` | Promote when the overlay is bounded, registered, and referenced by a profile or task packet. | Demote if overlay becomes global doctrine or lacks an owning source. |
 | Repo skill source to agent factory role envelope | `linked` | `repo -> skill envelope -> candidate role` | Agent roles consume skill envelopes; they do not create autonomous runtime availability. | `core/control-plane/agent-factory-promotion-pipeline.md` | Promote a role only when the envelope is complete and proof replay passes. | Demote when required skill references are missing, stale, or unregistered. |
@@ -85,7 +89,9 @@ A full drift check must verify:
 
 ## Promotion Criteria For Generated Skill Bundles
 
-A generated skill bundle may be promoted from `planned` to `available` only when:
+A generated skill bundle may be promoted from `planned` to `available` only
+inside the generated-target boundary. Promotion never makes the generated bundle
+or a user-home copy source authority. The boundary requires:
 
 - the generation command is documented;
 - source files all come from this repository;
