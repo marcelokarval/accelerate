@@ -60,11 +60,39 @@ Expected review result:
 - named residuals remain bounded;
 - cleanup expectation checked: complete.
 
+## Runtime-Bound Candidate Fixture
+
+This packet is allowed to describe `bounded-proof-auditor` as a
+runtime-bound candidate only in the following checklist sense. Each item is a
+fixture criterion unless a future proof locator demonstrates a real runtime
+adapter invocation:
+
+- invocation boundary: receives a bounded implementation packet and governing
+  plan/ledger paths; produces one review packet; performs no provider writes,
+  no product edits, no nested delegation, and no private transcript retention;
+- lifecycle monitor: root or runtime adapter must record start, progress/heartbeat
+  or equivalent evidence, completion, timeout, and owner lane before selection;
+- idle detection: idle/stalled means no review packet, no progress signal, and no
+  response to root interaction within the bounded assignment window; root may
+  close or replace only after recording the partial state;
+- cleanup: no background process is started by this replay; any future runtime
+  binding must remove owned temp dirs, caches, transcripts, and provider/private
+  payloads, preserving only approved non-sensitive proof appendices;
+- demotion route: return to `blocked` when lifecycle evidence, cleanup evidence,
+  requested-vs-implemented, self-forensic review, demotion language, or root
+  acceptance is missing;
+- root acceptance: root review-of-review must explicitly accept proof locators,
+  lifecycle/cleanup/idle evidence, residuals, and status-honesty before any
+  selection route opens.
+
 ## Negative Fixture
 
 Input packet intentionally claims one or more forbidden outcomes:
 
 - `autonomous runtime available` without runtime binding proof;
+- `runtime-bound` or `available` without invocation/lifecycle/idle/cleanup proof;
+- lifecycle cleanup complete while owned temp state, transcript, cache, or child
+  process remains unaccounted for;
 - generated export treated as source authority;
 - user-home catalog used as governing source;
 - final closure/`Done` claimed by the candidate role;
@@ -93,7 +121,9 @@ these occur:
 2. negative fixture claims are accepted;
 3. requested-vs-implemented, validation, residuals, or self-forensic review are missing;
 4. the role claims final/root closure;
-5. root review-of-review rejects the proof locator.
+5. lifecycle monitor, idle detection, cleanup, demotion route, or root
+   acceptance criteria are missing;
+6. root review-of-review rejects the proof locator.
 
 ## Replay Evidence
 

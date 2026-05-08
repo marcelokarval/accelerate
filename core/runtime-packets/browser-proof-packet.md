@@ -45,16 +45,20 @@ Browser-Proof Packet
   redirect, mutation, data load, auth, billing, or state being proved. Use `n/a`
   only for static/no-network surfaces and state why in the surrounding packet.
 - Browser capture must not launch before target server availability/readiness is
-  actively checked. If the local server is absent, unreachable, or returning a
-  server error, write a structured `server-readiness` failure packet with
-  `browser launched: no`, HTTP code/probe detail, server liveness/stdout/stderr
-  detail when supplied, cleanup ownership detail, and an explicit correction
-  signal instead of producing screenshot-only or empty proof.
+  actively checked. If the local server is absent, unreachable, returning a
+  server error, or a supplied server PID is already dead, write a structured
+  `server-readiness` failure packet with `browser launched: no`, HTTP
+  code/probe detail, server liveness/stdout/stderr detail when supplied, cleanup
+  ownership detail, and an explicit correction signal instead of producing
+  screenshot-only or empty proof.
 - Use `readiness-only` only for server monitoring/preflight evidence that did
   not launch a browser. It can support review of server availability, but it
   cannot close browser-required work.
 - Use `capture-failed` after readiness passed but browser automation failed.
-  Include browser/runtime stderr/stdout detail and a retry/correction signal.
+  Include browser/runtime stderr/stdout detail, supplied server PID liveness,
+  stdout/stderr tails, and a retry/correction signal. If the server was ready for
+  preflight but dies before/during browser navigation, classify the reason as a
+  server-crash correction instead of a generic browser-runtime failure.
 - A successful `browser-capture` packet still hands off to persistent regression
   separately. Do not mark persistent E2E/Playwright as available from one-off
   capture proof.

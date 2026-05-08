@@ -1,8 +1,8 @@
 schema_version: 1
 kind: accelerate-local-dogfood-readiness-dashboard
-cycle: recursive-cycle-2026-05-08-7-12
-plan: planning/executive/2026-05-08-recursive-cycle-7-12-executive-plan.md
-ledger: planning/executive/2026-05-08-recursive-cycle-7-12-task-ledger.md
+cycle: recursive-cycle-2026-05-08-13-17
+plan: planning/executive/2026-05-08-recursive-cycle-13-17-executive-plan.md
+ledger: planning/executive/2026-05-08-recursive-cycle-13-17-task-ledger.md
 status: active
 entries:
   dogfood_workspace:
@@ -16,16 +16,30 @@ entries:
   browser_proof_server_monitoring:
     status: available
     proof: bash tests/browser-proof-monitoring.sh
-    boundary: localhost-only; readiness failure writes structured correction packet before browser launch
+    boundary: localhost-only; readiness failure and server-crash-after-readiness both write structured correction packets with HTTP code, process liveness, stdout/stderr tails, and no browser launch before readiness
   browser_proof_capture:
     status: conditional
     proof: bash tests/browser-proof-monitoring.sh
-    boundary: successful capture depends on local Node plus browser automation runtime; capture-failed packet is honest evidence, not browser closure
+    boundary: real capture depends on local Node plus Puppeteer/Chromium availability; helper uses a dedicated project .tmp browser profile and emits capture-failed when runtime or route/server crash blocks closure
+  linear_live_fixture:
+    status: planned
+    proof: planning/evidence/dated-proof-appendix/linear-mcp-live-validation-2026-05-08.md
+    boundary: RC13 added credential-safe preflight and structured helper checks, but no provider mutation ran because the credential and safe fixture settings were absent
+  skill_generated_host_runtime_export:
+    status: available
+    proof: bash tests/skill-export-proof.sh; planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md
+    boundary: temp/approved generated host-runtime proof only; generated target was cleaned up and user-home catalogs are not authority
+  bounded_proof_auditor_candidate:
+    status: blocked
+    proof: planning/evidence/dated-proof-appendix/agent-factory-replay-2026-05-08.md; bash tests/promotion-replay-fixtures.sh
+    boundary: fixture-scoped proof-replay only; no runtime binding, installation, persistent agent, or autonomous availability
   persistent_regression_handoff:
     status: planned
     proof: none-for-this-cycle-slice
     boundary: browser-capture packets must not promote persistent E2E without separate repo-owned proof
 residuals:
   - remote provider payloads remain out of committed .accelerate state
-  - live full browser capture still depends on local server health plus installed browser automation runtime
+  - Linear live fixture proof still requires a safe credential and explicit non-sensitive fixture configuration outside committed dogfood state
+  - live full browser capture still depends on local server health plus installed Puppeteer/Chromium runtime; capture-failed is honest evidence, not closure
   - persistent Playwright/E2E remains unpromoted unless a separate proof locator is added
+  - agent-factory runtime binding remains blocked until an actual adapter proves invocation, lifecycle monitoring, idle cleanup, demotion, and root acceptance

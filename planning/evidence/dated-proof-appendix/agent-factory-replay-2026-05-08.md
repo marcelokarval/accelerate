@@ -68,6 +68,42 @@ scratch state is test-local and removed by traps. No generated transcript is a
 committed artifact. The candidate remains fixture-scoped and idle after replay;
 selection routes remain unavailable until root review and runtime proof exist.
 
+## RC16 Runtime-Bound Candidate Criteria
+
+RC16 advanced the `bounded-proof-auditor` packet toward runtime-bound criteria
+without promoting it to runtime-bound or available. The current proof is still
+fixture replay only.
+
+Checklist required before any future runtime-bound promotion:
+
+1. invocation boundary: adapter/command, permitted inputs, forbidden writes,
+   privacy/transcript handling, and no nested delegation;
+2. lifecycle monitor: start, progress/heartbeat or equivalent, completion,
+   timeout, and corrective owner lane;
+3. idle detection: explicit stalled/idle definition, root interaction before
+   replacement, and closure accounting for idle records;
+4. cleanup: owned processes, temp state, caches, generated transcripts, and
+   private provider payloads removed or approved as non-sensitive evidence;
+5. demotion route: return to `blocked` or `proof-replay` for missing lifecycle,
+   cleanup, demotion, or root-acceptance proof, or for unsupported availability
+   language;
+6. root acceptance: root review-of-review must accept requested-vs-implemented,
+   tests, residuals, proof locators, lifecycle/cleanup/idle accounting, and
+   status honesty.
+
+Positive fixture addition: a bounded review packet is accepted only for root
+review when lifecycle monitor evidence, idle cleanup accounting, demotion route,
+and root acceptance pending state are present.
+
+Negative fixture addition: any claim of `runtime-bound`, `available`, or
+autonomous runtime without invocation/lifecycle/idle/cleanup proof results in
+`block-and-demote`; any unaccounted transcript/cache/temp/process state also
+blocks.
+
+Remaining blocker: no actual autonomous runtime adapter has invoked, monitored,
+cleaned up, or demoted this candidate. Therefore autonomous runtime availability
+remains blocked.
+
 ## Demotion Rules
 
 Demote to `blocked` if:

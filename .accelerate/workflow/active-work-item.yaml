@@ -1,24 +1,23 @@
 schema_version: 1
 kind: accelerate-local-dogfood-active-work-item
-id: recursive-cycle-2026-05-08-7-12
+id: recursive-cycle-2026-05-08-13-17
 status: active
 classification: orchestrated-non-trivial-recursive-self-improvement
 execution_model: root-orchestrator-with-bounded-subagents
-plan: planning/executive/2026-05-08-recursive-cycle-7-12-executive-plan.md
-ledger: planning/executive/2026-05-08-recursive-cycle-7-12-task-ledger.md
+plan: planning/executive/2026-05-08-recursive-cycle-13-17-executive-plan.md
+ledger: planning/executive/2026-05-08-recursive-cycle-13-17-task-ledger.md
 assigned_scope:
-  - RC7 Linear live fixture proof + closure/status structured bindings (Subagent A)
-  - RC8 browser-proof runtime expansion and active server monitoring (Subagent B)
-  - RC9 skill export proof from repo source to generated bundle (Subagent C)
-  - RC10 agent factory replay of one bounded candidate role (Subagent C)
-  - RC11 runtime adapter maturity follow-through (Subagent C)
-  - RC12 dogfood workspace and semantic negative gate maintenance (Subagent B)
-  - RC13 root final integration review, process cleanup, commit/push, CI watch
+  - RC13 Linear live fixture proof readiness and safe execution (Subagent A)
+  - RC14 Browser-proof real capture and server monitoring (Subagent B)
+  - RC15 Skill export host-runtime proof boundary (Subagent C)
+  - RC16 Agent factory runtime candidate proof (Subagent D)
+  - RC17 Governance integration, dogfood, semantic negatives, next queue (Subagent E)
+  - RC18 Root final integration review, process cleanup, commit/push, CI watch
 review_model:
   root: orchestrator and final forensic reviewer
   subagents: bounded implementation plus task-level self-review only
   acceptance: root must inspect actual diffs and proof; subagent self-review is not final acceptance
-provider_boundary: local-fixture-only-for-rc12; provider-live-proof-is-credential-gated-and-sanitized-by-assigned-scope
+provider_boundary: local-fixture-only-for-rc17; provider-live-proof-is-credential-gated-and-sanitized-by-assigned-scope
 remote_calls_allowed: false
 secret_policy: no secrets, tokens, screenshots, private browser captures, or provider responses in committed dogfood files
 generated_private_outputs:
@@ -31,6 +30,8 @@ generated_private_outputs:
   - .accelerate/proof/
   - .accelerate/tmp/
 proof_commands:
+  - bash tests/control-plane-rc4-rc6.sh
+  - bash tests/recursive-self-improvement-contract.sh
   - bash tests/browser-proof-monitoring.sh
   - bash tests/dogfood-workspace-contract.sh
   - bash tests/semantic-negative-fixtures.sh

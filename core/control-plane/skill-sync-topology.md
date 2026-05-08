@@ -24,7 +24,7 @@ enforced in this repository before it can govern Accelerate.
 
 | Edge | Status | Direction | Boundary | Proof locator | Promotion condition | Demotion condition |
 | --- | --- | --- | --- | --- | --- | --- |
-| Repo skill source to generated runtime export | `available` for repo-local proof export only; host installation remains `planned` | `repo -> generated export -> host runtime` | generated bundles are deployment artifacts; generated export is not source truth. | `scripts/export-skill-proof.sh`; `tests/skill-export-proof.sh`; `planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md`; `skills/_registry/manifest.md` | Host runtime export can be promoted only when the same repo-local provenance/drift proof is run against the intended generated target and host cleanup rules are accepted. | Demote if generated files differ from repo source, provenance is missing, or user-home catalogs are treated as source authority. |
+| Repo skill source to generated runtime export | `available` for repo-local proof export and temp/approved generated host-runtime proof only; real user-home host installation remains `planned` | `repo -> generated export -> host runtime` | generated bundles are deployment artifacts; generated export and generated host target are not source truth. | `scripts/export-skill-proof.sh`; `tests/skill-export-proof.sh`; `planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md`; `skills/_registry/manifest.md` | Host runtime export can be promoted beyond temp proof only when the same repo-local provenance/drift proof is run against an explicitly approved generated target and rollback/cleanup rules are accepted. | Demote if generated files differ from repo source, provenance is missing, rollback/cleanup proof is missing, or user-home catalogs are treated as source authority. |
 | User-home skill catalog to repo | `blocked` | `external candidate -> import review -> repo-local source` | No direct authority transfer from user home. | `AGENTS.md`; `skills/README.md`; this topology | Promote only through an import task that adapts content, registers it locally, and adds tests/contracts if it becomes mandatory. | Demote/remove if a repo doc relies on a user-home path as governing authority. |
 | Repo skill source to project overlay | `substitute` | `repo -> overlay draft` | Overlay drafts may specialize behavior but cannot rewrite core law. | `skills/overlays/`; `core/control-plane/authority-set-gate.md` | Promote when the overlay is bounded, registered, and referenced by a profile or task packet. | Demote if overlay becomes global doctrine or lacks an owning source. |
 | Repo skill source to agent factory role envelope | `linked` | `repo -> skill envelope -> candidate role` | Agent roles consume skill envelopes; they do not create autonomous runtime availability. | `core/control-plane/agent-factory-promotion-pipeline.md` | Promote a role only when the envelope is complete and proof replay passes. | Demote when required skill references are missing, stale, or unregistered. |
@@ -66,6 +66,7 @@ catalogs:
 ```bash
 scripts/export-skill-proof.sh --output /tmp/accelerate-skill-export-proof --selected prompt-hardening,verification-before-completion --check-drift
 scripts/export-skill-proof.sh --output /tmp/accelerate-skill-export-proof --verify-existing --check-drift
+scripts/export-skill-proof.sh --output /tmp/accelerate-skill-host-proof --selected prompt-hardening,verification-before-completion --host-runtime-target /tmp/accelerate-approved-generated-host-runtime --approve-generated-host-target --cleanup-host-target --check-drift
 ```
 
 A full drift check must verify:
@@ -76,8 +77,11 @@ A full drift check must verify:
    listed as temporary migration gaps in `skills/_registry/manifest.md`.
 3. No governing doc claims user-home catalogs are authority.
 4. Generated bundles, if present, identify the repo source commit or manifest.
-5. Promotion status does not move beyond `planned`, `substitute`, or `linked`
-   without reproducible generation proof.
+5. Approved generated host-runtime targets record `host-runtime-proof.json`,
+   `host_drift_detected: false`, and rollback/cleanup disposition.
+6. Promotion status does not move beyond `planned`, `substitute`, or `linked`
+   for real host/user-home runtime installation without reproducible generation
+   proof against that approved target.
 
 ## Promotion Criteria For Generated Skill Bundles
 
@@ -89,11 +93,15 @@ A generated skill bundle may be promoted from `planned` to `available` only when
 - drift detection passes;
 - export destination is identified as generated runtime deployment, not source
   authority;
-- cleanup rules remove stale host copies when repo source changes.
+- cleanup rules remove stale host copies when repo source changes;
+- temp host-runtime proof uses only `--host-runtime-target` together with
+  `--approve-generated-host-target` and records cleanup/rollback proof.
 
 ## Cleanup Rules
 
 - Delete or regenerate stale exported bundles instead of editing them by hand.
+- For proof runs, prefer `--cleanup-host-target`; if a generated host target
+  existed before the proof, rollback must restore the prior target snapshot.
 - Do not commit user-home catalogs or host runtime caches.
 - If a skill is retired, remove mandatory references or move the skill to
   `skills/legacy/` with a migration note.

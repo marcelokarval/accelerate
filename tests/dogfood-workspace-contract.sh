@@ -22,8 +22,8 @@ for path in "${required_files[@]}"; do
 done
 
 for marker in \
-  "planning/executive/2026-05-08-recursive-cycle-7-12-executive-plan.md" \
-  "planning/executive/2026-05-08-recursive-cycle-7-12-task-ledger.md" \
+  "planning/executive/2026-05-08-recursive-cycle-13-17-executive-plan.md" \
+  "planning/executive/2026-05-08-recursive-cycle-13-17-task-ledger.md" \
   "root orchestrator" \
   "bounded subagent" \
   "generated/private" \
@@ -32,7 +32,11 @@ for marker in \
 done
 
 secret_regex='(sk_live|sk_test|pk_live|xox[baprs]-|ghp_[A-Za-z0-9_]+|github_pat_|LINEAR_API_KEY|Authorization: Bearer|BEGIN (RSA|OPENSSH|EC|DSA) PRIVATE KEY)'
-if grep -R -E --line-number "${secret_regex}" .accelerate --exclude-dir=.git >/tmp/accelerate-dogfood-secret-scan.out 2>/dev/null; then
+tracked_dogfood_files=()
+while IFS= read -r -d '' path; do
+  tracked_dogfood_files+=("${path}")
+done < <(git ls-files -z .accelerate)
+if [ "${#tracked_dogfood_files[@]}" -gt 0 ] && grep -E --line-number "${secret_regex}" "${tracked_dogfood_files[@]}" >/tmp/accelerate-dogfood-secret-scan.out 2>/dev/null; then
   cat /tmp/accelerate-dogfood-secret-scan.out >&2
   fail "committed dogfood workspace contains a secret-like marker"
 fi

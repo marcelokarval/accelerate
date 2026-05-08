@@ -18,6 +18,7 @@ create_script="${ROOT}/onboarding/local-workspace/create-linear-mcp-issue.sh"
 attach_script="${ROOT}/onboarding/local-workspace/attach-linear-mcp-artifact.sh"
 closure_script="${ROOT}/onboarding/local-workspace/comment-linear-mcp-closure.sh"
 status_script="${ROOT}/onboarding/local-workspace/update-linear-mcp-status.sh"
+preflight_script="${ROOT}/onboarding/local-workspace/preflight-linear-mcp-live-fixture.sh"
 registry="${ROOT}/adapters/workflow/remote-write-registry.yaml"
 
 assert_json_fields() {
@@ -64,6 +65,11 @@ assert_json_fields "${TMP}/.accelerate/workflow/comment.jsonl" remote_calls eq f
 assert_json_fields "${TMP}/.accelerate/workflow/closure.jsonl" remote_calls eq false operation eq closure-comment binding eq linear-mcp-structured-non-llm
 "${status_script}" "${TMP}" LIN-123 status_fixture .accelerate/workflow/status.jsonl --dry-run >/dev/null
 assert_json_fields "${TMP}/.accelerate/workflow/status.jsonl" remote_calls eq false operation eq status-transition status eq status_fixture
+if env -u LINEAR_API_KEY -u ACCELERATE_LINEAR_LIVE_FIXTURE -u LINEAR_FIXTURE_TEAM_ID -u LINEAR_FIXTURE_TEAM_KEY -u LINEAR_FIXTURE_STATUS_ID "${preflight_script}" "${TMP}" .accelerate/workflow/preflight.jsonl --dry-run >/dev/null; then
+  echo "preflight dry-run unexpectedly reported live readiness without fixture env" >&2
+  exit 1
+fi
+assert_json_fields "${TMP}/.accelerate/workflow/preflight.jsonl" remote_calls eq false operation eq live-fixture-preflight ready eq false credential eq absent
 
 # Live mode requires LINEAR_API_KEY before remote work.
 if env -u LINEAR_API_KEY "${read_script}" "${TMP}" LIN-123 .accelerate/workflow/live-read.jsonl >/tmp/linear-read.err 2>&1; then
@@ -91,6 +97,11 @@ if env -u LINEAR_API_KEY "${status_script}" "${TMP}" LIN-123 status_fixture .acc
   exit 1
 fi
 grep -Fq 'LINEAR_API_KEY is not set' /tmp/linear-status.err
+if env -u LINEAR_API_KEY -u ACCELERATE_LINEAR_LIVE_FIXTURE -u LINEAR_FIXTURE_TEAM_ID -u LINEAR_FIXTURE_TEAM_KEY -u LINEAR_FIXTURE_STATUS_ID "${preflight_script}" "${TMP}" .accelerate/workflow/live-preflight.jsonl >/tmp/linear-preflight.out 2>/tmp/linear-preflight.err; then
+  echo "preflight helper reported ready without LINEAR_API_KEY" >&2
+  exit 1
+fi
+assert_json_fields "${TMP}/.accelerate/workflow/live-preflight.jsonl" remote_calls eq false operation eq live-fixture-preflight ready eq false credential eq absent
 
 # Path safety: outputs must be relative and under .accelerate/workflow; artifacts cannot escape.
 if "${read_script}" "${TMP}" LIN-123 /tmp/escape.jsonl --dry-run >/dev/null 2>&1; then
@@ -111,6 +122,10 @@ if "${closure_script}" "${TMP}" LIN-123 "Bad path" workflow/closure.jsonl --dry-
 fi
 if "${status_script}" "${TMP}" LIN-123 status_fixture /tmp/status.jsonl --dry-run >/dev/null 2>&1; then
   echo "status helper accepted absolute output path" >&2
+  exit 1
+fi
+if "${preflight_script}" "${TMP}" workflow/preflight.jsonl --dry-run >/dev/null 2>&1; then
+  echo "preflight helper accepted output outside .accelerate/workflow" >&2
   exit 1
 fi
 ln -s /tmp/linear-symlink-escape.jsonl "${TMP}/.accelerate/workflow/symlink.jsonl"
@@ -140,7 +155,7 @@ PY
 
 # No LLM-host/opencode dependency remains in the structured MCP helper path.
 if grep -R -E 'opencode|LLM host|LLM-host' \
-  "${read_script}" "${create_script}" "${attach_script}" "${closure_script}" "${status_script}" >/tmp/linear-llm-grep.out; then
+  "${read_script}" "${create_script}" "${attach_script}" "${closure_script}" "${status_script}" "${preflight_script}" >/tmp/linear-llm-grep.out; then
   cat /tmp/linear-llm-grep.out >&2
   exit 1
 fi

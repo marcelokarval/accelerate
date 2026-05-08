@@ -35,9 +35,13 @@ output_abs="${root}/${output_path}"
 output_real_dir="$(dirname "${output_abs}")"
 mkdir -p "${output_real_dir}"
 case "$(readlink -f "${output_real_dir}")" in "${root}"|"${root}"/*) ;; *) echo "output escapes target repo: ${output_path}" >&2; exit 1 ;; esac
+if [ -L "${output_abs}" ]; then
+  echo "output path must not be a symlink: ${output_path}" >&2
+  exit 1
+fi
 
 if [ "${mode}" = "--dry-run" ]; then
-  printf '{"adapter":"browser","mode":"dry-run","url":"%s","output":"%s","remote_calls":false,"phases":["server-readiness","browser-capture","readiness-only","capture-failed","persistent-regression-handoff"],"readiness_check":"would-run-before-browser-launch"}\n' "${url}" "${output_path}"
+  printf '{"adapter":"browser","mode":"dry-run","url":"%s","output":"%s","remote_calls":false,"phases":["server-readiness","server-crashed-after-readiness","browser-capture","readiness-only","capture-failed","persistent-regression-handoff"],"readiness_check":"would-run-before-browser-launch"}\n' "${url}" "${output_path}"
   exit 0
 fi
 
@@ -45,7 +49,14 @@ readiness_detail="$(mktemp)"
 capture_stdout="$(mktemp)"
 capture_stderr="$(mktemp)"
 tmp_js=""
-trap 'rm -f "${readiness_detail}" "${capture_stdout}" "${capture_stderr}" "${tmp_js}"' EXIT
+capture_profile_dir=""
+cleanup_tmp() {
+  rm -f "${readiness_detail}" "${capture_stdout}" "${capture_stderr}" "${tmp_js}"
+  if [ -n "${capture_profile_dir}" ]; then
+    rm -rf "${capture_profile_dir}"
+  fi
+}
+trap cleanup_tmp EXIT
 
 write_packet() {
   local status="$1"
@@ -72,8 +83,25 @@ write_packet() {
 import datetime
 import json
 import os
+import re
 import signal
 from pathlib import Path
+
+
+SECRET_PATTERNS = [
+    (re.compile(r"Authorization:\s*Bearer\s+\S+", re.IGNORECASE), "Authorization: Bearer [redacted]"),
+    (re.compile(r"Bearer\s+\S+", re.IGNORECASE), "Bearer [redacted]"),
+    (re.compile(r"(LINEAR_API_KEY|api[_-]?key|token|secret|password)\s*[:=]\s*\S+", re.IGNORECASE), r"\1=[redacted]"),
+    (re.compile(r"(sk_live|sk_test|pk_live)_[A-Za-z0-9_]+"), r"\1_[redacted]"),
+    (re.compile(r"(ghp_|github_pat_)[A-Za-z0-9_]+"), r"\1[redacted]"),
+]
+
+
+def redact(text: str) -> str:
+    redacted = text
+    for pattern, replacement in SECRET_PATTERNS:
+        redacted = pattern.sub(replacement, redacted)
+    return redacted
 
 
 def tail(path_value: str) -> str:
@@ -82,7 +110,7 @@ def tail(path_value: str) -> str:
     path = Path(path_value)
     if not path.exists() or not path.is_file():
         return ""
-    return path.read_text(errors="replace")[-4000:]
+    return redact(path.read_text(errors="replace")[-4000:])
 
 
 def process_alive(pid_value: str):
@@ -145,6 +173,11 @@ packet = {
         "owned_by_helper": False,
         "detail": "capture-browser-proof.sh does not own external server processes; fixture tests must kill and leak-check their servers",
     },
+    "browser_session": {
+        "posture": "fresh" if browser_launched else "not-launched",
+        "isolation": "dedicated temporary userDataDir under project .tmp" if browser_launched else "n/a",
+        "profile": None,
+    },
     "correction_signal": os.environ["CORRECTION_SIGNAL"] or None,
     "readiness_impact": "supports-closure" if status == "captured" else ("supports-review-not-browser-closure" if status == "readiness-only" else "still-blocked"),
     "persistent_regression_handoff": {
@@ -162,7 +195,14 @@ if command -v curl >/dev/null 2>&1; then
   http_code="$(curl --silent --show-error --location --max-time "${ACCELERATE_BROWSER_PROOF_READINESS_TIMEOUT:-5}" --output /dev/null --write-out '%{http_code}' "${url}" 2>"${readiness_detail}" || true)"
   if [ -s "${readiness_detail}" ] || [ -z "${http_code}" ] || [ "${http_code}" = "000" ] || [ "${http_code}" -ge 500 ]; then
     printf 'http_code=%s\n' "${http_code:-none}" >>"${readiness_detail}"
-    write_packet "blocked" "server-readiness" "false" "server_readiness_failed" "start_or_fix_the_local_server_before_requesting_browser_proof" "${readiness_detail}" "${http_code:-}"
+    readiness_correction="start_or_fix_the_local_server_before_requesting_browser_proof"
+    readiness_reason="server_readiness_failed"
+    if [ -n "${ACCELERATE_BROWSER_PROOF_SERVER_PID:-}" ] && ! kill -0 "${ACCELERATE_BROWSER_PROOF_SERVER_PID}" 2>/dev/null; then
+      readiness_correction="restart_crashed_local_server_before_requesting_browser_proof"
+      readiness_reason="server_process_not_alive"
+      printf 'server_pid=%s not_alive\n' "${ACCELERATE_BROWSER_PROOF_SERVER_PID}" >>"${readiness_detail}"
+    fi
+    write_packet "blocked" "server-readiness" "false" "${readiness_reason}" "${readiness_correction}" "${readiness_detail}" "${http_code:-}"
     printf 'browser proof blocked before launch: server readiness failed; wrote %s\n' "${output_path}" >&2
     exit 3
   fi
@@ -187,9 +227,45 @@ if ! command -v node >/dev/null 2>&1; then
   exit 4
 fi
 
+capture_profile_dir="${root}/.tmp/browser-proof/profile.$$"
+mkdir -p "${capture_profile_dir}"
+
+# The browser receives a dedicated project-local profile so the helper never
+# reuses or kills ambient Chrome/MCP/Playwright sessions.
 tmp_js="$(mktemp)"
 cat >"${tmp_js}" <<'JS'
 const fs = require('fs');
+
+function redact(text) {
+  return text
+    .replace(/Authorization:\s*Bearer\s+\S+/gi, 'Authorization: Bearer [redacted]')
+    .replace(/Bearer\s+\S+/gi, 'Bearer [redacted]')
+    .replace(/(LINEAR_API_KEY|api[_-]?key|token|secret|password)\s*[:=]\s*\S+/gi, '$1=[redacted]')
+    .replace(/(sk_live|sk_test|pk_live)_[A-Za-z0-9_]+/g, '$1_[redacted]')
+    .replace(/(ghp_|github_pat_)[A-Za-z0-9_]+/g, '$1[redacted]');
+}
+
+function tail(pathValue) {
+  if (!pathValue) return '';
+  try {
+    if (!fs.existsSync(pathValue) || !fs.statSync(pathValue).isFile()) return '';
+    return redact(fs.readFileSync(pathValue, 'utf8').slice(-4000));
+  } catch (_) {
+    return '';
+  }
+}
+
+function processAlive(pidValue) {
+  if (!pidValue) return null;
+  const pid = Number(pidValue);
+  if (!Number.isInteger(pid) || pid <= 0) return false;
+  try {
+    process.kill(pid, 0);
+    return true;
+  } catch (error) {
+    return error && error.code === 'EPERM';
+  }
+}
 
 async function loadPuppeteer() {
   try {
@@ -200,10 +276,11 @@ async function loadPuppeteer() {
 }
 
 async function main() {
-  const [, , url, outputPath, httpCode] = process.argv;
+  const [, , url, outputPath, httpCode, userDataDir] = process.argv;
   const puppeteer = await loadPuppeteer();
   const browser = await puppeteer.launch({
     headless: 'new',
+    userDataDir,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
   });
   try {
@@ -238,6 +315,9 @@ async function main() {
     const title = await page.title();
     const screenshotPath = outputPath.replace(/\.json$/, '.png');
     await page.screenshot({ path: screenshotPath, fullPage: true });
+    const serverPid = process.env.ACCELERATE_BROWSER_PROOF_SERVER_PID || '';
+    const serverStdout = process.env.ACCELERATE_BROWSER_PROOF_SERVER_STDOUT || '';
+    const serverStderr = process.env.ACCELERATE_BROWSER_PROOF_SERVER_STDERR || '';
     const packet = {
       schema_version: 1,
       adapter: 'browser',
@@ -245,15 +325,33 @@ async function main() {
       phase: 'browser-capture',
       captured_at: new Date().toISOString(),
       url,
+      output: outputPath,
       browser_launched: true,
       server_readiness: { checked: true, passed: true, http_code: Number(httpCode) },
-      server_monitor: { http_code: Number(httpCode) },
+      server_monitor: {
+        process: {
+          tracked: Boolean(serverPid),
+          pid: /^\d+$/.test(serverPid) ? Number(serverPid) : null,
+          alive: processAlive(serverPid),
+        },
+        stdout_tail: tail(serverStdout),
+        stderr_tail: tail(serverStderr),
+        http_code: Number(httpCode),
+      },
       viewport: { width: 1440, height: 1000 },
       title,
       screenshot: screenshotPath,
       console: consoleEvents,
       network: networkEvents,
-      cleanup: { browser_closed: true, server_owned_by_helper: false },
+      cleanup: {
+        browser_closed: true,
+        performed: true,
+        owned_by_helper: false,
+        server_owned_by_helper: false,
+        profile_dir_removed_by_trap: true,
+        detail: 'Browser process is closed by the helper. External/fixture server ownership remains with caller/test trap and must be leak-checked there.',
+      },
+      browser_session: { posture: 'fresh', isolation: 'dedicated temporary userDataDir under project .tmp', profile: userDataDir },
       correction_signal: null,
       readiness_impact: 'supports-closure',
       persistent_regression_handoff: {
@@ -276,7 +374,7 @@ main().catch((error) => {
 JS
 
 set +e
-(cd "${root}" && node "${tmp_js}" "${url}" "${output_path}" "${http_code}") >"${capture_stdout}" 2>"${capture_stderr}"
+(cd "${root}" && node "${tmp_js}" "${url}" "${output_path}" "${http_code}" "${capture_profile_dir}") >"${capture_stdout}" 2>"${capture_stderr}"
 capture_status=$?
 set -e
 if [ "${capture_status}" -ne 0 ]; then
@@ -287,7 +385,20 @@ if [ "${capture_status}" -ne 0 ]; then
     printf '\nstderr:\n'
     sed -e 's/[[:cntrl:]]//g' "${capture_stderr}" | tail -n 80
   } >"${readiness_detail}"
-  write_packet "blocked" "capture-failed" "true" "browser_capture_failed" "inspect_browser_runtime_installation_or_route_failure_then_retry_capture" "${readiness_detail}" "${http_code}"
+  capture_reason="browser_capture_failed"
+  capture_correction="inspect_browser_runtime_installation_or_route_failure_then_retry_capture"
+  capture_browser_launched="true"
+  if grep -E "Cannot find module 'puppeteer|Cannot find module 'puppeteer-core|MODULE_NOT_FOUND" "${capture_stderr}" >/dev/null 2>&1; then
+    capture_reason="browser_runtime_unavailable"
+    capture_correction="install_puppeteer_or_puppeteer_core_with_a_compatible_browser_then_retry_capture"
+    capture_browser_launched="false"
+  fi
+  if [ -n "${ACCELERATE_BROWSER_PROOF_SERVER_PID:-}" ] && ! kill -0 "${ACCELERATE_BROWSER_PROOF_SERVER_PID}" 2>/dev/null; then
+    capture_reason="server_crashed_after_readiness"
+    capture_correction="restart_or_fix_the_local_server_then_retry_browser_capture"
+    printf '\nserver_pid=%s not_alive_after_readiness\n' "${ACCELERATE_BROWSER_PROOF_SERVER_PID}" >>"${readiness_detail}"
+  fi
+  write_packet "blocked" "capture-failed" "${capture_browser_launched}" "${capture_reason}" "${capture_correction}" "${readiness_detail}" "${http_code}"
   printf 'browser proof capture failed after readiness; wrote %s\n' "${output_path}" >&2
   exit 5
 fi

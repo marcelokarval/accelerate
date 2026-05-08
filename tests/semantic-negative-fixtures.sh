@@ -104,9 +104,9 @@ if real_errors:
     fail("current dashboards violate semantic promotion gate: " + "; ".join(real_errors))
 
 required_cycle_markers = [
-    "recursive-cycle-2026-05-08-7-12",
-    "planning/executive/2026-05-08-recursive-cycle-7-12-executive-plan.md",
-    "planning/executive/2026-05-08-recursive-cycle-7-12-task-ledger.md",
+    "recursive-cycle-2026-05-08-13-17",
+    "planning/executive/2026-05-08-recursive-cycle-13-17-executive-plan.md",
+    "planning/executive/2026-05-08-recursive-cycle-13-17-task-ledger.md",
     "root-orchestrator-with-bounded-subagents",
 ]
 combined_dogfood = dogfood_text + "\n" + active_text
@@ -143,6 +143,20 @@ entries:
     status: implemented
     evidence: browser-capture exists, but persistent E2E remains unpromoted and proof is missing.
     residual: planned Playwright handoff.
+""",
+    "linear-live-fixture-promoted-without-live-proof": """
+entries:
+  linear_live_fixture:
+    status: available
+    evidence: planned preflight exists, but provider mutation is missing and not yet verified.
+    residual: absent credential-safe live fixture.
+""",
+    "agent-runtime-promoted-from-replay": """
+entries:
+  bounded_proof_auditor_candidate:
+    status: native
+    evidence: replay fixture exists, but runtime unavailable and autonomous availability is unsupported.
+    residual: blocked runtime binding.
 """,
 }
 

@@ -42,6 +42,7 @@ RC9 adds a reproducible proof-only export path:
 
 ```bash
 scripts/export-skill-proof.sh --output /tmp/accelerate-skill-export-proof --selected prompt-hardening,verification-before-completion --check-drift
+scripts/export-skill-proof.sh --output /tmp/accelerate-skill-host-proof --selected prompt-hardening,verification-before-completion --host-runtime-target /tmp/accelerate-approved-generated-host-runtime --approve-generated-host-target --cleanup-host-target --check-drift
 bash tests/skill-export-proof.sh
 ```
 
@@ -50,3 +51,10 @@ included file hashes, generated target, and drift result in `provenance.json` an
 `drift-report.json`. Those generated files are deployment/proof artifacts only;
 do not copy them back into repo-local source authority or treat a host runtime
 catalog as the governing skill registry.
+
+RC15 extends the proof to a temp/approved generated host-runtime target. That
+path requires `--approve-generated-host-target`, refuses `~/.codex/skills`,
+`~/.claude/skills`, and `~/.agents/skills`, writes `host-runtime-proof.json`,
+and can remove or roll back the generated host copy with `--cleanup-host-target`.
+The generated host target remains non-authoritative even when the copy and drift
+checks pass.

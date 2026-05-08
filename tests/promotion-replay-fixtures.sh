@@ -49,7 +49,18 @@ require_match 'empirically-replayed' planning/promotion/README.md
 require_match 'bounded-proof-auditor' planning/promotion/README.md
 require_match 'positive fixture expected result: `accept-for-root-review`' planning/promotion/replay-fixtures/bounded-proof-auditor.md
 require_match 'negative fixture expected result: `block-and-demote`' planning/promotion/replay-fixtures/bounded-proof-auditor.md
+require_match 'runtime-bound checklist: invocation boundary, lifecycle monitor, idle detection' planning/promotion/replay-fixtures/bounded-proof-auditor.md
+require_match 'lifecycle positive fixture:' planning/promotion/replay-fixtures/bounded-proof-auditor.md
+require_match 'lifecycle negative fixture: `block-and-demote`' planning/promotion/replay-fixtures/bounded-proof-auditor.md
+require_match 'unsupported runtime-bound availability' planning/promotion/replay-fixtures/bounded-proof-auditor.md
 require_match 'autonomous runtime availability' agents/promotion/bounded-proof-auditor-replay.md
+require_match 'Runtime-Bound Candidate Fixture' agents/promotion/bounded-proof-auditor-replay.md
+require_match 'lifecycle monitor: root or runtime adapter must record start' agents/promotion/bounded-proof-auditor-replay.md
+require_match 'idle detection: idle/stalled means no review packet' agents/promotion/bounded-proof-auditor-replay.md
+require_match 'root acceptance: root review-of-review must explicitly accept proof locators' agents/promotion/bounded-proof-auditor-replay.md
 require_match 'agent-factory-replay-2026-05-08.md' agents/promotion/bounded-proof-auditor-replay.md
+require_match 'Runtime-Bound Candidate Checklist' core/control-plane/agent-factory-promotion-pipeline.md
+require_match 'RC16 Runtime-Bound Candidate Criteria' planning/evidence/dated-proof-appendix/agent-factory-replay-2026-05-08.md
+require_match 'Remaining blocker: no actual autonomous runtime adapter' planning/evidence/dated-proof-appendix/agent-factory-replay-2026-05-08.md
 
 printf 'promotion replay fixtures passed\n'
