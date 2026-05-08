@@ -80,12 +80,12 @@ require_terms(dashboard, required_situations, "recursive improvement dashboard")
 require_terms(dashboard, ["status", "evidence", "residual", "next task", "owner lane"], "recursive improvement dashboard")
 
 honest_status_expectations = [
-    (("Linear", "MCP"), {"blocked"}),
-    ((".accelerate", "dogfood"), {"planned", "blocked"}),
-    (("semantic", "negative"), {"planned", "blocked"}),
-    (("runtime", "adapter", "maturity"), {"planned", "blocked"}),
-    (("skill", "sync", "topology"), {"planned", "blocked"}),
-    (("agent", "factory", "promotion", "pipeline"), {"planned", "blocked"}),
+    (("Linear", "MCP"), {"blocked", "planned"}),
+    ((".accelerate", "dogfood"), {"planned", "blocked", "available"}),
+    (("semantic", "negative"), {"planned", "blocked", "available"}),
+    (("runtime", "adapter", "maturity"), {"planned", "blocked", "linked"}),
+    (("skill", "sync", "topology"), {"planned", "blocked", "linked"}),
+    (("agent", "factory", "promotion", "pipeline"), {"planned", "blocked", "linked"}),
 ]
 github_land_proof = "planning/evidence/dated-proof-appendix/github-pr-land-live-validation-2026-05-07.md"
 github_land_matches = lines_containing(dashboard, "GitHub", "land")
@@ -112,6 +112,14 @@ for needles, allowed_statuses in honest_status_expectations:
         status_cell = cells[1]
         if status_cell in allowed_statuses:
             honest_match = True
+        if status_cell == "available":
+            allowed_available = False
+            if needles == (".accelerate", "dogfood"):
+                allowed_available = "tests/dogfood-workspace-contract.sh" in line and (root / "tests/dogfood-workspace-contract.sh").is_file()
+            elif needles == ("semantic", "negative"):
+                allowed_available = "tests/semantic-negative-fixtures.sh" in line and (root / "tests/semantic-negative-fixtures.sh").is_file()
+            if allowed_available:
+                continue
         if status_cell in {"native", "available", "done", "implemented", "complete"}:
             fail(
                 f"dashboard status for {' / '.join(needles)} must not claim "

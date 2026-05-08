@@ -9,6 +9,9 @@ Browser-Proof Packet
 
 - surface / route family: <...>
 - runtime target: <local URL, environment, or blocked reason>
+- server/readiness preflight: <passed|failed|blocked|not-required> plus probe summary
+- correction signal: <none|start-or-fix-server|fix-route|install-readiness-checker|other>
+- browser launched: <yes|no; readiness failures must be no>
 - browser tool: <Chrome DevTools|agent-browser|other>
 - browser session posture: <fresh|isolated|existing-intentional|profile-conflict-blocked>
 - browser profile / isolation: <profile path|--isolated|dedicated userDataDir|n/a|blocked reason>
@@ -38,6 +41,11 @@ Browser-Proof Packet
 - Network evidence is required when network/server truth affects the route,
   redirect, mutation, data load, auth, billing, or state being proved. Use `n/a`
   only for static/no-network surfaces and state why in the surrounding packet.
+- Browser capture must not launch before target server availability/readiness is
+  actively checked. If the local server is absent, unreachable, or returning a
+  server error, write a structured failure packet with `browser launched: no`, a
+  failed server/readiness preflight, and an explicit correction signal instead of
+  producing screenshot-only or empty proof.
 - `sampled` proof must not be presented as a `broad sweep` or `full
   route-family audit`.
 - Capture evidence belongs under the governed project root `.tmp/` tree unless

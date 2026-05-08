@@ -4,7 +4,9 @@ This directory is the repo-owned authoring source for standalone `accelerate`
 skills.
 
 Runtime copies outside this repository are optional deployment exports, not the
-source of truth and not required for local governance.
+source of truth and not required for local governance. The operational sync
+policy is governed by
+[`../core/control-plane/skill-sync-topology.md`](../core/control-plane/skill-sync-topology.md).
 
 ## Structure
 

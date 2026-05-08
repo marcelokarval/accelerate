@@ -54,19 +54,45 @@ writes:
     command: onboarding/local-workspace/create-linear-mcp-issue.sh
     provider: linear
     operation: create-issue
-    status: blocked
-    requires_opt_in: none
+    status: planned
+    requires_opt_in: LINEAR_API_KEY
     privacy_gate: none
     recovery: onboarding/local-workspace/write-linear-mcp-recovery.sh
-    live_proof: planning/evidence/dated-proof-appendix/linear-mcp-live-validation-2026-04-27.md
-    structured_write: no
+    live_proof: none
+    structured_write: yes
+    structured_binding: graphql-over-curl-non-llm
+    proof_condition: non-sensitive live Linear fixture issue created through this script
   - id: linear-mcp-comment-artifact
     command: onboarding/local-workspace/attach-linear-mcp-artifact.sh
     provider: linear
     operation: comment-artifact
-    status: blocked
-    requires_opt_in: none
+    status: planned
+    requires_opt_in: LINEAR_API_KEY
     privacy_gate: required
     recovery: onboarding/local-workspace/write-linear-mcp-recovery.sh
-    live_proof: planning/evidence/dated-proof-appendix/linear-mcp-live-validation-2026-04-27.md
+    live_proof: none
+    structured_write: yes
+    structured_binding: graphql-over-curl-non-llm
+    proof_condition: non-sensitive live Linear fixture comment created through this script with export-approved artifact
+  - id: linear-mcp-closure-comment
+    command: onboarding/local-workspace/comment-linear-mcp-closure.sh
+    provider: linear
+    operation: closure-comment
+    status: blocked
+    requires_opt_in: LINEAR_API_KEY
+    privacy_gate: required
+    recovery: onboarding/local-workspace/write-linear-mcp-recovery.sh
+    live_proof: none
     structured_write: no
+    blocker: structured_closure_comment_binding_not_implemented
+  - id: linear-mcp-status-transition
+    command: onboarding/local-workspace/update-linear-mcp-status.sh
+    provider: linear
+    operation: status-transition
+    status: blocked
+    requires_opt_in: LINEAR_API_KEY
+    privacy_gate: none
+    recovery: onboarding/local-workspace/write-linear-mcp-recovery.sh
+    live_proof: none
+    structured_write: no
+    blocker: structured_status_transition_binding_not_implemented

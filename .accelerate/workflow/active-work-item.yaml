@@ -1,0 +1,24 @@
+schema_version: 1
+kind: accelerate-local-dogfood-active-work-item
+id: recursive-cycle-2026-05-08-rc2-rc3
+status: active
+classification: recursive-self-improvement
+plan: planning/executive/2026-05-08-recursive-cycle-1-6-executive-plan.md
+ledger: planning/executive/2026-05-08-recursive-cycle-1-6-task-ledger.md
+assigned_scope:
+  - RC2 persistent .accelerate dogfood workspace
+  - RC3 semantic negative fixtures
+  - browser-proof server-readiness hardening
+provider_boundary: local-fixture-only
+remote_calls_allowed: false
+secret_policy: no secrets, tokens, screenshots, private browser captures, or provider responses in committed dogfood files
+generated_private_outputs:
+  - .accelerate/review/*.json
+  - .accelerate/review/*.jsonl
+  - .accelerate/review/*.png
+  - .accelerate/workflow/*.jsonl
+  - .accelerate/status/generated/
+proof_commands:
+  - bash tests/dogfood-workspace-contract.sh
+  - bash tests/semantic-negative-fixtures.sh
+  - bash tests/browser-proof-monitoring.sh

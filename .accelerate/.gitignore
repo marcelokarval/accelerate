@@ -1,0 +1,20 @@
+# Ignore generated/private local workspace outputs.
+# Keep committed dogfood control files explicit and non-secret.
+
+review/*.json
+review/*.jsonl
+review/*.png
+review/*.jpg
+review/*.jpeg
+review/*.webp
+workflow/*.json
+workflow/*.jsonl
+workflow/provider-responses/
+status/generated/
+proof/
+tmp/
+
+!README.md
+!*/README.md
+!workflow/active-work-item.yaml
+!status/readiness-dashboard.yaml

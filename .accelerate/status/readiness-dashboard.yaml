@@ -1,0 +1,22 @@
+schema_version: 1
+kind: accelerate-local-dogfood-readiness-dashboard
+cycle: recursive-cycle-2026-05-08-1-6
+plan: planning/executive/2026-05-08-recursive-cycle-1-6-executive-plan.md
+ledger: planning/executive/2026-05-08-recursive-cycle-1-6-task-ledger.md
+status: active
+entries:
+  dogfood_workspace:
+    status: available
+    proof: bash tests/dogfood-workspace-contract.sh
+    boundary: committed non-secret fixture/state only; generated/private proof outputs ignored
+  semantic_negative_gates:
+    status: available
+    proof: bash tests/semantic-negative-fixtures.sh
+    boundary: rejects blocked/planned/substitute optimistic promotion without proof
+  browser_proof_server_monitoring:
+    status: available
+    proof: bash tests/browser-proof-monitoring.sh
+    boundary: localhost-only; readiness failure writes structured correction packet before browser launch
+residuals:
+  - remote provider payloads remain out of committed .accelerate state
+  - live full browser capture still depends on local server health plus installed browser automation runtime
