@@ -27,10 +27,10 @@ be removed first; `substitute` means local recovery or non-remote evidence only.
 | PR metadata rehydration | GitHub PR | `native` | `planning/evidence/dated-proof-appendix/github-playground-live-validation-2026-05-05.md` | 2026-05-05 | none known | preserve PR fixture or replacement fixture |
 | PR land/merge | GitHub PR | `native` | `planning/evidence/dated-proof-appendix/github-pr-land-live-validation-2026-05-07.md` | 2026-05-07 | bounded to disposable playground PR proof; still requires `ACCELERATE_ALLOW_LAND` and land gates | keep proof locator durable and use only through guarded adapter path |
 | Linear read/lookup | Linear | `planned` | none for repo-local structured path; historical external-host proof remains `planning/evidence/dated-proof-appendix/linear-mcp-live-validation-2026-04-27.md` | none for repo-local path | structured GraphQL helper exists but no live non-sensitive fixture proof has been recorded | run repo-local `read-linear-mcp-adapter.sh` live proof with non-sensitive fixture |
-| Linear create/update | Linear | `planned` | none for repo-local structured path | none | `LINEAR_API_KEY` and explicit non-sensitive fixture are required; no live fixture proof yet | create a fixture issue through `create-linear-mcp-issue.sh` and record proof locator |
+| Linear create/update | Linear | `planned` | none for repo-local structured path | none | `LINEAR_API_KEY` and explicit non-sensitive fixture are required; no live fixture proof yet; `structured_non_llm_mcp_write_binding_required` remains the promotion gate until live proof is recorded | create a fixture issue through `create-linear-mcp-issue.sh` and record proof locator |
 | Linear artifact attachment | Linear | `planned` | none for repo-local structured path | none | export approval and `LINEAR_API_KEY` required; no live fixture proof yet | comment an export-approved fixture artifact through `attach-linear-mcp-artifact.sh` and record proof locator |
-| Linear closure comment | Linear | `blocked` | none | none | dedicated closure-comment script not implemented in this cycle | implement guarded structured closure-comment helper and prove fixture write |
-| Linear status transition | Linear | `blocked` | none | none | dedicated status-transition script not implemented in this cycle | implement guarded structured status-transition helper and prove fixture transition |
+| Linear closure comment | Linear | `planned` | none for repo-local structured path | none | structured GraphQL helper exists; `LINEAR_API_KEY`, privacy gate, and no live fixture proof yet | write a non-sensitive closure comment through `comment-linear-mcp-closure.sh` and record proof locator |
+| Linear status transition | Linear | `planned` | none for repo-local structured path | none | structured GraphQL helper exists; safe target status and no live fixture proof yet | transition a non-sensitive fixture through `update-linear-mcp-status.sh` and record proof locator |
 
 ## Remote Write Registry Summary
 
@@ -43,16 +43,30 @@ be removed first; `substitute` means local recovery or non-remote evidence only.
 | `linear-graphql-comment-artifact` | Linear | comment artifact | `planned` | none | requires `LINEAR_API_KEY` and live proof |
 | `linear-mcp-create` | Linear | create issue | `planned` | none | structured non-LLM GraphQL path exists; live fixture proof still required |
 | `linear-mcp-comment-artifact` | Linear | comment artifact | `planned` | none | structured non-LLM GraphQL path exists; export-approved live fixture proof still required |
+| `linear-mcp-closure-comment` | Linear | closure comment | `planned` | none | structured non-LLM GraphQL path exists; live fixture proof still required |
+| `linear-mcp-status-transition` | Linear | status transition | `planned` | none | structured non-LLM GraphQL path exists; safe status and live fixture proof still required |
 
 ## Current Priority Follow-ups
 
 1. Keep GitHub PR land/merge available only through the guarded adapter path and
    durable proof in `planning/evidence/dated-proof-appendix/github-pr-land-live-validation-2026-05-07.md`.
-2. Keep Linear structured paths `planned` (or `blocked` for unimplemented operations)
-   until non-sensitive live fixture proof is recorded with durable proof locators;
-   the former `structured_non_llm_mcp_write_binding_required` blocker is only
-   cleared for the repo-local read/create/artifact-comment helper shape, not for
-   live availability, closure comments, or status transitions.
-3. Do not promote any capability using only local substitute evidence.
-4. Update this dashboard whenever `adapters/workflow/*/capabilities.yaml` or
+2. Keep Linear structured paths `planned` until non-sensitive live fixture proof is
+   recorded with durable proof locators; structured non-LLM GraphQL helper shape is
+   present for read/create/artifact-comment/closure-comment/status-transition, but
+   live availability remains unpromoted without safe fixture proof.
+3. Treat RC9 skill generated export as `available` only for the repo-local proof
+   path (`scripts/export-skill-proof.sh`, `tests/skill-export-proof.sh`, and
+   `planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md`);
+   host runtime installation remains `planned`.
+4. Treat RC10 agent factory replay as fixture-scoped `proof-replay` only; the
+   autonomous runtime stays `blocked` until runtime binding proof exists.
+5. Do not promote any capability using only local substitute evidence.
+6. Update this dashboard whenever `adapters/workflow/*/capabilities.yaml` or
    `adapters/workflow/remote-write-registry.yaml` changes.
+
+## Control Plane Proof Follow-through
+
+| Capability | Status | Proof locator | Residual | Next promotion condition |
+| --- | --- | --- | --- | --- |
+| Skill generated export proof | `available` for repo-local proof artifact only | `scripts/export-skill-proof.sh`; `tests/skill-export-proof.sh`; `planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md` | Host/user-home runtime catalogs are not authority and were not written by the proof. | Run the same provenance/drift contract against an approved generated host target and record cleanup proof. |
+| Bounded proof-auditor candidate replay | `proof-replay` | `agents/promotion/bounded-proof-auditor-replay.md`; `planning/promotion/replay-fixtures/bounded-proof-auditor.md`; `planning/evidence/dated-proof-appendix/agent-factory-replay-2026-05-08.md`; `tests/promotion-replay-fixtures.sh` | Fixture-scoped only; no runtime binding, installation, persistent agent, or autonomous availability. | Add real runtime binding, lifecycle monitoring, cleanup/idle-agent proof, demotion route, and root acceptance. |

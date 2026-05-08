@@ -10,5 +10,8 @@ Key constraints:
 - candidate roles require bounded intake before use;
 - skill envelopes must come from repo-local skill authority;
 - proof replay must include requested-vs-implemented and self-forensic review;
+- the RC10 bounded proof-auditor replay is fixture-scoped evidence only, linked
+  from `agents/promotion/bounded-proof-auditor-replay.md` and
+  `planning/evidence/dated-proof-appendix/agent-factory-replay-2026-05-08.md`;
 - runtime binding requires actual proof and cleanup/idle-agent handling;
 - this repository does not claim an autonomous runtime from this pointer.

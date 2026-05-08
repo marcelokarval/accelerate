@@ -37,102 +37,152 @@ mkdir -p "${output_real_dir}"
 case "$(readlink -f "${output_real_dir}")" in "${root}"|"${root}"/*) ;; *) echo "output escapes target repo: ${output_path}" >&2; exit 1 ;; esac
 
 if [ "${mode}" = "--dry-run" ]; then
-  printf '{"adapter":"browser","mode":"dry-run","url":"%s","output":"%s","remote_calls":false,"readiness_check":"would-run-before-browser-launch"}\n' "${url}" "${output_path}"
+  printf '{"adapter":"browser","mode":"dry-run","url":"%s","output":"%s","remote_calls":false,"phases":["server-readiness","browser-capture","readiness-only","capture-failed","persistent-regression-handoff"],"readiness_check":"would-run-before-browser-launch"}\n' "${url}" "${output_path}"
   exit 0
 fi
 
-write_failure_packet() {
-  local reason="$1"
-  local correction_signal="$2"
-  local detail_file="$3"
+readiness_detail="$(mktemp)"
+capture_stdout="$(mktemp)"
+capture_stderr="$(mktemp)"
+tmp_js=""
+trap 'rm -f "${readiness_detail}" "${capture_stdout}" "${capture_stderr}" "${tmp_js}"' EXIT
+
+write_packet() {
+  local status="$1"
+  local phase="$2"
+  local browser_launched="$3"
+  local reason="$4"
+  local correction_signal="$5"
+  local detail_file="$6"
+  local http_code_value="${7:-}"
   URL_TO_CHECK="${url}" \
   OUTPUT_PATH="${output_path}" \
   OUTPUT_ABS="${output_abs}" \
+  STATUS="${status}" \
+  PHASE="${phase}" \
+  BROWSER_LAUNCHED="${browser_launched}" \
   REASON="${reason}" \
   CORRECTION_SIGNAL="${correction_signal}" \
   DETAIL_FILE="${detail_file}" \
+  HTTP_CODE_VALUE="${http_code_value}" \
+  ACCELERATE_BROWSER_PROOF_SERVER_PID="${ACCELERATE_BROWSER_PROOF_SERVER_PID:-}" \
+  ACCELERATE_BROWSER_PROOF_SERVER_STDOUT="${ACCELERATE_BROWSER_PROOF_SERVER_STDOUT:-}" \
+  ACCELERATE_BROWSER_PROOF_SERVER_STDERR="${ACCELERATE_BROWSER_PROOF_SERVER_STDERR:-}" \
   python3 - <<'PY'
 import datetime
 import json
 import os
+import signal
 from pathlib import Path
+
+
+def tail(path_value: str) -> str:
+    if not path_value:
+        return ""
+    path = Path(path_value)
+    if not path.exists() or not path.is_file():
+        return ""
+    return path.read_text(errors="replace")[-4000:]
+
+
+def process_alive(pid_value: str):
+    if not pid_value:
+        return None
+    try:
+        pid = int(pid_value)
+        os.kill(pid, 0)
+        return True
+    except (ValueError, ProcessLookupError):
+        return False
+    except PermissionError:
+        return True
+
+http_code_raw = os.environ.get("HTTP_CODE_VALUE", "")
+http_code = None
+if http_code_raw and http_code_raw.isdigit():
+    http_code = int(http_code_raw)
 
 detail_path = Path(os.environ["DETAIL_FILE"])
 detail = ""
 if detail_path.exists():
     detail = detail_path.read_text(errors="replace")[:4000]
 
+pid_value = os.environ.get("ACCELERATE_BROWSER_PROOF_SERVER_PID", "")
+stdout_path = os.environ.get("ACCELERATE_BROWSER_PROOF_SERVER_STDOUT", "")
+stderr_path = os.environ.get("ACCELERATE_BROWSER_PROOF_SERVER_STDERR", "")
+status = os.environ["STATUS"]
+phase = os.environ["PHASE"]
+browser_launched = os.environ["BROWSER_LAUNCHED"] == "true"
+readiness_passed = status in {"captured", "readiness-only"} or phase in {"browser-capture", "readiness-only", "capture-failed"}
 packet = {
     "schema_version": 1,
     "adapter": "browser",
-    "status": "blocked",
-    "phase": "server-readiness-preflight",
+    "status": status,
+    "phase": phase,
     "captured_at": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
     "url": os.environ["URL_TO_CHECK"],
     "output": os.environ["OUTPUT_PATH"],
-    "browser_launched": False,
-    "reason": os.environ["REASON"],
+    "browser_launched": browser_launched,
+    "reason": os.environ["REASON"] or None,
     "server_readiness": {
         "checked": True,
-        "passed": False,
+        "passed": readiness_passed,
+        "http_code": http_code,
         "detail": detail,
     },
-    "correction_signal": os.environ["CORRECTION_SIGNAL"],
-    "readiness_impact": "still-blocked",
+    "server_monitor": {
+        "process": {
+            "tracked": bool(pid_value),
+            "pid": int(pid_value) if pid_value.isdigit() else None,
+            "alive": process_alive(pid_value),
+        },
+        "stdout_tail": tail(stdout_path),
+        "stderr_tail": tail(stderr_path),
+        "http_code": http_code,
+    },
+    "cleanup": {
+        "performed": False,
+        "owned_by_helper": False,
+        "detail": "capture-browser-proof.sh does not own external server processes; fixture tests must kill and leak-check their servers",
+    },
+    "correction_signal": os.environ["CORRECTION_SIGNAL"] or None,
+    "readiness_impact": "supports-closure" if status == "captured" else ("supports-review-not-browser-closure" if status == "readiness-only" else "still-blocked"),
+    "persistent_regression_handoff": {
+        "status": "not-run",
+        "required_before_persistent_e2e_claim": True,
+        "detail": "Browser capture/readiness packets do not prove persistent Playwright or E2E regression coverage.",
+    },
     "privacy": {"cookies_logged": False, "tokens_redacted": True, "response_body_logged": False},
 }
 Path(os.environ["OUTPUT_ABS"]).write_text(json.dumps(packet, indent=2) + "\n")
 PY
 }
 
-readiness_detail="$(mktemp)"
-tmp_js=""
-trap 'rm -f "${readiness_detail}" "${tmp_js}"' EXIT
-
 if command -v curl >/dev/null 2>&1; then
   http_code="$(curl --silent --show-error --location --max-time "${ACCELERATE_BROWSER_PROOF_READINESS_TIMEOUT:-5}" --output /dev/null --write-out '%{http_code}' "${url}" 2>"${readiness_detail}" || true)"
   if [ -s "${readiness_detail}" ] || [ -z "${http_code}" ] || [ "${http_code}" = "000" ] || [ "${http_code}" -ge 500 ]; then
     printf 'http_code=%s\n' "${http_code:-none}" >>"${readiness_detail}"
-    write_failure_packet "server_readiness_failed" "start_or_fix_the_local_server_before_requesting_browser_proof" "${readiness_detail}"
+    write_packet "blocked" "server-readiness" "false" "server_readiness_failed" "start_or_fix_the_local_server_before_requesting_browser_proof" "${readiness_detail}" "${http_code:-}"
     printf 'browser proof blocked before launch: server readiness failed; wrote %s\n' "${output_path}" >&2
     exit 3
   fi
   printf 'http_code=%s\n' "${http_code}" >"${readiness_detail}"
 else
   printf 'curl unavailable; cannot verify server readiness before browser launch\n' >"${readiness_detail}"
-  write_failure_packet "server_readiness_checker_unavailable" "install_curl_or_use_a_runtime_adapter_with_an_equivalent_readiness_probe" "${readiness_detail}"
+  write_packet "blocked" "server-readiness" "false" "server_readiness_checker_unavailable" "install_curl_or_use_a_runtime_adapter_with_an_equivalent_readiness_probe" "${readiness_detail}" ""
   printf 'browser proof blocked before launch: no readiness checker; wrote %s\n' "${output_path}" >&2
   exit 3
 fi
 
 if [ "${ACCELERATE_BROWSER_PROOF_READINESS_ONLY:-0}" = "1" ]; then
-  URL_TO_CHECK="${url}" OUTPUT_PATH="${output_path}" OUTPUT_ABS="${output_abs}" HTTP_CODE="${http_code}" python3 - <<'PY'
-import datetime
-import json
-import os
-from pathlib import Path
-
-packet = {
-    "schema_version": 1,
-    "adapter": "browser",
-    "status": "readiness-only",
-    "captured_at": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
-    "url": os.environ["URL_TO_CHECK"],
-    "browser_launched": False,
-    "server_readiness": {"checked": True, "passed": True, "http_code": int(os.environ["HTTP_CODE"])},
-    "correction_signal": None,
-    "readiness_impact": "supports-review-not-browser-closure",
-    "privacy": {"cookies_logged": False, "tokens_redacted": True, "response_body_logged": False},
-}
-Path(os.environ["OUTPUT_ABS"]).write_text(json.dumps(packet, indent=2) + "\n")
-PY
+  write_packet "readiness-only" "readiness-only" "false" "" "" "${readiness_detail}" "${http_code}"
   printf '%s\n' "${output_path}"
   exit 0
 fi
 
 if ! command -v node >/dev/null 2>&1; then
   printf 'node is required for browser proof capture after readiness passed\n' >"${readiness_detail}"
-  write_failure_packet "browser_runtime_unavailable" "install_node_and_browser_automation_or_use_readiness_only_for_server_monitoring" "${readiness_detail}"
+  write_packet "blocked" "capture-failed" "false" "browser_runtime_unavailable" "install_node_and_browser_automation_or_use_readiness_only_for_server_monitoring" "${readiness_detail}" "${http_code}"
   printf 'browser proof blocked after readiness: node unavailable; wrote %s\n' "${output_path}" >&2
   exit 4
 fi
@@ -150,7 +200,7 @@ async function loadPuppeteer() {
 }
 
 async function main() {
-  const [, , url, outputPath] = process.argv;
+  const [, , url, outputPath, httpCode] = process.argv;
   const puppeteer = await loadPuppeteer();
   const browser = await puppeteer.launch({
     headless: 'new',
@@ -191,15 +241,27 @@ async function main() {
     const packet = {
       schema_version: 1,
       adapter: 'browser',
+      status: 'captured',
+      phase: 'browser-capture',
       captured_at: new Date().toISOString(),
       url,
-      server_readiness: { checked: true, passed: true },
+      browser_launched: true,
+      server_readiness: { checked: true, passed: true, http_code: Number(httpCode) },
+      server_monitor: { http_code: Number(httpCode) },
       viewport: { width: 1440, height: 1000 },
       title,
       screenshot: screenshotPath,
       console: consoleEvents,
       network: networkEvents,
-      privacy: { cookies_logged: false, tokens_redacted: true },
+      cleanup: { browser_closed: true, server_owned_by_helper: false },
+      correction_signal: null,
+      readiness_impact: 'supports-closure',
+      persistent_regression_handoff: {
+        status: 'not-run',
+        required_before_persistent_e2e_claim: true,
+        detail: 'Successful capture is browser proof only; persistent regression requires a separate repo-owned E2E proof.'
+      },
+      privacy: { cookies_logged: false, tokens_redacted: true, response_body_logged: false },
     };
     fs.writeFileSync(outputPath, `${JSON.stringify(packet, null, 2)}\n`);
   } finally {
@@ -213,5 +275,20 @@ main().catch((error) => {
 });
 JS
 
-(cd "${root}" && node "${tmp_js}" "${url}" "${output_path}")
+set +e
+(cd "${root}" && node "${tmp_js}" "${url}" "${output_path}" "${http_code}") >"${capture_stdout}" 2>"${capture_stderr}"
+capture_status=$?
+set -e
+if [ "${capture_status}" -ne 0 ]; then
+  {
+    printf 'browser_capture_exit=%s\n' "${capture_status}"
+    printf 'stdout:\n'
+    sed -e 's/[[:cntrl:]]//g' "${capture_stdout}" | tail -n 40
+    printf '\nstderr:\n'
+    sed -e 's/[[:cntrl:]]//g' "${capture_stderr}" | tail -n 80
+  } >"${readiness_detail}"
+  write_packet "blocked" "capture-failed" "true" "browser_capture_failed" "inspect_browser_runtime_installation_or_route_failure_then_retry_capture" "${readiness_detail}" "${http_code}"
+  printf 'browser proof capture failed after readiness; wrote %s\n' "${output_path}" >&2
+  exit 5
+fi
 printf '%s\n' "${output_path}"

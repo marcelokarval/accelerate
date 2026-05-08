@@ -1,8 +1,8 @@
 schema_version: 1
 kind: accelerate-local-dogfood-readiness-dashboard
-cycle: recursive-cycle-2026-05-08-1-6
-plan: planning/executive/2026-05-08-recursive-cycle-1-6-executive-plan.md
-ledger: planning/executive/2026-05-08-recursive-cycle-1-6-task-ledger.md
+cycle: recursive-cycle-2026-05-08-7-12
+plan: planning/executive/2026-05-08-recursive-cycle-7-12-executive-plan.md
+ledger: planning/executive/2026-05-08-recursive-cycle-7-12-task-ledger.md
 status: active
 entries:
   dogfood_workspace:
@@ -12,11 +12,20 @@ entries:
   semantic_negative_gates:
     status: available
     proof: bash tests/semantic-negative-fixtures.sh
-    boundary: rejects blocked/planned/substitute optimistic promotion without proof
+    boundary: rejects blocked/planned/substitute optimistic promotion without proof locators for new cycle surfaces
   browser_proof_server_monitoring:
     status: available
     proof: bash tests/browser-proof-monitoring.sh
     boundary: localhost-only; readiness failure writes structured correction packet before browser launch
+  browser_proof_capture:
+    status: conditional
+    proof: bash tests/browser-proof-monitoring.sh
+    boundary: successful capture depends on local Node plus browser automation runtime; capture-failed packet is honest evidence, not browser closure
+  persistent_regression_handoff:
+    status: planned
+    proof: none-for-this-cycle-slice
+    boundary: browser-capture packets must not promote persistent E2E without separate repo-owned proof
 residuals:
   - remote provider payloads remain out of committed .accelerate state
   - live full browser capture still depends on local server health plus installed browser automation runtime
+  - persistent Playwright/E2E remains unpromoted unless a separate proof locator is added

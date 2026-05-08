@@ -78,21 +78,23 @@ writes:
     command: onboarding/local-workspace/comment-linear-mcp-closure.sh
     provider: linear
     operation: closure-comment
-    status: blocked
+    status: planned
     requires_opt_in: LINEAR_API_KEY
     privacy_gate: required
     recovery: onboarding/local-workspace/write-linear-mcp-recovery.sh
     live_proof: none
-    structured_write: no
-    blocker: structured_closure_comment_binding_not_implemented
+    structured_write: yes
+    structured_binding: graphql-over-curl-non-llm
+    proof_condition: non-sensitive live Linear fixture closure comment created through this script
   - id: linear-mcp-status-transition
     command: onboarding/local-workspace/update-linear-mcp-status.sh
     provider: linear
     operation: status-transition
-    status: blocked
+    status: planned
     requires_opt_in: LINEAR_API_KEY
     privacy_gate: none
     recovery: onboarding/local-workspace/write-linear-mcp-recovery.sh
     live_proof: none
-    structured_write: no
-    blocker: structured_status_transition_binding_not_implemented
+    structured_write: yes
+    structured_binding: graphql-over-curl-non-llm
+    proof_condition: non-sensitive live Linear fixture status transition created through this script

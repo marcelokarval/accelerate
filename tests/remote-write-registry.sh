@@ -89,7 +89,7 @@ write_markers = [
 ]
 for script in (root / "onboarding/local-workspace").glob("*.sh"):
     rel = str(script.relative_to(root))
-    if rel.endswith("validate-linear-comment-response.sh") or rel.endswith("validate-linear-issue-response.sh"):
+    if rel.endswith("validate-linear-comment-response.sh") or rel.endswith("validate-linear-issue-response.sh") or rel.endswith("validate-linear-status-response.sh"):
         continue
     body = f" {script.read_text()} "
     if any(marker in body for marker in write_markers) and rel not in registered_commands:

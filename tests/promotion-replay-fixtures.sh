@@ -22,6 +22,7 @@ fixtures=(
   planning/promotion/replay-fixtures/backend-worker.md
   planning/promotion/replay-fixtures/frontend-worker.md
   planning/promotion/replay-fixtures/governance-auditor.md
+  planning/promotion/replay-fixtures/bounded-proof-auditor.md
 )
 
 for fixture in "${fixtures[@]}"; do
@@ -37,7 +38,7 @@ for fixture in "${fixtures[@]}"; do
   require_match 'residual risk required: yes' "$fixture"
   require_match 'cleanup expectation checked: complete' "$fixture"
   require_match 'root review-of-review required: yes' "$fixture"
-  require_match 'promotion state: template-only until runtime binding and replay evidence exist' "$fixture"
+  require_match 'promotion state: .*template-only until runtime binding and replay evidence exist|promotion state: proof-replay only for this fixture; template-only until runtime binding and replay evidence exist' "$fixture"
   if rg -n 'final closure[^\n]*(allowed|owned by agent)|`Done`[^\n]*(allowed|owned by agent)' "$fixture" >/dev/null; then
     fail "fixture claims forbidden closure authority: $fixture"
   fi
@@ -45,5 +46,10 @@ done
 
 require_match 'replay-fixtures/' planning/promotion/README.md
 require_match 'empirically-replayed' planning/promotion/README.md
+require_match 'bounded-proof-auditor' planning/promotion/README.md
+require_match 'positive fixture expected result: `accept-for-root-review`' planning/promotion/replay-fixtures/bounded-proof-auditor.md
+require_match 'negative fixture expected result: `block-and-demote`' planning/promotion/replay-fixtures/bounded-proof-auditor.md
+require_match 'autonomous runtime availability' agents/promotion/bounded-proof-auditor-replay.md
+require_match 'agent-factory-replay-2026-05-08.md' agents/promotion/bounded-proof-auditor-replay.md
 
 printf 'promotion replay fixtures passed\n'

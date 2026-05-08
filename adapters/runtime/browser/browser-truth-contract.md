@@ -10,11 +10,19 @@ Screenshot-only proof is insufficient for UI/runtime behavior.
 `onboarding/local-workspace/capture-browser-proof.sh` is the repo-local browser
 proof helper. It defaults to localhost-only URLs, writes a JSON proof packet, and
 records screenshot, console, network, viewport, URL, server-readiness metadata,
-and privacy metadata. Before launching browser automation it performs a target
-server/readiness preflight. Readiness failures write a structured blocked packet
-with `browser_launched: false`, `server_readiness.checked: true`, a failure
-detail, and a correction signal so the execution-to-spec loop can start or fix
-the server before retrying. Remote URLs are blocked until a request-intercepting
+server monitor metadata, cleanup ownership, and privacy metadata. Before
+launching browser automation it performs a target server/readiness preflight.
+Readiness failures write a structured `server-readiness` blocked packet with
+`browser_launched: false`, `server_readiness.checked: true`, HTTP code/probe
+detail, optional server PID/stdout/stderr liveness detail from
+`ACCELERATE_BROWSER_PROOF_SERVER_*`, cleanup ownership detail, and a correction
+signal so the execution-to-spec loop can start or fix the server before retrying.
+`ACCELERATE_BROWSER_PROOF_READINESS_ONLY=1` writes a `readiness-only` packet and
+never launches the browser. If readiness passes but browser automation is missing
+or fails, the helper writes `capture-failed` instead of conflating it with server
+readiness. Successful one-off capture writes `browser-capture` and includes a
+persistent-regression handoff stating that persistent E2E/Playwright still needs
+separate repo-owned proof. Remote URLs are blocked until a request-intercepting
 adapter can prevent page-triggered private network and metadata-host subresource
 requests.
 

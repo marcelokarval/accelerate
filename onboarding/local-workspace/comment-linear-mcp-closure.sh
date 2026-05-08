@@ -13,17 +13,87 @@ output_path="$4"
 mode=""
 if [ "${@: -1}" = "--dry-run" ]; then
   mode="--dry-run"
+  set -- "${@:1:$(($#-1))}"
 fi
 
+case "${issue_id}" in *[!A-Z0-9-]*|""|-*) echo "invalid Linear issue id: ${issue_id}" >&2; exit 1 ;; esac
+[ -n "${comment_body}" ] || { echo "comment body must not be empty" >&2; exit 1; }
 case "${output_path}" in /*|*..*) echo "output path must be relative and cannot contain '..': ${output_path}" >&2; exit 1 ;; esac
+case "${output_path}" in .accelerate/workflow/*) ;; *) echo "output path must be under .accelerate/workflow/: ${output_path}" >&2; exit 1 ;; esac
+
 output_abs="${root}/${output_path}"
+[ ! -L "${output_abs}" ] || { echo "output path must not be a symlink: ${output_path}" >&2; exit 1; }
 mkdir -p "$(dirname "${output_abs}")"
-case "$(readlink -f "$(dirname "${output_abs}")")" in "${root}"|"${root}"/*) ;; *) echo "output escapes target repo: ${output_path}" >&2; exit 1 ;; esac
+output_dir_real="$(cd "$(dirname "${output_abs}")" && pwd)"
+case "${output_dir_real}" in "${root}/.accelerate/workflow"|"${root}/.accelerate/workflow"/*) ;; *) echo "resolved output path escapes .accelerate/workflow: ${output_path}" >&2; exit 1 ;; esac
+
+emit_line() {
+  local line="$1"
+  printf '%s\n' "${line}" >>"${output_abs}"
+  printf '%s\n' "${line}"
+}
 
 if [ "${mode}" = "--dry-run" ]; then
-  printf '{"adapter":"linear","transport":"mcp","operation":"closure-comment","mode":"dry-run","issue":"%s","body_length":%s,"remote_calls":false,"structured_write":false,"blocked_reason":"structured_closure_comment_binding_not_implemented"}\n' "${issue_id}" "${#comment_body}" | tee -a "${output_abs}"
+  line="$(python3 - "${issue_id}" "${comment_body}" "${output_path}" <<'PY'
+import json, sys
+issue, body, output = sys.argv[1:4]
+print(json.dumps({
+    "adapter": "linear",
+    "transport": "graphql",
+    "binding": "linear-mcp-structured-non-llm",
+    "operation": "closure-comment",
+    "mode": "dry-run",
+    "issue": issue,
+    "body_length": len(body),
+    "output": output,
+    "remote_calls": False,
+}, sort_keys=True))
+PY
+)"
+  emit_line "${line}"
   exit 0
 fi
 
-echo "Linear MCP closure comment is blocked until a structured non-LLM closure-comment binding is implemented and proven" >&2
-exit 2
+[ -n "${LINEAR_API_KEY:-}" ] || { echo "LINEAR_API_KEY is not set" >&2; exit 1; }
+command -v curl >/dev/null 2>&1 || { echo "curl is not installed" >&2; exit 1; }
+
+read_query='query Issue($id: String!) { issue(id: $id) { id identifier title url state { name type } project { name } assignee { email } team { id key name } } }'
+read_payload="$(python3 - "${read_query}" "${issue_id}" <<'PY'
+import json, sys
+print(json.dumps({"query": sys.argv[1], "variables": {"id": sys.argv[2]}}))
+PY
+)"
+read_response="$(curl -fsS https://api.linear.app/graphql \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -H "Content-Type: application/json" \
+  --data "${read_payload}")"
+linear_uuid="$(printf '%s' "${read_response}" | "$(dirname "${BASH_SOURCE[0]}")/validate-linear-issue-response.sh" "${issue_id}")"
+query='mutation CommentCreate($input: CommentCreateInput!) { commentCreate(input: $input) { success comment { id url } } }'
+payload="$(python3 - "${query}" "${linear_uuid}" "${comment_body}" <<'PY'
+import json, sys
+print(json.dumps({"query": sys.argv[1], "variables": {"input": {"issueId": sys.argv[2], "body": sys.argv[3]}}}))
+PY
+)"
+response="$(curl -fsS https://api.linear.app/graphql \
+  -H "Authorization: ${LINEAR_API_KEY}" \
+  -H "Content-Type: application/json" \
+  --data "${payload}")"
+printf '%s' "${response}" | "$(dirname "${BASH_SOURCE[0]}")/validate-linear-comment-response.sh" >/dev/null
+line="$(python3 - "${issue_id}" "${output_path}" "${read_response}" "${response}" <<'PY'
+import json, sys
+issue, output, read_response, response = sys.argv[1:5]
+print(json.dumps({
+    "adapter": "linear",
+    "transport": "graphql",
+    "binding": "linear-mcp-structured-non-llm",
+    "operation": "closure-comment",
+    "mode": "live",
+    "issue": issue,
+    "output": output,
+    "remote_calls": True,
+    "read_response": json.loads(read_response),
+    "response": json.loads(response),
+}, sort_keys=True))
+PY
+)"
+emit_line "${line}"

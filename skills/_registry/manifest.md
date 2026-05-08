@@ -123,7 +123,13 @@ The next packaging and proof tasks are:
 5. `accelerate` root seed packaging decision maintenance
 6. runtime proof lane fixtures
 7. profile-local validation bundles
-8. optional runtime export drift gate
+8. host runtime export proof against an explicitly approved generated target
+
+RC9 proof note: `scripts/export-skill-proof.sh` and `tests/skill-export-proof.sh`
+prove repo-local source -> generated export provenance/drift detection for a
+bounded selected skill set. The proof appendix is
+`planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md`. This
+is not a promotion of user-home catalogs or generated bundles to source truth.
 
 Do not add new mandatory skill references without registering them here.
 

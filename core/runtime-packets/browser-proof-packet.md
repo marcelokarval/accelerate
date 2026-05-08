@@ -9,8 +9,11 @@ Browser-Proof Packet
 
 - surface / route family: <...>
 - runtime target: <local URL, environment, or blocked reason>
-- server/readiness preflight: <passed|failed|blocked|not-required> plus probe summary
-- correction signal: <none|start-or-fix-server|fix-route|install-readiness-checker|other>
+- phase: <server-readiness|browser-capture|readiness-only|capture-failed|persistent-regression-handoff>
+- server/readiness preflight: <passed|failed|blocked|not-required> plus HTTP code/probe summary
+- server monitor: <pid/liveness if known; stdout/stderr tail if supplied; HTTP code>
+- cleanup: <browser closed; helper-owned server killed or external server not owned; fixture leak-check result>
+- correction signal: <none|start-or-fix-server|fix-route|install-readiness-checker|inspect-browser-runtime|other>
 - browser launched: <yes|no; readiness failures must be no>
 - browser tool: <Chrome DevTools|agent-browser|other>
 - browser session posture: <fresh|isolated|existing-intentional|profile-conflict-blocked>
@@ -43,9 +46,20 @@ Browser-Proof Packet
   only for static/no-network surfaces and state why in the surrounding packet.
 - Browser capture must not launch before target server availability/readiness is
   actively checked. If the local server is absent, unreachable, or returning a
-  server error, write a structured failure packet with `browser launched: no`, a
-  failed server/readiness preflight, and an explicit correction signal instead of
-  producing screenshot-only or empty proof.
+  server error, write a structured `server-readiness` failure packet with
+  `browser launched: no`, HTTP code/probe detail, server liveness/stdout/stderr
+  detail when supplied, cleanup ownership detail, and an explicit correction
+  signal instead of producing screenshot-only or empty proof.
+- Use `readiness-only` only for server monitoring/preflight evidence that did
+  not launch a browser. It can support review of server availability, but it
+  cannot close browser-required work.
+- Use `capture-failed` after readiness passed but browser automation failed.
+  Include browser/runtime stderr/stdout detail and a retry/correction signal.
+- A successful `browser-capture` packet still hands off to persistent regression
+  separately. Do not mark persistent E2E/Playwright as available from one-off
+  capture proof.
+- Fixture tests that start local servers must kill the owned server and leak
+  check common server/browser process patterns before passing.
 - `sampled` proof must not be presented as a `broad sweep` or `full
   route-family audit`.
 - Capture evidence belongs under the governed project root `.tmp/` tree unless

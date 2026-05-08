@@ -17,9 +17,10 @@ The generated/private boundary is enforced by `.accelerate/.gitignore` and by `t
 
 ## Current Dogfood Cycle
 
-- cycle: recursive cycle 1..6
-- governing plan: `planning/executive/2026-05-08-recursive-cycle-1-6-executive-plan.md`
-- task ledger: `planning/executive/2026-05-08-recursive-cycle-1-6-task-ledger.md`
+- cycle: recursive cycle 7..12
+- governing plan: `planning/executive/2026-05-08-recursive-cycle-7-12-executive-plan.md`
+- task ledger: `planning/executive/2026-05-08-recursive-cycle-7-12-task-ledger.md`
+- execution model: root orchestrator with bounded subagent implementation/review packets
 - local status: `.accelerate/status/readiness-dashboard.yaml`
 - active work item: `.accelerate/workflow/active-work-item.yaml`
 

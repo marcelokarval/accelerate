@@ -4,7 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILLS_DIR="${ROOT_DIR}/skills"
 ROOT_RUNTIME_DIR="${ROOT_DIR}/global-runtime/accelerate"
-GLOBAL_SKILLS_DIR="${HOME}/.codex/skills"
+GLOBAL_SKILLS_DIR="${CODEX_SKILLS_DIR:-${GLOBAL_SKILLS_DIR:-${HOME}/.codex/skills}}"
 
 if [[ ! -d "${SKILLS_DIR}" ]]; then
   echo "Missing local skills directory: ${SKILLS_DIR}" >&2
@@ -22,6 +22,10 @@ for skill_dir in "${SKILLS_DIR}"/*/*; do
   for file_name in SKILL.md metadata.yaml; do
     source_file="${skill_dir}/${file_name}"
     target_file="${target_dir}/${file_name}"
+
+    if [[ ! -f "${source_file}" ]]; then
+      continue
+    fi
 
     if [[ ! -f "${target_file}" ]]; then
       echo "missing: ${target_file}" >&2

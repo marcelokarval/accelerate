@@ -22,8 +22,10 @@ for path in "${required_files[@]}"; do
 done
 
 for marker in \
-  "planning/executive/2026-05-08-recursive-cycle-1-6-executive-plan.md" \
-  "planning/executive/2026-05-08-recursive-cycle-1-6-task-ledger.md" \
+  "planning/executive/2026-05-08-recursive-cycle-7-12-executive-plan.md" \
+  "planning/executive/2026-05-08-recursive-cycle-7-12-task-ledger.md" \
+  "root orchestrator" \
+  "bounded subagent" \
   "generated/private" \
   "no secrets"; do
   grep -R --line-number --fixed-strings "${marker}" .accelerate >/dev/null || fail "missing marker ${marker}"

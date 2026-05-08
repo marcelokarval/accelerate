@@ -31,6 +31,7 @@ The first native contract artifact now lives in:
 - `install-export-contract.md`
 - `execution-contract.md`
 - `return-contract.md`
+- `bounded-proof-auditor-replay.md`
 
 Read in this order:
 
@@ -39,3 +40,8 @@ Read in this order:
 3. `install-export-contract.md`
 4. `execution-contract.md`
 5. `return-contract.md`
+6. `bounded-proof-auditor-replay.md`
+
+`bounded-proof-auditor-replay.md` is the RC10 fixture-scoped replay packet. It
+is not a runtime install, not a persistent agent, and not an autonomous runtime
+availability claim.

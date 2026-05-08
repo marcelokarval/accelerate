@@ -24,7 +24,7 @@ enforced in this repository before it can govern Accelerate.
 
 | Edge | Status | Direction | Boundary | Proof locator | Promotion condition | Demotion condition |
 | --- | --- | --- | --- | --- | --- | --- |
-| Repo skill source to generated runtime export | `planned` | `repo -> generated export -> host runtime` | Generated bundles are deployment artifacts; they are not source truth. | `skills/README.md`; `skills/_registry/manifest.md` when present; this topology | A generated bundle can be promoted only when it is reproducible from repo-local files, has a manifest/provenance entry, and passes drift detection. | Demote if generated files differ from repo source without a recorded generation command or provenance. |
+| Repo skill source to generated runtime export | `available` for repo-local proof export only; host installation remains `planned` | `repo -> generated export -> host runtime` | generated bundles are deployment artifacts; generated export is not source truth. | `scripts/export-skill-proof.sh`; `tests/skill-export-proof.sh`; `planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md`; `skills/_registry/manifest.md` | Host runtime export can be promoted only when the same repo-local provenance/drift proof is run against the intended generated target and host cleanup rules are accepted. | Demote if generated files differ from repo source, provenance is missing, or user-home catalogs are treated as source authority. |
 | User-home skill catalog to repo | `blocked` | `external candidate -> import review -> repo-local source` | No direct authority transfer from user home. | `AGENTS.md`; `skills/README.md`; this topology | Promote only through an import task that adapts content, registers it locally, and adds tests/contracts if it becomes mandatory. | Demote/remove if a repo doc relies on a user-home path as governing authority. |
 | Repo skill source to project overlay | `substitute` | `repo -> overlay draft` | Overlay drafts may specialize behavior but cannot rewrite core law. | `skills/overlays/`; `core/control-plane/authority-set-gate.md` | Promote when the overlay is bounded, registered, and referenced by a profile or task packet. | Demote if overlay becomes global doctrine or lacks an owning source. |
 | Repo skill source to agent factory role envelope | `linked` | `repo -> skill envelope -> candidate role` | Agent roles consume skill envelopes; they do not create autonomous runtime availability. | `core/control-plane/agent-factory-promotion-pipeline.md` | Promote a role only when the envelope is complete and proof replay passes. | Demote when required skill references are missing, stale, or unregistered. |
@@ -36,7 +36,9 @@ Allowed durable artifacts:
 - repo-local skill source files under `skills/`;
 - registry/provenance docs under `skills/_registry/`;
 - control-plane references to the skill topology;
-- tests that verify mandatory skills and source-of-truth language.
+- tests that verify mandatory skills and source-of-truth language;
+- non-sensitive proof appendices that record generated export provenance without
+  committing the generated bundle.
 
 Generated or private artifacts must not become source truth:
 
@@ -55,6 +57,15 @@ Run the skill topology contract before claiming a skill bundle is current:
 
 ```bash
 bash tests/control-plane-rc4-rc6.sh
+bash tests/skill-export-proof.sh
+```
+
+For a reproducible generated proof bundle that does not touch user-home runtime
+catalogs:
+
+```bash
+scripts/export-skill-proof.sh --output /tmp/accelerate-skill-export-proof --selected prompt-hardening,verification-before-completion --check-drift
+scripts/export-skill-proof.sh --output /tmp/accelerate-skill-export-proof --verify-existing --check-drift
 ```
 
 A full drift check must verify:

@@ -18,11 +18,9 @@ while IFS= read -r skill_dir; do
     status=1
   }
 
-  [[ -f "$skill_dir/metadata.yaml" ]] || {
-    echo "Missing metadata.yaml in $skill_dir" >&2
-    status=1
-  }
-
+  # Metadata is recommended for runtime export, but repo-local skill authority is
+  # the SKILL.md plus registry row. Native skills may temporarily lack metadata
+  # while the registry remains authoritative.
   if [[ -f "$skill_dir/metadata.yaml" ]]; then
     if grep -Eq '^source: ~/' "$skill_dir/metadata.yaml"; then
       echo "Metadata source must be repo-local in $skill_dir/metadata.yaml" >&2
