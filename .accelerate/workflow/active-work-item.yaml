@@ -1,23 +1,23 @@
 schema_version: 1
 kind: accelerate-local-dogfood-active-work-item
-id: recursive-cycle-2026-05-08-13-17
+id: recursive-cycle-2026-05-08-18-22
 status: active
 classification: orchestrated-non-trivial-recursive-self-improvement
 execution_model: root-orchestrator-with-bounded-subagents
-plan: planning/executive/2026-05-08-recursive-cycle-13-17-executive-plan.md
-ledger: planning/executive/2026-05-08-recursive-cycle-13-17-task-ledger.md
+plan: planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md
+ledger: planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md
 assigned_scope:
-  - RC13 Linear live fixture proof readiness and safe execution (Subagent A)
-  - RC14 Browser-proof real capture and server monitoring (Subagent B)
-  - RC15 Skill export host-runtime proof boundary (Subagent C)
-  - RC16 Agent factory runtime candidate proof (Subagent D)
-  - RC17 Governance integration, dogfood, semantic negatives, next queue (Subagent E)
-  - RC18 Root final integration review, process cleanup, commit/push, CI watch
+  - RC18 Linear live fixture proof readiness and provider-live negatives (Subagent A)
+  - RC19 Browser-proof server monitoring and capture correction (Subagent B)
+  - RC20 Persistent regression separation and E2E handoff proof (Subagent B)
+  - RC21 Generated host skill export and bounded agent runtime candidate (Subagent C)
+  - RC22 Governance integration, dogfood, semantic negatives, next queue (Subagent C)
+  - RC23 Root final integration review, process cleanup, commit/push, CI watch
 review_model:
   root: orchestrator and final forensic reviewer
   subagents: bounded implementation plus task-level self-review only
   acceptance: root must inspect actual diffs and proof; subagent self-review is not final acceptance
-provider_boundary: local-fixture-only-for-rc17; provider-live-proof-is-credential-gated-and-sanitized-by-assigned-scope
+provider_boundary: local-fixture-only-for-rc18; provider-live-proof-is-credential-gated-and-sanitized-by-assigned-scope
 remote_calls_allowed: false
 secret_policy: no secrets, tokens, screenshots, private browser captures, or provider responses in committed dogfood files
 generated_private_outputs:

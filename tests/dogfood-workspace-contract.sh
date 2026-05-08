@@ -22,8 +22,8 @@ for path in "${required_files[@]}"; do
 done
 
 for marker in \
-  "planning/executive/2026-05-08-recursive-cycle-13-17-executive-plan.md" \
-  "planning/executive/2026-05-08-recursive-cycle-13-17-task-ledger.md" \
+  "planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md" \
+  "planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md" \
   "root orchestrator" \
   "bounded subagent" \
   "generated/private" \

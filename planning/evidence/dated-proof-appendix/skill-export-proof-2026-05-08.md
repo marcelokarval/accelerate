@@ -56,7 +56,7 @@ bash tests/skill-export-proof.sh
 - drift_detected: `false`
 - note: `source_commit`/`source_tree` identify the Git HEAD used by the proof;
   the generated provenance also records dirty shared-worktree status for
-  uncommitted RC13..RC17 cycle edits.
+  uncommitted recursive-cycle edits.
 
 ## Included Source Files
 

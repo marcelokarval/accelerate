@@ -101,8 +101,10 @@ autonomous runtime without invocation/lifecycle/idle/cleanup proof results in
 blocks.
 
 Remaining blocker: no actual autonomous runtime adapter has invoked, monitored,
-cleaned up, or demoted this candidate. Therefore autonomous runtime availability
-remains blocked.
+cleaned up, or demoted this candidate. The repo-owned physical-agent adapter is
+still `status: planned` with `command: not-implemented-yet`, so it is a contract
+surface rather than runtime-binding proof. Therefore autonomous runtime
+availability remains blocked.
 
 ## Demotion Rules
 

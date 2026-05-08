@@ -69,7 +69,7 @@ if env -u LINEAR_API_KEY -u ACCELERATE_LINEAR_LIVE_FIXTURE -u LINEAR_FIXTURE_TEA
   echo "preflight dry-run unexpectedly reported live readiness without fixture env" >&2
   exit 1
 fi
-assert_json_fields "${TMP}/.accelerate/workflow/preflight.jsonl" remote_calls eq false operation eq live-fixture-preflight ready eq false credential eq absent
+assert_json_fields "${TMP}/.accelerate/workflow/preflight.jsonl" remote_calls eq false operation eq live-fixture-preflight ready eq false credential eq absent blocked_reason eq "missing prerequisites: LINEAR_API_KEY, ACCELERATE_LINEAR_LIVE_FIXTURE=1, LINEAR_FIXTURE_TEAM_ID or LINEAR_FIXTURE_TEAM_KEY, LINEAR_FIXTURE_STATUS_ID"
 
 # Live mode requires LINEAR_API_KEY before remote work.
 if env -u LINEAR_API_KEY "${read_script}" "${TMP}" LIN-123 .accelerate/workflow/live-read.jsonl >/tmp/linear-read.err 2>&1; then
@@ -101,7 +101,7 @@ if env -u LINEAR_API_KEY -u ACCELERATE_LINEAR_LIVE_FIXTURE -u LINEAR_FIXTURE_TEA
   echo "preflight helper reported ready without LINEAR_API_KEY" >&2
   exit 1
 fi
-assert_json_fields "${TMP}/.accelerate/workflow/live-preflight.jsonl" remote_calls eq false operation eq live-fixture-preflight ready eq false credential eq absent
+assert_json_fields "${TMP}/.accelerate/workflow/live-preflight.jsonl" remote_calls eq false operation eq live-fixture-preflight ready eq false credential eq absent blocked_reason eq "missing prerequisites: LINEAR_API_KEY, ACCELERATE_LINEAR_LIVE_FIXTURE=1, LINEAR_FIXTURE_TEAM_ID or LINEAR_FIXTURE_TEAM_KEY, LINEAR_FIXTURE_STATUS_ID"
 
 # Path safety: outputs must be relative and under .accelerate/workflow; artifacts cannot escape.
 if "${read_script}" "${TMP}" LIN-123 /tmp/escape.jsonl --dry-run >/dev/null 2>&1; then

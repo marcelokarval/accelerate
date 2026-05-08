@@ -30,20 +30,21 @@ opt_in="${ACCELERATE_LINEAR_LIVE_FIXTURE:-}"
 token_present=false
 [ -n "${LINEAR_API_KEY:-}" ] && token_present=true
 
+missing_prerequisites=()
+[ "${token_present}" = true ] || missing_prerequisites+=("LINEAR_API_KEY")
+[ "${opt_in}" = "1" ] || missing_prerequisites+=("ACCELERATE_LINEAR_LIVE_FIXTURE=1")
+[ -n "${team}" ] || missing_prerequisites+=("LINEAR_FIXTURE_TEAM_ID or LINEAR_FIXTURE_TEAM_KEY")
+[ -n "${status}" ] || missing_prerequisites+=("LINEAR_FIXTURE_STATUS_ID")
+
 reason="ready"
 ready=true
-if [ "${token_present}" != true ]; then
+if [ "${#missing_prerequisites[@]}" -gt 0 ]; then
   ready=false
-  reason="missing LINEAR_API_KEY"
-elif [ "${opt_in}" != "1" ]; then
-  ready=false
-  reason="missing ACCELERATE_LINEAR_LIVE_FIXTURE=1 opt-in"
-elif [ -z "${team}" ]; then
-  ready=false
-  reason="missing LINEAR_FIXTURE_TEAM_ID or LINEAR_FIXTURE_TEAM_KEY"
-elif [ -z "${status}" ]; then
-  ready=false
-  reason="missing LINEAR_FIXTURE_STATUS_ID"
+  joined_missing="${missing_prerequisites[0]}"
+  for item in "${missing_prerequisites[@]:1}"; do
+    joined_missing="${joined_missing}, ${item}"
+  done
+  reason="missing prerequisites: ${joined_missing}"
 fi
 
 case "${team}" in "") ;; -*|*[!A-Za-z0-9_-]*) echo "invalid Linear fixture team id/key" >&2; exit 1 ;; esac

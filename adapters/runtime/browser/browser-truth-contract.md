@@ -27,7 +27,10 @@ one-off capture writes `browser-capture`, includes the same server monitor tails
 and uses a dedicated temporary browser profile under project `.tmp/` so ambient
 Chrome/MCP/Playwright sessions are neither reused nor killed. The helper removes
 that profile through its trap; fixture tests still own and leak-check servers they
-start. Successful packets include a persistent-regression handoff stating that
+start. All packet paths include
+`persistent_regression_handoff.required_before_persistent_e2e_claim: true` and
+state that browser capture/readiness is not persistent regression evidence.
+Successful packets include a persistent-regression handoff stating that
 persistent E2E/Playwright still needs separate repo-owned proof. Remote URLs are
 blocked until a request-intercepting adapter can prevent page-triggered private
 network and metadata-host subresource requests.

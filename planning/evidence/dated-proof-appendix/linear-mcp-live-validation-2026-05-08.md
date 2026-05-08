@@ -15,9 +15,9 @@ The helper implementation remains intentionally non-LLM and uses direct GraphQL-
 
 ## Sanitized Credential / Fixture Decision
 
-Credential and fixture readiness were checked from the RC13 subagent shell without printing secrets.
+Credential and fixture readiness were checked from the RC13 and RC18 subagent shells without printing secrets.
 
-Sanitized result from repo-local preflight:
+Sanitized result from the RC18 repo-local live preflight:
 
 ```text
 operation=live-fixture-preflight
@@ -25,33 +25,31 @@ credential=absent
 live_fixture_opt_in=False
 fixture_team=absent
 fixture_status=absent
+fixture_project=none
+fixture_assignee=none
 ready=False
 verified=False
-blocked_reason=missing LINEAR_API_KEY
+blocked_reason=missing prerequisites: LINEAR_API_KEY, ACCELERATE_LINEAR_LIVE_FIXTURE=1, LINEAR_FIXTURE_TEAM_ID or LINEAR_FIXTURE_TEAM_KEY, LINEAR_FIXTURE_STATUS_ID
 remote_calls=False
+mode=live-preflight
 ```
 
-No private Linear payloads, tokens, provider response bodies, issue titles, team names, user emails, or raw GraphQL JSON are committed in this appendix.
+No private Linear payloads, tokens, provider response bodies, issue titles, team names, user emails, raw fixture IDs, or raw GraphQL JSON are committed in this appendix.
 
 ## Live Fixture Result
 
-Live fixture follow-through through the repo-local scripts was **blocked**.
+Live fixture follow-through through the repo-local scripts was **blocked** in RC18.
 
-Primary blocker:
-
-```text
-LINEAR_API_KEY is not set
-```
-
-Secondary safe-fixture prerequisites were also unavailable in this shell:
+Exact missing prerequisites from the credential-safe live preflight:
 
 ```text
+LINEAR_API_KEY absent
 ACCELERATE_LINEAR_LIVE_FIXTURE=1 absent
 LINEAR_FIXTURE_TEAM_ID or LINEAR_FIXTURE_TEAM_KEY absent
 LINEAR_FIXTURE_STATUS_ID absent
 ```
 
-Because these prerequisites were absent, RC13 did not create, comment on, attach artifacts to, close/comment, transition, or otherwise mutate any Linear issue. The live chain correctly stopped before any remote call.
+Because these prerequisites were absent, RC18 did not create, comment on, attach artifacts to, close/comment, transition, or otherwise mutate any Linear issue. The live chain correctly stopped before any remote call.
 
 ## Local Structured Binding Proof
 
@@ -66,7 +64,7 @@ Covered local guarantees:
 
 - dry-run JSONL emits `remote_calls:false`
 - live-fixture preflight emits credential-safe readiness rows without secrets
-- live-fixture preflight fails closed when token, explicit opt-in, team, or target status are absent
+- live-fixture preflight fails closed and reports the exact missing non-sensitive gates when token, explicit opt-in, team, or target status are absent
 - issue read, issue create, artifact comment, closure comment, and status transition helpers reject missing `LINEAR_API_KEY` before remote work
 - output paths must stay under `.accelerate/workflow/`
 - symlink/escaping output paths are rejected

@@ -38,12 +38,20 @@ STRONG_TERMS = {
     "contract test",
     "contract tests",
     "fixture proof",
-    "live proof",
     "validated",
     "passed",
     "proof:",
     "proof locator",
     "bash tests/",
+}
+NEGATED_PROOF_TERMS = {
+    "without proof locator",
+    "without separate proof locator",
+    "proof is missing",
+    "proof missing",
+    "missing proof",
+    "live proof is missing",
+    "absent proof",
 }
 
 
@@ -73,7 +81,9 @@ def reject_markdown_optimistic_promotion(source: str) -> list[str]:
         row_text = " ".join(cells).lower()
         evidence_text = cells[2].lower() if len(cells) > 2 else ""
         if status in PROMOTED and any(term in row_text for term in WEAK_TERMS):
-            if not any(term in evidence_text for term in STRONG_TERMS):
+            has_strong_evidence = any(term in evidence_text for term in STRONG_TERMS)
+            has_negated_proof = any(term in row_text for term in NEGATED_PROOF_TERMS)
+            if not has_strong_evidence or has_negated_proof:
                 errors.append(f"{cells[0]} promoted to {status} while row still contains weak status language")
     return errors
 
@@ -88,11 +98,39 @@ def reject_yaml_optimistic_promotion(source: str) -> list[str]:
         status = stripped.split(":", 1)[1].strip().strip('`"').lower()
         if status not in PROMOTED:
             continue
-        start = max(0, index - 4)
-        end = min(len(lines), index + 8)
+        status_indent = len(raw) - len(raw.lstrip())
+        item_indent = None
+        for back in range(index - 1, -1, -1):
+            candidate = lines[back]
+            candidate_stripped = candidate.strip()
+            if not candidate_stripped:
+                continue
+            candidate_indent = len(candidate) - len(candidate.lstrip())
+            if candidate_indent < status_indent and candidate_stripped.endswith(":"):
+                item_indent = candidate_indent
+                start = back
+                break
+        else:
+            start = max(0, index - 1)
+        end = len(lines)
+        if item_indent is not None:
+            for forward in range(index + 1, len(lines)):
+                candidate = lines[forward]
+                candidate_stripped = candidate.strip()
+                if not candidate_stripped:
+                    continue
+                candidate_indent = len(candidate) - len(candidate.lstrip())
+                if candidate_indent <= item_indent:
+                    end = forward
+                    break
+        else:
+            end = min(len(lines), index + 4)
         block = "\n".join(lines[start:end]).lower()
-        if any(term in block for term in WEAK_TERMS) and not any(term in block for term in STRONG_TERMS):
-            errors.append(f"YAML promoted status near line {index + 1} contains weak status language without proof locator")
+        if any(term in block for term in WEAK_TERMS):
+            has_strong_evidence = any(term in block for term in STRONG_TERMS)
+            has_negated_proof = any(term in block for term in NEGATED_PROOF_TERMS)
+            if not has_strong_evidence or has_negated_proof:
+                errors.append(f"YAML promoted status near line {index + 1} contains weak status language without proof locator")
     return errors
 
 
@@ -104,9 +142,9 @@ if real_errors:
     fail("current dashboards violate semantic promotion gate: " + "; ".join(real_errors))
 
 required_cycle_markers = [
-    "recursive-cycle-2026-05-08-13-17",
-    "planning/executive/2026-05-08-recursive-cycle-13-17-executive-plan.md",
-    "planning/executive/2026-05-08-recursive-cycle-13-17-task-ledger.md",
+    "recursive-cycle-2026-05-08-18-22",
+    "planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md",
+    "planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md",
     "root-orchestrator-with-bounded-subagents",
 ]
 combined_dogfood = dogfood_text + "\n" + active_text
@@ -144,12 +182,34 @@ entries:
     evidence: browser-capture exists, but persistent E2E remains unpromoted and proof is missing.
     residual: planned Playwright handoff.
 """,
+    "persistent-regression-handoff-disabled-promoted": """
+entries:
+  persistent_regression_handoff:
+    status: available
+    required_before_persistent_e2e_claim: false
+    evidence: browser-capture exists without separate proof locator.
+    residual: persistent E2E remains unpromoted.
+""",
     "linear-live-fixture-promoted-without-live-proof": """
 entries:
   linear_live_fixture:
     status: available
     evidence: planned preflight exists, but provider mutation is missing and not yet verified.
     residual: absent credential-safe live fixture.
+""",
+    "provider-live-linear-promoted-without-proof-locator": """
+entries:
+  provider_live_linear_mcp_writes:
+    status: available
+    evidence: planned helper shape exists, but provider mutation evidence is missing and provider mutation is absent.
+    residual: without proof locator for non-sensitive Linear fixture.
+""",
+    "generated-host-user-home-promoted-without-approved-proof": """
+entries:
+  skill_generated_host_runtime_export:
+    status: available
+    evidence: generated export exists, but approved generated host proof is missing and user-home runtime catalog authority is absent.
+    residual: without proof locator for approved non-user-home generated target.
 """,
     "agent-runtime-promoted-from-replay": """
 entries:

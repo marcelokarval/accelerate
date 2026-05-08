@@ -133,7 +133,7 @@ if http_code_raw and http_code_raw.isdigit():
 detail_path = Path(os.environ["DETAIL_FILE"])
 detail = ""
 if detail_path.exists():
-    detail = detail_path.read_text(errors="replace")[:4000]
+    detail = redact(detail_path.read_text(errors="replace")[:4000])
 
 pid_value = os.environ.get("ACCELERATE_BROWSER_PROOF_SERVER_PID", "")
 stdout_path = os.environ.get("ACCELERATE_BROWSER_PROOF_SERVER_STDOUT", "")

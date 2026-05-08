@@ -60,8 +60,11 @@ Browser-Proof Packet
   preflight but dies before/during browser navigation, classify the reason as a
   server-crash correction instead of a generic browser-runtime failure.
 - A successful `browser-capture` packet still hands off to persistent regression
-  separately. Do not mark persistent E2E/Playwright as available from one-off
-  capture proof.
+  separately. Every helper packet must include
+  `persistent_regression_handoff.required_before_persistent_e2e_claim: true`.
+  Do not mark persistent E2E/Playwright as available from one-off capture proof;
+  persistent regression stays `planned` until a separate repo-owned proof locator
+  exists.
 - Fixture tests that start local servers must kill the owned server and leak
   check common server/browser process patterns before passing.
 - `sampled` proof must not be presented as a `broad sweep` or `full

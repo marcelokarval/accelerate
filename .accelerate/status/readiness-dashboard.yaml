@@ -1,8 +1,8 @@
 schema_version: 1
 kind: accelerate-local-dogfood-readiness-dashboard
-cycle: recursive-cycle-2026-05-08-13-17
-plan: planning/executive/2026-05-08-recursive-cycle-13-17-executive-plan.md
-ledger: planning/executive/2026-05-08-recursive-cycle-13-17-task-ledger.md
+cycle: recursive-cycle-2026-05-08-18-22
+plan: planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md
+ledger: planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md
 status: active
 entries:
   dogfood_workspace:
@@ -12,7 +12,7 @@ entries:
   semantic_negative_gates:
     status: available
     proof: bash tests/semantic-negative-fixtures.sh
-    boundary: rejects blocked/planned/substitute optimistic promotion without proof locators for new cycle surfaces
+    boundary: rejects blocked/planned/substitute optimistic promotion unless current proof locators support the promoted status for new cycle surfaces
   browser_proof_server_monitoring:
     status: available
     proof: bash tests/browser-proof-monitoring.sh
@@ -24,19 +24,19 @@ entries:
   linear_live_fixture:
     status: planned
     proof: planning/evidence/dated-proof-appendix/linear-mcp-live-validation-2026-05-08.md
-    boundary: RC13 added credential-safe preflight and structured helper checks, but no provider mutation ran because the credential and safe fixture settings were absent
+    boundary: RC18 credential-safe live preflight and structured helper checks passed locally, but no provider mutation ran because credential, explicit opt-in, and safe fixture settings were absent
   skill_generated_host_runtime_export:
     status: available
     proof: bash tests/skill-export-proof.sh; planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md
-    boundary: temp/approved generated host-runtime proof only; generated target was cleaned up and user-home catalogs are not authority
+    boundary: RC21 reconfirmed temp/approved generated host-runtime proof only; generated target was cleaned up and user-home catalogs are refused/non-authoritative
   bounded_proof_auditor_candidate:
     status: blocked
     proof: planning/evidence/dated-proof-appendix/agent-factory-replay-2026-05-08.md; bash tests/promotion-replay-fixtures.sh
-    boundary: fixture-scoped proof-replay only; no runtime binding, installation, persistent agent, or autonomous availability
+    boundary: fixture-scoped proof-replay only; repo-owned physical-agent adapter is planned/not implemented and no runtime binding, installation, persistent agent, or autonomous availability is proven
   persistent_regression_handoff:
     status: planned
-    proof: none-for-this-cycle-slice
-    boundary: browser-capture packets must not promote persistent E2E without separate repo-owned proof
+    proof: bash tests/semantic-negative-fixtures.sh
+    boundary: browser-capture packets set persistent_regression_handoff.required_before_persistent_e2e_claim=true and must not promote persistent E2E without separate repo-owned proof
 residuals:
   - remote provider payloads remain out of committed .accelerate state
   - Linear live fixture proof still requires a safe credential and explicit non-sensitive fixture configuration outside committed dogfood state

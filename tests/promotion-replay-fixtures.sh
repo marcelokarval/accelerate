@@ -62,5 +62,9 @@ require_match 'agent-factory-replay-2026-05-08.md' agents/promotion/bounded-proo
 require_match 'Runtime-Bound Candidate Checklist' core/control-plane/agent-factory-promotion-pipeline.md
 require_match 'RC16 Runtime-Bound Candidate Criteria' planning/evidence/dated-proof-appendix/agent-factory-replay-2026-05-08.md
 require_match 'Remaining blocker: no actual autonomous runtime adapter' planning/evidence/dated-proof-appendix/agent-factory-replay-2026-05-08.md
+require_match 'physical-agent adapter' planning/evidence/dated-proof-appendix/agent-factory-replay-2026-05-08.md
+require_match 'status: planned' planning/evidence/dated-proof-appendix/agent-factory-replay-2026-05-08.md
+require_match 'command: not-implemented-yet' planning/evidence/dated-proof-appendix/agent-factory-replay-2026-05-08.md
+require_match 'command: not-implemented-yet' adapters/runtime/physical-agent/capabilities.yaml
 
 printf 'promotion replay fixtures passed\n'
