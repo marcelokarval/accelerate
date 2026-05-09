@@ -12,6 +12,9 @@ fail() {
 required_files=(
   ".accelerate/README.md"
   ".accelerate/.gitignore"
+  ".accelerate/state.yaml"
+  ".accelerate/workflow/README.md"
+  ".accelerate/workflow/adapter.yaml"
   ".accelerate/workflow/active-work-item.yaml"
   ".accelerate/review/README.md"
   ".accelerate/status/readiness-dashboard.yaml"
@@ -19,6 +22,7 @@ required_files=(
 
 for path in "${required_files[@]}"; do
   [ -f "${path}" ] || fail "missing ${path}"
+  git ls-files --error-unmatch "${path}" >/dev/null 2>&1 || fail "required dogfood path is not tracked: ${path}"
 done
 
 for marker in \
@@ -27,6 +31,10 @@ for marker in \
   "P4Y-1298" \
   "P4Y-1302" \
   "linear-oauth-runtime-proof-2026-05-08-rc24-rc27" \
+  "v2_contract_decision: materialize-summary-index-and-local-workflow-adapter" \
+  "adapter: local" \
+  "status: accepted" \
+  "Last Accepted Dogfood Cycle" \
   "planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md" \
   "planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md" \
   "root orchestrator" \
@@ -60,5 +68,19 @@ for committed_path in "${required_files[@]}"; do
     fail "required committed dogfood path is ignored: ${committed_path}"
   fi
 done
+
+for lifecycle_file in \
+  ".accelerate/state.yaml" \
+  ".accelerate/status/readiness-dashboard.yaml" \
+  ".accelerate/workflow/adapter.yaml" \
+  ".accelerate/workflow/active-work-item.yaml"; do
+  grep --line-number --fixed-strings "accepted" "${lifecycle_file}" >/dev/null || fail "dogfood lifecycle is not accepted in ${lifecycle_file}"
+done
+
+if grep -R --line-number -E '^status:[[:space:]]*active$' .accelerate/state.yaml .accelerate/status/readiness-dashboard.yaml .accelerate/workflow >/tmp/accelerate-dogfood-active-status.out 2>/dev/null; then
+  cat /tmp/accelerate-dogfood-active-status.out >&2
+  fail "accepted dogfood cycle drifted back to active status"
+fi
+rm -f /tmp/accelerate-dogfood-active-status.out
 
 printf 'dogfood workspace contract passed\n'

@@ -5,12 +5,12 @@ plan: planning/executive/2026-05-08-linear-oauth-runtime-proof-executive-plan.md
 ledger: planning/executive/2026-05-08-linear-oauth-runtime-proof-task-ledger.md
 governing_linear_parent: P4Y-1298
 governing_linear_child: P4Y-1302
-status: active
+status: accepted
 entries:
   dogfood_workspace:
     status: available
     proof: bash tests/dogfood-workspace-contract.sh
-    boundary: committed non-secret fixture/state only; generated/private proof outputs ignored; active state points to P4Y-1298 and the RC24..RC27 cycle
+    boundary: committed non-secret fixture/state only; generated/private proof outputs ignored; selected state points to P4Y-1298 and the accepted RC24..RC27 cycle
   semantic_negative_gates:
     status: available
     proof: bash tests/semantic-negative-fixtures.sh
