@@ -1,6 +1,8 @@
 # Accelerate Dogfood Workspace
 
-This directory is the minimal committed `.accelerate/` workspace used by the Accelerate repository to dogfood its own local workspace model.
+This directory is the committed `.accelerate/` dogfood workspace used by the Accelerate repository to dogfood its own local workspace model.
+
+It now materializes the repository-safe V2 summary-index and local workflow-adapter subset for the repository itself while still committing only non-secret control-plane state. This is not the full generated V2 template tree; generated runtime outputs remain ignored/private.
 
 ## Boundary
 
@@ -15,16 +17,18 @@ Generated or private proof outputs must not be committed here. In particular, ke
 
 The generated/private boundary is enforced by `.accelerate/.gitignore` and by `tests/dogfood-workspace-contract.sh`.
 
-## Current Dogfood Cycle
+## Last Accepted Dogfood Cycle
 
 - cycle: linear OAuth MCP + runtime proof gates, RC24..RC27
+- lifecycle: accepted by root final review; retained as the selected dogfood work item until a newer cycle supersedes it
 - governing Linear parent: `P4Y-1298`
 - governing Linear child for this handoff: `P4Y-1302`
 - governing plan: `planning/executive/2026-05-08-linear-oauth-runtime-proof-executive-plan.md`
 - task ledger: `planning/executive/2026-05-08-linear-oauth-runtime-proof-task-ledger.md`
 - execution model: root orchestrator with bounded subagent implementation/review packets
 - local status: `.accelerate/status/readiness-dashboard.yaml`
-- active work item: `.accelerate/workflow/active-work-item.yaml`
+- selected work item: `.accelerate/workflow/active-work-item.yaml`
+- local workflow adapter: `.accelerate/workflow/adapter.yaml`
 
 ## Previous Dogfood Cycle Pointer
 
@@ -34,6 +38,6 @@ The prior dogfood cycle was `recursive cycle 18..22` and used:
 - previous governing plan: `planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md`
 - previous task ledger: `planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md`
 
-This pointer exists only to keep historical contract tests and migration traceability readable; the active cycle above governs current work.
+This pointer exists only to keep historical contract tests and migration traceability readable; the accepted cycle above remains the selected dogfood reference until a newer cycle supersedes it.
 
 This workspace is not a provider cache and must not contain tokens, private provider payloads, screenshots, or customer data. It is a no secrets surface for committed governance state.

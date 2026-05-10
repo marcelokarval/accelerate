@@ -1,0 +1,11 @@
+schema_version: 1
+kind: accelerate-dogfood-workflow-adapter
+adapter: local
+adapter_status: active
+remote_workflow_backend: none-yet
+host_authenticated_workflow_surface: linear-oauth-mcp
+active_work_item_id: linear-oauth-runtime-proof-2026-05-08-rc24-rc27
+active_work_item_locator: .accelerate/workflow/active-work-item.yaml
+last_event_id: rc24-rc27-root-final-review-accepted
+last_updated: 2026-05-09
+boundary: local adapter state is committed as non-secret dogfood control-plane truth; live provider payloads and workflow event exports remain generated/private

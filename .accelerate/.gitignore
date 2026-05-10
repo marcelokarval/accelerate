@@ -15,6 +15,8 @@ proof/
 tmp/
 
 !README.md
+!state.yaml
 !*/README.md
+!workflow/adapter.yaml
 !workflow/active-work-item.yaml
 !status/readiness-dashboard.yaml

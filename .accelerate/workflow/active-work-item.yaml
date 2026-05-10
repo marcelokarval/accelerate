@@ -1,7 +1,7 @@
 schema_version: 1
 kind: accelerate-local-dogfood-active-work-item
 id: linear-oauth-runtime-proof-2026-05-08-rc24-rc27
-status: active
+status: accepted
 classification: orchestrated-non-trivial-recursive-self-improvement
 execution_model: root-orchestrator-with-bounded-subagents
 root_orchestrator: Claw
@@ -13,11 +13,11 @@ previous_cycle:
   id: recursive-cycle-2026-05-08-18-22
   plan: planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md
   ledger: planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md
-assigned_scope:
-  - RC24 Linear OAuth MCP lane proof and dashboard correction (Subagent A; implementation evidence present, pending independent review/root acceptance)
-  - RC25 Browser-proof server readiness, capture, and correction hardening (Subagent B; implementation evidence present, pending independent review/root acceptance)
-  - RC26 Persistent E2E, generated-host export, and agent-runtime boundary preservation (Subagent C; implementation evidence present, pending independent review/root acceptance)
-  - RC27 Governance integration, dogfood state, task ledger, and final next queue (Subagent D; active in this handoff)
+accepted_scope:
+  - RC24 Linear OAuth MCP lane proof and dashboard correction (Subagent A; accepted by root final review after independent review)
+  - RC25 Browser-proof server readiness, capture, and correction hardening (Subagent B; accepted by root final review after independent review)
+  - RC26 Persistent E2E, generated-host export, and agent-runtime boundary preservation (Subagent C; accepted by root final review after independent review)
+  - RC27 Governance integration, dogfood state, task ledger, and final next queue (Subagent D; accepted by root final review)
 review_model:
   root: root orchestrator and final forensic reviewer
   subagents: bounded implementation plus task-level self-review only
