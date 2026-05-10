@@ -4,6 +4,8 @@ This directory is the committed `.accelerate/` dogfood workspace used by the Acc
 
 It now materializes the repository-safe V2 summary-index and local workflow-adapter subset for the repository itself while still committing only non-secret control-plane state. This is not the full generated V2 template tree; generated runtime outputs remain ignored/private.
 
+Use `bash onboarding/local-workspace/validate-dogfood-v2-subset.sh .` to validate this committed dogfood V2 subset. Use `bash onboarding/local-workspace/validate-v2.sh <target-repo>` only for a full generated V2 workspace that includes the complete onboarding, planning, status, review, workflow, and agents tree.
+
 ## Boundary
 
 Committed files in this directory are non-secret control-plane fixture/state files only. They may point to public repository planning artifacts, local contract tests, and status dashboards.
@@ -15,7 +17,7 @@ Generated or private proof outputs must not be committed here. In particular, ke
 - `.accelerate/status/generated/`
 - `.accelerate/proof/` and `.accelerate/tmp/`
 
-The generated/private boundary is enforced by `.accelerate/.gitignore` and by `tests/dogfood-workspace-contract.sh`.
+The generated/private boundary is enforced by `.accelerate/.gitignore`, `onboarding/local-workspace/validate-dogfood-v2-subset.sh`, and `tests/dogfood-workspace-contract.sh`.
 
 ## Last Accepted Dogfood Cycle
 
