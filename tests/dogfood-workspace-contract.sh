@@ -25,24 +25,7 @@ for path in "${required_files[@]}"; do
   git ls-files --error-unmatch "${path}" >/dev/null 2>&1 || fail "required dogfood path is not tracked: ${path}"
 done
 
-for marker in \
-  "planning/executive/2026-05-08-linear-oauth-runtime-proof-executive-plan.md" \
-  "planning/executive/2026-05-08-linear-oauth-runtime-proof-task-ledger.md" \
-  "P4Y-1298" \
-  "P4Y-1302" \
-  "linear-oauth-runtime-proof-2026-05-08-rc24-rc27" \
-  "v2_contract_decision: materialize-summary-index-and-local-workflow-adapter" \
-  "adapter: local" \
-  "status: accepted" \
-  "Last Accepted Dogfood Cycle" \
-  "planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md" \
-  "planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md" \
-  "root orchestrator" \
-  "bounded subagent" \
-  "generated/private" \
-  "no secrets"; do
-  grep -R --line-number --fixed-strings "${marker}" .accelerate >/dev/null || fail "missing marker ${marker}"
-done
+bash onboarding/local-workspace/validate-dogfood-v2-subset.sh .
 
 secret_regex='(sk_live|sk_test|pk_live|xox[baprs]-|ghp_[A-Za-z0-9_]+|github_pat_|LINEAR_API_KEY|Authorization: Bearer|BEGIN (RSA|OPENSSH|EC|DSA) PRIVATE KEY)'
 tracked_dogfood_files=()
