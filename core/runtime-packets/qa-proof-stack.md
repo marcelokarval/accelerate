@@ -7,13 +7,14 @@ generic "tests/review later" posture.
 
 ## Rule
 
-Truth moves through five distinct layers:
+Truth moves through six distinct layers:
 
 1. implementation proof
-2. backend/frontend QA proof
-3. browser truth
-4. persistent regression proof
-5. forensic closure
+2. backend QA proof
+3. frontend QA proof
+4. browser truth
+5. persistent regression proof
+6. forensic closure
 
 Do not collapse these into a single vague `tested` claim.
 
@@ -21,25 +22,44 @@ When `Execution-To-Spec Loop Gate` is active, QA failures, browser proof
 failures, and visual proof failures must feed the correction loop. They are not
 terminal notes unless the loop is explicitly blocked or narrowed.
 
+QA must actively revalidate the test posture for the work that just landed. If
+the branch added, changed, or depended on tests, run the relevant test command
+again and report the result. If the project has coverage tooling, run the
+smallest meaningful coverage target and report scope, percentage/threshold, and
+uncovered critical paths. If no coverage tool exists, state that explicitly and
+run the closest deterministic unit/integration/contract suite instead.
+
 ## Lane Ownership
 
 - `Backend Tester`
   - service tests
+  - unit/integration/contract coverage for changed backend behavior
   - query-shape proof
   - migrations/runtime proof
   - ownership/auth proof
+  - backend logs captured and scanned for new errors, warnings, tracebacks,
+    rejected requests, migrations, worker failures, provider failures, and
+    unexpected retries
   - observability/performance packet when performance, logs, metrics, cache, or
     N+1 behavior is in scope
 - `Frontend Tester`
+  - frontend unit/component coverage for changed frontend behavior
   - type-check
+  - lint/build when available and relevant
   - component state proof
   - i18n proof through `core/review/i18n-closure-gate.md` when copy or locale
     behavior changes
   - route/view-model proof
+  - framework/design-system conformance for the active stack
 - `Browser-Proof Auditor`
   - interactive truth in Chrome DevTools
   - breadth and route-family audit
-  - runtime console and UX drift detection
+  - runtime console and network inspection at minimum
+  - screenshots for the active route/state
+  - ARIA/accessibility snapshot or equivalent accessibility probe when UI is in
+    scope
+  - UX/UI alignment and component-layout drift detection
+  - responsive viewport coverage when visual correctness is in scope
   - design implementation proof for contract-driven or premium UI mutation
   - optional agent-browser-style CLI operations after the flow is bounded
   - when exploratory browser QA and issue capture are the main need, `dogfood`
@@ -87,6 +107,82 @@ worth automating.
 When persistent proof is needed, use the local Playwright adapter fixtures in
 `adapters/runtime/playwright/` instead of an informal test note.
 
+## Backend QA Minimum Contract
+
+When backend behavior, persistence, auth, jobs, providers, API contracts, CLI
+commands, migrations, or server-side validation are touched, backend QA must
+include:
+
+- the relevant backend test command rerun after the change;
+- coverage command/result when coverage tooling exists;
+- API/contract/domain assertions for the changed behavior;
+- migration/schema proof when schema or persistence changes;
+- backend process, test, worker, or container logs captured after the run;
+- log scan result for new errors, tracebacks, warnings, failed jobs, provider
+  failures, retry storms, permission failures, or unexpected 4xx/5xx responses.
+
+Do not close backend work from green tests alone when logs show new runtime
+errors. Feed the log defect into the correction loop.
+
+## Frontend QA Minimum Contract
+
+When frontend behavior, UI, routes, forms, design-system usage, accessibility,
+copy, responsive behavior, or browser-visible state changes, frontend QA must
+include:
+
+- the relevant frontend unit/component test command rerun after the change;
+- coverage command/result when coverage tooling exists;
+- type-check, lint, or build when available and relevant;
+- Chrome DevTools console inspection;
+- Chrome DevTools network inspection for decisive requests;
+- screenshot evidence for changed states;
+- ARIA/accessibility snapshot or equivalent accessibility probe when UI is in
+  scope;
+- active comparison against the framework/design-system rules used by the
+  project;
+- mobile/tablet/desktop responsive proof when layout or visual behavior matters.
+
+Do not accept "looks good" without screenshots and console/network evidence for
+browser-visible changes.
+
+## Responsive 3x3 Viewport Matrix
+
+When visual layout, responsive behavior, premium UI, design-system application,
+or user-facing browser UX is in scope, use a 3x3 viewport map unless the user or
+repo defines a stricter matrix:
+
+| Family | Small | Medium | Large |
+| --- | --- | --- | --- |
+| Mobile | 320x568 | 390x844 | 430x932 |
+| Tablet | 768x1024 | 834x1194 | 1024x1366 |
+| Desktop | 1280x720 | 1440x900 | 1920x1080 |
+
+For each viewport, capture:
+
+- screenshot or visual snapshot;
+- console error state;
+- relevant network failures;
+- layout/overflow/overlap findings;
+- ARIA/accessibility findings when UI semantics matter;
+- component-system deviations.
+
+If the full 3x3 matrix is not justified, state why and name the reduced matrix.
+For product-critical or premium surfaces, missing 3x3 proof is a closure
+blocker unless explicitly waived.
+
+## Active Visual Correction
+
+Frontend/browser QA is not a passive report when the branch is supposed to
+deliver UI quality. Any in-scope visual, ARIA, layout, responsive, console, or
+network defect discovered during QA must enter the correction loop:
+
+```text
+detect -> fix -> rerun affected viewport/probe -> compare corrected evidence
+```
+
+Do not close on pre-fix screenshots. Closure evidence must show the corrected
+state or explicitly classify the defect as waived/deferred/blocked.
+
 ## Browser-Proof Intensity Labels
 
 Every browser-proof packet should classify its breadth as one of:
@@ -124,6 +220,20 @@ Name the proof failure explicitly when it appears.
     `tested successfully`.
 - `packetless proof`
   - evidence exists, but the lane did not leave an explicit `QA / Proof Packet`.
+- `coverage-claim-without-run`
+  - coverage was claimed or implied without rerunning the relevant coverage
+    target or declaring no coverage tooling exists.
+- `backend-log-blind-closure`
+  - backend QA closed without capturing/scanning server, worker, test, or
+    container logs when backend runtime behavior was in scope.
+- `devtools-blind-closure`
+  - browser-visible work closed without console and network inspection.
+- `responsive-matrix-gap`
+  - visual/responsive UI work closed without the required 3x3 matrix or an
+    explicit reduced-matrix rationale.
+- `aria-blind-ui-closure`
+  - UI work with semantic/accessibility impact closed without ARIA/accessibility
+    proof or an explicit not-applicable rationale.
 - `metricless performance closure`
   - performance or observability was claimed without baseline/post-change
     evidence or an explicit no-metric rationale.
@@ -143,8 +253,17 @@ Closure must expose proof-lane status, not just accumulated confidence.
 Before closure, make visible at least:
 
 - `Backend QA=<present|missing|blocked>`
+- `Backend Coverage=<present|missing|not-configured|blocked>`
+- `Backend Logs=<present|missing|blocked>`
 - `Frontend QA=<present|missing|blocked>`
+- `Frontend Coverage=<present|missing|not-configured|blocked>`
+- `Frontend Build/Type/Lint=<present|missing|not-applicable|blocked>`
 - `Browser-Proof=<present|missing|blocked>`
+- `DevTools Console=<present|missing|blocked>`
+- `DevTools Network=<present|missing|blocked>`
+- `Screenshots=<present|missing|blocked>`
+- `ARIA/A11y=<present|missing|not-applicable|blocked>`
+- `Responsive 3x3=<present|reduced|missing|not-applicable|blocked>`
 - `Persistent E2E=<present|missing|blocked|out of order>`
 - `UX/UI Fullstack Surface=<present|missing|blocked|not-applicable>` when the
   slice crosses backend truth, frontend state, and runtime UX/UI behavior

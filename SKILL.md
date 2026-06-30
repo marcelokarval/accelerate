@@ -246,6 +246,21 @@ At minimum, runtime packets should expose:
 
 Do not replace packeted runtime state with long opaque progress prose.
 
+## QA Proof Contract
+
+When backend or frontend behavior is in scope, open
+`core/runtime-packets/qa-proof-stack.md` and do not close from a generic
+`tested` claim. Backend QA must rerun relevant tests, run coverage when
+configured, and capture/scan backend logs. Frontend/browser QA must rerun
+relevant tests, run coverage when configured, inspect Chrome DevTools console
+and network, capture screenshots, check ARIA/accessibility when UI semantics are
+in scope, compare against the active framework/design-system rules, and run the
+3x3 mobile/tablet/desktop viewport matrix for visual or responsive UI work.
+
+QA findings are active correction inputs. In-scope console, network, visual,
+ARIA, responsive, backend-log, or coverage defects must be fixed and reproofed,
+or explicitly classified as waived/deferred/blocked before closure.
+
 ## Mutation Rule
 
 If the run mutates:

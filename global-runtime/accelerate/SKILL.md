@@ -170,6 +170,14 @@ The proof order is:
 4. persistent regression proof
 5. forensic closure
 
+Backend/frontend QA proof is governed by `references/qa-proof-stack.md`. When
+backend or frontend behavior is in scope, do not close from a generic `tested`
+claim. Revalidate relevant tests and coverage when configured; backend QA must
+capture and scan logs; frontend/browser QA must inspect DevTools console and
+network, capture screenshots, check ARIA/accessibility when UI semantics are in
+scope, compare against the active framework/design-system rules, and run the
+3x3 mobile/tablet/desktop viewport matrix for visual or responsive UI work.
+
 Browser truth comes before Playwright when the flow is not yet stabilized.
 
 When the active repository has `.accelerate/` local status and the run is

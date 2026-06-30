@@ -52,6 +52,7 @@ When full prompt hardening is active, the run should visibly expose:
 - `explicit non-goals`
 - `risks or ambiguity resolved`
 - `proof required`
+- `QA required`
 
 When transformation traceability matters, also expose:
 
@@ -60,6 +61,12 @@ When transformation traceability matters, also expose:
 - what changed materially
 - bounded scope now
 - next branch or persona route
+
+When backend or frontend behavior is in scope, `QA required` must name the
+required backend/frontend proof lanes: test rerun, coverage when configured,
+backend logs, DevTools console/network, screenshots, ARIA/accessibility when
+applicable, framework/design-system comparison, responsive 3x3 matrix when
+visual layout matters, and active correction/reproof for QA defects.
 
 For micro-hardening, do not emit a heavy artifact. State the compact outcome
 contract in the Branch Entry Packet or visible runtime preamble.
