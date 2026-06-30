@@ -189,6 +189,16 @@ Apply these gates when their risk exists in the slice. They are stack-agnostic
 and may be proven through unit, integration, contract, browser, log, metric, or
 manual runtime evidence as appropriate.
 
+- `Test Data`
+  - backend fixtures, seeds, rollback, cleanup, user, role, tenant, and
+    permission state are deterministic;
+  - frontend initial state, viewport, storage, cookies, session, user, and role
+    are explicit and resettable.
+- `Contracts`
+  - backend OpenAPI, JSON schema, event schema, command contract, or provider
+    contract is asserted where relevant;
+  - frontend props, API payload shape, event payload, and view-model contract
+    are asserted where relevant.
 - `Negative Path`
   - backend covers controlled 400/401/403/404/409/422/429 and expected 5xx
     behavior where relevant;
@@ -209,11 +219,48 @@ manual runtime evidence as appropriate.
     pressure is measured or explicitly marked not applicable;
   - frontend LCP/CLS/INP, long tasks, hydration, bundle growth, or equivalent
     runtime cost is checked when relevant.
+- `Observability`
+  - backend structured logs, trace IDs, metrics, alerts, errors, and warnings
+    are captured or explicitly marked not applicable;
+  - frontend captured errors, telemetry, correlation IDs, and decisive runtime
+    signals are checked where relevant.
+- `Compatibility`
+  - backend runtime versions, database versions, queue versions, provider API
+    versions, and deploy/runtime compatibility are checked where relevant;
+  - frontend browser support, dark/light theme, locale, zoom, font size, and
+    device capability compatibility are checked where relevant.
+- `Deep Accessibility`
+  - backend/API error contracts expose accessible, localizable, actionable
+    errors where relevant;
+  - frontend keyboard navigation, focus order, focus trap, labels, names,
+    roles, contrast, reduced motion, and screen-reader semantics are checked
+    where relevant.
+- `Internationalization`
+  - backend timezone, currency, number/date formatting, encoding, collation, and
+    locale-sensitive validation are checked where relevant;
+  - frontend pt/en/es or active locale coverage, text overflow, truncation,
+    pluralization, RTL when applicable, and localized formatting are checked
+    where relevant.
 - `External Resilience`
   - provider down, timeout, retry, backoff, circuit-breaker, and fallback
     behavior is covered when external systems are touched;
   - frontend slow/offline network, request cancellation, and retry UI are
     checked when relevant.
+- `Migration/Rollback`
+  - backend migrations prove up/down, idempotence, data compatibility,
+    backfill/forward-fill safety, and rollback posture where relevant;
+  - frontend compatibility with previous cache, storage, props, route state, and
+    deployed client/server skew is checked where relevant.
+- `Dependency Audit`
+  - backend CVE, license, lockfile, runtime pin, provider SDK, and transitive
+    dependency risk is checked where relevant;
+  - frontend package audit, bundle dependency, external asset, CDN, and browser
+    dependency risk is checked where relevant.
+- `Snapshot/Golden Master`
+  - backend canonical response, event, command, migration, or provider payload
+    snapshots are asserted where regression risk exists;
+  - frontend visual snapshot, DOM snapshot, screenshot diff, accessibility tree,
+    or component-state golden evidence is collected where relevant.
 - `Clean State/Cleanup`
   - fixtures, seeds, temporary rows/files, jobs, locks, queues, cookies, local
     storage, service workers, and test artifacts are deterministic and cleaned
@@ -263,6 +310,12 @@ Name the proof failure explicitly when it appears.
 - `coverage-claim-without-run`
   - coverage was claimed or implied without rerunning the relevant coverage
     target or declaring no coverage tooling exists.
+- `test-data-drift`
+  - QA used implicit, polluted, non-deterministic, or unresettable fixtures,
+    users, roles, cookies, storage, or viewport state.
+- `contract-blind-closure`
+  - API, schema, event, props, payload, command, or provider contracts were in
+    scope but not asserted.
 - `happy-path-only-qa`
   - QA exercised only success paths while in-scope negative/error/empty/loading
     or recovery paths were unproven.
@@ -278,6 +331,27 @@ Name the proof failure explicitly when it appears.
 - `resilience-blind-closure`
   - external provider, network, timeout, retry, fallback, or cancellation
     behavior was in scope but not explicitly proved.
+- `compatibility-blind-closure`
+  - runtime, database, queue, provider, browser, theme, locale, zoom, font, or
+    device compatibility was in scope but not explicitly proved.
+- `shallow-a11y-closure`
+  - UI/API accessibility was treated as a shallow ARIA check while keyboard,
+    focus, labels, contrast, error contract, or screen-reader risks were in
+    scope.
+- `i18n-blind-closure`
+  - timezone, currency, formatting, encoding, locale, text overflow,
+    pluralization, or translation behavior was in scope but not explicitly
+    proved.
+- `migration-rollback-blind-closure`
+  - migration, rollback, backfill, data compatibility, or old-client/new-server
+    compatibility was in scope but not explicitly proved.
+- `dependency-audit-blind-closure`
+  - CVE, license, lockfile, SDK, package, bundle dependency, external asset, or
+    CDN risk was in scope but not explicitly checked.
+- `golden-master-blind-closure`
+  - canonical response, event, DOM, visual, screenshot, accessibility tree, or
+    component-state regression risk was in scope but no snapshot/golden evidence
+    was collected or ruled out.
 - `dirty-state-qa`
   - tests or runtime proof left uncontrolled rows, files, jobs, locks, browser
     storage, service workers, or other state that can pollute later runs.
@@ -329,11 +403,20 @@ Before closure, make visible at least:
   design-system or premium UI mutation was active
 - `Observability/Performance=<present|missing|blocked|not-applicable>` when
   metrics, logs, query shape, cache, or runtime performance were active
+- `Test Data=<present|missing|not-applicable|blocked>`
+- `Contracts=<present|missing|not-applicable|blocked>`
 - `Negative Path=<present|missing|not-applicable|blocked>`
 - `Security/Auth/Ownership=<present|missing|not-applicable|blocked>`
 - `Concurrency/Idempotency=<present|missing|not-applicable|blocked>`
 - `Performance Minimum=<present|missing|not-applicable|blocked>`
+- `Observability=<present|missing|not-applicable|blocked>`
+- `Compatibility=<present|missing|not-applicable|blocked>`
+- `Deep Accessibility=<present|missing|not-applicable|blocked>`
+- `Internationalization=<present|missing|not-applicable|blocked>`
 - `External Resilience=<present|missing|not-applicable|blocked>`
+- `Migration/Rollback=<present|missing|not-applicable|blocked>`
+- `Dependency Audit=<present|missing|not-applicable|blocked>`
+- `Snapshot/Golden Master=<present|missing|not-applicable|blocked>`
 - `Clean State/Cleanup=<present|missing|blocked>`
 - `Observability Correlation=<present|missing|not-applicable|blocked>`
 - `blocking lane=<lane or none>`

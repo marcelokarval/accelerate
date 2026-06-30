@@ -128,6 +128,10 @@ Do not close on pre-fix screenshots.
 
 When risk exists, proof must also name:
 
+- `Test Data`: deterministic fixtures, clean seeds, rollback/cleanup,
+  user/role state, viewport, storage, cookies, and initial state.
+- `Contracts`: OpenAPI, JSON schema, event schema, provider/command contract,
+  props/API payload shape, and view-model contract.
 - `Negative Path`: expected 4xx/5xx, validation, empty/loading/error/recovery
   states.
 - `Security/Auth/Ownership`: authz, ownership, CSRF/session, rate-limit/replay,
@@ -136,8 +140,23 @@ When risk exists, proof must also name:
   locks, idempotency keys, and race-sensitive writes.
 - `Performance Minimum`: latency, query count, N+1/cache/memory, LCP/CLS/INP,
   long tasks, hydration, or bundle cost.
+- `Observability`: structured logs, trace ID, metrics, alerts, captured errors,
+  correlation ID, and telemetry.
+- `Compatibility`: runtime, database, queue, provider, browser, theme, locale,
+  zoom, font size, and device compatibility.
+- `Deep Accessibility`: accessible error contracts, keyboard navigation, focus
+  trap/order, labels, roles, contrast, reduced motion, and screen-reader
+  semantics.
+- `Internationalization`: timezone, currency, formatting, encoding, locale
+  coverage, text overflow, pluralization, and localized formatting.
 - `External Resilience`: provider down/timeout/retry/backoff/fallback,
   offline/slow network, cancellation, and retry UI.
+- `Migration/Rollback`: migration up/down, idempotence, data compatibility,
+  backfill/rollback posture, and compatibility with old frontend cache/state.
+- `Dependency Audit`: CVE, license, lockfile, runtime pins, provider SDKs,
+  package audit, bundle dependencies, and external assets.
+- `Snapshot/Golden Master`: canonical backend responses/events and visual, DOM,
+  screenshot, accessibility-tree, or component-state snapshots.
 - `Clean State/Cleanup`: deterministic fixtures and cleanup for rows, files,
   jobs, locks, queues, cookies, storage, service workers, and artifacts.
 - `Observability Correlation`: correlation/trace/session/request ID from
@@ -185,7 +204,9 @@ vague sentence.
 Closure must expose at least: `Backend QA`, `Backend Coverage`, `Backend Logs`,
 `Frontend QA`, `Frontend Coverage`, `Frontend Build/Type/Lint`,
 `Browser-Proof`, `DevTools Console`, `DevTools Network`, `Screenshots`,
-`ARIA/A11y`, `Responsive 3x3`, `Negative Path`, `Security/Auth/Ownership`,
-`Concurrency/Idempotency`, `Performance Minimum`, `External Resilience`,
-`Clean State/Cleanup`, `Observability Correlation`, `Persistent E2E`, and
-blocking lane status.
+`ARIA/A11y`, `Responsive 3x3`, `Test Data`, `Contracts`, `Negative Path`,
+`Security/Auth/Ownership`, `Concurrency/Idempotency`, `Performance Minimum`,
+`Observability`, `Compatibility`, `Deep Accessibility`,
+`Internationalization`, `External Resilience`, `Migration/Rollback`,
+`Dependency Audit`, `Snapshot/Golden Master`, `Clean State/Cleanup`,
+`Observability Correlation`, `Persistent E2E`, and blocking lane status.

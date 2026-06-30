@@ -23,17 +23,34 @@ terms=(
   "Tablet"
   "Desktop"
   "detect -> fix -> rerun"
+  "Test Data"
+  "Contracts"
   "Negative Path"
   "Security/Auth/Ownership"
   "Concurrency/Idempotency"
   "Performance Minimum"
+  "Observability"
+  "Compatibility"
+  "Deep Accessibility"
+  "Internationalization"
   "External Resilience"
+  "Migration/Rollback"
+  "Dependency Audit"
+  "Snapshot/Golden Master"
   "Clean State/Cleanup"
   "Observability Correlation"
+  "test-data-drift"
+  "contract-blind-closure"
   "happy-path-only-qa"
   "auth-ownership-blind-closure"
   "idempotency-race-blind-closure"
   "resilience-blind-closure"
+  "compatibility-blind-closure"
+  "shallow-a11y-closure"
+  "i18n-blind-closure"
+  "migration-rollback-blind-closure"
+  "dependency-audit-blind-closure"
+  "golden-master-blind-closure"
   "dirty-state-qa"
   "correlation-blind-closure"
 )
@@ -67,11 +84,20 @@ if ! grep -Fq 'Responsive 3x3=<present|reduced|missing|not-applicable|blocked>' 
 fi
 
 for state in \
+  'Test Data=<present|missing|not-applicable|blocked>' \
+  'Contracts=<present|missing|not-applicable|blocked>' \
   'Negative Path=<present|missing|not-applicable|blocked>' \
   'Security/Auth/Ownership=<present|missing|not-applicable|blocked>' \
   'Concurrency/Idempotency=<present|missing|not-applicable|blocked>' \
   'Performance Minimum=<present|missing|not-applicable|blocked>' \
+  'Observability=<present|missing|not-applicable|blocked>' \
+  'Compatibility=<present|missing|not-applicable|blocked>' \
+  'Deep Accessibility=<present|missing|not-applicable|blocked>' \
+  'Internationalization=<present|missing|not-applicable|blocked>' \
   'External Resilience=<present|missing|not-applicable|blocked>' \
+  'Migration/Rollback=<present|missing|not-applicable|blocked>' \
+  'Dependency Audit=<present|missing|not-applicable|blocked>' \
+  'Snapshot/Golden Master=<present|missing|not-applicable|blocked>' \
   'Clean State/Cleanup=<present|missing|blocked>' \
   'Observability Correlation=<present|missing|not-applicable|blocked>'
 do

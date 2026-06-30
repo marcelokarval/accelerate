@@ -179,7 +179,10 @@ scope, compare against the active framework/design-system rules, and run the
 3x3 mobile/tablet/desktop viewport matrix for visual or responsive UI work.
 When risk exists, QA must also prove or explicitly rule out Negative Path,
 Security/Auth/Ownership, Concurrency/Idempotency, Performance Minimum, External
-Resilience, Clean State/Cleanup, and Observability Correlation.
+Resilience, Clean State/Cleanup, and Observability Correlation. For full QA
+coverage, also cover Test Data, Contracts, Observability, Compatibility, Deep
+Accessibility, Internationalization, Migration/Rollback, Dependency Audit, and
+Snapshot/Golden Master when applicable.
 
 Browser truth comes before Playwright when the flow is not yet stabilized.
 

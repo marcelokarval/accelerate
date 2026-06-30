@@ -66,10 +66,12 @@ When backend or frontend behavior is in scope, `QA required` must name the
 required backend/frontend proof lanes: test rerun, coverage when configured,
 backend logs, DevTools console/network, screenshots, ARIA/accessibility when
 applicable, framework/design-system comparison, responsive 3x3 matrix when
-visual layout matters, negative path, security/auth/ownership,
-concurrency/idempotency, performance minimum, external resilience, clean
-state/cleanup, observability correlation, and active correction/reproof for QA
-defects.
+visual layout matters, test data, contracts, negative path,
+security/auth/ownership, concurrency/idempotency, performance minimum,
+observability, compatibility, deep accessibility, internationalization,
+external resilience, migration/rollback, dependency audit, snapshot/golden
+master, clean state/cleanup, observability correlation, and active
+correction/reproof for QA defects.
 
 For micro-hardening, do not emit a heavy artifact. State the compact outcome
 contract in the Branch Entry Packet or visible runtime preamble.
