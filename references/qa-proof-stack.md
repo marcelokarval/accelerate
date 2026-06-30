@@ -124,6 +124,26 @@ detect -> fix -> rerun affected viewport/probe -> compare corrected evidence
 
 Do not close on pre-fix screenshots.
 
+## Additional Agnostic QA Gates
+
+When risk exists, proof must also name:
+
+- `Negative Path`: expected 4xx/5xx, validation, empty/loading/error/recovery
+  states.
+- `Security/Auth/Ownership`: authz, ownership, CSRF/session, rate-limit/replay,
+  token handling, and PII exposure.
+- `Concurrency/Idempotency`: double-submit, retry, duplicate event/job/message,
+  locks, idempotency keys, and race-sensitive writes.
+- `Performance Minimum`: latency, query count, N+1/cache/memory, LCP/CLS/INP,
+  long tasks, hydration, or bundle cost.
+- `External Resilience`: provider down/timeout/retry/backoff/fallback,
+  offline/slow network, cancellation, and retry UI.
+- `Clean State/Cleanup`: deterministic fixtures and cleanup for rows, files,
+  jobs, locks, queues, cookies, storage, service workers, and artifacts.
+- `Observability Correlation`: correlation/trace/session/request ID from
+  frontend action through backend logs, persistence, jobs, and provider calls
+  when available.
+
 ## Browser-Proof Intensity Labels
 
 Every browser-proof packet should classify its breadth as one of:
@@ -165,4 +185,7 @@ vague sentence.
 Closure must expose at least: `Backend QA`, `Backend Coverage`, `Backend Logs`,
 `Frontend QA`, `Frontend Coverage`, `Frontend Build/Type/Lint`,
 `Browser-Proof`, `DevTools Console`, `DevTools Network`, `Screenshots`,
-`ARIA/A11y`, `Responsive 3x3`, `Persistent E2E`, and blocking lane status.
+`ARIA/A11y`, `Responsive 3x3`, `Negative Path`, `Security/Auth/Ownership`,
+`Concurrency/Idempotency`, `Performance Minimum`, `External Resilience`,
+`Clean State/Cleanup`, `Observability Correlation`, `Persistent E2E`, and
+blocking lane status.

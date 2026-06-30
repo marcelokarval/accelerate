@@ -183,6 +183,46 @@ detect -> fix -> rerun affected viewport/probe -> compare corrected evidence
 Do not close on pre-fix screenshots. Closure evidence must show the corrected
 state or explicitly classify the defect as waived/deferred/blocked.
 
+## Additional Agnostic QA Gates
+
+Apply these gates when their risk exists in the slice. They are stack-agnostic
+and may be proven through unit, integration, contract, browser, log, metric, or
+manual runtime evidence as appropriate.
+
+- `Negative Path`
+  - backend covers controlled 400/401/403/404/409/422/429 and expected 5xx
+    behavior where relevant;
+  - frontend covers validation errors, empty/loading/error/success/disabled
+    states, and recovery paths.
+- `Security/Auth/Ownership`
+  - server-side authorization, ownership, CSRF/session, rate-limit/replay, and
+    PII exposure boundaries are checked when relevant;
+  - frontend protected-route, token handling, and sensitive UI exposure are
+    checked when relevant.
+- `Concurrency/Idempotency`
+  - double submits, retries, duplicate webhooks/jobs/messages, idempotency keys,
+    locks, and race-sensitive writes are covered when relevant;
+  - frontend rapid-click, optimistic-update, cancellation, and retry states are
+    checked when relevant.
+- `Performance Minimum`
+  - backend latency, query count, N+1, cache behavior, memory, or worker
+    pressure is measured or explicitly marked not applicable;
+  - frontend LCP/CLS/INP, long tasks, hydration, bundle growth, or equivalent
+    runtime cost is checked when relevant.
+- `External Resilience`
+  - provider down, timeout, retry, backoff, circuit-breaker, and fallback
+    behavior is covered when external systems are touched;
+  - frontend slow/offline network, request cancellation, and retry UI are
+    checked when relevant.
+- `Clean State/Cleanup`
+  - fixtures, seeds, temporary rows/files, jobs, locks, queues, cookies, local
+    storage, service workers, and test artifacts are deterministic and cleaned
+    or explicitly retained with rationale.
+- `Observability Correlation`
+  - correlation/trace/session/request IDs connect frontend action, backend log,
+    persistence, job, and provider call where available;
+  - the QA packet records the correlation key or states why it is unavailable.
+
 ## Browser-Proof Intensity Labels
 
 Every browser-proof packet should classify its breadth as one of:
@@ -223,9 +263,27 @@ Name the proof failure explicitly when it appears.
 - `coverage-claim-without-run`
   - coverage was claimed or implied without rerunning the relevant coverage
     target or declaring no coverage tooling exists.
+- `happy-path-only-qa`
+  - QA exercised only success paths while in-scope negative/error/empty/loading
+    or recovery paths were unproven.
 - `backend-log-blind-closure`
   - backend QA closed without capturing/scanning server, worker, test, or
     container logs when backend runtime behavior was in scope.
+- `auth-ownership-blind-closure`
+  - auth, authorization, ownership, session, CSRF, token, or PII boundaries were
+    in scope but not explicitly proved or ruled not applicable.
+- `idempotency-race-blind-closure`
+  - duplicate submits, retries, concurrent writes, duplicate events, locks, or
+    idempotency behavior were in scope but not explicitly proved.
+- `resilience-blind-closure`
+  - external provider, network, timeout, retry, fallback, or cancellation
+    behavior was in scope but not explicitly proved.
+- `dirty-state-qa`
+  - tests or runtime proof left uncontrolled rows, files, jobs, locks, browser
+    storage, service workers, or other state that can pollute later runs.
+- `correlation-blind-closure`
+  - a traceable runtime flow closed without recording correlation identifiers
+    or explaining why they were unavailable.
 - `devtools-blind-closure`
   - browser-visible work closed without console and network inspection.
 - `responsive-matrix-gap`
@@ -271,6 +329,13 @@ Before closure, make visible at least:
   design-system or premium UI mutation was active
 - `Observability/Performance=<present|missing|blocked|not-applicable>` when
   metrics, logs, query shape, cache, or runtime performance were active
+- `Negative Path=<present|missing|not-applicable|blocked>`
+- `Security/Auth/Ownership=<present|missing|not-applicable|blocked>`
+- `Concurrency/Idempotency=<present|missing|not-applicable|blocked>`
+- `Performance Minimum=<present|missing|not-applicable|blocked>`
+- `External Resilience=<present|missing|not-applicable|blocked>`
+- `Clean State/Cleanup=<present|missing|blocked>`
+- `Observability Correlation=<present|missing|not-applicable|blocked>`
 - `blocking lane=<lane or none>`
 
 If `Browser-Proof` is missing while `Persistent E2E` is already present for a

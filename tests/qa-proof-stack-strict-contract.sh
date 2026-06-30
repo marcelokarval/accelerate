@@ -23,6 +23,19 @@ terms=(
   "Tablet"
   "Desktop"
   "detect -> fix -> rerun"
+  "Negative Path"
+  "Security/Auth/Ownership"
+  "Concurrency/Idempotency"
+  "Performance Minimum"
+  "External Resilience"
+  "Clean State/Cleanup"
+  "Observability Correlation"
+  "happy-path-only-qa"
+  "auth-ownership-blind-closure"
+  "idempotency-race-blind-closure"
+  "resilience-blind-closure"
+  "dirty-state-qa"
+  "correlation-blind-closure"
 )
 
 for file in "${files[@]}"; do
@@ -52,5 +65,20 @@ if ! grep -Fq 'Responsive 3x3=<present|reduced|missing|not-applicable|blocked>' 
   printf 'missing responsive 3x3 closure state\n' >&2
   exit 1
 fi
+
+for state in \
+  'Negative Path=<present|missing|not-applicable|blocked>' \
+  'Security/Auth/Ownership=<present|missing|not-applicable|blocked>' \
+  'Concurrency/Idempotency=<present|missing|not-applicable|blocked>' \
+  'Performance Minimum=<present|missing|not-applicable|blocked>' \
+  'External Resilience=<present|missing|not-applicable|blocked>' \
+  'Clean State/Cleanup=<present|missing|blocked>' \
+  'Observability Correlation=<present|missing|not-applicable|blocked>'
+do
+  if ! grep -Fq "$state" core/runtime-packets/qa-proof-stack.md; then
+    printf 'missing QA closure state: %s\n' "$state" >&2
+    exit 1
+  fi
+done
 
 printf 'qa proof stack strict contract passed\n'

@@ -256,6 +256,9 @@ relevant tests, run coverage when configured, inspect Chrome DevTools console
 and network, capture screenshots, check ARIA/accessibility when UI semantics are
 in scope, compare against the active framework/design-system rules, and run the
 3x3 mobile/tablet/desktop viewport matrix for visual or responsive UI work.
+When risk exists, QA must also prove or explicitly rule out Negative Path,
+Security/Auth/Ownership, Concurrency/Idempotency, Performance Minimum, External
+Resilience, Clean State/Cleanup, and Observability Correlation.
 
 QA findings are active correction inputs. In-scope console, network, visual,
 ARIA, responsive, backend-log, or coverage defects must be fixed and reproofed,
