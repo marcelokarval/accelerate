@@ -79,6 +79,11 @@ through `capability-matrix.md#role-family-compatibility-map` before binding a
 physical agent. The selected physical family must still honor the base agent
 contract, write scope, return contract, and cleanup expectation.
 
+When that runtime is Codex collaboration, also resolve the bounded profile in
+`../../adapters/runtime/codex-collaboration/role-policy.json`. The model and
+reasoning effort must be passed explicitly to the binding. Its tools, skills,
+and MCPs are assignment contracts rather than host-enforced allowlists.
+
 ## Composition Rules
 
 Prefer two-family compositions only when they materially improve honesty:

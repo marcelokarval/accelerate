@@ -272,6 +272,8 @@ Use these bundled references first:
 - `references/specification-layer.md`
 - `references/subagent-model.md`
 - `references/persona-mandatory-skills-matrix.md`
+- `references/codex-collaboration-routing.md`
+- `references/codex-collaboration-role-policy.json`
 
 When the active repository has stronger local doctrine, use this runtime root
 to classify and then defer to that repo-local authority.

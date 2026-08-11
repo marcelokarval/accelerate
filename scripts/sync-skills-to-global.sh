@@ -34,6 +34,11 @@ if [[ -d "$root_runtime_dir" ]]; then
   cp "$root_runtime_dir/README.md" "$target_dir/README.md"
   cp -r "$root_dir/references/." "$target_dir/references/"
 
+  codex_collaboration_policy="$root_dir/adapters/runtime/codex-collaboration/role-policy.json"
+  if [[ -f "$codex_collaboration_policy" ]]; then
+    cp "$codex_collaboration_policy" "$target_dir/references/codex-collaboration-role-policy.json"
+  fi
+
   if [[ -f "$root_dir/agents/openai.yaml" ]]; then
     cp "$root_dir/agents/openai.yaml" "$target_dir/agents/openai.yaml"
   fi

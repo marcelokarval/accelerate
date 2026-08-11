@@ -1,0 +1,32 @@
+name: codex-collaboration
+type: bounded-subagent-runtime
+status: experimental
+authority_boundary: subordinate-to-accelerate
+tool_enforcement: assignment-contract-only
+allowed_tools:
+  - assignment-contract-only
+suppressed_capabilities:
+  - host-enforced-tool-isolation
+  - host-enforced-mcp-isolation
+  - root-closure
+  - issue-topology
+  - role-family-selection
+  - review-of-review
+supported_binding:
+  - collaboration.spawn_agent
+supported_lifecycle:
+  - spawn
+  - followup
+  - wait
+  - interrupt
+  - return
+  - close-by-completion
+policy_source: role-policy.json
+validation_command: python3 scripts/validate-codex-collaboration-policy.py
+proof_artifacts:
+  - codex-collaboration-assignment-packet
+  - subagent-return-packet
+fallback:
+  - scoped-root-only
+  - virtual-subagent-packets
+privacy_notes: assignment text, returned evidence, and host transcripts may contain sensitive local proof
