@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://karval.local/codex/accelerate/reasoning-decision-receipt.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "receipt_version", "receipt_kind", "runtime", "denominator", "dependencies",
+    "side_effect_boundaries", "execution_mode", "mode_basis", "prompt_hardening",
+    "selected_effort", "basis_code", "observable_status", "trigger", "evidence",
+    "lower_effort_insufficiency", "budget", "stop_condition"
+  ],
+  "properties": {
+    "receipt_version": {"const": 1},
+    "receipt_kind": {"enum": ["pre-create", "final-decision"]},
+    "runtime": {"const": "codex"},
+    "denominator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["count", "source"],
+      "properties": {
+        "count": {"type": "integer", "minimum": 1},
+        "source": {"$ref": "#/$defs/typedReference"}
+      }
+    },
+    "dependencies": {"type": "array", "items": {"$ref": "#/$defs/typedReference"}},
+    "side_effect_boundaries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowed", "forbidden"],
+      "properties": {
+        "allowed": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "forbidden": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true}
+      }
+    },
+    "execution_mode": {"enum": ["single", "parallel", "wave", "incident"]},
+    "mode_basis": {"enum": ["single-bounded", "independent-lanes", "ordered-waves", "active-incident"]},
+    "prompt_hardening": {"enum": ["not-needed", "micro", "full"]},
+    "selected_effort": {"enum": ["no-model", "low", "medium", "high"]},
+    "basis_code": {"enum": ["deterministic-mechanical", "bounded-clear", "authority-sufficient", "governed-multisurface-clear", "trigger-authority-conflict", "trigger-observable-insufficient", "trigger-irreversible-risk", "direct-readback-available", "trigger-architecture-deadlock", "user-request-only-prohibited", "priority-label-only-prohibited", "exceptional-scope-missing"]},
+    "observable_status": {"enum": ["not-applicable", "sufficient", "insufficient", "conflicting"]},
+    "trigger": {"type": ["string", "null"]},
+    "evidence": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/typedReference"}},
+    "lower_effort_insufficiency": {"enum": ["not-applicable", "semantic-judgment-required", "multi-surface-governance", "objective-trigger-requires-deeper-analysis"]},
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_calls", "max_tool_calls", "max_correction_loops"],
+      "properties": {
+        "model_calls": {"type": "integer", "minimum": 0},
+        "max_tool_calls": {"type": "integer", "minimum": 0},
+        "max_correction_loops": {"type": "integer", "minimum": 0}
+      }
+    },
+    "stop_condition": {"enum": ["acceptance-proved", "budget-exhausted", "scope-authority-missing", "trigger-resolved", "blocked-with-evidence"]}
+  },
+  "allOf": [
+    {"if": {"properties": {"selected_effort": {"const": "high"}}}, "then": {"properties": {"trigger": {"enum": ["authority-conflict", "observable-insufficient", "irreversible-risk", "architecture-deadlock", "forensic-evidence-conflict"]}, "lower_effort_insufficiency": {"not": {"const": "not-applicable"}}, "budget": {"properties": {"model_calls": {"minimum": 1}}}}}, "else": {"properties": {"trigger": {"type": "null"}}}},
+    {"if": {"properties": {"execution_mode": {"const": "single"}}}, "then": {"properties": {"mode_basis": {"const": "single-bounded"}}}},
+    {"if": {"properties": {"execution_mode": {"const": "parallel"}}}, "then": {"properties": {"mode_basis": {"const": "independent-lanes"}}}},
+    {"if": {"properties": {"execution_mode": {"const": "wave"}}}, "then": {"properties": {"mode_basis": {"const": "ordered-waves"}}}},
+    {"if": {"properties": {"execution_mode": {"const": "incident"}}}, "then": {"properties": {"mode_basis": {"const": "active-incident"}}}}
+  ],
+  "$defs": {
+    "typedReference": {"type": "string", "pattern": "^(artifact|cmd|test|runtime|doc|receipt|plane):.+$"}
+  }
+}

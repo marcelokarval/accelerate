@@ -143,6 +143,22 @@ scheduled-runtime, rollout, and migration-stewardship risks.
 
 ## Spawn Criteria
 
+## Execution Route Budget
+
+Choose the route before assigning a role:
+
+- Direct Fast Path: `0` physical or virtual subagents. The root executes known,
+  low-risk, focal work directly; a sidecar always escalates the route to Scoped.
+- Scoped: at most `1` sidecar for bounded discovery, current research, or
+  independent proof whose value exceeds its handoff cost. Keep execution single.
+- Orchestrated: use `2-3` subagents only when there are two or more independent
+  lanes, write scopes do not overlap, and expected latency or uncertainty
+  reduction exceeds integration cost.
+
+Routes do not follow file count, UI presence, or agent availability. A task may
+touch multiple files and remain direct when the target, risk, and proof stay
+bounded.
+
 For non-trivial work, prefer bounded delegation when it creates honest value.
 When no physical subagent is available, use virtual delegation packets instead
 of collapsing execution, review, and acceptance into one authority.

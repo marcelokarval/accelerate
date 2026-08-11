@@ -48,6 +48,9 @@ code, docs, workflow seeds, or runtime governance.
 Branch Entry Packet
 
 - classification: <conversational|trivial bounded engineering work|orchestrated non-trivial work>
+- execution route: <direct-fast-path|scoped|orchestrated>
+- delegation budget: <0|1|2-3>
+- delegation basis: <one-line handoff-cost versus value decision>
 - goal: <user-visible outcome>
 - success criteria:
   - <observable criterion>
@@ -118,6 +121,23 @@ Branch Entry Packet
 
 For calibration-only or read-only benchmark slices, keep the packet bounded.
 Do not inflate it with execution lanes the current slice is only evaluating.
+For `direct-fast-path`, keep the compact form: route, budget, proof, and any
+locally mandatory mutation gate are sufficient unless risk escalates.
+
+## Direct Fast Path Packet
+
+```text
+Direct Fast Path Packet
+
+- route / delegation budget: direct-fast-path / 0
+- goal / done means: <outcome / observable result>
+- focused proof: <one focused check or evidence>
+- locally mandatory mutation gate: <gate|none>
+- escalation trigger: <condition or none>
+```
+
+Use this instead of expanding the full Branch Entry Packet for direct work.
+Escalate to the normal packet before adding a sidecar or broadening risk/proof.
 
 When `.accelerate/` local status already exists, this packet should prefer the
 compact local handoff read first:

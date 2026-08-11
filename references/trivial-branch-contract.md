@@ -7,6 +7,20 @@ minimum workflow stack remains mandatory even for bounded trivial execution.
 
 `trivial` means the smallest valid workflow stack, not workflow absence.
 
+## Direct Fast Path
+
+Use `direct-fast-path` for a trivial read or mutation when the target is known,
+one logical surface is involved, risk is low and reversible, and focused proof
+can establish the result. Use micro-hardening, a compact packet, and zero
+physical or virtual subagents; do not manufacture planning, browser, or review
+lanes. Auth, billing, permissions, sensitive data, migrations, secrets,
+irreversible external calls, and runtime truth are never direct-path work.
+
+This route does not waive a target repository's stricter issue, workspace, or
+mutation policy. Escalate to `scoped` when one bounded discovery, research, or
+proof sidecar has independent value. Escalate to `orchestrated` for material
+risk, broad runtime proof, cross-surface coordination, or two independent lanes.
+
 ## Trivial Classes
 
 ### Trivial Read-Only
@@ -82,6 +96,13 @@ Branch Entry Packet
 - spawn subagents by habit
 - create planning artifacts without real need
 - use browser-proof or Playwright by default when the branch does not need them
+
+## Scoped Route
+
+Use `scoped` when the task remains one bounded lane but a single independent
+sidecar can provide discovery, current research, or focused proof. Keep the
+root responsible for the result, use at most one sidecar, and do not turn the
+sidecar into a planning chain or parallel workflow.
 
 ## Escalation Out Of Trivial
 

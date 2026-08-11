@@ -40,6 +40,26 @@ workspace docs remain authoritative after entry classification.
 Bounded execution may implement or inspect a slice, but it does not inherit
 root authority.
 
+## Reasoning Effort Contract
+
+Select prompt-hardening depth and reasoning effort independently before opening
+expensive lanes. Use the Codex-native machine authority at
+`assets/reasoning-effort-policy.json`, the strict receipt shape at
+`assets/reasoning-decision-receipt.schema.json`, and the human contract at
+`references/reasoning-effort-policy.md`. Validate operational receipts with
+`scripts/validate_reasoning_receipt.py`.
+
+- Prefer deterministic scripts/commands for pure mechanics.
+- Use `low` for bounded clear work.
+- Keep `medium` for non-trivial work when repo-local authority, observability and
+  acceptance are sufficient.
+- `high` is fail-closed without an objective trigger and complete receipt.
+- Issue priority, user emphasis, task size and multi-agent use are not triggers.
+- `xhigh|max|ultra` require separate explicit scope, budget, eval and stop rule.
+
+This skill never rewrites global `config.toml` per task. Repo-local `AGENTS.md`
+may impose a stricter compatible boundary and remains authoritative.
+
 ## Operating Model
 
 Run `accelerate` in this order:
@@ -63,6 +83,27 @@ The top-level outcomes are:
 - conversational / no-op
 - trivial bounded engineering work
 - orchestrated non-trivial work
+
+## Execution Routes
+
+Choose one route after classification:
+
+- `direct-fast-path`: known, one-surface, low and reversible-risk work with
+  focal proof; root executes directly with micro-hardening and zero physical or
+  virtual subagents. Never use it for auth, billing, permissions, sensitive
+  data, migrations, secrets, irreversible external calls, or runtime truth.
+- `scoped`: one bounded lane may use at most one sidecar for independent
+  discovery, current research, or proof when its value exceeds handoff cost.
+- `orchestrated`: material uncertainty, cross-surface risk, or two or more
+  independent lanes require ownership, reconciliation, and proportionate proof.
+
+These are an execution route, not a classification or execution mode. They do
+not override stricter repository authority. Do not escalate only because work
+touches multiple files, includes UI, or an agent is available.
+
+Escalate out of `direct-fast-path` when the target stops being known, proof
+becomes broad or runtime-facing, risk is material, or a genuinely independent
+lane appears.
 
 When a run is design-system-driven, premium, or broadly visual, default to the
 UI Mutation Ladder:
@@ -215,6 +256,7 @@ workspace layer itself.
 Use these bundled references first:
 
 - `references/prompt-hardening-gate.md`
+- `references/reasoning-effort-policy.md`
 - `references/branch-enforcement-matrix.md`
 - `references/full-invocation-map.md`
 - `references/local-workspace-entry-gate.md`
