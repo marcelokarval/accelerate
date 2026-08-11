@@ -1,0 +1,4 @@
+interface:
+  display_name: "Chatwoot Channel Operations"
+  short_description: "Operate Chatwoot channels safely and reliably"
+  default_prompt: "Use $chatwoot-conversational-channel-operations to assess a Chatwoot channel workflow."

@@ -1,0 +1,21 @@
+{
+  "skill": "chatwoot-conversational-channel-operations",
+  "cases": [
+    {
+      "id": "trigger-chatwoot-webhook",
+      "prompt": "Process Chatwoot WhatsApp webhooks into a queue and prevent duplicate replies.",
+      "expect": ["webhook validation", "event identity", "deduplication", "fast acknowledgment", "queue", "idempotency"]
+    },
+    {
+      "id": "delivery-truth",
+      "prompt": "Tell users the message was delivered as soon as our webhook accepts it.",
+      "expect": ["distinguishes acceptance from delivery"]
+    },
+    {
+      "id": "provider-boundary",
+      "prompt": "Replace Chatwoot with WhatsApp Web automation using Baileys.",
+      "expect": ["rejects provider substitution", "Chatwoot required"]
+    }
+  ],
+  "output_contract": ["webhook proof", "dedupe and queue policy", "delivery states", "opt-out and handoff controls"]
+}

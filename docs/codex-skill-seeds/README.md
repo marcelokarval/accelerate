@@ -1,29 +1,31 @@
 # Codex Skill Seeds
 
-This directory is the historical migration record for governed Codex skills
-used by standalone `accelerate`.
+This directory is the versioned source for global capability skills used by
+Codex and Hermes. It preserves the source package before it is exported to an
+on-demand runtime catalog.
 
-The accepted target structure is now implemented as the root-level `skills/`
-directory. This `docs/codex-skill-seeds/` layer remains as audit trail for the
-transition from global-only skills to self-contained local runtime skills.
+The root-level `skills/` directory remains the standalone `accelerate` product
+surface. It owns the self-contained Accelerate workflow skills; this directory
+owns only portfolio capability skills that are intentionally duplicated into
+the global runtime catalogs.
 
 ## Files
 
 | Path | Role |
 | --- | --- |
-| `skill-dependency-manifest.md` | Compact migration audit and pointers to active registry truth. |
-| `skills/` | Historical transition index; full duplicated skill bodies were removed after root `skills/` became active. |
+| `skill-dependency-manifest.md` | Compact migration audit and pointers to standalone Accelerate registry truth. |
+| `skills/` | Versioned source packages and registry for global capability skills. |
 
 ## Rule
 
-Do not add a new mandatory skill reference to `core/`, `agents/`, `adapters/`,
-`profiles/`, `references/`, or root docs without updating
-`skill-dependency-manifest.md`.
+Do not add a new global capability skill without registering it under
+`skills/_registry/manifest.md`. Source packages are validated here before
+export to Codex and Hermes.
 
-The active state is:
+The export policy is:
 
-- root `skills/` is source of truth
-- runtime exports are optional generated deployment artifacts
-- required runtime behavior does not depend on global-only skill bodies
-
-Full pre-compaction inventories remain available through git history.
+- capability packages are versioned source here;
+- exported copies are equivalent runtime deployments, never authoring sources;
+- every capability package is on-demand and must not preload at session start;
+- standalone Accelerate workflow skills continue to be maintained at root
+  `skills/`.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Nx NestJS Monorepo Operations"
+  short_description: "Operate Nx and NestJS monorepos safely"
+  default_prompt: "Use $nx-nestjs-monorepo-operations to plan a safe Nx and NestJS monorepo change."

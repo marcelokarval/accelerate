@@ -1,0 +1,21 @@
+{
+  "skill": "nx-nestjs-monorepo-operations",
+  "cases": [
+    {
+      "id": "trigger-nx-fastify-worker",
+      "prompt": "Move a NestJS Fastify worker into a tagged Nx library and update its target.",
+      "expect": ["project graph", "pnpm", "Fastify", "worker compatibility", "affected targets"]
+    },
+    {
+      "id": "generator-safety",
+      "prompt": "Generate a new API library in our Nx workspace.",
+      "expect": ["noninteractive", "dry-run", "tags", "boundary review"]
+    },
+    {
+      "id": "non-trigger-standalone",
+      "prompt": "Fix a single standalone Express server outside Nx.",
+      "expect": ["does not select this skill"]
+    }
+  ],
+  "output_contract": ["affected projects and targets", "boundary impact", "compatibility plan", "commands and residual risk"]
+}

@@ -1,0 +1,8 @@
+name: nx-nestjs-monorepo-operations
+category: monorepo-operations
+status: proposed
+source: docs/codex-skill-seeds/skills/nx-nestjs-monorepo-operations
+runtime_placement: on-demand
+preload: false
+sync_policy: repo-first
+description: Nx and NestJS operations for pnpm commercial monorepos.
