@@ -239,3 +239,18 @@ Closure Packet
 - residual risk: <...>
 - recommendation: <done|partial|follow-up|blocked>
 ```
+
+## 14. Direct Fast Path Packet
+
+```text
+Direct Fast Path Packet
+
+- route / delegation budget: direct-fast-path / 0
+- goal / done means: <outcome / observable result>
+- focused proof: <one focused check or evidence>
+- locally mandatory mutation gate: <gate|none>
+- escalation trigger: <condition or none>
+```
+
+Use this compact packet for direct work. Escalate to the normal Branch Entry
+Packet before adding a sidecar or broadening risk/proof.

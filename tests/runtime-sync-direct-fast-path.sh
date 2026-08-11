@@ -15,6 +15,8 @@ CODEX_SKILLS_DIR="$STAGE_ROOT/skills" "$ROOT/scripts/sync-skills-to-global.sh" >
 SOURCE="$ROOT/global-runtime/accelerate/SKILL.md"
 TARGET="$STAGE_ROOT/skills/accelerate/SKILL.md"
 cmp -s "$SOURCE" "$TARGET"
+cmp -s "$ROOT/references/runtime-packet-templates.md" \
+  "$STAGE_ROOT/skills/accelerate/references/runtime-packet-templates.md"
 
 for expected in \
   "## Reasoning Effort Contract" \
@@ -26,5 +28,8 @@ for expected in \
   'Escalate out of `direct-fast-path`'; do
   grep -Fq -- "$expected" "$TARGET"
 done
+
+grep -Fq -- "## 14. Direct Fast Path Packet" \
+  "$STAGE_ROOT/skills/accelerate/references/runtime-packet-templates.md"
 
 printf 'runtime sync direct fast path passed\n'

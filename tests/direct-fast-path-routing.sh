@@ -35,6 +35,8 @@ require "$ROOT/core/runtime-packets/templates.md" "- delegation budget: <0|1|2-3
 require "$ROOT/core/runtime-packets/templates.md" "## Direct Fast Path Packet"
 require "$ROOT/core/runtime-packets/templates.md" "- route / delegation budget: direct-fast-path / 0"
 require "$ROOT/core/runtime-packets/templates.md" "Use this instead of expanding the full Branch Entry Packet"
+require "$ROOT/references/runtime-packet-templates.md" "## 14. Direct Fast Path Packet"
+require "$ROOT/references/runtime-packet-templates.md" "- route / delegation budget: direct-fast-path / 0"
 require "$ROOT/core/control-plane/quick-invocation-map.md" "direct-fast-path -> direct root execution"
 require "$ROOT/global-runtime/accelerate/SKILL.md" "## Execution Routes"
 require "$ROOT/global-runtime/accelerate/SKILL.md" "zero physical or"
