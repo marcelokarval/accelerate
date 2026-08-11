@@ -1,6 +1,6 @@
 name: nx-nestjs-monorepo-operations
 category: monorepo-operations
-status: proposed
+status: active
 source: docs/codex-skill-seeds/skills/nx-nestjs-monorepo-operations
 runtime_placement: on-demand
 preload: false

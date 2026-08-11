@@ -1,6 +1,6 @@
 name: governed-us-lead-data-acquisition
 category: data-acquisition-governance
-status: proposed
+status: active
 source: docs/codex-skill-seeds/skills/governed-us-lead-data-acquisition
 runtime_placement: on-demand
 preload: false

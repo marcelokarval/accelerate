@@ -87,6 +87,7 @@ class CapabilitySkillSeedsTest(unittest.TestCase):
                 self.assertEqual(skill_name, metadata_value(metadata_text, "name"))
                 self.assertIn(reference, skill_text)
                 self.assertTrue((skill_dir / reference).is_file(), f"missing {reference}")
+                self.assertEqual("active", metadata_value(metadata_text, "status"))
                 self.assertEqual("on-demand", metadata_value(metadata_text, "runtime_placement"))
                 self.assertEqual("false", metadata_value(metadata_text, "preload"))
 

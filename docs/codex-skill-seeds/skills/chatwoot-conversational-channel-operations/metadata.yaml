@@ -1,6 +1,6 @@
 name: chatwoot-conversational-channel-operations
 category: conversational-channel-operations
-status: proposed
+status: active
 source: docs/codex-skill-seeds/skills/chatwoot-conversational-channel-operations
 runtime_placement: on-demand
 preload: false

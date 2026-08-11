@@ -1,6 +1,6 @@
 name: docker-compose-deployment-operations
 category: deployment-operations
-status: proposed
+status: active
 source: docs/codex-skill-seeds/skills/docker-compose-deployment-operations
 runtime_placement: on-demand
 preload: false
