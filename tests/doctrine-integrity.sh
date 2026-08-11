@@ -203,6 +203,8 @@ bash tests/gstack-pattern-adoption.sh
 bash tests/generated-docs-integrity.sh
 bash tests/doc-snippet-integrity.sh
 bash tests/classification-golden.sh
+bash tests/direct-fast-path-routing.sh
+bash tests/runtime-sync-direct-fast-path.sh
 bash tests/remote-write-registry.sh
 bash tests/manifest-truth-gate.sh
 bash tests/response-locale-gate.sh

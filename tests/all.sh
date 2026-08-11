@@ -17,7 +17,7 @@ done
 
 while IFS= read -r test_script; do
   case "${test_script}" in
-    tests/all.sh) continue ;;
+    tests/all.sh|tests/direct-fast-path-routing.sh|tests/runtime-sync-direct-fast-path.sh) continue ;;
   esac
   bash "${test_script}"
 done < <(find tests -maxdepth 1 -type f -name '*.sh' | sort)
