@@ -17,6 +17,8 @@ TARGET="$STAGE_ROOT/skills/accelerate/SKILL.md"
 cmp -s "$SOURCE" "$TARGET"
 cmp -s "$ROOT/references/runtime-packet-templates.md" \
   "$STAGE_ROOT/skills/accelerate/references/runtime-packet-templates.md"
+cmp -s "$ROOT/global-runtime/accelerate/evals/direct-fast-path-routing.json" \
+  "$STAGE_ROOT/skills/accelerate/evals/direct-fast-path-routing.json"
 
 for expected in \
   "## Reasoning Effort Contract" \

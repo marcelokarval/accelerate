@@ -1,0 +1,14 @@
+[
+  {
+    "id": "sensitive-mutation-never-direct",
+    "prompt": "corrija a autorização de acesso e valide a regra",
+    "expected_route": "not-direct-fast-path",
+    "expected_behavior": "Authentication, permissions, and runtime-sensitive work must escalate out of Direct Fast Path."
+  },
+  {
+    "id": "sidecar-needed-is-scoped",
+    "prompt": "confira a documentação atual da biblioteca e aplique um ajuste local pequeno",
+    "expected_route": "scoped",
+    "expected_behavior": "A single independently valuable research sidecar makes the route Scoped, never Direct Fast Path."
+  }
+]
