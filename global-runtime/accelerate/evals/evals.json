@@ -1,0 +1,68 @@
+[
+  {
+    "id": "trivial-readonly-no-wave",
+    "prompt": "qual é o status do catálogo? apenas confira e responda",
+    "should_trigger": true,
+    "expected_behavior": "Classify as trivial read-only or quick command, use compact proof, and do not invoke Wave-Gated Execution."
+  },
+  {
+    "id": "small-bugfix-bounded-slice",
+    "prompt": "corrija este bug pequeno e prove com teste focado",
+    "should_trigger": true,
+    "expected_behavior": "Classify as bounded slice or trivial mutation depending on scope; use entry/proof/closure, not wave-gated unless a repeated denominator appears."
+  },
+  {
+    "id": "large-one-shot-no-wave-by-default",
+    "prompt": "implemente uma feature grande ponta-a-ponta uma vez e valide",
+    "should_trigger": true,
+    "expected_behavior": "Classify as orchestrated mission one-shot with ledger/proof lanes; do not use coverage wave gates unless repeatable target sets are identified."
+  },
+  {
+    "id": "large-repeated-wave-gated",
+    "prompt": "padronize todos os endpoints em ondas, teste tudo e avance só com cobertura maior que 95%",
+    "should_trigger": true,
+    "expected_behavior": "Use orchestrated mission / wave-gated mode; freeze denominator, emit Wave Packet, compute Coverage Gate, run correction/reproof loop, then Wave Closure Packet."
+  },
+  {
+    "id": "small-multitask-checklist-not-wave",
+    "prompt": "faça três ajustes pequenos independentes e me diga o que mudou",
+    "should_trigger": true,
+    "expected_behavior": "Use bounded slice with checklist and requested-vs-delivered proof; do not use wave-gated unless tasks are homogeneous/repeated."
+  },
+  {
+    "id": "large-multitask-hybrid",
+    "prompt": "audite backend, frontend, docs e integrações, corrija tudo e prove",
+    "should_trigger": true,
+    "expected_behavior": "Use orchestrated mission; split lanes first, then apply wave-gated execution only to repeated target sets within lanes."
+  },
+  {
+    "id": "near-miss-generic-planning",
+    "prompt": "explique conceitualmente o que é cobertura de testes sem executar nada",
+    "should_trigger": false,
+    "expected_behavior": "Do not run accelerate mutation workflow; answer conversationally unless the user asks for operational execution."
+  },
+  {
+    "id": "accelerate-fable-dual-explicit",
+    "prompt": "use Accelerate com Fable Method para executar esta mudança e fechar com prova outcome-first",
+    "should_trigger": true,
+    "expected_behavior": "Keep one Accelerate root, set fable_overlay=required, apply the bounded Fable loop inside the active branch, and do not create duplicate packets, ledgers, proof lanes or closure."
+  },
+  {
+    "id": "fable-only-does-not-activate-accelerate",
+    "prompt": "use apenas o Fable Method para reescrever este relatório outcome-first, sem orquestração",
+    "should_trigger": false,
+    "expected_behavior": "Do not activate Accelerate solely because Fable is named when no engineering/root-governance trigger exists."
+  },
+  {
+    "id": "accelerate-only-fable-not-needed",
+    "prompt": "use Accelerate para corrigir uma chave YAML local bem definida e validar o parser",
+    "should_trigger": true,
+    "expected_behavior": "Use a bounded Accelerate branch, set fable_overlay=not-needed, and rely on the specialist/parser proof without loading Fable automatically."
+  },
+  {
+    "id": "accelerate-fable-useful-authority-conflict",
+    "prompt": "use Accelerate: a especificação diz desconto de 10%, o teste exige 15% e o código implementa 10%; resolva e prove",
+    "should_trigger": true,
+    "expected_behavior": "Set fable_overlay=useful, resolve intent from primary authority before editing, correct the wrong side through the specialist lane, and close only through Accelerate root proof."
+  }
+]

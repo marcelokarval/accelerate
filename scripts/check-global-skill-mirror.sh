@@ -43,9 +43,11 @@ done
 if [[ -d "${ROOT_RUNTIME_DIR}" ]]; then
   target_dir="${GLOBAL_SKILLS_DIR}/accelerate"
 
-  for file_name in SKILL.md README.md; do
+  for file_name in SKILL.md README.md metadata.yaml; do
     source_file="${ROOT_RUNTIME_DIR}/${file_name}"
     target_file="${target_dir}/${file_name}"
+
+    [[ -f "${source_file}" ]] || continue
 
     if [[ ! -f "${target_file}" ]]; then
       echo "missing: ${target_file}" >&2
@@ -57,6 +59,26 @@ if [[ -d "${ROOT_RUNTIME_DIR}" ]]; then
       echo "different: ${source_file} != ${target_file}" >&2
       different=1
     fi
+  done
+
+  for support_dir in assets evals scripts templates; do
+    source_dir="${ROOT_RUNTIME_DIR}/${support_dir}"
+    [[ -d "${source_dir}" ]] || continue
+
+    while IFS= read -r source_file; do
+      target_file="${target_dir}/${support_dir}/${source_file#${source_dir}/}"
+
+      if [[ ! -f "${target_file}" ]]; then
+        echo "missing: ${target_file}" >&2
+        missing=1
+        continue
+      fi
+
+      if ! cmp -s "${source_file}" "${target_file}"; then
+        echo "different: ${source_file} != ${target_file}" >&2
+        different=1
+      fi
+    done < <(find "${source_dir}" -type f | sort)
   done
 
   while IFS= read -r source_file; do
