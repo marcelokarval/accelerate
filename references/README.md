@@ -90,6 +90,9 @@ These are still useful reference-first or support-heavy surfaces:
 - `linear-execution.md`
 - `team-operating-model.md`
 - `trivial-branch-contract.md`
+- `fable-method-composition.md`
+  - optional reasoning/reporting overlay contract; Accelerate remains root and
+    closure owner
 - `codex-agents/`
 
 Use them when:
@@ -110,3 +113,6 @@ The intended reading order is:
 5. relevant native `core/` surface
 6. only then matching `references/` file when deeper inherited doctrine still
    helps
+
+- `wave-gated-execution.md`: use for broad repeated work with frozen denominators, coverage gates, correction loops, and wave-by-wave closure.
+- `fable-method-composition.md`: use when Fable is required/useful inside an Accelerate run; do not create a second lifecycle, packet family, proof lane, or closure owner.

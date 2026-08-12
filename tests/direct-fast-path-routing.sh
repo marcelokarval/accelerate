@@ -35,10 +35,26 @@ require "$ROOT/core/runtime-packets/templates.md" "- delegation budget: <0|1|2-3
 require "$ROOT/core/runtime-packets/templates.md" "## Direct Fast Path Packet"
 require "$ROOT/core/runtime-packets/templates.md" "- route / delegation budget: direct-fast-path / 0"
 require "$ROOT/core/runtime-packets/templates.md" "Use this instead of expanding the full Branch Entry Packet"
+require "$ROOT/references/runtime-packet-templates.md" "## 14. Direct Fast Path Packet"
+require "$ROOT/references/runtime-packet-templates.md" "- route / delegation budget: direct-fast-path / 0"
 require "$ROOT/core/control-plane/quick-invocation-map.md" "direct-fast-path -> direct root execution"
 require "$ROOT/global-runtime/accelerate/SKILL.md" "## Execution Routes"
 require "$ROOT/global-runtime/accelerate/SKILL.md" "zero physical or"
 require "$ROOT/global-runtime/accelerate/SKILL.md" "virtual subagents"
 require "$ROOT/global-runtime/accelerate/SKILL.md" 'Escalate out of `direct-fast-path`'
+
+python3 - "$ROOT/global-runtime/accelerate/evals/direct-fast-path-routing.json" <<'PY'
+import json
+import sys
+
+cases = json.load(open(sys.argv[1], encoding="utf-8"))
+expected = {
+    "sensitive-mutation-never-direct": "not-direct-fast-path",
+    "sidecar-needed-is-scoped": "scoped",
+}
+actual = {case.get("id"): case.get("expected_route") for case in cases}
+if actual != expected:
+    raise SystemExit(f"unexpected direct-route evals: {actual!r}")
+PY
 
 printf 'direct fast path routing policy passed\n'

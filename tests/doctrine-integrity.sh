@@ -36,6 +36,8 @@ require_file "tests/subagent-routing-policy.sh"
 require_file "tests/base-agent-contract.sh"
 require_file "tests/agent-family-compatibility.sh"
 require_file "tests/physical-agent-runtime-adapter.sh"
+require_file "tests/codex-collaboration-policy.sh"
+require_file "tests/runtime-sync-codex-collaboration.sh"
 require_file "tests/agent-template-integrity.sh"
 require_file "tests/subagent-assignment-builder.sh"
 require_file "tests/template-promotion-readiness.sh"
@@ -53,6 +55,8 @@ require_file "tests/gstack-pattern-adoption.sh"
 require_file "tests/generated-docs-integrity.sh"
 require_file "tests/doc-snippet-integrity.sh"
 require_file "tests/classification-golden.sh"
+require_file "tests/direct-fast-path-routing.sh"
+require_file "tests/runtime-sync-direct-fast-path.sh"
 require_file "tests/remote-write-registry.sh"
 require_file "tests/manifest-truth-gate.sh"
 require_file "tests/response-locale-gate.sh"
@@ -183,6 +187,8 @@ bash tests/subagent-routing-policy.sh
 bash tests/base-agent-contract.sh
 bash tests/agent-family-compatibility.sh
 bash tests/physical-agent-runtime-adapter.sh
+bash tests/codex-collaboration-policy.sh
+bash tests/runtime-sync-codex-collaboration.sh
 bash tests/agent-template-integrity.sh
 bash tests/subagent-assignment-builder.sh
 bash tests/template-promotion-readiness.sh
@@ -201,6 +207,8 @@ bash tests/gstack-pattern-adoption.sh
 bash tests/generated-docs-integrity.sh
 bash tests/doc-snippet-integrity.sh
 bash tests/classification-golden.sh
+bash tests/direct-fast-path-routing.sh
+bash tests/runtime-sync-direct-fast-path.sh
 bash tests/remote-write-registry.sh
 bash tests/manifest-truth-gate.sh
 bash tests/response-locale-gate.sh

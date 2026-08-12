@@ -1,0 +1,76 @@
+<h1>Codex global skill catalog and specialist profiles</h1>
+<h2>Problem and measured evidence</h2>
+<p>Codex emitted the skills-context truncation warning because the effective prompt exposed 125 skills. Physical plugin caches are not activation evidence; the denominator is the fresh <code>codex debug prompt-input ''</code> inventory. The failure mode is a root prompt carrying specialist and rare capabilities that should be routed only when needed.</p>
+<p>The implementation must preserve every capability while reducing resident root context. It must also prevent a title-only Plane work item from being treated as execution-ready and remove the passive Orca hook, which forwarded events but discarded failures and could not enforce a decision.</p>
+
+<h2>Outcome and scope</h2>
+<ul>
+  <li>Create the source-owned Codex catalog manifest with the exact 125-skill denominator, source roots, classification, and recovery coverage.</li>
+  <li>Install a compact root selection: 18 managed-global core skills plus 19 host-injected skills, yielding 37 visible skills. The other 88 managed-global skills are disabled at root only.</li>
+  <li>Render and install additive <code>codex -p &lt;profile&gt;</code> files for specialist and on-demand work; prove root and profile prompt inventories.</li>
+  <li>Make Accelerate require fresh catalog discovery before capability claims or thinning; export catalog configurations with provenance, digest, neutral-CWD validation, and rollback record.</li>
+  <li>Add a Plane MCP pre-creation readiness contract and receipt fingerprint binding; add a descriptor-visible mutation receipt template so callers cannot guess the hash field.</li>
+  <li>Replace the active Codex hook configuration with an explicit empty configuration after backup and contract test. This removes passive Orca behavior; it is not a claim that hooks now enforce policy.</li>
+</ul>
+<h2>Non-goals and hard boundaries</h2>
+<ul>
+  <li>Do not delete skills, plugins, MCP servers, credentials, or caches.</li>
+  <li>Do not claim that native Codex profiles are credential, tool, sandbox, or MCP isolation. They are additive selection layers. Real isolation requires a separate CODEX_HOME/process and explicit trust boundary.</li>
+  <li>Do not promote a logical profile to a physical agent, change Plane project topology, close this issue, or use direct HTTP/borrowed credentials.</li>
+  <li>Do not treat a descriptor, configuration parse, or test green result as provider mutation/readback proof.</li>
+</ul>
+
+<h2>Exact catalog architecture</h2>
+<p>Authority: <code>adapters/runtime/codex/skill-catalog-manifest.toml</code>, schema version 2. Sources are r0 managed-global <code>/home/marcelo-karval/.codex/skills</code>, r1 host-injected superpowers <code>/home/marcelo-karval/.agents/skills</code>, and r2 host-injected system skills <code>/home/marcelo-karval/.codex/skills/.system</code>. The validator must reject duplicate identifiers/paths, missing source/class/profile/recovery fields, stale denominator, and a non-compact enabled catalog.</p>
+<ul>
+  <li><strong>root-core (18, enabled)</strong>: accelerate, architecture, bash-linux, code-audit, dependency-governance, executing-plans, governance-audit, parallel-agents, plane, planning-with-files, prompt-hardening, security-patterns, skill-catalog-router, subagent-governance, systematic-debugging, validation-governance, verification-before-completion, visual-modeling.</li>
+  <li><strong>host-system (5, enabled)</strong>: imagegen, openai-docs, plugin-creator, skill-creator, skill-installer.</li>
+  <li><strong>host-superpowers (14, enabled)</strong>: the host-injected superpowers namespace; it is not controlled by the r0 global disable list.</li>
+  <li><strong>django-backend (11)</strong>: api-surface-governance, authorization-policy-patterns, django-inertia-integration, django-pro, django-service-patterns, django-vite-integration, inertia-patterns, inertia-shared-props, python-pro, python-testing, server-prop-governance.</li>
+  <li><strong>next-react-frontend (17)</strong>: apply-design-system-contract, component-extraction, design-md-corpus-patterns, extract-html-design-system-v2, figma-node-fidelity, front-react-shadcn, frontend-boundary-governance, frontend-chunk-ownership-audit, frontend-component-hierarchy, frontend-componentization-audit, i18n-patterns, inertia-runtime-persistence-audit, nextjs-app-router-patterns, react-best-practices, tailwind-design-system, tailwind-patterns, typescript-pro.</li>
+  <li><strong>data-db (9)</strong>: database-architect, database-design, drizzle-patterns, neon-postgres-patterns, postgres-best-practices, postgresql, prisma-patterns, sql-optimization-patterns, supabase-postgres-patterns.</li>
+  <li><strong>integrations-ops (17)</strong>: queues, MCP/native-MCP, mail, payment, storage, and runtime skills listed in the manifest. Read-only by default; no secrets/service-state/provider delivery authority.</li>
+  <li><strong>product-browser-qa (3)</strong>: dogfood, playwright-patterns, product-runtime-review. Proof only; no product source write.</li>
+  <li><strong>governance-review (9)</strong>: adversarial/anti-abuse, GitHub review/workflow, requesting-code-review, ingress hardening. Read-only review; no Plane/GitHub/config write authority.</li>
+  <li><strong>catalog-librarian (5)</strong>: codebase-inspection, codex, codex-skill-promotion-protocol, skill-developer, writing-skills. Ephemeral, read-only discovery sidecar.</li>
+  <li><strong>on-demand (17)</strong>: remaining rare/broad skills, including Linear, legacy, auth-provider, finance, AdminJS/AdonisJS, premium design, Vercel and web reading. It is recovered through skill-catalog-router and must not re-enable unrelated specialist groups.</li>
+</ul>
+<p>Root alone owns cross-surface reconciliation, governed Plane writes, external delivery, commits/releases, and closure. Specialist write scopes and MCP/tool allowlists are task assignment contracts, not host enforcement.</p>
+
+<h2>File-level implementation plan</h2>
+<ol>
+  <li>Plane MCP source: create <code>src/plane_mcp_karval/issue_creation_readiness.py</code>; modify <code>src/plane_mcp_karval/server.py</code>, <code>src/plane_api/client.py</code>, <code>src/plane_api/__init__.py</code>, and <code>tests/test_plane_mcp_karval.py</code>. Require objective/context/scope/non-goals/acceptance/owner/priority/dependencies/validation/execution units and a substantive <code>description_html</code> for issue creation; bind readiness fingerprint and expose exact <code>payload_fingerprint</code> template in descriptors.</li>
+  <li>Accelerate source: create <code>adapters/runtime/codex/skill-catalog-manifest.toml</code>, <code>scripts/validate-codex-skill-catalog.py</code>, <code>scripts/render-codex-skill-profile.py</code>, <code>references/skill-catalog-truth-gate.md</code>, <code>tests/codex-skill-catalog-truth.sh</code>; amend <code>global-runtime/accelerate/SKILL.md</code>, <code>adapters/runtime/codex/capabilities.yaml</code>, <code>scripts/export-runtime-host.sh</code>, <code>adapters/runtime/host-export-contract.md</code>, and <code>tests/host-export-contract.sh</code>.</li>
+  <li>Orca: create <code>adapters/runtime/codex/codex-hooks.json</code> and <code>tests/codex-hook-contract.sh</code>; back up active hooks, install only the explicit empty JSON, and remove stale trusted-hook state entries.</li>
+  <li>Global deployment: render root disable configuration into <code>~/.codex/config.toml</code>; render one profile file per named profile plus <code>on-demand.config.toml</code>; keep source/mirror parity and a rollback backup/receipt outside tests.</li>
+</ol>
+
+<h2>SDD and TDD execution sequence</h2>
+<ol>
+  <li>Freeze runtime denominator with <code>codex debug prompt-input ''</code>; do not infer from cache directories.</li>
+  <li>Write RED tests for title-only/incomplete Plane creation, stale/duplicate/uncovered catalog entries, generated profile selection, export from neutral CWD, and passive Orca signatures.</li>
+  <li>Implement the minimal validators, renderer, hook artifact, and export provenance until focused tests are green.</li>
+  <li>Use an isolated worktree. Delegate only independent read/proof lanes; each returns a bounded Subagent Return Packet and root reconciles.</li>
+  <li>Before global install, make a disposable precedence proof: base disables python-pro; django-backend restores it. Then prove root hides python-pro, django-backend exposes python-pro but not Next.js, and next-react-frontend exposes Next.js but not python-pro.</li>
+  <li>After source validation, restart/reopen the governed Plane MCP and inspect injected schema; descriptor must expose the exact receipt fingerprint. Do not call a stale MCP and claim the source change is live.</li>
+</ol>
+
+<h2>Acceptance, proof, rollout and rollback</h2>
+<ul>
+  <li><strong>Catalog proof:</strong> validator reports inventory=125 and enabled=37; all disabled r0 skills have one specialist or on-demand recovery path; no duplicate path/id; no wildcard allowlist.</li>
+  <li><strong>Runtime proof:</strong> fresh root prompt is 37 visible skills; django profile is 48 with python-pro and without nextjs-app-router-patterns; frontend profile is 54 with nextjs-app-router-patterns and without python-pro; on-demand has linear-pm and not django-pro.</li>
+  <li><strong>Contract proof:</strong> run catalog truth, hook contract, host export contract, focused Plane MCP tests, and source/mirror parity. Generated export includes source provenance, manifest SHA-256, root/profile files, and a neutral-CWD validation command.</li>
+  <li><strong>Rollout:</strong> generate to a temporary approved directory, diff against intended configuration, back up existing global config/profile/hook files, install atomically, parse TOML/JSON, then re-run fresh prompt-input and startup diagnostics. Record an installation receipt with paths, digest, validation command, timestamp, and rollback location.</li>
+  <li><strong>Rollback:</strong> restore the recorded config/profile/hook backup, remove only newly generated profile files identified in the receipt, parse, and repeat prompt/startup proof. Never use test temp directories or user-home as test authority.</li>
+  <li><strong>Residual:</strong> logical profiles reduce prompt pressure and improve capability routing, but do not isolate MCPs/tools/credentials. A separate CODEX_HOME/process is required for an actual trust boundary.</li>
+</ul>
+
+<h2>Dependencies and readiness dispositions</h2>
+<ul>
+  <li>Owner: Marcelo Karval (Plane member verified); root Codex remains the governance coordinator.</li>
+  <li>Priority: high; a global Codex runtime configuration and the governed Plane path affect subsequent engineering work, but there is no active provider incident.</li>
+  <li>Labels: <code>tipo:hardening</code>, <code>area:infra</code>, <code>area:integration</code>, <code>area:qa</code>, and <code>risco:production</code>. These describe the work without importing unrelated migration, data-loss, or external-delivery risks.</li>
+  <li>Dependencies: fresh Codex runtime prompt proof; fresh governed Plane MCP schema proof; repo source/mirror parity; no production provider dependency.</li>
+  <li>Dates: start date 2026-08-12 records the actual resumed implementation. Due date remains unassigned: no committed delivery date was provided, and one must not be fabricated.</li>
+  <li>State: In Progress after the governed START packet. This is not a completion claim.</li>
+</ul>

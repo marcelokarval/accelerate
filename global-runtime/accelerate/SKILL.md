@@ -18,6 +18,7 @@ Its job is to:
 - keep runtime state visible
 - enforce proof order
 - block closure until the active branch is truly satisfied
+- for repeated broad work, freeze a wave denominator and close each wave by proof/coverage gates before advancing
 
 This runtime bundle is intentionally portable. Repo-local `AGENTS.md` and
 workspace docs remain authoritative after entry classification.
@@ -40,6 +41,26 @@ workspace docs remain authoritative after entry classification.
 Bounded execution may implement or inspect a slice, but it does not inherit
 root authority.
 
+## Reasoning Effort Contract
+
+Select prompt-hardening depth and reasoning effort independently before opening
+expensive lanes. Use the Codex-native machine authority at
+`assets/reasoning-effort-policy.json`, the strict receipt shape at
+`assets/reasoning-decision-receipt.schema.json`, and the human contract at
+`references/reasoning-effort-policy.md`. Validate operational receipts with
+`scripts/validate_reasoning_receipt.py`.
+
+- Prefer deterministic scripts/commands for pure mechanics.
+- Use `low` for bounded clear work.
+- Keep `medium` for non-trivial work when repo-local authority, observability and
+  acceptance are sufficient.
+- `high` is fail-closed without an objective trigger and complete receipt.
+- Issue priority, user emphasis, task size and multi-agent use are not triggers.
+- `xhigh|max|ultra` require separate explicit scope, budget, eval and stop rule.
+
+This skill never rewrites global `config.toml` per task. Repo-local `AGENTS.md`
+may impose a stricter compatible boundary and remains authoritative.
+
 ## Operating Model
 
 Run `accelerate` in this order:
@@ -53,6 +74,23 @@ Run `accelerate` in this order:
 6. keep runtime state visible with explicit packets
 7. enforce proof in the correct order
 8. block closure until the branch contract is truly satisfied
+
+## Fable Method Composition
+
+Fable is an optional reasoning/reporting overlay, never another root workflow.
+When Fable is considered, classify `fable_overlay` as `required`, `useful`, or
+`not-needed` and persist a short basis in the existing runtime packet:
+
+- `required` when the user explicitly names Fable inside an Accelerate run;
+- `useful` for conflicting authorities, material intent ambiguity, or an
+  outcome-first audit/report;
+- `not-needed` when a specialist skill already defines mechanics and proof.
+
+Accelerate retains branch, staffing, risk, proof order and root closure. Fable
+feeds the outcome preamble, Authority Set, scope decision, proof lane and final
+report. Do not duplicate packets, ledgers, proof or closure. Load
+`references/fable-method-composition.md` for the self-contained repo-local
+contract; user-home skill catalogs are not authority.
 
 ## Classification Contract
 
@@ -231,11 +269,35 @@ If that file is missing or still only template-shaped, fall back to:
 Only bypass this with an explicit manual-debug exception for the local
 workspace layer itself.
 
+## Wave-Gated Execution
+
+Use wave-gated mode when broad work has a repeatable target set or a measurable coverage denominator.
+
+Default shape:
+
+```text
+class: orchestrated non-trivial work
+mode: wave-gated
+```
+
+Required gates:
+
+- freeze the denominator before mutation;
+- emit a Wave Packet;
+- run implementation and proof gates;
+- compute coverage with `scripts/wave_gate_report.py`;
+- require >=95% coverage unless explicitly overridden;
+- open correction/reproof loop before advancing when the gate fails;
+- close with a Wave Closure Packet.
+
+Do not use wave-gated mode for tiny one-off changes or large one-shot features without repeated target sets.
+
 ## Reference Map
 
 Use these bundled references first:
 
 - `references/prompt-hardening-gate.md`
+- `references/reasoning-effort-policy.md`
 - `references/branch-enforcement-matrix.md`
 - `references/full-invocation-map.md`
 - `references/local-workspace-entry-gate.md`
@@ -251,6 +313,40 @@ Use these bundled references first:
 - `references/specification-layer.md`
 - `references/subagent-model.md`
 - `references/persona-mandatory-skills-matrix.md`
+- `references/codex-collaboration-routing.md`
+- `references/codex-collaboration-role-policy.json`
+- `references/wave-gated-execution.md`
+- `references/fable-method-composition.md`
 
 When the active repository has stronger local doctrine, use this runtime root
 to classify and then defer to that repo-local authority.
+
+## Resource Router
+
+References:
+
+- `references/skill-catalog-truth-gate.md`: require fresh runtime discovery and a declared coverage class before skill thinning, specialist selection, or capability claims.
+
+- `references/reasoning-effort-policy.md`: select and audit prompt-hardening depth and the minimum sufficient Codex effort; machine authority is `assets/reasoning-effort-policy.json`.
+- `references/codex-collaboration-routing.md`: map Codex execution roles to supported collaboration model and reasoning parameters.
+- `references/codex-collaboration-role-policy.json`: machine-readable role policy consumed by the Codex collaboration adapter.
+- `references/wave-gated-execution.md`: use for broad repeated work with frozen denominators, coverage gates, correction loops, and wave-by-wave closure.
+- `references/fable-method-composition.md`: classify and apply Fable as an optional reasoning/reporting overlay without duplicating Accelerate root authority.
+
+Scripts:
+
+- `scripts/validate_reasoning_receipt.py`: validate a non-secret reasoning decision receipt against the local policy and schema.
+- `scripts/wave_gate_report.py`: compute denominator coverage and emit JSON or a Wave Closure Packet.
+
+Assets:
+
+- `assets/reasoning-effort-policy.json` and `assets/reasoning-decision-receipt.schema.json`: machine policy and receipt shape for the reasoning-effort contract.
+
+Templates:
+
+- `templates/wave-packet.md`: use when freezing a denominator before a wave.
+- `templates/wave-closure-packet.md`: use when closing or correcting a wave after proof.
+
+Evals:
+
+- `evals/evals.json`: use when checking trigger behavior for trivial, bounded, large one-shot, repeated, and multitask prompts.

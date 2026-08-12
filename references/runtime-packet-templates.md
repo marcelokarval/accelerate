@@ -239,3 +239,71 @@ Closure Packet
 - residual risk: <...>
 - recommendation: <done|partial|follow-up|blocked>
 ```
+
+## 11. Wave Packet
+
+```text
+Wave Packet
+
+- wave id: <id>
+- class/mode: <bounded slice|orchestrated mission / wave-gated>
+- objective: <objective>
+- target selection rule: <rule>
+- frozen denominator: <count>
+- target list/artifact: <path|inline>
+- non-goals: <...>
+- required mutations: <...>
+- proof gates: <validators/tests>
+- coverage threshold: <default 95% unless overridden>
+- allowed residuals: <...>
+- stop conditions: <...>
+- rollback/safety: <...>
+```
+
+## 12. Coverage Gate
+
+```text
+Coverage Gate
+
+- denominator source: <path|query|inventory>
+- covered targets: <count>
+- failed targets: <count>
+- coverage percent: <percent>
+- threshold: <percent>
+- pass/fail: <pass|fail>
+- residual classification: <...>
+```
+
+## 13. Wave Closure Packet
+
+```text
+Wave Closure Packet
+
+- wave id: <id>
+- requested objective: <objective>
+- frozen denominator: <count>
+- covered targets: <count>
+- failed/residual targets: <count>
+- coverage percent: <percent>
+- validators/suites: <...>
+- interface/runtime proof: <...>
+- correction loops: <...>
+- residual classification: <...>
+- decision: <advance|correct|block|waive-with-reason>
+- next wave: <...>
+```
+
+## 14. Direct Fast Path Packet
+
+```text
+Direct Fast Path Packet
+
+- route / delegation budget: direct-fast-path / 0
+- goal / done means: <outcome / observable result>
+- focused proof: <one focused check or evidence>
+- locally mandatory mutation gate: <gate|none>
+- escalation trigger: <condition or none>
+```
+
+Use this compact packet for direct work. Escalate to the normal Branch Entry
+Packet before adding a sidecar or broadening risk/proof.

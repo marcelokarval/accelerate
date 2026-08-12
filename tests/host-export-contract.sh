@@ -66,6 +66,17 @@ done
 require_match 'generated outward' "$export_path"
 require_match 'Do not treat this export as canonical doctrine' "$export_path"
 require_match 'do not treat it as proof of promoted physical agents' "$export_path"
+require_match 'codex-root-skills.config.toml' "$manifest_path"
+require_match 'codex-django-backend.config.toml' "$manifest_path"
+if rg -F 'codex-orchestrator.config.toml' "$manifest_path" >/dev/null; then
+  fail 'host export emitted an additive orchestrator profile'
+fi
+require_match 'codex-python-backend.config.toml' "$manifest_path"
+require_match 'catalog_manifest_sha256: [0-9a-f]{64}' "$manifest_path"
+require_match 'logical_agent_topology_sha256: [0-9a-f]{64}' "$manifest_path"
+require_match 'additive profile configuration layers' "$export_path"
+require_match 'do not establish technical MCP, tool, credential, or' "$export_path"
+require_match 'not profiles injected into collaboration.spawn_agent' "$export_path"
 validation_command="$(python3 - "${manifest_path}" <<'PY'
 from pathlib import Path
 import re
@@ -88,5 +99,22 @@ if bash "$script" 'bad/host' "$out_dir" >/tmp/accelerate-host-export-host.out 2>
   fail "invalid host was accepted"
 fi
 require_match 'invalid host' /tmp/accelerate-host-export-host.out
+
+fixture=".tmp/host-export-invalid-topology"
+rm -rf "$fixture"
+mkdir -p "$fixture/scripts" "$fixture/adapters/runtime/codex" "$fixture/adapters/runtime/codex-collaboration"
+cp "$script" "$fixture/scripts/export-runtime-host.sh"
+ln -s "$ROOT/scripts/render-codex-skill-profile.py" "$fixture/scripts/render-codex-skill-profile.py"
+ln -s "$ROOT/scripts/render-codex-logical-agent.py" "$fixture/scripts/render-codex-logical-agent.py"
+ln -s "$ROOT/scripts/validate-codex-logical-agent-topology.py" "$fixture/scripts/validate-codex-logical-agent-topology.py"
+ln -s "$ROOT/adapters/runtime/codex/capabilities.yaml" "$fixture/adapters/runtime/codex/capabilities.yaml"
+ln -s "$ROOT/adapters/runtime/codex/skill-catalog-manifest.toml" "$fixture/adapters/runtime/codex/skill-catalog-manifest.toml"
+ln -s "$ROOT/adapters/runtime/codex-collaboration/role-policy.json" "$fixture/adapters/runtime/codex-collaboration/role-policy.json"
+cp "$ROOT/adapters/runtime/codex/logical-agent-topology.toml" "$fixture/adapters/runtime/codex/logical-agent-topology.toml"
+sed -i 's/spawn_packet_limit = 10/spawn_packet_limit = 11/' "$fixture/adapters/runtime/codex/logical-agent-topology.toml"
+if bash "$fixture/scripts/export-runtime-host.sh" codex "$fixture/out" >/tmp/accelerate-host-export-topology.out 2>&1; then
+  fail "invalid logical topology was exported"
+fi
+require_match 'spawn_packet_limit must be 10' /tmp/accelerate-host-export-topology.out
 
 printf 'host export contract passed\n'

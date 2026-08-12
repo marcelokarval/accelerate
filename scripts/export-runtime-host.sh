@@ -14,6 +14,8 @@ case "${out_dir}" in
   ""|*"/../"*|../*|*/..|..|*"/.."|*"../"*) echo "invalid output dir traversal: ${out_dir}" >&2; exit 1 ;;
 esac
 manifest="${ROOT}/adapters/runtime/${host}/capabilities.yaml"
+catalog_manifest="${ROOT}/adapters/runtime/${host}/skill-catalog-manifest.toml"
+logical_topology="${ROOT}/adapters/runtime/${host}/logical-agent-topology.toml"
 
 [ -f "${manifest}" ] || { echo "unknown runtime host: ${host}" >&2; exit 1; }
 case "${out_dir}" in /*) ;; *) out_dir="${ROOT}/${out_dir}" ;; esac
@@ -23,10 +25,64 @@ status="$(sed -n 's/^status: //p' "${manifest}" | head -n 1)"
 [ -n "${status}" ] || status="unknown"
 export_md="${out_dir}/accelerate-${host}-export.md"
 export_manifest="${out_dir}/accelerate-${host}-export-manifest.yaml"
+catalog_renderer="${ROOT}/scripts/render-codex-skill-profile.py"
+logical_agent_renderer="${ROOT}/scripts/render-codex-logical-agent.py"
+logical_topology_validator="${ROOT}/scripts/validate-codex-logical-agent-topology.py"
+collaboration_policy="${ROOT}/adapters/runtime/codex-collaboration/role-policy.json"
+generated_catalog_files=()
+generated_logical_agent_files=()
+catalog_digest="not-applicable"
+logical_topology_digest="not-applicable"
+source_artifacts_yaml="  - adapters/runtime/${host}/capabilities.yaml"
 shell_quote() {
   printf "'%s'" "$(printf '%s' "$1" | sed "s/'/'\\''/g")"
 }
 validation_command="test -f $(shell_quote "${export_md}") && test -f $(shell_quote "${export_manifest}")"
+
+if [ "${host}" = "codex" ]; then
+  [ -f "${catalog_manifest}" ] || { echo "missing Codex catalog manifest" >&2; exit 1; }
+  [ -f "${logical_topology}" ] || { echo "missing Codex logical agent topology" >&2; exit 1; }
+  [ -f "${catalog_renderer}" ] || { echo "missing Codex catalog renderer" >&2; exit 1; }
+  [ -f "${logical_agent_renderer}" ] || { echo "missing Codex logical agent renderer" >&2; exit 1; }
+  [ -f "${logical_topology_validator}" ] || { echo "missing Codex logical agent topology validator" >&2; exit 1; }
+  [ -f "${collaboration_policy}" ] || { echo "missing Codex collaboration policy" >&2; exit 1; }
+  python3 "${logical_topology_validator}" "${logical_topology}" "${catalog_manifest}" "${collaboration_policy}"
+  catalog_digest="$(sha256sum "${catalog_manifest}" | awk '{print $1}')"
+  logical_topology_digest="$(sha256sum "${logical_topology}" | awk '{print $1}')"
+  source_artifacts_yaml+=$'\n  - adapters/runtime/codex/skill-catalog-manifest.toml\n  - adapters/runtime/codex/logical-agent-topology.toml\n  - scripts/render-codex-skill-profile.py\n  - scripts/render-codex-logical-agent.py'
+  root_config="${out_dir}/codex-root-skills.config.toml"
+  python3 "${catalog_renderer}" "${catalog_manifest}" --mode global --output "${root_config}"
+  generated_catalog_files+=("${root_config}")
+  validation_command+=" && test -f $(shell_quote "${root_config}")"
+  while IFS= read -r profile; do
+    profile_config="${out_dir}/codex-${profile}.config.toml"
+    python3 "${catalog_renderer}" "${catalog_manifest}" --mode profile --profile "${profile}" --output "${profile_config}"
+    generated_catalog_files+=("${profile_config}")
+    validation_command+=" && test -f $(shell_quote "${profile_config}")"
+  done < <(python3 "${catalog_renderer}" "${catalog_manifest}" --mode profile --list-profiles)
+  while IFS= read -r agent; do
+    agent_config="${out_dir}/codex-${agent}.config.toml"
+    python3 "${logical_agent_renderer}" "${logical_topology}" "${catalog_manifest}" --agent "${agent}" --output "${agent_config}"
+    generated_logical_agent_files+=("${agent_config}")
+    validation_command+=" && test -f $(shell_quote "${agent_config}")"
+  done < <(python3 - "${logical_topology}" <<'PY'
+import sys
+import tomllib
+from pathlib import Path
+for item in tomllib.loads(Path(sys.argv[1]).read_text())["agents"]:
+    if item["kind"] == "specialist":
+        print(item["name"])
+PY
+)
+fi
+
+generated_files_yaml="  - ${export_md}"$'\n'"  - ${export_manifest}"
+for generated_catalog_file in "${generated_catalog_files[@]}"; do
+  generated_files_yaml+=$'\n'"  - ${generated_catalog_file}"
+done
+for generated_logical_agent_file in "${generated_logical_agent_files[@]}"; do
+  generated_files_yaml+=$'\n'"  - ${generated_logical_agent_file}"
+done
 
 cat > "${export_md}" <<MD
 # Accelerate ${host} Runtime Export
@@ -38,6 +94,17 @@ cat > "${export_md}" <<MD
 - authority: generated-export; repository remains source of truth
 - privacy classification: public-repo-derived
 - validation command: ${validation_command}
+
+## Catalog Export
+
+For Codex, generated profile files are additive profile configuration layers.
+They select skills; they do not establish technical MCP, tool, credential, or
+physical-agent isolation. Their input manifest digest is
+${catalog_digest}.
+
+The named logical-agent profiles are a fail-closed process-launch contract;
+they are not profiles injected into collaboration.spawn_agent. Their topology
+digest is ${logical_topology_digest}.
 
 ## Root Instruction
 
@@ -51,12 +118,11 @@ schema_version: 1
 export_identity: accelerate-runtime-host-export
 source_repository: accelerate
 source_artifacts:
-  - adapters/runtime/${host}/capabilities.yaml
+${source_artifacts_yaml}
 target_host: ${host}
 target_path: ${out_dir}
 generated_files:
-  - ${export_md}
-  - ${export_manifest}
+${generated_files_yaml}
 authority: generated-export; repository remains source of truth
 privacy_classification: public-repo-derived
 suppressed_capabilities:
@@ -64,7 +130,11 @@ suppressed_capabilities:
 rewritten_tools:
   - none
 validation_command: ${validation_command}
+catalog_manifest_sha256: ${catalog_digest}
+logical_agent_topology_sha256: ${logical_topology_digest}
 YAML
 
 printf '%s\n' "${export_md}"
 printf '%s\n' "${export_manifest}"
+printf '%s\n' "${generated_catalog_files[@]}"
+printf '%s\n' "${generated_logical_agent_files[@]}"

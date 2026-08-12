@@ -1,0 +1,106 @@
+{
+  "policy": "accelerate-reasoning-effort",
+  "version": 1,
+  "runtime": "codex",
+  "default_provider_effort": "medium",
+  "supported_provider_efforts": ["low", "medium", "high", "xhigh"],
+  "decision_efforts": ["no-model", "low", "medium", "high"],
+  "prompt_hardening_modes": ["not-needed", "micro", "full"],
+  "advisory_classification_rules": {
+    "prompt_hardening": {
+      "not-needed": "Use when the execution/classification packet is already explicit and no missing acceptance, proof, material conflict or risky boundary needs added instruction framing.",
+      "micro": "Use when a bounded task lacks one or more explicit acceptance, proof or observable details that can be added without a full authority and edge-case packet.",
+      "full": "Use when cross-runtime governance explicitly requires Prompt A/B, or when material authority conflict, an incident without a reliable observable, irreversible production/security/authentication/secrets action, or architecture deadlock requires explicit authorities, boundaries, edge cases and stop conditions."
+    },
+    "observable_status": {
+      "not-applicable": "Use only when no semantic or runtime decision needs an observable, such as deterministic mechanics.",
+      "sufficient": "Use when available authority, documentation, acceptance, proof and direct readback are sufficient to decide and verify the work.",
+      "insufficient": "Use when a required acceptance or proof condition, or a reliable runtime observable, is missing.",
+      "conflicting": "Use when material authorities or evidence conflict and direct readback cannot resolve them."
+    }
+  },
+  "basis_codes": [
+    "deterministic-mechanical",
+    "bounded-clear",
+    "authority-sufficient",
+    "governed-multisurface-clear",
+    "trigger-authority-conflict",
+    "trigger-observable-insufficient",
+    "trigger-irreversible-risk",
+    "direct-readback-available",
+    "trigger-architecture-deadlock",
+    "user-request-only-prohibited",
+    "priority-label-only-prohibited",
+    "exceptional-scope-missing"
+  ],
+  "lower_effort_insufficiency_codes": [
+    "not-applicable",
+    "semantic-judgment-required",
+    "multi-surface-governance",
+    "objective-trigger-requires-deeper-analysis"
+  ],
+  "stop_condition_codes": [
+    "acceptance-proved",
+    "budget-exhausted",
+    "scope-authority-missing",
+    "trigger-resolved",
+    "blocked-with-evidence"
+  ],
+  "defaults": {
+    "deterministic_mechanical": "no-model",
+    "bounded_clear": "low",
+    "non_trivial_with_sufficient_authority": "medium"
+  },
+  "selection_rules": {
+    "no-model": "Prefer a deterministic script or shell command when no semantic judgment is required; do not launch another model merely for mechanics.",
+    "low": "Use for bounded repository lookups, clear classifications, small patches and direct proof.",
+    "medium": "Use for non-trivial engineering when repo-local AGENTS, observability, documentation and acceptance are sufficient.",
+    "high": "Use only after an objective escalation trigger is proved and a complete receipt is recorded."
+  },
+  "high_escalation": {
+    "default": false,
+    "triggers": [
+      {"id": "authority-conflict", "description": "Repo-local authorities or evidence materially conflict and direct readback cannot resolve it."},
+      {"id": "observable-insufficient", "description": "An active incident or runtime decision lacks a reliable observable."},
+      {"id": "irreversible-risk", "description": "The decision is materially irreversible and affects production, security, authentication or secrets."},
+      {"id": "architecture-deadlock", "description": "Materially different architectural choices remain and repo-local authority is insufficient."},
+      {"id": "forensic-evidence-conflict", "description": "Agent or forensic evidence conflicts and root readback cannot resolve it."}
+    ],
+    "prohibitions": [
+      {"id": "observable-sufficient", "description": "Do not escalate when an active coherent observable answers the decision."},
+      {"id": "documentation-sufficient", "description": "Do not escalate when repo-local AGENTS, documentation and lifecycle rules answer the decision."},
+      {"id": "bounded-acceptance-sufficient", "description": "Do not escalate when scope, acceptance, proof and stop conditions are already bounded."},
+      {"id": "direct-readback-available", "description": "Do not escalate to reconcile claims that a direct root readback can resolve."},
+      {"id": "priority-label-only", "description": "Project or issue priority HIGH is never a reasoning-effort trigger."},
+      {"id": "user-request-only", "description": "A bare request to use HIGH is insufficient without an objective trigger."}
+    ],
+    "required_receipt_fields": [
+      "selected_effort",
+      "trigger",
+      "evidence",
+      "lower_effort_insufficiency",
+      "budget",
+      "stop_condition"
+    ],
+    "lower_effort_insufficiency_forbidden": ["not-applicable"],
+    "budget_minimums": {"model_calls": 1}
+  },
+  "exceptional_efforts": {
+    "names": ["xhigh", "max", "ultra"],
+    "fail_closed_without": ["explicit_scope", "budget", "evaluation_case", "stop_condition"]
+  },
+  "receipt": {
+    "expose_raw_chain_of_thought": false,
+    "fields": [
+      "prompt_hardening",
+      "selected_effort",
+      "basis_code",
+      "observable_status",
+      "trigger",
+      "evidence",
+      "lower_effort_insufficiency",
+      "budget",
+      "stop_condition"
+    ]
+  }
+}
