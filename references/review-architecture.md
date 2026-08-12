@@ -23,6 +23,7 @@ The review system includes:
 - `integration review`
 - `forensic review`
 - `closure review`
+- `coverage review` for wave-gated missions
 - `review-of-review`
 
 ## Reviewer Matrix
@@ -191,3 +192,13 @@ When a visual reference or approved wireframe exists, the final review must say:
 
 If the result is only a technical repair, say so and keep the issue or
 follow-up chain honest.
+
+## Wave-Gated Review
+
+For wave-gated missions, review must reconcile:
+
+- frozen denominator vs changed target set;
+- covered targets vs failed/residual targets;
+- coverage threshold vs actual percent;
+- correction loops and fresh proof;
+- whether the next wave can advance.

@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "runtime": "codex-collaboration",
+  "policy_status": "experimental",
+  "authority_boundary": "subordinate-to-accelerate",
+  "binding": {
+    "spawn_api": "collaboration.spawn_agent",
+    "model_override": "explicit-per-assignment",
+    "reasoning_effort_override": "explicit-per-assignment",
+    "tool_enforcement": "assignment-contract-only",
+    "skill_visibility": "on-demand-contract-only",
+    "mcp_visibility": "on-demand-contract-only"
+  },
+  "routes": {
+    "direct-fast-path": {
+      "delegation_budget": 0,
+      "physical_binding_allowed": false
+    },
+    "scoped": {
+      "delegation_budget": 1,
+      "physical_binding_allowed": true
+    },
+    "orchestrated": {
+      "delegation_budget": "2-3",
+      "physical_binding_allowed": true
+    }
+  },
+  "profiles": {
+    "explorer": {
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "low",
+      "tool_policy": [
+        "read-source",
+        "search-local"
+      ],
+      "skill_allowlist": [],
+      "mcp_allowlist": [],
+      "write_mode": "read-only",
+      "requires_write_scope": false,
+      "requires_reasoning_receipt": false,
+      "eligibility": [
+        "bounded local discovery with no implementation or global design judgment"
+      ]
+    },
+    "librarian": {
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "low",
+      "tool_policy": [
+        "search-official-docs",
+        "read-source"
+      ],
+      "skill_allowlist": [
+        "openai-docs"
+      ],
+      "mcp_allowlist": [
+        "context7"
+      ],
+      "write_mode": "read-only",
+      "requires_write_scope": false,
+      "requires_reasoning_receipt": false,
+      "eligibility": [
+        "bounded current documentation or source research with a citation return"
+      ]
+    },
+    "architecture-review": {
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "tool_policy": [
+        "read-source",
+        "search-official-docs",
+        "run-read-only-analysis"
+      ],
+      "skill_allowlist": [
+        "architecture",
+        "governance-audit"
+      ],
+      "mcp_allowlist": [],
+      "write_mode": "read-only",
+      "requires_write_scope": false,
+      "requires_reasoning_receipt": false,
+      "eligibility": [
+        "architecture or dependency judgment with a bounded evidence request"
+      ]
+    },
+    "implementation": {
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "tool_policy": [
+        "read-source",
+        "apply-patch",
+        "run-focused-validation"
+      ],
+      "skill_allowlist": [
+        "validation-governance"
+      ],
+      "mcp_allowlist": [],
+      "write_mode": "bounded-write",
+      "requires_write_scope": true,
+      "requires_reasoning_receipt": false,
+      "eligibility": [
+        "bounded implementation after surface, owner, write scope, and proof are known"
+      ]
+    },
+    "mechanical-fixer": {
+      "model": "gpt-5.6-luna",
+      "reasoning_effort": "medium",
+      "tool_policy": [
+        "read-source",
+        "apply-patch",
+        "run-focused-validation"
+      ],
+      "skill_allowlist": [],
+      "mcp_allowlist": [],
+      "write_mode": "bounded-write",
+      "requires_write_scope": true,
+      "requires_reasoning_receipt": false,
+      "eligibility": [
+        "known target and prescribed behavior with no discovery, architecture, or design judgment"
+      ]
+    },
+    "product-runtime-review": {
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "tool_policy": [
+        "read-source",
+        "run-focused-validation",
+        "browser-proof"
+      ],
+      "skill_allowlist": [
+        "product-runtime-review"
+      ],
+      "mcp_allowlist": [],
+      "write_mode": "read-only",
+      "requires_write_scope": false,
+      "requires_reasoning_receipt": false,
+      "eligibility": [
+        "bounded runtime or browser proof independent of implementation"
+      ]
+    },
+    "governance-audit": {
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "tool_policy": [
+        "read-source",
+        "run-focused-validation"
+      ],
+      "skill_allowlist": [
+        "governance-audit"
+      ],
+      "mcp_allowlist": [],
+      "write_mode": "read-only",
+      "requires_write_scope": false,
+      "requires_reasoning_receipt": false,
+      "eligibility": [
+        "bounded workflow or policy audit with no provider mutation"
+      ]
+    },
+    "high-stakes-review": {
+      "model": "gpt-5.6-sol",
+      "reasoning_effort": "high",
+      "tool_policy": [
+        "read-source",
+        "run-focused-validation",
+        "search-official-docs"
+      ],
+      "skill_allowlist": [
+        "security-patterns",
+        "anti-abuse-review"
+      ],
+      "mcp_allowlist": [],
+      "write_mode": "read-only",
+      "requires_write_scope": false,
+      "requires_reasoning_receipt": true,
+      "eligibility": [
+        "objective high-risk trigger",
+        "valid reasoning decision receipt",
+        "independent skeptical review"
+      ]
+    }
+  },
+  "role_bindings": {
+    "architecture": [
+      "architecture-review",
+      "high-stakes-review"
+    ],
+    "backend": [
+      "implementation",
+      "mechanical-fixer"
+    ],
+    "frontend": [
+      "implementation",
+      "mechanical-fixer"
+    ],
+    "qa-regression": [
+      "product-runtime-review"
+    ],
+    "security": [
+      "high-stakes-review"
+    ],
+    "governance": [
+      "governance-audit"
+    ],
+    "provider-boundary": [],
+    "product-runtime": [
+      "product-runtime-review"
+    ],
+    "other": []
+  },
+  "fallback": [
+    "scoped-root-only",
+    "virtual-subagent-packets"
+  ]
+}

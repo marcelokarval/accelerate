@@ -54,10 +54,14 @@ this sequence:
 3. classify the dominant risk: integration, runtime correctness, security,
    performance/query shape, UX/product, governance, or release safety
 4. choose the smallest honest role family that owns that surface, phase, and risk
-5. bind the role to a physical subagent only when a matching promoted agent or
+5. when the host is Codex collaboration, resolve the explicit model/effort and
+   assignment allowlists through
+   `adapters/runtime/codex-collaboration/role-policy.json`; do not inherit the
+   root model by omission
+6. bind the role to a physical subagent only when a matching promoted agent or
    runtime adapter exists
-6. otherwise emit a virtual subagent assignment packet with the chosen role family
-7. keep master-owned architecture and closure decisions out of delegated
+7. otherwise emit a virtual subagent assignment packet with the chosen role family
+8. keep master-owned architecture and closure decisions out of delegated
    acceptance authority
 
 The routing output must name:
@@ -70,6 +74,12 @@ The routing output must name:
 - return contract
 - review counterpart
 - cleanup expectation after return
+
+For Codex collaboration, tools, skills, and MCPs remain assignment-contract
+allowlists because the host does not enforce a per-subagent tool boundary. Do
+not represent this as technical isolation. `direct-fast-path` never reaches a
+physical binding; unresolved or unavailable bindings fall back to root or
+virtual packets.
 
 Do not route by title alone. For example, a task named "review dashboard" may be
 QA/proof, product/runtime, accessibility, or architecture depending on the proof

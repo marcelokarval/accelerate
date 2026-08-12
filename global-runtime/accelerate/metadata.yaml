@@ -1,0 +1,4 @@
+name: accelerate
+category: orchestration
+origin: standalone-global-runtime
+summary: Runtime root for classifying engineering work, routing workflows, and enforcing proof gates.

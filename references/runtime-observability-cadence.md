@@ -36,6 +36,7 @@ feed that opening packet is:
 - skills change -> `Runtime Delta Packet`
 - ADR/reference set change -> `Runtime Delta Packet`
 - gate status change -> `Runtime Delta Packet`
+- wave denominator frozen or coverage gate change -> `Runtime Delta Packet`
 - QA/proof lane change -> `Runtime Delta Packet`
 
 ### On prompt hardening
@@ -66,3 +67,11 @@ state, treat that as observability drift.
 
 If a non-trivial run does not spawn subagents, the opening packet must include a
 `single-threaded exception` reason.
+
+### On wave-gated work
+
+- denominator freeze -> `Wave Packet`
+- coverage pass/fail -> `Coverage Gate` plus `Runtime Delta Packet`
+- wave closure or correction -> `Wave Closure Packet`
+
+Do not report broad repeated work as complete from validator success alone; report coverage against the frozen denominator.
