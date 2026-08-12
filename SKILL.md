@@ -127,6 +127,32 @@ The top-level outcomes are:
 - trivial bounded engineering work
 - orchestrated non-trivial work
 
+## Execution Routes
+
+After classification, choose exactly one execution route:
+
+- `direct-fast-path`: a known target, one logical surface, low and reversible
+  risk, and focal proof. The root executes directly with micro-hardening and
+  zero physical or virtual subagents. Do not create a plan, handoff, browser
+  lane, or extra packet merely because the work is engineering. Never use this
+  route for auth, billing, permissions, sensitive data, migrations, secrets,
+  irreversible external calls, or runtime truth.
+- `scoped`: one bounded lane needs discovery, current external knowledge, or
+  independent proof. Keep execution `single`; use at most one sidecar only when
+  its return will reduce uncertainty or elapsed time more than the handoff costs.
+- `orchestrated`: cross-surface risk, material uncertainty, or two or more
+  independent lanes justify explicit orchestration, ownership, reconciliation,
+  and proportionate proof.
+
+`direct-fast-path`, `scoped`, and `orchestrated` are an execution route, not a
+classification or execution mode. They do not override a target repository's
+stricter issue, local-workspace, safety, or proof authority.
+
+Escalate out of `direct-fast-path` when the target stops being known, proof
+becomes broad or runtime-facing, risk is material, or the work gains a genuinely
+independent lane. Do not use file count, UI presence, or agent availability as
+an escalation trigger by itself.
+
 All engineering runs need outcome clarity.
 
 Use micro-hardening for trivial bounded work:

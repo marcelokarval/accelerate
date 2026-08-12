@@ -1,0 +1,4 @@
+interface:
+  display_name: "Governed US Lead Data Acquisition"
+  short_description: "Acquire US lead data with traceability"
+  default_prompt: "Use $governed-us-lead-data-acquisition to assess and govern a US lead-data acquisition workflow with provenance."

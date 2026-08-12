@@ -24,9 +24,11 @@ User Request
         -> no  -> continue
      -> conversational / no-op
      -> trivial bounded
-     -> trivial bounded / micro-hardening
+        -> direct-fast-path -> direct root execution
+        -> scoped -> one bounded sidecar only when handoff value is positive
      -> ambiguous / full prompt hardening
      -> non-trivial engineering / reasoning effort decision
+        -> orchestrated -> reconcile independent lanes before closure
           -> branch select
           -> issue / planning / execution / proof / closure
 ```

@@ -64,6 +64,27 @@ The top-level outcomes are:
 - trivial bounded engineering work
 - orchestrated non-trivial work
 
+## Execution Routes
+
+Choose one route after classification:
+
+- `direct-fast-path`: known, one-surface, low and reversible-risk work with
+  focal proof; root executes directly with micro-hardening and zero physical or
+  virtual subagents. Never use it for auth, billing, permissions, sensitive
+  data, migrations, secrets, irreversible external calls, or runtime truth.
+- `scoped`: one bounded lane may use at most one sidecar for independent
+  discovery, current research, or proof when its value exceeds handoff cost.
+- `orchestrated`: material uncertainty, cross-surface risk, or two or more
+  independent lanes require ownership, reconciliation, and proportionate proof.
+
+These are an execution route, not a classification or execution mode. They do
+not override stricter repository authority. Do not escalate only because work
+touches multiple files, includes UI, or an agent is available.
+
+Escalate out of `direct-fast-path` when the target stops being known, proof
+becomes broad or runtime-facing, risk is material, or a genuinely independent
+lane appears.
+
 When a run is design-system-driven, premium, or broadly visual, default to the
 UI Mutation Ladder:
 

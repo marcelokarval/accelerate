@@ -1,0 +1,8 @@
+name: chatwoot-conversational-channel-operations
+category: conversational-channel-operations
+status: active
+source: docs/codex-skill-seeds/skills/chatwoot-conversational-channel-operations
+runtime_placement: on-demand
+preload: false
+sync_policy: repo-first
+description: Chatwoot WhatsApp channel ingress, delivery, handoff, and privacy operations.
