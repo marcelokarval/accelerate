@@ -25,7 +25,7 @@ python3 "$validator" "$topology" "$catalog" "$policy"
 tmp_dir="$(mktemp -d)"
 trap 'rm -rf "$tmp_dir"' EXIT
 
-for agent in orchestrator python-backend nextjs-frontend research reviewer qa; do
+for agent in python-backend nextjs-frontend research reviewer qa; do
   output="$tmp_dir/${agent}.config.toml"
   python3 "$renderer" "$topology" "$catalog" --agent "$agent" --output "$output"
   [ -s "$output" ] || fail "empty profile for $agent"
@@ -33,8 +33,9 @@ for agent in orchestrator python-backend nextjs-frontend research reviewer qa; d
   ! rg -F '*' "$output" >/dev/null || fail "wildcard in $agent profile"
 done
 
-rg -F 'model = "gpt-5.6-terra"' "$tmp_dir/orchestrator.config.toml" >/dev/null || fail 'orchestrator model missing'
-rg -F 'model_reasoning_effort = "high"' "$tmp_dir/orchestrator.config.toml" >/dev/null || fail 'orchestrator effort missing'
+if python3 "$renderer" "$topology" "$catalog" --agent orchestrator --output "$tmp_dir/orchestrator.config.toml" >/dev/null 2>&1; then
+  fail 'renderer accepted orchestrator as an additive profile'
+fi
 rg -F 'python-pro/SKILL.md", enabled = true' "$tmp_dir/python-backend.config.toml" >/dev/null || fail 'python profile missing'
 ! rg -F 'nextjs-app-router-patterns/SKILL.md' "$tmp_dir/python-backend.config.toml" >/dev/null || fail 'python profile leaked frontend skill'
 rg -F 'nextjs-app-router-patterns/SKILL.md", enabled = true' "$tmp_dir/nextjs-frontend.config.toml" >/dev/null || fail 'frontend profile missing'

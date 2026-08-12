@@ -28,8 +28,23 @@ PY
 ln -s "$catalog_skills_dir" "$temporary/skills"
 python3 scripts/render-codex-skill-profile.py "$catalog" --mode global --output "$temporary/config.toml"
 python3 scripts/install-codex-logical-agents.py "$topology" "$catalog" --codex-home "$temporary" >/dev/null
+python3 - "$temporary/config.toml" "$temporary/orchestrator.config.toml" <<'PY'
+import sys
+import tomllib
+from pathlib import Path
+
+config = tomllib.loads(Path(sys.argv[1]).read_text())
+if config.get("model") != "gpt-5.6-sol" or config.get("model_reasoning_effort") != "medium":
+    raise SystemExit("root orchestrator defaults were not installed")
+if Path(sys.argv[2]).exists():
+    raise SystemExit("root orchestrator was installed as an additive profile")
+PY
 while IFS= read -r agent; do
-  CODEX_HOME="$temporary" codex -p "$agent" debug prompt-input '' >"$temporary/$agent.json"
+  if [ "$agent" = "orchestrator" ]; then
+    CODEX_HOME="$temporary" codex debug prompt-input '' >"$temporary/$agent.json"
+  else
+    CODEX_HOME="$temporary" codex -p "$agent" debug prompt-input '' >"$temporary/$agent.json"
+  fi
 done < <(python3 - "$topology" <<'PY'
 import sys
 import tomllib

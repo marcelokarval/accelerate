@@ -28,6 +28,8 @@ catalog = tomllib.loads(args.catalog.read_text())
 agent = next((item for item in topology["agents"] if item["name"] == args.agent), None)
 if agent is None:
     parser.error(f"unknown logical agent: {args.agent}")
+if agent["kind"] != "specialist":
+    parser.error("the orchestrator is the default config, not an additive profile")
 sources = {source["id"]: source for source in catalog["sources"]}
 group = next((item for item in catalog["groups"] if item["id"] == agent["catalog_group"]), None)
 if group is None:

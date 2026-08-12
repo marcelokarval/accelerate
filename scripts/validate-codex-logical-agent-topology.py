@@ -77,8 +77,8 @@ def main() -> int:
                 roots.append(agent)
                 if agent.get("name") != "orchestrator" or agent.get("role_family") != "root":
                     fail("orchestrator root identity is invalid")
-                if agent.get("model") != "gpt-5.6-terra" or agent.get("reasoning_effort") != "high":
-                    fail("orchestrator must be Terra/high")
+                if agent.get("model") != "gpt-5.6-sol" or agent.get("reasoning_effort") != "medium":
+                    fail("orchestrator must be Sol/medium")
                 if agent.get("write_mode") != "root-only" or agent.get("external_writes") is not True or agent.get("closure_authority") is not True:
                     fail("orchestrator authority is invalid")
                 if not ROOT_SKILLS <= set(skills):

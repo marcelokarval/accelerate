@@ -22,9 +22,15 @@ python3 "${ROOT}/scripts/check-codex-logical-agent-install.py" "${TOPOLOGY}" "${
   --codex-home "${CODEX_HOME_TARGET}" --agent "${agent}" >/dev/null
 
 if [ "${dry_run}" = true ]; then
-  printf 'CODEX_HOME=%q codex -p %q' "${CODEX_HOME_TARGET}" "${agent}"
+  printf 'CODEX_HOME=%q codex' "${CODEX_HOME_TARGET}"
+  if [ "${agent}" != "orchestrator" ]; then
+    printf ' -p %q' "${agent}"
+  fi
   printf ' %q' "$@"
   printf '\n'
   exit 0
+fi
+if [ "${agent}" = "orchestrator" ]; then
+  exec env CODEX_HOME="${CODEX_HOME_TARGET}" codex "$@"
 fi
 exec env CODEX_HOME="${CODEX_HOME_TARGET}" codex -p "${agent}" "$@"

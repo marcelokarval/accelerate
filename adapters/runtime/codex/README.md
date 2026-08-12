@@ -2,7 +2,8 @@
 
 This directory describes two distinct Codex mechanisms:
 
-- a profile is a separate process launched through `codex -p <name>`;
+- the default `codex` process is the sole root `orchestrator`;
+- a specialist profile is a separate process launched through `codex -p <name>`;
 - a collaboration spawn receives only the bounded assignment packet plus
   explicit model and reasoning effort.
 
@@ -16,12 +17,17 @@ topology, external writes, integration, review-of-review, and closure.
 
 ## Install and prove
 
-First install the rendered global catalog base in `config.toml`; profile entries
-are overlays, not standalone skill discovery. Then generate/install through
+First install the rendered global catalog base in `config.toml`; it is the
+source-controlled skills input. `scripts/install-codex-logical-agents.py`
+reconciles the root `model` and `model_reasoning_effort` from the topology while
+preserving unrelated configuration. Profile entries are specialist overlays, not
+standalone skill discovery. Then generate/install through
 `scripts/install-codex-logical-agents.py` and use
-`scripts/codex-logical-agent.sh`. The launcher verifies both that global base
-and the installed profile against the source render before invoking Codex, so
-an unknown or ineffective profile cannot silently run as the base configuration.
+`scripts/codex-logical-agent.sh`. Use `orchestrator` as an alias for bare
+`codex`, never as `-p orchestrator`. The launcher verifies both that global base
+and the installed specialist profile against the source render before invoking
+Codex, so an unknown or ineffective profile cannot silently run as the base
+configuration.
 
 Use `tests/codex-logical-agent-topology.sh` and
 `tests/codex-logical-agent-install.sh` for source and installation proof.

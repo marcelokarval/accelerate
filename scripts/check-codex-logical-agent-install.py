@@ -51,6 +51,16 @@ def effective_states(base_document: dict[str, object], managed_paths: set[str]) 
     return states
 
 
+def require_orchestrator_default(base_document: dict[str, object], home: Path, orchestrator: dict[str, object]) -> None:
+    if base_document.get("model") != orchestrator["model"]:
+        raise SystemExit("default Codex model does not match the orchestrator")
+    if base_document.get("model_reasoning_effort") != orchestrator["reasoning_effort"]:
+        raise SystemExit("default Codex reasoning effort does not match the orchestrator")
+    profile = home / "orchestrator.config.toml"
+    if profile.exists():
+        raise SystemExit(f"orchestrator must not be an additive profile: {profile}")
+
+
 topology = tomllib.loads(args.topology.read_text())
 validator = Path(__file__).with_name("validate-codex-logical-agent-topology.py")
 source_root = Path(__file__).resolve().parents[1]
@@ -61,10 +71,12 @@ subprocess.run(
 )
 if args.agent not in {str(agent["name"]) for agent in topology["agents"]}:
     parser.error(f"unknown logical agent: {args.agent}")
+agent = next(agent for agent in topology["agents"] if agent["name"] == args.agent)
 target = args.codex_home / f"{args.agent}.config.toml"
-if not target.is_file():
-    raise SystemExit(f"logical profile is not installed: {target}")
-tomllib.loads(target.read_text())
+if agent["kind"] == "specialist":
+    if not target.is_file():
+        raise SystemExit(f"logical profile is not installed: {target}")
+    tomllib.loads(target.read_text())
 renderer = Path(__file__).with_name("render-codex-logical-agent.py")
 catalog_renderer = Path(__file__).with_name("render-codex-skill-profile.py")
 base_config = args.codex_home / "config.toml"
@@ -83,6 +95,11 @@ with tempfile.TemporaryDirectory(prefix="codex-logical-agent-check-") as tempora
     actual_states = effective_states(base_document, set(expected_states))
     if any(actual_states.get(path, True) != expected for path, expected in expected_states.items()):
         raise SystemExit(f"global catalog base is stale or incomplete: {base_config}")
+    orchestrator = next(agent for agent in topology["agents"] if agent["kind"] == "root-orchestrator")
+    require_orchestrator_default(base_document, args.codex_home, orchestrator)
+    if agent["kind"] == "root-orchestrator":
+        print(base_config)
+        raise SystemExit(0)
     subprocess.run(
         ["python3", str(renderer), str(args.topology), str(args.catalog), "--agent", args.agent, "--output", str(expected)],
         check=True,

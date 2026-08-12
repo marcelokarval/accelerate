@@ -70,7 +70,8 @@ import sys
 import tomllib
 from pathlib import Path
 for item in tomllib.loads(Path(sys.argv[1]).read_text())["agents"]:
-    print(item["name"])
+    if item["kind"] == "specialist":
+        print(item["name"])
 PY
 )
 fi

@@ -68,7 +68,9 @@ require_match 'Do not treat this export as canonical doctrine' "$export_path"
 require_match 'do not treat it as proof of promoted physical agents' "$export_path"
 require_match 'codex-root-skills.config.toml' "$manifest_path"
 require_match 'codex-django-backend.config.toml' "$manifest_path"
-require_match 'codex-orchestrator.config.toml' "$manifest_path"
+if rg -F 'codex-orchestrator.config.toml' "$manifest_path" >/dev/null; then
+  fail 'host export emitted an additive orchestrator profile'
+fi
 require_match 'codex-python-backend.config.toml' "$manifest_path"
 require_match 'catalog_manifest_sha256: [0-9a-f]{64}' "$manifest_path"
 require_match 'logical_agent_topology_sha256: [0-9a-f]{64}' "$manifest_path"
