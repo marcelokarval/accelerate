@@ -66,7 +66,7 @@ def validate(policy: dict[str, Any]) -> None:
         fail("binding must be an object")
     require_keys(
         binding,
-        {"spawn_api", "model_override", "reasoning_effort_override", "tool_enforcement", "skill_visibility", "mcp_visibility"},
+        {"spawn_api", "model_override", "reasoning_effort_override", "tool_enforcement", "skill_visibility", "mcp_visibility", "logical_topology"},
         "binding",
     )
     if binding["spawn_api"] != "collaboration.spawn_agent":
@@ -75,6 +75,8 @@ def validate(policy: dict[str, Any]) -> None:
         fail("model overrides must be explicit per assignment")
     if binding["tool_enforcement"] != "assignment-contract-only":
         fail("tool enforcement must remain assignment-contract-only")
+    if binding["logical_topology"] != "adapters/runtime/codex/logical-agent-topology.toml":
+        fail("logical topology binding is invalid")
 
     routes = policy["routes"]
     if set(routes) != {"direct-fast-path", "scoped", "orchestrated"}:

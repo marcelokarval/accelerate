@@ -34,3 +34,25 @@ top of the compact core; it is a capability-selection mechanism, not a host
 sandbox, credential boundary, MCP allowlist, or promotion to a physical agent.
 Root retains cross-surface reconciliation, Plane writes, external delivery,
 and closure.
+
+## Logical Agent Contract
+
+`logical-agent-topology.toml` makes the root orchestrator and the bounded
+`python-backend`, `nextjs-frontend`, `research`, `reviewer`, and `qa` roles
+explicit. It maps each specialist to one catalog group, one collaboration
+policy profile, explicit model/effort, and read/write posture.
+
+Install and invoke a logical profile only through the fail-closed launcher:
+
+```bash
+python3 scripts/install-codex-logical-agents.py \
+  adapters/runtime/codex/logical-agent-topology.toml \
+  adapters/runtime/codex/skill-catalog-manifest.toml --codex-home ~/.codex
+scripts/codex-logical-agent.sh python-backend
+```
+
+The launcher rejects unknown, missing, malformed, stale, or manually edited
+profiles. This safeguards separate `codex -p` processes. It does not make a
+native collaboration spawn load that profile: for `spawn_agent`, include the
+same named logical profile in the short assignment packet and pass its model
+and effort explicitly.

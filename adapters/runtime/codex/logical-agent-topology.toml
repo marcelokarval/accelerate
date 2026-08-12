@@ -1,0 +1,82 @@
+schema_version = 1
+topology_identity = "codex-logical-agent-topology"
+authority = "logical routing contract; Codex profiles are additive and do not enforce process, tool, MCP, credential, or filesystem isolation"
+spawn_packet_limit = 10
+root_exclusive_authority = ["issue topology", "external writes", "integration", "review-of-review", "closure"]
+
+[[agents]]
+name = "orchestrator"
+kind = "root-orchestrator"
+role_family = "root"
+catalog_group = "root-core"
+model = "gpt-5.6-terra"
+reasoning_effort = "high"
+write_mode = "root-only"
+external_writes = true
+closure_authority = true
+required_skills = ["accelerate", "prompt-hardening", "plane", "subagent-governance", "skill-catalog-router", "verification-before-completion"]
+
+[[agents]]
+name = "python-backend"
+kind = "specialist"
+role_family = "backend"
+catalog_group = "django-backend"
+collaboration_profile = "implementation"
+model = "gpt-5.6-terra"
+reasoning_effort = "medium"
+write_mode = "bounded-write"
+external_writes = false
+closure_authority = false
+required_skills = ["django-pro", "django-service-patterns", "python-pro", "python-testing", "validation-governance"]
+
+[[agents]]
+name = "nextjs-frontend"
+kind = "specialist"
+role_family = "frontend"
+catalog_group = "next-react-frontend"
+collaboration_profile = "implementation"
+model = "gpt-5.6-terra"
+reasoning_effort = "medium"
+write_mode = "bounded-write"
+external_writes = false
+closure_authority = false
+required_skills = ["nextjs-app-router-patterns", "frontend-boundary-governance", "typescript-pro", "react-best-practices"]
+
+[[agents]]
+name = "research"
+kind = "specialist"
+role_family = "architecture"
+catalog_group = "catalog-librarian"
+collaboration_profile = "librarian"
+model = "gpt-5.6-luna"
+reasoning_effort = "low"
+write_mode = "read-only"
+external_writes = false
+closure_authority = false
+required_skills = ["codebase-inspection", "codex", "writing-skills"]
+
+[[agents]]
+name = "reviewer"
+kind = "specialist"
+role_family = "governance"
+catalog_group = "governance-review"
+collaboration_profile = "governance-audit"
+model = "gpt-5.6-terra"
+reasoning_effort = "medium"
+write_mode = "read-only"
+external_writes = false
+closure_authority = false
+required_skills = ["governance-audit", "requesting-code-review", "adversarial-security-review"]
+
+[[agents]]
+name = "qa"
+kind = "specialist"
+role_family = "qa-regression"
+catalog_group = "product-browser-qa"
+collaboration_profile = "product-runtime-review"
+model = "gpt-5.6-terra"
+reasoning_effort = "medium"
+write_mode = "read-only"
+external_writes = false
+closure_authority = false
+required_skills = ["dogfood", "playwright-patterns", "product-runtime-review"]

@@ -9,7 +9,8 @@
     "reasoning_effort_override": "explicit-per-assignment",
     "tool_enforcement": "assignment-contract-only",
     "skill_visibility": "on-demand-contract-only",
-    "mcp_visibility": "on-demand-contract-only"
+    "mcp_visibility": "on-demand-contract-only",
+    "logical_topology": "adapters/runtime/codex/logical-agent-topology.toml"
   },
   "routes": {
     "direct-fast-path": {
@@ -181,6 +182,7 @@
   "role_bindings": {
     "architecture": [
       "architecture-review",
+      "librarian",
       "high-stakes-review"
     ],
     "backend": [

@@ -22,6 +22,7 @@ python3 "$validator"
 rg -n 'assignment-contract-only' "$adapter" "$capabilities" >/dev/null || fail 'missing honest tool-enforcement boundary'
 rg -n 'never `direct-fast-path`' "$adapter" >/dev/null || fail 'direct route is not blocked'
 rg -n 'never use `\*`' "$adapter" >/dev/null || fail 'wildcards are not prohibited'
+rg -n 'logical-agent-topology.toml' "$policy" >/dev/null || fail 'logical topology is not bound'
 rg -n 'status: experimental' "$capabilities" >/dev/null || fail 'adapter must remain experimental'
 rg -n 'allowed_tools:' "$capabilities" >/dev/null || fail 'capabilities must declare allowed tools'
 rg -n 'suppressed_capabilities:' "$capabilities" >/dev/null || fail 'capabilities must declare suppressed capabilities'
