@@ -22,17 +22,28 @@ CAPABILITY_SKILLS = {
 }
 
 
-def frontmatter_value(skill_text: str, key: str) -> str | None:
-    match = re.match(r"^---\n(.*?)\n---\n", skill_text, re.DOTALL)
-    if not match:
-        return None
-    value = re.search(rf"^{re.escape(key)}:\s*(.+?)\s*$", match.group(1), re.MULTILINE)
-    return value.group(1).strip("\"'") if value else None
+def frontmatter(skill_text: str) -> dict:
+    if not skill_text.startswith("---\n"):
+        return {}
+    body, separator, _ = skill_text.removeprefix("---\n").partition("\n---\n")
+    if not separator:
+        return {}
+    parsed = yaml.safe_load(body)
+    return parsed if isinstance(parsed, dict) else {}
 
 
-def metadata_value(metadata_text: str, key: str) -> str | None:
-    value = re.search(rf"^{re.escape(key)}:\s*(.+?)\s*$", metadata_text, re.MULTILINE)
-    return value.group(1).strip("\"'") if value else None
+def metadata(metadata_text: str) -> dict:
+    parsed = yaml.safe_load(metadata_text)
+    return parsed if isinstance(parsed, dict) else {}
+
+
+def assert_unique_eval_case_ids(test_case: unittest.TestCase, cases: list[dict]) -> None:
+    case_ids = [case.get("id") for case in cases if isinstance(case, dict)]
+    test_case.assertEqual(
+        len(case_ids),
+        len(set(case_ids)),
+        "duplicate eval case id detected in evals/evals.json",
+    )
 
 
 def registry_rows(manifest_text: str) -> list[tuple[str, list[str]]]:
@@ -83,13 +94,14 @@ class CapabilitySkillSeedsTest(unittest.TestCase):
 
                 skill_text = skill_path.read_text(encoding="utf-8")
                 metadata_text = metadata_path.read_text(encoding="utf-8")
-                self.assertEqual(skill_name, frontmatter_value(skill_text, "name"))
-                self.assertEqual(skill_name, metadata_value(metadata_text, "name"))
+                self.assertEqual(skill_name, frontmatter(skill_text).get("name"))
+                skill_metadata = metadata(metadata_text)
+                self.assertEqual(skill_name, skill_metadata.get("name"))
                 self.assertIn(reference, skill_text)
                 self.assertTrue((skill_dir / reference).is_file(), f"missing {reference}")
-                self.assertEqual("active", metadata_value(metadata_text, "status"))
-                self.assertEqual("on-demand", metadata_value(metadata_text, "runtime_placement"))
-                self.assertEqual("false", metadata_value(metadata_text, "preload"))
+                self.assertEqual("active", skill_metadata.get("status"))
+                self.assertEqual("on-demand", skill_metadata.get("runtime_placement"))
+                self.assertIs(False, skill_metadata.get("preload"))
 
     def test_capability_packages_have_agent_metadata_and_evals(self) -> None:
         for skill_name in CAPABILITY_SKILLS:
@@ -114,11 +126,16 @@ class CapabilitySkillSeedsTest(unittest.TestCase):
                 self.assertEqual(skill_name, evals.get("skill"))
                 self.assertIsInstance(evals.get("cases"), list)
                 self.assertTrue(evals["cases"], "eval cases must not be empty")
+                assert_unique_eval_case_ids(self, evals["cases"])
                 for case in evals["cases"]:
                     self.assertIsInstance(case, dict)
                     for key in ("id", "prompt", "expect"):
                         self.assertIn(key, case)
                         self.assertTrue(case[key], f"empty eval case {key}")
+
+    def test_duplicate_eval_case_ids_fail_closed(self) -> None:
+        with self.assertRaisesRegex(AssertionError, "duplicate eval case id"):
+            assert_unique_eval_case_ids(self, [{"id": "same"}, {"id": "same"}])
 
     def test_capability_guardrails_remain_explicit(self) -> None:
         skill_text = {
