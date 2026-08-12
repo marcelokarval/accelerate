@@ -144,7 +144,9 @@ fi
 perl -0pi -e 's#\n  - path: \.accelerate/review/qa-report\.md\n    class: secret-prohibited\n    export: never\n##' "${WORK_ROOT}/repo/.accelerate/status/privacy-map.yaml"
 bash "${SCRIPTS}/check-export-allowlist.sh" "${WORK_ROOT}/repo" >/dev/null
 host_export_output="$(bash "${ROOT}/scripts/export-runtime-host.sh" codex "${WORK_ROOT}/host-export")"
-host_export="$(printf '%s\n' "${host_export_output}" | sed -n '1p')"
+mapfile -t host_exports < <(printf '%s\n' "${host_export_output}" | grep -E '/accelerate-codex-export\.md$')
+[ "${#host_exports[@]}" -eq 1 ] || fail "host export path is missing or ambiguous"
+host_export="${host_exports[0]}"
 [ -f "${host_export}" ] || fail "host export not generated"
 if bash "${ROOT}/scripts/export-runtime-host.sh" "../bad" "${WORK_ROOT}/host-export" >"${WORK_ROOT}/bad-host.out" 2>&1; then
   fail "invalid host name accepted"
