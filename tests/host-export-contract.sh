@@ -66,6 +66,11 @@ done
 require_match 'generated outward' "$export_path"
 require_match 'Do not treat this export as canonical doctrine' "$export_path"
 require_match 'do not treat it as proof of promoted physical agents' "$export_path"
+require_match 'codex-root-skills.config.toml' "$manifest_path"
+require_match 'codex-django-backend.config.toml' "$manifest_path"
+require_match 'catalog_manifest_sha256: [0-9a-f]{64}' "$manifest_path"
+require_match 'additive profile configuration layers' "$export_path"
+require_match 'do not establish technical MCP, tool, credential, or' "$export_path"
 validation_command="$(python3 - "${manifest_path}" <<'PY'
 from pathlib import Path
 import re

@@ -3,7 +3,10 @@ type: host-export
 status: available
 authority_boundary: generated-export
 allowed_tools: []
-suppressed_capabilities: []
+suppressed_capabilities:
+  - per-agent MCP/tool/skill isolation is not host-enforced
 validation_command: scripts/export-runtime-host.sh codex .tmp/host-export
-proof_artifacts: []
+proof_artifacts:
+  - adapters/runtime/codex/skill-catalog-manifest.toml
+  - scripts/render-codex-skill-profile.py
 privacy_notes: generated outward only; not source authority

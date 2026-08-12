@@ -325,6 +325,8 @@ to classify and then defer to that repo-local authority.
 
 References:
 
+- `references/skill-catalog-truth-gate.md`: require fresh runtime discovery and a declared coverage class before skill thinning, specialist selection, or capability claims.
+
 - `references/reasoning-effort-policy.md`: select and audit prompt-hardening depth and the minimum sufficient Codex effort; machine authority is `assets/reasoning-effort-policy.json`.
 - `references/codex-collaboration-routing.md`: map Codex execution roles to supported collaboration model and reasoning parameters.
 - `references/codex-collaboration-role-policy.json`: machine-readable role policy consumed by the Codex collaboration adapter.

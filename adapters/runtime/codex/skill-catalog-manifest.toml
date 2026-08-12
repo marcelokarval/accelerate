@@ -1,0 +1,166 @@
+schema_version = 2
+catalog_identity = "codex-runtime-skill-catalog"
+authority = "runtime discovery is evidence; this manifest defines the routing and profile contract"
+discovery_command = "codex debug prompt-input ''"
+runtime_skill_count = 125
+root_route = "skill-catalog-router"
+
+[[sources]]
+id = "r0"
+base_path = "/home/marcelo-karval/.codex/skills"
+classification = "managed-global"
+
+[[sources]]
+id = "r1"
+base_path = "/home/marcelo-karval/.agents/skills"
+classification = "host-injected"
+
+[[sources]]
+id = "r2"
+base_path = "/home/marcelo-karval/.codex/skills/.system"
+classification = "host-injected"
+
+[[groups]]
+id = "root-core"
+source = "r0"
+classification = "core"
+enabled_by_default = true
+skill_ids = [
+  "accelerate", "architecture", "bash-linux", "code-audit",
+  "dependency-governance", "executing-plans", "governance-audit",
+  "parallel-agents", "plane", "planning-with-files", "prompt-hardening",
+  "security-patterns", "skill-catalog-router", "subagent-governance",
+  "systematic-debugging", "validation-governance",
+  "verification-before-completion", "visual-modeling",
+]
+
+[[groups]]
+id = "django-backend"
+source = "r0"
+classification = "specialist"
+profile = "django-backend"
+enabled_by_default = false
+skill_ids = [
+  "api-surface-governance", "authorization-policy-patterns",
+  "django-inertia-integration", "django-pro", "django-service-patterns",
+  "django-vite-integration", "inertia-patterns", "inertia-shared-props",
+  "python-pro", "python-testing", "server-prop-governance",
+]
+
+[[groups]]
+id = "next-react-frontend"
+source = "r0"
+classification = "specialist"
+profile = "next-react-frontend"
+enabled_by_default = false
+skill_ids = [
+  "apply-design-system-contract", "component-extraction",
+  "design-md-corpus-patterns", "extract-html-design-system-v2",
+  "figma-node-fidelity", "front-react-shadcn",
+  "frontend-boundary-governance", "frontend-chunk-ownership-audit",
+  "frontend-component-hierarchy", "frontend-componentization-audit",
+  "i18n-patterns", "inertia-runtime-persistence-audit",
+  "nextjs-app-router-patterns", "react-best-practices",
+  "tailwind-design-system", "tailwind-patterns", "typescript-pro",
+]
+
+[[groups]]
+id = "data-db"
+source = "r0"
+classification = "specialist"
+profile = "data-db"
+enabled_by_default = false
+skill_ids = [
+  "database-architect", "database-design", "drizzle-patterns",
+  "neon-postgres-patterns", "postgres-best-practices", "postgresql",
+  "prisma-patterns", "sql-optimization-patterns", "supabase-postgres-patterns",
+]
+
+[[groups]]
+id = "integrations-ops"
+source = "r0"
+classification = "specialist"
+profile = "integrations-ops"
+enabled_by_default = false
+skill_ids = [
+  "bullmq-patterns", "celery-tasks", "inngest-patterns", "mcporter",
+  "native-mcp", "nodemailer-patterns", "payment-integration",
+  "pgboss-patterns", "postmark-patterns", "qstash-patterns",
+  "rabbitmq-patterns", "redis-patterns", "resend-patterns",
+  "s3-r2-storage-patterns", "stripe-integration", "triggerdev-patterns",
+  "uploadthing-patterns",
+]
+
+[[groups]]
+id = "product-browser-qa"
+source = "r0"
+classification = "specialist"
+profile = "product-browser-qa"
+enabled_by_default = false
+skill_ids = ["dogfood", "playwright-patterns", "product-runtime-review"]
+
+[[groups]]
+id = "governance-review"
+source = "r0"
+classification = "specialist"
+profile = "governance-review"
+enabled_by_default = false
+skill_ids = [
+  "adversarial-security-review", "anti-abuse-review", "github-auth",
+  "github-code-review", "github-issues", "github-pr-workflow",
+  "github-repo-management", "requesting-code-review",
+  "untrusted-ingress-hardening",
+]
+
+[[groups]]
+id = "catalog-librarian"
+source = "r0"
+classification = "specialist"
+profile = "catalog-librarian"
+enabled_by_default = false
+skill_ids = [
+  "codebase-inspection", "codex", "codex-skill-promotion-protocol",
+  "skill-developer", "writing-skills",
+]
+
+[[groups]]
+id = "on-demand-router"
+source = "r0"
+classification = "on-demand"
+profile = "on-demand"
+enabled_by_default = false
+recovery_route = "skill-catalog-router"
+skill_ids = [
+  "adminjs-patterns", "adonisjs-patterns", "ascii-wireframe",
+  "authjs-patterns", "better-auth-patterns", "clerk-patterns",
+  "financial-source-truth", "legacy-first-protocol", "legacy-transplant",
+  "linear-implementation-planner", "linear-pm", "linear-progress-reporter",
+  "linear-workflow-orchestrator", "premium-design-benchmark-corpus",
+  "using-superpowers", "vercel-deployment-patterns", "web-content-reader",
+]
+
+[[groups]]
+id = "host-system"
+source = "r2"
+classification = "host-injected"
+enabled_by_default = true
+skill_ids = [
+  "imagegen", "openai-docs", "plugin-creator", "skill-creator",
+  "skill-installer",
+]
+
+[[groups]]
+id = "host-superpowers"
+source = "r1"
+classification = "host-injected"
+enabled_by_default = true
+path_prefix = "superpowers"
+identifier_prefix = "superpowers:"
+skill_ids = [
+  "brainstorming", "dispatching-parallel-agents", "executing-plans",
+  "finishing-a-development-branch", "receiving-code-review",
+  "requesting-code-review", "subagent-driven-development",
+  "systematic-debugging", "test-driven-development", "using-git-worktrees",
+  "using-superpowers", "verification-before-completion", "writing-plans",
+  "writing-skills",
+]
