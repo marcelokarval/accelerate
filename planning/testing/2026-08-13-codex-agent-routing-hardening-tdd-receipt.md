@@ -76,7 +76,7 @@ output and all generation 2 proof after `G3-F1` and `G3-F2` reopened correction.
 - Correction evidence locator: `planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-3-current-proof`
 - Correction generation: `3`
 - Proof generation: `3`
-- Current disposition: `reproved / independent-review-pending`
+- At-generation disposition: `reproved / independent-review-pending`
 
 | Finding | Severity | Honest RED condition | Current correction/proof |
 | --- | --- | --- | --- |
@@ -100,7 +100,7 @@ generation 3 proof is now stale after `G4-F1` through `G4-F3` reopened correctio
 - Correction evidence locator: `planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-4-current-proof`
 - Correction generation: `4`
 - Proof generation: `4`
-- Current disposition: `reproved / independent-review-pending`
+- At-generation disposition: `reproved / independent-review-pending`
 
 | Order | Finding | Severity | RED condition | Required correction |
 | --- | --- | --- | --- | --- |
@@ -122,7 +122,7 @@ generation 4 proof is stale after `G5-F1` through `G5-F3` reopened correction.
 - Correction evidence locator: `planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-5-current-proof`
 - Correction generation: `5`
 - Proof generation: `5`
-- Current disposition: `reproved / independent-review-pending`
+- At-generation disposition: `reproved / independent-review-pending`
 
 | Order | Finding | Severity | RED condition | Required correction |
 | --- | --- | --- | --- | --- |
@@ -142,7 +142,7 @@ generation 5 proof is stale after `G6-F1` reopened correction.
 - Correction evidence locator: `planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-6-current-proof`
 - Correction generation: `6`
 - Proof generation: `6`
-- Current disposition: `reproved / independent-review-pending`
+- At-generation disposition: `reproved / independent-review-pending`
 
 | Finding | Severity | RED condition | Required correction |
 | --- | --- | --- | --- |
@@ -160,7 +160,7 @@ generation 6 proof is stale after `G7-F1` reopened correction.
 - Correction evidence locator: `planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-7-current-proof`
 - Correction generation: `7`
 - Proof generation: `7`
-- Current disposition: `reproved / independent-review-pending`
+- At-generation disposition: `reproved / independent-review-pending`
 
 | Finding | Severity | Honest RED condition | Required correction |
 | --- | --- | --- | --- |
@@ -179,7 +179,7 @@ generation 7 proof is stale after `G8-F1` and `G8-F2` reopened correction.
 - Correction evidence locator: `planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-8-current-proof`
 - Correction generation: `8`
 - Proof generation: `8`
-- Current disposition: `reproved / independent-review-pending`
+- At-generation disposition: `reproved / independent-review-pending`
 
 | Order | Finding | Severity | Honest RED condition | Required correction |
 | --- | --- | --- | --- | --- |
@@ -199,7 +199,7 @@ for closure after `G9-F1` reopened correction. Generation 8 proof is stale.
 - Correction evidence locator: `planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-9-current-proof`
 - Correction generation: `9`
 - Proof generation: `9`
-- Current disposition: `reproved / independent-review-pending`
+- At-generation disposition: `reproved / independent-review-pending`
 
 | Finding | Severity | Honest RED condition | Required correction |
 | --- | --- | --- | --- |
@@ -218,7 +218,7 @@ Final independent review verdict for generation 9: `fail` for closure.
 - Correction evidence locator: `planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-10-current-proof`
 - Correction generation: `10`
 - Proof generation: `10`
-- Current disposition: `reproved / independent-review-pending`
+- At-generation disposition: `reproved / independent-review-pending`
 
 | Order | Finding | Severity | RED condition | Required correction |
 | --- | --- | --- | --- | --- |

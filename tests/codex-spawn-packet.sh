@@ -11,11 +11,38 @@ fail() {
 
 topology="adapters/runtime/codex/logical-agent-topology.toml"
 policy="adapters/runtime/codex-collaboration/role-policy.json"
+catalog="adapters/runtime/codex/skill-catalog-manifest.toml"
 renderer="scripts/render-codex-spawn-packet.py"
 tmp_dir="$(mktemp -d)"
 trap 'rm -rf "$tmp_dir"' EXIT
 
+hermetic_skills="$tmp_dir/hermetic-skills"
+hermetic_catalog="$tmp_dir/hermetic-catalog.toml"
+hermetic_index="$tmp_dir/hermetic-index.tsv"
+python3 - "$ROOT" "skills/governance/skill-catalog-router/references/index.tsv" "$catalog" "$hermetic_skills" "$hermetic_index" "$hermetic_catalog" <<'PY'
+import sys
+from pathlib import Path
+
+root, index_path, catalog_path, runtime_root, output_index, output_catalog = map(Path, sys.argv[1:])
+rows = []
+for line in index_path.read_text(encoding="utf-8").splitlines():
+    skill_id, source_path, _runtime_path, digest, description = line.split("\t")
+    target = runtime_root / skill_id / "SKILL.md"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes((root / source_path).read_bytes())
+    rows.append("\t".join((skill_id, source_path, str(target), digest, description)))
+output_index.write_text("\n".join(rows) + "\n", encoding="utf-8")
+catalog = catalog_path.read_text(encoding="utf-8").replace(
+    'base_path = "/home/marcelo-karval/.codex/skills"',
+    f'base_path = "{runtime_root}"',
+    1,
+)
+output_catalog.write_text(catalog, encoding="utf-8")
+PY
+
 common=(
+  --catalog "$hermetic_catalog"
+  --route-index "$hermetic_index"
   --task-id CODEX-1
   --objective "Bounded collaboration proof"
   --scope "adapters/runtime/codex-collaboration"

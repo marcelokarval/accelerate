@@ -46,6 +46,35 @@ case_spawn_002() {
   local policy="adapters/runtime/codex-collaboration/role-policy.json"
   local catalog="adapters/runtime/codex/skill-catalog-manifest.toml"
   local index="skills/governance/skill-catalog-router/references/index.tsv"
+  local hermetic_skills="$tmp_dir/hermetic-skills"
+  local hermetic_catalog="$tmp_dir/hermetic-catalog.toml"
+  local hermetic_index="$tmp_dir/hermetic-index.tsv"
+
+  mkdir -p "$hermetic_skills"
+  python3 - "$ROOT" "$index" "$catalog" "$hermetic_skills" "$hermetic_index" "$hermetic_catalog" <<'PY' || return 1
+import sys
+from pathlib import Path
+
+root, index_path, catalog_path, runtime_root, output_index, output_catalog = map(Path, sys.argv[1:])
+rows = []
+for line in index_path.read_text(encoding="utf-8").splitlines():
+    skill_id, source_path, _runtime_path, digest, description = line.split("\t")
+    source = root / source_path
+    target = runtime_root / skill_id / "SKILL.md"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes(source.read_bytes())
+    rows.append("\t".join((skill_id, source_path, str(target), digest, description)))
+output_index.write_text("\n".join(rows) + "\n", encoding="utf-8")
+catalog = catalog_path.read_text(encoding="utf-8")
+catalog = catalog.replace(
+    'base_path = "/home/marcelo-karval/.codex/skills"',
+    f'base_path = "{runtime_root}"',
+    1,
+)
+output_catalog.write_text(catalog, encoding="utf-8")
+PY
+  catalog="$hermetic_catalog"
+  index="$hermetic_index"
 
   python3 - "$catalog" "$index" <<'PY' || return 1
 import sys
@@ -79,6 +108,7 @@ PY
     python3 scripts/render-codex-spawn-packet.py \
       "$topology" \
       --catalog "$catalog" \
+      --route-index "$index" \
       --policy "$policy" \
       --route scoped \
       --agent "$agent" \

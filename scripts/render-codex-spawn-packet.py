@@ -50,11 +50,12 @@ def unique(values: list[str]) -> list[str]:
 def resolve_skill_routes(
     skill_ids: list[str],
     catalog: dict[str, Any],
+    route_index: Path,
     parser: argparse.ArgumentParser,
 ) -> list[tuple[str, Path, str]]:
     indexed: dict[str, tuple[Path, str]] = {}
     try:
-        for line_number, line in enumerate(ROUTE_INDEX.read_text(encoding="utf-8").splitlines(), 1):
+        for line_number, line in enumerate(route_index.read_text(encoding="utf-8").splitlines(), 1):
             fields = line.split("\t")
             if len(fields) != 5:
                 parser.error(f"malformed repo-owned skill route at index line {line_number}")
@@ -205,6 +206,7 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("topology", type=Path)
     parser.add_argument("--catalog", type=Path, default=DEFAULT_CATALOG)
+    parser.add_argument("--route-index", type=Path, default=ROUTE_INDEX)
     parser.add_argument("--policy", type=Path, default=DEFAULT_POLICY)
     parser.add_argument("--route", required=True, choices=["direct-fast-path", "scoped", "orchestrated"])
     parser.add_argument("--agent")
@@ -306,7 +308,7 @@ def main() -> int:
 
     logical_skills = logical_agent.get("required_skills", []) if logical_agent else []
     assignment_skills = unique([*logical_skills, *profile.get("skill_allowlist", [])])
-    skill_routes = resolve_skill_routes(assignment_skills, catalog, parser)
+    skill_routes = resolve_skill_routes(assignment_skills, catalog, args.route_index, parser)
     logical_description = (
         f"{logical_agent['name']}/{logical_agent['catalog_group']}"
         if logical_agent
