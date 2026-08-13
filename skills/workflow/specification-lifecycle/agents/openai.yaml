@@ -1,0 +1,4 @@
+interface:
+  display_name: "Specification Lifecycle"
+  short_description: "Govern proportional specification readiness"
+  default_prompt: "Use $specification-lifecycle to classify specification depth and decide whether this change is ready to enter implementation."

@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "mutation": true,
+  "change_kind": "governance",
+  "classification": {
+    "triggers": [
+      "workflow-governance"
+    ],
+    "selected_mode": "standard",
+    "override": null
+  },
+  "sdd": {
+    "id": "SDD-EXAMPLE-001",
+    "mode": "standard",
+    "status": "accepted",
+    "locator": "planning/architecture/delta-sdd-template.md"
+  },
+  "dispositions": {
+    "adr": {
+      "status": "separate",
+      "reason": "The change establishes a durable cross-surface decision.",
+      "locator": "planning/architecture/adr-template.md"
+    },
+    "design": {
+      "status": "not-applicable",
+      "reason": "No product UI or interaction structure changes."
+    },
+    "test_design": {
+      "status": "separate",
+      "reason": "The semantic contract has positive and negative fixture classes.",
+      "locator": "planning/testing/test-design-template.md"
+    },
+    "agents": {
+      "status": "consolidated",
+      "reason": "The root executes the bounded slice without a new agent topology."
+    },
+    "rollout": {
+      "status": "consolidated",
+      "reason": "Repository source is validated before any generated export."
+    },
+    "rollback": {
+      "status": "consolidated",
+      "reason": "Revert only the bounded source slice and invalidate its proof."
+    },
+    "observability": {
+      "status": "consolidated",
+      "reason": "Validator diagnostics and proof receipts expose the state."
+    },
+    "agents_docs": {
+      "status": "required",
+      "reason": "The root entry contract must point to the new gate."
+    }
+  },
+  "tasks": [
+    {
+      "id": "T1"
+    }
+  ],
+  "requirements": [
+    {
+      "id": "REQ-EXAMPLE-001",
+      "task": "T1",
+      "test": {
+        "case_id": "CASE-EXAMPLE-001",
+        "locator": "tests/specification-lifecycle-contract.sh"
+      },
+      "proof": {
+        "status": "observed-red",
+        "locator": "planning/evidence/dated-proof-appendix/quality-stack-case-red-receipt-2026-08-12.md#case-results"
+      }
+    }
+  ],
+  "test_design": {
+    "id": "TEST-DESIGN-EXAMPLE-001",
+    "status": "accepted",
+    "owner": "test-engineer",
+    "independent_reviewer": "independent-reviewer",
+    "accepted_by": "accelerate-root",
+    "locator": "planning/testing/test-design-template.md",
+    "dimensions": {
+      "happy": {
+        "status": "covered",
+        "reason": "Valid accepted standard manifest."
+      },
+      "negative": {
+        "status": "covered",
+        "reason": "Missing and invalid field fixtures."
+      },
+      "boundary": {
+        "status": "covered",
+        "reason": "Micro and critical mode boundaries."
+      },
+      "ownership": {
+        "status": "not-applicable",
+        "reason": "The validator has no user-owned data access."
+      },
+      "concurrency_idempotency": {
+        "status": "not-applicable",
+        "reason": "Validation is a read-only deterministic process."
+      },
+      "failure_recovery": {
+        "status": "covered",
+        "reason": "Invalid manifests fail closed with stable diagnostics."
+      },
+      "fixtures": {
+        "status": "covered",
+        "reason": "Disposable JSON fixtures exercise each rule."
+      },
+      "observability": {
+        "status": "covered",
+        "reason": "Exit status and deterministic diagnostics are observable."
+      },
+      "lowest_effective_level": {
+        "status": "covered",
+        "reason": "A focused Python semantic validator is the lowest effective level."
+      }
+    }
+  },
+  "tdd_receipt": {
+    "id": "TDD-RECEIPT-EXAMPLE-001",
+    "locator": "planning/testing/tdd-receipt-template.md",
+    "state": "baseline-observed",
+    "mode": "semantic-contract",
+    "baseline": {
+      "status": "observed-red",
+      "locator": "planning/evidence/dated-proof-appendix/quality-stack-case-red-receipt-2026-08-12.md#receipt"
+    },
+    "implementation_owner": "bounded-implementation-owner",
+    "test_writer": "independent-test-writer",
+    "independent_reviewer": "independent-reviewer",
+    "correction_evidence": {
+      "status": "pending",
+      "locator": "planning/evidence/dated-proof-appendix/quality-stack-t2-t3-green-receipt-2026-08-12.md#focused-proof"
+    },
+    "proof_order": {
+      "implementation": "pending",
+      "qa": "pending",
+      "browser_truth": "not-applicable",
+      "persistent_regression": "not-applicable",
+      "forensic_review": "pending"
+    },
+    "independent_review_verdict": "pending",
+    "correction_generation": 0,
+    "proof_generation": 0
+  }
+}

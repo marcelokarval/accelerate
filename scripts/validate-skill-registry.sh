@@ -58,4 +58,68 @@ if grep -Fq '~/.codex/skills/' "$manifest"; then
   status=1
 fi
 
+if ! python3 - "$root_dir" "$manifest" <<'PY'
+import re
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+manifest = Path(sys.argv[2])
+text = manifest.read_text(encoding="utf-8")
+local_section = text.split("## Local Skills", 1)[1].split("## Migration Backlog", 1)[0]
+rows = re.findall(r"^\| `([^`]+)` \| `([^`]+)` \| `([^`]+)` \|", local_section, re.MULTILINE)
+row_names = [row[0] for row in rows]
+if len(row_names) != len(set(row_names)):
+    raise SystemExit("duplicate skill rows in Local Skills registry")
+
+directories = [path.parent for path in root.glob("skills/*/*/SKILL.md")]
+actual: dict[str, Path] = {}
+for directory in directories:
+    name = directory.name
+    if name in actual:
+        raise SystemExit(f"duplicate governed skill folder name: {name}")
+    actual[name] = directory
+
+registered = {name: (category, path) for name, category, path in rows}
+missing = sorted(set(actual) - set(registered))
+stale = sorted(set(registered) - set(actual))
+if missing or stale:
+    raise SystemExit(f"registry mismatch: missing={missing} stale={stale}")
+
+quality = {
+    "specification-lifecycle", "test-driven-development", "test-engineering",
+    "source-verification", "solution-minimalism", "web-performance-review",
+}
+for name, directory in sorted(actual.items()):
+    skill_text = (directory / "SKILL.md").read_text(encoding="utf-8")
+    match = re.search(r"^name:\s*(.+?)\s*$", skill_text, re.MULTILINE)
+    if not match or match.group(1) != name:
+        raise SystemExit(f"folder/frontmatter name mismatch: {directory}")
+    category, registered_path = registered[name]
+    expected = (manifest.parent / registered_path).resolve()
+    if expected != directory.resolve() or category != directory.parent.name:
+        raise SystemExit(f"registry category/path mismatch: {name}")
+    metadata = directory / "metadata.yaml"
+    if metadata.is_file():
+        metadata_text = metadata.read_text(encoding="utf-8")
+        metadata_name = re.search(r"^name:\s*(.+?)\s*$", metadata_text, re.MULTILINE)
+        if not metadata_name or metadata_name.group(1) != name:
+            raise SystemExit(f"folder/metadata name mismatch: {directory}")
+    if name in quality:
+        required = [metadata, directory / "agents/openai.yaml", directory / "evals/evals.json"]
+        absent = [str(path) for path in required if not path.is_file()]
+        if absent:
+            raise SystemExit(f"incomplete governed quality skill {name}: {absent}")
+        if len(skill_text.splitlines()) > 220 or len(skill_text.encode()) > 10240:
+            raise SystemExit(f"quality skill router exceeds local size target: {name}")
+        if (directory / "README.md").exists():
+            raise SystemExit(f"forbidden skill README: {directory}")
+    for path in directory.rglob("*"):
+        if path.name == "__pycache__" or path.suffix == ".pyc":
+            raise SystemExit(f"generated cache inside governed skill: {path}")
+PY
+then
+  status=1
+fi
+
 exit "$status"

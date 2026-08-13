@@ -22,17 +22,20 @@ parser.add_argument("--mode", choices=("global", "profile"), required=True)
 parser.add_argument("--profile")
 parser.add_argument("--output", type=Path)
 parser.add_argument("--list-profiles", action="store_true")
+parser.add_argument("--list-hidden-profiles", action="store_true")
 args = parser.parse_args()
 
 manifest = tomllib.loads(args.manifest.read_text())
 sources = {source["id"]: source for source in manifest["sources"]}
 entries: list[tuple[str, bool]] = []
 
-if args.list_profiles:
-    if args.mode != "profile" or args.profile or args.output:
-        parser.error("--list-profiles requires --mode profile without --profile or --output")
+if args.list_profiles or args.list_hidden_profiles:
+    if args.mode != "profile" or args.profile or args.output or (args.list_profiles and args.list_hidden_profiles):
+        parser.error("profile listing requires --mode profile, one listing flag, and no --profile/--output")
     for group in manifest["groups"]:
-        if profile := group.get("profile"):
+        public = group.get("public_profile") is True
+        if (args.list_profiles and public) or (args.list_hidden_profiles and group.get("profile") and not public):
+            profile = group["profile"]
             print(profile)
     raise SystemExit(0)
 if not args.output:
@@ -42,13 +45,13 @@ if args.mode == "global":
     if args.profile:
         parser.error("--profile is only valid with --mode profile")
     for group in manifest["groups"]:
-        if group["source"] == "r0" and not group["enabled_by_default"]:
+        if group["classification"] != "host-injected" and not group["enabled_by_default"]:
             entries.extend((path_for(sources[group["source"]], group, skill_id), False) for skill_id in group["skill_ids"])
 else:
     if not args.profile:
         parser.error("--profile is required with --mode profile")
     for group in manifest["groups"]:
-        if group.get("profile") == args.profile:
+        if group.get("profile") == args.profile and group.get("public_profile") is True:
             entries.extend((path_for(sources[group["source"]], group, skill_id), True) for skill_id in group["skill_ids"])
     if not entries:
         parser.error(f"unknown specialist profile: {args.profile}")

@@ -2,7 +2,7 @@ schema_version = 2
 catalog_identity = "codex-runtime-skill-catalog"
 authority = "runtime discovery is evidence; this manifest defines the routing and profile contract"
 discovery_command = "codex debug prompt-input ''"
-runtime_skill_count = 125
+runtime_skill_count = 131
 root_route = "skill-catalog-router"
 
 [[sources]]
@@ -26,12 +26,9 @@ source = "r0"
 classification = "core"
 enabled_by_default = true
 skill_ids = [
-  "accelerate", "architecture", "bash-linux", "code-audit",
-  "dependency-governance", "executing-plans", "governance-audit",
-  "parallel-agents", "plane", "planning-with-files", "prompt-hardening",
-  "security-patterns", "skill-catalog-router", "subagent-governance",
-  "systematic-debugging", "validation-governance",
-  "verification-before-completion", "visual-modeling",
+  "accelerate", "plane", "prompt-hardening", "skill-catalog-router",
+  "subagent-governance", "specification-lifecycle",
+  "test-driven-development", "verification-before-completion",
 ]
 
 [[groups]]
@@ -39,12 +36,14 @@ id = "django-backend"
 source = "r0"
 classification = "specialist"
 profile = "django-backend"
+public_profile = false
 enabled_by_default = false
 skill_ids = [
   "api-surface-governance", "authorization-policy-patterns",
   "django-inertia-integration", "django-pro", "django-service-patterns",
   "django-vite-integration", "inertia-patterns", "inertia-shared-props",
   "python-pro", "python-testing", "server-prop-governance",
+  "validation-governance",
 ]
 
 [[groups]]
@@ -52,6 +51,7 @@ id = "next-react-frontend"
 source = "r0"
 classification = "specialist"
 profile = "next-react-frontend"
+public_profile = false
 enabled_by_default = false
 skill_ids = [
   "apply-design-system-contract", "component-extraction",
@@ -69,6 +69,7 @@ id = "data-db"
 source = "r0"
 classification = "specialist"
 profile = "data-db"
+public_profile = false
 enabled_by_default = false
 skill_ids = [
   "database-architect", "database-design", "drizzle-patterns",
@@ -81,6 +82,7 @@ id = "integrations-ops"
 source = "r0"
 classification = "specialist"
 profile = "integrations-ops"
+public_profile = false
 enabled_by_default = false
 skill_ids = [
   "bullmq-patterns", "celery-tasks", "inngest-patterns", "mcporter",
@@ -96,20 +98,25 @@ id = "product-browser-qa"
 source = "r0"
 classification = "specialist"
 profile = "product-browser-qa"
+public_profile = false
 enabled_by_default = false
-skill_ids = ["dogfood", "playwright-patterns", "product-runtime-review"]
+skill_ids = [
+  "dogfood", "playwright-patterns", "product-runtime-review",
+  "test-engineering", "web-performance-review",
+]
 
 [[groups]]
 id = "governance-review"
 source = "r0"
 classification = "specialist"
 profile = "governance-review"
+public_profile = false
 enabled_by_default = false
 skill_ids = [
   "adversarial-security-review", "anti-abuse-review", "github-auth",
-  "github-code-review", "github-issues", "github-pr-workflow",
-  "github-repo-management", "requesting-code-review",
-  "untrusted-ingress-hardening",
+  "code-audit", "github-code-review", "github-issues", "github-pr-workflow",
+  "github-repo-management", "governance-audit", "requesting-code-review",
+  "security-patterns", "solution-minimalism", "untrusted-ingress-hardening",
 ]
 
 [[groups]]
@@ -117,10 +124,11 @@ id = "catalog-librarian"
 source = "r0"
 classification = "specialist"
 profile = "catalog-librarian"
+public_profile = false
 enabled_by_default = false
 skill_ids = [
   "codebase-inspection", "codex", "codex-skill-promotion-protocol",
-  "skill-developer", "writing-skills",
+  "skill-developer", "source-verification", "writing-skills",
 ]
 
 [[groups]]
@@ -128,15 +136,19 @@ id = "on-demand-router"
 source = "r0"
 classification = "on-demand"
 profile = "on-demand"
+public_profile = true
 enabled_by_default = false
 recovery_route = "skill-catalog-router"
 skill_ids = [
   "adminjs-patterns", "adonisjs-patterns", "ascii-wireframe",
-  "authjs-patterns", "better-auth-patterns", "clerk-patterns",
+  "architecture", "authjs-patterns", "bash-linux", "better-auth-patterns",
+  "clerk-patterns", "dependency-governance", "executing-plans",
   "financial-source-truth", "legacy-first-protocol", "legacy-transplant",
   "linear-implementation-planner", "linear-pm", "linear-progress-reporter",
-  "linear-workflow-orchestrator", "premium-design-benchmark-corpus",
-  "using-superpowers", "vercel-deployment-patterns", "web-content-reader",
+  "linear-workflow-orchestrator", "parallel-agents", "planning-with-files",
+  "premium-design-benchmark-corpus", "systematic-debugging",
+  "using-superpowers", "vercel-deployment-patterns", "visual-modeling",
+  "web-content-reader",
 ]
 
 [[groups]]
@@ -152,8 +164,11 @@ skill_ids = [
 [[groups]]
 id = "host-superpowers"
 source = "r1"
-classification = "host-injected"
-enabled_by_default = true
+classification = "on-demand"
+profile = "superpowers-on-demand"
+public_profile = true
+enabled_by_default = false
+recovery_route = "skill-catalog-router"
 path_prefix = "superpowers"
 identifier_prefix = "superpowers:"
 skill_ids = [

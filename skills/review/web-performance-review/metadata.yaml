@@ -1,0 +1,8 @@
+name: web-performance-review
+category: review
+status: native
+source: skills/review/web-performance-review
+runtime_export: optional
+local_native_owner: core/review/
+sync_policy: repo-first
+description: Source-labelled quick-static and deep-measured web performance review.

@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "mutation": true,
+  "change_kind": "governance",
+  "classification": {
+    "triggers": ["workflow-governance", "living-docs", "durable-decision"],
+    "selected_mode": "standard",
+    "override": null
+  },
+  "sdd": {
+    "id": "SDD-OMO-SLIM-AGENT-PROVENANCE-001",
+    "mode": "standard",
+    "status": "accepted",
+    "locator": "planning/architecture/2026-08-13-omo-slim-agent-provenance-sdd.md"
+  },
+  "dispositions": {
+    "adr": {"status": "consolidated", "reason": "Provenance metadata adds no new runtime boundary and the SDD records the durable decision."},
+    "design": {"status": "not-applicable", "reason": "No product interface or interaction behavior changes in this governance update."},
+    "test_design": {"status": "separate", "reason": "Semantic valid and invalid fixtures must prove the exact donor mapping.", "locator": "planning/testing/2026-08-13-omo-slim-agent-provenance-test-design.md"},
+    "agents": {"status": "consolidated", "reason": "The accepted SDD owns the exact eight-agent provenance mapping."},
+    "rollout": {"status": "consolidated", "reason": "The accepted SDD requires governed global sync after focused local proof."},
+    "rollback": {"status": "consolidated", "reason": "The existing transactional schema-4 runtime receipt remains the rollback authority."},
+    "observability": {"status": "consolidated", "reason": "Focused tests, mirror, fresh runtime, and Plane readback expose the change state."},
+    "agents_docs": {"status": "required", "reason": "AGENTS.md must expose the human mapping while the TOML remains machine authority."}
+  },
+  "tasks": [{"id": "T1"}, {"id": "T2"}, {"id": "T3"}, {"id": "T4"}],
+  "requirements": [
+    {"id": "REQ-OMO-001", "task": "T1", "test": {"case_id": "CASE-OMO-001", "locator": "tests/codex-logical-agent-topology.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/omo-slim-agent-provenance-green-2026-08-13.md", "generation": 2, "current": true}},
+    {"id": "REQ-OMO-002", "task": "T2", "test": {"case_id": "CASE-OMO-002", "locator": "tests/codex-logical-agent-topology.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/omo-slim-agent-provenance-green-2026-08-13.md", "generation": 2, "current": true}},
+    {"id": "REQ-OMO-003", "task": "T2", "test": {"case_id": "CASE-OMO-003", "locator": "tests/codex-logical-agent-topology.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/omo-slim-agent-provenance-green-2026-08-13.md", "generation": 2, "current": true}},
+    {"id": "REQ-OMO-004", "task": "T3", "test": {"case_id": "CASE-OMO-004", "locator": "tests/codex-logical-agent-topology.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/omo-slim-agent-provenance-green-2026-08-13.md", "generation": 2, "current": true}},
+    {"id": "REQ-OMO-005", "task": "T4", "test": {"case_id": "CASE-OMO-005", "locator": "tests/codex-logical-agent-topology.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/omo-slim-agent-provenance-green-2026-08-13.md", "generation": 2, "current": true}}
+  ],
+  "test_design": {
+    "id": "TEST-DESIGN-OMO-SLIM-AGENT-PROVENANCE-001",
+    "status": "accepted",
+    "owner": "codex5-test-author",
+    "independent_reviewer": "codex3-generation2-contract-review",
+    "accepted_by": "accelerate-root",
+    "locator": "planning/testing/2026-08-13-omo-slim-agent-provenance-test-design.md",
+    "dimensions": {
+      "happy": {"status": "covered", "reason": "All eight exact mappings are parsed and compared."},
+      "negative": {"status": "covered", "reason": "Missing and unknown donor roles fail closed."},
+      "boundary": {"status": "covered", "reason": "Only the current built-in donor role set is accepted."},
+      "ownership": {"status": "covered", "reason": "Existing root and specialist authority fields remain exact."},
+      "concurrency_idempotency": {"status": "covered", "reason": "The existing transactional installer proves repeatable digest reconciliation."},
+      "failure_recovery": {"status": "covered", "reason": "Invalid topology stops before global runtime deployment."},
+      "fixtures": {"status": "covered", "reason": "A temporary mutated topology provides disposable negative fixtures."},
+      "observability": {"status": "covered", "reason": "The human table and machine mapping are compared deterministically."},
+      "lowest_effective_level": {"status": "covered", "reason": "TOML semantic parsing precedes install and fresh runtime proof."}
+    }
+  },
+  "tdd_receipt": {
+    "id": "TDD-RECEIPT-OMO-SLIM-AGENT-PROVENANCE-001",
+    "locator": "planning/testing/2026-08-13-omo-slim-agent-provenance-tdd-receipt.md",
+    "state": "reviewed",
+    "mode": "semantic-contract",
+    "baseline": {"status": "observed-red", "locator": "planning/evidence/dated-proof-appendix/omo-slim-agent-provenance-red-2026-08-13.md"},
+    "implementation_owner": "accelerate-root",
+    "test_writer": "codex5-test-author",
+    "independent_reviewer": "codex3-generation2-contract-review",
+    "correction_evidence": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/omo-slim-agent-provenance-green-2026-08-13.md"},
+    "proof_order": {"implementation": "observed", "qa": "observed", "browser_truth": "not-applicable", "persistent_regression": "not-applicable", "forensic_review": "observed"},
+    "independent_review_verdict": "pass",
+    "correction_generation": 2,
+    "proof_generation": 2
+  }
+}

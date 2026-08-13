@@ -10,15 +10,25 @@ cleanup() {
 }
 trap cleanup EXIT
 
-CODEX_SKILLS_DIR="$STAGE_ROOT/skills" "$ROOT/scripts/sync-skills-to-global.sh" >/dev/null
+CODEX_HOME_ROOT="$STAGE_ROOT/runtime/.codex"
+SKILLS_TARGET="$CODEX_HOME_ROOT/skills"
+BACKUP_ROOT="$STAGE_ROOT/backups/direct-fast-path"
+RECEIPT_FILE="$BACKUP_ROOT/sync-receipt.json"
+mkdir -p "$SKILLS_TARGET"
+
+CODEX_HOME="$CODEX_HOME_ROOT" CODEX_SKILLS_DIR="$SKILLS_TARGET" \
+  CODEX_SKILLS_BACKUP_DIR="$BACKUP_ROOT" CODEX_SKILLS_RECEIPT_FILE="$RECEIPT_FILE" \
+  CODEX_SKILL_SYNC_ALLOWED_ROOT="$STAGE_ROOT" \
+  "$ROOT/scripts/sync-skills-to-global.sh" >/dev/null
 
 SOURCE="$ROOT/global-runtime/accelerate/SKILL.md"
-TARGET="$STAGE_ROOT/skills/accelerate/SKILL.md"
+TARGET="$SKILLS_TARGET/accelerate/SKILL.md"
 cmp -s "$SOURCE" "$TARGET"
 cmp -s "$ROOT/references/runtime-packet-templates.md" \
-  "$STAGE_ROOT/skills/accelerate/references/runtime-packet-templates.md"
+  "$SKILLS_TARGET/accelerate/references/runtime-packet-templates.md"
 cmp -s "$ROOT/global-runtime/accelerate/evals/direct-fast-path-routing.json" \
-  "$STAGE_ROOT/skills/accelerate/evals/direct-fast-path-routing.json"
+  "$SKILLS_TARGET/accelerate/evals/direct-fast-path-routing.json"
+test -f "$RECEIPT_FILE"
 
 for expected in \
   "## Reasoning Effort Contract" \
@@ -32,6 +42,6 @@ for expected in \
 done
 
 grep -Fq -- "## 14. Direct Fast Path Packet" \
-  "$STAGE_ROOT/skills/accelerate/references/runtime-packet-templates.md"
+  "$SKILLS_TARGET/accelerate/references/runtime-packet-templates.md"
 
 printf 'runtime sync direct fast path passed\n'

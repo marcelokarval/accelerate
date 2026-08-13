@@ -1,106 +1,138 @@
-# SDD Template
+# Software Design Document Template
 
-Use this template when product scope exists but the technical design is not yet
-safe for implementation.
-
-SDD is required when architecture, data ownership, transport, workflow/runtime
-adapter selection, security posture, migration shape, or proof strategy is still
-unclear.
+Use this template for a root `hierarchical` or `critical` Software Design
+Document. Use `delta-sdd-template.md` for `standard` work and a Spec Capsule for
+`micro` work. `SDD` names this document, not the full Specification Lifecycle.
 
 ## Status
 
+- ID: `SDD-<SCOPE>-<NUMBER>`
+- Status: `draft | accepted | implementing | superseded`
+- Mode: `hierarchical | critical`
 - Owner:
 - Date:
-- Source request:
-- Source PRD-lite or user story:
-- Active phase: `Design`
-- Related issue or artifact:
+- Governing issue:
+- Source request / product artifact:
+- Engineering Artifact Manifest:
+- Related ADR:
+- Related Test Design:
+- Supersedes:
+- Superseded by:
 
-## Design Problem
+Only `accepted` or `implementing` can authorize execution. Acceptance remains
+root-owned.
 
-State the technical design problem this SDD resolves.
+## Problem And Current Behavior
+
+State the technical problem and current truth without assuming the solution.
+
+## Desired Behavior
+
+Describe the target outcome and observable acceptance.
+
+## Scope And Non-Goals
+
+- In scope:
+- Non-goals:
+
+## Authority Set
+
+- Governing authorities:
+- Supporting references:
+- Decision artifacts:
+- Generated exports:
+- Forbidden authorities:
+
+## Requirements
+
+- `REQ-<SCOPE>-001`:
+
+Requirement IDs must be stable and unique.
 
 ## Constraints And Drivers
 
-- Product constraints:
-- Stack constraints:
-- Security, privacy, or abuse constraints:
+- Product and stack constraints:
+- Security, privacy, and abuse constraints:
 - Runtime or workflow constraints:
-- Migration constraints:
+- Compatibility and migration constraints:
+- Verification constraints:
 
-## Target Architecture
+## Current, Target, And Transition Architecture
 
+- Current shape:
 - Target shape:
-- Layer placement:
-- Ownership model:
-- Runtime behavior:
-- Explicit non-goals:
+- Transition sequence:
+- Ownership boundaries:
+- Explicit invariants:
 
 ## Layer Ownership
 
-- Core:
-- Workflow adapter:
-- Runtime adapter:
-- Stack profile:
-- Agent factory:
-- Overlay:
-- External or project-specific layer:
-
-## Data, Contracts, And Surfaces
-
-- Data model or storage:
-- Server-to-client contracts:
-- API, Inertia, webhook, callback, or CLI surfaces:
-- Validation authority:
-- Backward compatibility:
-
-## Workflow And Runtime Adapters
-
-- Workflow backend:
-- Runtime adapter:
-- Browser or proof adapter:
-- Issue or planning persistence:
-- Current no-adapter exceptions:
-
-## Security, Privacy, And Abuse Posture
-
-- Trust boundaries:
-- Ownership checks:
-- Rate limits, replay, enumeration, or mutation risks:
-- Secret handling:
-- Audit or observability requirements:
-
-## Alternatives Considered
-
-| Option | Benefit | Cost | Decision |
+| Layer / surface | Owner | Responsibility | Forbidden authority |
 | --- | --- | --- | --- |
 |  |  |  |  |
 
-## Migration And Rollout
+## Contracts And Trust Boundaries
 
-- Migration sequence:
+- Data or storage contracts:
+- API, CLI, callback, or runtime surfaces:
+- Validation authority:
+- Trust boundaries:
+- Ownership / authorization checks:
+- Secret handling:
+- Observability requirements:
+
+## Child SDD Dispositions
+
+Hierarchical and critical modes must disposition each potential child.
+
+| Child ID / surface | Disposition (`included | separate | deferred | not-applicable`) | Reason | Locator when separate |
+| --- | --- | --- | --- |
+|  |  |  |  |
+
+## Decision Dispositions
+
+| Artifact | Status | Substantive reason | Locator when separate/existing |
+| --- | --- | --- | --- |
+| ADR |  |  |  |
+| DESIGN |  |  |  |
+| Test Design |  |  |  |
+| Threat model |  |  |  |
+| Agents |  |  |  |
+| Rollout |  |  |  |
+| Rollback |  |  |  |
+| Observability |  |  |  |
+| AGENTS/docs |  |  |  |
+
+Critical mode requires separate ADR, threat model, Test Design, and rollback
+artifacts.
+
+## Alternatives
+
+| Option | Benefit | Cost / risk | Decision |
+| --- | --- | --- | --- |
+|  |  |  |  |
+
+## Rollout And Rollback
+
+- Rollout sequence:
 - Compatibility guard:
-- Rollback or fallback:
-- Follow-up work:
+- Rollback trigger:
+- Rollback procedure / locator:
+- Stop rules:
 
-## Test And Proof Strategy
+## Traceability And Proof Strategy
 
-- Unit or static proof:
-- Integration proof:
-- Browser truth:
-- Persistent regression proof:
+- Canonical traceability locator:
+- Test Design locator:
+- TDD Receipt locator:
+- Static / unit / integration proof:
+- Runtime / browser / persistent proof:
+- Correction freshness rule:
 - Forensic closure evidence:
-
-## Acceptance To Tasks
-
-- Architecture acceptance:
-- Required implementation slices:
-- Dependencies:
-- Known risks:
 
 ## Handoff Decision
 
-- Ready for executive plan: `yes | no`
 - Ready for task breakdown: `yes | no`
-- Issue bootstrap required: `yes | no`
+- Ready for implementation: `yes | no`
 - Residual design ambiguity:
+- Root acceptance:

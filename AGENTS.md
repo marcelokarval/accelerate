@@ -43,6 +43,34 @@ For work in this repository, the root must preserve:
 - root-owned closure mode
 - agent optionality
 
+## OMO-Slim Provenance Map
+
+The current Codex agent topology selectively adapts the useful role boundaries
+from [oh-my-opencode-slim](https://github.com/alvinunreal/oh-my-opencode-slim).
+This is provenance, not delegated authority and not a claim that the two
+runtimes are identical.
+
+The machine-readable authority is
+[`adapters/runtime/codex/logical-agent-topology.toml`](./adapters/runtime/codex/logical-agent-topology.toml).
+Update that TOML and its validator first; keep this table as the compact human
+view.
+
+| Codex agent | Represents in OMO-Slim | Local adaptation |
+| --- | --- | --- |
+| `orchestrator` | `orchestrator` + absorbed `council` | Root orchestrates and closes; bounded independent reviewers supply council behavior. |
+| `python-backend` | specialized `fixer` | Bounded Python/Django implementation. |
+| `nextjs-frontend` | `fixer` + partial `designer` | Frontend implementation; design behavior requires accepted design authority. |
+| `research` | `librarian` + `explorer` | Current-source research plus read-only repository discovery. |
+| `reviewer` | `oracle` + bounded `council` | Skeptical review; root retains review-of-review. |
+| `qa` | partial `observer` + `oracle` | Visual/media evidence inspection plus skeptical review; broader QA/runtime/browser proof is Codex-native. |
+| `data-db` | specialized `fixer` | Bounded database design and SQL implementation. |
+| `integrations-ops` | specialized `fixer` | Bounded MCP, integration, cache, payment, and operational implementation. |
+
+There is intentionally no standalone local `designer`, `observer`, or
+`council`. Their useful behavior is contained in the named specialists and root
+governance. OMO-Slim prompts, hooks, wrappers, wildcard grants, and runtime
+authority are not imported.
+
 ## Current Stage
 
 This repository is in the standalone pre-agents phase.

@@ -1,0 +1,332 @@
+{
+  "schema_version": 1,
+  "contract": "reviewed-package-integrity-not-llm-behavior",
+  "hash_algorithm": "sha256",
+  "tree_encoding": "canonical-json-v1",
+  "packages": [
+    {
+      "path": "skills/workflow/specification-lifecycle",
+      "tree_sha256": "53ac741ab6620d32bab7d8b545b7a8c2d78ad2df312776445dd3708e6870db39",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 4338,
+          "sha256": "2251f0ac40fd748a101f7eba86ba6b3133b3cd4de562a9c57bd7712f135ab461"
+        },
+        {
+          "path": "agents/openai.yaml",
+          "size": 266,
+          "sha256": "1b243b21e276a293665bffc6321d6ccf150e80c4534c0cae92c0a68fc03e9777"
+        },
+        {
+          "path": "evals/evals.json",
+          "size": 2133,
+          "sha256": "3aeced83267397a919ad51836b664054647e96f42261ea4fdaf4d97e0dc30192"
+        },
+        {
+          "path": "metadata.yaml",
+          "size": 474,
+          "sha256": "9855f64c4ec80502926a76524f0e9a4e11601c595d8451d04c92da68d9873e09"
+        },
+        {
+          "path": "references/lifecycle-contract.md",
+          "size": 2951,
+          "sha256": "1dab42a5595bb85e8646adfd6e734712e061010783a52493b03b904584c6c52d"
+        }
+      ]
+    },
+    {
+      "path": "skills/workflow/test-driven-development",
+      "tree_sha256": "1c05988448eca536aa8f19c283756813b7bc5e9c69ef6091c937c0ebb30a3306",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 4232,
+          "sha256": "18702cf81d0ffeb42e11e999b1b07395ad4cdcdbf6872e1bbd5e0792b129e96d"
+        },
+        {
+          "path": "agents/openai.yaml",
+          "size": 258,
+          "sha256": "58b2aa1e58e7017b6bd56a153722d8833312e2715b9ee785849477b56c4bc49d"
+        },
+        {
+          "path": "evals/evals.json",
+          "size": 2179,
+          "sha256": "bcc5bb395baca3fd1081e3ecfef8c8c1a9ef0526374ba9513f07424e960ebe16"
+        },
+        {
+          "path": "metadata.yaml",
+          "size": 509,
+          "sha256": "cba7c3d4f93b1030969922b0e9abb5f66d57636a23f31dd04c98cf5f55d171b1"
+        },
+        {
+          "path": "references/fresh-proof-contract.md",
+          "size": 1715,
+          "sha256": "232a594b8717f18be62a43ca8e6afb5ec240f112993c7480a321520139f6fbc0"
+        },
+        {
+          "path": "references/proof-modes.md",
+          "size": 1920,
+          "sha256": "c6f31e354dde043c8fbf72871d776e76f48fc94eb4333807b63418dbbf85c7d8"
+        }
+      ]
+    },
+    {
+      "path": "skills/review/test-engineering",
+      "tree_sha256": "f70b13164382284e6f157d87ab8d2ab5ac2b25320085bbbef6811b724b4b9e51",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 4375,
+          "sha256": "25931c606da5d86298aba573bef5470c192f0a0cb210c4435f33fdc03581f421"
+        },
+        {
+          "path": "agents/openai.yaml",
+          "size": 225,
+          "sha256": "050a6b4ff12ba2f14cb474d66c2bc3a6bb09946be976f4481cedd42a35d9237a"
+        },
+        {
+          "path": "evals/evals.json",
+          "size": 1925,
+          "sha256": "e847ee6ada0f300f7ec8d688a50ca16fced0d0b5c65c84a1cd5c9b40454496a9"
+        },
+        {
+          "path": "metadata.yaml",
+          "size": 282,
+          "sha256": "a550c0d1141054c290c4b8929f11def19b11a52a7772982514e9b9da4ae91a1a"
+        },
+        {
+          "path": "references/suite-health.md",
+          "size": 1050,
+          "sha256": "54c4f29cd7dc01311ec0a9273ce28515263b6dae9075e9c41ba6a62f84c693d7"
+        },
+        {
+          "path": "references/test-strategy.md",
+          "size": 1942,
+          "sha256": "489d1c566bb5e2b1ac828001c0320ec712cd5a72a87c9c9c171e64fe949bfe0e"
+        }
+      ]
+    },
+    {
+      "path": "skills/review/source-verification",
+      "tree_sha256": "182925088e508621ca34e26221d300a23e12c9eec16857911425f03f55e57c14",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 4689,
+          "sha256": "d27fe15068280e3d93b408da4b575d039564afe61002f470b08646f2b13eb249"
+        },
+        {
+          "path": "agents/openai.yaml",
+          "size": 236,
+          "sha256": "076190e399b051f9fc804bfe84de5d9da6fcb8ed5c82f04312e8ba672d5f91d0"
+        },
+        {
+          "path": "evals/evals.json",
+          "size": 2336,
+          "sha256": "2f3c2613f2c332fd5a196e5bda7746a038936cdef6234175ff8b8debe0c36e82"
+        },
+        {
+          "path": "metadata.yaml",
+          "size": 498,
+          "sha256": "eecde94dbe54bcc51b078493a2614af29b3db7ec7b912ae4889ba3160da5ab72"
+        },
+        {
+          "path": "references/claim-evidence-matrix.md",
+          "size": 1764,
+          "sha256": "8199ee512583544e3ef0006c1d6d2bade8b3f73e70f48a6f111d1d56aefad815"
+        },
+        {
+          "path": "references/uncertainty-contract.md",
+          "size": 1334,
+          "sha256": "11b66dcf09a2e482daa9e9280764d2e16b54a5458bfd8b3994d398db012cee20"
+        }
+      ]
+    },
+    {
+      "path": "skills/review/solution-minimalism",
+      "tree_sha256": "174d85cd92ae32bfb3bac0b4249b789f60bbc84e082dcd76121a68e7e65945fb",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 5524,
+          "sha256": "7cd6f4d36aeec48ec95bbdbcfc70a61f3ef1ac1ebcc889b2e6e82ab089a5bdae"
+        },
+        {
+          "path": "agents/openai.yaml",
+          "size": 230,
+          "sha256": "a64aa560024d351b3d68c00d58487ea88c5044daa38d7d3fb8e0b552289ad0a2"
+        },
+        {
+          "path": "evals/evals.json",
+          "size": 2316,
+          "sha256": "1b1342f7963fbc8c1618a2967f221358ccac4164daf7990cb3ab8b4b613732b1"
+        },
+        {
+          "path": "metadata.yaml",
+          "size": 478,
+          "sha256": "f848e8de22bc69139358aefa757d37f59466b596336ae49062c4367f986c793a"
+        },
+        {
+          "path": "references/decision-ladder.md",
+          "size": 3372,
+          "sha256": "16b895227e766259dac20792f90778afc68baa41133c12f49658b4ab18b84f8c"
+        }
+      ]
+    },
+    {
+      "path": "skills/review/web-performance-review",
+      "tree_sha256": "b57e277a0f1b2ad3a2d82695025ceca4f27249fcbfeb1512d713463924ed55bf",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 4615,
+          "sha256": "75448353f69036306d4dfae7d47b684bb3edd769356cd23477b43ac28b73022e"
+        },
+        {
+          "path": "agents/openai.yaml",
+          "size": 227,
+          "sha256": "e48e652bee414c96f0dedaf4cf883f894a3a06c2074011af8f9ed7ac61b6fd4f"
+        },
+        {
+          "path": "evals/evals.json",
+          "size": 1902,
+          "sha256": "702b02b5ccee2778dc9735dc7fa8791f5ba9c040e48026b316144e7c487d83c9"
+        },
+        {
+          "path": "metadata.yaml",
+          "size": 272,
+          "sha256": "5667e50d36d37af50201841ab9021e5afffd5b2038ab0d132d46467b142528c2"
+        },
+        {
+          "path": "references/measurement-sources.md",
+          "size": 1270,
+          "sha256": "bfb5923b977463a7341291f139990ad5b577fcc406083683a0f84f9c6efc7a5c"
+        },
+        {
+          "path": "references/report-schema.md",
+          "size": 826,
+          "sha256": "14607373975089eb07c9991f18002495cec82397c981645a03f93322e1a4e668"
+        }
+      ]
+    },
+    {
+      "path": "skills/review/code-audit",
+      "tree_sha256": "f785d671a85b024acbbd7b06e18f16153abfe8b87214ff4cf10a4981a8a03384",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 4222,
+          "sha256": "78162d5824394845039b692c7a4ad0ad197f9f9fcf660337d5241ddaf4a0f907"
+        },
+        {
+          "path": "agents/openai.yaml",
+          "size": 196,
+          "sha256": "bed57bbc645704e340d5a6e392102d9e459b296429b4042d1e5a037a7b231e65"
+        },
+        {
+          "path": "evals/evals.json",
+          "size": 1851,
+          "sha256": "f6b6ffbb26fbb9326ea0f11b643cea8910cc400e9a5bfe79f9a4d7e5f928c065"
+        },
+        {
+          "path": "metadata.yaml",
+          "size": 281,
+          "sha256": "8264f420508baf1d346f2807951f525c00e96317b5a3b23e33bfe092e8ae4e7e"
+        },
+        {
+          "path": "references/full-procedure.md",
+          "size": 7779,
+          "sha256": "29b59f01d85594886d92a6f5fb3c062b600bb2089b22f506d859f2fb73d77d62"
+        },
+        {
+          "path": "references/review-axes.md",
+          "size": 2047,
+          "sha256": "ac2d97424e398a292caa874a90ef5a2dbe58f6103f4377b8858707bd6843f107"
+        },
+        {
+          "path": "references/review-finding-schema.md",
+          "size": 3610,
+          "sha256": "1d4ab5bf7e85c78a42296d4f97fb5ccd25c2a85debe1166268607bf30e2f4628"
+        },
+        {
+          "path": "references/stack-heuristics.md",
+          "size": 1713,
+          "sha256": "da6d77e8fa845e3277b9b4720e3eb6181d30e9a44375df1b41824ebaec998b34"
+        }
+      ]
+    },
+    {
+      "path": "skills/review/requesting-code-review",
+      "tree_sha256": "8ac203a43b5fc6ad8a223cdf44bc039646b7c1e90c0fd2bdb41b6f1de0c131a5",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 4671,
+          "sha256": "fac05d13e7e988ae576346c098eb8397d5eeb112f48b11bc74f8a0f57dd54e29"
+        },
+        {
+          "path": "agents/openai.yaml",
+          "size": 231,
+          "sha256": "de0dee719310cc4d00308cfacba2b563abb4a70c24bd2c4f4d19725b69389b0e"
+        },
+        {
+          "path": "evals/evals.json",
+          "size": 1888,
+          "sha256": "a144317e0ab00f59ecfb3fa529e7c5d6732f96fd1c6d8a01e7b7e9e3afb0bff2"
+        },
+        {
+          "path": "metadata.yaml",
+          "size": 305,
+          "sha256": "2100ab7afa96db0611addf40c959ea3bbc2f021003c97ca655adbea0b932ab4f"
+        },
+        {
+          "path": "references/full-procedure.md",
+          "size": 9863,
+          "sha256": "6876aa0782d41b43235affff327a0ed4917544b2949d624d5a8f398160b99573"
+        },
+        {
+          "path": "references/review-packet.md",
+          "size": 896,
+          "sha256": "700b3bccb95e6cd666de1c537eb50f42a9bfb508bf607a3d2bbaba1424c4610e"
+        }
+      ]
+    },
+    {
+      "path": "skills/security/security-patterns",
+      "tree_sha256": "cf0389ee1c0847f3b4ff3cde628090e63771f0f89345809571f9d2b39f42ba03",
+      "files": [
+        {
+          "path": "SKILL.md",
+          "size": 4896,
+          "sha256": "ca61d33648c72c79a1d3d25f4331540e6af82549f731398a5a1816f581379cf1"
+        },
+        {
+          "path": "agents/openai.yaml",
+          "size": 214,
+          "sha256": "4ffa11629fc8a52b915a070f20925723352a8d789a2bcb439ab8d3234339fd87"
+        },
+        {
+          "path": "evals/evals.json",
+          "size": 2316,
+          "sha256": "2930d691f231ea6a2f72f84ed84da5f53c202e850d83c521f7a384dc54e7cd60"
+        },
+        {
+          "path": "metadata.yaml",
+          "size": 495,
+          "sha256": "90be386cef2d07cc9009edb720fd1924cc777d60871d2f92ca36b8d32c611af6"
+        },
+        {
+          "path": "references/full-procedure.md",
+          "size": 4605,
+          "sha256": "23b1134fb11b2e911d8485f9f66f0ff8d77ec4d866d26677793ddba77c70f2f8"
+        },
+        {
+          "path": "references/threat-review-contract.md",
+          "size": 2475,
+          "sha256": "591bd3a67b4e216764b8d1663fea43e43cfc4aea708d0a57bcb506b1406e4cb5"
+        }
+      ]
+    }
+  ]
+}

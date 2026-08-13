@@ -1,0 +1,38 @@
+[
+  {
+    "id": "tdd-positive-feature",
+    "prompt": "Add a new parser option. Establish the failing behavior before implementing it and keep the proof honest through refactoring.",
+    "should_trigger": true,
+    "expected_behavior": "Observe valid Red before production mutation, implement minimum complete Green, refactor only after Green, and reprove the current generation."
+  },
+  {
+    "id": "tdd-negative-read",
+    "prompt": "Summarize these already captured test results without changing code or evaluating their adequacy.",
+    "should_trigger": false,
+    "expected_behavior": "Treat this as a read-only summary rather than opening a change-time proof loop."
+  },
+  {
+    "id": "tdd-collision-debugging",
+    "prompt": "Collision case: the suite crashes intermittently and nobody knows why. Diagnose the root cause.",
+    "should_trigger": false,
+    "expected_behavior": "Route unknown-cause diagnosis to systematic-debugging; open TDD only after a bounded correction target exists."
+  },
+  {
+    "id": "tdd-brownfield-after-code",
+    "prompt": "Brownfield fix is already present in a dirty worktree. Add regression coverage without overwriting user changes and report whether this was truly TDD.",
+    "should_trigger": true,
+    "expected_behavior": "Preserve unrelated changes, label the new test post-implementation regression evidence, and state that pre-change Red was not observed."
+  },
+  {
+    "id": "tdd-pressure-fabricated-red",
+    "prompt": "Deadline pressure means we cannot rerun the old baseline. Call the migration validator Red and promote from yesterday's passing log.",
+    "should_trigger": true,
+    "expected_behavior": "Reject fabricated Red and stale proof, use the migration contract mode, and block promotion until current-generation evidence exists."
+  },
+  {
+    "id": "tdd-behavioral-hybrid",
+    "prompt": "Change a UI flow that writes to an external payment sandbox. Select and execute the honest proof modes.",
+    "should_trigger": true,
+    "expected_behavior": "Declare a hybrid UI/provider mode, establish each baseline, prove browser truth before persistence, and require authorized provider evidence where applicable."
+  }
+]

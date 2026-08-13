@@ -271,12 +271,187 @@
         "valid reasoning decision receipt",
         "independent skeptical review"
       ]
+    },
+    "specification-review": {
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "tool_policy": [
+        "read-source",
+        "run-read-only-analysis",
+        "run-focused-validation"
+      ],
+      "skill_allowlist": [
+        "specification-lifecycle",
+        "architecture",
+        "source-verification"
+      ],
+      "mcp_allowlist": [],
+      "write_mode": "read-only",
+      "requires_write_scope": false,
+      "requires_reasoning_receipt": false,
+      "return_contract": "Skeptical Review Packet",
+      "return_fields": [
+        "requested_vs_implemented",
+        "evidence",
+        "specification_coverage",
+        "traceability_gaps",
+        "disposition_gaps",
+        "defects",
+        "self_review",
+        "self_forensic_review",
+        "residual_risks",
+        "root_closure_boundary"
+      ],
+      "eligibility": [
+        "bounded specification drafting or audit without implementation or acceptance authority"
+      ]
+    },
+    "code-review": {
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "tool_policy": [
+        "read-source",
+        "run-read-only-analysis",
+        "run-focused-validation"
+      ],
+      "skill_allowlist": [
+        "code-audit",
+        "requesting-code-review",
+        "solution-minimalism"
+      ],
+      "mcp_allowlist": [],
+      "write_mode": "read-only",
+      "requires_write_scope": false,
+      "requires_reasoning_receipt": false,
+      "return_contract": "Skeptical Review Packet",
+      "return_fields": [
+        "requested_vs_implemented",
+        "evidence",
+        "findings",
+        "severity",
+        "spec_compliance",
+        "minimality_assessment",
+        "defects",
+        "self_review",
+        "self_forensic_review",
+        "residual_risks",
+        "root_closure_boundary"
+      ],
+      "eligibility": [
+        "independent bounded review of code, documentation, configuration, or workflow changes"
+      ]
+    },
+    "test-strategy": {
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "tool_policy": [
+        "read-source",
+        "run-read-only-analysis",
+        "run-focused-validation"
+      ],
+      "skill_allowlist": [
+        "test-engineering",
+        "test-driven-development"
+      ],
+      "mcp_allowlist": [],
+      "write_mode": "read-only",
+      "requires_write_scope": false,
+      "requires_reasoning_receipt": false,
+      "return_contract": "Skeptical Review Packet",
+      "return_fields": [
+        "requested_vs_implemented",
+        "evidence",
+        "test_design",
+        "regression_proof",
+        "independence_status",
+        "test_level_rationale",
+        "defects",
+        "self_review",
+        "self_forensic_review",
+        "residual_risks",
+        "root_closure_boundary"
+      ],
+      "eligibility": [
+        "read-only test design or independent regression proof; test writing requires a separate executor assignment"
+      ]
+    },
+    "security-review": {
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "tool_policy": [
+        "read-source",
+        "run-read-only-analysis",
+        "run-focused-validation"
+      ],
+      "skill_allowlist": [
+        "security-patterns",
+        "anti-abuse-review",
+        "source-verification"
+      ],
+      "mcp_allowlist": [],
+      "write_mode": "read-only",
+      "requires_write_scope": false,
+      "requires_reasoning_receipt": false,
+      "return_contract": "Skeptical Review Packet",
+      "return_fields": [
+        "requested_vs_implemented",
+        "evidence",
+        "trust_boundaries",
+        "threat_model",
+        "supply_chain_provenance",
+        "exploitability",
+        "negative_proof",
+        "defects",
+        "self_review",
+        "self_forensic_review",
+        "residual_risks",
+        "root_closure_boundary"
+      ],
+      "eligibility": [
+        "independent bounded threat, hostile-path, exploitability, or supply-chain review"
+      ]
+    },
+    "web-performance-review": {
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "tool_policy": [
+        "read-source",
+        "run-read-only-analysis",
+        "run-focused-validation",
+        "browser-proof"
+      ],
+      "skill_allowlist": [
+        "web-performance-review",
+        "product-runtime-review"
+      ],
+      "mcp_allowlist": [],
+      "write_mode": "read-only",
+      "requires_write_scope": false,
+      "requires_reasoning_receipt": false,
+      "return_contract": "Skeptical Review Packet",
+      "return_fields": [
+        "requested_vs_implemented",
+        "evidence",
+        "metric_sources",
+        "measurements",
+        "unmeasured_areas",
+        "findings",
+        "defects",
+        "self_review",
+        "self_forensic_review",
+        "residual_risks",
+        "root_closure_boundary"
+      ],
+      "eligibility": [
+        "bounded source-labelled static, lab, field, or trace performance review"
+      ]
     }
   },
   "role_bindings": {
     "architecture": [
       "architecture-review",
-      "high-stakes-review"
+      "high-stakes-review",
+      "specification-review"
     ],
     "research": [
       "explorer",
@@ -290,18 +465,28 @@
       "implementation",
       "mechanical-fixer"
     ],
+    "data": [
+      "implementation"
+    ],
+    "integrations-ops": [
+      "implementation"
+    ],
     "qa-regression": [
-      "product-runtime-review"
+      "product-runtime-review",
+      "test-strategy"
     ],
     "security": [
-      "high-stakes-review"
+      "high-stakes-review",
+      "security-review"
     ],
     "governance": [
-      "governance-audit"
+      "governance-audit",
+      "code-review"
     ],
     "provider-boundary": [],
     "product-runtime": [
-      "product-runtime-review"
+      "product-runtime-review",
+      "web-performance-review"
     ],
     "other": []
   },

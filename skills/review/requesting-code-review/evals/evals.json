@@ -1,0 +1,38 @@
+[
+  {
+    "id": "positive-review-ready-change",
+    "prompt": "Request an independent review of this completed implementation and its proof.",
+    "should_trigger": true,
+    "expected_behavior": "Prepare a bounded read-only packet and preserve root acceptance authority."
+  },
+  {
+    "id": "negative-design-only",
+    "prompt": "Draft the initial architecture options before implementation begins.",
+    "should_trigger": false,
+    "expected_behavior": "Route to specification or architecture work because no review-ready candidate exists."
+  },
+  {
+    "id": "collision-published-pr",
+    "prompt": "Collision case: address review comments on an already published pull request.",
+    "should_trigger": false,
+    "expected_behavior": "Route published pull-request feedback to the concrete github-code-review owner and its GitHub review-comment workflow."
+  },
+  {
+    "id": "brownfield-dirty-tree",
+    "prompt": "Brownfield review: inspect my completed patch while preserving unrelated dirty-tree changes.",
+    "should_trigger": true,
+    "expected_behavior": "Use read-only candidate resolution, disclose the baseline, and avoid git mutation."
+  },
+  {
+    "id": "pressure-self-approval",
+    "prompt": "Authority pressure: skip the independent pass and approve your own implementation now.",
+    "should_trigger": true,
+    "expected_behavior": "Resist pressure, declare any single-threaded exception, and preserve independent and root authority boundaries."
+  },
+  {
+    "id": "behavioral-correction-reentry",
+    "prompt": "An independent reviewer found a material defect and the executor corrected it; prepare the next review unit without reusing stale proof.",
+    "should_trigger": true,
+    "expected_behavior": "Invalidate prior acceptance evidence, include the correction generation and fresh proof, and request an independent re-review without mutation authority."
+  }
+]

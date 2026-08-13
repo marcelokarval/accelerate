@@ -34,6 +34,8 @@ The current intended recurring families:
 - `django-inertia-contract-integrator`
 - `runtime-proof-auditor`
 - `trust-anti-abuse-reviewer`
+- `data-database-specialist`
+- `integrations-ops-specialist`
 
 ### 3. Risk detection pool
 
@@ -80,6 +82,10 @@ Proof classes:
 Valid but non-default specialties:
 
 - `legacy-truth-analyst`
+- `specification-engineer`
+- `code-quality-reviewer`
+- `test-engineer`
+- `web-performance-auditor`
 
 ### 8. Future-gap pool
 
@@ -88,6 +94,11 @@ Named placeholders for possible future families:
 - async workflow stewardship
 - provider-boundary auditing
 - migration stewardship
+
+The named specialist entries above are bounded capabilities, not an instruction
+to keep every profile resident. `specification-engineer`,
+`code-quality-reviewer`, `test-engineer`, and `web-performance-auditor` remain
+candidate/template-backed until empirical replay supports promotion.
 
 ## Fit Scoring Dimensions
 

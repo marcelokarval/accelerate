@@ -67,11 +67,17 @@ require_match 'generated outward' "$export_path"
 require_match 'Do not treat this export as canonical doctrine' "$export_path"
 require_match 'do not treat it as proof of promoted physical agents' "$export_path"
 require_match 'codex-root-skills.config.toml' "$manifest_path"
-require_match 'codex-django-backend.config.toml' "$manifest_path"
+require_match 'codex-on-demand.config.toml' "$manifest_path"
+require_match 'codex-superpowers-on-demand.config.toml' "$manifest_path"
+if rg -F 'codex-django-backend.config.toml' "$manifest_path" >/dev/null; then
+  fail 'host export emitted a hidden raw catalog alias'
+fi
 if rg -F 'codex-orchestrator.config.toml' "$manifest_path" >/dev/null; then
   fail 'host export emitted an additive orchestrator profile'
 fi
 require_match 'codex-python-backend.config.toml' "$manifest_path"
+require_match 'codex-data-db.config.toml' "$manifest_path"
+require_match 'codex-integrations-ops.config.toml' "$manifest_path"
 require_match 'catalog_manifest_sha256: [0-9a-f]{64}' "$manifest_path"
 require_match 'logical_agent_topology_sha256: [0-9a-f]{64}' "$manifest_path"
 require_match 'additive profile configuration layers' "$export_path"
@@ -111,10 +117,10 @@ ln -s "$ROOT/adapters/runtime/codex/capabilities.yaml" "$fixture/adapters/runtim
 ln -s "$ROOT/adapters/runtime/codex/skill-catalog-manifest.toml" "$fixture/adapters/runtime/codex/skill-catalog-manifest.toml"
 ln -s "$ROOT/adapters/runtime/codex-collaboration/role-policy.json" "$fixture/adapters/runtime/codex-collaboration/role-policy.json"
 cp "$ROOT/adapters/runtime/codex/logical-agent-topology.toml" "$fixture/adapters/runtime/codex/logical-agent-topology.toml"
-sed -i 's/spawn_packet_limit = 10/spawn_packet_limit = 11/' "$fixture/adapters/runtime/codex/logical-agent-topology.toml"
+sed -i 's/spawn_packet_limit = 10/spawn_packet_limit = 7/' "$fixture/adapters/runtime/codex/logical-agent-topology.toml"
 if bash "$fixture/scripts/export-runtime-host.sh" codex "$fixture/out" >/tmp/accelerate-host-export-topology.out 2>&1; then
   fail "invalid logical topology was exported"
 fi
-require_match 'spawn_packet_limit must be 10' /tmp/accelerate-host-export-topology.out
+require_match 'spawn_packet_limit must be an integer between 8 and 20' /tmp/accelerate-host-export-topology.out
 
 printf 'host export contract passed\n'

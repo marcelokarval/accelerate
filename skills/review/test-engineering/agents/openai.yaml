@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test Engineering"
+  short_description: "Design strategy and assess test proof"
+  default_prompt: "Use $test-engineering to design the test strategy and independent proof contract for this change."

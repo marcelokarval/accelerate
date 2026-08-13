@@ -1,0 +1,15 @@
+name: source-verification
+category: review
+status: native
+source: skills/review/source-verification
+owner: accelerate
+runtime_export: optional
+local_native_owner: core/review/source-observer.md
+sync_policy: repo-first
+adaptation_policy: >
+  Accelerate-native claim verification. Keep acquisition separate from
+  authority, freshness, corroboration, contradiction, and uncertainty.
+last_reviewed: 2026-08-12
+references:
+  - references/claim-evidence-matrix.md
+  - references/uncertainty-contract.md

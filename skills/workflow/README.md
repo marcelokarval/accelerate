@@ -17,5 +17,7 @@ Current skills:
 | `github-code-review` | GitHub PR/diff review and review-comment workflow. |
 | `github-repo-management` | GitHub repository setup, clone/fork, remote wiring, and identity verification. |
 | `executing-plans` | Execute written plans in bounded batches with checkpoints. |
+| `specification-lifecycle` | Govern proportional pre-code specification, accepted artifact state, and re-entry after drift. |
+| `test-driven-development` | Govern honest change-time baseline, correction, and same-generation reproof. |
 | `subagent-governance` | Multi-agent scope, delegation, nested-spawn, review aggregation, and master revalidation governance. |
 | `parallel-agents` | Safe parallelization of independent reads, analyses, validations, and bounded implementation slices. |

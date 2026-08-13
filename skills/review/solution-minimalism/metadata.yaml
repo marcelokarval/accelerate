@@ -1,0 +1,11 @@
+name: solution-minimalism
+category: review
+status: native-adapted
+source: skills/review/solution-minimalism
+runtime_export: optional
+local_native_owner: core/review/
+sync_policy: repo-first
+description: Post-spec and post-green review for the smallest legible complete solution without weakening required guarantees.
+provenance: original Accelerate adaptation of approved code-simplification and Ponytail-style minimalism decisions
+references:
+  - references/decision-ladder.md

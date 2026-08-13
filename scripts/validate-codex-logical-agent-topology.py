@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Any
 
 
-REQUIRED_NAMES = {"orchestrator", "python-backend", "nextjs-frontend", "research", "reviewer", "qa"}
+REQUIRED_NAMES = {"orchestrator", "python-backend", "nextjs-frontend", "research", "reviewer", "qa", "data-db", "integrations-ops"}
 EXPECTED_ROLE_FAMILIES = {
     "orchestrator": "root",
     "python-backend": "backend",
@@ -18,10 +18,34 @@ EXPECTED_ROLE_FAMILIES = {
     "research": "research",
     "reviewer": "governance",
     "qa": "qa-regression",
+    "data-db": "data",
+    "integrations-ops": "integrations-ops",
 }
 ROOT_EXCLUSIVE = {"issue topology", "external writes", "integration", "review-of-review", "closure"}
-ROOT_SKILLS = {"accelerate", "prompt-hardening", "plane", "subagent-governance", "skill-catalog-router", "verification-before-completion"}
-SPECIALIST_KEYS = {"name", "kind", "role_family", "catalog_group", "collaboration_profile", "model", "reasoning_effort", "write_mode", "external_writes", "closure_authority", "required_skills"}
+ROOT_SKILLS = {
+    "accelerate", "plane", "prompt-hardening", "skill-catalog-router",
+    "subagent-governance", "specification-lifecycle",
+    "test-driven-development", "verification-before-completion",
+}
+TOPOLOGY_KEYS = {
+    "schema_version", "topology_identity", "authority", "spawn_packet_limit",
+    "root_exclusive_authority", "omo_slim_reference", "omo_slim_provenance",
+    "omo_slim_builtin_roles", "agents",
+}
+OMO_SLIM_ROLES = ("orchestrator", "oracle", "librarian", "explorer", "designer", "fixer", "observer", "council")
+OMO_SLIM_ROLE_SET = set(OMO_SLIM_ROLES)
+OMO_SLIM_MAPPING = {
+    "orchestrator": ("orchestrator", ["council"], "adapted-absorbed"),
+    "python-backend": ("fixer", [], "adapted-specialized"),
+    "nextjs-frontend": ("fixer", ["designer"], "adapted-partial"),
+    "research": ("librarian", ["explorer"], "adapted-composite"),
+    "reviewer": ("oracle", ["council"], "adapted-composite"),
+    "qa": ("observer", ["oracle"], "adapted-partial"),
+    "data-db": ("fixer", [], "adapted-specialized"),
+    "integrations-ops": ("fixer", [], "adapted-specialized"),
+}
+OMO_KEYS = {"omo_slim_primary_role", "omo_slim_secondary_roles", "omo_slim_equivalence", "omo_slim_adaptation"}
+SPECIALIST_KEYS = {"name", "kind", "role_family", "catalog_group", "collaboration_profile", "model", "reasoning_effort", "write_mode", "external_writes", "closure_authority", "required_skills"} | OMO_KEYS
 ROOT_KEYS = SPECIALIST_KEYS - {"collaboration_profile"}
 
 
@@ -47,10 +71,19 @@ def main() -> int:
         topology = tomllib.loads(Path(sys.argv[1]).read_text())
         catalog = tomllib.loads(Path(sys.argv[2]).read_text())
         policy = json.loads(Path(sys.argv[3]).read_text())
-        if topology.get("schema_version") != 1 or topology.get("topology_identity") != "codex-logical-agent-topology":
+        if set(topology) != TOPOLOGY_KEYS:
+            fail("topology has invalid fields")
+        if topology.get("schema_version") != 2 or topology.get("topology_identity") != "codex-logical-agent-topology":
             fail("invalid topology identity")
-        if topology.get("spawn_packet_limit") != 10:
-            fail("spawn_packet_limit must be 10")
+        if topology.get("omo_slim_reference") != "https://github.com/alvinunreal/oh-my-opencode-slim":
+            fail("invalid OMO-Slim provenance source")
+        if topology.get("omo_slim_provenance") != "adapted-influence-not-runtime-authority":
+            fail("OMO-Slim provenance must not become runtime authority")
+        if topology.get("omo_slim_builtin_roles") != list(OMO_SLIM_ROLES):
+            fail("OMO-Slim built-in role denominator is incomplete")
+        packet_limit = topology.get("spawn_packet_limit")
+        if type(packet_limit) is not int or not 8 <= packet_limit <= 20:
+            fail("spawn_packet_limit must be an integer between 8 and 20")
         if set(topology.get("root_exclusive_authority", [])) != ROOT_EXCLUSIVE:
             fail("root_exclusive_authority is incomplete")
         if contains_wildcard(topology):
@@ -76,6 +109,27 @@ def main() -> int:
                 fail(f"agent {agent.get('name')} references unknown catalog group")
             if agent.get("role_family") != EXPECTED_ROLE_FAMILIES.get(agent.get("name")):
                 fail(f"agent {agent.get('name')} has an invalid normalized role family")
+            expected_omo = OMO_SLIM_MAPPING.get(agent.get("name"))
+            actual_omo = (
+                agent.get("omo_slim_primary_role"),
+                agent.get("omo_slim_secondary_roles"),
+                agent.get("omo_slim_equivalence"),
+            )
+            if actual_omo != expected_omo:
+                fail(f"agent {agent.get('name')} has an invalid OMO-Slim mapping")
+            primary = agent.get("omo_slim_primary_role")
+            secondary = agent.get("omo_slim_secondary_roles")
+            if (
+                primary not in OMO_SLIM_ROLE_SET
+                or not isinstance(secondary, list)
+                or len(secondary) != len(set(secondary))
+                or primary in secondary
+                or not set(secondary) <= OMO_SLIM_ROLE_SET
+            ):
+                fail(f"agent {agent.get('name')} has invalid OMO-Slim roles")
+            adaptation = agent.get("omo_slim_adaptation")
+            if not isinstance(adaptation, str) or "\n" in adaptation or len(adaptation.split()) < 5:
+                fail(f"agent {agent.get('name')} lacks a substantive OMO-Slim adaptation")
             skills = agent.get("required_skills")
             active_core = set(groups["root-core"].get("skill_ids", []))
             eligible_skills = set(groups[agent["catalog_group"]].get("skill_ids", []))
@@ -91,8 +145,8 @@ def main() -> int:
                     fail("orchestrator must be Sol/medium")
                 if agent.get("write_mode") != "root-only" or agent.get("external_writes") is not True or agent.get("closure_authority") is not True:
                     fail("orchestrator authority is invalid")
-                if not ROOT_SKILLS <= set(skills):
-                    fail("orchestrator is missing mandatory root skills")
+                if set(skills) != ROOT_SKILLS:
+                    fail("orchestrator skills must equal the compact root contract")
                 continue
             if agent.get("external_writes") is not False or agent.get("closure_authority") is not False:
                 fail(f"specialist {agent.get('name')} exceeds root authority")

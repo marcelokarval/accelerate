@@ -54,8 +54,9 @@ validation_command: <command>
    not claim promoted agents or implemented behavior without the source manifest
    saying so.
 6. Validation must be explicit and runnable by a later operator.
-7. A Codex catalog export may declare logical specialist profiles, but it must
-   state that these are additive `-p` configuration layers, not technical
+7. A Codex catalog export may declare the two recovery profiles and logical
+   specialist profiles, but it must not export internal raw catalog aliases.
+   It must state that these are additive `-p` configuration layers, not technical
    skill/MCP/credential isolation or physical-agent promotion.
 
 ## Relationship To Agent Promotion

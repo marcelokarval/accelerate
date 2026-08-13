@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex Runtime Operations"
+  short_description: "Inspect and prove Codex runtime behavior"
+  default_prompt: "Use $codex to inspect or prove this bounded Codex CLI/runtime behavior from current evidence."

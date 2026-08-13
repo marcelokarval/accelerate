@@ -1,0 +1,4 @@
+interface:
+  display_name: "Using Superpowers Compatibility"
+  short_description: "Map legacy skill-first prompts to Accelerate"
+  default_prompt: "Use $using-superpowers to map this explicit legacy skill-first requirement into the current Accelerate workflow."

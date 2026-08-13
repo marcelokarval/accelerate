@@ -5,4 +5,4 @@ source: skills/review/requesting-code-review
 runtime_export: optional
 local_native_owner: core/review/
 sync_policy: repo-first
-description: Pre-commit verification, static scan, reviewer pass, and bounded auto-fix loop.
+description: Bounded independent review preparation and reconciliation without git or closure authority.

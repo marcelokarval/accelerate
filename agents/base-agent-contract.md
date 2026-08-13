@@ -54,6 +54,8 @@ Every base agent must declare one selected role family before work starts:
 - `research`
 - `backend`
 - `frontend`
+- `data`
+- `integrations-ops`
 - `qa-regression`
 - `security`
 - `governance`

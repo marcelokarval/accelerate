@@ -12,5 +12,10 @@ proof_artifacts:
   - tests/codex-logical-agent-runtime-proof.sh
   - scripts/render-codex-skill-profile.py
   - scripts/render-codex-logical-agent.py
+  - scripts/install-codex-skill-catalog.py
+  - scripts/check-codex-skill-catalog-install.py
+  - scripts/sync-skills-to-global.sh
+  - scripts/check-global-skill-mirror.sh
+  - scripts/rollback-global-skill-sync.sh
   - scripts/codex-logical-agent.sh
 privacy_notes: generated outward only; not source authority

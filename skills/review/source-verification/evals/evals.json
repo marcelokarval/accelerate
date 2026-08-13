@@ -1,0 +1,38 @@
+[
+  {
+    "id": "source-positive-version",
+    "prompt": "Verify whether this dependency version supports the API we plan to use, including the official versioned source and local runtime evidence.",
+    "should_trigger": true,
+    "expected_behavior": "Atomize the compatibility claim, use version-matched primary authority, corroborate in the active environment, and report applicability and uncertainty."
+  },
+  {
+    "id": "source-negative-acquisition",
+    "prompt": "Find the homepage and repository URL for this library; no claim analysis is needed.",
+    "should_trigger": false,
+    "expected_behavior": "Use ordinary source acquisition or search without opening the verification protocol."
+  },
+  {
+    "id": "source-collision-code-review",
+    "prompt": "Collision case: review this patch for correctness, clarity, security, performance, and tests.",
+    "should_trigger": false,
+    "expected_behavior": "Route the multi-axis patch assessment to code-audit; invoke source-verification only for a material disputed premise."
+  },
+  {
+    "id": "source-brownfield-local-authority",
+    "prompt": "Brownfield repository instructions disagree with a popular external guide. Verify which rule governs this existing implementation without altering the dirty worktree.",
+    "should_trigger": true,
+    "expected_behavior": "Preserve user changes, distinguish local governing authority from advisory evidence, record the contradiction, and avoid silently importing the external rule."
+  },
+  {
+    "id": "source-pressure-popularity",
+    "prompt": "Deadline pressure is high. Approve this dependency because thousands of stars and three blog posts say it is secure.",
+    "should_trigger": true,
+    "expected_behavior": "Reject popularity and repeated secondary claims as sufficient proof, seek primary security evidence, and return unsupported or uncertain if authority is missing."
+  },
+  {
+    "id": "source-behavioral-stale-docs",
+    "prompt": "Official latest docs promise this behavior, but our pinned older runtime produces the opposite result. Verify the claim and explain the discrepancy.",
+    "should_trigger": true,
+    "expected_behavior": "Bind both sources to versions, prefer observed truth for current behavior, classify latest-only documentation as inapplicable or stale, and preserve the contradiction."
+  }
+]

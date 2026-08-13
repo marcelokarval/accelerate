@@ -33,7 +33,11 @@ This layer owns the explicit artifacts that shape work before execution:
 
 - user stories
 - PRD-lite artifacts
-- SDD artifacts
+- proportional Software Design Documents (`micro`, `standard`, `hierarchical`,
+  or `critical`)
+- Engineering Artifact Manifests and requirement traceability
+- ADR and DESIGN dispositions
+- Test Design and TDD Receipt artifacts as distinct testing surfaces
 - executive plans
 - task breakdowns
 - architecture plans
@@ -53,19 +57,23 @@ Planning is not:
 When non-trivial work cannot honestly jump from discovery to execution, the
 root should require a planning artifact before mutation begins.
 
-The usual chain is:
+Every mutation first enters the Specification Lifecycle. The usual chain is:
 
 1. classify and harden the request
-2. frame user value and acceptance when needed
-3. produce PRD-lite when scope is capability-level or epic-like
-4. produce SDD when technical ownership or architecture is unresolved
-5. produce an executive plan when sequencing, adapters, proof lanes, or rollout matter
-6. break the work into dependency-aware tasks
-7. execute
-8. prove
-9. close
+2. attach the governing issue or explicit narrow exception
+3. select `micro`, `standard`, `hierarchical`, or `critical` SDD mode
+4. materialize the Engineering Artifact Manifest and accepted design authority
+5. disposition ADR, DESIGN, Test Design, agents, rollout, rollback,
+   observability, and AGENTS/docs
+6. map stable requirements to tasks, tests or justified exceptions, and proof
+7. produce larger product or executive planning artifacts when needed
+8. execute through the appropriate TDD, repro, characterization, or semantic baseline
+9. prove, correct, invalidate stale proof, and reprove
+10. reconcile execution to specification and close
 
-Use the smallest artifact that makes the next phase honest.
+Use the smallest proportional artifact that makes the next phase honest. A
+direct-fast-path mutation uses a non-empty micro Spec Capsule; it does not use
+mode `none` or skip issue bootstrap.
 
 Not every task needs the full chain. Implementation must not start while the
 artifact needed for the next safe step is missing.
@@ -78,6 +86,14 @@ native planning sublayer with a date and slug:
 - user story: `product/YYYY-MM-DD-<slug>-user-story.md`
 - PRD-lite: `product/YYYY-MM-DD-<slug>-prd-lite.md`
 - SDD: `architecture/YYYY-MM-DD-<slug>-sdd.md`
+- delta SDD: `architecture/YYYY-MM-DD-<slug>-delta-sdd.md`
+- ADR: `architecture/YYYY-MM-DD-<slug>-adr.md`
+- Engineering Artifact Manifest:
+  `specification/YYYY-MM-DD-<slug>-engineering-artifact-manifest.json`
+- traceability: `specification/YYYY-MM-DD-<slug>-traceability.md`
+- DESIGN disposition: `design/YYYY-MM-DD-<slug>-design.md`
+- Test Design: `testing/YYYY-MM-DD-<slug>-test-design.md`
+- TDD Receipt: `testing/YYYY-MM-DD-<slug>-tdd-receipt.md`
 - task breakdown: `execution/YYYY-MM-DD-<slug>-task-breakdown.md`
 - executive plan: `executive/YYYY-MM-DD-<slug>-executive-plan.md`
 
@@ -92,12 +108,15 @@ For a fresh session, read in this order:
 2. `../SKILL.md`
 3. `README.md`
 4. `product/README.md`
-5. `architecture/README.md`
-6. `executive/README.md`
-7. `execution/README.md`
-8. `migration/README.md`
-9. `onboarding/README.md`
-10. `promotion/README.md`
+5. `specification/README.md`
+6. `architecture/README.md`
+7. `design/README.md`
+8. `testing/README.md`
+9. `executive/README.md`
+10. `execution/README.md`
+11. `migration/README.md`
+12. `onboarding/README.md`
+13. `promotion/README.md`
 
 ## Current Output Contract
 

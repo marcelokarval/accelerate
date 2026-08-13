@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Audit"
+  short_description: "Evidence-based multi-axis code audit"
+  default_prompt: "Use $code-audit to perform a read-only evidence-based audit of this change."

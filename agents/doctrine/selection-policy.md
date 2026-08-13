@@ -71,6 +71,12 @@ Choose based on the real center of gravity:
 - browser/runtime proof -> `runtime-proof-auditor`
 - abuse/trust review -> `trust-anti-abuse-reviewer`
 - legacy truth extraction -> `legacy-truth-analyst`
+- specification readiness or traceability -> `specification-engineer`
+- independent implementation review -> `code-quality-reviewer`
+- test design or independent regression proof -> `test-engineer`
+- measured web performance review -> `web-performance-auditor`
+- database schema, query, migration, or integrity mutation -> `data-database-specialist`
+- MCP, queue, mail, storage, or payment handoff implementation -> `integrations-ops-specialist`
 
 Ownership and risk outrank the task title.
 
@@ -90,6 +96,8 @@ Prefer two-family compositions only when they materially improve honesty:
 
 - implementation + runtime proof
 - implementation + trust review
+- data implementation + independent migration/query proof
+- integrations implementation + provider-boundary or trust review
 - technical planning + contract integration
 - lifecycle framing + technical planning
 
