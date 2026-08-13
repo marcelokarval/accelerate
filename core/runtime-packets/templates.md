@@ -12,6 +12,7 @@ The platform uses:
 - `Branch Entry Packet`
 - `Runtime Delta Packet`
 - `Prompt Hardening Packet`
+- `Specification Lifecycle Packet`
 - `Requested-Vs-Implemented Packet`
 - `Defect Ledger Packet`
 - `Correction Loop Packet`
@@ -105,7 +106,13 @@ Branch Entry Packet
 - product/spec artifact chain:
   - source story=<path|n/a|required-missing>
   - PRD-lite=<path|n/a|required-missing>
+  - SDD mode=<micro|standard|hierarchical|critical|n/a|required-missing>
   - SDD=<path|n/a|required-missing>
+  - SDD status=<draft|accepted|implementing|superseded|n/a>
+  - Engineering Artifact Manifest=<path|n/a|required-missing>
+  - Test Design=<path|consolidated|n/a|required-missing>
+  - TDD Receipt=<path|n/a|required-missing>
+  - traceability=<path|manifest|required-missing>
   - task breakdown=<path|n/a|required-missing>
 - artifact sufficiency decision: <smallest sufficient artifact / missing blocker>
 - mandatory gates: <gates>
@@ -131,6 +138,9 @@ Direct Fast Path Packet
 
 - route / delegation budget: direct-fast-path / 0
 - goal / done means: <outcome / observable result>
+- mutation issue: <issue locator|n/a for read-only>
+- SDD mode / Spec Capsule: <micro + locator|n/a for read-only>
+- Engineering Artifact Manifest: <locator + implementation-stage result|n/a for read-only>
 - focused proof: <one focused check or evidence>
 - locally mandatory mutation gate: <gate|none>
 - escalation trigger: <condition or none>
@@ -175,6 +185,8 @@ Runtime Delta Packet
 - QA / proof lane transition: <A -> B or n/a>
 - browser-proof intensity transition: <A -> B or n/a>
 - issue stack transition: <A -> B or n/a>
+- specification lifecycle transition: <draft|accepted|implementing|corrected|reproved|n/a>
+- correction/proof generation transition: <A -> B or n/a>
 ```
 
 Use this packet when the runtime shape changes materially. Do not emit it for
@@ -215,6 +227,31 @@ Use this packet when full prompt hardening is active or when micro-hardening
 needs explicit runtime visibility. If full hardening is not used, the Branch
 Entry Packet should state the micro-hardening contract or say why hardening is
 not applicable for non-engineering work.
+
+## Specification Lifecycle Packet
+
+```text
+Specification Lifecycle Packet
+
+- manifest: <path>
+- mutation / change kind: <true|false / kind>
+- classification triggers: <...>
+- SDD mode / authority: <micro|standard|hierarchical|critical / id + accepted|implementing>
+- artifact dispositions: <ADR, DESIGN, Test Design, agents, rollout, rollback, observability, AGENTS/docs>
+- traceability: <REQ -> task -> test/exception -> proof locator>
+- planned proof status: <planned|n/a>
+- observed proof status: <observed-red|observed-green|observed|blocked>
+- Test Design locator: <path>
+- TDD Receipt mode / locator: <mode / path>
+- correction / proof generation: <integer / integer>
+- manifest validation: <stage + command + pass|fail>
+- implementation entry: <allowed|blocked>
+- blockers: <none|...>
+```
+
+Test Design is pre-code strategy; the TDD Receipt is observed execution
+history. Any correction invalidates stale proof until fresh proof reaches the
+correction generation.
 
 ## Requested-Vs-Implemented Packet
 
@@ -704,6 +741,8 @@ Closure Packet
 - issue scope vs landing: <...>
 - defect ledger status: <clear|open defects remain|waived defects present>
 - correction loop status: <not-needed|completed|incomplete>
+- specification reconciliation: <manifest + accepted SDD + requested-vs-implemented comparison>
+- correction/proof freshness: <generation match|stale|not-applicable>
 - seam-proof status: <not-needed|present|missing|insufficient>
 - readiness summary: <status + next blocking gate>
 - timeline closure checkpoint: <present|missing|n/a>

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Source Verification"
+  short_description: "Verify claims against governing sources"
+  default_prompt: "Use $source-verification to verify this claim against authoritative, current, and corroborated sources."

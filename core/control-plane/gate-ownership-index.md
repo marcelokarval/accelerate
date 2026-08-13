@@ -23,7 +23,12 @@ This prevents invisible gate drift and stale mandatory language.
 | `Response Locale Gate` | `response-locale-gate.md` | Required before user-facing responses so the answer follows the user's conversational language. |
 | `Story Framing` | `../hardening/prompt-hardening.md` | Required when actor, goal, value, or acceptance are still implicit. |
 | `PRD-lite Gate` | `../../planning/product/README.md` | Required when scope is capability-level or epic-like. |
-| `SDD Gate` | `../../planning/architecture/sdd-template.md` | Required when technical ownership, architecture, data, transport, migration, or proof strategy is unresolved. |
+| `Specification Entry Gate` | `specification-entry-gate.md` | Required for every mutation; blocks implementation until the proportional manifest and accepted design authority exist. |
+| `SDD Mode Gate` | `sdd-mode-gate.md` | Selects `micro`, `standard`, `hierarchical`, or `critical`; mutation cannot use `none` or under-classify risk. |
+| `Decision Artifact Gate` | `decision-artifact-gate.md` | Requires ADR, DESIGN, Test Design, agents, rollout, rollback, observability, and AGENTS/docs dispositions. |
+| `Test Design Gate` | `test-design-gate.md` | Keeps pre-code test strategy complete and distinct from an execution receipt. |
+| `TDD Entry Gate` | `tdd-entry-gate.md` | Requires the baseline mode appropriate to the change kind and invalidates stale proof after correction. |
+| `SDD Gate` | `sdd-mode-gate.md` | Compatibility name for the proportional SDD decision; new routing should use `SDD Mode Gate`. |
 | `Task Breakdown Gate` | `../../planning/execution/README.md` | Required before broad work enters bounded execution. |
 | `Local Workspace Entry Gate` | `local-workspace-entry-gate.md` | Required before governed target-repo mutation. |
 | `Issue Bootstrap Gate` | `../issue-topology/issue-driven-mutation-stack.md` | Required for mutation-bearing work unless explicitly excepted. |

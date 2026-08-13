@@ -1,0 +1,14 @@
+name: specification-lifecycle
+category: workflow
+status: native
+source: skills/workflow/specification-lifecycle
+owner: accelerate
+runtime_export: optional
+local_native_owner: core/control-plane/specification-entry-gate.md
+sync_policy: repo-first
+adaptation_policy: >
+  Accelerate-native proportional specification lifecycle. Keep artifact
+  acceptance and implementation entry under root authority.
+last_reviewed: 2026-08-12
+references:
+  - references/lifecycle-contract.md

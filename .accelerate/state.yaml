@@ -7,14 +7,20 @@ project_onboarded: true
 installation_mode: adoption
 repo_maturity: existing
 onboarding_status: completed
-reentry_status: clean
+reentry_status: light_reentry
 workflow_backend: none-yet
 workflow_backend_detected: linear
 active_profile: unknown
 active_runtime_adapters: ['bash','linear-oauth-mcp-host','browser-proof-helper']
-agent_mode: root-only
-current_plan: planning/executive/2026-05-08-linear-oauth-runtime-proof-executive-plan.md
-current_task_ledger: planning/executive/2026-05-08-linear-oauth-runtime-proof-task-ledger.md
+agent_mode: agent-eligible
+current_plan: planning/architecture/2026-08-13-codex-agent-routing-hardening-sdd.md
+current_task_ledger: planning/execution/2026-08-13-codex-agent-routing-hardening-task-breakdown.md
+current_governing_issue: CODEX-3
+current_execution_overlay: codex-agent-routing-hardening-generation-11-documentary
+current_overlay_status: generation-11-closed-plane-finish-readback-observed
+current_traceability: planning/specification/2026-08-13-codex-agent-routing-hardening-traceability.md
+current_handoff: .accelerate/review/handoff-summary.md
+current_review_evidence: planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-independent-review-2026-08-13.md
 readiness_dashboard: .accelerate/status/readiness-dashboard.yaml
 workflow_adapter: .accelerate/workflow/adapter.yaml
 active_work_item: .accelerate/workflow/active-work-item.yaml
@@ -27,4 +33,4 @@ governing_linear_parent: P4Y-1298
 governing_linear_child: P4Y-1302
 secret_policy: no secrets, tokens, screenshots, private browser captures, credential env names, or provider responses in committed dogfood files
 generated_private_boundary: enforced-by-.accelerate/.gitignore-and-tests/dogfood-workspace-contract.sh
-last_bootstrap_update: 2026-05-09
+last_bootstrap_update: 2026-08-13

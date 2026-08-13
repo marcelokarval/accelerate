@@ -1,0 +1,4 @@
+interface:
+  display_name: "Test-Driven Development"
+  short_description: "Preserve honest baselines and fresh proof"
+  default_prompt: "Use $test-driven-development to select the honest proof mode and drive this change from baseline through fresh reproof."

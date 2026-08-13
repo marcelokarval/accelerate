@@ -101,6 +101,40 @@ Owns abuse-sensitive and trust-sensitive review for user-driven flows.
 Owns bounded extraction of legacy or donor-system truth when adaptation is
 required.
 
+### `specification-engineer`
+
+Owns a bounded read-only specification pass: requirements, non-goals,
+proportional SDD mode, dispositions, and traceability gaps. Proposed artifacts
+return to root; this family does not persist or accept its own specification.
+
+### `code-quality-reviewer`
+
+Owns independent evidence-first review of correctness, spec compliance,
+maintainability, dependency posture, and minimality. It reports findings and
+never edits or accepts the reviewed slice.
+
+### `test-engineer`
+
+Owns test design or independent regression proof. Test mutation is a separate
+bounded executor assignment and forfeits independent acceptance for that test.
+
+### `web-performance-auditor`
+
+Owns source-labelled static, lab, field, or trace performance review. It never
+turns source inspection into invented runtime measurements.
+
+### `data-database-specialist`
+
+Owns bounded database design, migration, query, constraint, and integrity work.
+It does not own application-wide architecture, external provider writes, or
+closure.
+
+### `integrations-ops-specialist`
+
+Owns bounded integration code and operational contracts for MCP, queue, mail,
+storage, or payment handoffs. Provider mutations and credentials remain
+root-governed and must be separately authorized.
+
 ## Current Phase Note
 
 This ontology is already architecturally real in `standalone pre-agents`.

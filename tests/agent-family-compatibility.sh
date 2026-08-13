@@ -19,7 +19,7 @@ matrix="agents/doctrine/capability-matrix.md"
 selection="agents/doctrine/selection-policy.md"
 
 require_match 'Role Family Compatibility Map' "$matrix"
-for role in architecture backend frontend qa-regression security governance provider-boundary product-runtime; do
+for role in architecture backend frontend data integrations-ops qa-regression security governance provider-boundary product-runtime; do
   printf -v role_pattern '[|] `%s` [|]' "$role"
   require_match "$role_pattern" "$matrix"
 done

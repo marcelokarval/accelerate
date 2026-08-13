@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "mutation": true,
+  "change_kind": "governance",
+  "classification": {
+    "triggers": [
+      "cross-control-plane",
+      "new-specialist-capability"
+    ],
+    "selected_mode": "hierarchical",
+    "override": null
+  },
+  "sdd": {
+    "id": "SDD-CODEX-QUALITY-001",
+    "mode": "hierarchical",
+    "status": "accepted",
+    "locator": "planning/architecture/2026-08-12-quality-engineering-stack-sdd.md",
+    "children": [
+      {
+        "id": "SDD-CODEX-QUALITY-SPEC",
+        "disposition": "included",
+        "reason": "The root SDD owns the specification and test lifecycle contracts."
+      },
+      {
+        "id": "SDD-CODEX-QUALITY-AGENTS",
+        "disposition": "separate",
+        "reason": "The specialist boundaries require an explicit communication model.",
+        "locator": "planning/architecture/2026-08-12-quality-engineering-agent-communication.md"
+      },
+      {
+        "id": "SDD-CODEX-QUALITY-SKILLS",
+        "disposition": "separate",
+        "reason": "Selective upstream adoption requires a durable provenance and disposition record.",
+        "locator": "planning/evidence/dated-proof-appendix/quality-stack-selective-adoption-matrix-2026-08-12.md"
+      },
+      {
+        "id": "SDD-CODEX-QUALITY-RUNTIME",
+        "disposition": "included",
+        "reason": "The root SDD owns catalog routing, mirror parity, and the restart boundary."
+      }
+    ]
+  },
+  "dispositions": {
+    "adr": {
+      "status": "separate",
+      "reason": "Selective adoption and root authority are durable cross-surface decisions.",
+      "locator": "planning/architecture/2026-08-12-quality-engineering-stack-adr.md"
+    },
+    "design": {
+      "status": "not-applicable",
+      "reason": "No product UI or interaction structure is changed by this governance stack."
+    },
+    "test_design": {
+      "status": "separate",
+      "reason": "Twenty-seven stable cases require an independently accepted test strategy.",
+      "locator": "planning/testing/2026-08-12-quality-engineering-stack-test-design.md"
+    },
+    "agents": {
+      "status": "separate",
+      "reason": "Five bounded specialists need explicit authority and communication boundaries.",
+      "locator": "planning/architecture/2026-08-12-quality-engineering-agent-communication.md"
+    },
+    "rollout": {
+      "status": "consolidated",
+      "reason": "The SDD stages source validation, governed mirror sync, and restart handoff."
+    },
+    "rollback": {
+      "status": "consolidated",
+      "reason": "The runtime integration must produce a bounded backup and rollback receipt."
+    },
+    "observability": {
+      "status": "consolidated",
+      "reason": "Named cases, exact diagnostics, receipts, and runtime packets expose state."
+    },
+    "agents_docs": {
+      "status": "required",
+      "reason": "The root bootstrap and specialist contracts materially change agent guidance."
+    }
+  },
+  "tasks": [
+    {"id": "T2"},
+    {"id": "T3"},
+    {"id": "T4"},
+    {"id": "T5"},
+    {"id": "T6"},
+    {"id": "T7"},
+    {"id": "T8"},
+    {"id": "T9"},
+    {"id": "T10"},
+    {"id": "T11"}
+  ],
+  "requirements": [
+    {"id": "REQ-SPEC-001", "task": "T2", "test": {"case_id": "CASE-SPEC-001", "locator": "tests/specification-lifecycle-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-t2-t3-green-receipt-2026-08-12.md#focused-proof"}},
+    {"id": "REQ-SPEC-002", "task": "T2", "test": {"case_id": "CASE-SPEC-002", "locator": "tests/specification-lifecycle-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-t2-t3-green-receipt-2026-08-12.md#focused-proof"}},
+    {"id": "REQ-SPEC-003", "task": "T2", "test": {"case_id": "CASE-SPEC-003", "locator": "tests/specification-lifecycle-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-t2-t3-green-receipt-2026-08-12.md#focused-proof"}},
+    {"id": "REQ-SPEC-004", "task": "T2", "test": {"case_id": "CASE-SPEC-004", "locator": "tests/specification-lifecycle-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-t2-t3-green-receipt-2026-08-12.md#focused-proof"}},
+    {"id": "REQ-SPEC-005", "task": "T2", "test": {"case_id": "CASE-SPEC-005", "locator": "tests/specification-lifecycle-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-t2-t3-green-receipt-2026-08-12.md#focused-proof"}},
+    {"id": "REQ-TRACE-001", "task": "T3", "test": {"case_id": "CASE-TRACE-001", "locator": "tests/specification-lifecycle-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-t2-t3-green-receipt-2026-08-12.md#focused-proof"}},
+    {"id": "REQ-TRACE-002", "task": "T3", "test": {"case_id": "CASE-TRACE-002", "locator": "tests/specification-lifecycle-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-t2-t3-green-receipt-2026-08-12.md#focused-proof"}},
+    {"id": "REQ-TEST-001", "task": "T3", "test": {"case_id": "CASE-TEST-001", "locator": "tests/specification-lifecycle-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-t2-t3-green-receipt-2026-08-12.md#focused-proof"}},
+    {"id": "REQ-TEST-002", "task": "T3", "test": {"case_id": "CASE-TEST-002", "locator": "tests/specification-lifecycle-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-t2-t3-green-receipt-2026-08-12.md#focused-proof"}},
+    {"id": "REQ-TEST-003", "task": "T3", "test": {"case_id": "CASE-TEST-003", "locator": "tests/specification-lifecycle-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-t2-t3-green-receipt-2026-08-12.md#focused-proof"}},
+    {"id": "REQ-REV-001", "task": "T5", "test": {"case_id": "CASE-REV-001", "locator": "tests/quality-skill-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-REV-002", "task": "T5", "test": {"case_id": "CASE-REV-002", "locator": "tests/quality-skill-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-REV-003", "task": "T5", "test": {"case_id": "CASE-REV-003", "locator": "tests/quality-skill-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-REV-004", "task": "T5", "test": {"case_id": "CASE-REV-004", "locator": "tests/quality-skill-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-SEC-001", "task": "T5", "test": {"case_id": "CASE-SEC-001", "locator": "tests/quality-agent-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-QA-001", "task": "T5", "test": {"case_id": "CASE-QA-001", "locator": "tests/quality-agent-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-PERF-001", "task": "T5", "test": {"case_id": "CASE-PERF-001", "locator": "tests/quality-agent-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-LEAN-001", "task": "T6", "test": {"case_id": "CASE-LEAN-001", "locator": "tests/quality-skill-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-LEAN-002", "task": "T6", "test": {"case_id": "CASE-LEAN-002", "locator": "tests/quality-skill-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-LEAN-003", "task": "T6", "test": {"case_id": "CASE-LEAN-003", "locator": "tests/quality-skill-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-AGENT-001", "task": "T4", "test": {"case_id": "CASE-AGENT-001", "locator": "tests/quality-agent-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-AGENT-002", "task": "T4", "test": {"case_id": "CASE-AGENT-002", "locator": "tests/quality-agent-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-AGENT-003", "task": "T4", "test": {"case_id": "CASE-AGENT-003", "locator": "tests/quality-agent-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-SKILL-001", "task": "T7", "test": {"case_id": "CASE-SKILL-001", "locator": "tests/quality-skill-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-SKILL-002", "task": "T7", "test": {"case_id": "CASE-SKILL-002", "locator": "tests/quality-skill-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-RUNTIME-001", "task": "T8", "test": {"case_id": "CASE-RUNTIME-001", "locator": "tests/quality-skill-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-pre-restart-green-receipt-2026-08-13.md#stable-requirement-and-case-evidence"}},
+    {"id": "REQ-RUNTIME-002", "task": "T11", "test": {"case_id": "CASE-RUNTIME-002", "locator": "tests/quality-skill-contract.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/quality-stack-post-restart-runtime-proof-2026-08-13.md#fresh-runtime-green"}}
+  ],
+  "test_design": {
+    "id": "TEST-DESIGN-CODEX-QUALITY-001",
+    "status": "accepted",
+    "owner": "test-engineering-lane",
+    "independent_reviewer": "quality_spec_review",
+    "accepted_by": "accelerate-root",
+    "locator": "planning/testing/2026-08-12-quality-engineering-stack-test-design.md",
+    "dimensions": {
+      "happy": {"status": "covered", "reason": "Focused valid fixtures exercise every new contract surface."},
+      "negative": {"status": "covered", "reason": "Invalid semantic fixtures must fail closed with diagnostics."},
+      "boundary": {"status": "covered", "reason": "Mode, lifecycle, generation, and catalog boundaries are explicit."},
+      "ownership": {"status": "covered", "reason": "Specialist authority and self-acceptance violations are rejected."},
+      "concurrency_idempotency": {"status": "covered", "reason": "Provider receipts and runtime sync retries have deterministic checks."},
+      "failure_recovery": {"status": "covered", "reason": "Stale proof, parity drift, and rollback restoration are exercised."},
+      "fixtures": {"status": "covered", "reason": "Disposable JSON, Markdown, TOML, and dirty-tree fixtures are used."},
+      "observability": {"status": "covered", "reason": "Every stable case emits an exact result and evidence locator."},
+      "lowest_effective_level": {"status": "covered", "reason": "Semantic validators precede broader integration and runtime replay."}
+    }
+  },
+  "tdd_receipt": {
+    "id": "TDD-RECEIPT-CODEX-QUALITY-001",
+    "locator": "planning/testing/2026-08-12-quality-engineering-stack-tdd-receipt.md",
+    "state": "reviewed",
+    "mode": "semantic-contract",
+    "baseline": {
+      "status": "observed-red",
+      "locator": "planning/evidence/dated-proof-appendix/quality-stack-case-red-receipt-2026-08-12.md#receipt"
+    },
+    "implementation_owner": "accelerate-root",
+    "test_writer": "quality-red-test-writer",
+    "independent_reviewer": "quality-stack-final-review",
+    "correction_evidence": {
+      "status": "observed-green",
+      "locator": "planning/evidence/dated-proof-appendix/quality-stack-post-restart-runtime-proof-2026-08-13.md#fresh-runtime-green"
+    },
+    "proof_order": {
+      "implementation": "observed",
+      "qa": "observed",
+      "browser_truth": "not-applicable",
+      "persistent_regression": "not-applicable",
+      "forensic_review": "observed"
+    },
+    "independent_review_verdict": "pass",
+    "correction_generation": 5,
+    "proof_generation": 5
+  }
+}

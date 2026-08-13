@@ -1,0 +1,11 @@
+name: skill-catalog-router
+category: governance
+status: native
+source: skills/governance/skill-catalog-router
+runtime_export: optional
+local_native_owner: agents/envelopes/skill-envelopes.md
+sync_policy: repo-first
+description: Progressive discovery and integrity verification for the current repo-owned governed skill catalog.
+references:
+  - references/catalog-contract.md
+  - references/index.tsv

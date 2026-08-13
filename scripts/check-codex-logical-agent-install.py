@@ -18,11 +18,19 @@ parser.add_argument("--agent", required=True)
 args = parser.parse_args()
 
 
+def run_checked(command: list[str], label: str) -> None:
+    """Run a governed helper without leaking a Python traceback on rejection."""
+    try:
+        subprocess.run(command, check=True)
+    except subprocess.CalledProcessError as error:
+        raise SystemExit(f"{label} failed with exit {error.returncode}") from None
+
+
 def managed_catalog_states(catalog: dict[str, object]) -> dict[str, bool]:
     sources = {str(source["id"]): source for source in catalog["sources"]}
     states: dict[str, bool] = {}
     for group in catalog["groups"]:
-        if group["source"] != "r0":
+        if group["classification"] == "host-injected":
             continue
         source = sources[str(group["source"])]
         prefix = [str(source["base_path"])]
@@ -65,9 +73,9 @@ topology = tomllib.loads(args.topology.read_text())
 validator = Path(__file__).with_name("validate-codex-logical-agent-topology.py")
 source_root = Path(__file__).resolve().parents[1]
 policy = source_root / "adapters/runtime/codex-collaboration/role-policy.json"
-subprocess.run(
+run_checked(
     ["python3", str(validator), str(args.topology), str(args.catalog), str(policy)],
-    check=True,
+    "logical agent topology validation",
 )
 if args.agent not in {str(agent["name"]) for agent in topology["agents"]}:
     parser.error(f"unknown logical agent: {args.agent}")
@@ -79,16 +87,25 @@ if agent["kind"] == "specialist":
     tomllib.loads(target.read_text())
 renderer = Path(__file__).with_name("render-codex-logical-agent.py")
 catalog_renderer = Path(__file__).with_name("render-codex-skill-profile.py")
+catalog_checker = Path(__file__).with_name("check-codex-skill-catalog-install.py")
 base_config = args.codex_home / "config.toml"
 if not base_config.is_file():
     raise SystemExit(f"global catalog base is not installed: {base_config}")
 base_document = tomllib.loads(base_config.read_text())
+run_checked(
+    [
+        "python3", str(catalog_checker), str(args.catalog),
+        "--codex-home", str(args.codex_home),
+        "--logical-topology", str(args.topology),
+    ],
+    "Codex skill catalog install check",
+)
 with tempfile.TemporaryDirectory(prefix="codex-logical-agent-check-") as temporary:
     expected = Path(temporary) / target.name
     expected_base = Path(temporary) / "config.toml"
-    subprocess.run(
+    run_checked(
         ["python3", str(catalog_renderer), str(args.catalog), "--mode", "global", "--output", str(expected_base)],
-        check=True,
+        "Codex skill catalog render",
     )
     catalog = tomllib.loads(args.catalog.read_text())
     expected_states = managed_catalog_states(catalog)
@@ -100,9 +117,9 @@ with tempfile.TemporaryDirectory(prefix="codex-logical-agent-check-") as tempora
     if agent["kind"] == "root-orchestrator":
         print(base_config)
         raise SystemExit(0)
-    subprocess.run(
+    run_checked(
         ["python3", str(renderer), str(args.topology), str(args.catalog), "--agent", args.agent, "--output", str(expected)],
-        check=True,
+        "logical agent render",
     )
     if target.read_bytes() != expected.read_bytes():
         raise SystemExit(f"logical profile is stale or manually edited: {target}")

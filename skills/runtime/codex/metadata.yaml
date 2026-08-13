@@ -1,0 +1,17 @@
+name: codex
+category: runtime
+status: standalone-adapted
+source: skills/runtime/codex
+runtime_export: optional
+local_native_owner: adapters/runtime/codex/README.md
+sync_policy: repo-first
+adaptation_policy: >
+  Preserve useful Codex CLI/runtime operations while replacing Hermes terminal,
+  process, credential, delegation, and static model assumptions with current
+  Codex-native collaboration and fresh runtime proof.
+references:
+  - references/full-procedure.md
+interface:
+  display_name: "Codex Runtime Operations"
+  short_description: "Inspect and prove Codex runtime behavior"
+  default_prompt: "Use $codex to inspect or prove this bounded Codex CLI/runtime behavior from current evidence."

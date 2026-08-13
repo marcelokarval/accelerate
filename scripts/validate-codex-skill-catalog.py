@@ -9,6 +9,11 @@ from pathlib import Path
 
 
 VALID_CLASSES = {"core", "specialist", "on-demand", "host-injected"}
+ROOT_SKILLS = {
+    "accelerate", "plane", "prompt-hardening", "skill-catalog-router",
+    "subagent-governance", "specification-lifecycle",
+    "test-driven-development", "verification-before-completion",
+}
 
 
 def fail(message: str) -> None:
@@ -54,6 +59,7 @@ if not isinstance(groups, list) or not groups:
 
 seen_ids: set[str] = set()
 seen_paths: set[str] = set()
+group_by_id: dict[str, dict[str, object]] = {}
 enabled_count = 0
 for group in groups:
     if not isinstance(group, dict):
@@ -65,6 +71,8 @@ for group in groups:
     skill_ids = group.get("skill_ids")
     if not isinstance(group_id, str) or not group_id:
         fail("each group requires a non-empty id")
+    if group_id in group_by_id:
+        fail(f"duplicate group id: {group_id}")
     if source_id not in source_by_id:
         fail(f"group {group_id} uses an unknown source")
     if classification not in VALID_CLASSES:
@@ -79,8 +87,13 @@ for group in groups:
         fail(f"host-injected group {group_id} must stay enabled")
     if classification == "specialist" and (enabled or not isinstance(group.get("profile"), str)):
         fail(f"specialist group {group_id} needs a disabled named profile")
+    if classification == "specialist" and group.get("public_profile") is not False:
+        fail(f"specialist group {group_id} must keep its catalog profile internal")
     if classification == "on-demand" and (enabled or group.get("recovery_route") != "skill-catalog-router"):
         fail(f"on-demand group {group_id} must be disabled and router-recoverable")
+    if classification == "on-demand" and (not isinstance(group.get("profile"), str) or group.get("public_profile") is not True):
+        fail(f"on-demand group {group_id} must expose one public recovery profile")
+    group_by_id[group_id] = group
     for skill_id in skill_ids:
         identifier = f"{group.get('identifier_prefix', '')}{skill_id}"
         if identifier in seen_ids:
@@ -94,6 +107,18 @@ for group in groups:
 
 if document.get("runtime_skill_count") != len(seen_ids):
     fail(f"runtime_skill_count={document.get('runtime_skill_count')} does not match inventory={len(seen_ids)}")
-if enabled_count > 40:
-    fail(f"enabled catalog is not compact enough: {enabled_count} skills")
+root = group_by_id.get("root-core", {})
+if root.get("classification") != "core" or set(root.get("skill_ids", [])) != ROOT_SKILLS:
+    fail("root-core must equal the compact eight-skill orchestrator contract")
+superpowers = group_by_id.get("host-superpowers", {})
+if (
+    superpowers.get("classification") != "on-demand"
+    or superpowers.get("profile") != "superpowers-on-demand"
+    or superpowers.get("public_profile") is not True
+    or superpowers.get("enabled_by_default") is not False
+    or superpowers.get("recovery_route") != "skill-catalog-router"
+):
+    fail("host-superpowers must be a disabled router-recoverable profile")
+if enabled_count != 13:
+    fail(f"enabled catalog must equal the 13-skill root budget: {enabled_count}")
 print(f"codex skill catalog truth gate passed: inventory={len(seen_ids)} enabled={enabled_count}")

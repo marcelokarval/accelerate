@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "mutation": true,
+  "change_kind": "governance",
+  "classification": {
+    "triggers": [
+      "workflow-governance",
+      "durable-decision",
+      "new-specialist-capability"
+    ],
+    "selected_mode": "standard",
+    "override": null
+  },
+  "sdd": {
+    "id": "SDD-CODEX-AGENT-ROUTING-001",
+    "mode": "standard",
+    "status": "accepted",
+    "locator": "planning/architecture/2026-08-13-codex-agent-routing-hardening-sdd.md"
+  },
+  "dispositions": {
+    "adr": {
+      "status": "separate",
+      "reason": "Routing authority, launch identity, read-only artifact delivery, and packet-limit semantics are durable decisions.",
+      "locator": "planning/architecture/2026-08-13-codex-agent-routing-hardening-adr.md"
+    },
+    "design": {
+      "status": "not-applicable",
+      "reason": "This governance correction changes no product UI, interaction, or visual structure."
+    },
+    "test_design": {
+      "status": "separate",
+      "reason": "Seven ordered semantic contracts require distinct failure oracles and proof-level boundaries.",
+      "locator": "planning/testing/2026-08-13-codex-agent-routing-hardening-test-design.md"
+    },
+    "agents": {
+      "status": "consolidated",
+      "reason": "The accepted SDD defines the two logical routes and the six-family doctrine reconciliation."
+    },
+    "rollout": {
+      "status": "consolidated",
+      "reason": "The SDD and task breakdown govern ordered local proof, transactional runtime sync, and fresh-process readback."
+    },
+    "rollback": {
+      "status": "consolidated",
+      "reason": "The SDD requires bounded installer backup receipts and forbids broad user-home resets."
+    },
+    "observability": {
+      "status": "consolidated",
+      "reason": "Named cases, commands, hashes, generations, runtime receipts, and provider readback expose execution truth."
+    },
+    "agents_docs": {
+      "status": "required",
+      "reason": "Agent doctrine, templates, adapter documentation, and launch topology must share the corrected contract."
+    }
+  },
+  "tasks": [
+    {"id": "T1"},
+    {"id": "T2"},
+    {"id": "T3"},
+    {"id": "T4"},
+    {"id": "T5"},
+    {"id": "T6"},
+    {"id": "T7"}
+  ],
+  "requirements": [
+    {"id": "REQ-ROUTER-001", "task": "T1", "test": {"case_id": "CASE-ROUTER-001", "locator": "tests/codex-agent-routing-hardening.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-10-current-proof", "generation": 10, "current": true}},
+    {"id": "REQ-SPAWN-002", "task": "T2", "test": {"case_id": "CASE-SPAWN-002", "locator": "tests/codex-agent-routing-hardening.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-10-current-proof", "generation": 10, "current": true}},
+    {"id": "REQ-ALIASES-003", "task": "T3", "test": {"case_id": "CASE-ALIASES-003", "locator": "tests/codex-agent-routing-hardening.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-10-current-proof", "generation": 10, "current": true}},
+    {"id": "REQ-ROUTES-004", "task": "T4", "test": {"case_id": "CASE-ROUTES-004", "locator": "tests/codex-agent-routing-hardening.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-10-current-proof", "generation": 10, "current": true}},
+    {"id": "REQ-DOCTRINE-005", "task": "T5", "test": {"case_id": "CASE-DOCTRINE-005", "locator": "tests/codex-agent-routing-hardening.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-10-current-proof", "generation": 10, "current": true}},
+    {"id": "REQ-READONLY-006", "task": "T6", "test": {"case_id": "CASE-READONLY-006", "locator": "tests/codex-agent-routing-hardening.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-10-current-proof", "generation": 10, "current": true}},
+    {"id": "REQ-LIMIT-007", "task": "T7", "test": {"case_id": "CASE-LIMIT-007", "locator": "tests/codex-agent-routing-hardening.sh"}, "proof": {"status": "observed-green", "locator": "planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-10-current-proof", "generation": 10, "current": true}}
+  ],
+  "test_design": {
+    "id": "TEST-DESIGN-CODEX-AGENT-ROUTING-001",
+    "status": "accepted",
+    "owner": "codex3-test-author",
+    "independent_reviewer": "codex3-independent-reviewer",
+    "accepted_by": "accelerate-root",
+    "locator": "planning/testing/2026-08-13-codex-agent-routing-hardening-test-design.md",
+    "dimensions": {
+      "happy": {"status": "covered", "reason": "All seven focused cases define deterministic post-correction success."},
+      "negative": {"status": "covered", "reason": "Missing routes, raw aliases, authority ambiguity, and stale doctrine fail closed."},
+      "boundary": {"status": "covered", "reason": "Exact sets, absolute paths, 64-hex hashes, and a positive limit of eight are exercised."},
+      "ownership": {"status": "covered", "reason": "Logical specialists and read-only reviewers cannot acquire root or persistence authority."},
+      "concurrency_idempotency": {"status": "covered", "reason": "A disposable installer home proves repeatable alias reconciliation without touching the real runtime."},
+      "failure_recovery": {"status": "covered", "reason": "Invalid topology and stale alias fixtures fail before deployment; transactional rollback stays required."},
+      "fixtures": {"status": "covered", "reason": "Current governed files, a temporary home, and a derived topology are disposable evidence fixtures."},
+      "observability": {"status": "covered", "reason": "Stable IDs, aggregate status, timestamp, exit code, and SHA-256 are persisted."},
+      "lowest_effective_level": {"status": "covered", "reason": "Shell and Python semantic parsing precede integration, full-suite, mirror, and fresh-runtime proof."}
+    }
+  },
+  "tdd_receipt": {
+    "id": "TDD-RECEIPT-CODEX-AGENT-ROUTING-001",
+    "locator": "planning/testing/2026-08-13-codex-agent-routing-hardening-tdd-receipt.md",
+    "state": "reviewed",
+    "mode": "semantic-contract",
+    "baseline": {
+      "status": "observed-red",
+      "locator": "planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-red-2026-08-13.md"
+    },
+    "implementation_owner": "accelerate-root",
+    "test_writer": "codex3-red-test-writer",
+    "independent_reviewer": "codex3-final-independent-reviewers",
+    "correction_evidence": {
+      "status": "observed-green",
+      "locator": "planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-green-2026-08-13.md#generation-11-documentary-proof"
+    },
+    "proof_order": {
+      "implementation": "observed",
+      "qa": "observed",
+      "browser_truth": "not-applicable",
+      "persistent_regression": "not-applicable",
+      "forensic_review": "observed"
+    },
+    "independent_review_verdict": "pass",
+    "correction_generation": 11,
+    "proof_generation": 11
+  },
+  "current_reentry": {
+    "state": "closed-plane-finish-readback-observed",
+    "historical_generation_1_green": "stale",
+    "historical_generation_2_green": "observed-then-invalidated-for-closure",
+    "historical_generation_3_green": "observed-then-invalidated-for-closure",
+    "historical_generation_4_green": "observed-then-invalidated-for-closure",
+    "historical_generation_5_green": "observed-then-invalidated-for-closure",
+    "historical_generation_6_green": "observed-then-invalidated-for-closure",
+    "historical_generation_7_green": "observed-then-invalidated-for-closure",
+    "historical_generation_8_green": "observed-then-invalidated-for-closure",
+    "historical_generation_9_green": "observed-then-invalidated-for-closure",
+    "generation_10_implementation_evidence": "current-accepted",
+    "generation_10_runtime_receipt": "historical-stale-after-external-drift",
+    "current_green": true,
+    "independent_review": "pass",
+    "runtime_sync": "generation-11-installed-mirror-and-fresh-runtime-proof-observed",
+    "historical_findings": [
+      {"id": "G2-F1", "severity": "P1", "status": "corrected-and-reproved-generation-2", "summary": "Managed catalog/index divergence breaks the research Spawn Packet."},
+      {"id": "G2-F2", "severity": "P1", "status": "corrected-and-reproved-generation-2", "summary": "Standalone catalog reinstall deletes current logical-owned data-db and integrations-ops profiles."},
+      {"id": "G2-F3", "severity": "P1", "status": "corrected-and-reproved-generation-2", "summary": "The index writer follows an escaping symlink."},
+      {"id": "G2-F4", "severity": "P1", "status": "corrected-and-reproved-generation-2", "summary": "Rollback receipts depend on future topology and fail after drift."},
+      {"id": "G2-F5", "severity": "P2", "status": "corrected-and-reproved-generation-2", "summary": "rollback_command is not validated exactly."}
+    ],
+    "findings": [
+      {"id": "G3-F1", "severity": "P1", "status": "corrected-and-reproved-generation-3", "summary": "Rollback previously overwrote or deleted pre-existing post-sync target drift."},
+      {"id": "G3-F2", "severity": "P1", "status": "corrected-and-reproved-generation-3", "summary": "Stale logical ownership across catalog evolution was previously lost during catalog reinstall."},
+      {"id": "G4-F1", "severity": "P1", "status": "corrected-and-reproved-generation-4", "summary": "Shape plus mtime previously laundered backdated tampered content into logical ownership."},
+      {"id": "G4-F2", "severity": "P2", "status": "corrected-and-reproved-generation-4", "summary": "Installed runtime configs previously retained mode 0664."},
+      {"id": "G4-F3", "severity": "P2", "status": "corrected-and-reproved-generation-4", "summary": "Cooperative TOCTOU previously remained between preflight or classification and mutation."},
+      {"id": "G5-F1", "severity": "P1", "status": "corrected-and-reproved-generation-5", "summary": "Inherited FD inode identity previously failed to prove held flock ownership."},
+      {"id": "G5-F2", "severity": "P1", "status": "corrected-and-reproved-generation-5", "summary": "Rollback previously materially validated the receipt before acquiring the shared lock."},
+      {"id": "G5-F3", "severity": "P2", "status": "corrected-and-reproved-generation-5", "summary": "Combined sync previously left standalone catalog and logical ownership receipts stale or absent."},
+      {"id": "G6-F1", "severity": "P1", "status": "corrected-and-reproved-generation-6", "summary": "Third-OFD contention was previously mistaken for inherited-FD ownership across all four mutators."},
+      {"id": "G7-F1", "severity": "P1", "status": "corrected-and-reproved-generation-7", "summary": "A supported standalone logical reinstall after sync previously rewrote only the logical receipt, changed installed_digest, and invalidated schema-4 rollback."},
+      {"id": "G8-F1", "severity": "P2", "status": "corrected-and-reproved-generation-8", "summary": "The logical fast path previously accepted state outside CODEX_HOME rollback and backup history."},
+      {"id": "G8-F2", "severity": "P1", "status": "corrected-and-reproved-generation-8", "summary": "A directory at the receipt path plus real drift previously caused partial profile mutation before final receipt replacement failed; RED was review-observed and GREEN regression passed at root."},
+      {"id": "G9-F1", "severity": "P2", "status": "corrected-and-reproved-generation-9", "summary": "Logical fast path previously accepted a receipt-updated renamed backup within CODEX_HOME backups and mode 0666, unlike catalog exact target-to-backup validation."},
+      {"id": "G10-F1", "severity": "P1", "status": "corrected-and-reproved-generation-10", "summary": "Catalog receipt late publication failure previously left temporary and backup artifacts and restored target mode drift."},
+      {"id": "G10-F2", "severity": "P2", "status": "corrected-and-reproved-generation-10", "summary": "Catalog no-op previously accepted a hardlinked receipt with nlink 2."},
+      {"id": "G10-F3", "severity": "P2", "status": "corrected-and-reproved-generation-10", "summary": "Catalog previously accepted a logical receipt rollback_directory different from the actual backup parent while logical rejected it."},
+      {"id": "G11-F1", "severity": "P2", "status": "documentary-corrected-and-reproved-generation-11", "summary": "Governing dashboard, traceability and task ledger were stale or contradictory after G10."},
+      {"id": "G11-F2", "severity": "P1", "status": "runtime-reproved-generation-11", "summary": "External post-G10-sync drift changed root reasoning effort to low while topology requires medium; governed G11 resync restored Sol medium and mirror plus fresh root plus seven passed."}
+    ]
+  }
+}

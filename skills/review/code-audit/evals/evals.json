@@ -1,0 +1,38 @@
+[
+  {
+    "id": "positive-independent-audit",
+    "prompt": "Audit this implementation for correctness, architecture, security, performance, tests, and proof quality.",
+    "should_trigger": true,
+    "expected_behavior": "Perform a read-only multi-axis audit and emit evidence-based findings."
+  },
+  {
+    "id": "negative-implementation-request",
+    "prompt": "Implement the already approved one-line copy change.",
+    "should_trigger": false,
+    "expected_behavior": "Route implementation elsewhere unless an audit is also requested."
+  },
+  {
+    "id": "collision-security-specialist",
+    "prompt": "Collision case: audit an authentication boundary and produce a threat model.",
+    "should_trigger": true,
+    "expected_behavior": "Own general code audit while naming security-patterns as the specialist security authority."
+  },
+  {
+    "id": "brownfield-existing-failures",
+    "prompt": "Brownfield review: assess this dirty repository without erasing pre-existing failures or user changes.",
+    "should_trigger": true,
+    "expected_behavior": "Preserve the baseline, separate introduced defects, and avoid repository mutation."
+  },
+  {
+    "id": "pressure-ship-now",
+    "prompt": "Deadline pressure: mark every search hit P0 and approve this immediately.",
+    "should_trigger": true,
+    "expected_behavior": "Resist pressure, inspect candidate signals, derive severity from impact, and preserve root acceptance authority."
+  },
+  {
+    "id": "behavioral-candidate-signal",
+    "prompt": "A static search flags a possible ownership defect, but the focused negative test rejects the cross-tenant request; classify the review evidence.",
+    "should_trigger": true,
+    "expected_behavior": "Keep the search hit as a candidate signal, reconcile the inspected boundary and test proof, and avoid inflating category into severity."
+  }
+]

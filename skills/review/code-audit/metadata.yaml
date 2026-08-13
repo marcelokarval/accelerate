@@ -5,4 +5,4 @@ source: skills/review/code-audit
 runtime_export: optional
 local_native_owner: core/review/
 sync_policy: repo-first
-description: P0-P3 code audit guidance for security, architecture, maintainability, documentation, and quality gates.
+description: Evidence-based multi-axis code audit with impact-derived P0-P3 findings and explicit proof.

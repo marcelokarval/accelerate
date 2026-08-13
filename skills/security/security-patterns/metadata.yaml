@@ -5,7 +5,11 @@ source: skills/security/security-patterns
 owner: accelerate
 runtime_export: optional
 local_native_owner: references/adjacent-skill-trigger-audit.md
+sync_policy: repo-first
 adaptation_policy: >
   Standalone Accelerate version. Keep ownership, auth, secrets, fail-closed
   mutations, and race-safety stack-neutral.
-last_reviewed: 2026-04-22
+last_reviewed: 2026-08-13
+references:
+  - references/threat-review-contract.md
+  - references/full-procedure.md

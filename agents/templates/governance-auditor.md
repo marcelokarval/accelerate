@@ -22,8 +22,11 @@ authority-boundary audits.
 ## Allowed Authority
 
 - read-only governance review
-- bounded docs/workflow edits when explicitly assigned as executor
 - identifying contradictory authority and missing proof lanes
+
+In the `governance-audit` read-only profile, workspace mutation is forbidden.
+Proposed documentation or workflow corrections are delivered only in the
+return packet. Persisting them requires a separate bounded executor assignment.
 
 ## Prohibited Authority
 

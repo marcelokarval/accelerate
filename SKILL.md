@@ -68,6 +68,7 @@ Then open the native surface that actually governs the branch, usually from:
 - classification
 - response locale matching the user's request language
 - prompt-hardening decision
+- proportional SDD mode and design-acceptance decision
 - issue topology
 - lane opening order
 - staffing / delegation budget
@@ -95,13 +96,15 @@ Run `accelerate` in this order:
    output, and stop rules
 7. choose reasoning effort and delegation posture from success criteria, risk,
    and available evidence
-8. open the required branch, skills, gates, and artifacts
-9. when execution and acceptance review are both in scope, keep the master
+8. for mutation, open the Specification Entry Gate, choose the proportional
+   SDD mode, and require accepted or implementing design authority
+9. open the required branch, skills, gates, and artifacts
+10. when execution and acceptance review are both in scope, keep the master
    session as orchestrator/final reviewer and separate executor/reviewer
    authority through physical or virtual subagent packets
-10. keep runtime state visible with explicit packets
-11. enforce proof in the correct order
-12. block closure until the branch contract is truly satisfied
+11. keep runtime state visible with explicit packets
+12. enforce proof in the correct order
+13. block closure until the branch contract is truly satisfied
 
 Do not treat `accelerate` as a label. Treat it as the visible team operating
 system for the run.
@@ -133,7 +136,9 @@ After classification, choose exactly one execution route:
 
 - `direct-fast-path`: a known target, one logical surface, low and reversible
   risk, and focal proof. The root executes directly with micro-hardening and
-  zero physical or virtual subagents. Do not create a plan, handoff, browser
+  zero physical or virtual subagents. A mutation still requires issue bootstrap,
+  `micro` semantic SDD through a non-empty Spec Capsule, and a compact
+  Engineering Artifact Manifest. Do not create a larger plan, handoff, browser
   lane, or extra packet merely because the work is engineering. Never use this
   route for auth, billing, permissions, sensitive data, migrations, secrets,
   irreversible external calls, or runtime truth.
@@ -393,10 +398,16 @@ Use these native authorities first:
   - `core/issue-topology/issue-driven-mutation-stack.md`
 - product/specification planning:
   - `planning/README.md`
+  - `planning/specification/README.md`
+  - `planning/specification/engineering-artifact-manifest-template.json`
+  - `planning/specification/spec-capsule-template.md`
+  - `planning/specification/traceability-template.md`
   - `planning/product/README.md`
   - `planning/product/user-story-template.md`
   - `planning/product/prd-lite-template.md`
   - `planning/architecture/sdd-template.md`
+  - `planning/architecture/delta-sdd-template.md`
+  - `planning/architecture/adr-template.md`
   - `planning/execution/task-breakdown-template.md`
 - proof and closure:
   - `core/runtime-packets/qa-proof-stack.md`

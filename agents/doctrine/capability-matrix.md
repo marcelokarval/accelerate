@@ -22,6 +22,12 @@ outside this table.
 | `runtime-proof-auditor` | prove | browser runtime, staged flows, redirect truth, shell persistence | runtime/product drift | read-only by default | delegate-possible reviewer | runtime review and dogfood skills |
 | `trust-anti-abuse-reviewer` | review / prove | auth, session, billing, export, deletion, upload, ownership-sensitive flows | misuse, replay, enumeration, privilege drift | read-only by default | delegate-possible reviewer | anti-abuse and security review skills |
 | `legacy-truth-analyst` | frame / plan | donor-system or legacy truth extraction | adaptation drift, false rewrites | read-only | specialist sidecar | `legacy-first-protocol`, `legacy-transplant` |
+| `specification-engineer` | frame / plan | requirements, non-goals, SDD mode, dispositions, traceability | under-specification, contradiction, premature implementation | read-only | candidate specialist sidecar | `specification-lifecycle`, `architecture`, `source-verification` as needed |
+| `code-quality-reviewer` | review | code, docs, configuration, workflow seeds, implementation/spec delta | correctness, maintainability, unnecessary complexity, spec drift | read-only | candidate specialist reviewer | `code-audit`, `requesting-code-review`, `solution-minimalism` as needed |
+| `test-engineer` | plan / prove | test design, fixtures, regression proof, negative paths | false confidence, wrong test layer, self-acceptance | read-only; test-only in a separate executor assignment | candidate specialist reviewer | `test-engineering`, `test-driven-development`, active test stack |
+| `web-performance-auditor` | review / prove | static source, bundles, network, field/lab/trace evidence | invented metrics, source confusion, unmeasured runtime risk | read-only | candidate specialist reviewer | `web-performance-review`, `product-runtime-review` when live truth is active |
+| `data-database-specialist` | plan / execute | schemas, migrations, queries, constraints, database runtime | integrity drift, destructive migration, query and tenancy risk | bounded workspace-write | delegate-possible worker | selected data profile, `database-design`, `postgresql`, `sql-optimization-patterns` as needed |
+| `integrations-ops-specialist` | plan / execute | MCP adapters, queues, mail, storage, payment handoffs, retries | provider-boundary drift, replay, idempotency, secret and delivery risk | bounded workspace-write; no provider write by default | delegate-possible worker | selected integrations profile, `native-mcp`, queue/provider skill, `payment-integration` as needed |
 
 ## Role Family Compatibility Map
 
@@ -36,15 +42,17 @@ Use this map when binding a normalized role family to a physical agent:
 
 | Normalized role family | Compatible capability families |
 | --- | --- |
-| `architecture` | `django-inertia-technical-planner`, `django-inertia-contract-integrator`, `legacy-truth-analyst` when legacy architecture truth is active |
+| `architecture` | `django-inertia-technical-planner`, `django-inertia-contract-integrator`, `specification-engineer`, `legacy-truth-analyst` when legacy architecture truth is active |
 | `research` | Codex collaboration `explorer` or `librarian`; `legacy-truth-analyst` only when bounded legacy truth extraction dominates; otherwise keep the physical family as an explicit gap |
 | `backend` | `django-domain-implementer`, `django-inertia-contract-integrator` |
 | `frontend` | `inertia-react-ui-implementer`, `django-inertia-contract-integrator` when prop/page contracts dominate |
-| `qa-regression` | `runtime-proof-auditor` |
+| `data` | `data-database-specialist`, `django-domain-implementer` only when data behavior remains inseparable from bounded domain work |
+| `integrations-ops` | `integrations-ops-specialist`; use `trust-anti-abuse-reviewer` as a separate review lane when hostile provider input is active |
+| `qa-regression` | `runtime-proof-auditor`, `test-engineer` |
 | `security` | `trust-anti-abuse-reviewer` |
-| `governance` | `lifecycle-product-manager`, `django-inertia-technical-planner` when planning/governance is bounded |
+| `governance` | `lifecycle-product-manager`, `code-quality-reviewer`, `django-inertia-technical-planner` when planning/governance is bounded |
 | `provider-boundary` | `legacy-truth-analyst` only when provider/legacy truth extraction is the bounded slice; otherwise treat as a gap |
-| `product-runtime` | `runtime-proof-auditor`, `lifecycle-product-manager` for read-only product acceptance framing |
+| `product-runtime` | `runtime-proof-auditor`, `web-performance-auditor`, `lifecycle-product-manager` for read-only product acceptance framing |
 
 If a role family maps to more than one capability family, choose by dominant
 risk and write scope. Do not select a concrete capability family that cannot
@@ -76,12 +84,31 @@ Valid bounded families for clean slices:
 - `django-inertia-contract-integrator`
 - `runtime-proof-auditor`
 - `trust-anti-abuse-reviewer`
+- `data-database-specialist`
+- `integrations-ops-specialist`
 
 ### Specialist sidecar
 
 Use only when the slice truly needs the specialty:
 
 - `legacy-truth-analyst`
+
+### Candidate specialist
+
+Template-backed, read-only families that may be selected only through their
+normalized role binding while empirical replay and promotion evidence remain
+incomplete:
+
+- `specification-engineer` as a specialist sidecar
+- `code-quality-reviewer` as a specialist reviewer
+- `test-engineer` as a specialist reviewer; test mutation requires a separate
+  bounded executor assignment
+- `web-performance-auditor` as a specialist reviewer
+
+Candidate status is not physical promotion or isolation. Move one of these
+families to `Delegate-possible` only after the promotion contract records
+successful empirical replay, effective runtime capability visibility, and the
+same root-owned closure boundary declared by its template.
 
 ## Fit Rules
 

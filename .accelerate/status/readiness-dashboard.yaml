@@ -6,6 +6,17 @@ ledger: planning/executive/2026-05-08-linear-oauth-runtime-proof-task-ledger.md
 governing_linear_parent: P4Y-1298
 governing_linear_child: P4Y-1302
 status: accepted
+current_execution_overlay:
+  id: codex-agent-routing-hardening-generation-11-documentary
+  governing_issue: CODEX-3
+  status: generation-11-closed-plane-finish-readback-observed
+  phase: closed
+  plan: planning/architecture/2026-08-13-codex-agent-routing-hardening-sdd.md
+  ledger: planning/execution/2026-08-13-codex-agent-routing-hardening-task-breakdown.md
+  traceability: planning/specification/2026-08-13-codex-agent-routing-hardening-traceability.md
+  implementation_readiness: generation-10-implementation-accepted-generation-11-documentary-proof-observed
+  blocker: none
+  restart_boundary: generation-11 governed resync restored Sol medium; mirror and fresh root plus seven passed
 entries:
   dogfood_workspace:
     status: available
@@ -44,6 +55,20 @@ entries:
     proof: bash tests/semantic-negative-fixtures.sh
     boundary: browser-capture packets set persistent_regression_handoff.required_before_persistent_e2e_claim=true and must not promote persistent E2E without separate repo-owned proof
 residuals:
+  - G11-F1 P2 stale governing-document contract is corrected and documentary proof generation 11 passed JSON/YAML/link/whitespace checks
+  - G10 implementation evidence remains current and accepted: focused and affected suites plus full tests/all.sh PASS
+  - G10 production schema-4 receipt is /home/marcelo-karval/.codex/backups/skill-sync-CODEX-3-G10-20260813T190557Z/sync-receipt.json with SHA d80ac01e89b053261406a5884e41e2f75594476bd7b3c59985795e1334fe9d18
+  - G10 receipt denominator is 130 operations, 112 package plus 18 runtime-file, 124 replace plus 6 delete
+  - G10 catalog receipt is schema2 mode0600 nlink1 SHA e669404c024093815552d0d2bd793d37f7637243334c001189015464c2953837
+  - G10 logical receipt is schema2 mode0600 nlink1 SHA e4cf5ae7b036f2470527e8559fc69d75cbfc45d59ea65edb7d870c31575aff98
+  - G11-F2 external drift changed root config reasoning effort to low while topology requires medium; mirror root plus seven failed before recovery
+  - G10 runtime receipt is historical/stale; G11 governed resync receipt 5f7ba0e0fd1279f8fbf26fd895b1a3dc262f363817fc7d2eef32b3236bbee9e6 restored Sol medium
+  - G11 mirror and fresh root plus seven-specialist runtime proof passed
+  - two independent reviewers ACCEPTED with P0=0 P1=0 P2=0 P3=0; root review-of-review and forensic closure passed
+  - review evidence is planning/evidence/dated-proof-appendix/codex-agent-routing-hardening-independent-review-2026-08-13.md
+  - governed Plane REVIEW, Done transition, FINISH and final provider readback passed
+  - exact three-state lock semantics reject spoof OFD-B, accept legitimate shared OFD and allow no-inheritance acquisition
+  - the accepted CODEX-1 overlay remains historical evidence and does not supersede the dashboard's last accepted dogfood-cycle proof
   - remote provider payloads remain out of committed .accelerate state
   - Linear OAuth MCP is host-authenticated and conditional only; portable repo-local shell and CI availability remain unproven
   - Linear live fixture proof still requires a safe credential and explicit non-sensitive fixture configuration outside committed dogfood state

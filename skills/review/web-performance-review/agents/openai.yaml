@@ -1,0 +1,4 @@
+interface:
+  display_name: "Web Performance Review"
+  short_description: "Source-labelled web performance review"
+  default_prompt: "Use $web-performance-review to assess this web journey with honest source-labelled evidence."

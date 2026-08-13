@@ -37,6 +37,11 @@ git diff --check
 Those commands are deployment/export checks. They do not make user-home paths
 authoritative.
 
+The sync command stages complete packages, backs up every replaced governed
+package, writes a machine-readable receipt, and preserves unrelated runtime
+packages. Use the receipt's `rollback_command` argv when restoration is needed;
+never treat manual edits in the exported copy as a source correction.
+
 When local workspace state is active, this portable bundle should expose:
 
 - readiness dashboard status

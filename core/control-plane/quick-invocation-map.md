@@ -24,7 +24,8 @@ User Request
         -> no  -> continue
      -> conversational / no-op
      -> trivial bounded
-        -> direct-fast-path -> direct root execution
+        -> read-only -> direct root execution
+        -> mutating direct-fast-path -> Issue Bootstrap -> micro Spec Capsule -> Manifest -> direct root execution
         -> scoped -> one bounded sidecar only when handoff value is positive
      -> ambiguous / full prompt hardening
      -> non-trivial engineering / reasoning effort decision
@@ -110,10 +111,12 @@ are:
 
 1. `root-laws.md`
 2. `branch-enforcement-matrix.md`
-3. `../issue-topology/issue-driven-mutation-stack.md`
-4. `../runtime-packets/qa-proof-stack.md`
-5. `../review/architecture.md`
-6. `../workflows/catalog.md`
+3. `specification-entry-gate.md`
+4. `sdd-mode-gate.md`
+5. `../issue-topology/issue-driven-mutation-stack.md`
+6. `../runtime-packets/qa-proof-stack.md`
+7. `../review/architecture.md`
+8. `../workflows/catalog.md`
 
 ## Quick Questions
 

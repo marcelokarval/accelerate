@@ -148,12 +148,14 @@ At a high level, `accelerate` works like this:
 5. when a governed target repository is in scope, decide local `.accelerate/`
    entry state
 6. decide the honest issue topology
-7. decide which lanes and skills are required
-8. decide whether the work should stay root-only or use bounded agents
-9. execute with visible runtime packets and active gates
-10. keep readiness, timeline, and learning disposition visible when local workspace state is active
-11. force proof in the correct order
-12. enter root closure mode before `Done`
+7. for mutation, choose `micro`, `standard`, `hierarchical`, or `critical` SDD
+   mode and require an accepted Engineering Artifact Manifest
+8. decide which lanes and skills are required
+9. decide whether the work should stay root-only or use bounded agents
+10. execute with visible runtime packets and active gates
+11. keep readiness, timeline, and learning disposition visible when local workspace state is active
+12. force proof in the correct order
+13. enter root closure mode before `Done`
 
 The control plane should be visible, not implied.
 
@@ -261,14 +263,18 @@ The minimum mutation path is:
 1. `accelerate`
 2. `Local Workspace Entry Gate` when a governed target repo is in scope
 3. `Issue Bootstrap Gate`
-4. active workflow adapter when a live adapter is available, otherwise native
+4. `Specification Entry Gate`
+5. `SDD Mode Gate` and accepted or implementing design authority
+6. Engineering Artifact Manifest with complete dispositions and traceability
+7. active workflow adapter when a live adapter is available, otherwise native
    planning artifacts and runtime packets
-5. planning artifact
-6. execution
-7. proof stack
-8. local review / closure preparation when `.accelerate/` local status is active
-9. `AI Review Report`
-10. root closure mode
+8. proportional planning artifact
+9. Test Design and the appropriate TDD/repro/characterization/contract baseline
+10. execution
+11. proof stack and correction reproof
+12. local review / closure preparation when `.accelerate/` local status is active
+13. `AI Review Report`
+14. root closure mode
 
 Mutation must not jump directly from request to implementation.
 
@@ -279,6 +285,8 @@ mutation path also opens the `One-Shot Side-By-Side Gate`.
 See:
 
 - [issue-driven-mutation-stack.md](./core/issue-topology/issue-driven-mutation-stack.md)
+- [specification/README.md](./planning/specification/README.md)
+- [specification-entry-gate.md](./core/control-plane/specification-entry-gate.md)
 - [one-shot-side-by-side-protocol.md](./core/review/one-shot-side-by-side-protocol.md)
 
 ## Enforcement And Branching

@@ -1,8 +1,11 @@
-schema_version = 1
+schema_version = 2
 topology_identity = "codex-logical-agent-topology"
 authority = "logical routing contract; Codex profiles are additive and do not enforce process, tool, MCP, credential, or filesystem isolation"
 spawn_packet_limit = 10
 root_exclusive_authority = ["issue topology", "external writes", "integration", "review-of-review", "closure"]
+omo_slim_reference = "https://github.com/alvinunreal/oh-my-opencode-slim"
+omo_slim_provenance = "adapted-influence-not-runtime-authority"
+omo_slim_builtin_roles = ["orchestrator", "oracle", "librarian", "explorer", "designer", "fixer", "observer", "council"]
 
 [[agents]]
 name = "orchestrator"
@@ -14,7 +17,11 @@ reasoning_effort = "medium"
 write_mode = "root-only"
 external_writes = true
 closure_authority = true
-required_skills = ["accelerate", "prompt-hardening", "plane", "subagent-governance", "skill-catalog-router", "verification-before-completion"]
+required_skills = ["accelerate", "plane", "prompt-hardening", "skill-catalog-router", "subagent-governance", "specification-lifecycle", "test-driven-development", "verification-before-completion"]
+omo_slim_primary_role = "orchestrator"
+omo_slim_secondary_roles = ["council"]
+omo_slim_equivalence = "adapted-absorbed"
+omo_slim_adaptation = "Owns orchestration and final synthesis while bounded independent reviewers provide the useful council behavior."
 
 [[agents]]
 name = "python-backend"
@@ -28,6 +35,10 @@ write_mode = "bounded-write"
 external_writes = false
 closure_authority = false
 required_skills = ["django-pro", "django-service-patterns", "python-pro", "python-testing", "validation-governance"]
+omo_slim_primary_role = "fixer"
+omo_slim_secondary_roles = []
+omo_slim_equivalence = "adapted-specialized"
+omo_slim_adaptation = "Specializes the OMO-Slim fixer implementation role for bounded Python and Django backend work."
 
 [[agents]]
 name = "nextjs-frontend"
@@ -41,6 +52,10 @@ write_mode = "bounded-write"
 external_writes = false
 closure_authority = false
 required_skills = ["nextjs-app-router-patterns", "frontend-boundary-governance", "typescript-pro", "react-best-practices"]
+omo_slim_primary_role = "fixer"
+omo_slim_secondary_roles = ["designer"]
+omo_slim_equivalence = "adapted-partial"
+omo_slim_adaptation = "Implements the fixer role and absorbs designer behavior only when an accepted design authority already exists."
 
 [[agents]]
 name = "research"
@@ -54,6 +69,10 @@ write_mode = "read-only"
 external_writes = false
 closure_authority = false
 required_skills = ["codebase-inspection", "codex", "writing-skills"]
+omo_slim_primary_role = "librarian"
+omo_slim_secondary_roles = ["explorer"]
+omo_slim_equivalence = "adapted-composite"
+omo_slim_adaptation = "Combines versioned source research from librarian with bounded read-only repository discovery from explorer."
 
 [[agents]]
 name = "reviewer"
@@ -66,7 +85,11 @@ reasoning_effort = "medium"
 write_mode = "read-only"
 external_writes = false
 closure_authority = false
-required_skills = ["governance-audit", "requesting-code-review", "adversarial-security-review"]
+required_skills = ["adversarial-security-review", "code-audit", "governance-audit", "requesting-code-review", "security-patterns"]
+omo_slim_primary_role = "oracle"
+omo_slim_secondary_roles = ["council"]
+omo_slim_equivalence = "adapted-composite"
+omo_slim_adaptation = "Provides skeptical oracle review and contributes one bounded council opinion while root retains review-of-review."
 
 [[agents]]
 name = "qa"
@@ -80,3 +103,41 @@ write_mode = "read-only"
 external_writes = false
 closure_authority = false
 required_skills = ["dogfood", "playwright-patterns", "product-runtime-review"]
+omo_slim_primary_role = "observer"
+omo_slim_secondary_roles = ["oracle"]
+omo_slim_equivalence = "adapted-partial"
+omo_slim_adaptation = "Borrows observer only for read-only visual and media evidence inspection; broader QA, runtime, and browser proof remains Codex-native."
+
+[[agents]]
+name = "data-db"
+kind = "specialist"
+role_family = "data"
+catalog_group = "data-db"
+collaboration_profile = "implementation"
+model = "gpt-5.6-terra"
+reasoning_effort = "medium"
+write_mode = "bounded-write"
+external_writes = false
+closure_authority = false
+required_skills = ["database-design", "postgresql", "sql-optimization-patterns"]
+omo_slim_primary_role = "fixer"
+omo_slim_secondary_roles = []
+omo_slim_equivalence = "adapted-specialized"
+omo_slim_adaptation = "Specializes the OMO-Slim fixer implementation role for bounded database design and SQL work."
+
+[[agents]]
+name = "integrations-ops"
+kind = "specialist"
+role_family = "integrations-ops"
+catalog_group = "integrations-ops"
+collaboration_profile = "implementation"
+model = "gpt-5.6-terra"
+reasoning_effort = "medium"
+write_mode = "bounded-write"
+external_writes = false
+closure_authority = false
+required_skills = ["native-mcp", "redis-patterns", "payment-integration"]
+omo_slim_primary_role = "fixer"
+omo_slim_secondary_roles = []
+omo_slim_equivalence = "adapted-specialized"
+omo_slim_adaptation = "Specializes the OMO-Slim fixer implementation role for bounded MCP integration and operational code."

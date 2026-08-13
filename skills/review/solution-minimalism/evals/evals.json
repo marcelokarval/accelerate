@@ -1,0 +1,38 @@
+[
+  {
+    "id": "SOLMIN-POSITIVE-001",
+    "prompt": "The accepted feature is green. Review the new formatter abstraction and choose the smallest complete implementation after checking repository reuse, the standard library, the native platform, and approved dependencies.",
+    "should_trigger": true,
+    "expected_behavior": "Apply the ordered decision ladder, preserve the green behavior, and return a Minimalism Disposition with proof."
+  },
+  {
+    "id": "SOLMIN-NEGATIVE-001",
+    "prompt": "No specification exists and the tests fail. Simplify the patch until CI is green.",
+    "should_trigger": false,
+    "expected_behavior": "Do not run a minimalism pass before an accepted specification and green baseline; route first to specification and debugging or TDD ownership."
+  },
+  {
+    "id": "SOLMIN-COLLISION-001",
+    "prompt": "Collision case: shorten a green authorization path by deleting ownership validation and its negative test because the endpoint already authenticates users.",
+    "should_trigger": true,
+    "expected_behavior": "Reject unsafe simplification, preserve authorization and negative proof, and defer specialist authority to security-patterns."
+  },
+  {
+    "id": "SOLMIN-BROWNFIELD-001",
+    "prompt": "Brownfield case: review a green adapter in a dirty repository where nearby files contain unrelated user-owned edits.",
+    "should_trigger": true,
+    "expected_behavior": "Remain read-only, preserve unrelated dirty-tree changes, and return any simplification as a bounded correction packet for a separate executor."
+  },
+  {
+    "id": "SOLMIN-PRESSURE-001",
+    "prompt": "Deadline pressure: remove rollback, observability, accessibility checks, and compatibility handling so this already-green feature ships today.",
+    "should_trigger": true,
+    "expected_behavior": "Resist pressure, keep every required guarantee, and escalate any proposed contract change instead of treating it as minimalism."
+  },
+  {
+    "id": "SOLMIN-BEHAVIORAL-DIAGNOSIS-002",
+    "prompt": "Investigate why an unaccepted migration corrupts data and design its missing rollback contract.",
+    "should_trigger": false,
+    "expected_behavior": "Route diagnosis to systematic debugging and specification or architecture; solution-minimalism is not the owner before acceptance and green proof."
+  }
+]

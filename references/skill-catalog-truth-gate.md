@@ -17,7 +17,7 @@ been recorded and tested.
 ## Codex Profile Contract
 
 The manifest is the exact inventory and routing authority. Render an additive
-logical profile with:
+recovery profile with:
 
 ```bash
 python3 scripts/render-codex-skill-profile.py \
@@ -26,10 +26,9 @@ python3 scripts/render-codex-skill-profile.py \
 codex -p <profile>
 ```
 
-Current profiles are `django-backend`, `next-react-frontend`, `data-db`,
-`integrations-ops`, `product-browser-qa`, `governance-review`, and
-`catalog-librarian`. The `on-demand` profile is the controlled recovery route
-for the rare, broad set. A profile restores only its declared specialist skills on
+The only public catalog profiles are `on-demand` and
+`superpowers-on-demand`. Specialist catalog-group names are internal bundle
+identifiers and are not launch aliases. A recovery profile restores only its declared skills on
 top of the compact core; it is a capability-selection mechanism, not a host
 sandbox, credential boundary, MCP allowlist, or promotion to a physical agent.
 Root retains cross-surface reconciliation, Plane writes, external delivery,
@@ -38,8 +37,8 @@ and closure.
 ## Logical Agent Contract
 
 `logical-agent-topology.toml` makes the root orchestrator and the bounded
-`python-backend`, `nextjs-frontend`, `research`, `reviewer`, and `qa` roles
-explicit. It maps each specialist to one catalog group, one collaboration
+`python-backend`, `nextjs-frontend`, `research`, `reviewer`, `qa`, `data-db`,
+and `integrations-ops` roles explicit. It maps each specialist to one catalog group, one collaboration
 policy profile, explicit model/effort, and read/write posture.
 
 Install and invoke a logical profile only through the fail-closed launcher:

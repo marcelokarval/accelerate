@@ -28,6 +28,11 @@ For each governed skill:
 - optional runtime exports are generated from the local canonical file
 - export drift is a deployment concern, not a change in source authority
 - missing runtime exports must not block local repository governance
+- the exporter replaces each governed package from a clean staged copy, so
+  stale files inside that package cannot survive silently
+- unrelated runtime-only packages remain outside the governed replacement set
+- every real export uses a separate backup and machine-readable rollback
+  receipt; the receipt is deployment evidence, never source authority
 
 ## Transitional Location
 
@@ -51,6 +56,10 @@ target runtime is part of the current task:
 bash scripts/check-global-skill-mirror.sh
 git diff --check
 ```
+
+Use the receipt's argv-form `rollback_command` to restore the pre-export state.
+Rollback moves the generated replacement aside and restores only packages
+listed in that receipt; it does not touch unrelated runtime packages.
 
 Do not use runtime export drift checks as proof that Accelerate itself is
 correct. Accelerate correctness is proved against this repository.

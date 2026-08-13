@@ -1,0 +1,8 @@
+name: test-engineering
+category: review
+status: native
+source: skills/review/test-engineering
+runtime_export: optional
+local_native_owner: core/review/
+sync_policy: repo-first
+description: Pre-code test strategy and independent post-code proof review at the lowest effective level.

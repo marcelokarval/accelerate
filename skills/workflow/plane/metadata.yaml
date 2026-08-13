@@ -1,0 +1,30 @@
+name: plane
+category: workflow
+status: standalone-adapted
+source: skills/workflow/plane
+runtime_export: optional
+local_native_owner: adapters/runtime/codex/README.md
+sync_policy: repo-first
+provenance:
+  adapted_from:
+    - skills/productivity/plane
+    - skills/productivity/plane-pm
+    - skills/productivity/plane-governance
+    - skills/integrations/plane-api-tools
+compatibility:
+  requires: plane-mcp-karval
+  mutation_surface:
+    - plane_mutation_action
+    - plane_add_lifecycle_comment
+parity_contract: governed Plane lifecycle, title/taxonomy validation, one-shot authorization, idempotency, and provider readback
+last_reviewed: 2026-08-13
+references:
+  - references/governed-operations.md
+  - references/issue-creation-readiness.md
+  - references/lifecycle-contract.md
+  - references/taxonomy-and-title.md
+  - references/parity-map.md
+interface:
+  display_name: "Plane Governance"
+  short_description: "Governed Plane work items for Codex"
+  default_prompt: "Use $plane to inspect, create, update, comment on, or close a governed Plane work item with proper readback."

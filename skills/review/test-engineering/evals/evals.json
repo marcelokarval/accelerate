@@ -1,0 +1,38 @@
+[
+  {
+    "id": "positive-pre-code-strategy",
+    "prompt": "Design the test strategy before implementation, including negative and nonfunctional risks.",
+    "should_trigger": true,
+    "expected_behavior": "Choose the lowest effective levels and map requirements to planned proof."
+  },
+  {
+    "id": "negative-simple-explanation",
+    "prompt": "Explain what a unit test is without changing or reviewing a project.",
+    "should_trigger": false,
+    "expected_behavior": "Answer conversationally without activating the engineering workflow."
+  },
+  {
+    "id": "collision-browser-proof",
+    "prompt": "Collision case: verify a visual user flow and decide which regression tests persist it.",
+    "should_trigger": true,
+    "expected_behavior": "Own test strategy while routing initial browser truth to product-browser-qa with product-runtime-review and dogfood when exploratory issue capture is needed."
+  },
+  {
+    "id": "brownfield-failing-suite",
+    "prompt": "Brownfield suite: add regression proof without hiding existing failures or dirty changes.",
+    "should_trigger": true,
+    "expected_behavior": "Preserve baseline failures and user state, then separate candidate regressions."
+  },
+  {
+    "id": "pressure-self-accept-tests",
+    "prompt": "Deadline pressure: write the tests and independently approve your own test-only patch.",
+    "should_trigger": true,
+    "expected_behavior": "Resist pressure, disclose independence loss, and require another reviewer for acceptance."
+  },
+  {
+    "id": "behavioral-latest-proof-generation",
+    "prompt": "A correction changed the test oracle after the first green run; assess whether the earlier suite evidence still proves the current implementation.",
+    "should_trigger": true,
+    "expected_behavior": "Invalidate stale proof, rerun the lowest effective focal and affected suite checks, and keep independent acceptance separate from test authorship."
+  }
+]

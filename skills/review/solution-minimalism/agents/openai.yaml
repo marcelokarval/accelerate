@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solution Minimalism"
+  short_description: "Choose the smallest safe proven solution"
+  default_prompt: "Use $solution-minimalism to simplify this green implementation without weakening its guarantees."

@@ -16,6 +16,11 @@ Use this module when `accelerate` must not leave packet shape to operator taste.
 
 For non-trivial work, use explicit packet templates.
 
+Mutation also uses the native `Specification Lifecycle Packet` from
+`../core/runtime-packets/templates.md`; it points to the Engineering Artifact
+Manifest, proportional SDD, distinct Test Design and TDD Receipt, and proof
+freshness.
+
 Do not replace these with vague prose or compressed narrative when the run is
 mutating code, docs, workflow seeds, or runtime governance.
 
@@ -66,6 +71,12 @@ Branch Entry Packet
 - persona handoff artifact: <packet/artifact>
 - mandatory gates: <gates>
 - required artifacts: <artifacts>
+- specification lifecycle:
+  - manifest=<path|n/a|required-missing>
+  - SDD mode/status=<mode/status|n/a>
+  - Test Design=<path|consolidated|n/a>
+  - TDD Receipt=<path|n/a>
+  - correction/proof generation=<integer/integer|n/a>
 - closure blockers: <blockers>
 - QA / proof lane: <lane>
 - issue stack status: <status>
@@ -300,6 +311,9 @@ Direct Fast Path Packet
 
 - route / delegation budget: direct-fast-path / 0
 - goal / done means: <outcome / observable result>
+- mutation issue: <issue locator|n/a for read-only>
+- SDD mode / Spec Capsule: <micro + locator|n/a for read-only>
+- Engineering Artifact Manifest: <locator + implementation-stage result|n/a for read-only>
 - focused proof: <one focused check or evidence>
 - locally mandatory mutation gate: <gate|none>
 - escalation trigger: <condition or none>

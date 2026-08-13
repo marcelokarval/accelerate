@@ -18,6 +18,10 @@ The historical migration manifest remains available at:
 | `visual-modeling` | `review` | `../review/visual-modeling/` | `native` | optional | `local-authoritative` |
 | `requesting-code-review` | `review` | `../review/requesting-code-review/` | `standalone-adapted` | optional | `local-authoritative` |
 | `code-audit` | `review` | `../review/code-audit/` | `standalone-adapted` | optional | `local-authoritative` |
+| `test-engineering` | `review` | `../review/test-engineering/` | `selective-upstream-adaptation` | optional | `local-authoritative` |
+| `source-verification` | `review` | `../review/source-verification/` | `selective-upstream-adaptation` | optional | `local-authoritative` |
+| `solution-minimalism` | `review` | `../review/solution-minimalism/` | `selective-upstream-adaptation` | optional | `local-authoritative` |
+| `web-performance-review` | `review` | `../review/web-performance-review/` | `selective-upstream-adaptation` | optional | `local-authoritative` |
 | `governance-audit` | `governance` | `../governance/governance-audit/` | `standalone-adapted` | optional | `local-authoritative` |
 | `api-surface-governance` | `governance` | `../governance/api-surface-governance/` | `standalone-adapted` | optional | `local-authoritative` |
 | `dependency-governance` | `governance` | `../governance/dependency-governance/` | `standalone-adapted` | optional | `local-authoritative` |
@@ -64,11 +68,16 @@ The historical migration manifest remains available at:
 | `github-code-review` | `workflow` | `../workflow/github-code-review/` | `standalone-adapted` | optional | `local-authoritative` |
 | `github-repo-management` | `workflow` | `../workflow/github-repo-management/` | `standalone-adapted` | optional | `local-authoritative` |
 | `executing-plans` | `workflow` | `../workflow/executing-plans/` | `standalone-adapted` | optional | `local-authoritative` |
+| `specification-lifecycle` | `workflow` | `../workflow/specification-lifecycle/` | `selective-upstream-adaptation` | optional | `local-authoritative` |
+| `test-driven-development` | `workflow` | `../workflow/test-driven-development/` | `selective-upstream-adaptation` | optional | `local-authoritative` |
+| `plane` | `workflow` | `../workflow/plane/` | `standalone-adapted` | optional | `local-authoritative` |
 | `dogfood` | `runtime` | `../runtime/dogfood/` | `standalone-adapted` | optional | `local-authoritative` |
 | `bash-linux` | `runtime` | `../runtime/bash-linux/` | `standalone-adapted` | optional | `local-authoritative` |
 | `native-mcp` | `runtime` | `../runtime/native-mcp/` | `standalone-adapted` | optional | `local-authoritative` |
 | `mcporter` | `runtime` | `../runtime/mcporter/` | `standalone-adapted` | optional | `local-authoritative` |
 | `codebase-inspection` | `runtime` | `../runtime/codebase-inspection/` | `standalone-adapted` | optional | `local-authoritative` |
+| `codex` | `runtime` | `../runtime/codex/` | `standalone-adapted` | optional | `local-authoritative` |
+| `using-superpowers` | `runtime` | `../runtime/using-superpowers/` | `compatibility-overlay` | optional | `local-authoritative` |
 | `web-content-reader` | `runtime` | `../runtime/web-content-reader/` | `native` | optional | `local-authoritative` |
 | `vercel-deployment-patterns` | `runtime` | `../runtime/vercel-deployment-patterns/` | `native` | optional | `local-authoritative` |
 | `inngest-patterns` | `runtime` | `../runtime/inngest-patterns/` | `native` | optional | `local-authoritative` |
@@ -105,6 +114,7 @@ The historical migration manifest remains available at:
 | `codex-skill-promotion-protocol` | `governance` | `../governance/codex-skill-promotion-protocol/` | `standalone-adapted` | optional | `local-authoritative` |
 | `skill-developer` | `governance` | `../governance/skill-developer/` | `native` | optional | `local-authoritative` |
 | `writing-skills` | `governance` | `../governance/writing-skills/` | `native` | optional | `local-authoritative` |
+| `skill-catalog-router` | `governance` | `../governance/skill-catalog-router/` | `native` | optional | `local-authoritative` |
 | `legacy-first-protocol` | `legacy` | `../legacy/legacy-first-protocol/` | `standalone-adapted` | optional | `local-authoritative` |
 | `legacy-transplant` | `legacy` | `../legacy/legacy-transplant/` | `standalone-adapted` | optional | `local-authoritative` |
 | `extract-html-design-system-v2` | `design-system` | `../design-system/extract-html-design-system-v2/` | `native` | optional | `local-authoritative` |
@@ -119,7 +129,7 @@ The next packaging and proof tasks are:
 1. `financial-source-truth` domain fixtures/evals
 2. `payment-integration` provider fixtures/evals
 3. `stripe-integration` provider fixtures/evals
-4. `using-superpowers` replacement audit maintenance
+4. `using-superpowers` compatibility-overlay audit maintenance
 5. `accelerate` root seed packaging decision maintenance
 6. runtime proof lane fixtures
 7. profile-local validation bundles

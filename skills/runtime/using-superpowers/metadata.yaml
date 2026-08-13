@@ -1,0 +1,16 @@
+name: using-superpowers
+category: runtime
+status: compatibility-overlay
+source: skills/runtime/using-superpowers
+runtime_export: optional
+local_native_owner: planning/executive/using-superpowers-replacement-audit.md
+sync_policy: repo-first
+adaptation_policy: >
+  Keep Accelerate as the sole root classifier. Export this package only as an
+  on-demand compatibility route for explicit legacy references.
+references:
+  - references/full-procedure.md
+interface:
+  display_name: "Using Superpowers Compatibility"
+  short_description: "Map legacy skill-first prompts to Accelerate"
+  default_prompt: "Use $using-superpowers to map this explicit legacy skill-first requirement into the current Accelerate workflow."

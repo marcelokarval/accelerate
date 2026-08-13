@@ -17,6 +17,7 @@ tmp/
 !README.md
 !state.yaml
 !*/README.md
+!review/handoff-summary.md
 !workflow/adapter.yaml
 !workflow/active-work-item.yaml
 !status/readiness-dashboard.yaml

@@ -16,6 +16,11 @@ physical or virtual subagents; do not manufacture planning, browser, or review
 lanes. Auth, billing, permissions, sensitive data, migrations, secrets,
 irreversible external calls, and runtime truth are never direct-path work.
 
+For mutation, `micro` also means semantic SDD: materialize a non-empty Spec
+Capsule and compact Engineering Artifact Manifest, attach the governing issue,
+and validate implementation entry. No separate executive plan is required, but
+SDD mode `none` and issue-free mutation remain invalid.
+
 This route does not waive a target repository's stricter issue, workspace, or
 mutation policy. Escalate to `scoped` when one bounded discovery, research, or
 proof sidecar has independent value. Escalate to `orchestrated` for material
@@ -59,6 +64,9 @@ Minimum stack:
 - `Truth Ownership Check`
 - `Stack Adherence`
 - `Issue Bootstrap Gate` when mutating code, workflow seeds, or living docs
+- `Specification Entry Gate`
+- `SDD Mode Gate` with `micro` Spec Capsule
+- compact Engineering Artifact Manifest
 - minimum relevant stack skill
 - compact `Branch Entry Packet`
 - honest verification before closure
@@ -74,6 +82,8 @@ Branch Entry Packet
 - active stack: <surface>
 - active skills: <minimum set>
 - active ADRs / references: <only if actually relevant>
+- SDD mode / Spec Capsule: <micro / locator>
+- Engineering Artifact Manifest: <locator + implementation-stage result>
 - gate ledger: <minimal gate state>
 - phase / SDLC: Execute / Verify
 - closure blockers: <none or one-line truth>
@@ -95,6 +105,7 @@ Branch Entry Packet
 - treat trivial as governance-free
 - spawn subagents by habit
 - create planning artifacts without real need
+- treat the required micro Spec Capsule as an optional planning artifact
 - use browser-proof or Playwright by default when the branch does not need them
 
 ## Scoped Route

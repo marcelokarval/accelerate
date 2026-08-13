@@ -20,18 +20,22 @@ of the execution model.
 3. `Prompt Hardening Gate` when the request is ambiguous, multi-phase,
    governance-heavy, or not execution-ready yet
 4. `Issue Bootstrap Gate`
-5. active workflow adapter when implemented/available, otherwise native planning
+5. `Specification Entry Gate`
+6. `SDD Mode Gate` with an accepted or implementing design authority
+7. `Decision Artifact Gate`, `Test Design Gate`, and `TDD Entry Gate`
+8. validated Engineering Artifact Manifest with complete traceability
+9. active workflow adapter when implemented/available, otherwise native planning
    artifacts and runtime packets
-6. adapter-specific planner when a remote adapter is active and sequencing or
+10. adapter-specific planner when a remote adapter is active and sequencing or
    hierarchy is non-trivial
-7. planning artifact
-8. `executing-plans` when the execution packet is accepted
-9. adapter-specific progress reporter for longer runs when a remote adapter is
+11. proportional planning artifact
+12. `executing-plans` when the execution packet is accepted
+13. adapter-specific progress reporter for longer runs when a remote adapter is
    active
-10. proof stack
-11. local review / closure preparation when `.accelerate/` local status is active
-12. `AI Review Report`
-13. root closure mode
+14. proof stack, correction invalidation, and fresh reproof
+15. local review / closure preparation when `.accelerate/` local status is active
+16. `AI Review Report`
+17. root closure mode
 
 ## Flow
 
@@ -51,8 +55,11 @@ User Request
                          -> shaped request ready -> Issue Bootstrap Gate
                  -> yes -> Issue Bootstrap Gate
                            -> missing issue     -> BLOCK
-                           -> existing issue    -> validate with active workflow adapter when available, otherwise local planning artifact
-                           -> new issue needed  -> create with active workflow adapter when available, otherwise local planning artifact
+                           -> existing/new issue -> validate or create through the active adapter/local authority
+                                -> Specification Entry Gate
+                                   -> missing/invalid manifest -> BLOCK
+                                   -> draft/underclassified design -> BLOCK
+                                   -> accepted proportional design
                                 -> planning gate
                                    -> missing plan -> BLOCK
                                    -> plan present -> execute
@@ -65,6 +72,11 @@ User Request
 ## Execution Rule
 
 Mutation must not jump directly from request to implementation.
+
+Issue bootstrap alone does not authorize implementation. Every mutation must
+also pass the Specification Entry Gate. Direct-fast-path mutation remains
+issue-driven and uses a micro Spec Capsule plus compact Engineering Artifact
+Manifest; `none` is not a mutation mode.
 
 If issue bootstrap succeeded but no post-bootstrap planning artifact exists for
 non-trivial work, execution is still blocked.
@@ -100,6 +112,10 @@ Issue-driven runtime packets must make visible:
 - whether the run is still blocked on issue/plan hygiene
 - whether the slice is still in shaping-first mode before execution
 - whether `Prompt Hardening Gate` was satisfied or is still blocking entry
+- SDD mode and accepted/implementing design locator
+- Engineering Artifact Manifest locator and validation stage
+- decision, Test Design, and TDD entry dispositions
+- correction generation versus proof generation
 - whether `prepare-review.sh` or `prepare-closure.sh` is now the canonical next step
 
 ## Subagents In Issue-Driven Work

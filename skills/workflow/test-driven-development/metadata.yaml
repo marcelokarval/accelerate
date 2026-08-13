@@ -1,0 +1,15 @@
+name: test-driven-development
+category: workflow
+status: native
+source: skills/workflow/test-driven-development
+owner: accelerate
+runtime_export: optional
+local_native_owner: core/control-plane/tdd-entry-gate.md
+sync_policy: repo-first
+adaptation_policy: >
+  Accelerate-native change-time proof loop. Preserve honest non-feature modes,
+  fresh proof generations, and independent acceptance boundaries.
+last_reviewed: 2026-08-12
+references:
+  - references/proof-modes.md
+  - references/fresh-proof-contract.md

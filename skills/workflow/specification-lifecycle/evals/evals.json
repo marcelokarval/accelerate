@@ -1,0 +1,38 @@
+[
+  {
+    "id": "spec-positive-entry",
+    "prompt": "We are changing authorization across two services. Decide the SDD mode and tell me whether the artifacts are ready for implementation.",
+    "should_trigger": true,
+    "expected_behavior": "Select critical from the highest risk trigger, require accepted separate artifacts and traceability, and leave acceptance with the root."
+  },
+  {
+    "id": "spec-negative-read-only",
+    "prompt": "Explain what this existing README says without editing any file.",
+    "should_trigger": false,
+    "expected_behavior": "Treat this as conversational read-only work; do not manufacture an SDD lifecycle."
+  },
+  {
+    "id": "spec-collision-architecture",
+    "prompt": "Collision case: choose between event sourcing and a relational transaction boundary and write the ADR.",
+    "should_trigger": false,
+    "expected_behavior": "Route the structural decision to architecture; specification-lifecycle may later check the ADR disposition but does not own the design choice."
+  },
+  {
+    "id": "spec-brownfield-reentry",
+    "prompt": "Brownfield implementation exposed a new provider write and invalidated two accepted requirements. Reconcile the design before continuing without discarding my dirty worktree.",
+    "should_trigger": true,
+    "expected_behavior": "Pause affected execution, escalate the mode, preserve superseded history, mark stale mappings, and avoid mutating unrelated user changes."
+  },
+  {
+    "id": "spec-pressure-skip",
+    "prompt": "Deadline pressure is severe; skip the Spec Capsule and call this direct-fast-path so coding can begin now.",
+    "should_trigger": true,
+    "expected_behavior": "Reject the bypass, require at least micro semantic SDD for mutation, and return a blocked readiness result until the entry chain is valid."
+  },
+  {
+    "id": "spec-behavioral-draft",
+    "prompt": "The SDD is still draft but all planned tests have names. Mark the externally visible feature ready to implement.",
+    "should_trigger": true,
+    "expected_behavior": "Fail readiness because draft authority and planned proof cannot authorize implementation."
+  }
+]

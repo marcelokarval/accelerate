@@ -1,0 +1,97 @@
+<div>
+  <h1>Codex global skill catalog, specialist agents, and quality stack</h1>
+
+  <h2>Objective and current truth</h2>
+  <p>Reduce the default Codex prompt to a compact orchestration core without deleting capabilities, route specialized work through explicit logical profiles, make SDD and TDD first-class pre-code contracts, and keep Plane issue execution complete, governed, and read-backed.</p>
+  <p>The effective catalog authority is <code>adapters/runtime/codex/skill-catalog-manifest.toml</code>. The current denominator is 131 skills. Exactly 13 are visible in the default root: eight repo-governed orchestration skills plus five Codex system skills. The remaining capabilities are specialist or on-demand and are not deleted.</p>
+
+  <h2>Problem and measured evidence</h2>
+  <p>The original runtime exposed a broad set of specialist skills to the default root and emitted the warning that skill descriptions were shortened to fit the context budget. The first pre-restart correction reduced the catalog but still left 39 skills effective because 20 repo skills and 14 host Superpowers skills remained resident alongside five system skills. A real post-restart startup reproduced the warning, proving that static compactness alone was not a sufficient oracle.</p>
+  <p>The Plane work item also originally lacked sufficient body detail and lifecycle discipline. Its body must remain execution-ready and current rather than relying on a title or stale historical counts.</p>
+
+  <h2>Delivered architecture</h2>
+  <ul>
+    <li><strong>root-core (8, enabled):</strong> accelerate, plane, prompt-hardening, skill-catalog-router, subagent-governance, specification-lifecycle, test-driven-development, verification-before-completion.</li>
+    <li><strong>host-system (5, enabled):</strong> imagegen, openai-docs, plugin-creator, skill-creator, skill-installer.</li>
+    <li><strong>django-backend (12):</strong> Django, Python, Inertia and backend governance, including validation-governance.</li>
+    <li><strong>next-react-frontend (17):</strong> Next.js, React, TypeScript, component architecture, design systems and frontend boundaries.</li>
+    <li><strong>data-db (9):</strong> PostgreSQL, database design, query optimization and governed ORM/provider patterns.</li>
+    <li><strong>integrations-ops (17):</strong> queues, mail, storage, payments, MCP and runtime integrations.</li>
+    <li><strong>product-browser-qa (5):</strong> dogfood, Playwright patterns, product runtime review, test engineering and web performance review.</li>
+    <li><strong>governance-review (13):</strong> code audit, governance, security, abuse, ingress, GitHub review and solution minimalism.</li>
+    <li><strong>catalog-librarian (6):</strong> codebase inspection, Codex research, skill development, source verification and writing skills.</li>
+    <li><strong>on-demand (25):</strong> architecture, shell, dependencies, planning, debugging, visualization and other rare or broad capabilities.</li>
+    <li><strong>superpowers-on-demand (14):</strong> the complete Superpowers namespace remains recoverable through the catalog router but is disabled by default.</li>
+  </ul>
+
+  <h2>Logical agent topology</h2>
+  <ul>
+    <li><strong>orchestrator:</strong> the bare default Codex process; Sol/medium; sole owner of issue topology, external writes, integration, review-of-review and closure.</li>
+    <li><strong>python-backend:</strong> Terra/medium; bounded implementation profile; effective inventory 25.</li>
+    <li><strong>nextjs-frontend:</strong> Terra/medium; bounded implementation profile; effective inventory 30.</li>
+    <li><strong>research:</strong> Luna/low; read-only librarian profile; effective inventory 19.</li>
+    <li><strong>reviewer:</strong> Terra/medium; read-only governance and security review profile; effective inventory 26.</li>
+    <li><strong>qa:</strong> Terra/medium; read-only product/test proof profile; effective inventory 18.</li>
+  </ul>
+  <p>Profiles are additive process configurations selected with <code>codex -p &lt;name&gt;</code>. They are not credential, filesystem, tool, MCP or physical-agent isolation. Native collaboration spawn receives a bounded assignment, model and reasoning effort; it does not prove injection of a logical profile.</p>
+
+  <h2>Specification and quality lifecycle</h2>
+  <ul>
+    <li>Every mutation enters a proportional Specification Lifecycle: micro, standard, hierarchical or critical.</li>
+    <li>SDD, ADR, DESIGN, Test Design, threat, rollout, rollback, observability and AGENTS dispositions are explicit before implementation.</li>
+    <li>Traceability is requirement to task to stable case to observed proof.</li>
+    <li>TDD selects Red/Green/Refactor, failing repro, characterization, semantic contract, migration, security, UI or provider proof according to the change.</li>
+    <li>Code review covers correctness, legibility, architecture, security, performance, tests and proof without collapsing specialist authority.</li>
+    <li>Security review starts at trust boundaries and includes STRIDE, abuse variants, supply chain, exploitability, safe-PoC disposition and negative proof.</li>
+    <li>Test engineering preserves independent acceptance; web performance distinguishes static opportunity from measured evidence; minimalism cannot remove safety or proof.</li>
+    <li>Nine quality/workflow skill packages use progressive disclosure, reviewed package snapshots and fail-closed eval-fixture validation without claiming unperformed LLM replay.</li>
+  </ul>
+
+  <h2>Plane and hook governance</h2>
+  <ul>
+    <li>Plane is the sole issue authority and is accessed only through the governed MCP.</li>
+    <li>Issue creation requires substantive objective, context, scope, non-goals, acceptance, owner, priority, dependencies, validation and execution units; descriptors expose the exact payload fingerprint field.</li>
+    <li>Lifecycle comments use START, PROGRESS, BLOCKED, REVIEW and FINISH with mutation receipt and provider readback.</li>
+    <li>The passive Orca hook path is removed from the active contract by an explicit empty hooks configuration. This is removal of a misleading passive hook, not a claim that hooks enforce governance.</li>
+  </ul>
+
+  <h2>Acceptance criteria</h2>
+  <ol>
+    <li>The catalog validates at <code>inventory=131 enabled=13</code> with no duplicate identifier/path, wildcard or uncovered disabled capability.</li>
+    <li>The default root effective inventory is exactly 13; Python 25; Next.js 30; research 19; reviewer 26; QA 18.</li>
+    <li>Each of the six contexts completes an ephemeral read-only startup turn with an exact readiness token and zero skill-description-shortening errors.</li>
+    <li>Superpowers remains recoverable through <code>superpowers-on-demand</code>; system skills remain unmanaged by the catalog reconciler.</li>
+    <li>Unknown or stale profiles fail closed; the root is bare <code>codex</code>, never <code>-p orchestrator</code>.</li>
+    <li>Repo source precedes global deployment. Sync is atomic, preserves unrelated config/MCPs/packages, records a schema-3 receipt, and has tested rollback.</li>
+    <li>Focused lifecycle, agent, skill, catalog, topology, install, stage and runtime gates pass; the full repository suite passes.</li>
+    <li>A bounded no-history spawn returns evidence, findings, self-review and self-forensic review while root retains integration and closure.</li>
+    <li>Plane lifecycle writes have semantic preflight, narrow authorization, idempotency, mutation receipt and independent provider readback.</li>
+    <li>No capability, plugin, MCP, credential, cache or user-owned configuration is silently deleted.</li>
+  </ol>
+
+  <h2>Evidence and rollback</h2>
+  <ul>
+    <li>Post-restart proof: <code>planning/evidence/dated-proof-appendix/quality-stack-post-restart-runtime-proof-2026-08-13.md</code>.</li>
+    <li>Current runtime receipt: <code>skill-sync-20260813T112142Z-3821303/sync-receipt.json</code>, schema 3, status installed, backup complete.</li>
+    <li>Governed T11 PROGRESS comment: <code>c7031d70-8633-4c96-b5ab-d1fb1d1bb48a</code>, mutation applied and read back.</li>
+    <li>Rollback uses the exact argv stored in the machine receipt and restores only receipt-owned paths after full backup preflight.</li>
+  </ul>
+
+  <h2>Non-goals and closure boundary</h2>
+  <ul>
+    <li>Do not install either upstream quality repository wholesale or adopt foreign hooks, personas or auto-commit behavior.</li>
+    <li>Do not claim physical-agent promotion, native-spawn profile injection or sandbox isolation from logical TOML profiles.</li>
+    <li>Do not use direct Plane HTTP or copied credentials.</li>
+    <li>Do not call the issue Done from static config, local documentation or a subagent self-review.</li>
+  </ul>
+  <p>At the generation-five review boundary the provider state remained In Progress. Independent review has since accepted the correction with zero P0-P3. Final closure still requires full same-generation reproof, root review-of-review, governed REVIEW and FINISH packets, a valid Done-state transition, and fresh provider readback. The final provider readback and lifecycle comments are the state authority.</p>
+
+  <h2>Ownership and metadata</h2>
+  <ul>
+    <li>Owner: Marcelo Karval; root Codex is the execution coordinator.</li>
+    <li>Priority: high because this global runtime governs subsequent engineering work.</li>
+    <li>Start date: 2026-08-12. Target date: explicitly unassigned because no committed due date was provided.</li>
+    <li>Labels: hardening, infrastructure, integration, QA and production risk.</li>
+    <li>Dependencies: final root review-of-review and provider lifecycle readback. Browser and persistent product E2E are not applicable because no product UI changed.</li>
+  </ul>
+</div>

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Catalog Router"
+  short_description: "Resolve current governed specialist skills"
+  default_prompt: "Use $skill-catalog-router to resolve and verify the smallest current governed skill for this task."

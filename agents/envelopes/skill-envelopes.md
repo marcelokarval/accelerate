@@ -150,3 +150,75 @@ Mandatory:
 
 - `legacy-first-protocol`
 - `legacy-transplant`
+
+### `specification-engineer`
+
+Mandatory:
+
+- `specification-lifecycle`
+- `architecture`
+
+Conditional:
+
+- `source-verification`
+
+### `code-quality-reviewer`
+
+Mandatory:
+
+- `code-audit`
+- `requesting-code-review`
+
+Conditional:
+
+- `solution-minimalism`
+
+### `test-engineer`
+
+Mandatory:
+
+- `test-engineering`
+- `test-driven-development`
+
+Conditional:
+
+- the active stack test skill
+
+### `web-performance-auditor`
+
+Mandatory:
+
+- `web-performance-review`
+
+Conditional:
+
+- `product-runtime-review` when live browser truth is active
+
+### `data-database-specialist`
+
+Mandatory:
+
+- the selected data profile
+- `database-design`
+- `postgresql`
+
+Conditional:
+
+- `sql-optimization-patterns`
+- the selected ORM/provider skill
+
+### `integrations-ops-specialist`
+
+Mandatory:
+
+- the selected integrations profile
+- `native-mcp` or the dominant queue/provider skill
+
+Conditional:
+
+- `payment-integration`
+- `redis-patterns`
+- mail, storage, queue, or provider-specific skills
+
+Neither data nor integrations envelopes grant credential access, provider
+writes, issue topology, integration acceptance, review-of-review, or closure.

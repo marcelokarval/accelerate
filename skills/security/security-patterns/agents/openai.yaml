@@ -1,0 +1,4 @@
+interface:
+  display_name: "Security Patterns"
+  short_description: "Apply trust-boundary security evidence"
+  default_prompt: "Use $security-patterns to assess this trust boundary and define safe negative proof."

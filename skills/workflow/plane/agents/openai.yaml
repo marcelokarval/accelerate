@@ -1,0 +1,4 @@
+interface:
+  display_name: "Plane Governance"
+  short_description: "Governed Plane work items for Codex"
+  default_prompt: "Use $plane to inspect, create, update, comment on, or close a governed Plane work item with proper readback."

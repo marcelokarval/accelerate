@@ -6,6 +6,9 @@ cd "$ROOT"
 
 required_tests=(
   "tests/recursive-self-improvement-contract.sh"
+  "tests/specification-lifecycle-contract.sh"
+  "tests/quality-agent-contract.sh"
+  "tests/quality-skill-contract.sh"
 )
 
 for required_test in "${required_tests[@]}"; do
