@@ -60,12 +60,38 @@ selected route: a failed Scoped or Orchestrated binding never falls back to
 no physical binding; root must reclassify them, keep them root-owned, or use a
 virtual packet.
 
+The normalized `research` role is deliberately separate from architecture. It
+binds only `explorer` for bounded local discovery or `librarian` for current
+official/source research. Their existence in this policy does not create a
+Codex process profile or load a logical skill profile into a native spawn.
+
+## Active Session And Interruption
+
+Reuse an active agent context only when it is still relevant to the same task,
+role, and bounded lane. Do not create a duplicate active lane while that context
+can be resumed or followed up honestly.
+
+An interruption is not a rollback. It stops agent execution but can leave
+partial edits in the shared worktree.
+Do not start a replacement writer until root has inspected and reconciled partial shared-filesystem changes.
+This same
+root reconciliation is required before any next writer enters the affected
+scope. Cancellation, cleanup, and a replacement spawn do not erase filesystem
+effects.
+
 ## Return and Cleanup
 
 Require the standard Subagent Return Packet plus the selected policy profile,
 model/effort actually requested, assignment-contract allowlists, and whether
 the host could enforce them. Root must reconcile the return, then close the
 agent by completion or record why it remains retained.
+
+The profile's `return_contract` and `return_fields` add bounded evidence to the
+standard return: explorer paths/lines and gaps; librarian sources/version and
+official-vs-community status; architecture options/trade-offs/uncertainty;
+writers files/behavior/validation/skips; and runtime/review profiles evidence,
+findings, severity, and blockers. Every profile also returns self-review,
+self-forensic review, residual risks, and the root closure boundary.
 
 Block closure when an agent claims final closure, writes outside its scope,
 uses a `high` profile without a receipt, or presents assignment contracts as

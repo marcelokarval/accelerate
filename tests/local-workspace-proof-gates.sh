@@ -170,6 +170,7 @@ Virtual Subagent Assignment Packet
 - required evidence: implementation proof and requested-vs-implemented packet
 - prohibited authority: acceptance review and final closure
 - return contract: implementation evidence and self-review disclosure
+- required return fields: files changed, behavior, validations, skipped checks, self-review, self-forensic review, residual risks, root closure boundary
 - cleanup expectation after return: complete
 MD
   set_artifact "${target}" "virtual_subagent_assignments" ".accelerate/proof/virtual_subagent_assignments.md"

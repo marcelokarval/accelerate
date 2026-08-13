@@ -45,7 +45,7 @@ required_skills = ["nextjs-app-router-patterns", "frontend-boundary-governance",
 [[agents]]
 name = "research"
 kind = "specialist"
-role_family = "architecture"
+role_family = "research"
 catalog_group = "catalog-librarian"
 collaboration_profile = "librarian"
 model = "gpt-5.6-luna"

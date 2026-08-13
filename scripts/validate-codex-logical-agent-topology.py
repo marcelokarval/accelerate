@@ -11,6 +11,14 @@ from typing import Any
 
 
 REQUIRED_NAMES = {"orchestrator", "python-backend", "nextjs-frontend", "research", "reviewer", "qa"}
+EXPECTED_ROLE_FAMILIES = {
+    "orchestrator": "root",
+    "python-backend": "backend",
+    "nextjs-frontend": "frontend",
+    "research": "research",
+    "reviewer": "governance",
+    "qa": "qa-regression",
+}
 ROOT_EXCLUSIVE = {"issue topology", "external writes", "integration", "review-of-review", "closure"}
 ROOT_SKILLS = {"accelerate", "prompt-hardening", "plane", "subagent-governance", "skill-catalog-router", "verification-before-completion"}
 SPECIALIST_KEYS = {"name", "kind", "role_family", "catalog_group", "collaboration_profile", "model", "reasoning_effort", "write_mode", "external_writes", "closure_authority", "required_skills"}
@@ -66,6 +74,8 @@ def main() -> int:
                 fail(f"agent {agent.get('name')} has invalid fields")
             if agent.get("catalog_group") not in groups:
                 fail(f"agent {agent.get('name')} references unknown catalog group")
+            if agent.get("role_family") != EXPECTED_ROLE_FAMILIES.get(agent.get("name")):
+                fail(f"agent {agent.get('name')} has an invalid normalized role family")
             skills = agent.get("required_skills")
             active_core = set(groups["root-core"].get("skill_ids", []))
             eligible_skills = set(groups[agent["catalog_group"]].get("skill_ids", []))

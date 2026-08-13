@@ -21,6 +21,11 @@ The root must pass model and reasoning effort explicitly on each physical
 binding. Otherwise the spawned agent inherits the parent runtime and this
 policy has not taken effect.
 
+`explorer` and `librarian` are the only bindings for normalized `research`.
+Architecture no longer uses the librarian as a substitute for architectural
+judgment. A logical skill profile in the topology is routing metadata; native
+collaboration spawn does not load the corresponding `-p` process profile.
+
 Skills, tools, and MCPs are assignment allowlists, not host-enforced isolation.
 Use only the items necessary for the assignment; never use a wildcard and never
 make an MCP a startup dependency. `context7`, when available, is a librarian
@@ -32,3 +37,7 @@ downgrade to Direct Fast Path merely because an agent is unavailable. The
 `provider-boundary` and `other` role families stay root-owned gaps unless they
 are reclassified through normal Accelerate governance. Preserve root ownership
 of issue topology, integration, review-of-review, and closure.
+
+Reuse a relevant active context and prohibit duplicate active lanes. An
+interrupt is stop-not-rollback: root must inspect and reconcile partial changes
+in the shared filesystem before starting a replacement or overlapping writer.

@@ -48,7 +48,7 @@ agents first. It routes each task from the executive plan or task ledger through
 this sequence:
 
 1. classify the task surface: architecture, backend, frontend, data, security,
-   QA/proof, docs, workflow, product/runtime, or provider-boundary
+   QA/proof, research, docs, workflow, product/runtime, or provider-boundary
 2. classify the task phase: planning, implementation, review, correction,
    reproof, or closure
 3. classify the dominant risk: integration, runtime correctness, security,
@@ -92,6 +92,7 @@ Use this matrix as the default routing policy:
 | Task signal | Preferred role family | Typical authority | Review counterpart |
 | --- | --- | --- | --- |
 | architecture boundary, ADR, migration shape, dependency direction | architecture / design reviewer | read-only analysis or design packet | governance auditor or master review-of-review |
+| bounded local discovery or current official/source research | research explorer or librarian | read-only evidence gathering | architecture/governance reviewer or master review-of-review |
 | backend behavior, services, data contracts, migrations, query shape | backend implementation worker or backend reviewer | bounded code change or backend proof | QA/proof or security reviewer |
 | frontend UI, state, component hierarchy, visual contract | frontend implementation worker or frontend reviewer | bounded code change or visual proof | QA/browser reviewer or product/runtime reviewer |
 | tests, regression, validation commands, browser proof, closure evidence | QA / regression reviewer | read-only or test-only proof | master review-of-review |
@@ -279,12 +280,33 @@ leaks, not harmless background state.
 Role-specific returns should add the missing proof, not restate the global
 plan:
 
-- implementation worker: exact write scope, behavior changed, local tests
-- proof sidecar: proof lane exercised, blockers found, evidence location
+- explorer: paths and exact lines inspected, direct answer, gaps
+- librarian: sources, source versions, official-vs-community status, conclusion
+- architecture reviewer: options, trade-offs, recommendation, uncertainty
+- implementation or mechanical worker: files changed, behavior, validations,
+  skipped checks
+- proof/runtime sidecar: evidence, findings, severity, blockers
 - trust / anti-abuse reviewer: abuse path, signal, blocker, release condition
 - source observer candidate: source material inspected, useful pattern,
   rejected direct imports, proposed bounded adaptation
 - governance auditor: violated rule, governing artifact, correction target
+
+All role-specific returns still include self-review, self-forensic review,
+residual risks, and an explicit statement that closure remains root-owned.
+
+## Active Session And Interrupted Writer Rule
+
+Reuse a relevant active agent context for the same task and bounded role before
+creating a replacement. Do not create a duplicate active lane merely because a
+new spawn is convenient.
+
+An interruption is not a rollback. An interrupted writer may have left partial
+changes in the shared worktree.
+Do not start a replacement writer until root has inspected and reconciled partial shared-filesystem changes.
+Root must also
+perform that reconciliation before another writer receives an overlapping
+scope. Interrupting, cancelling, or closing an agent changes session state; it
+does not restore files.
 
 ## Review Hierarchy
 

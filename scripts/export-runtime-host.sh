@@ -46,7 +46,7 @@ if [ "${host}" = "codex" ]; then
   [ -f "${logical_agent_renderer}" ] || { echo "missing Codex logical agent renderer" >&2; exit 1; }
   [ -f "${logical_topology_validator}" ] || { echo "missing Codex logical agent topology validator" >&2; exit 1; }
   [ -f "${collaboration_policy}" ] || { echo "missing Codex collaboration policy" >&2; exit 1; }
-  python3 "${logical_topology_validator}" "${logical_topology}" "${catalog_manifest}" "${collaboration_policy}"
+  python3 "${logical_topology_validator}" "${logical_topology}" "${catalog_manifest}" "${collaboration_policy}" >/dev/null
   catalog_digest="$(sha256sum "${catalog_manifest}" | awk '{print $1}')"
   logical_topology_digest="$(sha256sum "${logical_topology}" | awk '{print $1}')"
   source_artifacts_yaml+=$'\n  - adapters/runtime/codex/skill-catalog-manifest.toml\n  - adapters/runtime/codex/logical-agent-topology.toml\n  - scripts/render-codex-skill-profile.py\n  - scripts/render-codex-logical-agent.py'

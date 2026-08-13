@@ -37,6 +37,7 @@ Use this map when binding a normalized role family to a physical agent:
 | Normalized role family | Compatible capability families |
 | --- | --- |
 | `architecture` | `django-inertia-technical-planner`, `django-inertia-contract-integrator`, `legacy-truth-analyst` when legacy architecture truth is active |
+| `research` | Codex collaboration `explorer` or `librarian`; `legacy-truth-analyst` only when bounded legacy truth extraction dominates; otherwise keep the physical family as an explicit gap |
 | `backend` | `django-domain-implementer`, `django-inertia-contract-integrator` |
 | `frontend` | `inertia-react-ui-implementer`, `django-inertia-contract-integrator` when prop/page contracts dominate |
 | `qa-regression` | `runtime-proof-auditor` |

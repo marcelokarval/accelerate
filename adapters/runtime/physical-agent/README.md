@@ -39,6 +39,7 @@ Every physical assignment must preserve the base assignment fields:
 - required evidence
 - prohibited authority
 - return contract
+- required return fields
 - cleanup expectation after return
 
 The selected capability family must be compatible with

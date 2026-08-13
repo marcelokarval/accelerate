@@ -267,13 +267,14 @@ Virtual Subagent Assignment Packet
 
 - task id: <id>
 - virtual role: <executor|skeptical-reviewer>
-- selected role family: <architecture|backend|frontend|qa-regression|security|governance|provider-boundary|product-runtime|other>
+- selected role family: <architecture|research|backend|frontend|qa-regression|security|governance|provider-boundary|product-runtime|other>
 - assigned scope: <bounded scope>
 - required skills / profiles: <...>
 - write scope: <paths|read-only|n/a>
 - required evidence: <tests|packets|proof>
 - prohibited authority: <acceptance-review|closure|scope-expansion>
 - return contract: <packet shape>
+- required return fields: <role-specific fields plus self-review, self-forensic review, residual risks, root closure boundary>
 - cleanup expectation after return: <close|complete|retain-with-reason|not-applicable>
 ```
 

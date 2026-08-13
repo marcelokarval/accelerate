@@ -26,6 +26,12 @@
       "physical_binding_allowed": true
     }
   },
+  "session_lifecycle": {
+    "reuse_relevant_agent_context": true,
+    "duplicate_active_lane": "forbidden",
+    "interrupt_semantics": "stop-not-rollback",
+    "interrupted_writer_reconciliation": "root-required-before-replacement-or-next-writer"
+  },
   "profiles": {
     "explorer": {
       "model": "gpt-5.6-luna",
@@ -39,6 +45,16 @@
       "write_mode": "read-only",
       "requires_write_scope": false,
       "requires_reasoning_receipt": false,
+      "return_contract": "Agent Return Packet",
+      "return_fields": [
+        "paths_and_lines",
+        "answer",
+        "gaps",
+        "self_review",
+        "self_forensic_review",
+        "residual_risks",
+        "root_closure_boundary"
+      ],
       "eligibility": [
         "bounded local discovery with no implementation or global design judgment"
       ]
@@ -59,6 +75,18 @@
       "write_mode": "read-only",
       "requires_write_scope": false,
       "requires_reasoning_receipt": false,
+      "return_contract": "Agent Return Packet",
+      "return_fields": [
+        "sources",
+        "source_version",
+        "official_vs_community",
+        "conclusion",
+        "uncertainty",
+        "self_review",
+        "self_forensic_review",
+        "residual_risks",
+        "root_closure_boundary"
+      ],
       "eligibility": [
         "bounded current documentation or source research with a citation return"
       ]
@@ -79,6 +107,17 @@
       "write_mode": "read-only",
       "requires_write_scope": false,
       "requires_reasoning_receipt": false,
+      "return_contract": "Skeptical Review Packet",
+      "return_fields": [
+        "options",
+        "tradeoffs",
+        "recommendation",
+        "uncertainty",
+        "self_review",
+        "self_forensic_review",
+        "residual_risks",
+        "root_closure_boundary"
+      ],
       "eligibility": [
         "architecture or dependency judgment with a bounded evidence request"
       ]
@@ -98,6 +137,17 @@
       "write_mode": "bounded-write",
       "requires_write_scope": true,
       "requires_reasoning_receipt": false,
+      "return_contract": "Task Execution Return Packet",
+      "return_fields": [
+        "files_changed",
+        "behavior",
+        "validations",
+        "skipped_checks",
+        "self_review",
+        "self_forensic_review",
+        "residual_risks",
+        "root_closure_boundary"
+      ],
       "eligibility": [
         "bounded implementation after surface, owner, write scope, and proof are known"
       ]
@@ -115,6 +165,17 @@
       "write_mode": "bounded-write",
       "requires_write_scope": true,
       "requires_reasoning_receipt": false,
+      "return_contract": "Task Execution Return Packet",
+      "return_fields": [
+        "files_changed",
+        "behavior",
+        "validations",
+        "skipped_checks",
+        "self_review",
+        "self_forensic_review",
+        "residual_risks",
+        "root_closure_boundary"
+      ],
       "eligibility": [
         "known target and prescribed behavior with no discovery, architecture, or design judgment"
       ]
@@ -134,6 +195,17 @@
       "write_mode": "read-only",
       "requires_write_scope": false,
       "requires_reasoning_receipt": false,
+      "return_contract": "Skeptical Review Packet",
+      "return_fields": [
+        "evidence",
+        "findings",
+        "severity",
+        "blockers",
+        "self_review",
+        "self_forensic_review",
+        "residual_risks",
+        "root_closure_boundary"
+      ],
       "eligibility": [
         "bounded runtime or browser proof independent of implementation"
       ]
@@ -152,6 +224,17 @@
       "write_mode": "read-only",
       "requires_write_scope": false,
       "requires_reasoning_receipt": false,
+      "return_contract": "Skeptical Review Packet",
+      "return_fields": [
+        "evidence",
+        "findings",
+        "severity",
+        "blockers",
+        "self_review",
+        "self_forensic_review",
+        "residual_risks",
+        "root_closure_boundary"
+      ],
       "eligibility": [
         "bounded workflow or policy audit with no provider mutation"
       ]
@@ -172,6 +255,17 @@
       "write_mode": "read-only",
       "requires_write_scope": false,
       "requires_reasoning_receipt": true,
+      "return_contract": "Skeptical Review Packet",
+      "return_fields": [
+        "evidence",
+        "findings",
+        "severity",
+        "blockers",
+        "self_review",
+        "self_forensic_review",
+        "residual_risks",
+        "root_closure_boundary"
+      ],
       "eligibility": [
         "objective high-risk trigger",
         "valid reasoning decision receipt",
@@ -182,8 +276,11 @@
   "role_bindings": {
     "architecture": [
       "architecture-review",
-      "librarian",
       "high-stakes-review"
+    ],
+    "research": [
+      "explorer",
+      "librarian"
     ],
     "backend": [
       "implementation",

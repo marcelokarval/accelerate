@@ -34,6 +34,7 @@ assert_common_packet() {
   assert_contains "$output" "issue topology"
   assert_contains "$output" "scope expansion"
   assert_contains "$output" "review-of-review"
+  assert_contains "$output" "- required return fields:"
   assert_contains "$output" "- cleanup expectation after return: complete"
 }
 
@@ -73,6 +74,15 @@ assert_contains "$architecture_output" "- virtual role: skeptical-reviewer"
 assert_contains "$architecture_output" "architecture"
 assert_contains "$architecture_output" "governance-audit"
 assert_contains "$architecture_output" "- return contract: Skeptical Review Packet"
+assert_contains "$architecture_output" "options, tradeoffs, recommendation, uncertainty"
+
+research_output="$(render research)"
+assert_common_packet "$research_output" "research"
+assert_contains "$research_output" "- virtual role: skeptical-reviewer"
+assert_contains "$research_output" "codebase-inspection"
+assert_contains "$research_output" "openai-docs"
+assert_contains "$research_output" "sources, source version, official-vs-community, conclusion, uncertainty"
+assert_contains "$research_output" "- return contract: Agent Return Packet"
 
 governance_output="$(render governance)"
 assert_common_packet "$governance_output" "governance"
@@ -94,6 +104,7 @@ assert_contains "$product_output" "- virtual role: skeptical-reviewer"
 assert_contains "$product_output" "product-runtime-review"
 assert_contains "$product_output" "server-prop-governance"
 assert_contains "$product_output" "- return contract: Skeptical Review Packet"
+assert_contains "$product_output" "evidence, findings, severity, blockers"
 
 other_output="$(render other)"
 assert_common_packet "$other_output" "other"

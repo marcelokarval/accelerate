@@ -1,0 +1,36 @@
+{
+  "receipt_version": 1,
+  "receipt_kind": "final-decision",
+  "runtime": "codex",
+  "denominator": {
+    "count": 1,
+    "source": "artifact:CODEX-1"
+  },
+  "dependencies": [],
+  "side_effect_boundaries": {
+    "allowed": [
+      "read-only skeptical review"
+    ],
+    "forbidden": [
+      "workspace writes",
+      "external writes"
+    ]
+  },
+  "execution_mode": "single",
+  "mode_basis": "single-bounded",
+  "prompt_hardening": "full",
+  "selected_effort": "high",
+  "basis_code": "trigger-irreversible-risk",
+  "observable_status": "insufficient",
+  "trigger": "irreversible-risk",
+  "evidence": [
+    "artifact:CODEX-1"
+  ],
+  "lower_effort_insufficiency": "objective-trigger-requires-deeper-analysis",
+  "budget": {
+    "model_calls": 1,
+    "max_tool_calls": 10,
+    "max_correction_loops": 1
+  },
+  "stop_condition": "acceptance-proved"
+}

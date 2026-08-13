@@ -39,6 +39,7 @@ Every base agent must receive an assignment packet that names:
 - required evidence
 - prohibited authority
 - return contract
+- required return fields
 - cleanup expectation after return
 
 For virtual agents, this is the `Virtual Subagent Assignment Packet`.
@@ -50,6 +51,7 @@ preserve the same fields.
 Every base agent must declare one selected role family before work starts:
 
 - `architecture`
+- `research`
 - `backend`
 - `frontend`
 - `qa-regression`
@@ -124,6 +126,7 @@ Specialized agents are base agents plus narrower defaults.
 Examples:
 
 - architecture agent: base agent + architecture / design reviewer role family
+- research agent: base agent + read-only explorer or librarian collaboration profile
 - QA agent: base agent + QA / regression reviewer role family
 - security agent: base agent + security / anti-abuse reviewer role family
 - backend agent: base agent + backend role family and backend profile skills

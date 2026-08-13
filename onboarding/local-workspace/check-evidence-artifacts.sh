@@ -243,7 +243,7 @@ validate_virtual_subagent_assignments_artifact() {
   local artifact="$1"
   local path
   path="$(require_local_artifact "virtual_subagent_assignments" "${artifact}")"
-  for marker in "Virtual Subagent Assignment Packet" "- task id:" "- virtual role:" "- selected role family:" "- assigned scope:" "- required skills / profiles:" "- write scope:" "- required evidence:" "- prohibited authority:" "- return contract:" "- cleanup expectation after return:"; do
+  for marker in "Virtual Subagent Assignment Packet" "- task id:" "- virtual role:" "- selected role family:" "- assigned scope:" "- required skills / profiles:" "- write scope:" "- required evidence:" "- prohibited authority:" "- return contract:" "- required return fields:" "- cleanup expectation after return:"; do
     require_marker "virtual_subagent_assignments_artifact" "${path}" "${marker}"
   done
 
@@ -252,7 +252,7 @@ validate_virtual_subagent_assignments_artifact() {
     exit 1
   fi
 
-  if ! grep -Eq 'selected role family:[[:space:]]*(architecture|backend|frontend|qa-regression|security|governance|provider-boundary|product-runtime|other)' "${path}"; then
+  if ! grep -Eq 'selected role family:[[:space:]]*(architecture|research|backend|frontend|qa-regression|security|governance|provider-boundary|product-runtime|other)' "${path}"; then
     echo "artifact gate blocked: virtual_subagent_assignments_artifact has invalid selected role family" >&2
     exit 1
   fi
