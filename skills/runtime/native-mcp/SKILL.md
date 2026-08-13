@@ -24,6 +24,11 @@ configured directly in the Codex runtime.
 Prefer the native Codex MCP runtime for durable, reused capabilities.
 Use `mcporter` for ad-hoc one-off inspection or experimentation.
 
+Keep capability claims at their proven lifecycle state. Read
+[capability lifecycle](references/capability-lifecycle.md) when diagnosing
+startup, cached sessions, release drift, authentication, callability, or
+cleanup after an initial connection failure.
+
 ## Source Of Truth
 
 The live MCP catalog is configured in:
@@ -52,8 +57,8 @@ Use when Codex should launch a local process:
 
 ```toml
 [mcp_servers.example]
-command = "npx"
-args = ["-y", "@modelcontextprotocol/server-example"]
+command = "/absolute/path/to/pinned-mcp-launcher"
+args = []
 startup_timeout_sec = 120.0
 ```
 
@@ -80,16 +85,19 @@ Use this when a tool has side effects or should stay human-gated.
 
 ## Shell + Secret Pattern
 
-For servers that need credentials, this runtime commonly uses a shell wrapper:
+For servers that need credentials, use an owner-controlled pinned launcher that
+loads only the required secret names and then replaces itself with the exact
+server entrypoint:
 
 ```toml
 [mcp_servers.github]
-command = "bash"
-args = ["-lc", "set -a; source ~/.codex/mcp-secrets.env; set +a; exec npx -y @modelcontextprotocol/server-github"]
+command = "/absolute/path/to/pinned-github-mcp-launcher"
+args = []
 startup_timeout_sec = 120.0
 ```
 
-This pattern keeps tokens out of the main config file and makes rotation easier.
+This keeps tokens out of the main config, avoids floating installation during a
+user workflow, and makes rotation auditable.
 
 ## Workflow
 
@@ -131,6 +139,9 @@ After changing config, verify:
 - required secrets file entries exist when referenced
 - the intended MCP-backed workflow now has the needed tools
 
+Then start a fresh client. Registration, initialize, tools/list, callability,
+authentication, and authorization are separate claims.
+
 ## Troubleshooting
 
 ### Server exists in config but tools do not appear
@@ -142,6 +153,7 @@ Check:
 - missing credentials in `~/.codex/mcp-secrets.env`
 - too-short startup timeout
 - approval rules that are stricter than expected
+- a session that cached the pre-change config or tool inventory at startup
 
 ### Stdio server fails to start
 
@@ -175,3 +187,5 @@ This skill is being used correctly if:
 - secrets stay outside the main config when possible
 - native MCP is chosen for durable capabilities
 - ad-hoc tooling is chosen for exploration instead of unnecessary permanent config
+- capability claims stop at the highest state proven in the lifecycle reference
+- fresh-session and client/daemon release parity are checked after runtime changes

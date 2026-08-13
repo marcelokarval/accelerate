@@ -9,6 +9,7 @@ Current skills:
 | --- | --- |
 | `dogfood` | Exploratory browser QA, evidence capture, issue taxonomy, and structured bug reports. |
 | `bash-linux` | Safe shell inspection, Bash scripting, log review, and command-line workflow discipline. |
+| `codex` | Codex configuration, global environment capability preflight, provider authority selection, and fresh-process proof. |
 | `native-mcp` | Codex-native MCP configuration, transport, approval, secret, and troubleshooting guidance. |
 | `mcporter` | Ad-hoc MCP discovery, schema inspection, auth, direct calls, and CLI generation. |
 | `codebase-inspection` | LOC, language breakdown, and repository composition inspection. |

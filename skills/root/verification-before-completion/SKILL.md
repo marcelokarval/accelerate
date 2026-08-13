@@ -24,6 +24,11 @@ Make `done` mean evidenced, reviewed, and proportionate to the claim being made.
 6. record review / QA outcome
 7. state whether completion is actually supported
 
+When persistent host state is in scope, read
+[runtime forensic closure](references/runtime-forensic-closure.md) before the
+verdict. A passing test does not close legacy clients, release drift, orphaned
+processes, open runtime roots, or missing provider readback.
+
 ## Compatible Companion Skills
 
 - `python-testing`
@@ -47,6 +52,8 @@ Make `done` mean evidenced, reviewed, and proportionate to the claim being made.
 3. If a reviewer or QA lane is required, completion waits for that lane.
 4. Keep verification proportional, but never fictional.
 5. Say which surfaces were proven, which were inferred, and which were left open.
+6. For runtime-facing work, reconcile exact process/root ownership and release
+   parity before calling cleanup complete.
 
 ## Output Format
 
@@ -74,3 +81,5 @@ This skill is being used correctly if:
 - evidence is tied to the actual changed surface
 - open gaps are named instead of hidden behind confidence language
 - the final verdict is stricter than narrative optimism
+- runtime closure records legacy-client, release-parity, residue, quarantine,
+  and provider-readback dispositions when applicable

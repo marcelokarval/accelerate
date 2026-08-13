@@ -22,6 +22,7 @@ The historical migration manifest remains available at:
 | `api-surface-governance` | `governance` | `../governance/api-surface-governance/` | `standalone-adapted` | optional | `local-authoritative` |
 | `dependency-governance` | `governance` | `../governance/dependency-governance/` | `standalone-adapted` | optional | `local-authoritative` |
 | `validation-governance` | `governance` | `../governance/validation-governance/` | `standalone-adapted` | optional | `local-authoritative` |
+| `skill-catalog-router` | `governance` | `../governance/skill-catalog-router/` | `native` | optional | `local-authoritative` |
 | `anti-abuse-review` | `security` | `../security/anti-abuse-review/` | `standalone-adapted` | optional | `local-authoritative` |
 | `security-patterns` | `security` | `../security/security-patterns/` | `standalone-adapted` | optional | `local-authoritative` |
 | `front-react-shadcn` | `frontend` | `../frontend/front-react-shadcn/` | `standalone-adapted` | optional | `local-authoritative` |
@@ -66,6 +67,7 @@ The historical migration manifest remains available at:
 | `executing-plans` | `workflow` | `../workflow/executing-plans/` | `standalone-adapted` | optional | `local-authoritative` |
 | `dogfood` | `runtime` | `../runtime/dogfood/` | `standalone-adapted` | optional | `local-authoritative` |
 | `bash-linux` | `runtime` | `../runtime/bash-linux/` | `standalone-adapted` | optional | `local-authoritative` |
+| `codex` | `runtime` | `../runtime/codex/` | `native` | optional | `local-authoritative` |
 | `native-mcp` | `runtime` | `../runtime/native-mcp/` | `standalone-adapted` | optional | `local-authoritative` |
 | `mcporter` | `runtime` | `../runtime/mcporter/` | `standalone-adapted` | optional | `local-authoritative` |
 | `codebase-inspection` | `runtime` | `../runtime/codebase-inspection/` | `standalone-adapted` | optional | `local-authoritative` |

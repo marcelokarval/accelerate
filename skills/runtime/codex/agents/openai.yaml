@@ -1,0 +1,4 @@
+interface:
+  display_name: "Codex Runtime"
+  short_description: "Govern Codex capability preflight and proof"
+  default_prompt: "Inspect Codex runtime authority, consult the environment capability catalog when relevant, and verify claims in a fresh process."

@@ -1,0 +1,8 @@
+name: codex
+category: runtime
+status: native
+source: skills/runtime/codex
+runtime_export: optional
+local_native_owner: adapters/runtime/codex/
+sync_policy: repo-first
+description: Codex configuration, environment capability preflight, provider authority selection, and fresh-process runtime proof.
