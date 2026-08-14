@@ -182,7 +182,31 @@ rg -F 'postgresql/SKILL.md", enabled = true' "$tmp_dir/data-db.config.toml" >/de
 rg -F 'native-mcp/SKILL.md", enabled = true' "$tmp_dir/integrations-ops.config.toml" >/dev/null || fail 'integrations profile missing'
 ! rg -F 'postgresql/SKILL.md' "$tmp_dir/integrations-ops.config.toml" >/dev/null || fail 'integrations profile leaked data skill'
 
-packet="$(python3 "$assignment" "$topology" --policy "$policy" --route scoped --agent python-backend --task-id CODEX-1 --objective 'Add one bounded backend change' --scope 'src/service.py' --write-scope 'src/service.py tests/test_service.py' --evidence 'pytest tests/test_service.py' --validation-owner root --context 'Use the active issue and current worktree.')"
+hermetic_skills="$tmp_dir/hermetic-skills"
+hermetic_catalog="$tmp_dir/hermetic-catalog.toml"
+hermetic_index="$tmp_dir/hermetic-index.tsv"
+python3 - "$ROOT" "skills/governance/skill-catalog-router/references/index.tsv" "$catalog" "$hermetic_skills" "$hermetic_index" "$hermetic_catalog" <<'PY'
+import sys
+from pathlib import Path
+
+root, index_path, catalog_path, runtime_root, output_index, output_catalog = map(Path, sys.argv[1:])
+rows = []
+for line in index_path.read_text(encoding="utf-8").splitlines():
+    skill_id, source_path, _runtime_path, digest, description = line.split("\t")
+    target = runtime_root / skill_id / "SKILL.md"
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.write_bytes((root / source_path).read_bytes())
+    rows.append("\t".join((skill_id, source_path, str(target), digest, description)))
+output_index.write_text("\n".join(rows) + "\n", encoding="utf-8")
+catalog = catalog_path.read_text(encoding="utf-8").replace(
+    'base_path = "/home/marcelo-karval/.codex/skills"',
+    f'base_path = "{runtime_root}"',
+    1,
+)
+output_catalog.write_text(catalog, encoding="utf-8")
+PY
+
+packet="$(python3 "$assignment" "$topology" --catalog "$hermetic_catalog" --route-index "$hermetic_index" --policy "$policy" --route scoped --agent python-backend --task-id CODEX-1 --objective 'Add one bounded backend change' --scope 'src/service.py' --write-scope 'src/service.py tests/test_service.py' --evidence 'pytest tests/test_service.py' --validation-owner root --context 'Use the active issue and current worktree.')"
 printf '%s\n' "$packet" | rg -F 'Spawn Packet' >/dev/null || fail 'spawn packet missing heading'
 [ "$(printf '%s\n' "$packet" | wc -l)" -le 10 ] || fail 'spawn packet exceeds ten lines'
 printf '%s\n' "$packet" | rg -F 'Root only: issue topology, external writes, integration, review-of-review, closure.' >/dev/null || fail 'root boundary missing'

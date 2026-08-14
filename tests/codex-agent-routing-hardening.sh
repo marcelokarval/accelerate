@@ -335,6 +335,8 @@ case_packet_limit_007() {
   local packet="$tmp_dir/limit-eight.packet"
   python3 scripts/render-codex-spawn-packet.py \
     "$topology" \
+    --catalog "$tmp_dir/hermetic-catalog.toml" \
+    --route-index "$tmp_dir/hermetic-index.tsv" \
     --policy adapters/runtime/codex-collaboration/role-policy.json \
     --route scoped \
     --agent python-backend \
