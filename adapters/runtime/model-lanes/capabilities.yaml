@@ -1,0 +1,29 @@
+name: model-lanes
+type: governed-external-model-runtime
+status: experimental
+authority_boundary: subordinate-to-codex-root
+tool_enforcement: adapter-and-assignment-contract
+allowed_tools:
+  - stdin-prompt-dispatch
+  - provider-cli-or-api-adapter
+suppressed_capabilities:
+  - root-closure
+  - issue-topology
+  - autonomous-external-writes
+  - credential-export
+supported_binding:
+  - deepseek-v4-flash
+  - gemini-3.7-flash
+supported_lifecycle:
+  - resolve
+  - dispatch
+  - return-to-root
+policy_source: model-lanes.toml
+validation_command: python3 -m pytest -q tests/test_model_lanes.py
+proof_artifacts:
+  - model-lane-selection
+  - provider-response-return
+fallback:
+  - codex-native-profile
+  - root-review-required
+privacy_notes: prompts and provider responses may contain sensitive task context; credentials remain runtime-local and are never copied into artifacts
