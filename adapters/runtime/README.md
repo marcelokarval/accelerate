@@ -11,7 +11,6 @@ Examples:
 - generic browser proof helpers for local screenshot/console/network capture
 - agent-browser-style CLI automation for bounded browser operations
 - physical agent runtime delegation when a real agent runtime exists
-- Codex collaboration for explicitly model-bound, bounded subagents
 - Playwright for persistent regression proof
 - web content reader for bounded external source observation
 - locale-pack parity checks for i18n proof
@@ -30,13 +29,12 @@ Native pre-agents reading order:
 4. `chrome-devtools/README.md`
 5. `agent-browser/README.md`
 6. `physical-agent/README.md`
-7. `codex-collaboration/README.md`
-8. `playwright/README.md`
-9. `web-content-reader/README.md`
-10. `locale-pack-parity/README.md`
-11. `proof-fixtures/README.md`
-12. `tailwind/theme-token-mapping.md`
-13. `host-export-contract.md`
+7. `playwright/README.md`
+8. `web-content-reader/README.md`
+9. `locale-pack-parity/README.md`
+10. `proof-fixtures/README.md`
+11. `tailwind/theme-token-mapping.md`
+12. `host-export-contract.md`
 
 ## Current Runtime Expansion
 

@@ -1,0 +1,31 @@
+schema_version = 1
+authority = "accelerate-repo"
+runtime_authority = false
+
+[lanes.deepseek]
+model = "deepseek-v4-flash"
+provider = "deepseek"
+codex_transport = "hermes-governed-profile"
+codex_target_profile = "deepseek"
+hermes_profile = "deepseek"
+openhands_llm_profile = "default"
+credential_owner = "runtime-local"
+
+[lanes.gemini_flash]
+model = "gemini-3.7-flash"
+provider = "google"
+codex_transport = "official-cli"
+codex_executable = "gemini"
+codex_args = ["--model", "gemini-3.7-flash"]
+hermes_provider = "gemini"
+openhands_transport = "acp"
+openhands_agent_profile = "gemini-flash"
+openhands_acp_server = "gemini-cli"
+openhands_llm_profile_optional = "gemini-3.7-flash"
+credential_owner = "runtime-local"
+
+[policy]
+default_economic_order = ["gemini_flash", "deepseek"]
+secret_copying = false
+callability_requires_fresh_process = true
+fallback_requires_explicit_receipt = true

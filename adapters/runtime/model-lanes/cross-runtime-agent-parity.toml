@@ -1,0 +1,37 @@
+schema_version = 1
+authority = "accelerate-repo"
+parity_kind = "capability-directional"
+
+codex_roles = [
+  "orchestrator", "python-backend", "nextjs-frontend", "research",
+  "reviewer", "qa", "data-db", "integrations-ops", "mechanical-fixer",
+  "test-engineer", "high-stakes-reviewer",
+]
+
+openhands_roles = [
+  "orchestrator", "python-backend", "nextjs-frontend", "research",
+  "reviewer", "qa", "data-db", "integrations-ops", "mechanical-fixer",
+  "test-engineer", "high-stakes-reviewer", "deepseek", "gemini-flash",
+  "codex",
+]
+
+[hermes]
+materialization = "selective"
+profiles = [
+  "default", "brain-agent", "coding-agent", "curator-agent", "deepseek",
+  "design-agent", "log-analyst", "ops-agent", "orchestrator", "qa-agent",
+  "research-agent", "session-agent", "sync-agent", "yasmim",
+]
+retired_profiles = ["sdr-agent"]
+
+[openhands_acp.codex]
+server = "codex"
+model = "gpt-5.6-terra"
+credential_source = "codex-cli-login"
+secret_copying = false
+
+[invariants]
+sdr_domain_owner = "yasmim"
+codex_is_role_catalog = true
+hermes_profile_equality_required = false
+provider_lanes_are_not_personas = true

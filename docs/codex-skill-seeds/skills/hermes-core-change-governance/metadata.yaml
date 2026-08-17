@@ -1,0 +1,10 @@
+name: hermes-core-change-governance
+status: active
+runtime_placement: on-demand
+preload: false
+category: hermes-agent
+owner: karval-hermes
+source_of_truth: docs/codex-skill-seeds/skills/hermes-core-change-governance
+runtime_exports:
+  - ~/.codex/skills/hermes-core-change-governance
+  - ~/.hermes/skills/hermes-core-change-governance

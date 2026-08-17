@@ -5,6 +5,8 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILLS_DIR="${ROOT_DIR}/skills"
 ROOT_RUNTIME_DIR="${ROOT_DIR}/global-runtime/accelerate"
 GLOBAL_SKILLS_DIR="${CODEX_SKILLS_DIR:-${GLOBAL_SKILLS_DIR:-${HOME}/.codex/skills}}"
+HERMES_SKILLS_DIR="${HERMES_SKILLS_DIR:-${HOME}/.hermes/skills}"
+CAPABILITY_SEEDS_DIR="${ROOT_DIR}/docs/codex-skill-seeds/skills"
 
 if [[ ! -d "${SKILLS_DIR}" ]]; then
   echo "Missing local skills directory: ${SKILLS_DIR}" >&2
@@ -88,7 +90,6 @@ if [[ -d "${ROOT_RUNTIME_DIR}" ]]; then
       fi
     done < <(find "${source_dir}" -type f | sort)
   done
-
   while IFS= read -r source_file; do
     target_file="${GLOBAL_SKILLS_DIR}/accelerate/references/${source_file#${ROOT_DIR}/references/}"
     runtime_expected=$((runtime_expected + 1))
@@ -107,21 +108,6 @@ if [[ -d "${ROOT_RUNTIME_DIR}" ]]; then
     fi
   done < <(find "${ROOT_DIR}/references" -type f | sort)
 
-  codex_collaboration_policy="${ROOT_DIR}/adapters/runtime/codex-collaboration/role-policy.json"
-  if [[ -f "${codex_collaboration_policy}" ]]; then
-    target_file="${GLOBAL_SKILLS_DIR}/accelerate/references/codex-collaboration-role-policy.json"
-    runtime_expected=$((runtime_expected + 1))
-    if [[ ! -f "${target_file}" ]]; then
-      echo "missing: ${target_file}" >&2
-      missing=1
-    elif ! cmp -s "${codex_collaboration_policy}" "${target_file}"; then
-      echo "different: ${codex_collaboration_policy} != ${target_file}" >&2
-      different=1
-    else
-      runtime_verified=$((runtime_verified + 1))
-    fi
-  fi
-
   if [[ -f "${ROOT_DIR}/agents/openai.yaml" ]]; then
     source_file="${ROOT_DIR}/agents/openai.yaml"
     target_file="${GLOBAL_SKILLS_DIR}/accelerate/agents/openai.yaml"
@@ -137,6 +123,34 @@ if [[ -d "${ROOT_RUNTIME_DIR}" ]]; then
       runtime_verified=$((runtime_verified + 1))
     fi
   fi
+fi
+
+# Repo-governed capability seeds are exported as complete physical packages to
+# both Codex and Hermes. Check every package file, not only SKILL.md, so
+# references, manifests, evals, and agent metadata cannot silently drift.
+if [[ -d "${CAPABILITY_SEEDS_DIR}" ]]; then
+  while IFS= read -r source_dir; do
+    skill_name="$(basename "${source_dir}")"
+    for target_root in "${GLOBAL_SKILLS_DIR}" "${HERMES_SKILLS_DIR}"; do
+      target_dir="${target_root}/${skill_name}"
+      while IFS= read -r source_file; do
+        relative_path="${source_file#${source_dir}/}"
+        target_file="${target_dir}/${relative_path}"
+        if [[ ! -f "${target_file}" ]]; then
+          echo "missing: ${target_file}" >&2
+          missing=1
+          continue
+        fi
+        if ! cmp -s "${source_file}" "${target_file}"; then
+          echo "different: ${source_file} != ${target_file}" >&2
+          different=1
+        fi
+      done < <(find "${source_dir}" -type f | sort)
+    done
+  done < <(
+    find "${CAPABILITY_SEEDS_DIR}" -mindepth 2 -maxdepth 2 \
+      -type f -name SKILL.md -printf '%h\n' | sort -u
+  )
 fi
 
 if [[ "${missing}" -ne 0 || "${different}" -ne 0 ]]; then

@@ -1,0 +1,4 @@
+interface:
+  display_name: Hermes Core Change Governance
+  short_description: Choose the correct Hermes extension layer
+  default_prompt: Use $hermes-core-change-governance to govern a Hermes core, gateway, or state-backend change.

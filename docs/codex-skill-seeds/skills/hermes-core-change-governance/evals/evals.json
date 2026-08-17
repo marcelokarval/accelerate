@@ -1,0 +1,20 @@
+{
+  "skill": "hermes-core-change-governance",
+  "cases": [
+    {
+      "id": "telegram-topic-placement",
+      "prompt": "Change Telegram behavior for one topic without changing every platform.",
+      "expect": ["config.yaml", "platform adapter", "runtime truth"]
+    },
+    {
+      "id": "postgres-cutover-placement",
+      "prompt": "Move governed Hermes session state from SQLite to PostgreSQL.",
+      "expect": ["PostgreSQL 18", "migration", "reconciliation", "no silent fallback"]
+    },
+    {
+      "id": "vendor-plugin-placement",
+      "prompt": "Add a vendor-specific tool without changing Hermes core.",
+      "expect": ["plugin", "middleware", "no core special case"]
+    }
+  ]
+}

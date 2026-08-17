@@ -10,6 +10,7 @@ must not preload in Codex or Hermes.
 | `governed-us-lead-data-acquisition` | US lead-data acquisition governance | `../governed-us-lead-data-acquisition/` | on-demand; not preload |
 | `docker-compose-deployment-operations` | Docker Compose deployment operations | `../docker-compose-deployment-operations/` | on-demand; not preload |
 | `chatwoot-conversational-channel-operations` | Chatwoot conversational-channel operations | `../chatwoot-conversational-channel-operations/` | on-demand; not preload |
+| `hermes-core-change-governance` | Hermes core, gateway, plugin, and PostgreSQL change placement | `../hermes-core-change-governance/` | on-demand; not preload |
 
 These packages are distinct from root `skills/`, which continues to own the
 standalone Accelerate product surface.

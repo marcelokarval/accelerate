@@ -19,6 +19,7 @@ CAPABILITY_SKILLS = {
     "governed-us-lead-data-acquisition": "references/us-lead-governance.md",
     "docker-compose-deployment-operations": "references/compose-deployment.md",
     "chatwoot-conversational-channel-operations": "references/chatwoot-channel-operations.md",
+    "hermes-core-change-governance": "references/placement-and-gateway.md",
 }
 
 

@@ -106,6 +106,15 @@ The accepted target architecture is layered:
 
 Preserve strong defaults while moving toward that architecture.
 
+## External Model Lanes
+
+Codex-native collaboration profiles remain on supported Codex model families.
+DeepSeek V4 Flash and Gemini 3.7 Flash are governed external lanes defined in
+`adapters/runtime/model-lanes/model-lanes.toml`; invoke them through the
+repo-owned adapter, never by writing unsupported model IDs into Codex profile
+TOML. Prompts travel on stdin, credentials remain runtime-local, and external
+lane output returns to the Codex root for review and closure.
+
 Do not weaken the root control plane in the name of flexibility.
 
 ## Design-System And Premium Corpus Rule
