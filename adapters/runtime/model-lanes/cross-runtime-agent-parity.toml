@@ -8,11 +8,17 @@ codex_roles = [
   "test-engineer", "high-stakes-reviewer",
 ]
 
-openhands_roles = [
+openhands_agent_profiles = [
   "orchestrator", "python-backend", "nextjs-frontend", "research",
   "reviewer", "qa", "data-db", "integrations-ops", "mechanical-fixer",
   "test-engineer", "high-stakes-reviewer", "deepseek", "gemini-flash",
   "codex",
+]
+
+openhands_native_subagent_roles = [
+  "deepseek", "python-backend", "nextjs-frontend", "data-db",
+  "integrations-ops", "qa", "test-engineer", "research",
+  "mechanical-fixer", "reviewer", "high-stakes-reviewer",
 ]
 
 [hermes]
@@ -30,6 +36,12 @@ model = "gpt-5.6-terra"
 credential_source = "codex-cli-login"
 secret_copying = false
 
+[openhands_acp.gemini-flash]
+server = "gemini-cli"
+model = "gemini-3.7-flash"
+credential_source = "gemini-cli-or-runtime-env"
+secret_copying = false
+
 [openhands_native_bindings]
 default = "default"
 deepseek = "default"
@@ -45,8 +57,133 @@ integrations-ops = "gemini-3.7-flash"
 qa = "gemini-3.7-flash"
 test-engineer = "gemini-3.7-flash"
 
+[openhands_subagent_registry]
+materialization = "user-file-agents"
+target = "~/.agents/agents"
+root_profiles = ["default", "orchestrator"]
+excluded_profiles = ["codex", "gemini-flash"]
+max_parallel_recommendation = 4
+recursive_delegation = false
+
+[openhands_root_delegation_policy]
+profiles = ["default", "orchestrator"]
+max_parallel_recommendation = 4
+system_message_suffix = """
+For every non-trivial task, perform mandatory repository bootstrap and skill loading first, then stop and identify its bounded slices. When at least two slices are independent, you MUST call the task tool for the independent specialist work before any task-specific terminal, browser, or file inspection. Do not gather the specialists' evidence yourself first. Use at most four concurrent native subagents, selecting by registered role descriptions. Prefer governed user-defined specialists whenever a governed role fits; built-ins are fallback only when no governed role matches. Keep simple, tightly coupled, integration, and closure work in the parent. Never delegate root authority, external writes, review-of-review, or final closure. Children are one level only: do not ask them to spawn. Give each child an exact objective, allowed scope, non-goals, expected evidence, and return contract. Wait for every required result, reconcile conflicts and model/tool failures, independently verify material claims, and produce the final integrated answer. If delegation is unavailable or fails, state that explicitly before doing the bounded work locally. ACP launch profiles are not native children.
+"""
+
+[[openhands_subagent_registry.agents]]
+name = "deepseek"
+description = "Provide low-cost alternative reasoning for complex analysis and long-context decomposition."
+model = "default"
+tools = ["terminal"]
+permission_mode = "confirm_risky"
+max_iteration_per_run = 35
+max_budget_per_run = 0.4
+write_mode = "read-only"
+
+[[openhands_subagent_registry.agents]]
+name = "python-backend"
+description = "Implement and debug bounded Python or Django backend work."
+model = "gemini-3.7-flash"
+tools = ["terminal", "file_editor", "task_tracker"]
+permission_mode = "confirm_risky"
+max_iteration_per_run = 60
+max_budget_per_run = 1.0
+write_mode = "bounded-write"
+
+[[openhands_subagent_registry.agents]]
+name = "nextjs-frontend"
+description = "Implement bounded Next.js, React, and TypeScript frontend work."
+model = "gemini-3.7-flash"
+tools = ["terminal", "file_editor", "task_tracker"]
+permission_mode = "confirm_risky"
+max_iteration_per_run = 60
+max_budget_per_run = 1.0
+write_mode = "bounded-write"
+
+[[openhands_subagent_registry.agents]]
+name = "data-db"
+description = "Analyze and implement bounded database, schema, migration, and SQL work."
+model = "gemini-3.7-flash"
+tools = ["terminal", "file_editor", "task_tracker"]
+permission_mode = "confirm_risky"
+max_iteration_per_run = 50
+max_budget_per_run = 0.8
+write_mode = "bounded-write"
+
+[[openhands_subagent_registry.agents]]
+name = "integrations-ops"
+description = "Implement bounded integrations, MCP, cache, deployment, and operational work."
+model = "gemini-3.7-flash"
+tools = ["terminal", "file_editor", "task_tracker"]
+permission_mode = "confirm_risky"
+max_iteration_per_run = 50
+max_budget_per_run = 0.8
+write_mode = "bounded-write"
+
+[[openhands_subagent_registry.agents]]
+name = "qa"
+description = "Validate runtime, browser, regression, and acceptance behavior independently."
+model = "gemini-3.7-flash"
+tools = ["terminal", "browser_tool_set"]
+permission_mode = "confirm_risky"
+max_iteration_per_run = 45
+max_budget_per_run = 0.7
+write_mode = "read-only"
+
+[[openhands_subagent_registry.agents]]
+name = "test-engineer"
+description = "Design and implement focused tests, fixtures, and regression coverage."
+model = "gemini-3.7-flash"
+tools = ["terminal", "file_editor", "task_tracker"]
+permission_mode = "confirm_risky"
+max_iteration_per_run = 45
+max_budget_per_run = 0.7
+write_mode = "bounded-write"
+
+[[openhands_subagent_registry.agents]]
+name = "research"
+description = "Explore repositories and current sources read-only before implementation decisions."
+model = "default"
+tools = ["terminal", "browser_tool_set"]
+permission_mode = "confirm_risky"
+max_iteration_per_run = 35
+max_budget_per_run = 0.4
+write_mode = "read-only"
+
+[[openhands_subagent_registry.agents]]
+name = "mechanical-fixer"
+description = "Apply narrow mechanical corrections with deterministic verification."
+model = "default"
+tools = ["terminal", "file_editor"]
+permission_mode = "confirm_risky"
+max_iteration_per_run = 30
+max_budget_per_run = 0.3
+write_mode = "bounded-write"
+
+[[openhands_subagent_registry.agents]]
+name = "reviewer"
+description = "Perform skeptical read-only review of implementation, contracts, and regressions."
+model = "deepseek-v4-pro"
+tools = ["terminal"]
+permission_mode = "confirm_risky"
+max_iteration_per_run = 40
+max_budget_per_run = 0.8
+write_mode = "read-only"
+
+[[openhands_subagent_registry.agents]]
+name = "high-stakes-reviewer"
+description = "Review high-risk security, governance, and operational changes without mutating them."
+model = "deepseek-v4-pro"
+tools = ["terminal"]
+permission_mode = "always_confirm"
+max_iteration_per_run = 45
+max_budget_per_run = 1.0
+write_mode = "read-only"
+
 [invariants]
 sdr_domain_owner = "yasmim"
 codex_is_role_catalog = true
 hermes_profile_equality_required = false
-provider_lanes_are_not_personas = true
+provider_lanes_require_explicit_role_definition = true

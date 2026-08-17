@@ -12,6 +12,17 @@ Examples:
 - agent-browser-style CLI automation for bounded browser operations
 - physical agent runtime delegation when a real agent runtime exists
 - Codex collaboration for explicitly model-bound, bounded subagents
+- OpenHands native subagents generated from
+  `model-lanes/cross-runtime-agent-parity.toml` into the canonical user registry
+  `~/.agents/agents`; Agent Profiles remain launch configurations, while these
+  Markdown definitions are the spawnable `AgentDefinition` layer
+
+The `default` and `orchestrator` Agent Profiles also receive a governed routing
+prompt from the same parity manifest. It asks the parent to delegate independent
+bounded slices and retain integration/closure. This is behavioral routing, not
+a deterministic classifier. Child `write_mode` metadata is likewise not a
+sandbox: enforcement comes from tool scope, confirmation policy, task-tool
+omission, iteration/budget limits, and explicit parent/child contracts.
 - Playwright for persistent regression proof
 - web content reader for bounded external source observation
 - locale-pack parity checks for i18n proof

@@ -34,7 +34,13 @@ def _write_atomic(path: Path, payload: dict) -> None:
             temporary.unlink()
 
 
-def reconcile(profiles_dir: Path, expected: dict[str, str], *, apply: bool) -> int:
+def reconcile(
+    profiles_dir: Path,
+    expected: dict[str, str],
+    *,
+    root_policy: dict | None = None,
+    apply: bool,
+) -> int:
     drift = 0
     for role, llm_profile in sorted(expected.items()):
         path = profiles_dir / f"{role}.json"
@@ -43,11 +49,20 @@ def reconcile(profiles_dir: Path, expected: dict[str, str], *, apply: bool) -> i
         payload = json.loads(path.read_text(encoding="utf-8"))
         if payload.get("name") != role or payload.get("agent_kind") != "openhands":
             raise ValueError(f"invalid native OpenHands agent profile: {role}")
-        if payload.get("llm_profile_ref") == llm_profile:
+        changes: dict[str, object] = {}
+        if payload.get("llm_profile_ref") != llm_profile:
+            changes["llm_profile_ref"] = llm_profile
+        if root_policy and role in root_policy["profiles"]:
+            if payload.get("enable_sub_agents") is not True:
+                changes["enable_sub_agents"] = True
+            suffix = root_policy["system_message_suffix"].strip()
+            if payload.get("system_message_suffix") != suffix:
+                changes["system_message_suffix"] = suffix
+        if not changes:
             continue
         drift += 1
         if apply:
-            payload["llm_profile_ref"] = llm_profile
+            payload.update(changes)
             payload["revision"] = int(payload.get("revision", 0)) + 1
             _write_atomic(path, payload)
     return 0 if apply else drift
@@ -64,9 +79,13 @@ def main() -> int:
     args = parser.parse_args()
 
     with PARITY.open("rb") as stream:
-        expected = tomllib.load(stream)["openhands_native_bindings"]
+        parity = tomllib.load(stream)
+        expected = parity["openhands_native_bindings"]
+        root_policy = parity["openhands_root_delegation_policy"]
     try:
-        drift = reconcile(args.profiles_dir, expected, apply=args.apply)
+        drift = reconcile(
+            args.profiles_dir, expected, root_policy=root_policy, apply=args.apply
+        )
     except (OSError, ValueError, json.JSONDecodeError) as error:
         print(f"FAIL: {error}")
         return 2
