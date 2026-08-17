@@ -193,6 +193,7 @@ When a visual reference or approved wireframe exists, the final review must say:
 If the result is only a technical repair, say so and keep the issue or
 follow-up chain honest.
 
+
 ## Wave-Gated Review
 
 For wave-gated missions, review must reconcile:

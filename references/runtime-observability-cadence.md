@@ -68,6 +68,7 @@ state, treat that as observability drift.
 If a non-trivial run does not spawn subagents, the opening packet must include a
 `single-threaded exception` reason.
 
+
 ### On wave-gated work
 
 - denominator freeze -> `Wave Packet`

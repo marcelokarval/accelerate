@@ -240,6 +240,7 @@ Closure Packet
 - recommendation: <done|partial|follow-up|blocked>
 ```
 
+
 ## 11. Wave Packet
 
 ```text

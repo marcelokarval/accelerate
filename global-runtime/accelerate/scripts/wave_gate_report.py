@@ -1,8 +1,21 @@
 #!/usr/bin/env python3
 """Compute Wave-Gated Execution coverage and emit a closure report.
 
-Statuses that count as covered: covered, pass, passed, done. All other
-statuses are residual/failed unless explicitly waived.
+Input JSON schema:
+{
+  "wave_id": "wave-1",
+  "objective": "Normalize resource routers",
+  "threshold": 0.95,
+  "targets": [
+    {"id": "target-a", "status": "covered", "proof": "validator ok"},
+    {"id": "target-b", "status": "failed", "reason": "test failed"}
+  ],
+  "validators": ["unit tests ok"],
+  "correction_loops": []
+}
+
+Statuses that count as covered: covered, pass, passed, done.
+All other statuses are residual/failed unless status is explicitly waived.
 """
 
 from __future__ import annotations
@@ -57,10 +70,12 @@ def compute(payload: dict[str, Any]) -> dict[str, Any]:
     threshold = normalize_threshold(payload.get("threshold"))
     coverage = (len(covered) / denominator) if denominator else 1.0
     passed = coverage >= threshold and not any(
-        str(target.get("status", "")).strip().lower() not in COVERED | WAIVED
-        for target in residual
+        str(t.get("status", "")).strip().lower() not in COVERED | WAIVED
+        for t in residual
     )
+    decision = "advance" if passed else "correct"
     if denominator == 0:
+        decision = "block"
         passed = False
     return {
         "wave_id": payload.get("wave_id", "wave-unknown"),
@@ -75,7 +90,7 @@ def compute(payload: dict[str, Any]) -> dict[str, Any]:
         "correction_loops": payload.get("correction_loops", []),
         "residual_targets": residual,
         "waived_targets": waived,
-        "decision": "block" if not denominator else ("advance" if passed else "correct"),
+        "decision": decision,
         "pass": passed,
         "next_wave": payload.get("next_wave", "advance when decision=advance"),
     }
@@ -106,8 +121,17 @@ def main() -> int:
         description="Compute wave-gated coverage and emit a Wave Closure Packet."
     )
     parser.add_argument("input", nargs="?", default="-", help="Input JSON file, or '-' for stdin")
-    parser.add_argument("--format", choices=["json", "packet"], default="json")
-    parser.add_argument("--allow-fail", action="store_true", help="Exit 0 when the gate fails.")
+    parser.add_argument(
+        "--format",
+        choices=["json", "packet"],
+        default="json",
+        help="Output format (default: json)",
+    )
+    parser.add_argument(
+        "--allow-fail",
+        action="store_true",
+        help="Exit 0 even when the coverage gate fails; useful for dashboards.",
+    )
     args = parser.parse_args()
     try:
         report = compute(load_payload(args.input))
@@ -118,7 +142,9 @@ def main() -> int:
         print(json.dumps(report, indent=2, ensure_ascii=False))
     else:
         print(as_packet(report))
-    return 0 if report["pass"] or args.allow_fail else 1
+    if report["pass"] or args.allow_fail:
+        return 0
+    return 1
 
 
 if __name__ == "__main__":

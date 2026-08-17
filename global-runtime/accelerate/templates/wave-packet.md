@@ -13,3 +13,18 @@
 - allowed residuals:
 - stop conditions:
 - rollback/safety:
+
+## Denominator Freeze
+
+- selection rule:
+- target count:
+- explicit exclusions:
+- newly discovered backlog handling:
+
+## Execution Notes
+
+- baseline proof:
+- implementation strategy:
+- local mechanical tests:
+- validators/suites:
+- correction loop trigger:
