@@ -5,7 +5,6 @@ from __future__ import annotations
 
 import json
 import importlib.util
-import shutil
 import sys
 import tomllib
 from pathlib import Path
@@ -17,6 +16,7 @@ LANES = REPO / "adapters/runtime/model-lanes/model-lanes.toml"
 PARITY = REPO / "adapters/runtime/model-lanes/cross-runtime-agent-parity.toml"
 SUBAGENT_MATERIALIZER = REPO / "scripts/install-openhands-subagents.py"
 SKILL_MATERIALIZER = REPO / "scripts/install-openhands-governed-skills.py"
+LLM_PROFILE_MATERIALIZER = REPO / "scripts/install-openhands-llm-profiles.py"
 
 
 def fail(message: str) -> None:
@@ -51,6 +51,17 @@ def load_skill_materializer():
     return module
 
 
+def load_llm_profile_materializer():
+    spec = importlib.util.spec_from_file_location(
+        "openhands_llm_profile_installer", LLM_PROFILE_MATERIALIZER
+    )
+    if not spec or not spec.loader:
+        fail("OpenHands LLM profile materializer cannot be loaded")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 def main() -> None:
     lanes = load_toml(LANES)["lanes"]
     parity = load_toml(PARITY)
@@ -58,8 +69,8 @@ def main() -> None:
         fail("DeepSeek lane is not pinned to deepseek-v4-flash")
     if lanes["gemini_flash"]["model"] != "gemini-3.7-flash":
         fail("Gemini lane is not pinned to gemini-3.7-flash")
-    if not shutil.which(lanes["gemini_flash"]["codex_executable"]):
-        fail("official Gemini CLI is not installed")
+    # Gemini remains an optional ACP launch lane but is deliberately excluded
+    # from the governed child-lane denominator until its provider is stable.
 
     openhands_agents = HOME / ".openhands/agent-profiles"
     native_bindings = parity["openhands_native_bindings"]
@@ -119,16 +130,54 @@ def main() -> None:
         ):
             fail("OpenHands Codex ACP lane drift")
 
-    expected_llm_models = {
-        "default": "deepseek/deepseek-v4-flash",
-        "deepseek-v4-pro": "deepseek/deepseek-v4-pro",
-        "gemini-3.7-flash": "gemini/gemini-3.7-flash",
+    llm_materializer = load_llm_profile_materializer()
+    expected_llm_profiles = llm_materializer.load_registry(PARITY)
+    subscription_profiles = {
+        name
+        for name, profile in expected_llm_profiles.items()
+        if profile["auth_type"] == "subscription"
     }
-    for profile_name, model in expected_llm_models.items():
-        profile = json.loads(
-            (HOME / f".openhands/profiles/{profile_name}.json").read_text()
+    child_subscription_bindings = {
+        name: native_bindings[name]
+        for name in subagents
+        if native_bindings[name] in subscription_profiles
+    }
+    if child_subscription_bindings:
+        fail(
+            "OpenHands 1.42.1 TaskManager forces child streaming off; "
+            "subscription profile cannot be a native child binding: "
+            + ", ".join(sorted(child_subscription_bindings))
         )
-        if profile.get("model") != model:
+    llm_profiles_dir = HOME / ".openhands/profiles"
+    if llm_materializer.reconcile(llm_profiles_dir, expected_llm_profiles, apply=False):
+        fail("OpenHands governed LLM profiles are not materialized exactly")
+    for profile_name, expected in expected_llm_profiles.items():
+        profile = json.loads(
+            (llm_profiles_dir / f"{profile_name}.json").read_text()
+        )
+        for key in (
+            "model",
+            "auth_type",
+            "reasoning_effort",
+            "managed_by",
+            "managed_schema",
+        ):
+            expected_value = (
+                llm_materializer.MANAGED_BY
+                if key == "managed_by"
+                else llm_materializer.MANAGED_SCHEMA
+                if key == "managed_schema"
+                else expected[key]
+            )
+            if profile.get(key) != expected_value:
+                fail(f"OpenHands LLM profile drift: {profile_name}.{key}")
+        if "api_mode" in expected and profile.get("api_mode") != expected["api_mode"]:
+            fail(f"OpenHands LLM profile drift: {profile_name}.api_mode")
+        if profile.get("stream") is not (expected["auth_type"] == "subscription"):
+            fail(f"OpenHands LLM profile streaming contract drift: {profile_name}")
+        if expected["auth_type"] == "subscription" and profile.get(
+            "is_subscription"
+        ) is not True:
             fail(f"OpenHands LLM profile drift: {profile_name}")
 
     materializer = load_subagent_materializer()

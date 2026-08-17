@@ -21,6 +21,7 @@ MATERIALIZER = ADAPTER.parents[3] / "scripts/install-openhands-agent-bindings.py
 SUBAGENT_MATERIALIZER = ADAPTER.parents[3] / "scripts/install-openhands-subagents.py"
 CREDENTIAL_SYNC = ADAPTER.parents[3] / "scripts/sync-openhands-provider-credentials.py"
 SKILL_MATERIALIZER = ADAPTER.parents[3] / "scripts/install-openhands-governed-skills.py"
+LLM_PROFILE_MATERIALIZER = ADAPTER.parents[3] / "scripts/install-openhands-llm-profiles.py"
 
 
 def load_adapter():
@@ -62,6 +63,16 @@ def load_credential_sync():
 def load_skill_materializer():
     spec = importlib.util.spec_from_file_location(
         "openhands_governed_skill_installer", SKILL_MATERIALIZER
+    )
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def load_llm_profile_materializer():
+    spec = importlib.util.spec_from_file_location(
+        "openhands_llm_profile_installer", LLM_PROFILE_MATERIALIZER
     )
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
@@ -128,19 +139,19 @@ def test_openhands_native_roles_have_explicit_model_bindings():
         bindings = tomllib.load(stream)["openhands_native_bindings"]
 
     assert bindings == {
-        "default": "default",
-        "deepseek": "default",
-        "research": "default",
-        "mechanical-fixer": "default",
-        "orchestrator": "deepseek-v4-pro",
-        "reviewer": "deepseek-v4-pro",
-        "high-stakes-reviewer": "deepseek-v4-pro",
-        "python-backend": "gemini-3.7-flash",
-        "nextjs-frontend": "gemini-3.7-flash",
-        "data-db": "gemini-3.7-flash",
-        "integrations-ops": "gemini-3.7-flash",
-        "qa": "gemini-3.7-flash",
-        "test-engineer": "gemini-3.7-flash",
+        "default": "chatgpt-sol-medium",
+        "deepseek": "deepseek-pro-reasoning",
+        "research": "deepseek-flash-fast",
+        "mechanical-fixer": "deepseek-flash-fast",
+        "orchestrator": "chatgpt-sol-medium",
+        "reviewer": "deepseek-pro-reasoning",
+        "high-stakes-reviewer": "deepseek-pro-reasoning",
+        "python-backend": "deepseek-pro-reasoning",
+        "nextjs-frontend": "deepseek-pro-reasoning",
+        "data-db": "deepseek-pro-reasoning",
+        "integrations-ops": "deepseek-pro-reasoning",
+        "qa": "deepseek-pro-reasoning",
+        "test-engineer": "deepseek-flash-reasoning",
     }
 
 
@@ -155,7 +166,7 @@ def test_openhands_binding_materializer_is_idempotent(tmp_path):
         encoding="utf-8",
     )
 
-    expected = {"orchestrator": "deepseek-v4-pro"}
+    expected = {"orchestrator": "chatgpt-sol-medium"}
     assert module.reconcile(profiles, expected, apply=False) == 1
     assert module.reconcile(profiles, expected, apply=True) == 0
     first = target.read_bytes()
@@ -177,7 +188,7 @@ def test_openhands_root_delegation_policy_is_materialized_only_for_default(tmp_p
     orchestrator = profiles / "orchestrator.json"
     orchestrator.write_text(
         '{"schema_version":2,"name":"orchestrator","revision":1,'
-        '"agent_kind":"openhands","llm_profile_ref":"deepseek-v4-pro",'
+        '"agent_kind":"openhands","llm_profile_ref":"chatgpt-sol-medium",'
         '"enable_sub_agents":true,"system_message_suffix":"stale"}\n',
         encoding="utf-8",
     )
@@ -187,7 +198,7 @@ def test_openhands_root_delegation_policy_is_materialized_only_for_default(tmp_p
     }
     assert module.reconcile(
         profiles,
-        {"default": "default", "orchestrator": "deepseek-v4-pro"},
+        {"default": "chatgpt-sol-medium", "orchestrator": "chatgpt-sol-medium"},
         root_policy=policy,
         apply=True,
     ) == 0
@@ -216,11 +227,96 @@ def test_openhands_subagent_registry_is_native_bounded_and_non_recursive():
     assert registry["recursive_delegation"] is False
     assert set(agents) == set(parity["openhands_native_subagent_roles"])
     assert parity["invariants"]["provider_lanes_require_explicit_role_definition"] is True
+    subscription_profiles = {
+        profile["name"]
+        for profile in parity["openhands_llm_profile_registry"]["profiles"]
+        if profile["auth_type"] == "subscription"
+    }
     for agent in agents.values():
         assert "task" not in agent["tools"]
         assert agent["max_iteration_per_run"] > 0
         assert agent["max_budget_per_run"] > 0
-        assert agent["model"] in {"default", "deepseek-v4-pro", "gemini-3.7-flash"}
+        assert agent["model"] in {
+            "chatgpt-sol-medium",
+            "deepseek-flash-fast",
+            "deepseek-flash-reasoning",
+            "deepseek-pro-reasoning",
+        }
+        assert agent["model"] not in subscription_profiles
+
+
+def test_openhands_llm_profile_registry_is_subscription_safe_and_idempotent(tmp_path):
+    module = load_llm_profile_materializer()
+    profiles = tmp_path / "profiles"
+    expected = module.load_registry(PARITY)
+
+    assert expected["chatgpt-sol-medium"]["auth_type"] == "subscription"
+    assert expected["chatgpt-sol-medium"]["is_subscription"] is True
+    assert "credential_env" not in expected["chatgpt-sol-medium"]
+    assert expected["deepseek-flash-fast"]["reasoning_effort"] == "low"
+    assert module.reconcile(profiles, expected, apply=False) == len(expected)
+    assert module.reconcile(profiles, expected, apply=True) == 0
+    payload = json.loads((profiles / "chatgpt-sol-medium.json").read_text())
+    assert payload["is_subscription"] is True
+    assert payload["subscription_vendor"] == "openai"
+    assert payload["api_mode"] == "responses"
+    assert payload["stream"] is True
+    assert "api_key" not in payload
+    assert (profiles / "chatgpt-sol-medium.json").stat().st_mode & 0o777 == 0o600
+    first = (profiles / "chatgpt-sol-medium.json").read_bytes()
+    assert module.reconcile(profiles, expected, apply=True) == 0
+    assert (profiles / "chatgpt-sol-medium.json").read_bytes() == first
+
+
+def test_openhands_llm_profile_materializer_sanitizes_managed_subscription_key(tmp_path):
+    module = load_llm_profile_materializer()
+    profiles = tmp_path / "profiles"
+    profiles.mkdir()
+    expected = {"chatgpt-sol-medium": module.load_registry(PARITY)["chatgpt-sol-medium"]}
+    contaminated = module.profile_payload(expected["chatgpt-sol-medium"])
+    contaminated["api_key"] = "must-not-survive"
+    (profiles / "chatgpt-sol-medium.json").write_text(
+        json.dumps(contaminated), encoding="utf-8"
+    )
+    assert module.reconcile(profiles, expected, apply=False) == 1
+    assert module.reconcile(profiles, expected, apply=True) == 0
+    assert "api_key" not in json.loads((profiles / "chatgpt-sol-medium.json").read_text())
+
+
+def test_openhands_llm_profile_materializer_refuses_unmanaged_or_symlink(tmp_path):
+    module = load_llm_profile_materializer()
+    profiles = tmp_path / "profiles"
+    profiles.mkdir()
+    target = profiles / "chatgpt-sol-medium.json"
+    target.write_text('{"model":"personal"}\n', encoding="utf-8")
+    expected = {"chatgpt-sol-medium": module.load_registry(PARITY)["chatgpt-sol-medium"]}
+    with pytest.raises(ValueError, match="unmanaged"):
+        module.reconcile(profiles, expected, apply=True)
+
+    target.unlink()
+    outside = tmp_path / "outside.json"
+    outside.write_text("{}\n", encoding="utf-8")
+    os.symlink(outside, target)
+    with pytest.raises(ValueError, match="non-regular"):
+        module.reconcile(profiles, expected, apply=True)
+    assert outside.read_text(encoding="utf-8") == "{}\n"
+
+
+def test_openhands_llm_profile_materializer_removes_only_stale_managed_profiles(tmp_path):
+    module = load_llm_profile_materializer()
+    profiles = tmp_path / "profiles"
+    profiles.mkdir()
+    stale = profiles / "retired.json"
+    stale.write_text(
+        '{"managed_by":"accelerate","managed_schema":1}\n', encoding="utf-8"
+    )
+    personal = profiles / "personal.json"
+    personal.write_text('{"model":"personal"}\n', encoding="utf-8")
+    expected = {"chatgpt-sol-medium": module.load_registry(PARITY)["chatgpt-sol-medium"]}
+    assert module.reconcile(profiles, expected, apply=False) == 2
+    assert module.reconcile(profiles, expected, apply=True) == 0
+    assert not stale.exists()
+    assert personal.exists()
 
 
 def test_openhands_subagent_materializer_is_idempotent_and_preserves_unmanaged(tmp_path):
@@ -313,23 +409,78 @@ def test_openhands_provider_credential_sync_is_secret_safe_and_idempotent(tmp_pa
     module = load_credential_sync()
     profiles = tmp_path / "profiles"
     profiles.mkdir()
-    for name in module.PROFILE_ENV:
-        (profiles / f"{name}.json").write_text(
-            '{"model":"fixture","api_key":"stale"}\n', encoding="utf-8"
-        )
-    environ = {
-        "DEEPSEEK_API_KEY": "fresh-deepseek",
-        "GOOGLE_API_KEY": "fresh-gemini",
+    expected = {
+        "default": "DEEPSEEK_API_KEY",
+        "deepseek-v4-pro": "DEEPSEEK_API_KEY",
+        "deepseek-flash-fast": "DEEPSEEK_API_KEY",
     }
+    for name, model in {
+        "default": "deepseek/deepseek-v4-flash",
+        "deepseek-v4-pro": "deepseek/deepseek-v4-pro",
+        "deepseek-flash-fast": "deepseek/deepseek-v4-flash",
+    }.items():
+        managed = name == "deepseek-flash-fast"
+        (profiles / f"{name}.json").write_text(
+            json.dumps(
+                {
+                    "model": model,
+                    "auth_type": "api_key",
+                    "api_key": "stale",
+                    **({"managed_by": "accelerate", "managed_schema": 1} if managed else {}),
+                }
+            )
+            + "\n",
+            encoding="utf-8",
+        )
+    environ = {"DEEPSEEK_API_KEY": "fresh-deepseek"}
 
-    assert module.reconcile(profiles, environ, apply=False) == 3
-    assert module.reconcile(profiles, environ, apply=True) == 0
-    assert module.reconcile(profiles, environ, apply=False) == 0
+    assert module.reconcile(profiles, environ, apply=False, expected=expected) == 3
+    assert module.reconcile(profiles, environ, apply=True, expected=expected) == 0
+    assert module.reconcile(profiles, environ, apply=False, expected=expected) == 0
     assert json.loads((profiles / "default.json").read_text())["api_key"] == "fresh-deepseek"
-    assert (
-        json.loads((profiles / "gemini-3.7-flash.json").read_text())["api_key"]
-        == "fresh-gemini"
+
+
+def test_openhands_provider_credential_sync_refuses_symlink(tmp_path):
+    module = load_credential_sync()
+    profiles = tmp_path / "profiles"
+    profiles.mkdir()
+    outside = tmp_path / "outside.json"
+    outside.write_text('{"api_key":"personal"}\n', encoding="utf-8")
+    os.symlink(outside, profiles / "default.json")
+    with pytest.raises(ValueError, match="non-regular OpenHands LLM profile path"):
+        module.reconcile(
+            profiles,
+            {"DEEPSEEK_API_KEY": "fresh-deepseek"},
+            apply=True,
+            expected={"default": "DEEPSEEK_API_KEY"},
+        )
+    assert outside.read_text(encoding="utf-8") == '{"api_key":"personal"}\n'
+
+
+def test_openhands_provider_credential_sync_refuses_unmanaged_generated_profile(tmp_path):
+    module = load_credential_sync()
+    profiles = tmp_path / "profiles"
+    profiles.mkdir()
+    (profiles / "deepseek-flash-fast.json").write_text(
+        '{"model":"deepseek/deepseek-v4-flash","auth_type":"api_key"}\n',
+        encoding="utf-8",
     )
+    with pytest.raises(ValueError, match="refusing to sync unmanaged"):
+        module.reconcile(
+            profiles,
+            {"DEEPSEEK_API_KEY": "fresh-deepseek"},
+            apply=True,
+            expected={"deepseek-flash-fast": "DEEPSEEK_API_KEY"},
+        )
+
+
+def test_openhands_provider_credential_sync_derives_only_env_backed_candidates():
+    module = load_credential_sync()
+    expected = module.profile_env(PARITY)
+    assert expected["deepseek-flash-fast"] == "DEEPSEEK_API_KEY"
+    assert expected["deepseek-pro-reasoning"] == "DEEPSEEK_API_KEY"
+    assert "chatgpt-sol-medium" not in expected
+    assert "chatgpt-gpt-5.6" not in expected
 
 
 def test_openhands_governed_skill_materializer_is_safe_and_idempotent(tmp_path):

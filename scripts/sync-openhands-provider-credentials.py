@@ -7,14 +7,34 @@ import argparse
 import json
 import os
 import tempfile
+import tomllib
 from pathlib import Path
 
 
-PROFILE_ENV = {
+REPO = Path(__file__).resolve().parents[1]
+PARITY = REPO / "adapters/runtime/model-lanes/cross-runtime-agent-parity.toml"
+LEGACY_PROFILE_ENV = {
     "default": "DEEPSEEK_API_KEY",
     "deepseek-v4-pro": "DEEPSEEK_API_KEY",
-    "gemini-3.7-flash": "GOOGLE_API_KEY",
 }
+LEGACY_PROFILE_MODELS = {
+    "default": "deepseek/deepseek-v4-flash",
+    "deepseek-v4-pro": "deepseek/deepseek-v4-pro",
+}
+MANAGED_BY = "accelerate"
+MANAGED_SCHEMA = 1
+
+
+def profile_env(path: Path = PARITY) -> dict[str, str]:
+    """Return only ENV-backed profiles; subscription profiles never copy secrets."""
+    with path.open("rb") as stream:
+        registry = tomllib.load(stream)["openhands_llm_profile_registry"]["profiles"]
+    expected = dict(LEGACY_PROFILE_ENV)
+    for profile in registry:
+        credential_env = profile.get("credential_env")
+        if credential_env:
+            expected[profile["name"]] = credential_env
+    return expected
 
 
 def _write_atomic(path: Path, payload: dict) -> None:
@@ -36,16 +56,43 @@ def _write_atomic(path: Path, payload: dict) -> None:
             temporary.unlink()
 
 
-def reconcile(profiles_dir: Path, environ: dict[str, str], *, apply: bool) -> int:
+def _is_governed_profile(profile_name: str, payload: dict) -> bool:
+    """Reject secret writes to an arbitrary user profile.
+
+    The two legacy DeepSeek profiles predate the materializer and are retained
+    only under their exact historical model contract. Every generated profile
+    must carry the explicit Accelerate ownership marker.
+    """
+    if profile_name in LEGACY_PROFILE_MODELS:
+        return (
+            payload.get("model") == LEGACY_PROFILE_MODELS[profile_name]
+            and payload.get("auth_type") == "api_key"
+        )
+    return (
+        payload.get("managed_by") == MANAGED_BY
+        and payload.get("managed_schema") == MANAGED_SCHEMA
+        and payload.get("auth_type") == "api_key"
+    )
+
+
+def reconcile(
+    profiles_dir: Path,
+    environ: dict[str, str],
+    *,
+    apply: bool,
+    expected: dict[str, str] | None = None,
+) -> int:
     drift = 0
-    for profile_name, env_name in PROFILE_ENV.items():
+    for profile_name, env_name in (expected or profile_env()).items():
         path = profiles_dir / f"{profile_name}.json"
-        if not path.is_file():
-            raise ValueError(f"missing OpenHands LLM profile: {profile_name}")
+        if path.is_symlink() or not path.is_file():
+            raise ValueError(f"non-regular OpenHands LLM profile path: {profile_name}")
         credential = environ.get(env_name)
         if not credential:
             raise ValueError(f"required environment credential is unavailable: {env_name}")
         payload = json.loads(path.read_text(encoding="utf-8"))
+        if not _is_governed_profile(profile_name, payload):
+            raise ValueError(f"refusing to sync unmanaged OpenHands LLM profile: {profile_name}")
         if payload.get("api_key") == credential:
             continue
         drift += 1
@@ -63,15 +110,18 @@ def main() -> int:
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
     try:
-        drift = reconcile(args.profiles_dir, dict(os.environ), apply=args.apply)
-    except (OSError, ValueError, json.JSONDecodeError) as error:
+        expected = profile_env()
+        drift = reconcile(
+            args.profiles_dir, dict(os.environ), apply=args.apply, expected=expected
+        )
+    except (OSError, ValueError, json.JSONDecodeError, tomllib.TOMLDecodeError) as error:
         print(f"FAIL: {error}")
         return 2
     if drift:
         print(f"FAIL: OpenHands provider credential drift: {drift} profile(s)")
         return 1
     action = "applied" if args.apply else "verified"
-    print(f"PASS: OpenHands provider credentials {action}: {len(PROFILE_ENV)} profile(s)")
+    print(f"PASS: OpenHands provider credentials {action}: {len(expected)} profile(s)")
     return 0
 
 

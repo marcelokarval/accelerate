@@ -43,19 +43,19 @@ credential_source = "gemini-cli-or-runtime-env"
 secret_copying = false
 
 [openhands_native_bindings]
-default = "default"
-deepseek = "default"
-research = "default"
-mechanical-fixer = "default"
-orchestrator = "deepseek-v4-pro"
-reviewer = "deepseek-v4-pro"
-high-stakes-reviewer = "deepseek-v4-pro"
-python-backend = "gemini-3.7-flash"
-nextjs-frontend = "gemini-3.7-flash"
-data-db = "gemini-3.7-flash"
-integrations-ops = "gemini-3.7-flash"
-qa = "gemini-3.7-flash"
-test-engineer = "gemini-3.7-flash"
+default = "chatgpt-sol-medium"
+deepseek = "deepseek-pro-reasoning"
+research = "deepseek-flash-fast"
+mechanical-fixer = "deepseek-flash-fast"
+orchestrator = "chatgpt-sol-medium"
+reviewer = "deepseek-pro-reasoning"
+high-stakes-reviewer = "deepseek-pro-reasoning"
+python-backend = "deepseek-pro-reasoning"
+nextjs-frontend = "deepseek-pro-reasoning"
+data-db = "deepseek-pro-reasoning"
+integrations-ops = "deepseek-pro-reasoning"
+qa = "deepseek-pro-reasoning"
+test-engineer = "deepseek-flash-reasoning"
 
 [openhands_subagent_registry]
 materialization = "user-file-agents"
@@ -78,10 +78,112 @@ target = "~/.agents/skills"
 source_root = "global-runtime"
 skills = ["accelerate"]
 
+# These are LLM profiles, not personas. They are materialized under the
+# OpenHands profile store and are then selected by the native Agent Profiles
+# above. Subscription profiles deliberately contain no copied credential.
+[openhands_llm_profile_registry]
+materialization = "managed-llm-profile-json"
+target = "~/.openhands/profiles"
+
+[[openhands_llm_profile_registry.profiles]]
+name = "chatgpt-sol-medium"
+model = "gpt-5.6-sol"
+auth_type = "subscription"
+subscription_vendor = "openai"
+is_subscription = true
+reasoning_effort = "medium"
+api_mode = "responses"
+
+[[openhands_llm_profile_registry.profiles]]
+name = "chatgpt-sol-high"
+model = "gpt-5.6-sol"
+auth_type = "subscription"
+subscription_vendor = "openai"
+is_subscription = true
+reasoning_effort = "high"
+api_mode = "responses"
+
+[[openhands_llm_profile_registry.profiles]]
+name = "chatgpt-terra-medium"
+model = "gpt-5.6-terra"
+auth_type = "subscription"
+subscription_vendor = "openai"
+is_subscription = true
+reasoning_effort = "medium"
+api_mode = "responses"
+
+[[openhands_llm_profile_registry.profiles]]
+name = "chatgpt-terra-high"
+model = "gpt-5.6-terra"
+auth_type = "subscription"
+subscription_vendor = "openai"
+is_subscription = true
+reasoning_effort = "high"
+api_mode = "responses"
+
+[[openhands_llm_profile_registry.profiles]]
+name = "chatgpt-luna-low"
+model = "gpt-5.6-luna"
+auth_type = "subscription"
+subscription_vendor = "openai"
+is_subscription = true
+reasoning_effort = "low"
+api_mode = "responses"
+
+[[openhands_llm_profile_registry.profiles]]
+name = "chatgpt-luna-medium"
+model = "gpt-5.6-luna"
+auth_type = "subscription"
+subscription_vendor = "openai"
+is_subscription = true
+reasoning_effort = "medium"
+api_mode = "responses"
+
+[[openhands_llm_profile_registry.profiles]]
+name = "chatgpt-luna-high"
+model = "gpt-5.6-luna"
+auth_type = "subscription"
+subscription_vendor = "openai"
+is_subscription = true
+reasoning_effort = "high"
+api_mode = "responses"
+
+# “fast” means the lowest provider-supported effort. It is not labelled
+# “reasoning off” until a provider-level capability smoke proves that mode.
+[[openhands_llm_profile_registry.profiles]]
+name = "deepseek-flash-fast"
+model = "deepseek/deepseek-v4-flash"
+auth_type = "api_key"
+credential_env = "DEEPSEEK_API_KEY"
+base_url = "https://api.deepseek.com"
+reasoning_effort = "low"
+
+[[openhands_llm_profile_registry.profiles]]
+name = "deepseek-flash-reasoning"
+model = "deepseek/deepseek-v4-flash"
+auth_type = "api_key"
+credential_env = "DEEPSEEK_API_KEY"
+base_url = "https://api.deepseek.com"
+reasoning_effort = "high"
+
+[[openhands_llm_profile_registry.profiles]]
+name = "deepseek-pro-fast"
+model = "deepseek/deepseek-v4-pro"
+auth_type = "api_key"
+credential_env = "DEEPSEEK_API_KEY"
+reasoning_effort = "low"
+
+[[openhands_llm_profile_registry.profiles]]
+name = "deepseek-pro-reasoning"
+model = "deepseek/deepseek-v4-pro"
+auth_type = "api_key"
+credential_env = "DEEPSEEK_API_KEY"
+reasoning_effort = "high"
+
 [[openhands_subagent_registry.agents]]
 name = "deepseek"
 description = "Provide low-cost alternative reasoning for complex analysis and long-context decomposition."
-model = "default"
+model = "deepseek-pro-reasoning"
 tools = ["terminal"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 35
@@ -91,7 +193,7 @@ write_mode = "read-only"
 [[openhands_subagent_registry.agents]]
 name = "python-backend"
 description = "Implement and debug bounded Python or Django backend work."
-model = "gemini-3.7-flash"
+model = "deepseek-pro-reasoning"
 tools = ["terminal", "file_editor", "task_tracker"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 60
@@ -101,7 +203,7 @@ write_mode = "bounded-write"
 [[openhands_subagent_registry.agents]]
 name = "nextjs-frontend"
 description = "Implement bounded Next.js, React, and TypeScript frontend work."
-model = "gemini-3.7-flash"
+model = "deepseek-pro-reasoning"
 tools = ["terminal", "file_editor", "task_tracker"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 60
@@ -111,7 +213,7 @@ write_mode = "bounded-write"
 [[openhands_subagent_registry.agents]]
 name = "data-db"
 description = "Analyze and implement bounded database, schema, migration, and SQL work."
-model = "gemini-3.7-flash"
+model = "deepseek-pro-reasoning"
 tools = ["terminal", "file_editor", "task_tracker"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 50
@@ -121,7 +223,7 @@ write_mode = "bounded-write"
 [[openhands_subagent_registry.agents]]
 name = "integrations-ops"
 description = "Implement bounded integrations, MCP, cache, deployment, and operational work."
-model = "gemini-3.7-flash"
+model = "deepseek-pro-reasoning"
 tools = ["terminal", "file_editor", "task_tracker"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 50
@@ -131,7 +233,7 @@ write_mode = "bounded-write"
 [[openhands_subagent_registry.agents]]
 name = "qa"
 description = "Validate runtime, browser, regression, and acceptance behavior independently."
-model = "gemini-3.7-flash"
+model = "deepseek-pro-reasoning"
 tools = ["terminal", "browser_tool_set"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 45
@@ -141,7 +243,7 @@ write_mode = "read-only"
 [[openhands_subagent_registry.agents]]
 name = "test-engineer"
 description = "Design and implement focused tests, fixtures, and regression coverage."
-model = "gemini-3.7-flash"
+model = "deepseek-flash-reasoning"
 tools = ["terminal", "file_editor", "task_tracker"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 45
@@ -151,7 +253,7 @@ write_mode = "bounded-write"
 [[openhands_subagent_registry.agents]]
 name = "research"
 description = "Explore repositories and current sources read-only before implementation decisions."
-model = "default"
+model = "deepseek-flash-fast"
 tools = ["terminal", "browser_tool_set"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 35
@@ -161,7 +263,7 @@ write_mode = "read-only"
 [[openhands_subagent_registry.agents]]
 name = "mechanical-fixer"
 description = "Apply narrow mechanical corrections with deterministic verification."
-model = "default"
+model = "deepseek-flash-fast"
 tools = ["terminal", "file_editor"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 30
@@ -171,7 +273,7 @@ write_mode = "bounded-write"
 [[openhands_subagent_registry.agents]]
 name = "reviewer"
 description = "Perform skeptical read-only review of implementation, contracts, and regressions."
-model = "deepseek-v4-pro"
+model = "deepseek-pro-reasoning"
 tools = ["terminal"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 40
@@ -181,7 +283,7 @@ write_mode = "read-only"
 [[openhands_subagent_registry.agents]]
 name = "high-stakes-reviewer"
 description = "Review high-risk security, governance, and operational changes without mutating them."
-model = "deepseek-v4-pro"
+model = "deepseek-pro-reasoning"
 tools = ["terminal"]
 permission_mode = "always_confirm"
 max_iteration_per_run = 45
