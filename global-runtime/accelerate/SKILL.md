@@ -316,6 +316,8 @@ Use these bundled references first:
 - `references/persona-mandatory-skills-matrix.md`
 - `references/wave-gated-execution.md`
 - `references/fable-method-composition.md`
+- `references/codex-collaboration-routing.md`
+- `references/codex-collaboration-role-policy.json`
 
 When the active repository has stronger local doctrine, use this runtime root
 to classify and then defer to that repo-local authority.
@@ -329,6 +331,8 @@ References:
 - `references/reasoning-effort-policy.md`: select and audit prompt-hardening depth and the minimum sufficient Codex effort; machine authority is `assets/reasoning-effort-policy.json`.
 - `references/wave-gated-execution.md`: use for broad repeated work with frozen denominators, coverage gates, correction loops, and wave-by-wave closure.
 - `references/fable-method-composition.md`: classify and apply Fable as an optional reasoning/reporting overlay without duplicating Accelerate root authority.
+- `references/codex-collaboration-routing.md`: map Codex execution roles to supported collaboration model and reasoning parameters.
+- `references/codex-collaboration-role-policy.json`: machine-readable role policy consumed by the Codex collaboration adapter.
 
 Scripts:
 

@@ -108,6 +108,21 @@ if [[ -d "${ROOT_RUNTIME_DIR}" ]]; then
     fi
   done < <(find "${ROOT_DIR}/references" -type f | sort)
 
+  codex_collaboration_policy="${ROOT_DIR}/adapters/runtime/codex-collaboration/role-policy.json"
+  if [[ -f "${codex_collaboration_policy}" ]]; then
+    target_file="${GLOBAL_SKILLS_DIR}/accelerate/references/codex-collaboration-role-policy.json"
+    runtime_expected=$((runtime_expected + 1))
+    if [[ ! -f "${target_file}" ]]; then
+      echo "missing: ${target_file}" >&2
+      missing=1
+    elif ! cmp -s "${codex_collaboration_policy}" "${target_file}"; then
+      echo "different: ${codex_collaboration_policy} != ${target_file}" >&2
+      different=1
+    else
+      runtime_verified=$((runtime_verified + 1))
+    fi
+  fi
+
   if [[ -f "${ROOT_DIR}/agents/openai.yaml" ]]; then
     source_file="${ROOT_DIR}/agents/openai.yaml"
     target_file="${GLOBAL_SKILLS_DIR}/accelerate/agents/openai.yaml"
