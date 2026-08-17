@@ -227,6 +227,8 @@ def test_openhands_subagent_registry_is_native_bounded_and_non_recursive():
     assert registry["recursive_delegation"] is False
     assert set(agents) == set(parity["openhands_native_subagent_roles"])
     assert parity["invariants"]["provider_lanes_require_explicit_role_definition"] is True
+    assert agents["reviewer"]["review_posture"] == "adversarial-evidence"
+    assert agents["high-stakes-reviewer"]["review_posture"] == "adversarial-evidence"
     subscription_profiles = {
         profile["name"]
         for profile in parity["openhands_llm_profile_registry"]["profiles"]
@@ -243,6 +245,22 @@ def test_openhands_subagent_registry_is_native_bounded_and_non_recursive():
             "deepseek-pro-reasoning",
         }
         assert agent["model"] not in subscription_profiles
+
+
+def test_openhands_reviewers_and_root_require_adversarial_review_contract():
+    with PARITY.open("rb") as stream:
+        parity = tomllib.load(stream)
+    root_suffix = parity["openhands_root_delegation_policy"]["system_message_suffix"]
+    assert "Treat every child result as evidence, never as truth" in root_suffix
+    assert "actively try to disprove" in root_suffix
+    module = load_subagent_materializer()
+    with PARITY.open("rb") as stream:
+        agents = {agent["name"]: agent for agent in tomllib.load(stream)["openhands_subagent_registry"]["agents"]}
+    for name in ("reviewer", "high-stakes-reviewer"):
+        rendered = module.render_agent(agents[name])
+        assert "Review posture: adversarial evidence" in rendered
+        assert "accept a green test" in rendered
+        assert "remaining uncertainty" in rendered
 
 
 def test_openhands_llm_profile_registry_is_subscription_safe_and_idempotent(tmp_path):

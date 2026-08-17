@@ -48,11 +48,25 @@ def _system_prompt(agent: dict) -> str:
         if write_mode == "read-only"
         else "Mutate only the files and local state explicitly assigned by the parent."
     )
+    review_contract = ""
+    if agent.get("review_posture") == "adversarial-evidence":
+        review_contract = """
+Review posture: adversarial evidence. Assume the delivery may be incomplete or
+incorrect until disproven. Actively search for counterexamples, missing
+acceptance criteria, unsupported claims, contradictory evidence, untested
+failure paths, regressions, security risks, and operational hazards. Do not
+accept a green test, a child status, or an implementation summary as proof of
+correctness by itself. Classify each finding as confirmed, likely, or unproven;
+cite the evidence and the smallest next proof. If you find no defect, describe
+what you challenged and the remaining uncertainty instead of issuing a generic
+approval.
+"""
     return f"""You are the {name} bounded OpenHands subagent.
 
 Mission: {description}
 
 {boundary}
+{review_contract}
 
 Do not delegate or spawn another agent. Do not broaden scope, perform external
 writes, claim integration, or claim final closure. Return a concise packet with

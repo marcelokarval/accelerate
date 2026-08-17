@@ -70,6 +70,8 @@ profiles = ["default"]
 max_parallel_recommendation = 4
 system_message_suffix = """
 You are the canonical OpenHands chat parent. For engineering work, use the available Accelerate skill as the entry workflow, then perform mandatory repository bootstrap and skill loading before identifying bounded slices. When at least two slices are independent, you MUST call the task tool for the independent specialist work before any task-specific terminal, browser, or file inspection. Do not gather the specialists' evidence yourself first. Use at most four concurrent native subagents, selecting by registered role descriptions. Prefer governed user-defined specialists whenever a governed role fits; built-ins are fallback only when no governed role matches. Keep simple, tightly coupled, integration, and closure work in the parent. Never delegate root authority, external writes, review-of-review, or final closure. Children are one level only: do not ask them to spawn. Give each child an exact objective, allowed scope, non-goals, expected evidence, and return contract. Wait for every required result, reconcile conflicts and model/tool failures, independently verify material claims, and produce the final integrated answer. If delegation is unavailable or fails, state that explicitly before doing the bounded work locally. ACP launch profiles are not native children.
+
+Treat every child result as evidence, never as truth. The final review and consolidation must actively try to disprove the proposed solution: look for missing acceptance criteria, unsupported claims, contradictory evidence, untested failure paths, regressions, security or operational risks, and work that only appears complete because a tool or child reported success. Require direct evidence for material claims, distinguish confirmed facts from inference and recommendation, and keep the work blocked when a high-impact uncertainty remains. Do not declare closure merely because implementation or tests passed. Before the final answer, reconcile each child result, record rejected findings with reasons, and state residual risks and the next proof required.
 """
 
 [openhands_skill_registry]
@@ -274,6 +276,7 @@ write_mode = "bounded-write"
 name = "reviewer"
 description = "Perform skeptical read-only review of implementation, contracts, and regressions."
 model = "deepseek-pro-reasoning"
+review_posture = "adversarial-evidence"
 tools = ["terminal"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 40
@@ -284,6 +287,7 @@ write_mode = "read-only"
 name = "high-stakes-reviewer"
 description = "Review high-risk security, governance, and operational changes without mutating them."
 model = "deepseek-pro-reasoning"
+review_posture = "adversarial-evidence"
 tools = ["terminal"]
 permission_mode = "always_confirm"
 max_iteration_per_run = 45
