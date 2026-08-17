@@ -293,9 +293,16 @@ def test_openhands_provider_credential_sync_is_secret_safe_and_idempotent(tmp_pa
         (profiles / f"{name}.json").write_text(
             '{"model":"fixture","api_key":"stale"}\n', encoding="utf-8"
         )
-    environ = {"DEEPSEEK_API_KEY": "fresh-deepseek"}
+    environ = {
+        "DEEPSEEK_API_KEY": "fresh-deepseek",
+        "GOOGLE_API_KEY": "fresh-gemini",
+    }
 
-    assert module.reconcile(profiles, environ, apply=False) == 2
+    assert module.reconcile(profiles, environ, apply=False) == 3
     assert module.reconcile(profiles, environ, apply=True) == 0
     assert module.reconcile(profiles, environ, apply=False) == 0
     assert json.loads((profiles / "default.json").read_text())["api_key"] == "fresh-deepseek"
+    assert (
+        json.loads((profiles / "gemini-3.7-flash.json").read_text())["api_key"]
+        == "fresh-gemini"
+    )

@@ -13,6 +13,7 @@ from pathlib import Path
 PROFILE_ENV = {
     "default": "DEEPSEEK_API_KEY",
     "deepseek-v4-pro": "DEEPSEEK_API_KEY",
+    "gemini-3.7-flash": "GOOGLE_API_KEY",
 }
 
 

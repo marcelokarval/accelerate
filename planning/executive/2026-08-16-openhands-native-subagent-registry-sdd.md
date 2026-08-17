@@ -41,9 +41,12 @@ root integration/closure, choose agents by registered role descriptions, and
 prefer governed user-defined specialists over built-ins when a role fits.
 
 Gemini remains available through its governed ACP launch profile and the six
-approved native specialist bindings. Those native bindings must not be called
-runtime-ready until a fresh provider call proves the credential; the
-2026-08-16 canary returned `API_KEY_INVALID` before child execution.
+approved native specialist bindings. The initial canary returned
+`API_KEY_INVALID`; after reconciling the governed `GOOGLE_API_KEY`, both a
+direct provider call and a native OpenHands child passed authentication and
+reached the model. Both then received `503 UNAVAILABLE` because the model was
+under high demand, so current residual risk is provider availability rather
+than credential validity.
 This is an LLM routing policy with behavioral canary coverage, not a
 deterministic classifier.
 
@@ -54,11 +57,12 @@ of `task_tool_set`, bounded iterations/budget, and the child system prompt.
 Terminal/browser access is powerful and therefore must not be described as a
 hard read-only sandbox.
 
-The E2E canary exposed stale literal DeepSeek credentials in the OpenHands LLM
-profiles. A separate secret-safe synchronizer now reconciles only the two
-DeepSeek profiles from the governed `DEEPSEEK_API_KEY` environment authority,
-preserves mode `0600`, and never emits the value. Rollback is restoration of
-the prior profile files from the operator's private configuration backup.
+The E2E canaries exposed stale literal provider credentials in the OpenHands
+LLM profiles. A separate secret-safe synchronizer reconciles both DeepSeek
+profiles from governed `DEEPSEEK_API_KEY` and the Gemini profile from governed
+`GOOGLE_API_KEY`, preserves mode `0600`, and never emits either value. Rollback
+is restoration of prior profile files from the operator's private configuration
+backup.
 
 ## Dispositions
 
