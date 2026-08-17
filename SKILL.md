@@ -106,6 +106,24 @@ Run `accelerate` in this order:
 Do not treat `accelerate` as a label. Treat it as the visible team operating
 system for the run.
 
+## Fable Method Composition
+
+Fable is an optional reasoning/reporting overlay, never another root workflow.
+When Fable is considered, classify `fable_overlay` as `required`, `useful`, or
+`not-needed` and persist a short basis in the existing Branch Entry Packet:
+
+- `required` when the user explicitly names Fable inside an Accelerate run;
+- `useful` when authorities conflict, intent is materially ambiguous, or an
+  outcome-first audit/report is requested;
+- `not-needed` when the active specialist skill already defines mechanics and
+  proof without ambiguity.
+
+Accelerate retains classification, issue topology, delegation budget, risk,
+proof order and root closure. Fable feeds the outcome preamble, Authority Set,
+scope decision, existing proof lane and final report. Do not create a second
+issue, packet family, ledger, proof lane or closure mode. Load
+`references/fable-method-composition.md` for the complete repo-local contract.
+
 Use `core/control-plane/response-locale-gate.md` for user-facing language. If
 the user writes in pt-BR, respond in pt-BR unless they explicitly request another
 language. English docs, tool output, paths, and code identifiers do not override
@@ -401,6 +419,8 @@ Use these native authorities first:
 - proof and closure:
   - `core/runtime-packets/qa-proof-stack.md`
   - `core/workflows/operational-calibration.md`
+- optional reasoning/reporting overlays:
+  - `references/fable-method-composition.md`
 - risk and enforcement:
   - `core/risk/enforcement-surfaces.md`
 - critical visual/runtime review:

@@ -269,6 +269,7 @@ If that file is missing or still only template-shaped, fall back to:
 Only bypass this with an explicit manual-debug exception for the local
 workspace layer itself.
 
+
 ## Wave-Gated Execution
 
 Use wave-gated mode when broad work has a repeatable target set or a measurable coverage denominator.
@@ -313,8 +314,6 @@ Use these bundled references first:
 - `references/specification-layer.md`
 - `references/subagent-model.md`
 - `references/persona-mandatory-skills-matrix.md`
-- `references/codex-collaboration-routing.md`
-- `references/codex-collaboration-role-policy.json`
 - `references/wave-gated-execution.md`
 - `references/fable-method-composition.md`
 
@@ -328,8 +327,6 @@ References:
 - `references/skill-catalog-truth-gate.md`: require fresh runtime discovery and a declared coverage class before skill thinning, specialist selection, or capability claims.
 
 - `references/reasoning-effort-policy.md`: select and audit prompt-hardening depth and the minimum sufficient Codex effort; machine authority is `assets/reasoning-effort-policy.json`.
-- `references/codex-collaboration-routing.md`: map Codex execution roles to supported collaboration model and reasoning parameters.
-- `references/codex-collaboration-role-policy.json`: machine-readable role policy consumed by the Codex collaboration adapter.
 - `references/wave-gated-execution.md`: use for broad repeated work with frozen denominators, coverage gates, correction loops, and wave-by-wave closure.
 - `references/fable-method-composition.md`: classify and apply Fable as an optional reasoning/reporting overlay without duplicating Accelerate root authority.
 
