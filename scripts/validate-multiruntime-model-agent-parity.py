@@ -37,6 +37,7 @@ def main() -> None:
         fail("official Gemini CLI is not installed")
 
     openhands_agents = HOME / ".openhands/agent-profiles"
+    native_bindings = parity["openhands_native_bindings"]
     missing = [
         role for role in parity["openhands_roles"]
         if not (openhands_agents / f"{role}.json").is_file()
@@ -48,6 +49,8 @@ def main() -> None:
         expected_kind = "acp" if role in {"gemini-flash", "codex"} else "openhands"
         if payload.get("name") != role or payload.get("agent_kind") != expected_kind:
             fail(f"OpenHands agent profile contract mismatch: {role}")
+        if expected_kind == "openhands" and payload.get("llm_profile_ref") != native_bindings.get(role):
+            fail(f"OpenHands native LLM binding drift: {role}")
         if role == "gemini-flash" and (
             payload.get("acp_server") != "gemini-cli"
             or payload.get("acp_model") != "gemini-3.7-flash"
@@ -59,11 +62,17 @@ def main() -> None:
         ):
             fail("OpenHands Codex ACP lane drift")
 
-    gemini_profile = json.loads(
-        (HOME / ".openhands/profiles/gemini-3.7-flash.json").read_text()
-    )
-    if gemini_profile.get("model") != "gemini/gemini-3.7-flash":
-        fail("OpenHands Gemini model profile drift")
+    expected_llm_models = {
+        "default": "deepseek/deepseek-v4-flash",
+        "deepseek-v4-pro": "deepseek/deepseek-v4-pro",
+        "gemini-3.7-flash": "gemini/gemini-3.7-flash",
+    }
+    for profile_name, model in expected_llm_models.items():
+        profile = json.loads(
+            (HOME / f".openhands/profiles/{profile_name}.json").read_text()
+        )
+        if profile.get("model") != model:
+            fail(f"OpenHands LLM profile drift: {profile_name}")
 
     hermes_profiles = HOME / ".hermes/profiles"
     for profile in parity["hermes"]["profiles"]:

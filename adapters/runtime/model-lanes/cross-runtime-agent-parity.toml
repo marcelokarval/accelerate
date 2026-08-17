@@ -30,6 +30,21 @@ model = "gpt-5.6-terra"
 credential_source = "codex-cli-login"
 secret_copying = false
 
+[openhands_native_bindings]
+default = "default"
+deepseek = "default"
+research = "default"
+mechanical-fixer = "default"
+orchestrator = "deepseek-v4-pro"
+reviewer = "deepseek-v4-pro"
+high-stakes-reviewer = "deepseek-v4-pro"
+python-backend = "gemini-3.7-flash"
+nextjs-frontend = "gemini-3.7-flash"
+data-db = "gemini-3.7-flash"
+integrations-ops = "gemini-3.7-flash"
+qa = "gemini-3.7-flash"
+test-engineer = "gemini-3.7-flash"
+
 [invariants]
 sdr_domain_owner = "yasmim"
 codex_is_role_catalog = true
