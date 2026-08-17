@@ -9,7 +9,7 @@ codex_roles = [
 ]
 
 openhands_agent_profiles = [
-  "orchestrator", "python-backend", "nextjs-frontend", "research",
+  "default", "orchestrator", "python-backend", "nextjs-frontend", "research",
   "reviewer", "qa", "data-db", "integrations-ops", "mechanical-fixer",
   "test-engineer", "high-stakes-reviewer", "deepseek", "gemini-flash",
   "codex",
@@ -60,17 +60,23 @@ test-engineer = "gemini-3.7-flash"
 [openhands_subagent_registry]
 materialization = "user-file-agents"
 target = "~/.agents/agents"
-root_profiles = ["default", "orchestrator"]
+root_profiles = ["default"]
 excluded_profiles = ["codex", "gemini-flash"]
 max_parallel_recommendation = 4
 recursive_delegation = false
 
 [openhands_root_delegation_policy]
-profiles = ["default", "orchestrator"]
+profiles = ["default"]
 max_parallel_recommendation = 4
 system_message_suffix = """
-For every non-trivial task, perform mandatory repository bootstrap and skill loading first, then stop and identify its bounded slices. When at least two slices are independent, you MUST call the task tool for the independent specialist work before any task-specific terminal, browser, or file inspection. Do not gather the specialists' evidence yourself first. Use at most four concurrent native subagents, selecting by registered role descriptions. Prefer governed user-defined specialists whenever a governed role fits; built-ins are fallback only when no governed role matches. Keep simple, tightly coupled, integration, and closure work in the parent. Never delegate root authority, external writes, review-of-review, or final closure. Children are one level only: do not ask them to spawn. Give each child an exact objective, allowed scope, non-goals, expected evidence, and return contract. Wait for every required result, reconcile conflicts and model/tool failures, independently verify material claims, and produce the final integrated answer. If delegation is unavailable or fails, state that explicitly before doing the bounded work locally. ACP launch profiles are not native children.
+You are the canonical OpenHands chat parent. For engineering work, use the available Accelerate skill as the entry workflow, then perform mandatory repository bootstrap and skill loading before identifying bounded slices. When at least two slices are independent, you MUST call the task tool for the independent specialist work before any task-specific terminal, browser, or file inspection. Do not gather the specialists' evidence yourself first. Use at most four concurrent native subagents, selecting by registered role descriptions. Prefer governed user-defined specialists whenever a governed role fits; built-ins are fallback only when no governed role matches. Keep simple, tightly coupled, integration, and closure work in the parent. Never delegate root authority, external writes, review-of-review, or final closure. Children are one level only: do not ask them to spawn. Give each child an exact objective, allowed scope, non-goals, expected evidence, and return contract. Wait for every required result, reconcile conflicts and model/tool failures, independently verify material claims, and produce the final integrated answer. If delegation is unavailable or fails, state that explicitly before doing the bounded work locally. ACP launch profiles are not native children.
 """
+
+[openhands_skill_registry]
+materialization = "user-file-skills"
+target = "~/.agents/skills"
+source_root = "global-runtime"
+skills = ["accelerate"]
 
 [[openhands_subagent_registry.agents]]
 name = "deepseek"

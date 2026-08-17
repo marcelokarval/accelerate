@@ -1,6 +1,6 @@
 # OpenHands Native Subagent Registry SDD
 
-State: accepted by operator direction and root review; implementing
+State: accepted by operator direction and root review; implementing (reentry 1)
 Issue: CODEX-10
 Owner: root orchestrator
 Independent acceptor: review lane after implementation
@@ -8,7 +8,7 @@ Independent acceptor: review lane after implementation
 ## Objective
 
 Make the governed OpenHands specialist profiles available as real native
-subagents to `default` and `orchestrator`, preserving the already approved LLM
+subagents to one canonical chat parent, `default`, preserving approved LLM
 bindings and excluding ACP profiles from native delegation.
 
 ## Requirements and traceability
@@ -19,7 +19,9 @@ bindings and excluding ACP profiles from native delegation.
 | OH-SA-2 | Preserve each role's approved OpenHands LLM profile. | Generate `model` from the parity TOML. | Exact model comparison in unit and parity validators. |
 | OH-SA-3 | Prevent recursive delegation and exclude ACP/provider-only lanes. | Never grant `task` to children; validate exclusions. | Negative contract tests and live tool inventory. |
 | OH-SA-4 | Bound iteration, budget, permissions, and tool scope. | Require limits and role-specific tools in the registry. | Schema/semantic tests and API readback. |
-| OH-SA-5 | Prove parent delegation and consolidation. | Run a bounded orchestrator canary after structural proof. | Parent/child conversation or task events and final parent response. |
+| OH-SA-5 | Prove canonical-parent delegation and consolidation. | Run a bounded `default` canary after structural proof. | Parent/child conversation or task events and final parent response. |
+| OH-SA-6 | Make `default` the sole canonical chat parent. | Remove delegation and routing suffix from `orchestrator` while retaining its profile. | Profile parity validator and live profile readback. |
+| OH-SA-7 | Make governed workflow knowledge available to the chat parent. | Materialize repo-owned `accelerate` under the canonical OpenHands user skill path. | Safe materializer unit test, skill API readback, and fresh chat parent state. |
 
 ## Design
 
@@ -28,17 +30,24 @@ materializer renders deterministic Markdown definitions into the canonical
 user location `~/.agents/agents`. OpenHands 1.42.1 discovers those definitions and
 conversation-local registration makes them visible to `TaskToolSet`.
 
-Only `default` and `orchestrator` retain `enable_sub_agents=true`. Children are
-not given the task tool, so delegation depth is one. `codex` and
+Only `default` retains `enable_sub_agents=true`; `orchestrator` is preserved as
+a non-root, non-delegating profile for compatibility. Children are not given
+the task tool, so delegation depth is one. `codex` and
 `gemini-flash` are ACP launch profiles and are excluded. `deepseek` remains an
 explicit low-cost native child role, as required by the operator's fleet policy.
 Provider/model lanes never become personas implicitly; an explicit governed
 role definition such as this `deepseek` child is required.
 
-The parent profiles receive an explicit decomposition and routing suffix:
+The canonical parent receives an explicit decomposition and routing suffix:
 delegate independent bounded slices before locally investigating them, use at most four children, preserve
 root integration/closure, choose agents by registered role descriptions, and
 prefer governed user-defined specialists over built-ins when a role fits.
+
+The repo-owned `global-runtime/accelerate` skill is materialized into the
+preferred user skill location `~/.agents/skills/accelerate`. OpenHands discovers
+user skills by default; `default` is explicitly instructed to use Accelerate
+for engineering entry. The materializer rejects symlinks and unmanaged targets,
+so it never overwrites a user-owned skill.
 
 Gemini remains available through its governed ACP launch profile and the six
 approved native specialist bindings. The initial canary returned

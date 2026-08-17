@@ -58,6 +58,11 @@ def reconcile(
             suffix = root_policy["system_message_suffix"].strip()
             if payload.get("system_message_suffix") != suffix:
                 changes["system_message_suffix"] = suffix
+        elif root_policy:
+            if payload.get("enable_sub_agents") is not False:
+                changes["enable_sub_agents"] = False
+            if payload.get("system_message_suffix") is not None:
+                changes["system_message_suffix"] = None
         if not changes:
             continue
         drift += 1

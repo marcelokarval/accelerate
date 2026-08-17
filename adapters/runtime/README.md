@@ -17,12 +17,21 @@ Examples:
   `~/.agents/agents`; Agent Profiles remain launch configurations, while these
   Markdown definitions are the spawnable `AgentDefinition` layer
 
-The `default` and `orchestrator` Agent Profiles also receive a governed routing
-prompt from the same parity manifest. It asks the parent to delegate independent
+The `default` Agent Profile receives a governed routing prompt from the same
+parity manifest. It asks the parent to delegate independent
 bounded slices and retain integration/closure. This is behavioral routing, not
 a deterministic classifier. Child `write_mode` metadata is likewise not a
 sandbox: enforcement comes from tool scope, confirmation policy, task-tool
 omission, iteration/budget limits, and explicit parent/child contracts.
+
+The canonical OpenHands chat parent is now `default`: it alone receives the
+root delegation prompt and `enable_sub_agents=true`. `orchestrator` remains a
+non-root compatibility profile and cannot spawn. The three entries shown in the
+Agent Canvas model picker are LLM Profiles, not the native specialists. The
+specialists are file-based AgentDefinitions under `~/.agents/agents`, available
+only through the canonical parent's task tool. The repo-owned `accelerate`
+skill is materialized under `~/.agents/skills/accelerate`, where OpenHands
+discovers it as a user skill for the parent.
 - Playwright for persistent regression proof
 - web content reader for bounded external source observation
 - locale-pack parity checks for i18n proof

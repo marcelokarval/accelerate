@@ -20,6 +20,7 @@ PARITY = ADAPTER.parent / "cross-runtime-agent-parity.toml"
 MATERIALIZER = ADAPTER.parents[3] / "scripts/install-openhands-agent-bindings.py"
 SUBAGENT_MATERIALIZER = ADAPTER.parents[3] / "scripts/install-openhands-subagents.py"
 CREDENTIAL_SYNC = ADAPTER.parents[3] / "scripts/sync-openhands-provider-credentials.py"
+SKILL_MATERIALIZER = ADAPTER.parents[3] / "scripts/install-openhands-governed-skills.py"
 
 
 def load_adapter():
@@ -51,6 +52,16 @@ def load_subagent_materializer():
 def load_credential_sync():
     spec = importlib.util.spec_from_file_location(
         "openhands_credential_sync", CREDENTIAL_SYNC
+    )
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def load_skill_materializer():
+    spec = importlib.util.spec_from_file_location(
+        "openhands_governed_skill_installer", SKILL_MATERIALIZER
     )
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
@@ -152,27 +163,40 @@ def test_openhands_binding_materializer_is_idempotent(tmp_path):
     assert target.read_bytes() == first
 
 
-def test_openhands_root_delegation_policy_is_materialized(tmp_path):
+def test_openhands_root_delegation_policy_is_materialized_only_for_default(tmp_path):
     module = load_materializer()
     profiles = tmp_path / "agent-profiles"
     profiles.mkdir()
-    target = profiles / "orchestrator.json"
-    target.write_text(
-        '{"schema_version":2,"name":"orchestrator","revision":1,'
+    default = profiles / "default.json"
+    default.write_text(
+        '{"schema_version":2,"name":"default","revision":1,'
         '"agent_kind":"openhands","llm_profile_ref":"default",'
         '"enable_sub_agents":false,"system_message_suffix":null}\n',
         encoding="utf-8",
     )
+    orchestrator = profiles / "orchestrator.json"
+    orchestrator.write_text(
+        '{"schema_version":2,"name":"orchestrator","revision":1,'
+        '"agent_kind":"openhands","llm_profile_ref":"deepseek-v4-pro",'
+        '"enable_sub_agents":true,"system_message_suffix":"stale"}\n',
+        encoding="utf-8",
+    )
     policy = {
-        "profiles": ["orchestrator"],
+        "profiles": ["default"],
         "system_message_suffix": "Delegate bounded work; retain closure.\n",
     }
     assert module.reconcile(
-        profiles, {"orchestrator": "deepseek-v4-pro"}, root_policy=policy, apply=True
+        profiles,
+        {"default": "default", "orchestrator": "deepseek-v4-pro"},
+        root_policy=policy,
+        apply=True,
     ) == 0
-    payload = json.loads(target.read_text())
+    payload = json.loads(default.read_text())
     assert payload["enable_sub_agents"] is True
     assert payload["system_message_suffix"] == "Delegate bounded work; retain closure."
+    retired = json.loads(orchestrator.read_text())
+    assert retired["enable_sub_agents"] is False
+    assert retired["system_message_suffix"] is None
 
 
 def test_openhands_subagent_registry_is_native_bounded_and_non_recursive():
@@ -186,7 +210,7 @@ def test_openhands_subagent_registry_is_native_bounded_and_non_recursive():
         "qa", "test-engineer", "research", "mechanical-fixer", "reviewer",
         "high-stakes-reviewer",
     }
-    assert registry["root_profiles"] == ["default", "orchestrator"]
+    assert registry["root_profiles"] == ["default"]
     assert set(registry["excluded_profiles"]) == {"codex", "gemini-flash"}
     assert set(registry["excluded_profiles"]) == set(parity["openhands_acp"])
     assert registry["recursive_delegation"] is False
@@ -306,3 +330,71 @@ def test_openhands_provider_credential_sync_is_secret_safe_and_idempotent(tmp_pa
         json.loads((profiles / "gemini-3.7-flash.json").read_text())["api_key"]
         == "fresh-gemini"
     )
+
+
+def test_openhands_governed_skill_materializer_is_safe_and_idempotent(tmp_path):
+    module = load_skill_materializer()
+    source = tmp_path / "source" / "accelerate"
+    (source / "references").mkdir(parents=True)
+    (source / "SKILL.md").write_text(
+        "---\nname: accelerate\ndescription: governance\n---\n", encoding="utf-8"
+    )
+    (source / "references" / "guide.md").write_text("guide\n", encoding="utf-8")
+    target = tmp_path / "skills"
+
+    assert module.reconcile(target, {"accelerate": source}, apply=False) == 1
+    assert module.reconcile(target, {"accelerate": source}, apply=True) == 0
+    assert module.reconcile(target, {"accelerate": source}, apply=False) == 0
+    assert (target / "accelerate" / "references" / "guide.md").read_text() == "guide\n"
+
+    unmanaged = target / "personal"
+    unmanaged.mkdir()
+    (unmanaged / "SKILL.md").write_text("personal\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="unmanaged"):
+        module.reconcile(target, {"personal": source}, apply=True)
+
+
+def test_openhands_governed_skill_materializer_migrates_only_matching_legacy_link(tmp_path):
+    module = load_skill_materializer()
+    source = tmp_path / "codex" / "accelerate"
+    source.mkdir(parents=True)
+    (source / "SKILL.md").write_text(
+        "---\nname: accelerate\ndescription: governance\n---\n", encoding="utf-8"
+    )
+    target = tmp_path / "skills"
+    target.mkdir()
+    os.symlink(source, target / "accelerate")
+
+    assert module.reconcile(
+        target,
+        {"accelerate": source},
+        apply=False,
+        legacy_root=source.parent,
+    ) == 1
+    assert module.reconcile(
+        target,
+        {"accelerate": source},
+        apply=True,
+        legacy_root=source.parent,
+    ) == 0
+    assert not (target / "accelerate").is_symlink()
+
+
+def test_openhands_governed_skill_materializer_rejects_broken_legacy_link(tmp_path):
+    module = load_skill_materializer()
+    source = tmp_path / "source" / "accelerate"
+    source.mkdir(parents=True)
+    (source / "SKILL.md").write_text(
+        "---\nname: accelerate\ndescription: governance\n---\n", encoding="utf-8"
+    )
+    target = tmp_path / "skills"
+    target.mkdir()
+    os.symlink(tmp_path / "missing", target / "accelerate")
+
+    with pytest.raises(ValueError, match="unmanaged skill symlink"):
+        module.reconcile(
+            target,
+            {"accelerate": source},
+            apply=True,
+            legacy_root=source.parent,
+        )

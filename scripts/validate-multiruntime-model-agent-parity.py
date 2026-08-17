@@ -16,6 +16,7 @@ HOME = Path.home()
 LANES = REPO / "adapters/runtime/model-lanes/model-lanes.toml"
 PARITY = REPO / "adapters/runtime/model-lanes/cross-runtime-agent-parity.toml"
 SUBAGENT_MATERIALIZER = REPO / "scripts/install-openhands-subagents.py"
+SKILL_MATERIALIZER = REPO / "scripts/install-openhands-governed-skills.py"
 
 
 def fail(message: str) -> None:
@@ -39,6 +40,17 @@ def load_subagent_materializer():
     return module
 
 
+def load_skill_materializer():
+    spec = importlib.util.spec_from_file_location(
+        "openhands_governed_skill_installer", SKILL_MATERIALIZER
+    )
+    if not spec or not spec.loader:
+        fail("OpenHands governed skill materializer cannot be loaded")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 def main() -> None:
     lanes = load_toml(LANES)["lanes"]
     parity = load_toml(PARITY)
@@ -53,6 +65,7 @@ def main() -> None:
     native_bindings = parity["openhands_native_bindings"]
     subagent_registry = parity["openhands_subagent_registry"]
     root_policy = parity["openhands_root_delegation_policy"]
+    skill_registry = parity["openhands_skill_registry"]
     subagents = {agent["name"]: agent for agent in subagent_registry["agents"]}
     declared_subagent_roles = set(parity["openhands_native_subagent_roles"])
     roots = set(subagent_registry["root_profiles"])
@@ -68,6 +81,8 @@ def main() -> None:
         fail("OpenHands native subagent exclusions do not match ACP profiles")
     if subagent_registry["recursive_delegation"] is not False:
         fail("OpenHands recursive subagent delegation is enabled")
+    if roots != set(root_policy["profiles"]):
+        fail("OpenHands root policy and delegation roots drift")
     if set(subagents) != declared_subagent_roles:
         fail("OpenHands native subagent role denominator drift")
     missing = [
@@ -91,6 +106,8 @@ def main() -> None:
             "system_message_suffix"
         ].strip():
             fail(f"OpenHands root routing policy drift: {role}")
+        if role not in roots and payload.get("system_message_suffix") is not None:
+            fail(f"OpenHands non-root retains routing policy: {role}")
         if role == "gemini-flash" and (
             payload.get("acp_server") != "gemini-cli"
             or payload.get("acp_model") != "gemini-3.7-flash"
@@ -128,6 +145,14 @@ def main() -> None:
             fail(f"OpenHands child lacks an iteration limit: {name}")
         if definition["max_budget_per_run"] <= 0:
             fail(f"OpenHands child lacks a budget limit: {name}")
+
+    skill_materializer = load_skill_materializer()
+    expected_skills = skill_materializer.load_registry(PARITY)
+    if set(expected_skills) != set(skill_registry["skills"]):
+        fail("OpenHands governed skill denominator drift")
+    skill_target = HOME / ".agents/skills"
+    if skill_materializer.reconcile(skill_target, expected_skills, apply=False):
+        fail("OpenHands governed skills are not materialized exactly")
 
     hermes_profiles = HOME / ".hermes/profiles"
     for profile in parity["hermes"]["profiles"]:
