@@ -21,6 +21,13 @@ This file is intentionally constitutional and compact.
 - `core/` is the native method surface
 - `references/` remains supporting inherited depth while rehoming continues
 
+Runtime bootstrap is semantic-core first: adapters decide native primitives,
+status and enforcement. After `TASKS_READY`, physical dispatch is allowed only
+where the chosen adapter is supported and callable; blocked, legacy, staged, or
+export-only adapters must surface their status without fallback. The root keeps
+fan-in, review-of-review, promotion, and closure. Mirrors are projections;
+read `core/control-plane/cross-runtime-bootstrap.md` before an adapter install.
+
 ## Current Reality
 
 This repository is in the `standalone capability-portable` phase.

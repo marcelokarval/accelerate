@@ -75,6 +75,17 @@ recommended root. Route Luna/low to research, Luna/medium to prescribed
 mechanical work, Terra/medium to implementation/data/ops/QA/review, and
 Sol/high only to high-stakes read-only work with a receipt.
 
+## Cross-Runtime Bootstrap
+
+The semantic delegation core is shared, but each runtime adapter decides its
+native primitive, status, and enforcement. At `TASKS_READY`, dispatch physical
+work only through an adapter that is both supported and callable. Blocked,
+export-only, staged-only, and legacy adapters do not silently fall back. Root
+retains fan-in, integration, review-of-review, promotion, and closure; runtime
+model/quality classes are adapter mappings with effective receipts. Runtime
+mirrors are projections of this repository, never source truth. See
+`core/control-plane/cross-runtime-bootstrap.md`.
+
 ## Current Stage
 
 This repository is in the standalone capability-portable phase.
