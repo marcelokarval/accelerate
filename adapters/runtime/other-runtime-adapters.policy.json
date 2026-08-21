@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "runtimes": {
+    "opencode": {
+      "type": "runtime-reference", "runtime_status": "legacy-reference", "proof_class": "static-contract", "projection_mode": "generated-export", "loader": "none",
+      "authority_boundary": "reference-only; no host configuration is loaded or mutated", "current_tools": [], "candidate_tools": ["task", "tasks", "wait", "cancel"],
+      "allowed_roles": ["orchestrator", "python-backend", "nextjs-frontend", "research", "reviewer", "qa", "data-db", "integrations-ops"], "forbidden_roles": ["designer", "observer", "council"], "allowed_efforts": ["low", "medium", "high"], "forbidden_efforts": ["xhigh", "max"],
+      "suppressed_capabilities": ["wildcard-skills", "wildcard-mcp", "xhigh", "max", "nested-delegation", "plaintext-token-config", "installer"], "nesting": "disabled", "max_assignment_depth": 0, "max_concurrent_children": 0,
+      "named_model_allowlist": false, "named_tool_allowlist": false, "named_skill_allowlist": true, "named_mcp_allowlist": true, "timeout_required": false, "cleanup_currently_allowed": false, "root_only_synthesis": true, "effective_model_receipt_required": true, "callability_proven": false, "loader_proven": false,
+      "privacy_notes": "never read or reproduce plaintext-token configuration; export requires separate approval", "observed_version": "OpenCode 1.18.18", "candidate_note": "OMO-Slim task lifecycle candidate only; no task execution proof",
+      "registry_proof": "static-contract-only; runtime callability unproven", "registry_install": "denied/not-supported", "registry_rollback": "not-supported"
+    },
+    "openclaw": {
+      "type": "runtime-reference", "runtime_status": "legacy-reference", "proof_class": "static-contract", "projection_mode": "reference-only", "loader": "none",
+      "authority_boundary": "legacy-reference-only; no ~/.openclaw state is loaded or mutated", "current_tools": [], "candidate_tools": ["sessions-spawn"],
+      "allowed_roles": ["orchestrator", "python-backend", "nextjs-frontend", "research", "reviewer", "qa", "data-db", "integrations-ops"], "forbidden_roles": ["designer", "observer", "council"], "allowed_efforts": ["low", "medium", "high"], "forbidden_efforts": ["xhigh", "max"],
+      "suppressed_capabilities": ["sessions-spawn-unavailable", "nested-delegation", "unbounded-concurrency", "root-synthesis-by-child", "mutating-cleanup"], "nesting": "disabled", "max_assignment_depth": 0, "max_concurrent_children": 3,
+      "named_model_allowlist": true, "named_tool_allowlist": true, "named_skill_allowlist": true, "named_mcp_allowlist": true, "timeout_required": true, "cleanup_currently_allowed": false, "root_only_synthesis": true, "effective_model_receipt_required": false, "callability_proven": false, "loader_proven": false,
+      "privacy_notes": "do not read config, credentials, transcripts, or state payloads; no service operation", "observed_version": "OpenClaw 2026.6.10", "candidate_note": "sessions-spawn is unavailable in the observed CLI and only a future candidate",
+      "registry_proof": "static-contract-only; runtime callability unproven", "registry_install": "denied/not-supported", "registry_rollback": "not-supported"
+    },
+    "claude": {
+      "type": "host-export", "runtime_status": "export-only", "proof_class": "static-contract", "projection_mode": "future-export", "loader": "no semantic-core loader is installed",
+      "authority_boundary": "export-only; no loader or runtime delegation is established", "current_tools": [], "candidate_tools": [], "allowed_roles": [], "forbidden_roles": ["designer", "observer", "council"], "allowed_efforts": [], "forbidden_efforts": ["xhigh", "max"],
+      "suppressed_capabilities": ["runtime-delegation", "automatic-promotion", "callability-claim", "installer"], "nesting": "unavailable", "max_assignment_depth": 0, "max_concurrent_children": 0,
+      "named_model_allowlist": false, "named_tool_allowlist": false, "named_skill_allowlist": false, "named_mcp_allowlist": false, "timeout_required": false, "cleanup_currently_allowed": false, "root_only_synthesis": true, "effective_model_receipt_required": false, "callability_proven": false, "loader_proven": false,
+      "privacy_notes": "generated outward only; never read or reproduce ~/.claude credentials or settings", "observed_version": "Claude Code 2.1.191", "candidate_note": "background-agent help is not a governed loader or delegation proof",
+      "registry_proof": "static-contract-only; runtime callability unproven", "registry_install": "denied/not-supported", "registry_rollback": "not-supported"
+    }
+  }
+}

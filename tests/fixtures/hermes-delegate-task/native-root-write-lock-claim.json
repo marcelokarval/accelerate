@@ -1,0 +1,1 @@
+{"adapter":"hermes-delegate-task","tasks":[{"agent_role":"implementation","toolsets":"inherited"}],"assignment":{"role_kind":"leaf","depth":1},"model":{"requested":"x","effective":"x"},"reasoning_effort":{"requested":"medium","effective":"medium"},"root_write_lock":{"native":"enforced","adapter":"prompt-contract-only"}}

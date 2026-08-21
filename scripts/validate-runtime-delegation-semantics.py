@@ -115,7 +115,9 @@ def validate_registry(registry: dict[str, Any]) -> None:
         elif item["status"] == "export-only":
             if projection["mode"] != "future-export" or "no semantic-core loader" not in item["loader"]: fail(f"export-only registry entry is inconsistent: {item['runtime']}")
         elif item["status"] == "legacy-reference":
-            if projection["mode"] != "reference-only" or item["loader"] != "none": fail(f"legacy-reference registry entry is inconsistent: {item['runtime']}")
+            allowed_modes = {"reference-only"}
+            if item["runtime"] == "opencode": allowed_modes.add("generated-export")
+            if projection["mode"] not in allowed_modes or item["loader"] != "none": fail(f"legacy-reference registry entry is inconsistent: {item['runtime']}")
         elif projection["mode"] != "none" or item["adapter"] != "none" or item["loader"] != "none": fail(f"blocked registry entry is inconsistent: {item['runtime']}")
         if item["runtime"] == "openhands" and item["status"] != "export-only": fail("openhands remains export-only until separately proven")
 

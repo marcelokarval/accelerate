@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "adapter": "hermes-delegate-task",
+  "status": "staged-contract-only",
+  "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",
+  "native_primitive": "Hermes delegate_task",
+  "policy_cap": 3,
+  "batch": {"agent_role": "homogeneous-required", "toolsets": "inherited"},
+  "assignment": {"role_kind": ["leaf", "orchestrator"], "max_depth": 1, "nested_default": "off", "nested_requires": "explicit-root-grant"},
+  "execution": {"sync_first": true, "background_may_fall_back": "sync", "states": {"execution_native": ["completed", "failed", "interrupted", "unknown"], "delivery_native": ["delivery_intent", "delivery_unknown", "dead_lettered", "replay_requested", "dropped", "discarded", "pending", "delivered"], "sync_projection": "adapter:sync_result_received"}, "async_after": "adapter_reconciliation_and_live_postgres_proof"},
+  "receipt": {"requested": ["provider", "model", "reasoning_effort", "policy_refs"], "effective": ["provider", "model", "reasoning_effort"], "effective_evidence": "native_routing_or_result", "live_proof": "postgres_child_lineage_with_locator_hash_readback"},
+  "root_write_lock": {"native": "unsupported", "adapter": "prompt-contract-only"},
+  "projection": {"installer": "scripts/stage-hermes-delegate-task-adapter.py --dry-run", "readback": "manifest-and-receipt-validation", "rollback": "remove-staged-projection-before-install"}
+}

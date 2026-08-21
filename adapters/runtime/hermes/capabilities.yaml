@@ -1,9 +1,14 @@
 name: hermes
 type: host-export
 status: available
-authority_boundary: generated-export
+authority_boundary: generated-export; delegate_task projection remains staged-contract-only
 allowed_tools: []
-suppressed_capabilities: []
-validation_command: scripts/export-runtime-host.sh hermes .tmp/host-export
-proof_artifacts: []
-privacy_notes: generated outward only; not source authority
+validation_command: python3 scripts/validate-hermes-delegate-task.py tests/fixtures/hermes-delegate-task/valid-sync-fallback.json
+proof_artifacts:
+  - staged-hermes-delegate-task-receipt
+  - postgresql-child-lineage-for-live-proof
+suppressed_capabilities:
+  - native-root-write-lock
+  - installed-runtime-callability
+  - provider-callability
+privacy_notes: generated outward only; not source authority; receipts contain IDs only and no credentials

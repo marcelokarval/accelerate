@@ -1,0 +1,17 @@
+schema_version: 1
+name: openclaw
+type: runtime-reference
+status: experimental
+runtime_status: legacy-reference
+proof_class: static-contract
+authority_boundary: legacy-reference-only; no ~/.openclaw state is loaded or mutated
+allowed_current_tools: []
+candidate_native_tools: []
+allowed_roles: [orchestrator, python-backend, nextjs-frontend, research, reviewer, qa, data-db, integrations-ops]
+suppressed_roles: [designer, observer, council]
+allowed_efforts: [low, medium, high]
+suppressed_capabilities: [sessions-spawn-unavailable, nested-delegation, unbounded-concurrency, root-synthesis-by-child, mutating-cleanup]
+nesting: disabled
+validation_command: python3 scripts/validate-other-runtime-adapters.py
+proof_artifacts: [adapters/runtime/openclaw/delegation-contract.md, tests/test_other_runtime_adapters.py]
+privacy_notes: do not read config, credentials, transcripts, or state payloads; no service operation

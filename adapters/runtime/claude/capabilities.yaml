@@ -1,9 +1,17 @@
+schema_version: 1
 name: claude
 type: host-export
-status: available
-authority_boundary: generated-export
-allowed_tools: []
-suppressed_capabilities: []
-validation_command: scripts/export-runtime-host.sh claude .tmp/host-export
-proof_artifacts: []
-privacy_notes: generated outward only; not source authority
+status: experimental
+runtime_status: export-only
+proof_class: static-contract
+authority_boundary: export-only; no loader or runtime delegation is established
+allowed_current_tools: []
+candidate_native_tools: []
+allowed_roles: []
+suppressed_roles: [designer, observer, council]
+allowed_efforts: []
+suppressed_capabilities: [runtime-delegation, automatic-promotion, callability-claim, installer]
+nesting: unavailable
+validation_command: python3 scripts/validate-other-runtime-adapters.py
+proof_artifacts: [adapters/runtime/claude/delegation-contract.md, tests/test_other_runtime_adapters.py]
+privacy_notes: generated outward only; never read or reproduce ~/.claude credentials or settings

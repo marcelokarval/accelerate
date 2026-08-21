@@ -1,9 +1,17 @@
+schema_version: 1
 name: opencode
-type: host-export
-status: available
-authority_boundary: generated-export
-allowed_tools: []
-suppressed_capabilities: []
-validation_command: scripts/export-runtime-host.sh opencode .tmp/host-export
-proof_artifacts: []
-privacy_notes: generated outward only; not source authority
+type: runtime-reference
+status: experimental
+runtime_status: legacy-reference
+proof_class: static-contract
+authority_boundary: reference-only; no host configuration is loaded or mutated
+allowed_current_tools: []
+candidate_native_tools: [task, tasks, wait, cancel]
+allowed_roles: [orchestrator, python-backend, nextjs-frontend, research, reviewer, qa, data-db, integrations-ops]
+suppressed_roles: [designer, observer, council]
+allowed_efforts: [low, medium, high]
+suppressed_capabilities: [wildcard-skills, wildcard-mcp, xhigh, max, nested-delegation, plaintext-token-config, installer]
+nesting: disabled
+validation_command: python3 scripts/validate-other-runtime-adapters.py
+proof_artifacts: [adapters/runtime/opencode/delegation-contract.md, tests/test_other_runtime_adapters.py]
+privacy_notes: never read or reproduce plaintext-token configuration; export requires separate approval

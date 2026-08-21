@@ -42,37 +42,37 @@
       "runtime": "opencode",
       "status": "legacy-reference",
       "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",
-      "projection": {"mode": "reference-only", "path": "adapters/runtime/opencode/capabilities.yaml", "behavior_change": "none"},
+      "projection": {"mode": "generated-export", "path": "adapters/runtime/opencode/capabilities.yaml", "behavior_change": "none"},
       "loader": "none",
-      "native_primitive": "runtime-specific delegation primitive",
+      "native_primitive": "OMO-Slim task lifecycle: task, tasks, wait, cancel",
       "adapter": "adapters/runtime/opencode/",
-      "proof": "registry validation only",
-      "install": "not planned by this contract",
-      "rollback": "not applicable while reference-only"
+      "proof": "static-contract-only; runtime callability unproven",
+      "install": "denied/not-supported",
+      "rollback": "not-supported"
     },
     {
       "runtime": "openclaw",
-      "status": "blocked",
+      "status": "legacy-reference",
       "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",
-      "projection": {"mode": "none", "path": "none", "behavior_change": "none"},
+      "projection": {"mode": "reference-only", "path": "adapters/runtime/openclaw/capabilities.yaml", "behavior_change": "none"},
       "loader": "none",
-      "native_primitive": "unverified",
-      "adapter": "none",
-      "proof": "no repository-owned runtime proof",
-      "install": "blocked pending explicit architecture, adapter, and proof",
-      "rollback": "not applicable before installation"
+      "native_primitive": "sessions-spawn candidate; unavailable in locally observed CLI",
+      "adapter": "adapters/runtime/openclaw/",
+      "proof": "static-contract-only; runtime callability unproven",
+      "install": "denied/not-supported",
+      "rollback": "not-supported"
     },
     {
       "runtime": "claude",
-      "status": "blocked",
+      "status": "export-only",
       "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",
-      "projection": {"mode": "none", "path": "none", "behavior_change": "none"},
-      "loader": "none",
-      "native_primitive": "unverified",
-      "adapter": "none",
-      "proof": "no repository-owned runtime proof",
-      "install": "blocked pending explicit architecture, adapter, and proof",
-      "rollback": "not applicable before installation"
+      "projection": {"mode": "future-export", "path": "adapters/runtime/claude/capabilities.yaml", "behavior_change": "none"},
+      "loader": "no semantic-core loader is installed",
+      "native_primitive": "background agent CLI surface is observed but not governed",
+      "adapter": "adapters/runtime/claude/",
+      "proof": "static-contract-only; runtime callability unproven",
+      "install": "denied/not-supported",
+      "rollback": "not-supported"
     }
   ]
 }
