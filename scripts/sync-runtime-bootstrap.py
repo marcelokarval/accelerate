@@ -112,7 +112,7 @@ def main():
   if a.stage: print((REPO/EXPECTED['runtimes'][a.runtime]['projection']).read_text(),end=''); return
   r=root_for(a.test_root); t,rc,j=paths(a.runtime,r); safe(t,r); safe(rc,r); safe(j,r); distinct(t,rc,j)
   if a.receipt and a.receipt.resolve(strict=False)!=rc.resolve(strict=False): die('receipt must be canonical')
-  if a.dry_run and a.receipt is None: die('dry-run requires the explicit canonical receipt path')
+  if a.dry_run and a.receipt is not None: die('dry-run is zero-write; receipt output is stdout only')
   s=source(); b=state(t); out=render(b['bytes'],s); dry=rec('dry-run',t,b,out,s,j)
   if a.recover:
    q=json.loads(j.read_text());
@@ -130,15 +130,12 @@ def main():
    jwrite(rc,q['final']); q['status']='committed'; jwrite(j,q); print('recovered'); return
   if a.dry_run:
    # Preserve a committed no-op lineage; a dry-run must not orphan its rollback receipt.
-   if not dry['changed'] and rc.exists():
-    old=json.loads(rc.read_text())
-    if old.get('mode')=='apply' and old.get('target_after_sha256')==sha(b['bytes']): print(json.dumps(dict(old,changed=False))); return
-   jwrite(rc,dry); print(json.dumps(dry)); return
+   print(json.dumps(dry)); return
   if a.apply:
    if b['bytes']==out:
-    old=json.loads(rc.read_text())
-    if old.get('mode')=='apply' and old.get('target_after_sha256')==sha(b['bytes']): print(json.dumps(dict(old,changed=False))); return
-   if json.loads(rc.read_text())!=dry: die('stale or tampered dry-run receipt')
+    if rc.exists():
+     old=json.loads(rc.read_text())
+     if old.get('mode')=='apply' and old.get('target_after_sha256')==sha(b['bytes']): print(json.dumps(dict(old,changed=False))); return
    if b['bytes']==out:
     adopted=rec('apply',t,b,out,s,j); adopted.update({'changed':False,'adopted':True,'backup_path':None})
     jwrite(rc,adopted); print(json.dumps(adopted)); return

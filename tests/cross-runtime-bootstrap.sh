@@ -15,23 +15,26 @@ PY
 
 # Closed matrix: only Codex can reach a derived target; no arbitrary paths or output writes.
 for runtime in openhands hermes opencode openclaw claude; do
-  if python3 "$sync" --runtime "$runtime" --test-root "$tmp" --receipt "$receipt" --dry-run >/dev/null 2>&1; then fail "$runtime admitted"; fi
+  if python3 "$sync" --runtime "$runtime" --test-root "$tmp" --dry-run >/dev/null 2>&1; then fail "$runtime admitted"; fi
   [ ! -e "$receipt" ] || fail "$runtime wrote receipt"
 done
 if python3 "$sync" --runtime codex --test-root "$tmp" --target "$tmp/x" --dry-run >/dev/null 2>&1; then fail 'arbitrary target admitted'; fi
 if python3 "$sync" --runtime codex --test-root "$tmp" --stage-output "$tmp/x" --stage >/dev/null 2>&1; then fail 'arbitrary stage output admitted'; fi
 if python3 "$sync" --runtime codex --test-root "$tmp" --receipt "$target" --dry-run >/dev/null 2>&1; then fail 'target equals receipt admitted'; fi
 
-python3 "$sync" --runtime codex --test-root "$tmp" --receipt "$receipt" --dry-run >/dev/null
+find "$tmp/.codex" -maxdepth 1 -printf '%f:%i:%s\n' | sort > "$tmp/dry-run-before"
+python3 "$sync" --runtime codex --test-root "$tmp" --dry-run >/dev/null
+find "$tmp/.codex" -maxdepth 1 -printf '%f:%i:%s\n' | sort > "$tmp/dry-run-after"
+cmp -s "$tmp/dry-run-before" "$tmp/dry-run-after" || fail 'dry-run changed canonical runtime inventory'
 cmp -s "$target" "$tmp/original" || fail 'dry-run changed target'
 python3 "$sync" --runtime codex --test-root "$tmp" --apply >/dev/null
 rg -F '<!-- accelerate-delegation-policy:start -->' "$target" >/dev/null || fail 'missing managed block'
-python3 "$sync" --runtime codex --test-root "$tmp" --receipt "$receipt" --dry-run >/dev/null
+python3 "$sync" --runtime codex --test-root "$tmp" --dry-run >/dev/null
 python3 "$sync" --runtime codex --test-root "$tmp" --apply >/dev/null
 
 # A single managed block is corrected; duplicate/malformed blocks fail closed.
 perl -0pi -e 's/Standing Multi-Agent V2/Corrupted Policy/' "$target"
-python3 "$sync" --runtime codex --test-root "$tmp" --receipt "$receipt" --dry-run >/dev/null
+python3 "$sync" --runtime codex --test-root "$tmp" --dry-run >/dev/null
 python3 "$sync" --runtime codex --test-root "$tmp" --apply >/dev/null
 rg -F 'Standing Multi-Agent V2' "$target" >/dev/null || fail 'tampered block not corrected'
 printf '\n<!-- accelerate-delegation-policy:start -->' >> "$target"
@@ -43,7 +46,7 @@ os.setxattr(sys.argv[1], "user.accelerate_test", b"preserve", follow_symlinks=Fa
 PY
 
 # Forced final receipt failure leaves a prepared journal that recover finalizes.
-python3 "$sync" --runtime codex --test-root "$tmp" --receipt "$receipt" --dry-run >/dev/null
+python3 "$sync" --runtime codex --test-root "$tmp" --dry-run >/dev/null
 if ACCELERATE_BOOTSTRAP_TEST_FAIL_FINALIZE=1 python3 "$sync" --runtime codex --test-root "$tmp" --apply >/dev/null 2>&1; then fail 'forced finalization failure admitted'; fi
 python3 "$sync" --runtime codex --test-root "$tmp" --recover >/dev/null
 python3 "$sync" --runtime codex --test-root "$tmp" --rollback-preflight >/dev/null
@@ -61,7 +64,7 @@ for phase in intent backup_ready target_replaced receipt_finalize; do
 import os, sys
 os.setxattr(sys.argv[1], "user.accelerate_test", b"preserve", follow_symlinks=False)
 PY
-  python3 "$sync" --runtime codex --test-root "$tmp" --receipt "$receipt" --dry-run >/dev/null
+  python3 "$sync" --runtime codex --test-root "$tmp" --dry-run >/dev/null
   if ACCELERATE_BOOTSTRAP_TEST_FAULT="$phase" python3 "$sync" --runtime codex --test-root "$tmp" --apply >/dev/null 2>&1; then fail "$phase fault admitted"; fi
   python3 "$sync" --runtime codex --test-root "$tmp" --recover >/dev/null
   if [[ "$phase" == intent || "$phase" == backup_ready ]]; then cmp -s "$target" "$tmp/original" || fail "$phase recovery changed original"; fi
@@ -89,7 +92,7 @@ if command -v setfacl >/dev/null && command -v getfacl >/dev/null; then
   rm -f "$receipt" "$journal"; cp "$tmp/original" "$target"
   setfacl -m u::rw "$target"
   acl_before="$(getfacl -cp "$target")"
-  python3 "$sync" --runtime codex --test-root "$tmp" --receipt "$receipt" --dry-run >/dev/null
+  python3 "$sync" --runtime codex --test-root "$tmp" --dry-run >/dev/null
   python3 "$sync" --runtime codex --test-root "$tmp" --apply >/dev/null
   python3 "$sync" --runtime codex --test-root "$tmp" --rollback-preflight >/dev/null
   python3 "$sync" --runtime codex --test-root "$tmp" --rollback >/dev/null
@@ -100,7 +103,7 @@ fi
 
 # Tampered backup is rejected before rollback and cannot alter target bytes.
 rm -f "$receipt" "$journal"; cp "$tmp/original" "$target"
-python3 "$sync" --runtime codex --test-root "$tmp" --receipt "$receipt" --dry-run >/dev/null
+python3 "$sync" --runtime codex --test-root "$tmp" --dry-run >/dev/null
 python3 "$sync" --runtime codex --test-root "$tmp" --apply >/dev/null
 cp "$target" "$tmp/installed-before-tamper"
 backup="$(python3 - "$receipt" <<'PY'
@@ -114,7 +117,7 @@ cmp -s "$target" "$tmp/installed-before-tamper" || fail 'tampered backup changed
 
 # A target that did not exist before install must be absent after rollback.
 rm -f "$target" "$receipt" "$journal"
-python3 "$sync" --runtime codex --test-root "$tmp" --receipt "$receipt" --dry-run >/dev/null
+python3 "$sync" --runtime codex --test-root "$tmp" --dry-run >/dev/null
 python3 "$sync" --runtime codex --test-root "$tmp" --apply >/dev/null
 python3 "$sync" --runtime codex --test-root "$tmp" --rollback-preflight >/dev/null
 python3 "$sync" --runtime codex --test-root "$tmp" --rollback >/dev/null

@@ -6,6 +6,14 @@ codex_target_root="${CODEX_SKILLS_DIR:-$HOME/.codex/skills}"
 hermes_target_root="${HERMES_SKILLS_DIR:-$HOME/.hermes/skills}"
 root_runtime_dir="$root_dir/global-runtime/accelerate"
 
+# This legacy broad exporter is never allowed to touch a destination when the
+# Accelerate runtime package is in scope.  Keep this before validation, mkdir,
+# copy, or any other side effect.
+if [[ -d "$root_runtime_dir" ]]; then
+  echo "Accelerate export is fail-closed here; run scripts/sync-accelerate-governed-drift.py for the three governed drift paths." >&2
+  exit 1
+fi
+
 "$root_dir/scripts/validate-skill-registry.sh"
 
 for target_root in "$codex_target_root" "$hermes_target_root"; do
@@ -51,45 +59,5 @@ while IFS= read -r skill_file; do
     fi
   done
 done < <(find "$root_dir/skills" -mindepth 3 -maxdepth 3 -name SKILL.md | sort)
-
-if [[ -d "$root_runtime_dir" ]]; then
-  target_dir="$codex_target_root/accelerate"
-  mkdir -p "$target_dir" "$target_dir/references" "$target_dir/agents" "$target_dir/assets" "$target_dir/scripts"
-
-  cp "$root_runtime_dir/SKILL.md" "$target_dir/SKILL.md"
-  cp "$root_runtime_dir/README.md" "$target_dir/README.md"
-
-  if [[ -f "$root_runtime_dir/metadata.yaml" ]]; then
-    cp "$root_runtime_dir/metadata.yaml" "$target_dir/metadata.yaml"
-  fi
-
-  cp -r "$root_dir/references/." "$target_dir/references/"
-
-  codex_collaboration_policy="$root_dir/adapters/runtime/codex-collaboration/role-policy.json"
-  if [[ -f "$codex_collaboration_policy" ]]; then
-    cp "$codex_collaboration_policy" \
-      "$target_dir/references/codex-collaboration-role-policy.json"
-  fi
-
-  for root_runtime_support_dir in scripts templates evals assets; do
-    if [[ -d "$root_runtime_dir/$root_runtime_support_dir" ]]; then
-      rm -rf "$target_dir/$root_runtime_support_dir"
-      cp -r "$root_runtime_dir/$root_runtime_support_dir" "$target_dir/"
-    fi
-  done
-
-  delegation_schema="$root_dir/core/runtime-packets/delegation-dispatch-receipt.schema.json"
-  delegation_validator="$root_dir/scripts/validate-delegation-dispatch-receipt.py"
-  if [[ ! -f "$delegation_schema" || ! -f "$delegation_validator" ]]; then
-    echo "Missing canonical delegation dispatch export source." >&2
-    exit 1
-  fi
-  cp "$delegation_schema" "$target_dir/assets/delegation-dispatch-receipt.schema.json"
-  cp "$delegation_validator" "$target_dir/scripts/validate-delegation-dispatch-receipt.py"
-
-  if [[ -f "$root_dir/agents/openai.yaml" ]]; then
-    cp "$root_dir/agents/openai.yaml" "$target_dir/agents/openai.yaml"
-  fi
-fi
 
 echo "Synced capability skills to $codex_target_root and $hermes_target_root; Accelerate runtime to $codex_target_root/accelerate"

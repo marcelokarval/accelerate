@@ -17,7 +17,8 @@ and effort classes and must return effective receipts.
 canonical runtime paths; it accepts no arbitrary target or stage-output path.
 The only apply-eligible adapter is Codex. The manifest is checked against
 hard-coded approved invariants and the OpenHands/other-adapter registries.
-Dry-run writes only the distinct canonical receipt. Apply is write-ahead:
+Dry-run is strictly zero-write and emits its proposed receipt only to stdout;
+passing `--receipt` to dry-run is rejected. Apply is write-ahead:
 secure exclusive backup and fsynced prepared journal precede the atomic target
 replace; `--recover` finalizes an interrupted prepared transaction. Managed
 blocks are replaced exactly once while surrounding bytes are preserved.
