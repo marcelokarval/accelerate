@@ -6,12 +6,13 @@ codex_target_root="${CODEX_SKILLS_DIR:-$HOME/.codex/skills}"
 hermes_target_root="${HERMES_SKILLS_DIR:-$HOME/.hermes/skills}"
 root_runtime_dir="$root_dir/global-runtime/accelerate"
 
-# This legacy broad exporter is never allowed to touch a destination when the
-# Accelerate runtime package is in scope.  Keep this before validation, mkdir,
-# copy, or any other side effect.
-if [[ -d "$root_runtime_dir" ]]; then
+if [[ "$#" -eq 0 ]]; then
   echo "Accelerate export is fail-closed here; run scripts/sync-accelerate-governed-drift.py for the three governed drift paths." >&2
   exit 1
+fi
+if [[ "$#" -ne 1 || "$1" != "--capabilities-only" ]]; then
+  echo "Usage: sync-skills-to-global.sh --capabilities-only" >&2
+  exit 2
 fi
 
 "$root_dir/scripts/validate-skill-registry.sh"
@@ -60,4 +61,4 @@ while IFS= read -r skill_file; do
   done
 done < <(find "$root_dir/skills" -mindepth 3 -maxdepth 3 -name SKILL.md | sort)
 
-echo "Synced capability skills to $codex_target_root and $hermes_target_root; Accelerate runtime to $codex_target_root/accelerate"
+echo "Synced capability and standalone skills only to $codex_target_root and $hermes_target_root; Accelerate runtime was not touched."
