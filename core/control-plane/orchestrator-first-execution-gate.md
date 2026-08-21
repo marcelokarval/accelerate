@@ -5,9 +5,10 @@
 Use this gate when a run asks for executive planning, task execution, task-level
 review, correction, delegated work, or final forensic confirmation.
 
-The master session is the orchestrator and final forensic reviewer. It should not
-be treated as the task executor for non-trivial work unless an explicit exception
-is recorded.
+The root session is the orchestrator and final forensic reviewer. It owns
+hardening, SDD/PRD, task graph, dispatch, fan-in, integration-only repairs,
+review-of-review, and closure; it does not execute task-owned scopes. After
+`DISPATCH_REQUIRED`, a single-threaded exception is a blocker, not permission.
 
 The master session also owns active agent cleanup. A returned result does not
 mean the agent runtime is clean; agents that delivered and became idle must be
@@ -18,7 +19,9 @@ explicitly closed, marked complete, or recorded as intentionally retained.
 Execution authority, skeptical review authority, and final closure authority are
 separate.
 
-For every non-trivial execution task, assign:
+For every orchestrated execution task with collaboration available, use the
+Post-Spec Delegation Dispatch Gate and its receipt before the first task-owned
+write, then assign:
 
 - `executor`: physical subagent when available, otherwise a virtual executor pass
 - `skeptical reviewer`: independent physical reviewer when available, otherwise a
@@ -26,9 +29,10 @@ For every non-trivial execution task, assign:
 - `orchestrator`: the master session, which integrates, reviews the review, and
   owns closure
 
-Physical agents are preferred when available and bounded. Virtual agents are
-packetized role passes that preserve authority separation when the runtime has no
-promoted agent catalog.
+Physical dispatch uses 2-3 bindings and explicit model/effort/fork. Virtual
+agents are permitted only for `collaboration_unavailable` or
+`spawn_failed_operator_authorized` (or explicit user opt-out); they never
+satisfy a physical dispatch available in the host.
 
 ## Activation
 

@@ -1,0 +1,5 @@
+{"type":"delegation_canary_event","version":1,"event":"tasks_ready","route":"scoped","task_id":"SCOPED-1"}
+{"type":"delegation_canary_event","version":1,"event":"route_selected","route":"scoped"}
+{"type":"delegation_canary_event","version":1,"event":"spawn_agent","role":"research","agent_id":"agent-sidecar","call_id":"call-sidecar","task_id":"SCOPED-1-research","model":"gpt-5.6-luna","reasoning_effort":"low","fork_turns":"none","write_scopes":[]}
+{"type":"delegation_canary_event","version":1,"event":"agent_return","agent_id":"agent-sidecar","call_id":"call-sidecar"}
+{"type":"delegation_canary_event","version":1,"event":"closure_marker","actor_id":"root"}

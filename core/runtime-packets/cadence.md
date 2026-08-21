@@ -11,6 +11,7 @@ Non-trivial work must not hide the active workflow stack for long stretches.
 ## Minimum Cadence
 
 - first technical update -> `Branch Entry Packet`
+- before `DISPATCH_REQUIRED` task-owned execution -> `Delegation Dispatch Receipt`
 - meaningful stack change -> `Runtime Delta Packet`
 - prompt hardening active -> `Prompt Hardening Packet`
 - subagent completion -> `Subagent Return Packet`
@@ -26,7 +27,8 @@ When a governed target repository already has `.accelerate/`, the opening
 ## Single-Threaded Exception
 
 If a non-trivial run remains single-threaded, the opening packet must expose an
-explicit `single-threaded exception`.
+explicit `single-threaded exception`; after `DISPATCH_REQUIRED` it is a blocker,
+not authorization to execute task-owned work at root.
 
 ## Authority
 

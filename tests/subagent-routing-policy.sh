@@ -29,5 +29,11 @@ require_match 'security / anti-abuse reviewer' "$model"
 require_match 'selected role family' "$templates"
 require_match 'required skills / profiles' "$templates"
 require_match 'cleanup expectation after return' "$templates"
+require_match 'Post-Spec Delegation Dispatch Gate' "$model"
+require_match 'DISPATCH_REQUIRED' "$model"
+require_match 'single-threaded exception is a blocker' "$model"
+require_match 'root does not execute task-owned scopes' "$model"
+require_match 'nested Terra-to-Luna' "$model"
+require_match 'integer from `1..5`' "$model"
 
 printf 'subagent routing policy passed\n'

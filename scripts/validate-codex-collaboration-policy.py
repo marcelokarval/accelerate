@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the bounded Codex collaboration role-routing policy."""
+"""Validate the bounded Codex collaboration physical-dispatch policy."""
 
 from __future__ import annotations
 
@@ -13,18 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 POLICY_PATH = ROOT / "adapters/runtime/codex-collaboration/role-policy.json"
 VALID_MODELS = {"gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna"}
 VALID_EFFORTS = {"low", "medium", "high"}
-REQUIRED_ROLES = {
-    "architecture",
-    "backend",
-    "frontend",
-    "qa-regression",
-    "security",
-    "governance",
-    "provider-boundary",
-    "product-runtime",
-    "other",
-}
-WRITER_MODE = "bounded-write"
+REQUIRED_ROLES = {"architecture", "backend", "frontend", "qa-regression", "security", "governance", "data-db", "provider-boundary", "product-runtime", "other"}
+PROFILE_KEYS = {"model", "reasoning_effort", "tool_policy", "skill_allowlist", "mcp_allowlist", "write_mode", "requires_write_scope", "requires_reasoning_receipt", "eligibility"}
 
 
 def fail(message: str) -> None:
@@ -32,9 +22,8 @@ def fail(message: str) -> None:
 
 
 def require_keys(value: dict[str, Any], keys: set[str], label: str) -> None:
-    missing = keys - set(value)
-    if missing:
-        fail(f"{label} missing keys: {', '.join(sorted(missing))}")
+    if set(value) != keys:
+        fail(f"{label} keys must be exactly: {', '.join(sorted(keys))}")
 
 
 def no_wildcard(value: Any, label: str) -> None:
@@ -49,49 +38,27 @@ def no_wildcard(value: Any, label: str) -> None:
 
 
 def validate(policy: dict[str, Any]) -> None:
-    require_keys(
-        policy,
-        {"schema_version", "runtime", "policy_status", "authority_boundary", "binding", "routes", "profiles", "role_bindings", "fallback"},
-        "policy",
-    )
-    if policy["schema_version"] != 1:
-        fail("unsupported schema_version")
-    if policy["runtime"] != "codex-collaboration":
-        fail("runtime must be codex-collaboration")
+    require_keys(policy, {"schema_version", "runtime", "policy_status", "authority_boundary", "binding", "routes", "profiles", "role_bindings", "nested_terra_to_luna", "exceptions", "fallback"}, "policy")
+    if policy["schema_version"] != 2 or policy["runtime"] != "codex-collaboration":
+        fail("policy must be codex-collaboration schema v2")
     if policy["policy_status"] != "experimental":
         fail("policy must remain experimental until host enforcement is proven")
 
     binding = policy["binding"]
-    if not isinstance(binding, dict):
-        fail("binding must be an object")
-    require_keys(
-        binding,
-        {"spawn_api", "model_override", "reasoning_effort_override", "tool_enforcement", "skill_visibility", "mcp_visibility", "logical_topology"},
-        "binding",
-    )
-    if binding["spawn_api"] != "collaboration.spawn_agent":
-        fail("unsupported spawn API")
-    if binding["model_override"] != "explicit-per-assignment":
-        fail("model overrides must be explicit per assignment")
-    if binding["tool_enforcement"] != "assignment-contract-only":
-        fail("tool enforcement must remain assignment-contract-only")
-    if binding["logical_topology"] != "adapters/runtime/codex/logical-agent-topology.toml":
-        fail("logical topology binding is invalid")
+    require_keys(binding, {"spawn_api", "model_override", "reasoning_effort_override", "fork_turns_default", "fork_turns_override", "fork_turns_all", "child_binding_inheritance", "tool_enforcement", "skill_visibility", "mcp_visibility", "logical_topology"}, "binding")
+    expected_binding = {"spawn_api": "collaboration.spawn_agent", "model_override": "explicit-per-assignment", "reasoning_effort_override": "explicit-per-assignment", "fork_turns_default": "none", "fork_turns_override": "integer-1-to-5-only", "fork_turns_all": "forbidden-with-override", "child_binding_inheritance": "forbidden", "tool_enforcement": "assignment-contract-only", "skill_visibility": "on-demand-contract-only", "mcp_visibility": "on-demand-contract-only", "logical_topology": "adapters/runtime/codex/logical-agent-topology.toml"}
+    if binding != expected_binding:
+        fail("binding does not preserve explicit physical assignment boundaries")
 
     routes = policy["routes"]
     if set(routes) != {"direct-fast-path", "scoped", "orchestrated"}:
         fail("routes must be exactly direct-fast-path, scoped, orchestrated")
-    direct = routes["direct-fast-path"]
-    if direct["delegation_budget"] != 0 or direct["physical_binding_allowed"] is not False:
-        fail("direct-fast-path must prohibit physical bindings")
-    scoped = routes["scoped"]
-    if scoped["delegation_budget"] != 1 or scoped["physical_binding_allowed"] is not True:
-        fail("scoped must allow exactly one bounded physical binding")
-    orchestrated = routes["orchestrated"]
-    if orchestrated["delegation_budget"] != "2-3" or orchestrated["physical_binding_allowed"] is not True:
-        fail("orchestrated must allow two to three bounded physical bindings")
-    for name, route in routes.items():
-        require_keys(route, {"delegation_budget", "physical_binding_allowed"}, f"route {name}")
+    if routes["direct-fast-path"] != {"delegation_budget": 0, "physical_binding_allowed": False, "physical_binding_required": False, "dispatch_receipt_required": False, "root_task_execution": "allowed"}:
+        fail("direct-fast-path must have zero physical bindings")
+    if routes["scoped"] != {"delegation_budget": 1, "physical_binding_allowed": True, "physical_binding_required": False, "dispatch_receipt_required": True, "sidecar_may_implement_task": False, "root_task_execution": "allowed-only-when-no-task-owned-scope-is-dispatched"}:
+        fail("scoped route must be one non-implementation sidecar at most")
+    if routes["orchestrated"] != {"delegation_budget": "2-3", "physical_binding_allowed": True, "physical_binding_required": True, "dispatch_receipt_required": True, "root_task_execution": "forbidden-after-dispatch-required"}:
+        fail("orchestrated route requires 2-3 physical bindings and a dispatch receipt")
 
     profiles = policy["profiles"]
     if not isinstance(profiles, dict) or not profiles:
@@ -99,20 +66,16 @@ def validate(policy: dict[str, Any]) -> None:
     for name, profile in profiles.items():
         if not isinstance(profile, dict):
             fail(f"profile {name} must be an object")
-        require_keys(
-            profile,
-            {"model", "reasoning_effort", "tool_policy", "skill_allowlist", "mcp_allowlist", "write_mode", "requires_write_scope", "requires_reasoning_receipt", "eligibility"},
-            f"profile {name}",
-        )
+        require_keys(profile, PROFILE_KEYS, f"profile {name}")
         if profile["model"] not in VALID_MODELS or profile["reasoning_effort"] not in VALID_EFFORTS:
             fail(f"profile {name} has unsupported model or effort")
+        if not isinstance(profile["eligibility"], list) or not profile["eligibility"]:
+            fail(f"profile {name} must declare non-empty eligibility")
         for field in ("tool_policy", "skill_allowlist", "mcp_allowlist"):
             if not isinstance(profile[field], list):
                 fail(f"profile {name} {field} must be a list")
             no_wildcard(profile[field], f"profile {name} {field}")
-        if not isinstance(profile["eligibility"], list) or not profile["eligibility"]:
-            fail(f"profile {name} must declare non-empty eligibility")
-        if profile["write_mode"] == WRITER_MODE and profile["requires_write_scope"] is not True:
+        if profile["write_mode"] == "bounded-write" and profile["requires_write_scope"] is not True:
             fail(f"writer profile {name} must require a write scope")
         if profile["write_mode"] == "read-only" and profile["requires_write_scope"] is not False:
             fail(f"read-only profile {name} cannot require a write scope")
@@ -120,12 +83,8 @@ def validate(policy: dict[str, Any]) -> None:
             fail(f"high profile {name} must require a reasoning receipt")
         if profile["model"] == "gpt-5.6-luna" and profile["reasoning_effort"] == "high":
             fail(f"Luna/high is not an approved profile: {name}")
-
-    high_stakes = profiles.get("high-stakes-review")
-    if not high_stakes or high_stakes["model"] != "gpt-5.6-sol" or high_stakes["reasoning_effort"] != "high":
-        fail("high-stakes-review must be Sol/high")
-    if high_stakes["write_mode"] != "read-only":
-        fail("high-stakes-review must remain read-only")
+    if profiles.get("high-stakes-review", {}).get("model") != "gpt-5.6-sol" or profiles["high-stakes-review"].get("reasoning_effort") != "high" or profiles["high-stakes-review"].get("write_mode") != "read-only":
+        fail("high-stakes-review must be read-only Sol/high")
 
     bindings = policy["role_bindings"]
     if set(bindings) != REQUIRED_ROLES:
@@ -133,27 +92,30 @@ def validate(policy: dict[str, Any]) -> None:
     for role, choices in bindings.items():
         if not isinstance(choices, list):
             fail(f"role {role} must bind to a profile list")
-        if role in {"other", "provider-boundary"}:
+        if role == "other":
             if choices:
-                fail(f"{role} must remain root-owned or virtual until reclassified")
+                fail("other remains a root reclassification gap")
             continue
-        if not choices:
-            fail(f"role {role} must bind to at least one profile")
-        for choice in choices:
-            if choice not in profiles:
-                fail(f"role {role} references unknown profile {choice}")
+        if not choices or any(choice not in profiles for choice in choices):
+            fail(f"role {role} has an unknown or empty profile binding")
+    for role in ("data-db", "provider-boundary"):
+        if bindings[role] != ["implementation"]:
+            fail(f"{role} must bind explicitly to Terra/medium implementation")
 
-    if not isinstance(policy["fallback"], list) or "virtual-subagent-packets" not in policy["fallback"]:
-        fail("fallback must include virtual-subagent-packets")
-    if "root-direct-fast-path" in policy["fallback"]:
-        fail("sidecar unavailability must not downgrade a route to direct-fast-path")
+    nested = policy["nested_terra_to_luna"]
+    expected_nested = {"default": "forbidden", "authorization": "root-authorized-only", "allowed_profile": "mechanical-fixer", "max_luna_children": 1, "global_physical_budget_exact": 3, "scope_relation": "disjoint", "terra_accountability": "required", "independent_reviewer": "required", "luna_delegation": "leaf-only"}
+    if nested != expected_nested:
+        fail("nested Terra-to-Luna must remain a root-authorized single mechanical leaf exception")
+    if policy["exceptions"] != ["explicit_user_opt_out", "collaboration_unavailable", "spawn_failed_operator_authorized"]:
+        fail("exceptions must be the closed physical-dispatch catalog")
+    if policy["fallback"] != ["virtual-after-approved-exception"]:
+        fail("virtual fallback requires an approved physical-dispatch exception")
     no_wildcard(policy, "policy")
 
 
 def main() -> int:
     try:
-        policy = json.loads(POLICY_PATH.read_text())
-        validate(policy)
+        validate(json.loads(POLICY_PATH.read_text()))
     except (OSError, json.JSONDecodeError, ValueError) as error:
         print(f"codex collaboration policy invalid: {error}", file=sys.stderr)
         return 1

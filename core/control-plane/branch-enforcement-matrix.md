@@ -33,8 +33,10 @@ evidence needs, and future delegation implications instead of task size alone.
 Every non-trivial execution row also inherits `Orchestrator-First Execution Gate`
 when task execution and acceptance review both occur in the same run. The master
 session orchestrates, integrates, and reviews the review. Execution and skeptical
-acceptance review must remain separated through physical subagents or explicit
-virtual subagent packets.
+acceptance review must remain separated. Orchestrated execution additionally
+inherits `Post-Spec Delegation Dispatch Gate`: after `DISPATCH_REQUIRED`,
+available collaboration requires a 2-3 physical binding receipt before
+task-owned writes; virtual packets require an allowed exception.
 
 For any engineering run expected to mutate code, workflow seeds, or living
 docs, `Issue Bootstrap Gate` is inherited even when the row is not primarily an

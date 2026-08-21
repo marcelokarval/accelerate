@@ -117,6 +117,7 @@ Branch Entry Packet
 - persistent E2E status: <status or n/a>
 - local review / closure action: <none|prepare-review|prepare-closure|manual-debug-exception>
 - single-threaded exception: <reason or n/a>
+- delegation dispatch receipt: <path|n/a>; required before orchestrated task-owned writes
 ```
 
 For calibration-only or read-only benchmark slices, keep the packet bounded.
@@ -420,6 +421,7 @@ Subagent Return Packet
 - defects found and disposition: <summary or packet reference>
 - unresolved risks: <...>
 - recommendation: <done|partial|follow-up|blocked>
+- physical binding / receipt: <agent id, call id, model/effort/fork, receipt ref|virtual with allowed exception>
 ```
 
 Subagent packets never replace root review. They are inputs to root-owned

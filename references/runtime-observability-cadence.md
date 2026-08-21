@@ -22,6 +22,7 @@ Non-trivial work must not hide the active workflow stack for long stretches.
 ### Opening
 
 - first technical update -> `Branch Entry Packet`
+- before `DISPATCH_REQUIRED` task-owned execution -> `Delegation Dispatch Receipt`
 
 When `.accelerate/` local status already exists, the compact read that should
 feed that opening packet is:
@@ -66,7 +67,8 @@ state, treat that as observability drift.
 ## Single-Threaded Exception Rule
 
 If a non-trivial run does not spawn subagents, the opening packet must include a
-`single-threaded exception` reason.
+`single-threaded exception` reason. After `DISPATCH_REQUIRED`, this is a blocker
+instead of permission for root task execution.
 
 
 ### On wave-gated work

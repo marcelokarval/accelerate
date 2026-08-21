@@ -1,0 +1,4 @@
+{"type":"delegation_canary_event","version":1,"event":"tasks_ready","route":"orchestrated"}
+{"type":"delegation_canary_event","version":1,"event":"route_selected","route":"orchestrated"}
+{"type":"delegation_canary_event","version":1,"event":"spawn_agent","role":"executor","agent_id":"agent-one","call_id":"call-executor","task_id":"BAD-5","model":"gpt-5.6-terra","reasoning_effort":"medium","fork_turns":"none","write_scopes":["task/file.py"]}
+{"type":"delegation_canary_event","version":1,"event":"spawn_agent","role":"reviewer","agent_id":"agent-one","call_id":"call-reviewer","task_id":"BAD-5-review","model":"gpt-5.6-terra","reasoning_effort":"medium","fork_turns":"none","write_scopes":[]}

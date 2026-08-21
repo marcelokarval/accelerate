@@ -90,17 +90,20 @@ Examples:
 Reasoning effort informs future agent selection, but it is not the same as agent
 count.
 
-- `low`: root-only by default; do not spawn agents unless independent review has
-  clear value.
-- `medium`: root-only or one bounded agent/sidecar when it reduces latency or
-  improves proof.
+- `low`: direct-fast-path or scoped may remain root-owned; this does not waive
+  physical dispatch for orchestrated execution after `TASKS_READY`.
+- `medium`: direct-fast-path or scoped may remain root-owned or use one bounded
+  sidecar when it improves proof; this does not waive physical dispatch for
+  orchestrated execution after `TASKS_READY`.
 - `high`: consider specialized implementation, review, governance, security, or
   browser/proof sidecars when slices are independent and review isolation matters.
 - `xhigh`: keep root orchestration explicit; use specialists only for bounded
   evidence gathering or review, never for final closure authority.
 
-Do not use a higher effort label to justify a vague agent. If no honest agent
-family fits the dominant risk, keep the risk root-owned and register the gap.
+Do not use a higher effort label to justify a vague agent. Direct/scoped may
+retain a root-owned risk when no honest agent family fits. For orchestrated
+execution after `TASKS_READY` with collaboration available, record only the
+allowed blocking exception receipt; do not retain task-owned execution at root.
 
 ## Packet Requirements
 

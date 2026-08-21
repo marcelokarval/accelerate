@@ -1,0 +1,14 @@
+{
+  "contract_version": "1.0", "state": "DISPATCHED",
+  "artifacts": {"hardening": {"ref": "h", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}, "spec": {"ref": "s", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}, "task_graph": {"ref": "t", "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"}},
+  "route": "orchestrated", "execution_requested": true, "planned_task_owned_writes": true,
+  "capability_proof": {"collaboration_available": true, "spawn_api": "collaboration.spawn_agent", "checked_at": "2026-08-20T12:00:00Z"},
+  "budget": {"max_agents": 2, "active_count": 2},
+  "assignments": [
+    {"assignment_id": "terra", "kind": "executor", "task_id": "TASK-1", "dependencies": [], "wave": 1, "role": "governance", "model": "gpt-5.6-terra", "effort": "medium", "fork": "none", "agent_id": "agent-terra", "call_id": "call-terra", "read_scopes": [], "write_scopes": ["core/terra.md"], "proof": "tests/proof.sh", "reviewer_assignment_id": "reviewer", "recursion": {"delegation_allowed": true, "authorization": "nested_terra_to_luna_authorized"}, "parent_assignment_id": null, "delegation_reference": null},
+    {"assignment_id": "luna", "kind": "executor", "task_id": "TASK-1-luna", "dependencies": [], "wave": 1, "role": "mechanical-fixer", "model": "gpt-5.6-luna", "effort": "medium", "fork": "none", "agent_id": "agent-luna", "call_id": "call-luna", "read_scopes": [], "write_scopes": ["core/luna.md"], "proof": "tests/proof.sh", "reviewer_assignment_id": "reviewer", "recursion": {"delegation_allowed": false, "authorization": null}, "parent_assignment_id": "terra", "delegation_reference": "terra:call-terra->luna"},
+    {"assignment_id": "reviewer", "kind": "reviewer", "task_id": "TASK-1-review", "dependencies": ["TASK-1"], "wave": 2, "role": "qa-regression", "model": "gpt-5.6-terra", "effort": "medium", "fork": "none", "agent_id": "agent-review", "call_id": "call-review", "read_scopes": ["core/"], "write_scopes": [], "proof": "tests/proof.sh", "reviewer_assignment_id": null, "recursion": {"delegation_allowed": false, "authorization": null}, "parent_assignment_id": null, "delegation_reference": null}
+  ],
+  "fan_in": {"owner": "root", "assignment_ids": ["terra", "luna", "reviewer"]}, "exceptions": [],
+  "root_write_lock": {"task_owned_writes_forbidden": true, "allowed_scopes": []}
+}

@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -19,6 +20,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument("topology", type=Path)
 parser.add_argument("catalog", type=Path)
 parser.add_argument("--codex-home", type=Path, required=True)
+parser.add_argument("--receipt", type=Path)
+parser.add_argument("--rollback", action="store_true")
+parser.add_argument("--rollback-receipt", type=Path)
 args = parser.parse_args()
 
 
@@ -66,7 +70,7 @@ def root_config_with_orchestrator_defaults(text: str, orchestrator: dict[str, ob
     seen: set[str] = set()
     for index, line in enumerate(lines):
         stripped = line.strip()
-        if stripped.startswith("[") and stripped.endswith("]"):
+        if re.match(r"^\s*(?:\[\[.*\]\]|\[.*\])\s*(?:#.*)?$", line):
             root_scope = False
         if not root_scope or "=" not in line:
             continue
@@ -81,12 +85,186 @@ def root_config_with_orchestrator_defaults(text: str, orchestrator: dict[str, ob
     return "".join(lines)
 
 
+def reconciled_catalog_base(text: str, document: dict[str, object], states: dict[str, bool]) -> str:
+    skills = document.get("skills", {})
+    if not isinstance(skills, dict):
+        raise SystemExit("existing [skills] table must be a TOML table")
+    existing = skills.get("config", [])
+    if not isinstance(existing, list):
+        raise SystemExit("existing skills.config must be an array")
+    unmanaged: list[tuple[str, bool]] = []
+    for entry in existing:
+        if not isinstance(entry, dict) or set(entry) != {"path", "enabled"}:
+            raise SystemExit("existing skills.config entries must contain only path and enabled")
+        path = entry["path"]
+        enabled = entry["enabled"]
+        if not isinstance(path, str) or type(enabled) is not bool:
+            raise SystemExit("existing skills.config entries have invalid path or enabled")
+        if path not in states:
+            unmanaged.append((path, enabled))
+    entries = [*unmanaged, *states.items()]
+    block = ["config = [\n"]
+    block.extend(
+        f"  {{ path = {toml_basic_string(path)}, enabled = {str(enabled).lower()} }},\n"
+        for path, enabled in entries
+    )
+    block.append("]\n")
+    lines = text.splitlines(keepends=True)
+    section_indexes = [index for index, line in enumerate(lines) if line.strip() == "[skills]"]
+    if len(section_indexes) > 1:
+        raise SystemExit("existing config has multiple [skills] tables")
+    if not section_indexes:
+        prefix = "" if not text or text.endswith("\n") else "\n"
+        return text + prefix + "\n[skills]\n" + "".join(block)
+    start = section_indexes[0]
+    end = next(
+        (index for index in range(start + 1, len(lines)) if re.match(r"^\s*\[", lines[index])),
+        len(lines),
+    )
+    config_indexes = [
+        index
+        for index in range(start + 1, end)
+        if re.match(r"^\s*config\s*=", lines[index])
+    ]
+    if len(config_indexes) > 1:
+        raise SystemExit("existing [skills] table has multiple config entries")
+    if not config_indexes:
+        lines[end:end] = block
+        return "".join(lines)
+    config_start = config_indexes[0]
+    depth = 0
+    config_end = None
+    for index in range(config_start, end):
+        depth += lines[index].count("[") - lines[index].count("]")
+        if depth == 0 and "[" in "".join(lines[config_start : index + 1]):
+            config_end = index + 1
+            break
+    if config_end is None:
+        raise SystemExit("existing skills.config array is malformed")
+    lines[config_start:config_end] = block
+    return "".join(lines)
+
+
+def toml_basic_string(value: str) -> str:
+    escapes = {
+        "\\": "\\\\",
+        '"': '\\"',
+        "\b": "\\b",
+        "\t": "\\t",
+        "\n": "\\n",
+        "\f": "\\f",
+        "\r": "\\r",
+    }
+    return '"' + "".join(escapes.get(character, character) for character in value) + '"'
+
+
+def sha256_path(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def unique_backup_directory(home: Path, timestamp: str) -> Path:
+    root = home / "backups"
+    candidate = root / f"logical-agents-{timestamp}"
+    suffix = 2
+    while candidate.exists():
+        candidate = root / f"logical-agents-{timestamp}-{suffix}"
+        suffix += 1
+    return candidate
+
+
+def atomic_copy(source: Path, target: Path) -> None:
+    temporary = target.with_name(f".{target.name}.logical-agents-{os.getpid()}.tmp")
+    try:
+        shutil.copy2(source, temporary)
+        os.replace(temporary, target)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def rollback(home: Path, receipt_path: Path, rollback_receipt: Path, topology_hash: str, catalog_hash: str, owned_names: set[str]) -> None:
+    try:
+        receipt = json.loads(receipt_path.read_text())
+    except (OSError, json.JSONDecodeError) as error:
+        raise SystemExit(f"rollback requires a readable install receipt: {error}") from error
+    if receipt.get("install_identity") != "codex-logical-agent-profiles" or receipt.get("topology_sha256") != topology_hash or receipt.get("catalog_sha256") != catalog_hash:
+        raise SystemExit("rollback receipt identity or source fingerprints do not match")
+    owned = receipt.get("owned_files")
+    if not isinstance(owned, list) or not owned:
+        raise SystemExit("rollback receipt has no changed owned files")
+    home_resolved = home.resolve()
+    prepared: list[tuple[dict[str, object], Path, Path | None]] = []
+    for entry in owned:
+        if not isinstance(entry, dict) or set(entry) != {"target", "backup", "before_sha256", "after_sha256"}:
+            raise SystemExit("rollback receipt owned file shape is invalid")
+        target = Path(str(entry["target"]))
+        if target.parent.resolve() != home_resolved or target.name not in owned_names:
+            raise SystemExit("rollback receipt names an unowned target")
+        after = entry["after_sha256"]
+        if after is None:
+            if target.exists():
+                raise SystemExit("rollback current target fingerprint mismatch")
+        elif not isinstance(after, str) or not target.is_file() or sha256_path(target) != after:
+            raise SystemExit("rollback current target fingerprint mismatch")
+        backup_value = entry["backup"]
+        if backup_value is None:
+            if entry["before_sha256"] is not None:
+                raise SystemExit("rollback receipt has inconsistent created-file backup state")
+            prepared.append((entry, target, None))
+            continue
+        backup = Path(str(backup_value))
+        if not backup.is_file() or backup.parent.parent.resolve() != (home / "backups").resolve():
+            raise SystemExit("rollback backup is unavailable or outside the owned backup root")
+        if sha256_path(backup) != entry["before_sha256"]:
+            raise SystemExit("rollback backup fingerprint mismatch")
+        prepared.append((entry, target, backup))
+    for _, target, backup in reversed(prepared):
+        if backup is None:
+            target.unlink()
+        else:
+            atomic_copy(backup, target)
+    result = {
+        "mode": "rollback",
+        "install_receipt": str(receipt_path),
+        "changed": True,
+        "rolled_back_files": [str(target) for _, target, _ in prepared],
+        "timestamp": datetime.now(UTC).isoformat(),
+    }
+    rollback_receipt.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n")
+    print(rollback_receipt)
+
+
 topology = tomllib.loads(args.topology.read_text())
 orchestrator = next(agent for agent in topology["agents"] if agent["kind"] == "root-orchestrator")
 home = args.codex_home
+owned_names = {"config.toml", "orchestrator.config.toml"} | {
+    f"{agent['name']}.config.toml" for agent in topology["agents"] if agent["kind"] == "specialist"
+}
+receipt_path = args.receipt or home / "logical-agent-install-receipt.json"
+if receipt_path.parent.resolve() != home.resolve():
+    raise SystemExit("receipt path must be directly inside --codex-home")
+if receipt_path.name in owned_names:
+    raise SystemExit("receipt path must not overlap an owned logical-agent file")
+if args.rollback:
+    if args.rollback_receipt is None or args.rollback_receipt.parent.resolve() != home.resolve():
+        raise SystemExit("rollback requires --rollback-receipt directly inside --codex-home")
+    if args.rollback_receipt.name in owned_names:
+        raise SystemExit("rollback receipt path must not overlap an owned logical-agent file")
+    if args.rollback_receipt.resolve() == receipt_path.resolve():
+        raise SystemExit("rollback receipt path must differ from the install receipt")
+    rollback(
+        home,
+        receipt_path,
+        args.rollback_receipt,
+        hashlib.sha256(args.topology.read_bytes()).hexdigest(),
+        hashlib.sha256(args.catalog.read_bytes()).hexdigest(),
+        owned_names,
+    )
+    raise SystemExit(0)
+if args.rollback_receipt is not None:
+    raise SystemExit("--rollback-receipt requires --rollback")
 home.mkdir(parents=True, exist_ok=True)
 timestamp = datetime.now(UTC).strftime("%Y%m%dT%H%M%SZ")
-backup_dir = home / "backups" / f"logical-agents-{timestamp}"
+backup_dir = unique_backup_directory(home, timestamp)
 renderer = Path(__file__).with_name("render-codex-logical-agent.py")
 catalog_renderer = Path(__file__).with_name("render-codex-skill-profile.py")
 validator = Path(__file__).with_name("validate-codex-logical-agent-topology.py")
@@ -94,6 +272,7 @@ source_root = Path(__file__).resolve().parents[1]
 policy = source_root / "adapters/runtime/codex-collaboration/role-policy.json"
 installed: list[dict[str, str | None]] = []
 retired_profiles: list[dict[str, str]] = []
+owned_files: list[dict[str, str | None]] = []
 
 with tempfile.TemporaryDirectory(prefix="codex-logical-agents-", dir=home) as temporary:
     temporary_dir = Path(temporary)
@@ -102,8 +281,6 @@ with tempfile.TemporaryDirectory(prefix="codex-logical-agents-", dir=home) as te
         check=True,
     )
     base_config = home / "config.toml"
-    if not base_config.is_file():
-        raise SystemExit(f"global catalog base is not installed: {base_config}")
     expected_base = temporary_dir / "global-catalog.config.toml"
     subprocess.run(
         ["python3", str(catalog_renderer), str(args.catalog), "--mode", "global", "--output", str(expected_base)],
@@ -111,9 +288,13 @@ with tempfile.TemporaryDirectory(prefix="codex-logical-agents-", dir=home) as te
     )
     catalog = tomllib.loads(args.catalog.read_text())
     expected_states = managed_catalog_states(catalog)
-    actual_states = effective_states(tomllib.loads(base_config.read_text()), set(expected_states))
+    base_text = base_config.read_text() if base_config.is_file() else ""
+    base_document = tomllib.loads(base_text) if base_text else {}
+    reconciled_base = reconciled_catalog_base(base_text, base_document, expected_states)
+    reconciled_document = tomllib.loads(reconciled_base)
+    actual_states = effective_states(reconciled_document, set(expected_states))
     if any(actual_states.get(path, True) != expected for path, expected in expected_states.items()):
-        raise SystemExit(f"global catalog base is stale or incomplete: {base_config}")
+        raise SystemExit("reconciled global catalog is incomplete")
     staged: list[tuple[str, Path, Path]] = []
     for agent in topology["agents"]:
         if agent["kind"] != "specialist":
@@ -129,26 +310,31 @@ with tempfile.TemporaryDirectory(prefix="codex-logical-agents-", dir=home) as te
         staged.append((name, target, generated))
 
     staged_base = temporary_dir / "config.toml"
-    rendered_base = root_config_with_orchestrator_defaults(base_config.read_text(), orchestrator)
+    rendered_base = root_config_with_orchestrator_defaults(reconciled_base, orchestrator)
     tomllib.loads(rendered_base)
     staged_base.write_text(rendered_base)
     stale_orchestrator_profile = home / "orchestrator.config.toml"
     replaced: list[tuple[Path, Path | None]] = []
     try:
         base_backup: Path | None = None
-        if base_config.read_bytes() != staged_base.read_bytes():
+        base_before = base_config.read_bytes() if base_config.exists() else None
+        base_changed = base_before != staged_base.read_bytes()
+        if base_changed:
             backup_dir.mkdir(parents=True, exist_ok=True)
-            base_backup = backup_dir / base_config.name
-            shutil.copy2(base_config, base_backup)
+            if base_before is not None:
+                base_backup = backup_dir / base_config.name
+                shutil.copy2(base_config, base_backup)
             os.replace(staged_base, base_config)
             replaced.append((base_config, base_backup))
-        installed.append({"agent": "orchestrator", "target": str(base_config), "backup": str(base_backup) if base_backup else None})
+            owned_files.append({"target": str(base_config), "backup": str(base_backup) if base_backup else None, "before_sha256": sha256_path(base_backup) if base_backup else None, "after_sha256": sha256_path(base_config)})
+        installed.append({"agent": "orchestrator", "target": str(base_config), "backup": str(base_backup) if base_backup else None, "changed": base_changed})
         if stale_orchestrator_profile.exists():
             backup_dir.mkdir(parents=True, exist_ok=True)
             profile_backup = backup_dir / stale_orchestrator_profile.name
             shutil.copy2(stale_orchestrator_profile, profile_backup)
             stale_orchestrator_profile.unlink()
             replaced.append((stale_orchestrator_profile, profile_backup))
+            owned_files.append({"target": str(stale_orchestrator_profile), "backup": str(profile_backup), "before_sha256": sha256_path(profile_backup), "after_sha256": None})
             retired_profiles.append(
                 {
                     "agent": "orchestrator",
@@ -158,13 +344,18 @@ with tempfile.TemporaryDirectory(prefix="codex-logical-agents-", dir=home) as te
             )
         for name, target, generated in staged:
             backup: Path | None = None
+            changed = not target.exists() or target.read_bytes() != generated.read_bytes()
+            if not changed:
+                installed.append({"agent": name, "target": str(target), "backup": None, "changed": False})
+                continue
             if target.exists():
                 backup_dir.mkdir(parents=True, exist_ok=True)
                 backup = backup_dir / target.name
                 shutil.copy2(target, backup)
             os.replace(generated, target)
             replaced.append((target, backup))
-            installed.append({"agent": name, "target": str(target), "backup": str(backup) if backup else None})
+            owned_files.append({"target": str(target), "backup": str(backup) if backup else None, "before_sha256": sha256_path(backup) if backup else None, "after_sha256": sha256_path(target)})
+            installed.append({"agent": name, "target": str(target), "backup": str(backup) if backup else None, "changed": True})
     except Exception:
         for target, backup in reversed(replaced):
             if backup is None:
@@ -181,9 +372,10 @@ receipt = {
     "catalog_sha256": hashlib.sha256(args.catalog.read_bytes()).hexdigest(),
     "installed": installed,
     "retired_profiles": retired_profiles,
+    "changed": bool(owned_files),
+    "owned_files": owned_files,
     "rollback_directory": str(backup_dir) if backup_dir.exists() else None,
 }
-receipt_path = home / "logical-agent-install-receipt.json"
 staged_receipt = home / f".{receipt_path.name}.{timestamp}.tmp"
 staged_receipt.write_text(json.dumps(receipt, indent=2, sort_keys=True) + "\n")
 os.replace(staged_receipt, receipt_path)

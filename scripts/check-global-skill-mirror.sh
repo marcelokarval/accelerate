@@ -123,6 +123,30 @@ if [[ -d "${ROOT_RUNTIME_DIR}" ]]; then
     fi
   fi
 
+  for source_file in \
+    "${ROOT_DIR}/core/runtime-packets/delegation-dispatch-receipt.schema.json" \
+    "${ROOT_DIR}/scripts/validate-delegation-dispatch-receipt.py"; do
+    [[ -f "${source_file}" ]] || {
+      echo "missing canonical delegation dispatch export source: ${source_file}" >&2
+      exit 1
+    }
+    if [[ "${source_file}" == *".schema.json" ]]; then
+      target_file="${GLOBAL_SKILLS_DIR}/accelerate/assets/delegation-dispatch-receipt.schema.json"
+    else
+      target_file="${GLOBAL_SKILLS_DIR}/accelerate/scripts/validate-delegation-dispatch-receipt.py"
+    fi
+    runtime_expected=$((runtime_expected + 1))
+    if [[ ! -f "${target_file}" ]]; then
+      echo "missing: ${target_file}" >&2
+      missing=1
+    elif ! cmp -s "${source_file}" "${target_file}"; then
+      echo "different: ${source_file} != ${target_file}" >&2
+      different=1
+    else
+      runtime_verified=$((runtime_verified + 1))
+    fi
+  done
+
   if [[ -f "${ROOT_DIR}/agents/openai.yaml" ]]; then
     source_file="${ROOT_DIR}/agents/openai.yaml"
     target_file="${GLOBAL_SKILLS_DIR}/accelerate/agents/openai.yaml"

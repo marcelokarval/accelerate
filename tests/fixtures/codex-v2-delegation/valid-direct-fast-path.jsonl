@@ -1,0 +1,3 @@
+{"type":"delegation_canary_event","version":1,"event":"tasks_ready","route":"direct-fast-path","task_id":"FAST-1"}
+{"type":"delegation_canary_event","version":1,"event":"route_selected","route":"direct-fast-path"}
+{"type":"delegation_canary_event","version":1,"event":"closure_marker","actor_id":"root"}

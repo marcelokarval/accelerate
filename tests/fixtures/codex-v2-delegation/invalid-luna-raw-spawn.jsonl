@@ -1,0 +1,2 @@
+{"type":"thread.started","thread_id":"redacted-thread"}
+{"type":"response_item","payload":{"type":"function_call","call_id":"spawn-1","name":"spawn_agent","arguments":"{\"task_name\":\"u7-executor\",\"model\":\"gpt-5.6-terra\",\"reasoning_effort\":\"medium\",\"fork_turns\":\"none\"}"}}

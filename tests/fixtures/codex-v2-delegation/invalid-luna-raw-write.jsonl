@@ -1,0 +1,2 @@
+{"type":"thread.started","thread_id":"redacted-thread"}
+{"type":"response_item","payload":{"type":"function_call","call_id":"write-1","name":"apply_patch","arguments":"{\"input\":\"canary/executor-artifact.txt\"}"}}

@@ -89,6 +89,8 @@ agent remains review-ready, not final closure.
 
 `Done` stays root-owned.
 
-If no promoted agent is available, the root must execute or review through the
-orchestrator-first path with virtual executor/reviewer packets, or use an
-explicit single-threaded exception when virtual separation is not honest.
+If no promoted agent is available, direct-fast-path or scoped work may remain
+root-owned, with a read-only scoped sidecar where useful. An orchestrated run
+after `TASKS_READY` must dispatch physical executor/reviewer bindings when
+collaboration is available; virtual evidence is only an allowed exception's
+blocked compensation, never an execution or closure fallback.

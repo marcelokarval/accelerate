@@ -1,0 +1,12 @@
+{
+  "contract_version": "1.0", "state": "DISPATCHED",
+  "artifacts": {"hardening": {"ref": "h", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}, "spec": {"ref": "s", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}, "task_graph": {"ref": "t", "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"}},
+  "route": "orchestrated", "execution_requested": true, "planned_task_owned_writes": true,
+  "capability_proof": {"collaboration_available": true, "spawn_api": "collaboration.spawn_agent", "checked_at": "2026-08-20T12:00:00Z"}, "budget": {"max_agents": 2, "active_count": 2},
+  "assignments": [
+    {"assignment_id": "executor", "kind": "executor", "task_id": "TASK-1", "dependencies": [], "wave": 1, "role": "governance", "model": "gpt-5.6-terra", "effort": "medium", "fork": "none", "agent_id": "agent-executor", "call_id": "call-executor", "read_scopes": [], "write_scopes": ["core/task.md"], "proof": "tests/task.sh", "reviewer_assignment_id": "reviewer", "recursion": {"delegation_allowed": false, "authorization": null}, "parent_assignment_id": null, "delegation_reference": null},
+    {"assignment_id": "reviewer", "kind": "reviewer", "task_id": "TASK-1-review", "dependencies": ["TASK-1"], "wave": 2, "role": "qa-regression", "model": "gpt-5.6-terra", "effort": "medium", "fork": "none", "agent_id": "agent-reviewer", "call_id": "call-reviewer", "read_scopes": ["core/task.md"], "write_scopes": [], "proof": "tests/task.sh", "reviewer_assignment_id": null, "recursion": {"delegation_allowed": false, "authorization": null}, "parent_assignment_id": null, "delegation_reference": null}
+  ],
+  "fan_in": {"owner": "root", "assignment_ids": ["executor", "reviewer"]}, "exceptions": [],
+  "root_write_lock": {"mode": "root-owned", "task_owned_writes_forbidden": false, "dispatched_task_scopes": []}
+}

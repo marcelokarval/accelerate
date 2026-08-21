@@ -167,16 +167,33 @@ explicit no-issue exception exists.
 
 ### Non-Trivial Branch
 
-Non-trivial work should:
+Non-trivial work uses prompt hardening when ambiguity is real, keeps packeted
+runtime visibility, and keeps proof/closure lanes visible until completion.
 
-- use prompt hardening when ambiguity is real
-- keep packeted runtime visibility
-- default to multi-agent execution when there is an honest fit
-- emit a `single-threaded exception` reason when staying root-only
-- keep proof and closure lanes visible until real completion
+### Standing Multi-Agent V2 Delegation Request
 
-Agent usage is optional. `accelerate` must remain functional with zero promoted
-agents.
+When `execution_route=orchestrated`, execution was requested, `TASKS_READY`
+was reached, and `collaboration.spawn_agent` exists, root MUST call
+`collaboration.spawn_agent` before any task-owned mutation. The user need not
+repeat the request. Root MUST NOT execute task-owned scopes; it retains
+hardening, SDD/PRD/task graph, dispatch, fan-in, integration-only repairs,
+review-of-review, promotion, and closure.
+
+A virtual packet or `single-threaded exception` cannot satisfy the gate when
+physical collaboration exists. A single-threaded exception is a blocking
+exception receipt, not permission. The only exceptions are explicit user
+opt-out, collaboration unavailable, or spawn failure with
+operator-authorized degradation. Planning-only may stop at `TASKS_READY`;
+direct-fast-path and scoped retain proportional routing. Portability without
+collaboration remains valid, never a silent fallback when V2 exists.
+
+Every child assignment explicitly sets `model`, `reasoning_effort`, and
+`fork_turns`; default is `fork_turns=none`; only an explicit integer `1..5`
+may override it. Preserve the effective root selected by the session;
+Sol/medium is the recommended root.
+Use Luna/low for research, Luna/medium for prescribed mechanical work,
+Terra/medium for implementation/data/ops/QA/review, and Sol/high only for
+high-stakes read-only work with a receipt.
 
 ## Local Workspace Rule
 
@@ -215,7 +232,8 @@ For engineering runs, keep visible:
 - persistent E2E status
 - local review / closure action
 - closure blockers
-- `single-threaded exception` when non-trivial work stays root-only
+- `single-threaded exception` blocker receipt for an allowed degradation, never
+  root-only execution permission
 
 Use explicit packet shapes rather than long opaque progress prose.
 
@@ -318,6 +336,7 @@ Use these bundled references first:
 - `references/fable-method-composition.md`
 - `references/codex-collaboration-routing.md`
 - `references/codex-collaboration-role-policy.json`
+- `references/delegation-dispatch-gate.md`
 
 When the active repository has stronger local doctrine, use this runtime root
 to classify and then defer to that repo-local authority.
@@ -333,6 +352,7 @@ References:
 - `references/fable-method-composition.md`: classify and apply Fable as an optional reasoning/reporting overlay without duplicating Accelerate root authority.
 - `references/codex-collaboration-routing.md`: map Codex execution roles to supported collaboration model and reasoning parameters.
 - `references/codex-collaboration-role-policy.json`: machine-readable role policy consumed by the Codex collaboration adapter.
+- `references/delegation-dispatch-gate.md`: enforce physical dispatch after `TASKS_READY` and before orchestrated task-owned writes; use its receipt and packet links.
 
 Scripts:
 

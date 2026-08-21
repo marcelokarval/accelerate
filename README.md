@@ -71,11 +71,12 @@ session plans, assigns, integrates, reviews the review, and owns final forensic
 closure. It should not act as both task executor and acceptance reviewer.
 
 When physical subagents exist, use them for bounded execution or skeptical
-review. When they do not exist, use virtual subagent packets: a virtual executor
-pass returns implementation evidence and self-review, then a separate virtual
-skeptical reviewer pass checks that evidence as if the executor is wrong until
-proof says otherwise. The master session then performs review-of-review before
-closure.
+review. Direct-fast-path and scoped work may retain root-owned implementation;
+a scoped sidecar is read-only discovery or proof. For orchestrated work after
+`TASKS_READY`, available collaboration never permits a virtual or root-owned
+fallback: dispatch physical executor/reviewer bindings, or remain blocked with
+an allowed exception receipt. Virtual packets are only portability evidence for
+an unavailable or authorized-failed collaboration path and cannot close it.
 
 This is the native form of prompts that ask for a complete executive plan,
 complete task ledger, execution, subagent task review, and final confirmation by
@@ -398,29 +399,17 @@ Regression tests:
 - `tests/one-shot-protocol-delegation.sh`
 - `tests/one-shot-protocol-closure.sh`
 
-## Agent Optionality
+## Delegation Availability
 
-Agents are a governed capability, not a structural dependency.
+Agents are a governed capability, not a structural dependency. Direct-fast-path
+and scoped work may remain root-owned under their route rules. For orchestrated
+execution after `TASKS_READY`, physical dispatch is mandatory when collaboration
+is available; an honest-fit judgment or integration cost does not waive it.
 
-`accelerate` must remain fully functional:
-
-- when no exported runtime agents exist
-- when the user explicitly disables agents
-- when the current pool has no honest fit
-- when integration cost is higher than the gain from delegation
-
-`accelerate` may:
-
-- suggest a future agent promotion into the repo-owned agent factory and then an
-  optional runtime export
-- decide that no agent should be used
-- keep the run fully root-owned
-
-`accelerate` must not:
-
-- force delegation because a catalog exists
-- force delegation because thread budget exists
-- treat gap detection as automatic promotion
+Only explicit user opt-out, collaboration unavailable, or spawn failure with
+operator-authorized degradation may create the blocking exception receipt.
+`accelerate` may suggest a future agent promotion, but gap detection is never
+automatic promotion and a catalog/thread budget alone never chooses a route.
 
 The native bounded-delegation authority now lives in:
 
@@ -906,7 +895,8 @@ The user says not to use agents for this run.
 Expected behavior:
 
 - `accelerate` respects the instruction
-- root-only mode becomes active
+- records the explicit-user-opt-out blocking exception receipt when
+  orchestrated execution would otherwise require dispatch
 - issue bootstrap, planning, proof, and closure still happen normally
 
 ### Example 4. No honest fit in the current pool
@@ -916,7 +906,8 @@ The work repeatedly needs a specialty not covered by the current families.
 Expected behavior:
 
 - `accelerate` does not force the least-wrong family
-- root keeps the run honest
+- direct/scoped work may remain root-owned; orchestrated execution follows the
+  dispatch gate or records an allowed blocking exception
 - gap detection may suggest a future agent
 - no promotion happens automatically
 

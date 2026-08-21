@@ -10,11 +10,13 @@ be governed.
 Subagents are bounded collaborators. They do not replace the master
 orchestrator.
 
-For non-trivial execution, the default posture is orchestrator-first: the master
-session plans, assigns, integrates, reviews the review, and owns closure. Task
-execution should be assigned to a physical subagent when available and honest;
-otherwise it must be represented as a virtual executor pass with packeted scope
-and evidence.
+For non-trivial execution, the default posture is orchestrator-first: the root
+hardens, owns SDD/PRD and the task graph, dispatches, fans in, integrates,
+reviews the review, and owns closure. Root does not execute task-owned scopes.
+Operationally, root does not execute task-owned scopes after dispatch.
+After `DISPATCH_REQUIRED`, physical execution is mandatory when collaboration is
+available; see the [Post-Spec Delegation Dispatch Gate](../control-plane/post-spec-delegation-dispatch-gate.md)
+and its `delegation-dispatch-receipt.schema.json` receipt.
 
 The master always owns:
 
@@ -39,7 +41,7 @@ Useful subagent shapes:
 - runtime or browser reviewer
 - verification sidecar
 - QA / regression reviewer
-- source or provider-boundary observer candidate
+- provider-boundary implementation worker
 
 ## Orchestrator Routing Flow
 
@@ -60,7 +62,9 @@ this sequence:
    root model by omission
 6. bind the role to a physical subagent only when a matching promoted agent or
    runtime adapter exists
-7. otherwise emit a virtual subagent assignment packet with the chosen role family
+7. use virtual delegation only with `collaboration_unavailable` or
+   `spawn_failed_operator_authorized`; it never substitutes for available
+   physical dispatch
 8. keep master-owned architecture and closure decisions out of delegated
    acceptance authority
 
@@ -78,8 +82,8 @@ The routing output must name:
 For Codex collaboration, tools, skills, and MCPs remain assignment-contract
 allowlists because the host does not enforce a per-subagent tool boundary. Do
 not represent this as technical isolation. `direct-fast-path` never reaches a
-physical binding; unresolved or unavailable bindings fall back to root or
-virtual packets.
+physical binding. Root execution after `DISPATCH_REQUIRED` is prohibited;
+`single-threaded exception is a blocker`, not a route permission.
 
 Do not route by title alone. For example, a task named "review dashboard" may be
 QA/proof, product/runtime, accessibility, or architecture depending on the proof
@@ -97,7 +101,7 @@ Use this matrix as the default routing policy:
 | tests, regression, validation commands, browser proof, closure evidence | QA / regression reviewer | read-only or test-only proof | master review-of-review |
 | auth, billing, ownership, abuse, untrusted ingress, secrets | security / anti-abuse reviewer | read-only skeptical review unless correction is explicitly bounded | master plus affected stack reviewer |
 | docs, workflow seeds, runtime packets, local workspace gates | governance auditor | bounded docs/workflow edit or audit | master review-of-review |
-| external provider, source observation, runtime adapter gap | provider-boundary observer candidate | read-only observation or gap packet | architecture/governance reviewer |
+| external provider, source observation, runtime adapter change | provider-boundary implementation worker | bounded Terra/medium change or observation proof | architecture/governance reviewer |
 
 If two role families are plausible, prefer the one that owns the dominant risk,
 not the one that matches the file extension. If no role owns the dominant risk,
@@ -160,34 +164,41 @@ Choose the route before assigning a role:
 - Direct Fast Path: `0` physical or virtual subagents. The root executes known,
   low-risk, focal work directly; a sidecar always escalates the route to Scoped.
 - Scoped: at most `1` sidecar for bounded discovery, current research, or
-  independent proof whose value exceeds its handoff cost. Keep execution single.
-- Orchestrated: use `2-3` subagents only when there are two or more independent
-  lanes, write scopes do not overlap, and expected latency or uncertainty
-  reduction exceeds integration cost.
+  independent proof whose value exceeds its handoff cost. The root may perform
+  the bounded task-owned implementation; the read-only sidecar must not hide or
+  perform it.
+- Orchestrated: require `2-3` physical executor/reviewer bindings, a dispatch
+  receipt, non-overlapping write scopes, and an explicit fork per child before
+  task-owned execution.
+
+Orchestrated: use `2-3` subagents only when there are two or more independent
+lanes, write scopes do not overlap, and the dispatch receipt confirms physical
+binding availability. Once selected for execution, this is a requirement rather
+than a discretionary target.
 
 Routes do not follow file count, UI presence, or agent availability. A task may
 touch multiple files and remain direct when the target, risk, and proof stay
 bounded.
 
 For non-trivial work, prefer bounded delegation when it creates honest value.
-When no physical subagent is available, use virtual delegation packets instead
-of collapsing execution, review, and acceptance into one authority.
-
-Root-only execution remains legitimate only with an explicit exception when
-delegation or virtual separation would add more integration cost than execution
-clarity.
+When collaboration is unavailable, or a spawn fails with operator authorization,
+use virtual delegation packets rather than collapse execution and acceptance.
+The only exceptions are `explicit_user_opt_out`, `collaboration_unavailable`,
+and `spawn_failed_operator_authorized`, each with evidence and compensation.
 
 Delegation should trace back to the `Reasoning Effort Gate`:
 
-- `low`: root-only by default
-- `medium`: root-only or one bounded sidecar when it improves proof or latency
+- `low`: direct-fast-path or scoped may be root-owned
+- `medium`: direct-fast-path or scoped may be root-owned or use one bounded
+  sidecar when it improves proof or latency
 - `high`: consider specialized implementation, review, governance, security, or
   browser/proof sidecars when slices are independent
 - `xhigh`: keep root orchestration explicit and use specialists only for bounded
   evidence gathering or review
 
 Agent count is not reasoning effort. Do not spawn agents merely because effort is
-high, and do not use a vague agent to compensate for unclear criteria.
+high, and do not use a vague agent to compensate for unclear criteria. These
+effort defaults never waive orchestrated physical dispatch after `TASKS_READY`.
 
 Default expectation:
 
@@ -195,13 +206,18 @@ Default expectation:
   spawn an implementation worker
 - if there is no safe implementation split but there is clear proof/review value
   -> spawn a review, browser, governance, or verification sidecar
-- if neither physical nor virtual separation is honest -> keep the run
-  root-owned and emit an explicit `single-threaded exception`
+- if neither physical nor virtual separation is honest -> use direct-fast-path
+  or scoped root ownership when their route conditions hold; orchestrated work
+  instead remains blocked behind its explicit exception receipt
 
 ## Virtual Subagent Rule
 
 A virtual subagent is not a claim that a live agent exists. It is a packeted role
 pass used to preserve review isolation in standalone or pre-agents runtime.
+
+It is legitimate only for direct-fast-path/scoped work or as blocked
+compensation under an allowed exception. It never lets orchestrated execution
+after `TASKS_READY` and available collaboration replace physical dispatch.
 
 Virtual executor passes must include:
 
@@ -221,6 +237,18 @@ Virtual reviewer passes must include:
 - `met|partial|missed|blocked` judgment
 
 The master must still review the virtual review quality before closure.
+
+## Physical Binding and Nested Dispatch
+
+Every physical child declares model, effort, and fork. `none` is the default;
+only an integer from `1..5` may override it, and `all` is forbidden with an
+override. A child never inherits the root binding implicitly.
+
+nested Terra-to-Luna is forbidden by default. The root may authorize exactly one
+Luna/medium prescribed-mechanical leaf only when scopes are disjoint, the total
+physical budget is exactly three (Terra parent, Luna child, independent
+reviewer), and the Terra parent remains accountable. Luna is a leaf and cannot
+delegate.
 
 Prefer bounded delegation when all are true:
 
@@ -282,8 +310,8 @@ plan:
 - implementation worker: exact write scope, behavior changed, local tests
 - proof sidecar: proof lane exercised, blockers found, evidence location
 - trust / anti-abuse reviewer: abuse path, signal, blocker, release condition
-- source observer candidate: source material inspected, useful pattern,
-  rejected direct imports, proposed bounded adaptation
+- provider-boundary implementation worker: bounded provider scope, explicit
+  Terra/medium binding, source/proof evidence, and no external authority claim
 - governance auditor: violated rule, governing artifact, correction target
 
 ## Review Hierarchy
@@ -330,8 +358,10 @@ Use explicit budgets:
 
 - `0` physical subagents for trivial bounded work, with no virtual separation
   required unless review-bearing
-- `0` physical subagents plus virtual executor/reviewer passes for non-trivial
-  work when no honest physical agent exists
+- `0` physical subagents plus virtual executor/reviewer passes only for
+  direct-fast-path/scoped non-trivial work, or as a blocking exception; never
+  as executable fallback after `TASKS_READY` on an orchestrated route with
+  collaboration available
 - `1` subagent for a single meaningful sidecar
 - `2-3` subagents for independent bounded slices
 

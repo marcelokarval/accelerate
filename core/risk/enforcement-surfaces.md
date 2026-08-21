@@ -113,10 +113,13 @@ Use it when the question is:
 
 ## Multi-Agent Enforcement
 
-- non-trivial work should evaluate bounded subagent spawning explicitly
-- non-trivial work may stay root-owned when delegation has no honest fit or
-  adds more integration cost than execution clarity; staying fully
-  single-threaded still requires an explicit exception packet
+- `direct-fast-path` and `scoped` may retain root-owned execution under their
+  proportional route rules
+- orchestrated execution after `TASKS_READY`, when collaboration is available,
+  requires physical dispatch before task-owned mutation; root may not retain
+  task-owned execution because delegation lacks an honest fit
+- only explicit user opt-out, collaboration unavailable, or spawn failure with
+  operator-authorized degradation may record the blocking exception receipt
 - absence of promoted agents is never a runtime blocker for Accelerate; it is a
   planning or promotion signal only
 - each subagent loads `accelerate` first before layer-specific work

@@ -1,0 +1,9 @@
+{
+  "contract_version": "1.0", "state": "CLOSURE",
+  "artifacts": {"hardening": {"ref": "h", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}, "spec": {"ref": "s", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"}, "task_graph": {"ref": "t", "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"}},
+  "route": "orchestrated", "execution_requested": true, "planned_task_owned_writes": true,
+  "capability_proof": {"collaboration_available": false, "spawn_api": "collaboration.spawn_agent", "checked_at": "2026-08-20T12:00:00Z"},
+  "budget": {"max_agents": 0, "active_count": 0}, "assignments": [], "fan_in": {"owner": "root", "assignment_ids": []},
+  "exceptions": [{"code": "collaboration_unavailable", "proof": "capability probe", "compensation": "blocked pending physical dispatch"}],
+  "root_write_lock": {"task_owned_writes_forbidden": true, "allowed_scopes": []}
+}

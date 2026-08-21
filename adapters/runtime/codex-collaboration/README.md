@@ -1,7 +1,9 @@
 # Codex Collaboration Runtime Adapter
 
-Use this adapter when Accelerate delegates a bounded `scoped` or
-`orchestrated` lane through the Codex collaboration runtime.
+Use this adapter when Accelerate dispatches a bounded `scoped` or
+`orchestrated` lane through the Codex collaboration runtime. Read the
+Post-Spec Delegation Dispatch Gate and produce its receipt before task-owned
+execution.
 
 It is an experimental binding contract, not a replacement for root ownership
 or a claim that Codex enforces per-agent tool isolation.
@@ -11,10 +13,17 @@ or a claim that Codex enforces per-agent tool isolation.
 The root selects the execution route and normalized role family before binding.
 Resolve the role through `role-policy.json`, then pass its model and reasoning
 effort explicitly to `collaboration.spawn_agent`. An omitted override inherits
-the parent runtime and does not satisfy this policy.
+the parent runtime and does not satisfy this policy. Every child gets an
+explicit binding: `fork_turns=none` is the default, an integer from `1..5` is
+the only override, and `all` is forbidden whenever a model or effort override
+is present.
 
 The role policy is a minimum sufficient default:
 
+- root preserves the user/runtime-selected effective session model; Sol/medium
+  is the recommended default. Root owns hardening,
+  SDD/PRD, task graph, dispatch, fan-in, integration-only repairs,
+  review-of-review, and closure; it does not execute task-owned scopes.
 - `direct-fast-path` binds no agent; root retains its effective session model
   and effort.
 - bounded discovery and documentation use Luna/low.
@@ -51,14 +60,22 @@ Before binding, require all of the following:
 3. assignment has a bounded read/write scope and expected return;
 4. each writer has a non-overlapping write scope;
 5. a `high` profile has a valid reasoning decision receipt;
-6. root retains issue topology, integration, review-of-review, and closure.
+6. `orchestrated` dispatches 2-3 physical executor/reviewer bindings and a
+   dispatch receipt before `DISPATCH_REQUIRED` can advance to execution;
+7. root retains issue topology, integration, review-of-review, and closure.
 
-If a compatible physical agent is unavailable, use the declared fallback. Do
-not invent a binding or stretch a role to make delegation happen. Preserve the
-selected route: a failed Scoped or Orchestrated binding never falls back to
-`direct-fast-path`. The normalized `provider-boundary` and `other` roles have
-no physical binding; root must reclassify them, keep them root-owned, or use a
-virtual packet.
+Virtual delegation is permitted only after `collaboration_unavailable` or a
+`spawn_failed_operator_authorized` receipt exception (or explicit user opt-out
+where execution is not demanded). It never satisfies available physical
+dispatch. `single-threaded exception` is a blocker, not a permission. Scoped
+uses at most one read-only/discovery/proof sidecar and cannot conceal task-owned
+implementation. `data-db` and `provider-boundary` bind explicitly to
+Terra/medium implementation; only `other` is a root reclassification gap.
+
+Nested Terra-to-Luna dispatch is forbidden by default. The root may authorize
+one Luna/medium mechanical leaf only with exactly three physical participants:
+the Terra parent, Luna child, and independent reviewer. Scopes must be disjoint
+and Terra remains accountable. Luna never delegates.
 
 ## Return and Cleanup
 

@@ -1,0 +1,9 @@
+{"type":"delegation_canary_event","version":1,"event":"tasks_ready","route":"orchestrated","task_id":"CODEX-11"}
+{"type":"delegation_canary_event","version":1,"event":"route_selected","route":"orchestrated"}
+{"type":"delegation_canary_event","version":1,"event":"spawn_agent","role":"executor","agent_id":"agent-executor","call_id":"call-executor","task_id":"CODEX-11-U7","model":"gpt-5.6-terra","reasoning_effort":"medium","fork_turns":"none","write_scopes":["scripts/validate-codex-v2-delegation-transcript.py"]}
+{"type":"delegation_canary_event","version":1,"event":"spawn_agent","role":"reviewer","agent_id":"agent-reviewer","call_id":"call-reviewer","task_id":"CODEX-11-U7-review","model":"gpt-5.6-terra","reasoning_effort":"medium","fork_turns":"none","write_scopes":[]}
+{"type":"delegation_canary_event","version":1,"event":"implementation_write","actor_id":"agent-executor","scope":"scripts/validate-codex-v2-delegation-transcript.py"}
+{"type":"delegation_canary_event","version":1,"event":"agent_return","agent_id":"agent-executor","call_id":"call-executor"}
+{"type":"delegation_canary_event","version":1,"event":"agent_return","agent_id":"agent-reviewer","call_id":"call-reviewer"}
+{"type":"delegation_canary_event","version":1,"event":"root_review_of_review","actor_id":"root"}
+{"type":"delegation_canary_event","version":1,"event":"closure_marker","actor_id":"root"}

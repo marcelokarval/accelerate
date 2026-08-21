@@ -58,6 +58,7 @@ This prevents invisible gate drift and stale mandatory language.
 | `Seam Proof Requirement` | `../review/seam-proof.md` | Required when layout/state/shell seams are plausible. |
 | `AI Review Report` | `../runtime-packets/templates.md` | Required closure artifact in the Closure Packet when AI review is part of the proof lane. |
 | `Orchestrator-First Execution Gate` | `orchestrator-first-execution-gate.md` | Required when non-trivial execution and acceptance review happen in one run; separates executor, skeptical reviewer, and final orchestrator authority. |
+| `Post-Spec Delegation Dispatch Gate` | `post-spec-delegation-dispatch-gate.md` | Requires the canonical dispatch receipt before available physical orchestrated execution crosses `DISPATCH_REQUIRED`. |
 
 ## Adjacent-Skill-Owned Gates
 

@@ -110,7 +110,7 @@ into:
 Even before real runtime promotion exists, this layer should already leave
 clear truth for later sessions:
 
-- whether the run is root-only or agent-eligible
+- whether the route is direct/scoped root-owned or orchestrated dispatch-required
 - whether a family fit is honest or weak
 - whether a gap was merely detected
 - whether a future agent should be suggested

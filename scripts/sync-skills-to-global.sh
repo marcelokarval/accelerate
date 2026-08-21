@@ -54,7 +54,7 @@ done < <(find "$root_dir/skills" -mindepth 3 -maxdepth 3 -name SKILL.md | sort)
 
 if [[ -d "$root_runtime_dir" ]]; then
   target_dir="$codex_target_root/accelerate"
-  mkdir -p "$target_dir" "$target_dir/references" "$target_dir/agents"
+  mkdir -p "$target_dir" "$target_dir/references" "$target_dir/agents" "$target_dir/assets" "$target_dir/scripts"
 
   cp "$root_runtime_dir/SKILL.md" "$target_dir/SKILL.md"
   cp "$root_runtime_dir/README.md" "$target_dir/README.md"
@@ -77,6 +77,15 @@ if [[ -d "$root_runtime_dir" ]]; then
       cp -r "$root_runtime_dir/$root_runtime_support_dir" "$target_dir/"
     fi
   done
+
+  delegation_schema="$root_dir/core/runtime-packets/delegation-dispatch-receipt.schema.json"
+  delegation_validator="$root_dir/scripts/validate-delegation-dispatch-receipt.py"
+  if [[ ! -f "$delegation_schema" || ! -f "$delegation_validator" ]]; then
+    echo "Missing canonical delegation dispatch export source." >&2
+    exit 1
+  fi
+  cp "$delegation_schema" "$target_dir/assets/delegation-dispatch-receipt.schema.json"
+  cp "$delegation_validator" "$target_dir/scripts/validate-delegation-dispatch-receipt.py"
 
   if [[ -f "$root_dir/agents/openai.yaml" ]]; then
     cp "$root_dir/agents/openai.yaml" "$target_dir/agents/openai.yaml"

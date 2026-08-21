@@ -1,0 +1,4 @@
+{"type":"response_item","payload":{"type":"function_call","call_id":"spawn-exec","name":"spawn_agent","arguments":"{\"task_name\":\"u7-executor\",\"model\":\"gpt-5.6-terra\",\"reasoning_effort\":\"medium\",\"fork_turns\":\"6\"}"}}
+{"type":"response_item","payload":{"type":"function_call_output","call_id":"spawn-exec","output":"{\"agent_id\":\"agent-executor\"}"}}
+{"type":"response_item","payload":{"type":"function_call","call_id":"spawn-review","name":"spawn_agent","arguments":"{\"task_name\":\"u7-reviewer\",\"model\":\"gpt-5.6-terra\",\"reasoning_effort\":\"medium\",\"fork_turns\":\"none\"}"}}
+{"type":"response_item","payload":{"type":"function_call_output","call_id":"spawn-review","output":"{\"agent_id\":\"agent-reviewer\"}"}}

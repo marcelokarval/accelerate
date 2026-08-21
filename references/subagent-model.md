@@ -25,6 +25,12 @@ The master always owns:
 - final review
 - final forensic closure
 
+For orchestration dispatch and exceptions, read
+`../core/control-plane/post-spec-delegation-dispatch-gate.md` and the canonical
+`../core/runtime-packets/delegation-dispatch-receipt.schema.json`. Root does not
+execute task-owned scopes after `DISPATCH_REQUIRED`; a single-threaded exception
+is a blocker.
+
 ## Subagent Role Catalog
 
 Useful subagent shapes:
@@ -55,8 +61,9 @@ Safe defaults:
 
 For non-trivial work, prefer bounded delegation when it creates honest value.
 
-Root-only execution remains legitimate when delegation would add more
-integration cost than execution clarity.
+Root-only execution remains legitimate on direct-fast-path or scoped routes
+when delegation would add more integration cost than execution clarity; it is
+not an orchestrated fallback after `TASKS_READY` when collaboration is available.
 
 Default expectation:
 
@@ -64,8 +71,8 @@ Default expectation:
   spawn an implementation worker
 - if there is no safe implementation split but there is clear proof/review value
   -> spawn a review, browser, governance, or verification sidecar
-- if neither shape is honest -> keep the run root-owned and emit an explicit
-  `single-threaded exception`
+- if neither shape is honest -> use route-qualified direct/scoped root ownership
+  or leave orchestrated execution blocked with its explicit exception receipt
 
 Spawn when all are true:
 
@@ -128,8 +135,9 @@ Never trust subagent-local success as proof of integrated correctness.
 
 Use explicit budgets:
 
-- `0` subagents for trivial bounded work, root-only execution by honest fit, or
-  explicit single-threaded exception
+- `0` subagents for trivial bounded work or route-qualified direct/scoped
+  root-owned execution; orchestrated execution needs a valid blocking exception
+  receipt to remain at zero
 - `1` subagent for a single meaningful sidecar
 - `2-3` subagents for independent bounded slices
 

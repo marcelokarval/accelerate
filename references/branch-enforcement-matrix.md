@@ -19,4 +19,8 @@ Open the native file when deciding:
 - expected evidence
 - closure blockers
 
+For orchestrated execution, also open
+`../core/control-plane/post-spec-delegation-dispatch-gate.md` before task-owned
+writes and validate the `delegation-dispatch-receipt.schema.json` receipt.
+
 If this file and the native file ever disagree, the native file wins.

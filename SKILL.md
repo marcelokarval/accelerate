@@ -23,7 +23,7 @@ This file is intentionally constitutional and compact.
 
 ## Current Reality
 
-This repository is in the `standalone pre-agents` phase.
+This repository is in the `standalone capability-portable` phase.
 
 That means:
 
@@ -33,7 +33,8 @@ That means:
 - planning docs and executive artifacts are the current workflow vehicle until
   a native workflow adapter exists
 
-Agents are optional. The platform is not waiting for them to become valid.
+Portability without collaboration remains valid, but it is not a silent
+fallback when the Standing Multi-Agent V2 gate can dispatch physical children.
 
 ## Minimum Truth Stack
 
@@ -96,9 +97,9 @@ Run `accelerate` in this order:
 7. choose reasoning effort and delegation posture from success criteria, risk,
    and available evidence
 8. open the required branch, skills, gates, and artifacts
-9. when execution and acceptance review are both in scope, keep the master
-   session as orchestrator/final reviewer and separate executor/reviewer
-   authority through physical or virtual subagent packets
+9. for orchestrated execution, apply the Standing Multi-Agent V2 gate after
+   `TASKS_READY` and before task-owned mutation; root dispatches physical
+   executor/reviewer authority when collaboration is available
 10. keep runtime state visible with explicit packets
 11. enforce proof in the correct order
 12. block closure until the branch contract is truly satisfied
@@ -196,8 +197,9 @@ When the user asks for an executive plan, full task ledger, execution, subagent
 review, correction, and final confirmation by the main session, open
 `core/control-plane/orchestrator-first-execution-gate.md` and
 `core/review/one-shot-side-by-side-protocol.md`. The main session is the
-orchestrator and final forensic reviewer. Executors and skeptical reviewers may
-be physical subagents or virtual packeted role passes, but executor self-review
+orchestrator and final forensic reviewer. For orchestrated execution with
+collaboration available, physical executor/reviewer dispatch is mandatory;
+virtual packets only document a permitted degradation and executor self-review
 is never acceptance proof.
 
 Reasoning effort is a separate decision from branch size and agent count. Choose
@@ -286,7 +288,8 @@ At minimum, runtime packets should expose:
 - persistent E2E status
 - local review / closure action
 - closure blockers
-- `single-threaded exception` when non-trivial work stays root-only
+- `single-threaded exception` blocker receipt when an allowed degradation is
+  claimed; never root-only execution permission
 
 Do not replace packeted runtime state with long opaque progress prose.
 
@@ -380,18 +383,27 @@ Escalate into `premium interface` when:
 
 These branches do not close on logic correctness alone.
 
-## Agent Optionality
+## Standing Multi-Agent V2 Delegation Request
 
-Agent usage is optional.
+For `execution_route=orchestrated`, requested execution, and `TASKS_READY`,
+the root MUST call `collaboration.spawn_agent` before any task-owned mutation
+when collaboration exists. The user need not repeat that request. Root MUST
+NOT execute assigned task-owned scopes: it retains hardening, SDD/PRD/task
+graph, dispatch, fan-in, integration-only repairs, review-of-review,
+promotion, and closure. A virtual packet or `single-threaded exception` is a
+blocking exception receipt, not permission, while physical collaboration is
+available.
 
-`accelerate` must remain fully functional:
-
-- with no governed agents installed
-- when the user disables agent usage
-- when delegation has no honest fit
-
-If non-trivial work remains single-threaded, say so explicitly and give the
-reason.
+The only exceptions are explicit user opt-out, collaboration unavailable, or a
+spawn failure with operator-authorized degradation. Planning-only work may stop
+at `TASKS_READY`; direct-fast-path and scoped retain proportional routing.
+Every child assignment explicitly declares `model`, `reasoning_effort`, and
+`fork_turns`; default is `fork_turns=none`; only an explicit integer `1..5`
+may override it. Read
+[the delegation dispatch gate](references/delegation-dispatch-gate.md),
+[collaboration routing](references/codex-collaboration-routing.md), and
+[runtime packet templates](references/runtime-packet-templates.md) before
+dispatch.
 
 ## Reference Map
 
@@ -431,6 +443,9 @@ Use these native authorities first:
   - `core/control-plane/design-implementation-proof-gate.md`
 - delegation:
   - `core/delegation/subagent-model.md`
+  - `references/delegation-dispatch-gate.md`
+  - `references/codex-collaboration-routing.md`
+  - `references/runtime-packet-templates.md`
 
 Open `references/` only when native authority is still thin or when comparison
 against inherited doctrine is the point of the run.

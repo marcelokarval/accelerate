@@ -19,6 +19,33 @@ for path in "$policy" "$adapter" "$capabilities" "$validator"; do
 done
 
 python3 "$validator"
+python3 - "$policy" <<'PY'
+import json
+import sys
+
+policy = json.load(open(sys.argv[1]))
+assert policy["schema_version"] == 2
+assert policy["binding"]["fork_turns_default"] == "none"
+assert policy["binding"]["fork_turns_override"] == "integer-1-to-5-only"
+assert policy["binding"]["fork_turns_all"] == "forbidden-with-override"
+assert policy["routes"]["orchestrated"]["physical_binding_required"] is True
+assert policy["routes"]["orchestrated"]["dispatch_receipt_required"] is True
+assert policy["routes"]["orchestrated"]["root_task_execution"] == "forbidden-after-dispatch-required"
+assert policy["routes"]["scoped"]["sidecar_may_implement_task"] is False
+assert policy["role_bindings"]["data-db"] == ["implementation"]
+assert policy["role_bindings"]["provider-boundary"] == ["implementation"]
+assert policy["profiles"]["implementation"]["model"] == "gpt-5.6-terra"
+assert policy["profiles"]["implementation"]["reasoning_effort"] == "medium"
+assert policy["fallback"] == ["virtual-after-approved-exception"]
+assert policy["exceptions"] == [
+    "explicit_user_opt_out",
+    "collaboration_unavailable",
+    "spawn_failed_operator_authorized",
+]
+assert policy["nested_terra_to_luna"]["default"] == "forbidden"
+assert policy["nested_terra_to_luna"]["max_luna_children"] == 1
+assert policy["nested_terra_to_luna"]["global_physical_budget_exact"] == 3
+PY
 rg -n 'assignment-contract-only' "$adapter" "$capabilities" >/dev/null || fail 'missing honest tool-enforcement boundary'
 rg -n 'never `direct-fast-path`' "$adapter" >/dev/null || fail 'direct route is not blocked'
 rg -n 'never use `\*`' "$adapter" >/dev/null || fail 'wildcards are not prohibited'
@@ -63,9 +90,14 @@ reject("direct-binding", lambda value: value["routes"]["direct-fast-path"].updat
 reject("ungated-high", lambda value: value["profiles"]["high-stakes-review"].update(requires_reasoning_receipt=False))
 reject("direct-fallback", lambda value: value["fallback"].append("root-direct-fast-path"))
 reject("bound-other", lambda value: value["role_bindings"].update(other=["architecture-review"]))
-reject("bound-provider-boundary", lambda value: value["role_bindings"]["provider-boundary"].append("architecture-review"))
+reject("provider-not-terra", lambda value: value["role_bindings"].update(**{"provider-boundary": ["mechanical-fixer"]}))
+reject("data-not-terra", lambda value: value["role_bindings"].update(**{"data-db": ["mechanical-fixer"]}))
 reject("wide-scoped", lambda value: value["routes"]["scoped"].update(delegation_budget=99))
 reject("disabled-orchestrated", lambda value: value["routes"]["orchestrated"].update(physical_binding_allowed=False))
+reject("orchestrated-no-receipt", lambda value: value["routes"]["orchestrated"].update(dispatch_receipt_required=False))
+reject("orchestrated-root-exec", lambda value: value["routes"]["orchestrated"].update(root_task_execution="allowed"))
+reject("fork-all", lambda value: value["binding"].update(fork_turns_all="allowed"))
+reject("virtual-default", lambda value: value.update(fallback=["virtual-subagent-packets"]))
 PY
 
 printf 'codex collaboration policy tests passed\n'

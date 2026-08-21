@@ -27,6 +27,14 @@ proof_artifacts:
   - codex-collaboration-assignment-packet
   - subagent-return-packet
 fallback:
-  - scoped-root-only
-  - virtual-subagent-packets
+  - virtual-after-approved-exception
+dispatch_contract:
+  - post-spec-delegation-dispatch-gate
+  - delegation-dispatch-receipt
+  - explicit-child-model-effort-fork
+  - root-task-write-lock
+exceptions:
+  - explicit_user_opt_out
+  - collaboration_unavailable
+  - spawn_failed_operator_authorized
 privacy_notes: assignment text, returned evidence, and host transcripts may contain sensitive local proof

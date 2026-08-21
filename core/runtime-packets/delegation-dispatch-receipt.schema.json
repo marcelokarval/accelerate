@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "core/runtime-packets/delegation-dispatch-receipt.schema.json",
+  "title": "Delegation Dispatch Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "state", "artifacts", "route", "execution_requested", "planned_task_owned_writes", "capability_proof", "budget", "assignments", "fan_in", "exceptions", "root_write_lock"],
+  "properties": {
+    "contract_version": {"const": "1.0"},
+    "state": {"enum": ["HARDENING", "SPEC_READY", "TASKS_READY", "ROUTE_SELECTED", "DISPATCH_REQUIRED", "DISPATCHED", "EXECUTING", "FAN_IN", "INDEPENDENT_REVIEW", "ROOT_REVIEW_OF_REVIEW", "CLOSURE"]},
+    "artifacts": {"type": "object", "additionalProperties": false, "required": ["hardening", "spec", "task_graph"], "properties": {"hardening": {"$ref": "#/$defs/artifact"}, "spec": {"$ref": "#/$defs/artifact"}, "task_graph": {"$ref": "#/$defs/artifact"}}},
+    "route": {"enum": ["direct-fast-path", "scoped", "orchestrated"]},
+    "execution_requested": {"type": "boolean"},
+    "planned_task_owned_writes": {"type": "boolean"},
+    "capability_proof": {"type": "object", "additionalProperties": false, "required": ["collaboration_available", "spawn_api", "checked_at"], "properties": {"collaboration_available": {"type": "boolean"}, "spawn_api": {"const": "collaboration.spawn_agent"}, "checked_at": {"type": "string", "format": "date-time"}}},
+    "budget": {"type": "object", "additionalProperties": false, "required": ["max_agents", "active_count"], "properties": {"max_agents": {"type": "integer", "minimum": 0, "maximum": 3}, "active_count": {"type": "integer", "minimum": 0, "maximum": 3}}},
+    "assignments": {"type": "array", "items": {"$ref": "#/$defs/assignment"}},
+    "fan_in": {"type": "object", "additionalProperties": false, "required": ["owner", "assignment_ids"], "properties": {"owner": {"const": "root"}, "assignment_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}}},
+    "exceptions": {"type": "array", "items": {"$ref": "#/$defs/exception"}},
+    "root_write_lock": {"type": "object", "additionalProperties": false, "required": ["mode", "task_owned_writes_forbidden", "dispatched_task_scopes"], "properties": {"mode": {"enum": ["root-owned", "orchestrated-dispatched-scope-lock"]}, "task_owned_writes_forbidden": {"type": "boolean"}, "dispatched_task_scopes": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}}}
+  },
+  "allOf": [
+    {"if": {"properties": {"route": {"const": "orchestrated"}}}, "then": {"properties": {"root_write_lock": {"properties": {"mode": {"const": "orchestrated-dispatched-scope-lock"}, "task_owned_writes_forbidden": {"const": true}}}}}, "else": {"properties": {"root_write_lock": {"properties": {"mode": {"const": "root-owned"}, "task_owned_writes_forbidden": {"const": false}, "dispatched_task_scopes": {"maxItems": 0}}}}}}
+  ],
+  "$defs": {
+    "artifact": {"type": "object", "additionalProperties": false, "required": ["ref", "sha256"], "properties": {"ref": {"type": "string", "minLength": 1}, "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}}},
+    "assignment": {"type": "object", "additionalProperties": false, "required": ["assignment_id", "kind", "task_id", "dependencies", "wave", "role", "model", "effort", "fork", "agent_id", "call_id", "read_scopes", "write_scopes", "proof", "reviewer_assignment_id", "recursion", "parent_assignment_id", "delegation_reference"], "properties": {"assignment_id": {"type": "string", "minLength": 1}, "kind": {"enum": ["executor", "reviewer", "root"]}, "task_id": {"type": "string", "minLength": 1}, "dependencies": {"type": "array", "items": {"type": "string"}}, "wave": {"type": "integer", "minimum": 1}, "role": {"type": "string", "minLength": 1}, "model": {"enum": ["gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna"]}, "effort": {"enum": ["low", "medium", "high"]}, "fork": {"anyOf": [{"const": "none"}, {"type": "integer", "minimum": 1, "maximum": 5}]}, "agent_id": {"type": "string", "minLength": 1}, "call_id": {"type": "string", "minLength": 1}, "read_scopes": {"type": "array", "items": {"type": "string"}}, "write_scopes": {"type": "array", "items": {"type": "string"}}, "proof": {"type": "string", "minLength": 1}, "reviewer_assignment_id": {"type": ["string", "null"]}, "recursion": {"type": "object", "additionalProperties": false, "required": ["delegation_allowed", "authorization"], "properties": {"delegation_allowed": {"type": "boolean"}, "authorization": {"type": ["string", "null"]}}}, "parent_assignment_id": {"type": ["string", "null"]}, "delegation_reference": {"type": ["string", "null"]}}},
+    "exception": {"type": "object", "additionalProperties": false, "required": ["code", "proof", "compensation"], "properties": {"code": {"enum": ["explicit_user_opt_out", "collaboration_unavailable", "spawn_failed_operator_authorized"]}, "proof": {"type": "string", "minLength": 1}, "compensation": {"type": "string", "minLength": 1}}}
+  }
+}

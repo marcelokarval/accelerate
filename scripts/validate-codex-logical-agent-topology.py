@@ -10,11 +10,24 @@ from pathlib import Path
 from typing import Any
 
 
-REQUIRED_NAMES = {"orchestrator", "python-backend", "nextjs-frontend", "research", "reviewer", "qa"}
+REQUIRED_NAMES = {
+    "orchestrator", "python-backend", "nextjs-frontend", "research",
+    "reviewer", "qa", "data-db", "integrations-ops",
+}
 ROOT_EXCLUSIVE = {"issue topology", "external writes", "integration", "review-of-review", "closure"}
 ROOT_SKILLS = {"accelerate", "prompt-hardening", "plane", "subagent-governance", "skill-catalog-router", "verification-before-completion"}
-SPECIALIST_KEYS = {"name", "kind", "role_family", "catalog_group", "collaboration_profile", "model", "reasoning_effort", "write_mode", "external_writes", "closure_authority", "required_skills"}
-ROOT_KEYS = SPECIALIST_KEYS - {"collaboration_profile"}
+SPECIALIST_KEYS = {"name", "kind", "role_family", "catalog_group", "collaboration_profile", "model", "reasoning_effort", "fork_turns", "review_posture", "write_mode", "external_writes", "closure_authority", "required_skills"}
+ROOT_KEYS = SPECIALIST_KEYS - {"collaboration_profile", "fork_turns"}
+REVIEW_POSTURES = {
+    "orchestrator": "adversarial-consolidation",
+    "python-backend": "implementation-self-review",
+    "nextjs-frontend": "implementation-self-review",
+    "research": "evidence-synthesis",
+    "reviewer": "adversarial-evidence",
+    "qa": "adversarial-runtime",
+    "data-db": "implementation-self-review",
+    "integrations-ops": "implementation-self-review",
+}
 
 
 def fail(message: str) -> None:
@@ -45,6 +58,14 @@ def main() -> int:
             fail("spawn_packet_limit must be 10")
         if set(topology.get("root_exclusive_authority", [])) != ROOT_EXCLUSIVE:
             fail("root_exclusive_authority is incomplete")
+        if topology.get("assignment_contract") != "assignment-only; logical profiles do not enforce process, tool, MCP, credential, or filesystem isolation":
+            fail("assignment contract is invalid")
+        if topology.get("default_fork_turns") != "none" or topology.get("fork_turns_override") != "integer-1-to-5-only" or topology.get("forbid_fork_turns_all_with_override") is not True:
+            fail("override fork_turns policy is invalid")
+        if topology.get("luna_delegation") != "leaf-only":
+            fail("Luna must be leaf-only")
+        if topology.get("nested_terra_luna_exception") != "root-authorized-only; one-luna; prescribed-mechanical-scope; global-budget-exactly-3; disjoint-scopes; terra-accountability; independent-reviewer":
+            fail("nested Terra to Luna exception is invalid")
         if contains_wildcard(topology):
             fail("topology contains wildcard")
         groups = {group.get("id"): group for group in catalog.get("groups", []) if isinstance(group, dict)}
@@ -64,6 +85,8 @@ def main() -> int:
             expected = ROOT_KEYS if is_root else SPECIALIST_KEYS
             if set(agent) != expected:
                 fail(f"agent {agent.get('name')} has invalid fields")
+            if agent.get("review_posture") != REVIEW_POSTURES.get(agent.get("name")):
+                fail(f"agent {agent.get('name')} has invalid review posture")
             if agent.get("catalog_group") not in groups:
                 fail(f"agent {agent.get('name')} references unknown catalog group")
             skills = agent.get("required_skills")
@@ -86,6 +109,8 @@ def main() -> int:
                 continue
             if agent.get("external_writes") is not False or agent.get("closure_authority") is not False:
                 fail(f"specialist {agent.get('name')} exceeds root authority")
+            if agent.get("fork_turns") != "none":
+                fail(f"specialist {agent.get('name')} must default fork_turns to none")
             profile_name = agent.get("collaboration_profile")
             profile = profiles.get(profile_name)
             if not isinstance(profile, dict):
@@ -96,8 +121,12 @@ def main() -> int:
                 fail(f"agent {agent.get('name')} must match its collaboration profile write mode")
             if profile_name not in bindings.get(agent.get("role_family"), []):
                 fail(f"agent {agent.get('name')} is not bound to its role family")
+            if agent.get("model") == "gpt-5.6-luna" and agent.get("name") != "research":
+                fail("Luna is reserved for the research leaf")
         if len(roots) != 1:
             fail("exactly one root orchestrator is required")
+        if sum(agent.get("model") == "gpt-5.6-luna" for agent in agents) != 1:
+            fail("topology must declare exactly one Luna leaf")
     except (OSError, tomllib.TOMLDecodeError, json.JSONDecodeError, ValueError) as error:
         print(f"codex logical agent topology invalid: {error}", file=sys.stderr)
         return 1

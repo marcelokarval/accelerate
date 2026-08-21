@@ -1,0 +1,20 @@
+{
+  "contract_version": "1.0",
+  "state": "EXECUTING",
+  "artifacts": {
+    "hardening": {"ref": "planning/hardening.md", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"},
+    "spec": {"ref": "planning/spec.md", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"},
+    "task_graph": {"ref": "planning/tasks.json", "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"}
+  },
+  "route": "scoped",
+  "execution_requested": true,
+  "planned_task_owned_writes": true,
+  "capability_proof": {"collaboration_available": true, "spawn_api": "collaboration.spawn_agent", "checked_at": "2026-08-20T12:00:00Z"},
+  "budget": {"max_agents": 1, "active_count": 1},
+  "assignments": [
+    {"assignment_id": "assign-proof", "kind": "reviewer", "task_id": "TASK-1-proof", "dependencies": [], "wave": 1, "role": "qa-regression", "model": "gpt-5.6-terra", "effort": "medium", "fork": "none", "agent_id": "agent-proof", "call_id": "call-proof", "read_scopes": ["core/control-plane/new-contract.md"], "write_scopes": [], "proof": "tests/new-contract.sh", "reviewer_assignment_id": null, "recursion": {"delegation_allowed": false, "authorization": null}, "parent_assignment_id": null, "delegation_reference": null}
+  ],
+  "fan_in": {"owner": "root", "assignment_ids": ["assign-proof"]},
+  "exceptions": [],
+  "root_write_lock": {"mode": "root-owned", "task_owned_writes_forbidden": false, "dispatched_task_scopes": []}
+}

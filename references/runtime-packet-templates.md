@@ -73,6 +73,7 @@ Branch Entry Packet
 - persistent E2E status: <status or n/a>
 - local review / closure action: <none|prepare-review|prepare-closure|manual-debug-exception>
 - single-threaded exception: <reason or n/a>
+- delegation dispatch receipt: <path|n/a>; required before orchestrated task-owned writes
 ```
 
 ## 2. Runtime Delta Packet
@@ -203,6 +204,7 @@ Subagent Return Packet
 - defects found and disposition: <summary or packet reference>
 - unresolved risks: <...>
 - recommendation: <done|partial|follow-up|blocked>
+- physical binding / receipt: <agent id, call id, model/effort/fork, receipt ref|virtual with allowed exception>
 ```
 
 ## 9. QA / Proof Packet

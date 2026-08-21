@@ -1,0 +1,4 @@
+{"type":"delegation_canary_event","version":1,"event":"tasks_ready","route":"orchestrated","task_id":"OPTOUT-1"}
+{"type":"delegation_canary_event","version":1,"event":"route_selected","route":"orchestrated"}
+{"type":"delegation_canary_event","version":1,"event":"explicit_opt_out","receipt":"operator-approved: external collaboration disabled"}
+{"type":"delegation_canary_event","version":1,"event":"closure_marker","actor_id":"root"}

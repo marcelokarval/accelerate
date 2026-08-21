@@ -85,6 +85,8 @@ forbidden = {
     "orchestrator": {"django-pro", "nextjs-app-router-patterns"},
     "python-backend": {"nextjs-app-router-patterns"},
     "nextjs-frontend": {"django-pro"},
+    "data-db": {"nextjs-app-router-patterns"},
+    "integrations-ops": {"django-pro", "nextjs-app-router-patterns"},
     "research": {"django-pro", "nextjs-app-router-patterns"},
     "reviewer": {"django-pro", "nextjs-app-router-patterns"},
     "qa": {"django-pro", "nextjs-app-router-patterns"},

@@ -75,8 +75,10 @@ work proves:
 
 ## Root-Only Safety Rule
 
-If no promoted agent exists, Accelerate must still run the branch root-only or
-with an explicit `single-threaded exception`.
+If no promoted agent exists, direct-fast-path or scoped work may still run
+root-owned. Orchestrated work after `TASKS_READY` and available collaboration
+must not silently fall back: it needs physical dispatch, or an allowed
+exception receipt that remains blocked.
 
 Do not block a branch because an agent candidate is missing. Missing agents are
 planning signals, not runtime blockers.
@@ -91,7 +93,7 @@ Do not promote when:
 - review isolation is unclear
 - the runtime adapter is aspirational
 - empirical replay is missing
-- root-only fallback is not documented
+- route-qualified root ownership or orchestrated blocking is not documented
 
 ## Failure Labels
 

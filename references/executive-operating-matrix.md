@@ -27,7 +27,7 @@ Use this module when the operator needs a single executive view of the full
 ║ DRY/shared/compounds/enhanceds | source ladder | anti-div-soup | i18n | contract correctness | shared props governance ║
 ║ query ownership -> presenter ownership -> UI ownership | backend validation authority | named URLs | err() protocol     ║
 ╠══════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════╣
-║ AGENT POSTURE: non-trivial -> use bounded subagent(s) when they create honest value; root-only remains legitimate       ║
+║ AGENT POSTURE: direct/scoped may be root-owned; orchestrated + TASKS_READY + collaboration -> physical dispatch         ║
 ║ SUBAGENT RULE: each subagent loads `accelerate` first, stays bounded, returns self-review + self-forensic review         ║
 ║ PROOF ORDER: implementation -> backend/frontend QA -> browser truth (Chrome DevTools) -> persistent E2E (Playwright)     ║
 ║ ISSUE ORDER: bootstrap -> adapter/local planning -> planning artifact -> execution -> AI Review Report -> real closure    ║

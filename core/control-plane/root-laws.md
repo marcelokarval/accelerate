@@ -90,9 +90,9 @@ Within that ordering, the root should preserve the active correction chain:
 Do not let proof ordering degrade into passive evidence collection with no
 defect disposition.
 
-## Pre-Agents Rule
+## Capability-Portable Rule
 
-In the pre-agents phase, the platform must already be complete enough to:
+In the capability-portable phase, the platform must already be complete enough to:
 
 - classify work honestly
 - shape prompts
@@ -105,7 +105,9 @@ In the pre-agents phase, the platform must already be complete enough to:
 - document adapters and profiles
 - generate onboarding recommendations
 - consume onboarding outputs when they already exist locally
-- stay root-only when appropriate
+- execute root-owned `direct-fast-path` or `scoped` work when appropriate;
+  never use portability as a silent fallback after orchestrated `TASKS_READY`
+  when collaboration is available
 
 That is the baseline for later agent promotion. Agents are not the foundation
 of the system.
