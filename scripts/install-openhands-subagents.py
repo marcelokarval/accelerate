@@ -7,6 +7,7 @@ import argparse
 import json
 import os
 import re
+import hashlib
 import stat
 import tempfile
 import tomllib
@@ -24,12 +25,20 @@ def load_registry(path: Path = PARITY) -> dict[str, dict]:
     with path.open("rb") as stream:
         registry = tomllib.load(stream)["openhands_subagent_registry"]
     result: dict[str, dict] = {}
+    names = [agent["name"] for agent in registry["agents"]]
+    if len(names) != len(set(names)):
+        duplicate = next(name for name in names if names.count(name) > 1)
+        raise ValueError(f"duplicate OpenHands subagent name: {duplicate}")
     for agent in registry["agents"]:
         name = agent["name"]
         if not VALID_NAME.fullmatch(name):
             raise ValueError(f"invalid OpenHands subagent name: {name!r}")
-        if name in result:
-            raise ValueError(f"duplicate OpenHands subagent name: {name}")
+        if agent.get("binding_state", "available") == "binding_unavailable":
+            continue
+        if agent.get("binding_state", "available") != "available":
+            raise ValueError(f"invalid OpenHands child binding state: {name}")
+        if "model" not in agent:
+            raise ValueError(f"available OpenHands child lacks model: {name}")
         result[name] = agent
     return result
 
@@ -148,7 +157,94 @@ def _validate_target_dir(target_dir: Path) -> None:
         raise ValueError(f"target is not a directory: {target_dir}")
 
 
-def reconcile(target_dir: Path, expected: dict[str, dict], *, apply: bool) -> int:
+def _quarantine_receipt(quarantine_dir: Path, entries: list[dict]) -> None:
+    receipt = quarantine_dir / "receipt.json"
+    if receipt.exists():
+        raise ValueError(f"quarantine receipt already exists: {receipt}")
+    targets = {str(Path(entry["original"]).parent) for entry in entries}
+    if len(targets) != 1:
+        raise ValueError("quarantine entries do not share a target directory")
+    _write_atomic(
+        receipt,
+        json.dumps({"target_dir": targets.pop(), "entries": entries}, indent=2) + "\n",
+    )
+
+
+def _quarantine(path: Path, quarantine_dir: Path, entries: list[dict]) -> None:
+    if quarantine_dir.is_symlink():
+        raise ValueError(f"refusing symlinked quarantine directory: {quarantine_dir}")
+    quarantine_dir.mkdir(parents=True, exist_ok=True)
+    destination = quarantine_dir / path.name
+    if destination.exists() or destination.is_symlink():
+        raise ValueError(f"quarantine collision: {destination}")
+    rendered = path.read_bytes()
+    os.replace(path, destination)
+    entries.append(
+        {
+            "original": str(path),
+            "quarantined": str(destination),
+            "sha256": hashlib.sha256(rendered).hexdigest(),
+        }
+    )
+
+
+def rollback_quarantine(quarantine_dir: Path) -> int:
+    receipt_path = quarantine_dir / "receipt.json"
+    if quarantine_dir.is_symlink() or not receipt_path.is_file():
+        raise ValueError(f"invalid quarantine receipt: {receipt_path}")
+    receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+    if not isinstance(receipt, dict) or set(receipt) != {"target_dir", "entries"}:
+        raise ValueError("invalid quarantine receipt schema")
+    target_dir = Path(receipt["target_dir"])
+    if target_dir.is_symlink() or not target_dir.is_dir():
+        raise ValueError(f"invalid rollback target directory: {target_dir}")
+    entries = receipt.get("entries", [])
+    if not isinstance(entries, list) or not entries:
+        raise ValueError("invalid quarantine receipt entries")
+    plan: list[tuple[Path, Path]] = []
+    originals: set[Path] = set()
+    quarantined_paths: set[Path] = set()
+    for entry in entries:
+        if not isinstance(entry, dict) or set(entry) != {"original", "quarantined", "sha256"}:
+            raise ValueError("invalid quarantine receipt entry")
+        if not all(isinstance(entry[key], str) for key in entry):
+            raise ValueError("invalid quarantine receipt entry values")
+        original = Path(entry["original"])
+        quarantined = Path(entry["quarantined"])
+        if original.parent != target_dir:
+            raise ValueError(f"rollback target escape: {original}")
+        if quarantined.parent != quarantine_dir:
+            raise ValueError(f"quarantine path escape: {quarantined}")
+        if original.name != quarantined.name:
+            raise ValueError(f"quarantine ownership mismatch: {quarantined}")
+        if original in originals or quarantined in quarantined_paths:
+            raise ValueError("duplicate quarantine receipt path")
+        originals.add(original)
+        quarantined_paths.add(quarantined)
+        if quarantined.is_symlink() or not quarantined.is_file():
+            raise ValueError(f"missing quarantined agent: {quarantined}")
+        if original.exists() or original.is_symlink():
+            raise ValueError(f"rollback collision: {original}")
+        if hashlib.sha256(quarantined.read_bytes()).hexdigest() != entry["sha256"]:
+            raise ValueError(f"quarantine integrity mismatch: {quarantined}")
+        plan.append((quarantined, original))
+
+    # All validation precedes every move: a late bad receipt entry cannot leave
+    # an earlier managed definition restored while the remainder is stranded.
+    for quarantined, original in plan:
+        os.replace(quarantined, original)
+    receipt_path.unlink()
+    quarantine_dir.rmdir()
+    return len(plan)
+
+
+def reconcile(
+    target_dir: Path,
+    expected: dict[str, dict],
+    *,
+    apply: bool,
+    quarantine_dir: Path | None = None,
+) -> int:
     _validate_target_dir(target_dir)
     if apply:
         target_dir.mkdir(parents=True, exist_ok=True)
@@ -156,6 +252,9 @@ def reconcile(target_dir: Path, expected: dict[str, dict], *, apply: bool) -> in
         return len(expected)
 
     drift = 0
+    quarantined: list[dict] = []
+    if apply and quarantine_dir is not None and quarantine_dir.exists():
+        raise ValueError(f"quarantine collision: {quarantine_dir}")
     expected_paths: set[Path] = set()
     for name, agent in sorted(expected.items()):
         if not VALID_NAME.fullmatch(name):
@@ -185,11 +284,17 @@ def reconcile(target_dir: Path, expected: dict[str, dict], *, apply: bool) -> in
             mode = path.lstat().st_mode
             if stat.S_ISLNK(mode) or not stat.S_ISREG(mode):
                 raise ValueError(f"refusing non-regular agent path: {path}")
-            if not _is_managed(path.read_text(encoding="utf-8")):
+            rendered = path.read_text(encoding="utf-8")
+            if not (_is_managed(rendered) or _is_legacy_managed(rendered)):
                 continue
             drift += 1
             if apply:
-                path.unlink()
+                if quarantine_dir is None:
+                    raise ValueError("managed cleanup requires a quarantine directory")
+                _quarantine(path, quarantine_dir, quarantined)
+
+    if apply and quarantined:
+        _quarantine_receipt(quarantine_dir, quarantined)
 
     return 0 if apply else drift
 
@@ -200,10 +305,20 @@ def main() -> int:
         "--target-dir", type=Path, default=Path.home() / ".agents/agents"
     )
     parser.add_argument("--apply", action="store_true")
+    parser.add_argument("--quarantine-dir", type=Path)
+    parser.add_argument("--rollback-quarantine", type=Path)
     args = parser.parse_args()
     try:
+        if args.rollback_quarantine:
+            print(f"PASS: restored {rollback_quarantine(args.rollback_quarantine)} OpenHands subagent definition(s)")
+            return 0
         expected = load_registry()
-        drift = reconcile(args.target_dir, expected, apply=args.apply)
+        quarantine_dir = args.quarantine_dir
+        if args.apply and quarantine_dir is None:
+            raise ValueError("--apply requires --quarantine-dir for recoverable cleanup")
+        drift = reconcile(
+            args.target_dir, expected, apply=args.apply, quarantine_dir=quarantine_dir
+        )
     except (OSError, ValueError, KeyError, tomllib.TOMLDecodeError) as error:
         print(f"FAIL: {error}")
         return 2

@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import io
 import json
+import hashlib
 import subprocess
 import sys
 import tomllib
@@ -22,6 +23,7 @@ SUBAGENT_MATERIALIZER = ADAPTER.parents[3] / "scripts/install-openhands-subagent
 CREDENTIAL_SYNC = ADAPTER.parents[3] / "scripts/sync-openhands-provider-credentials.py"
 SKILL_MATERIALIZER = ADAPTER.parents[3] / "scripts/install-openhands-governed-skills.py"
 LLM_PROFILE_MATERIALIZER = ADAPTER.parents[3] / "scripts/install-openhands-llm-profiles.py"
+NATIVE_TASK_ADAPTER = ADAPTER.parents[3] / "scripts/validate-openhands-native-task.py"
 
 
 def load_adapter():
@@ -73,6 +75,16 @@ def load_skill_materializer():
 def load_llm_profile_materializer():
     spec = importlib.util.spec_from_file_location(
         "openhands_llm_profile_installer", LLM_PROFILE_MATERIALIZER
+    )
+    assert spec and spec.loader
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def load_native_task_adapter():
+    spec = importlib.util.spec_from_file_location(
+        "openhands_native_task_adapter", NATIVE_TASK_ADAPTER
     )
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
@@ -138,21 +150,7 @@ def test_openhands_native_roles_have_explicit_model_bindings():
     with PARITY.open("rb") as stream:
         bindings = tomllib.load(stream)["openhands_native_bindings"]
 
-    assert bindings == {
-        "default": "chatgpt-sol-medium",
-        "deepseek": "deepseek-pro-reasoning",
-        "research": "deepseek-flash-fast",
-        "mechanical-fixer": "deepseek-flash-fast",
-        "orchestrator": "chatgpt-sol-medium",
-        "reviewer": "deepseek-pro-reasoning",
-        "high-stakes-reviewer": "deepseek-pro-reasoning",
-        "python-backend": "deepseek-pro-reasoning",
-        "nextjs-frontend": "deepseek-pro-reasoning",
-        "data-db": "deepseek-pro-reasoning",
-        "integrations-ops": "deepseek-pro-reasoning",
-        "qa": "deepseek-pro-reasoning",
-        "test-engineer": "deepseek-flash-reasoning",
-    }
+    assert bindings == {"default": "chatgpt-sol-medium"}
 
 
 def test_openhands_binding_materializer_is_idempotent(tmp_path):
@@ -216,11 +214,7 @@ def test_openhands_subagent_registry_is_native_bounded_and_non_recursive():
     registry = parity["openhands_subagent_registry"]
 
     agents = {agent["name"]: agent for agent in registry["agents"]}
-    assert set(agents) == {
-        "deepseek", "python-backend", "nextjs-frontend", "data-db", "integrations-ops",
-        "qa", "test-engineer", "research", "mechanical-fixer", "reviewer",
-        "high-stakes-reviewer",
-    }
+    assert set(agents) == set(parity["openhands_native_subagent_roles"])
     assert registry["root_profiles"] == ["default"]
     assert set(registry["excluded_profiles"]) == {"codex", "gemini-flash"}
     assert set(registry["excluded_profiles"]) == set(parity["openhands_acp"])
@@ -229,35 +223,170 @@ def test_openhands_subagent_registry_is_native_bounded_and_non_recursive():
     assert parity["invariants"]["provider_lanes_require_explicit_role_definition"] is True
     assert agents["reviewer"]["review_posture"] == "adversarial-evidence"
     assert agents["high-stakes-reviewer"]["review_posture"] == "adversarial-evidence"
-    subscription_profiles = {
-        profile["name"]
-        for profile in parity["openhands_llm_profile_registry"]["profiles"]
-        if profile["auth_type"] == "subscription"
-    }
     for agent in agents.values():
         assert "task" not in agent["tools"]
         assert agent["max_iteration_per_run"] > 0
         assert agent["max_budget_per_run"] > 0
-        assert agent["model"] in {
-            "chatgpt-sol-medium",
-            "deepseek-flash-fast",
-            "deepseek-flash-reasoning",
-            "deepseek-pro-reasoning",
-        }
-        assert agent["model"] not in subscription_profiles
+        assert agent["binding_state"] == "binding_unavailable"
+        assert agent["requested_model"].startswith("gpt-5.6-")
+        assert agent["requested_reasoning_effort"] in {"low", "medium", "high"}
+    assert registry["max_parallel_recommendation"] == 3
+
+
+def test_openhands_native_task_contract_blocks_unproven_children(tmp_path):
+    module = load_native_task_adapter()
+    contract = module.validate_contract(PARITY)
+    target = tmp_path / "agents"
+    target.mkdir()
+    profiles = tmp_path / "profiles"
+    profiles.mkdir()
+    (profiles / "default.json").write_text(
+        json.dumps({"llm_profile_ref": "chatgpt-sol-medium", "enable_sub_agents": False}),
+        encoding="utf-8",
+    )
+
+    assert contract["root_subscription_state"] == "supported"
+    assert contract["runtime_package"] == "openhands-agent-server"
+    assert contract["runtime_package_version"] == "1.42.1"
+    assert contract["child_binding_state"] == "binding_unavailable"
+    assert contract["dispatch_after"] == "TASKS_READY"
+    assert contract["max_parallel_policy_cap"] == 3
+    assert contract["enforcement"] == "prompt-contract-only"
+    assert module.dry_run_materialization(PARITY, target) == 0
+    receipt = module.current_runtime_preflight(
+        PARITY, target_dir=target, profiles_dir=profiles,
+        runtime_version=contract["runtime_package_version"],
+    )
+    assert receipt["status"] == "blocked"
+    assert receipt["reason"] == "native_task_tool_enforcement_unsupported"
+
+
+def test_openhands_current_runtime_preflight_rejects_version_and_target_drift(tmp_path):
+    module = load_native_task_adapter()
+    contract = module.validate_contract(PARITY)
+    target = tmp_path / "agents"
+    target.mkdir()
+    profiles = tmp_path / "profiles"
+    profiles.mkdir()
+    (profiles / "default.json").write_text(
+        '{"llm_profile_ref":"chatgpt-sol-medium"}\n', encoding="utf-8"
+    )
+    assert module.current_runtime_preflight(
+        PARITY, target_dir=target, profiles_dir=profiles, runtime_version="0.0.0"
+    )["reason"] == "runtime_version_mismatch"
+    (target / "research.md").write_text(
+        '---\nname: "research"\nmanaged_by: "accelerate"\nmanaged_schema: 1\n---\n',
+        encoding="utf-8",
+    )
+    assert module.current_runtime_preflight(
+        PARITY, target_dir=target, profiles_dir=profiles,
+        runtime_version=contract["runtime_package_version"],
+    )["reason"] == "child_target_drift"
+
+
+def test_binding_unavailable_children_are_removed_only_when_managed(tmp_path):
+    module = load_subagent_materializer()
+    target = tmp_path / "agents"
+    target.mkdir()
+    stale = target / "research.md"
+    stale.write_text(
+        '---\nname: "research"\nmanaged_by: "accelerate"\nmanaged_schema: 1\n---\n',
+        encoding="utf-8",
+    )
+    personal = target / "personal.md"
+    personal.write_text("personal\n", encoding="utf-8")
+    quarantine = tmp_path / "quarantine"
+
+    assert module.load_registry(PARITY) == {}
+    assert module.reconcile(target, {}, apply=False) == 1
+    assert module.reconcile(target, {}, apply=True, quarantine_dir=quarantine) == 0
+    assert not stale.exists()
+    assert personal.read_text(encoding="utf-8") == "personal\n"
+    assert (quarantine / "research.md").is_file()
+    assert module.rollback_quarantine(quarantine) == 1
+    assert stale.is_file()
+
+
+def test_openhands_subagent_quarantine_is_collision_safe(tmp_path):
+    module = load_subagent_materializer()
+    target = tmp_path / "agents"
+    target.mkdir()
+    stale = target / "stale.md"
+    stale.write_text(
+        '---\nname: "stale"\nmanaged_by: "accelerate"\nmanaged_schema: 1\n---\n',
+        encoding="utf-8",
+    )
+    quarantine = tmp_path / "quarantine"
+    quarantine.mkdir()
+    with pytest.raises(ValueError, match="quarantine collision"):
+        module.reconcile(target, {}, apply=True, quarantine_dir=quarantine)
+    assert stale.is_file()
+
+    quarantine.rmdir()
+    assert module.reconcile(target, {}, apply=True, quarantine_dir=quarantine) == 0
+    (target / "stale.md").write_text("collision\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="rollback collision"):
+        module.rollback_quarantine(quarantine)
+
+
+@pytest.mark.parametrize("late_failure", ["collision", "hash", "missing"])
+def test_openhands_subagent_quarantine_rollback_is_two_phase(tmp_path, late_failure):
+    module = load_subagent_materializer()
+    target = tmp_path / "agents"
+    target.mkdir()
+    first = target / "first.md"
+    second = target / "second.md"
+    managed = '---\nname: "x"\nmanaged_by: "accelerate"\nmanaged_schema: 1\n---\n'
+    first.write_text(managed, encoding="utf-8")
+    second.write_text(managed, encoding="utf-8")
+    quarantine = tmp_path / "quarantine"
+    assert module.reconcile(target, {}, apply=True, quarantine_dir=quarantine) == 0
+
+    if late_failure == "collision":
+        second.write_text("collision\n", encoding="utf-8")
+    elif late_failure == "hash":
+        (quarantine / "second.md").write_text("tampered\n", encoding="utf-8")
+    else:
+        (quarantine / "second.md").unlink()
+
+    with pytest.raises(ValueError):
+        module.rollback_quarantine(quarantine)
+    assert not first.exists()
+    assert (quarantine / "first.md").is_file()
+    assert (quarantine / "receipt.json").is_file()
+
+    if late_failure == "collision":
+        second.unlink()
+    elif late_failure == "hash":
+        receipt = json.loads((quarantine / "receipt.json").read_text())
+        expected_hash = next(
+            entry["sha256"] for entry in receipt["entries"] if entry["original"].endswith("second.md")
+        )
+        # Recreate the original managed content only after proving the failed
+        # rollback moved nothing; this mirrors an operator repairing a damaged backup.
+        (quarantine / "second.md").write_text(managed, encoding="utf-8")
+        assert hashlib.sha256((quarantine / "second.md").read_bytes()).hexdigest() == expected_hash
+    else:
+        (quarantine / "second.md").write_text(managed, encoding="utf-8")
+
+    assert module.rollback_quarantine(quarantine) == 2
+    assert first.is_file()
+    assert second.is_file()
 
 
 def test_openhands_reviewers_and_root_require_adversarial_review_contract():
     with PARITY.open("rb") as stream:
         parity = tomllib.load(stream)
     root_suffix = parity["openhands_root_delegation_policy"]["system_message_suffix"]
+    assert "TASKS_READY gate before dispatching any task" in root_suffix
+    assert "Do not silently perform delegated work in the root" in root_suffix
     assert "Treat every child result as evidence, never as truth" in root_suffix
     assert "actively try to disprove" in root_suffix
     module = load_subagent_materializer()
     with PARITY.open("rb") as stream:
         agents = {agent["name"]: agent for agent in tomllib.load(stream)["openhands_subagent_registry"]["agents"]}
     for name in ("reviewer", "high-stakes-reviewer"):
-        rendered = module.render_agent(agents[name])
+        rendered = module._system_prompt(agents[name])
         assert "Review posture: adversarial evidence" in rendered
         assert "accept a green test" in rendered
         assert "remaining uncertainty" in rendered
@@ -271,7 +400,11 @@ def test_openhands_llm_profile_registry_is_subscription_safe_and_idempotent(tmp_
     assert expected["chatgpt-sol-medium"]["auth_type"] == "subscription"
     assert expected["chatgpt-sol-medium"]["is_subscription"] is True
     assert "credential_env" not in expected["chatgpt-sol-medium"]
-    assert expected["deepseek-flash-fast"]["reasoning_effort"] == "low"
+    assert set(expected) == {
+        "chatgpt-sol-medium", "chatgpt-sol-high", "chatgpt-terra-medium",
+        "chatgpt-terra-high", "chatgpt-luna-low", "chatgpt-luna-medium",
+        "chatgpt-luna-high",
+    }
     assert module.reconcile(profiles, expected, apply=False) == len(expected)
     assert module.reconcile(profiles, expected, apply=True) == 0
     payload = json.loads((profiles / "chatgpt-sol-medium.json").read_text())
@@ -412,14 +545,16 @@ def test_openhands_subagent_materializer_removes_only_stale_managed_files(tmp_pa
     target.mkdir()
     stale = target / "stale.md"
     stale.write_text(
-        '---\nname: "stale"\nmanaged_by: "accelerate"\nmanaged_schema: 1\n---\n',
+        '---\nname: "stale"\nmanaged_by: "accelerate"\nrecursive_delegation: false\nwrite_mode: "read-only"\n---\n',
         encoding="utf-8",
     )
     unmanaged = target / "personal.md"
     unmanaged.write_text("personal\n", encoding="utf-8")
     assert module.reconcile(target, {}, apply=False) == 1
-    assert module.reconcile(target, {}, apply=True) == 0
+    quarantine = tmp_path / "quarantine"
+    assert module.reconcile(target, {}, apply=True, quarantine_dir=quarantine) == 0
     assert not stale.exists()
+    assert (quarantine / "stale.md").is_file()
     assert unmanaged.exists()
 
 
@@ -427,17 +562,9 @@ def test_openhands_provider_credential_sync_is_secret_safe_and_idempotent(tmp_pa
     module = load_credential_sync()
     profiles = tmp_path / "profiles"
     profiles.mkdir()
-    expected = {
-        "default": "DEEPSEEK_API_KEY",
-        "deepseek-v4-pro": "DEEPSEEK_API_KEY",
-        "deepseek-flash-fast": "DEEPSEEK_API_KEY",
-    }
-    for name, model in {
-        "default": "deepseek/deepseek-v4-flash",
-        "deepseek-v4-pro": "deepseek/deepseek-v4-pro",
-        "deepseek-flash-fast": "deepseek/deepseek-v4-flash",
-    }.items():
-        managed = name == "deepseek-flash-fast"
+    expected = {"deepseek-flash-fast": "DEEPSEEK_API_KEY"}
+    for name, model in {"deepseek-flash-fast": "deepseek/deepseek-v4-flash"}.items():
+        managed = True
         (profiles / f"{name}.json").write_text(
             json.dumps(
                 {
@@ -452,10 +579,10 @@ def test_openhands_provider_credential_sync_is_secret_safe_and_idempotent(tmp_pa
         )
     environ = {"DEEPSEEK_API_KEY": "fresh-deepseek"}
 
-    assert module.reconcile(profiles, environ, apply=False, expected=expected) == 3
+    assert module.reconcile(profiles, environ, apply=False, expected=expected) == 1
     assert module.reconcile(profiles, environ, apply=True, expected=expected) == 0
     assert module.reconcile(profiles, environ, apply=False, expected=expected) == 0
-    assert json.loads((profiles / "default.json").read_text())["api_key"] == "fresh-deepseek"
+    assert json.loads((profiles / "deepseek-flash-fast.json").read_text())["api_key"] == "fresh-deepseek"
 
 
 def test_openhands_provider_credential_sync_refuses_symlink(tmp_path):
@@ -495,8 +622,7 @@ def test_openhands_provider_credential_sync_refuses_unmanaged_generated_profile(
 def test_openhands_provider_credential_sync_derives_only_env_backed_candidates():
     module = load_credential_sync()
     expected = module.profile_env(PARITY)
-    assert expected["deepseek-flash-fast"] == "DEEPSEEK_API_KEY"
-    assert expected["deepseek-pro-reasoning"] == "DEEPSEEK_API_KEY"
+    assert expected == {}
     assert "chatgpt-sol-medium" not in expected
     assert "chatgpt-gpt-5.6" not in expected
 

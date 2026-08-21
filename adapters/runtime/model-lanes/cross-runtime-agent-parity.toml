@@ -11,12 +11,12 @@ codex_roles = [
 openhands_agent_profiles = [
   "default", "orchestrator", "python-backend", "nextjs-frontend", "research",
   "reviewer", "qa", "data-db", "integrations-ops", "mechanical-fixer",
-  "test-engineer", "high-stakes-reviewer", "deepseek", "gemini-flash",
+  "test-engineer", "high-stakes-reviewer", "gemini-flash",
   "codex",
 ]
 
 openhands_native_subagent_roles = [
-  "deepseek", "python-backend", "nextjs-frontend", "data-db",
+  "python-backend", "nextjs-frontend", "data-db",
   "integrations-ops", "qa", "test-engineer", "research",
   "mechanical-fixer", "reviewer", "high-stakes-reviewer",
 ]
@@ -44,32 +44,43 @@ secret_copying = false
 
 [openhands_native_bindings]
 default = "chatgpt-sol-medium"
-deepseek = "deepseek-pro-reasoning"
-research = "deepseek-flash-fast"
-mechanical-fixer = "deepseek-flash-fast"
-orchestrator = "chatgpt-sol-medium"
-reviewer = "deepseek-pro-reasoning"
-high-stakes-reviewer = "deepseek-pro-reasoning"
-python-backend = "deepseek-pro-reasoning"
-nextjs-frontend = "deepseek-pro-reasoning"
-data-db = "deepseek-pro-reasoning"
-integrations-ops = "deepseek-pro-reasoning"
-qa = "deepseek-pro-reasoning"
-test-engineer = "deepseek-flash-reasoning"
+
+[openhands_native_task]
+contract = "openhands-native-taskmanager-v1"
+runtime_package = "openhands-agent-server"
+runtime_package_version = "1.42.1"
+runtime_version_readback = "explicit"
+runtime_semantics_evidence = "session-tool-readback-required"
+enforcement = "prompt-contract-only"
+root_subscription_state = "supported"
+child_subscription_state = "unsupported"
+child_binding_state = "binding_unavailable"
+binding_unavailable_reason = "No supported non-subscription child binding is proven in this manifest. Agent Canvas can inject a child-conversation launcher outside Agent Profile controls, so binding_unavailable is not native enforcement."
+dispatch_after = "TASKS_READY"
+on_required_dispatch_failure = "blocked"
+allowed_root_local_degradation = [
+  "explicit_user_opt_out",
+  "collaboration_unavailable",
+  "spawn_failed_operator_authorized",
+]
+max_parallel_policy_cap = 3
+child_depth = 1
+child_task_tool = false
+requested_effective_receipt = true
 
 [openhands_subagent_registry]
 materialization = "user-file-agents"
 target = "~/.agents/agents"
 root_profiles = ["default"]
 excluded_profiles = ["codex", "gemini-flash"]
-max_parallel_recommendation = 4
+max_parallel_recommendation = 3
 recursive_delegation = false
 
 [openhands_root_delegation_policy]
 profiles = ["default"]
-max_parallel_recommendation = 4
+max_parallel_recommendation = 3
 system_message_suffix = """
-You are the canonical OpenHands chat parent. For engineering work, use the available Accelerate skill as the entry workflow, then perform mandatory repository bootstrap and skill loading before identifying bounded slices. When at least two slices are independent, you MUST call the task tool for the independent specialist work before any task-specific terminal, browser, or file inspection. Do not gather the specialists' evidence yourself first. Use at most four concurrent native subagents, selecting by registered role descriptions. Prefer governed user-defined specialists whenever a governed role fits; built-ins are fallback only when no governed role matches. Keep simple, tightly coupled, integration, and closure work in the parent. Never delegate root authority, external writes, review-of-review, or final closure. Children are one level only: do not ask them to spawn. Give each child an exact objective, allowed scope, non-goals, expected evidence, and return contract. Wait for every required result, reconcile conflicts and model/tool failures, independently verify material claims, and produce the final integrated answer. If delegation is unavailable or fails, state that explicitly before doing the bounded work locally. ACP launch profiles are not native children.
+You are the canonical OpenHands chat parent. For engineering work, use the available Accelerate skill as the entry workflow. Complete hardening, repository bootstrap, specification, and the TASKS_READY gate before dispatching any task. After TASKS_READY, when two or more bounded slices are independent, you MUST use the native task tool before task-owned mutation. Use at most three concurrent native children, selecting only a role with an available binding. Give each child an exact objective, allowed scope, non-goals, expected evidence, requested model and effort, and require its effective model and effort receipt when the runtime exposes them. Keep simple, tightly coupled, integration, and closure work in the parent. Never delegate root authority, external writes, review-of-review, or final closure. Children are one level only and have no task tool: do not ask them to spawn. Wait for every required result, reconcile conflicts and model/tool failures, independently verify material claims, and produce the final integrated answer. If required dispatch has no available binding or fails, stop with binding_unavailable or blocked. Do not silently perform delegated work in the root. Root-local degradation is allowed only with explicit_user_opt_out, collaboration_unavailable, or spawn_failed_operator_authorized, and the receipt must name that reason. ACP launch profiles are not native children.
 
 Treat every child result as evidence, never as truth. The final review and consolidation must actively try to disprove the proposed solution: look for missing acceptance criteria, unsupported claims, contradictory evidence, untested failure paths, regressions, security or operational risks, and work that only appears complete because a tool or child reported success. Require direct evidence for material claims, distinguish confirmed facts from inference and recommendation, and keep the work blocked when a high-impact uncertainty remains. Do not declare closure merely because implementation or tests passed. Before the final answer, reconcile each child result, record rejected findings with reasons, and state residual risks and the next proof required.
 """
@@ -150,52 +161,12 @@ is_subscription = true
 reasoning_effort = "high"
 api_mode = "responses"
 
-# “fast” means the lowest provider-supported effort. It is not labelled
-# “reasoning off” until a provider-level capability smoke proves that mode.
-[[openhands_llm_profile_registry.profiles]]
-name = "deepseek-flash-fast"
-model = "deepseek/deepseek-v4-flash"
-auth_type = "api_key"
-credential_env = "DEEPSEEK_API_KEY"
-base_url = "https://api.deepseek.com"
-reasoning_effort = "low"
-
-[[openhands_llm_profile_registry.profiles]]
-name = "deepseek-flash-reasoning"
-model = "deepseek/deepseek-v4-flash"
-auth_type = "api_key"
-credential_env = "DEEPSEEK_API_KEY"
-base_url = "https://api.deepseek.com"
-reasoning_effort = "high"
-
-[[openhands_llm_profile_registry.profiles]]
-name = "deepseek-pro-fast"
-model = "deepseek/deepseek-v4-pro"
-auth_type = "api_key"
-credential_env = "DEEPSEEK_API_KEY"
-reasoning_effort = "low"
-
-[[openhands_llm_profile_registry.profiles]]
-name = "deepseek-pro-reasoning"
-model = "deepseek/deepseek-v4-pro"
-auth_type = "api_key"
-credential_env = "DEEPSEEK_API_KEY"
-reasoning_effort = "high"
-
-[[openhands_subagent_registry.agents]]
-name = "deepseek"
-description = "Provide low-cost alternative reasoning for complex analysis and long-context decomposition."
-model = "deepseek-pro-reasoning"
-tools = ["terminal"]
-permission_mode = "confirm_risky"
-max_iteration_per_run = 35
-max_budget_per_run = 0.4
-write_mode = "read-only"
-
 [[openhands_subagent_registry.agents]]
 name = "python-backend"
 description = "Implement and debug bounded Python or Django backend work."
-model = "deepseek-pro-reasoning"
+requested_model = "gpt-5.6-terra"
+requested_reasoning_effort = "medium"
+binding_state = "binding_unavailable"
 tools = ["terminal", "file_editor", "task_tracker"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 60
@@ -205,7 +176,9 @@ write_mode = "bounded-write"
 [[openhands_subagent_registry.agents]]
 name = "nextjs-frontend"
 description = "Implement bounded Next.js, React, and TypeScript frontend work."
-model = "deepseek-pro-reasoning"
+requested_model = "gpt-5.6-terra"
+requested_reasoning_effort = "medium"
+binding_state = "binding_unavailable"
 tools = ["terminal", "file_editor", "task_tracker"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 60
@@ -215,7 +188,9 @@ write_mode = "bounded-write"
 [[openhands_subagent_registry.agents]]
 name = "data-db"
 description = "Analyze and implement bounded database, schema, migration, and SQL work."
-model = "deepseek-pro-reasoning"
+requested_model = "gpt-5.6-terra"
+requested_reasoning_effort = "medium"
+binding_state = "binding_unavailable"
 tools = ["terminal", "file_editor", "task_tracker"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 50
@@ -225,7 +200,9 @@ write_mode = "bounded-write"
 [[openhands_subagent_registry.agents]]
 name = "integrations-ops"
 description = "Implement bounded integrations, MCP, cache, deployment, and operational work."
-model = "deepseek-pro-reasoning"
+requested_model = "gpt-5.6-terra"
+requested_reasoning_effort = "medium"
+binding_state = "binding_unavailable"
 tools = ["terminal", "file_editor", "task_tracker"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 50
@@ -235,7 +212,9 @@ write_mode = "bounded-write"
 [[openhands_subagent_registry.agents]]
 name = "qa"
 description = "Validate runtime, browser, regression, and acceptance behavior independently."
-model = "deepseek-pro-reasoning"
+requested_model = "gpt-5.6-terra"
+requested_reasoning_effort = "medium"
+binding_state = "binding_unavailable"
 tools = ["terminal", "browser_tool_set"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 45
@@ -245,7 +224,9 @@ write_mode = "read-only"
 [[openhands_subagent_registry.agents]]
 name = "test-engineer"
 description = "Design and implement focused tests, fixtures, and regression coverage."
-model = "deepseek-flash-reasoning"
+requested_model = "gpt-5.6-terra"
+requested_reasoning_effort = "medium"
+binding_state = "binding_unavailable"
 tools = ["terminal", "file_editor", "task_tracker"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 45
@@ -255,7 +236,9 @@ write_mode = "bounded-write"
 [[openhands_subagent_registry.agents]]
 name = "research"
 description = "Explore repositories and current sources read-only before implementation decisions."
-model = "deepseek-flash-fast"
+requested_model = "gpt-5.6-luna"
+requested_reasoning_effort = "low"
+binding_state = "binding_unavailable"
 tools = ["terminal", "browser_tool_set"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 35
@@ -265,7 +248,9 @@ write_mode = "read-only"
 [[openhands_subagent_registry.agents]]
 name = "mechanical-fixer"
 description = "Apply narrow mechanical corrections with deterministic verification."
-model = "deepseek-flash-fast"
+requested_model = "gpt-5.6-luna"
+requested_reasoning_effort = "medium"
+binding_state = "binding_unavailable"
 tools = ["terminal", "file_editor"]
 permission_mode = "confirm_risky"
 max_iteration_per_run = 30
@@ -275,7 +260,9 @@ write_mode = "bounded-write"
 [[openhands_subagent_registry.agents]]
 name = "reviewer"
 description = "Perform skeptical read-only review of implementation, contracts, and regressions."
-model = "deepseek-pro-reasoning"
+requested_model = "gpt-5.6-terra"
+requested_reasoning_effort = "medium"
+binding_state = "binding_unavailable"
 review_posture = "adversarial-evidence"
 tools = ["terminal"]
 permission_mode = "confirm_risky"
@@ -286,7 +273,9 @@ write_mode = "read-only"
 [[openhands_subagent_registry.agents]]
 name = "high-stakes-reviewer"
 description = "Review high-risk security, governance, and operational changes without mutating them."
-model = "deepseek-pro-reasoning"
+requested_model = "gpt-5.6-sol"
+requested_reasoning_effort = "high"
+binding_state = "binding_unavailable"
 review_posture = "adversarial-evidence"
 tools = ["terminal"]
 permission_mode = "always_confirm"

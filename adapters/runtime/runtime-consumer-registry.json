@@ -1,0 +1,78 @@
+{
+  "registry_version": "1.0",
+  "purpose": "Runtime projections of the portable delegation semantic core. A registry entry is not installation, activation, or runtime proof.",
+  "consumers": [
+    {
+      "runtime": "codex",
+      "status": "legacy-reference",
+      "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",
+      "projection": {"mode": "reference-only", "path": "adapters/runtime/codex/README.md", "behavior_change": "none"},
+      "loader": "none",
+      "native_primitive": "runtime-specific collaboration primitive",
+      "adapter": "adapters/runtime/codex/",
+      "proof": "registry validation only; no runtime callability claim",
+      "install": "not required for reference linkage",
+      "rollback": "remove a future projection only; the semantic core remains runtime-neutral"
+    },
+    {
+      "runtime": "openhands",
+      "status": "export-only",
+      "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",
+      "projection": {"mode": "future-export", "path": "adapters/runtime/model-lanes/cross-runtime-agent-parity.toml", "behavior_change": "none"},
+      "loader": "no semantic-core loader is installed",
+      "native_primitive": "runtime-specific child task primitive",
+      "adapter": "adapters/runtime/model-lanes/",
+      "proof": "registry validation only; existing installer behavior is outside this contract",
+      "install": "requires a separately approved exporter and runtime proof",
+      "rollback": "remove exporter output and restore the prior runtime-owned configuration"
+    },
+    {
+      "runtime": "hermes",
+      "status": "legacy-reference",
+      "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",
+      "projection": {"mode": "reference-only", "path": "adapters/runtime/hermes/capabilities.yaml", "behavior_change": "none"},
+      "loader": "none",
+      "native_primitive": "runtime-specific delegation primitive",
+      "adapter": "adapters/runtime/hermes/",
+      "proof": "registry validation only",
+      "install": "not planned by this contract",
+      "rollback": "not applicable while reference-only"
+    },
+    {
+      "runtime": "opencode",
+      "status": "legacy-reference",
+      "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",
+      "projection": {"mode": "reference-only", "path": "adapters/runtime/opencode/capabilities.yaml", "behavior_change": "none"},
+      "loader": "none",
+      "native_primitive": "runtime-specific delegation primitive",
+      "adapter": "adapters/runtime/opencode/",
+      "proof": "registry validation only",
+      "install": "not planned by this contract",
+      "rollback": "not applicable while reference-only"
+    },
+    {
+      "runtime": "openclaw",
+      "status": "blocked",
+      "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",
+      "projection": {"mode": "none", "path": "none", "behavior_change": "none"},
+      "loader": "none",
+      "native_primitive": "unverified",
+      "adapter": "none",
+      "proof": "no repository-owned runtime proof",
+      "install": "blocked pending explicit architecture, adapter, and proof",
+      "rollback": "not applicable before installation"
+    },
+    {
+      "runtime": "claude",
+      "status": "blocked",
+      "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",
+      "projection": {"mode": "none", "path": "none", "behavior_change": "none"},
+      "loader": "none",
+      "native_primitive": "unverified",
+      "adapter": "none",
+      "proof": "no repository-owned runtime proof",
+      "install": "blocked pending explicit architecture, adapter, and proof",
+      "rollback": "not applicable before installation"
+    }
+  ]
+}

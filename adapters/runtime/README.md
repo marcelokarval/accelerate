@@ -24,14 +24,19 @@ a deterministic classifier. Child `write_mode` metadata is likewise not a
 sandbox: enforcement comes from tool scope, confirmation policy, task-tool
 omission, iteration/budget limits, and explicit parent/child contracts.
 
-The canonical OpenHands chat parent is now `default`: it alone receives the
-root delegation prompt and `enable_sub_agents=true`. `orchestrator` remains a
-non-root compatibility profile and cannot spawn. The three entries shown in the
-Agent Canvas model picker are LLM Profiles, not the native specialists. The
-specialists are file-based AgentDefinitions under `~/.agents/agents`, available
-only through the canonical parent's task tool. The repo-owned `accelerate`
-skill is materialized under `~/.agents/skills/accelerate`, where OpenHands
-discovers it as a user skill for the parent.
+The canonical OpenHands chat parent is `default`: it alone receives the root
+delegation prompt and `enable_sub_agents=true`. `orchestrator` remains a
+non-root compatibility profile and cannot spawn. The root's ChatGPT
+subscription binding is supported. Since this repository has no independently
+proven non-subscription child binding, the specialist catalog is deliberately
+`binding_unavailable`: no child definition is materialized. This is not native
+enforcement: Agent Canvas can inject a child-conversation launcher outside the
+Agent Profile. The contract is therefore prompt-only, and current-runtime
+preflight intentionally returns `BLOCKED` until a session tool readback proves
+a supported mechanical disable. The current semantic evidence is bound to the
+installed `openhands-agent-server` 1.42.1 package and requires explicit version
+readback; it is not inferred from the unrelated OpenHands SDK banner. `scripts/validate-openhands-native-task.py
+--dry-run` is read-only and does not make provider calls or inspect credentials.
 - Playwright for persistent regression proof
 - web content reader for bounded external source observation
 - locale-pack parity checks for i18n proof

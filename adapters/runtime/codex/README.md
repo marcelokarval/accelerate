@@ -16,6 +16,12 @@ Profiles are logical capability selection, never proof of process, filesystem,
 tool, MCP, credential, or physical-agent isolation. Root retains issue
 topology, external writes, integration, review-of-review, and closure.
 
+The portable delegation meanings are defined by
+[`core/delegation/runtime-neutral-delegation.schema.json`](../../../core/delegation/runtime-neutral-delegation.schema.json)
+and its [consumer registry](../runtime-consumer-registry.json). This Codex
+entry is `legacy-reference` only: it does not load the semantic core, change
+this contract, or claim runtime callability.
+
 The root's Sol/medium binding is the recommended default; the session's
 effective root remains the session choice. Specialist assignment packets carry
 their explicit Terra/medium or Luna/low override with `fork_turns = none` by

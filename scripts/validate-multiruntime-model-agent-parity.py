@@ -17,6 +17,7 @@ PARITY = REPO / "adapters/runtime/model-lanes/cross-runtime-agent-parity.toml"
 SUBAGENT_MATERIALIZER = REPO / "scripts/install-openhands-subagents.py"
 SKILL_MATERIALIZER = REPO / "scripts/install-openhands-governed-skills.py"
 LLM_PROFILE_MATERIALIZER = REPO / "scripts/install-openhands-llm-profiles.py"
+NATIVE_TASK_VALIDATOR = REPO / "scripts/validate-openhands-native-task.py"
 
 
 def fail(message: str) -> None:
@@ -62,9 +63,24 @@ def load_llm_profile_materializer():
     return module
 
 
+def validate_native_task_contract() -> None:
+    spec = importlib.util.spec_from_file_location(
+        "openhands_native_task_validator", NATIVE_TASK_VALIDATOR
+    )
+    if not spec or not spec.loader:
+        fail("OpenHands native task validator cannot be loaded")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    try:
+        module.validate_contract(PARITY)
+    except (KeyError, ValueError) as error:
+        fail(str(error))
+
+
 def main() -> None:
     lanes = load_toml(LANES)["lanes"]
     parity = load_toml(PARITY)
+    validate_native_task_contract()
     if lanes["deepseek"]["model"] != "deepseek-v4-flash":
         fail("DeepSeek lane is not pinned to deepseek-v4-flash")
     if lanes["gemini_flash"]["model"] != "gemini-3.7-flash":
@@ -77,34 +93,34 @@ def main() -> None:
     subagent_registry = parity["openhands_subagent_registry"]
     root_policy = parity["openhands_root_delegation_policy"]
     skill_registry = parity["openhands_skill_registry"]
-    subagents = {agent["name"]: agent for agent in subagent_registry["agents"]}
+    subagent_candidates = {agent["name"]: agent for agent in subagent_registry["agents"]}
     declared_subagent_roles = set(parity["openhands_native_subagent_roles"])
     roots = set(subagent_registry["root_profiles"])
     excluded = set(subagent_registry["excluded_profiles"])
     acp_profiles = set(parity["openhands_acp"])
-    if set(subagents) & roots:
+    if set(subagent_candidates) & roots:
         fail("OpenHands root profile is incorrectly spawnable")
-    if set(subagents) & excluded or set(subagents) & acp_profiles:
+    if set(subagent_candidates) & excluded or set(subagent_candidates) & acp_profiles:
         fail("OpenHands ACP/excluded profile is incorrectly spawnable")
-    if not set(subagents) <= set(native_bindings):
-        fail("OpenHands subagent lacks a native LLM binding")
+    if set(subagent_candidates) & set(native_bindings):
+        fail("OpenHands blocked child incorrectly retains a native LLM binding")
     if excluded != acp_profiles:
         fail("OpenHands native subagent exclusions do not match ACP profiles")
     if subagent_registry["recursive_delegation"] is not False:
         fail("OpenHands recursive subagent delegation is enabled")
     if roots != set(root_policy["profiles"]):
         fail("OpenHands root policy and delegation roots drift")
-    if set(subagents) != declared_subagent_roles:
+    if set(subagent_candidates) != declared_subagent_roles:
         fail("OpenHands native subagent role denominator drift")
     missing = [
-        role for role in parity["openhands_agent_profiles"]
+        role for role in native_bindings
         if not (openhands_agents / f"{role}.json").is_file()
     ]
     if missing:
         fail(f"OpenHands agent profiles missing: {', '.join(missing)}")
-    for role in parity["openhands_agent_profiles"]:
+    for role in native_bindings:
         payload = json.loads((openhands_agents / f"{role}.json").read_text())
-        expected_kind = "acp" if role in {"gemini-flash", "codex"} else "openhands"
+        expected_kind = "openhands"
         if payload.get("name") != role or payload.get("agent_kind") != expected_kind:
             fail(f"OpenHands agent profile contract mismatch: {role}")
         if expected_kind == "openhands" and payload.get("llm_profile_ref") != native_bindings.get(role):
@@ -119,16 +135,6 @@ def main() -> None:
             fail(f"OpenHands root routing policy drift: {role}")
         if role not in roots and payload.get("system_message_suffix") is not None:
             fail(f"OpenHands non-root retains routing policy: {role}")
-        if role == "gemini-flash" and (
-            payload.get("acp_server") != "gemini-cli"
-            or payload.get("acp_model") != "gemini-3.7-flash"
-        ):
-            fail("OpenHands Gemini ACP lane drift")
-        if role == "codex" and (
-            payload.get("acp_server") != "codex"
-            or payload.get("acp_model") != "gpt-5.6-terra"
-        ):
-            fail("OpenHands Codex ACP lane drift")
 
     llm_materializer = load_llm_profile_materializer()
     expected_llm_profiles = llm_materializer.load_registry(PARITY)
@@ -137,17 +143,8 @@ def main() -> None:
         for name, profile in expected_llm_profiles.items()
         if profile["auth_type"] == "subscription"
     }
-    child_subscription_bindings = {
-        name: native_bindings[name]
-        for name in subagents
-        if native_bindings[name] in subscription_profiles
-    }
-    if child_subscription_bindings:
-        fail(
-            "OpenHands 1.42.1 TaskManager forces child streaming off; "
-            "subscription profile cannot be a native child binding: "
-            + ", ".join(sorted(child_subscription_bindings))
-        )
+    if native_bindings["default"] not in subscription_profiles:
+        fail("OpenHands root subscription binding is not materialized")
     llm_profiles_dir = HOME / ".openhands/profiles"
     if llm_materializer.reconcile(llm_profiles_dir, expected_llm_profiles, apply=False):
         fail("OpenHands governed LLM profiles are not materialized exactly")
@@ -185,9 +182,9 @@ def main() -> None:
     target_dir = HOME / ".agents/agents"
     if materializer.reconcile(target_dir, expected_definitions, apply=False):
         fail("OpenHands native subagent definitions are not materialized exactly")
-    for name, definition in subagents.items():
-        if definition["model"] != native_bindings[name]:
-            fail(f"OpenHands subagent model drift: {name}")
+    if expected_definitions:
+        fail("OpenHands binding_unavailable children are materializable")
+    for name, definition in expected_definitions.items():
         if "task_tool_set" in definition["tools"] or "task" in definition["tools"]:
             fail(f"OpenHands child can recursively delegate: {name}")
         if definition["max_iteration_per_run"] <= 0:

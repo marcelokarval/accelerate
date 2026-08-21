@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "core/delegation/runtime-neutral-delegation.schema.json",
+  "title": "Runtime-neutral delegation semantic core",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "run", "policy", "state", "budget", "assignments", "exceptions", "fan_in", "review", "root_ownership", "promotion"],
+  "properties": {
+    "contract_version": {"const": "1.0"},
+    "run": {"$ref": "#/$defs/run"},
+    "policy": {"$ref": "#/$defs/policy"},
+    "state": {"$ref": "#/$defs/state"},
+    "budget": {"$ref": "#/$defs/budget"},
+    "assignments": {"type": "array", "items": {"$ref": "#/$defs/assignment"}},
+    "exceptions": {"type": "array", "items": {"$ref": "#/$defs/exception"}},
+    "fan_in": {"$ref": "#/$defs/fan_in"},
+    "review": {"$ref": "#/$defs/review"},
+    "root_ownership": {"$ref": "#/$defs/root_ownership"},
+    "promotion": {"$ref": "#/$defs/promotion"}
+  },
+  "$defs": {
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["run_id", "execution_requested", "task_owned_mutation", "purpose"],
+      "properties": {
+        "run_id": {"type": "string", "minLength": 1},
+        "execution_requested": {"type": "boolean"},
+        "task_owned_mutation": {"type": "boolean"},
+        "purpose": {"type": "string", "minLength": 1}
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["enforcement_level", "runtime_capacity", "policy_cap", "effective_cap", "max_assignment_depth"],
+      "properties": {
+        "enforcement_level": {"enum": ["native", "adapter-enforced", "prompt-contract-only", "unsupported"]},
+        "runtime_capacity": {"$ref": "#/$defs/capacity_telemetry"},
+        "policy_cap": {"type": "integer", "minimum": 0},
+        "effective_cap": {"type": "integer", "minimum": 0},
+        "max_assignment_depth": {"type": "integer", "minimum": 0}
+      }
+    },
+    "capacity_telemetry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["telemetry", "value"],
+      "properties": {
+        "telemetry": {"enum": ["observed", "unknown"]},
+        "value": {"type": ["integer", "null"], "minimum": 0}
+      }
+    },
+    "state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["current", "history"],
+      "properties": {
+        "current": {"$ref": "#/$defs/lifecycle_state"},
+        "history": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/lifecycle_state"}}
+      }
+    },
+    "lifecycle_state": {
+      "enum": ["draft", "hardened", "tasks-ready", "dispatch-required", "dispatched", "executing", "fan-in", "independent-review", "root-review-of-review", "promotion-pending", "promoted", "completed", "blocked", "exception", "rejected", "cancelled", "superseded"]
+    },
+    "budget": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requested_slots", "reserved_slots"],
+      "properties": {
+        "requested_slots": {"type": "integer", "minimum": 0},
+        "reserved_slots": {"type": "integer", "minimum": 0}
+      }
+    },
+    "assignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assignment_id", "kind", "role", "quality_class", "objective", "dependencies", "parent_assignment_id", "nested_delegation_grant", "read_scopes", "write_scopes", "proof_requirement", "state", "outcome"],
+      "properties": {
+        "assignment_id": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["executor", "reviewer", "root"]},
+        "role": {"type": "string", "minLength": 1},
+        "quality_class": {"enum": ["root-orchestration", "research-low", "mechanical-medium", "implementation-medium", "review-medium", "high-stakes-review"]},
+        "objective": {"type": "string", "minLength": 1},
+        "dependencies": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "parent_assignment_id": {"type": ["string", "null"], "minLength": 1},
+        "nested_delegation_grant": {"$ref": "#/$defs/nested_delegation_grant"},
+        "read_scopes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "write_scopes": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "proof_requirement": {"type": "string", "minLength": 1},
+        "state": {"$ref": "#/$defs/lifecycle_state"},
+        "outcome": {"enum": ["pending", "succeeded", "failed", "blocked", "cancelled"]}
+      }
+    },
+    "nested_delegation_grant": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "authorized_by_assignment_id"],
+      "properties": {
+        "state": {"enum": ["not-granted", "granted"]},
+        "authorized_by_assignment_id": {"type": ["string", "null"], "minLength": 1}
+      }
+    },
+    "exception": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "reason", "compensation", "state"],
+      "properties": {
+        "code": {"type": "string", "minLength": 1},
+        "reason": {"type": "string", "minLength": 1},
+        "compensation": {"type": "string", "minLength": 1},
+        "state": {"enum": ["open", "resolved", "rejected"]}
+      }
+    },
+    "fan_in": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner_assignment_id", "required_assignment_ids", "state"],
+      "properties": {
+        "owner_assignment_id": {"type": ["string", "null"], "minLength": 1},
+        "required_assignment_ids": {"type": "array", "items": {"type": "string", "minLength": 1}, "uniqueItems": true},
+        "state": {"enum": ["pending", "ready", "complete", "blocked"]}
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["independent_required", "state", "evidence"],
+      "properties": {
+        "independent_required": {"type": "boolean"},
+        "state": {"enum": ["not-required", "pending", "passed", "failed", "blocked"]},
+        "evidence": {"type": "string", "minLength": 1}
+      }
+    },
+    "root_ownership": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["integration", "external_mutation", "review_of_review", "closure", "nested_delegation_authorizer_assignment_id"],
+      "properties": {
+        "integration": {"const": "root"},
+        "external_mutation": {"const": "root"},
+        "review_of_review": {"const": "root"},
+        "closure": {"const": "root"},
+        "nested_delegation_authorizer_assignment_id": {"type": ["string", "null"], "minLength": 1}
+      }
+    },
+    "promotion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "proof", "rollback"],
+      "properties": {
+        "state": {"enum": ["not-requested", "pending", "approved", "rejected", "blocked"]},
+        "proof": {"$ref": "#/$defs/verification_reference"},
+        "rollback": {"$ref": "#/$defs/verification_reference"}
+      }
+    },
+    "verification_reference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reference", "verified"],
+      "properties": {
+        "reference": {"type": "string", "minLength": 1},
+        "verified": {"type": "boolean"}
+      }
+    }
+  }
+}
