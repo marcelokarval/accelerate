@@ -1,0 +1,27 @@
+name: openhands
+type: host-export
+status: experimental
+runtime_status: export-only
+proof_class: static-contract
+authority_boundary: export-only; binding_unavailable; no semantic-core loader or callable child delegation is established
+allowed_current_tools: []
+candidate_native_tools: []
+allowed_roles: []
+suppressed_roles:
+  - orchestrator-child
+  - designer
+  - observer
+  - council
+suppressed_capabilities:
+  - semantic-core-loader
+  - callable-child-delegation
+  - automatic-root-fallback
+  - installation
+  - runtime-callability-claim
+nesting: unavailable
+validation_command: python3 scripts/validate-runtime-delegation-semantics.py tests/fixtures/runtime-delegation-semantics/valid-run.json
+proof_artifacts:
+  - adapters/runtime/openhands/accelerate-bootstrap-projection.md
+  - adapters/runtime/model-lanes/cross-runtime-agent-parity.toml
+  - tests/test_runtime_delegation_semantics.py
+privacy_notes: projection is repository-only; never read or reproduce OpenHands credentials, profiles, conversations, or runtime state
