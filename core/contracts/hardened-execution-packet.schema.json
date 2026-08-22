@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://accelerate.local/contracts/hardened-execution-packet.schema.json",
+  "title": "Accelerate Hardened Execution Packet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "classification",
+    "objective",
+    "success_criteria",
+    "authority_set",
+    "scope",
+    "known_facts",
+    "unresolved_decisions",
+    "risk_classification",
+    "acceptance_criteria",
+    "proof_plan",
+    "execution_route",
+    "model_decision",
+    "delegation_decision",
+    "stop_conditions"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "classification": {"const": "non-trivial"},
+    "objective": {"type": "string", "minLength": 1},
+    "success_criteria": {"$ref": "#/$defs/nonEmptyStrings"},
+    "authority_set": {"$ref": "#/$defs/nonEmptyStrings"},
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["in", "non_goals"],
+      "properties": {
+        "in": {"$ref": "#/$defs/nonEmptyStrings"},
+        "non_goals": {"$ref": "#/$defs/strings"}
+      }
+    },
+    "known_facts": {"$ref": "#/$defs/strings"},
+    "unresolved_decisions": {"$ref": "#/$defs/strings"},
+    "risk_classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "reasons"],
+      "properties": {
+        "level": {"enum": ["low", "medium", "high"]},
+        "reasons": {"$ref": "#/$defs/nonEmptyStrings"}
+      }
+    },
+    "acceptance_criteria": {"$ref": "#/$defs/nonEmptyStrings"},
+    "proof_plan": {"$ref": "#/$defs/nonEmptyStrings"},
+    "execution_route": {"enum": ["scoped", "orchestrated"]},
+    "model_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "effort", "reason"],
+      "properties": {
+        "model": {"type": "string", "minLength": 1},
+        "effort": {"enum": ["low", "medium", "high"]},
+        "reason": {"type": "string", "minLength": 1}
+      }
+    },
+    "delegation_decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "reason", "tasks"],
+      "properties": {
+        "mode": {"enum": ["root", "sidecar", "physical", "blocked"]},
+        "reason": {"type": "string", "minLength": 1},
+        "tasks": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/task"}
+        }
+      }
+    },
+    "stop_conditions": {"$ref": "#/$defs/nonEmptyStrings"}
+  },
+  "$defs": {
+    "strings": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "nonEmptyStrings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "owner", "depends_on", "deliverable"],
+      "properties": {
+        "id": {"type": "string", "minLength": 1},
+        "owner": {"type": "string", "minLength": 1},
+        "depends_on": {"$ref": "#/$defs/strings"},
+        "deliverable": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}
