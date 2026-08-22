@@ -3,6 +3,14 @@ managed_by = "accelerate"
 marker = ".accelerate-operational-skill.json"
 
 [[skills]]
+name = "dsh-operations"
+source = "skills/operations/dsh-operations"
+
+[[skills]]
+name = "openhands-operations"
+source = "skills/operations/openhands-operations"
+
+[[skills]]
 name = "omnirouter-operations"
 source = "skills/operations/omnirouter-operations"
 

@@ -3,6 +3,11 @@
 Runtime adapters translate capability-level expectations into concrete commands
 and tools.
 
+Repository-owned operational skills are projected through
+`operational-skill-projections.toml` into OpenCode, the shared DSH/OpenHands
+agent catalog, Codex, and Hermes. Those copies are generated artifacts with
+managed digests, never runtime authority.
+
 Examples:
 
 - Python via `uv`

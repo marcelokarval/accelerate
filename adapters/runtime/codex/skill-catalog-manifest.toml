@@ -2,7 +2,7 @@ schema_version = 2
 catalog_identity = "codex-runtime-skill-catalog"
 authority = "runtime discovery is evidence; this manifest defines the routing and profile contract"
 discovery_command = "codex debug prompt-input ''"
-runtime_skill_count = 125
+runtime_skill_count = 128
 root_route = "skill-catalog-router"
 
 [[sources]]
@@ -133,9 +133,11 @@ recovery_route = "skill-catalog-router"
 skill_ids = [
   "adminjs-patterns", "adonisjs-patterns", "ascii-wireframe",
   "authjs-patterns", "better-auth-patterns", "clerk-patterns",
+  "dsh-operations",
   "financial-source-truth", "legacy-first-protocol", "legacy-transplant",
   "linear-implementation-planner", "linear-pm", "linear-progress-reporter",
   "linear-workflow-orchestrator", "premium-design-benchmark-corpus",
+  "omnirouter-operations", "openhands-operations",
   "using-superpowers", "vercel-deployment-patterns", "web-content-reader",
 ]
 

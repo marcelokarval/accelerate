@@ -13,7 +13,10 @@ trap 'rm -rf "${TMP_DIR}"' EXIT
 
 python3 "${ROOT}/scripts/render-codex-skill-profile.py" "${MANIFEST}" \
   --mode global --output "${TMP_DIR}/global-skills.config.toml"
-test "$(rg -c 'enabled = false' "${TMP_DIR}/global-skills.config.toml")" -eq 88
+test "$(rg -c 'enabled = false' "${TMP_DIR}/global-skills.config.toml")" -eq 91
+for skill in dsh-operations openhands-operations omnirouter-operations; do
+  rg -F "${skill}/SKILL.md\", enabled = false" "${TMP_DIR}/global-skills.config.toml" >/dev/null
+done
 
 python3 "${ROOT}/scripts/render-codex-skill-profile.py" "${MANIFEST}" \
   --mode profile --profile django-backend --output "${TMP_DIR}/django-backend.config.toml"
@@ -23,3 +26,6 @@ rg -F 'python-pro/SKILL.md", enabled = true' "${TMP_DIR}/django-backend.config.t
 python3 "${ROOT}/scripts/render-codex-skill-profile.py" "${MANIFEST}" \
   --mode profile --profile on-demand --output "${TMP_DIR}/on-demand.config.toml"
 rg -F 'linear-pm/SKILL.md", enabled = true' "${TMP_DIR}/on-demand.config.toml" >/dev/null
+for skill in dsh-operations openhands-operations omnirouter-operations; do
+  rg -F "${skill}/SKILL.md\", enabled = true" "${TMP_DIR}/on-demand.config.toml" >/dev/null
+done
