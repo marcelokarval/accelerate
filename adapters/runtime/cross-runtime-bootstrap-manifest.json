@@ -2,6 +2,7 @@
   "contract_version": 2,
   "semantic_core": "core/delegation/runtime-neutral-delegation.md",
   "runtimes": {
+    "dsh": {"status": "supported", "apply_eligible": true, "loader": "code-orchestrated-preset", "projection": "adapters/runtime/dsh/code-orchestrated-bootstrap.md"},
     "codex": {"status": "supported", "apply_eligible": true, "loader": "AGENTS.md", "projection": "adapters/runtime/codex/global-bootstrap-orchestration.fragment.md"},
     "openhands": {"status": "export-only", "apply_eligible": false, "loader": "binding_unavailable", "projection": "adapters/runtime/openhands/accelerate-bootstrap-projection.md"},
     "hermes": {"status": "staged-only", "apply_eligible": false, "loader": "runtime-truth-required", "projection": "adapters/runtime/hermes/hermes-delegate-task-bootstrap.fragment.md"},

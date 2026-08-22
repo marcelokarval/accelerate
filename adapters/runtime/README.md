@@ -12,6 +12,7 @@ Examples:
 - agent-browser-style CLI automation for bounded browser operations
 - physical agent runtime delegation when a real agent runtime exists
 - Codex collaboration for explicitly model-bound, bounded subagents
+- DSH `code-orchestrated` preset bootstrap and native subagent/workflow mapping
 - OpenHands native subagents generated from
   `model-lanes/cross-runtime-agent-parity.toml` into the canonical user registry
   `~/.agents/agents`; Agent Profiles remain launch configurations, while these

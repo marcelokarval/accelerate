@@ -6,6 +6,7 @@ from pathlib import Path
 
 REPO=Path(__file__).resolve().parents[1]; MANIFEST=REPO/"adapters/runtime/cross-runtime-bootstrap-manifest.json"
 EXPECTED={"contract_version":2,"semantic_core":"core/delegation/runtime-neutral-delegation.md","runtimes":{
+"dsh":{"status":"supported","apply_eligible":True,"loader":"code-orchestrated-preset","projection":"adapters/runtime/dsh/code-orchestrated-bootstrap.md"},
 "codex":{"status":"supported","apply_eligible":True,"loader":"AGENTS.md","projection":"adapters/runtime/codex/global-bootstrap-orchestration.fragment.md"},
 "openhands":{"status":"export-only","apply_eligible":False,"loader":"binding_unavailable","projection":"adapters/runtime/openhands/accelerate-bootstrap-projection.md"},
 "hermes":{"status":"staged-only","apply_eligible":False,"loader":"runtime-truth-required","projection":"adapters/runtime/hermes/hermes-delegate-task-bootstrap.fragment.md"},
@@ -38,7 +39,7 @@ def contract():
  if json.loads(MANIFEST.read_text())!=EXPECTED: die("bootstrap manifest violates approved invariants")
  reg=json.loads((REPO/"adapters/runtime/runtime-consumer-registry.json").read_text()); par=(REPO/"adapters/runtime/model-lanes/cross-runtime-agent-parity.toml").read_text(); oth=json.loads((REPO/"adapters/runtime/other-runtime-adapters.policy.json").read_text())
  rows={row['runtime']:row for row in reg.get('consumers',[])}
- required={'codex':('legacy-reference','none','adapters/runtime/codex/README.md'),'openhands':('export-only','no semantic-core loader is installed','adapters/runtime/model-lanes/cross-runtime-agent-parity.toml'),'hermes':('legacy-reference','none','adapters/runtime/hermes/capabilities.yaml'),'opencode':('legacy-reference','none','adapters/runtime/opencode/capabilities.yaml'),'openclaw':('legacy-reference','none','adapters/runtime/openclaw/capabilities.yaml'),'claude':('export-only','no semantic-core loader is installed','adapters/runtime/claude/capabilities.yaml')}
+ required={'dsh':('supported','code-orchestrated-preset','adapters/runtime/dsh/code-orchestrated-bootstrap.md'),'codex':('legacy-reference','none','adapters/runtime/codex/README.md'),'openhands':('export-only','no semantic-core loader is installed','adapters/runtime/model-lanes/cross-runtime-agent-parity.toml'),'hermes':('legacy-reference','none','adapters/runtime/hermes/capabilities.yaml'),'opencode':('legacy-reference','none','adapters/runtime/opencode/capabilities.yaml'),'openclaw':('legacy-reference','none','adapters/runtime/openclaw/capabilities.yaml'),'claude':('export-only','no semantic-core loader is installed','adapters/runtime/claude/capabilities.yaml')}
  for name,(status,loader,path) in required.items():
   row=rows.get(name)
   if not row or row.get('status')!=status or row.get('loader')!=loader or row.get('projection',{}).get('path')!=path: die('runtime consumer registry cross-validation failed')
@@ -53,7 +54,7 @@ def root_for(test):
  return r
 def paths(runtime,root):
  if runtime not in EXPECTED['runtimes']: die('unknown runtime')
- if runtime!='codex': die('runtime is '+EXPECTED['runtimes'][runtime]['status']+'; apply is blocked')
+ if runtime!='codex': die('runtime uses a dedicated or blocked installer; generic apply is unavailable')
  b=root/'.codex'; return b/'AGENTS.md',b/'.accelerate-bootstrap-receipt.json',b/'.accelerate-bootstrap-journal.json'
 def safe(p,r,missing=True):
  try: parts=p.relative_to(r).parts

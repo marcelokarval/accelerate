@@ -3,6 +3,18 @@
   "purpose": "Runtime projections of the portable delegation semantic core. A registry entry is not installation, activation, or runtime proof.",
   "consumers": [
     {
+      "runtime": "dsh",
+      "status": "supported",
+      "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",
+      "projection": {"mode": "managed-preset-bootstrap", "path": "adapters/runtime/dsh/code-orchestrated-bootstrap.md", "behavior_change": "prompt-mandatory Accelerate entry"},
+      "loader": "code-orchestrated-preset",
+      "native_primitive": "subagent, subagent_fast, subagent_reasoning, and workflow",
+      "adapter": "adapters/runtime/dsh/",
+      "proof": "tests/test_dsh_runtime_adapter.py plus fresh disposable session event readback",
+      "install": "guarded preset bootstrap installer after dry-run",
+      "rollback": "restore the timestamped preset backup"
+    },
+    {
       "runtime": "codex",
       "status": "legacy-reference",
       "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",

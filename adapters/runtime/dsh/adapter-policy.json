@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "runtime": "dsh",
+  "status": "supported",
+  "enforcement": "prompt-enforced",
+  "loader": "code-orchestrated-preset",
+  "root_model_alias": "auto/best-coding",
+  "max_concurrent_children": 4,
+  "tools": {
+    "reasoning": {"tool": "subagent_reasoning", "model_alias": "auto/best-reasoning"},
+    "research": {"tool": "subagent_fast", "model_alias": "auto/best-fast"},
+    "implementation": {"tool": "subagent", "model_alias": "auto/best-coding"},
+    "independent_lanes": {"tool": "workflow", "model_alias": "auto/best-coding"}
+  },
+  "root_retained": ["hardening", "fan-in", "integration", "review-of-review", "closure"],
+  "route_policy": {
+    "conversational/no-op": {"routes": ["direct"], "delegation": "forbidden"},
+    "trivial-bounded": {"routes": ["direct", "scoped"], "delegation": "unnecessary-by-default"},
+    "non-trivial": {"routes": ["scoped", "orchestrated"], "delegation": "proportionate"}
+  },
+  "failure_policy": {
+    "missing_accelerate": "blocked",
+    "reasoning_child_failure": "root-harden-if-safe-otherwise-blocked",
+    "required_dispatch_failure": "governed-degradation-or-blocked",
+    "runtime_policy_disagreement": "runtime-status-wins-policy-remains-normative",
+    "unknown_tool_or_child": "blocked"
+  },
+  "proof_invalidation": "material-mutation",
+  "native_plugin": {
+    "status": "planned",
+    "role": "future-executor-receipt-gate",
+    "classifier": false
+  }
+}

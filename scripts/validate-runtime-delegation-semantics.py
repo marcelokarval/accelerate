@@ -10,7 +10,7 @@ from jsonschema import Draft202012Validator
 REPO = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = REPO / "core/delegation/runtime-neutral-delegation.schema.json"
 REGISTRY_PATH = REPO / "adapters/runtime/runtime-consumer-registry.json"
-RUNTIMES = {"codex", "openhands", "hermes", "opencode", "openclaw", "claude"}
+RUNTIMES = {"dsh", "codex", "openhands", "hermes", "opencode", "openclaw", "claude"}
 STATUSES = {"supported", "blocked", "export-only", "legacy-reference"}
 TRANSITIONS = {"draft": {"hardened", "blocked", "cancelled"}, "hardened": {"tasks-ready", "blocked", "exception", "cancelled"}, "tasks-ready": {"dispatch-required", "executing", "blocked", "exception", "cancelled"}, "dispatch-required": {"dispatched", "blocked", "exception", "cancelled"}, "dispatched": {"executing", "blocked", "exception", "cancelled"}, "executing": {"fan-in", "blocked", "exception", "cancelled", "superseded"}, "fan-in": {"independent-review", "root-review-of-review", "blocked", "exception", "superseded"}, "independent-review": {"root-review-of-review", "blocked", "rejected", "exception"}, "root-review-of-review": {"promotion-pending", "completed", "blocked", "rejected", "exception"}, "promotion-pending": {"promoted", "rejected", "blocked", "exception"}, "promoted": {"completed", "superseded"}, "exception": {"hardened", "tasks-ready", "dispatch-required", "executing", "fan-in", "blocked", "rejected", "cancelled"}, "blocked": {"hardened", "tasks-ready", "exception", "rejected", "cancelled", "superseded"}, "rejected": set(), "cancelled": set(), "superseded": set(), "completed": set()}
 
@@ -111,7 +111,9 @@ def validate_registry(registry: dict[str, Any]) -> None:
             if path != "none" and not (REPO / path).exists(): fail(f"registry path does not exist: {item['runtime']}")
         static_only = "registry validation only" in item["proof"].lower()
         if item["status"] == "supported":
-            if static_only or projection["mode"] != "reference-adapter" or projection["behavior_change"] != "none" or not item["proof"].startswith("tests/"): fail(f"supported registry entry has no callability-safe reference proof: {item['runtime']}")
+            if item["runtime"] == "dsh":
+                if static_only or projection["mode"] != "managed-preset-bootstrap" or projection["behavior_change"] != "prompt-mandatory Accelerate entry" or not item["proof"].startswith("tests/"): fail("supported DSH registry entry has no bootstrap-safe proof")
+            elif static_only or projection["mode"] != "reference-adapter" or projection["behavior_change"] != "none" or not item["proof"].startswith("tests/"): fail(f"supported registry entry has no callability-safe reference proof: {item['runtime']}")
         elif item["status"] == "export-only":
             if projection["mode"] != "future-export" or "no semantic-core loader" not in item["loader"]: fail(f"export-only registry entry is inconsistent: {item['runtime']}")
         elif item["status"] == "legacy-reference":

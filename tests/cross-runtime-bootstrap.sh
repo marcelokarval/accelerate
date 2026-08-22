@@ -14,7 +14,7 @@ except (AttributeError, OSError) as exc:
 PY
 
 # Closed matrix: only Codex can reach a derived target; no arbitrary paths or output writes.
-for runtime in openhands hermes opencode openclaw claude; do
+for runtime in dsh openhands hermes opencode openclaw claude; do
   if python3 "$sync" --runtime "$runtime" --test-root "$tmp" --dry-run >/dev/null 2>&1; then fail "$runtime admitted"; fi
   [ ! -e "$receipt" ] || fail "$runtime wrote receipt"
 done
