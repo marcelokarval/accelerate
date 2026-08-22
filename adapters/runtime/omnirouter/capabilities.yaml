@@ -1,0 +1,17 @@
+name: omnirouter
+type: model-router
+status: supported
+authority_boundary: model availability, priority, concurrency, and failover only
+strategy: priority
+failover_before_retry: true
+aliases:
+  - auto/best-coding
+  - auto/best-reasoning
+  - auto/best-fast
+suppressed_capabilities:
+  - work-classification
+  - mutation-authorization
+  - completion-validation
+  - root-closure
+operations_skill: skills/operations/omnirouter-operations/SKILL.md
+privacy_notes: never persist or report provider credentials or authorization headers

@@ -21,6 +21,7 @@ policy is governed by
 | `security/` | Security, anti-abuse, adversarial, and ingress skills. |
 | `data/` | Database, SQL, financial, payment, and provider-state skills. |
 | `runtime/` | Browser proof, Playwright, shell, MCP, and inspection skills. |
+| `operations/` | DSH, OpenHands, OmniRouter, and other runtime lifecycle runbooks. |
 | `governance/` | Dependency, API, stack, promotion, and external-skill vetting skills. |
 | `design-system/` | Design-system extraction and application skills. |
 | `legacy/` | Legacy consultation and migration skills. |

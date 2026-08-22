@@ -23,5 +23,6 @@ validation_command: python3 scripts/validate-runtime-delegation-semantics.py tes
 proof_artifacts:
   - adapters/runtime/openhands/accelerate-bootstrap-projection.md
   - adapters/runtime/model-lanes/cross-runtime-agent-parity.toml
+  - skills/operations/openhands-operations/SKILL.md
   - tests/test_runtime_delegation_semantics.py
 privacy_notes: projection is repository-only; never read or reproduce OpenHands credentials, profiles, conversations, or runtime state

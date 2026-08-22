@@ -14,3 +14,7 @@ The root retains task graph, fan-in, integration, review-of-review, promotion,
 and closure. Map quality classes through the active adapter binding and record
 the effective model/effort receipt. This skill does not claim that a profile or
 catalog entry proves a callable OpenHands child.
+
+Operational lifecycle, governed skill readback, MCP health, and rollback are
+documented by `skills/operations/openhands-operations/`. That skill does not
+change this adapter's `prompt-contract-only` child-binding status.

@@ -86,6 +86,9 @@ The historical migration manifest remains available at:
 | `s3-r2-storage-patterns` | `runtime` | `../runtime/s3-r2-storage-patterns/` | `native` | optional | `local-authoritative` |
 | `uploadthing-patterns` | `runtime` | `../runtime/uploadthing-patterns/` | `native` | optional | `local-authoritative` |
 | `playwright-patterns` | `runtime` | `../runtime/playwright-patterns/` | `native` | optional | `local-authoritative` |
+| `dsh-operations` | `operations` | `../operations/dsh-operations/` | `native` | generated | `local-authoritative` |
+| `openhands-operations` | `operations` | `../operations/openhands-operations/` | `native` | generated | `local-authoritative` |
+| `omnirouter-operations` | `operations` | `../operations/omnirouter-operations/` | `native` | generated | `local-authoritative` |
 | `adversarial-security-review` | `security` | `../security/adversarial-security-review/` | `standalone-adapted` | optional | `local-authoritative` |
 | `untrusted-ingress-hardening` | `security` | `../security/untrusted-ingress-hardening/` | `standalone-adapted` | optional | `local-authoritative` |
 | `authorization-policy-patterns` | `security` | `../security/authorization-policy-patterns/` | `native` | optional | `local-authoritative` |
