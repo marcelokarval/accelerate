@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "classification": "non-trivial",
+  "objective": "State the requested outcome without broadening it",
+  "success_criteria": ["State an observable success condition"],
+  "authority_set": ["Name the governing repository or runtime authority"],
+  "scope": {
+    "in": ["Name the included surface"],
+    "non_goals": ["Name an explicitly excluded surface"]
+  },
+  "known_facts": ["Record verified facts only"],
+  "unresolved_decisions": ["Record decisions that still require authority"],
+  "risk_classification": {
+    "level": "medium",
+    "reasons": ["Explain the material risk"]
+  },
+  "acceptance_criteria": ["State the acceptance boundary"],
+  "proof_plan": ["Name a runnable proof"],
+  "execution_route": "orchestrated",
+  "model_decision": {
+    "model": "auto/best-coding",
+    "effort": "medium",
+    "reason": "Explain why this is the minimum sufficient lane"
+  },
+  "delegation_decision": {
+    "mode": "physical",
+    "reason": "Explain why independent lanes are warranted",
+    "tasks": [
+      {
+        "id": "T1",
+        "owner": "implementation",
+        "depends_on": [],
+        "deliverable": "bounded implementation"
+      },
+      {
+        "id": "T2",
+        "owner": "qa",
+        "depends_on": ["T1"],
+        "deliverable": "independent proof"
+      }
+    ]
+  },
+  "stop_conditions": ["Stop on authority conflict or failed required proof"]
+}

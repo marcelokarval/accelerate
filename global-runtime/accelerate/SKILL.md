@@ -195,6 +195,15 @@ Use Luna/low for research, Luna/medium for prescribed mechanical work,
 Terra/medium for implementation/data/ops/QA/review, and Sol/high only for
 high-stakes read-only work with a receipt.
 
+### DSH Runtime Mapping
+
+When the runtime exposes `subagent`, `subagent_fast`, `subagent_reasoning`, and
+`workflow`, load `references/dsh-runtime-adapter.md` before physical dispatch.
+The DSH mapping preserves proportional classification: no-op work remains
+direct, clear bounded work uses the compact branch contract, and only ambiguous,
+risky, or multi-phase work receives a hardened packet. Do not treat native tool
+availability as a reason to delegate.
+
 ## Local Workspace Rule
 
 When a governed target repository uses a local `.accelerate/` workspace, root
@@ -337,6 +346,7 @@ Use these bundled references first:
 - `references/codex-collaboration-routing.md`
 - `references/codex-collaboration-role-policy.json`
 - `references/delegation-dispatch-gate.md`
+- `references/dsh-runtime-adapter.md`
 
 When the active repository has stronger local doctrine, use this runtime root
 to classify and then defer to that repo-local authority.
@@ -353,6 +363,7 @@ References:
 - `references/codex-collaboration-routing.md`: map Codex execution roles to supported collaboration model and reasoning parameters.
 - `references/codex-collaboration-role-policy.json`: machine-readable role policy consumed by the Codex collaboration adapter.
 - `references/delegation-dispatch-gate.md`: enforce physical dispatch after `TASKS_READY` and before orchestrated task-owned writes; use its receipt and packet links.
+- `references/dsh-runtime-adapter.md`: map Accelerate routes to DSH native tools and OmniRouter aliases without overstating prompt-level enforcement.
 
 Scripts:
 
@@ -362,6 +373,7 @@ Scripts:
 Assets:
 
 - `assets/reasoning-effort-policy.json` and `assets/reasoning-decision-receipt.schema.json`: machine policy and receipt shape for the reasoning-effort contract.
+- `assets/hardened-execution-packet.template.json`: non-secret template for ambiguous, risky, or otherwise non-trivial DSH entry.
 
 Templates:
 

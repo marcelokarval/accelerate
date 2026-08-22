@@ -37,6 +37,14 @@ git diff --check
 Those commands are deployment/export checks. They do not make user-home paths
 authoritative.
 
+## DSH Projection
+
+The portable bundle includes `references/dsh-runtime-adapter.md` and a hardened
+execution packet template. The DSH `code-orchestrated` preset loads this bundle
+through its compact managed bootstrap. The preset is only the entrypoint; it
+does not duplicate Accelerate policy. Initial enforcement remains
+`prompt-enforced` and observable.
+
 When local workspace state is active, this portable bundle should expose:
 
 - readiness dashboard status

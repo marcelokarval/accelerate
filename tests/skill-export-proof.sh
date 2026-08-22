@@ -20,6 +20,8 @@ for path in \
   core/control-plane/skill-sync-topology.md \
   skills/README.md \
   skills/_registry/manifest.md \
+  global-runtime/accelerate/references/dsh-runtime-adapter.md \
+  global-runtime/accelerate/assets/hardened-execution-packet.template.json \
   planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md; do
   [ -f "$path" ] || fail "missing $path"
 done
@@ -31,6 +33,10 @@ require_match 'user-home.*non-authoritative|user-home catalogs remain non-author
 require_match 'source_commit' planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md
 require_match 'drift_detected.*false' planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md
 require_match 'scripts/export-skill-proof.sh --output' planning/evidence/dated-proof-appendix/skill-export-proof-2026-05-08.md
+require_match 'dsh-runtime-adapter.md' global-runtime/accelerate/SKILL.md
+for pattern in subagent_reasoning subagent_fast workflow auto/best-coding auto/best-reasoning auto/best-fast 'four concurrent' 'review-of-review'; do
+  require_match "$pattern" global-runtime/accelerate/references/dsh-runtime-adapter.md
+done
 
 TMPDIR="$(mktemp -d)"
 trap 'rm -rf "$TMPDIR"' EXIT
