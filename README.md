@@ -1331,3 +1331,37 @@ the extraction and early platform build-out:
 - [docs/architecture/accelerate-migration-plan.md](./docs/architecture/accelerate-migration-plan.md)
 - [docs/architecture/accelerate-onboarding-model.md](./docs/architecture/accelerate-onboarding-model.md)
 - [docs/architecture/accelerate-pre-agents-baseline.md](./docs/architecture/accelerate-pre-agents-baseline.md)
+
+## DSH Code Orchestrated Bootstrap
+
+The DSH `code-orchestrated` Agent Preset uses a compact managed bootstrap that
+loads Accelerate before engineering actions. The preset does not duplicate the
+full control plane. Classification, proportional hardening, routing, root-owned
+synthesis, and closure remain in the portable Accelerate bundle.
+
+Current DSH enforcement is `prompt-enforced` and observable. A native Cordis
+executor plugin remains deferred until repeated violations and a stable plugin
+contract justify mechanical receipt gates.
+
+Repository-owned operational skills live in `skills/operations/` and are
+projected, with digests and guarded rollback, to:
+
+- OpenCode: `~/.config/opencode/skills`
+- DSH/OpenHands: `~/.agents/skills`
+- Codex: `~/.codex/skills`
+- Hermes: `~/.hermes/skills/runtime`
+
+Dry-run before applying:
+
+```bash
+python3 adapters/runtime/dsh/install-code-orchestrated-bootstrap.py \
+  --preset-dir ~/.dsh/.agent-presets/code-orchestrated
+python3 scripts/install-operational-skills.py --runtime opencode
+python3 scripts/install-operational-skills.py --runtime agents
+python3 scripts/install-operational-skills.py --runtime codex
+python3 scripts/install-operational-skills.py --runtime hermes
+```
+
+Use `--apply` only after reviewing drift. Record every printed backup path or
+rollback id. Runtime copies remain generated projections; use a fresh process or
+session to prove discovery after applying.
