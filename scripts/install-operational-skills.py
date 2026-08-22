@@ -227,7 +227,10 @@ def _replace(destination: Path, staged: Path) -> None:
         raise
     if previous.exists():
         _test_fault("before_cleanup", staged.parent)
-        shutil.rmtree(previous); _fsync_dir(destination.parent)
+        try:
+            shutil.rmtree(previous); _fsync_dir(destination.parent)
+        except OSError:
+            pass
     # Candidate parents are disposable; the run directory itself is retained
     # as the terminal backup/manifest record.
     if staged.parent.name.startswith(".") or "candidate-" in staged.parent.name:

@@ -161,6 +161,34 @@ def test_rollback_removes_first_install_only_while_marker_matches(tmp_path):
     assert not destination.exists()
 
 
+def test_apply_commits_when_displaced_tree_cleanup_fails(tmp_path, monkeypatch):
+    root, registry, home = fixture(tmp_path)
+    module = load_installer()
+    module.reconcile(
+        "opencode", home=home, registry_path=registry, repo_root=root,
+        apply=True, run_id="20260821T120000Z-opencode",
+    )
+    source = root / "skills/operations/example-operations/SKILL.md"
+    original = source.read_text(encoding="utf-8")
+    source.write_text(original + "updated\n", encoding="utf-8")
+    real_rmtree = module.shutil.rmtree
+
+    def fail_previous_cleanup(path, *args, **kwargs):
+        if Path(path).name in ("example-operations.previous", "example-operations.displaced"):
+            raise OSError("forced displaced-tree cleanup failure")
+        return real_rmtree(path, *args, **kwargs)
+
+    monkeypatch.setattr(module.shutil, "rmtree", fail_previous_cleanup)
+    result = module.reconcile(
+        "opencode", home=home, registry_path=registry, repo_root=root,
+        apply=True, run_id="20260821T120001Z-opencode",
+    )
+
+    installed = home / ".config/opencode/skills/example-operations/SKILL.md"
+    assert result["changed"] == ["example-operations"]
+    assert installed.read_text(encoding="utf-8") == original + "updated\n"
+
+
 def test_registry_rejects_path_traversal_and_duplicate_names(tmp_path):
     root, registry, home = fixture(tmp_path)
     content = registry.read_text(encoding="utf-8")
