@@ -44,14 +44,14 @@ require_text 'environment-capabilities.json' skills/runtime/codex/SKILL.md
 require_text 'PostgreSQL' skills/runtime/codex/references/environment-capability-preflight.md
 require_text 'SQLite' skills/runtime/codex/references/environment-capability-preflight.md
 require_text 'ManyChat' skills/runtime/codex/references/environment-capability-preflight.md
-python3 "${repo_root}/skills/runtime/codex/scripts/validate_environment_capabilities.py" \
-  "${CODEX_HOME:-${HOME}/.codex}/capabilities/environment-capabilities.json"
+catalog_fixture="${repo_root}/tests/fixtures/codex-environment-capabilities/valid-redacted.json"
+python3 "${repo_root}/skills/runtime/codex/scripts/validate_environment_capabilities.py" "${catalog_fixture}"
 
-catalog_fixture="$(mktemp)"
-trap 'rm -f -- "${catalog_fixture}"' EXIT
-printf '{"schema_version":1,"security":{"contains_values":true},"systems":[]}' >"${catalog_fixture}"
+invalid_catalog_fixture="$(mktemp)"
+trap 'rm -f -- "${invalid_catalog_fixture}"' EXIT
+printf '{"schema_version":1,"security":{"contains_values":true},"systems":[]}' >"${invalid_catalog_fixture}"
 if python3 "${repo_root}/skills/runtime/codex/scripts/validate_environment_capabilities.py" \
-  "${catalog_fixture}" >/dev/null 2>&1; then
+  "${invalid_catalog_fixture}" >/dev/null 2>&1; then
   echo 'FAIL: catalog validator accepted a value-bearing catalog' >&2
   exit 1
 fi
