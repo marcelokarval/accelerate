@@ -21,6 +21,7 @@ if grep -Fq 'actions/checkout@v4' "${WORKFLOW}"; then
   fail "workflow must not use Node 20-era checkout@v4"
 fi
 grep -Fq 'ripgrep' "${WORKFLOW}" || fail "workflow must install ripgrep for shell tests"
+grep -Eq 'fetch-depth:[[:space:]]*0' "${WORKFLOW}" || fail "workflow must retain full history for immutable governed-drift pin verification"
 
 if grep -Eiq 'TOKEN|SECRET|PASSWORD|API_KEY|LINEAR_API_KEY|GH_TOKEN|GITHUB_TOKEN' "${WORKFLOW}"; then
   fail "workflow must not declare or reference external provider credentials"
