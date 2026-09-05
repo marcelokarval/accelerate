@@ -16,6 +16,9 @@ grep -Fq 'pull_request:' "${WORKFLOW}" || fail "workflow must run on pull_reques
 grep -Fq 'push:' "${WORKFLOW}" || fail "workflow must run on push"
 grep -Fq 'branches: [main]' "${WORKFLOW}" || fail "workflow must target main branch"
 grep -Fq 'bash tests/all.sh' "${WORKFLOW}" || fail "workflow must run canonical full test suite"
+grep -Fq 'tests/codex-v2-delegation-live-canary.sh)' tests/all.sh || fail "canonical suite must explicitly route the live Codex canary"
+grep -Fq -- '--receipt-self-test' tests/all.sh || fail "canonical suite must retain offline canary receipt proof"
+grep -Fq 'requires separately authorized runtime lane' tests/all.sh || fail "canonical suite must not claim a live Codex canary"
 grep -Eq 'actions/checkout@v[5-9]' "${WORKFLOW}" || fail "workflow must checkout repository with Node 24-compatible checkout action"
 if grep -Fq 'actions/checkout@v4' "${WORKFLOW}"; then
   fail "workflow must not use Node 20-era checkout@v4"

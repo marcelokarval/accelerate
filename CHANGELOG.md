@@ -6,7 +6,9 @@
 - Release housekeeping tracked by GitHub issue #7.
 - The release candidate makes the canonical shell-contract suite self-contained
   in CI: immutable governed-drift ancestry is checked out, and mirror fixtures
-  are sourced from this repository's `global-runtime/accelerate` projection.
+  are sourced from checked-in repository fixtures. It also keeps the live Codex
+  canary outside canonical CI, retaining its offline receipt contract without
+  claiming live-runtime proof.
 
 ### Baseline limitations
 
@@ -16,8 +18,13 @@ ready. Those claims require their own current, environment-bound proof.
 
 ## Versioning policy
 
-Published versions use immutable Git tags after a reviewed pull request reaches
-`main`. The next unreleased body of work is prepared on its own version branch;
-it does not change the published baseline retroactively. A release entry names
-the source baseline, scope, and any limitations needed to avoid treating source
+Development uses an exact `vMAJOR.MINOR.PATCH` branch; the issue, pull request,
+and milestone use that same version, and every new commit references its issue.
+`main` changes only through a reviewed pull request. After merge, an immutable
+tag with the same version is created from the merged SHA; release operations
+must name `refs/heads/<version>` or `refs/tags/<version>` explicitly.
+
+Historical version branches remain separate records: they are never force
+renamed or deleted to make a newer release look linear. A release entry names
+the source baseline, scope, and limitations needed to avoid treating source
 history as runtime proof.
