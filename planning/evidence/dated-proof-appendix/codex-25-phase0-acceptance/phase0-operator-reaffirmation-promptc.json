@@ -1,0 +1,70 @@
+{
+  "schema_id": "phase0-operator-acceptance-v1",
+  "receipt_id": "CODEX-25-phase0-reaffirmation-promptc-20260903-v1",
+  "kind": "currentness-reaffirmation",
+  "work_item": {
+    "sequence_id": "CODEX-25",
+    "id": "6dc9e3a8-b9bf-46f3-ae02-68936a4082a9",
+    "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+    "workspace_slug": "karval",
+    "provider": "Plane"
+  },
+  "candidate": {
+    "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "version": "v0.7.25",
+    "digest_algorithm": "sha256",
+    "candidate_digest": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca",
+    "document_digest": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca"
+  },
+  "historical_predecessor": {
+    "path": "planning/evidence/dated-proof-appendix/codex-25-phase0-acceptance/round-3/phase0-operator-acceptance.json",
+    "sha256": "f722da4531542f3e2585f111ba8f0d334e5bf3655e44c1cadf3f303cdb4c759d",
+    "receipt_id": "CODEX-25-phase0-accept-v0.7.25",
+    "expires_at": "2026-09-02T22:12:53-04:00",
+    "disposition": "EXPIRED_HISTORICAL_PREDECESSOR_PRESERVED"
+  },
+  "provider_currentness": {
+    "read_route": "governed Plane MCP get_work_item plus issue_comment__list_issue_comments",
+    "read_at": "2026-09-03T12:10:13-04:00",
+    "work_item_state_id": "ed644a27-2d9b-403a-9b23-574715cb7c14",
+    "completed_at": "2026-09-02T12:09:07.470945Z",
+    "finish_comment_id": "f6581ead-4962-4bb6-b29f-e36f74af14e6",
+    "finish_external_id": "CODEX-25-phase0-accept-v0.7.25:lifecycle",
+    "finish_created_at": "2026-09-02T02:12:53.625257Z",
+    "finish_candidate_digest": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca",
+    "finish_claims": [
+      "three-independent-review-slots-pass",
+      "root-review-of-review-pass",
+      "explicit-operator-acceptance",
+      "phase0-only"
+    ],
+    "description_metadata_discrepancy": {
+      "observed_stale_digest": "45cca9d97786548be2495190bed5f53997a2aeb00e488c0ce77db43380e6176e",
+      "disposition": "NONBLOCKING_HISTORICAL_METADATA; append-only FINISH lifecycle record controls candidate acceptance"
+    }
+  },
+  "operator_reaffirmation": {
+    "actor_id": "marcelo-karval",
+    "trust_root": "authenticated-user-session",
+    "authorization_basis": "explicit-user-message-authorization-v1",
+    "operator_message": "autorizo explicitamente o Prompt C",
+    "scope": "Reaffirm only the existing Phase-0 acceptance for the exact v0.7.25 candidate so a proof-only Phase-1 revalidation authorization can bind it."
+  },
+  "issued_at": "2026-09-03T12:10:13-04:00",
+  "expires_at": "2026-09-04T12:10:13-04:00",
+  "freshness_status": "CURRENT_REAFFIRMED",
+  "revocation_status": "NOT_REVOKED_AT_ISSUE",
+  "cas_currentness": {
+    "candidate_digest_revalidated": true,
+    "provider_done_state_readback": true,
+    "provider_finish_comment_readback": true,
+    "historical_predecessor_preserved": true
+  },
+  "idempotency_key": "CODEX-25-phase0-reaffirmation-promptc-20260903-v1",
+  "decision": "REAFFIRMED_PHASE_0_ONLY",
+  "non_authorities": [
+    "No Phase 1-7 implementation authorization",
+    "No Plane mutation or lifecycle transition",
+    "No runtime, install, promotion, deployment, migration, WebUI or harness mutation"
+  ]
+}

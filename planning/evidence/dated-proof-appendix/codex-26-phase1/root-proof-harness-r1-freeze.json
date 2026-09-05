@@ -1,0 +1,66 @@
+{
+  "schema_id": "codex26_root_proof_harness_freeze_v1",
+  "issue_id": "CODEX-26",
+  "candidate_id": "CODEX-26-P1-ROOT-PROOF-HARNESS-R1",
+  "status": "FROZEN_FOR_GLOBAL_PROOF",
+  "frozen_at": "2026-09-03T17:46:28-04:00",
+  "authorization": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-d-correction-authorization.json",
+    "sha256": "2e002c303156ba55c2e791a960bffaa5de816ff94e46e75794c23daa63797f35"
+  },
+  "dispatch": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-d-delegation-dispatch-receipt.json",
+    "sha256": "f8a52b1ab25266d1a23068b7a4c5f89848490360a061e26971e410798dc1d907"
+  },
+  "phase1_candidate_relationship": {
+    "candidate_id": "CODEX-26-P1-IMPLEMENT-C14",
+    "file_count": 23,
+    "aggregate_sha256": "cbf26086ca9af5e7d927d7ee324818af35d74d972dfcdbfcce0cd562bc3780d4",
+    "mutation_authorized": false,
+    "integrity_at_freeze": "23/23_ZERO_MISMATCH"
+  },
+  "aggregate_algorithm": "sort paths; append UTF-8 path, NUL, lowercase SHA-256, LF; SHA-256 the concatenation",
+  "aggregate_sha256": "aa9551f4b2f33fe382b043059034fe1b107e50ee8b99c5975869bdc67e5eaeed",
+  "file_count": 5,
+  "files": [
+    {
+      "path": "scripts/check-global-skill-mirror.sh",
+      "pre_change_sha256": "a1fd4a625cef419b3e1fa1ad76db4ae810026f7d583a9603b1bd99b275f8e38b",
+      "sha256": "6bce40ba4bfc6c43c727acd76b28fb095d2e27ae4d966b4469684aa1ef3a9c74"
+    },
+    {
+      "path": "tests/global-skill-mirror-stage.sh",
+      "pre_change_sha256": "f3629a12551c06025478104be911af3b73f8ddc37458c4bc926ff5c134dd2262",
+      "sha256": "c54479915e77846efdd7ef272f0f346c16015991489ea6e7654efa4a2ebce894"
+    },
+    {
+      "path": "tests/helpers/stage-runtime-mirror-fixture.sh",
+      "pre_change_sha256": null,
+      "sha256": "ea215c2b23a25d1ded68607b5b64dc9f928ca7b6f67d8018e16fae882010c1a7"
+    },
+    {
+      "path": "tests/runtime-sync-codex-collaboration.sh",
+      "pre_change_sha256": "4b69240ea50fb0f15d2639a844a737b0b3cfdf3fee143617cbc8ea0318439330",
+      "sha256": "6e48b7a9ed1ea67f7c86fbe92eb9114005ed61b560d6efa08f23dafc8686ef7c"
+    },
+    {
+      "path": "tests/runtime-sync-direct-fast-path.sh",
+      "pre_change_sha256": "1e5451b40a21f340aeb9234e978ad7caf4f6d8f699c7f849fb95babc332dc0df",
+      "sha256": "ef51084f7609446fd6df516b314aa99e25f337a05eb06261c63ac75692c80308"
+    }
+  ],
+  "proof": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-d-focused-proof-generation-3.md",
+    "correction_generation": 3,
+    "proof_generation": 3
+  },
+  "rollback": "Restore the four recorded pre-change byte sets and remove the new helper; no runtime rollback is in scope.",
+  "forbidden_effects": [
+    "C14 mutation",
+    "user-home mutation",
+    "global sync",
+    "runtime promotion",
+    "Plane state transition",
+    "proposal rewrite"
+  ]
+}

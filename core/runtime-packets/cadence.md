@@ -17,6 +17,14 @@ Non-trivial work must not hide the active workflow stack for long stretches.
 - subagent completion -> `Subagent Return Packet`
 - QA lane completion -> `QA / Proof Packet`
 - pre-close -> `Closure Packet`
+- graph drift observation -> `development-heartbeat/v1` (observation and
+  reconciliation only; see `core/task-graph/heartbeat-reanalysis-contract.md`)
+
+The heartbeat records the graph's `delta-baseline` Git inventory and signals
+that reanalysis is required after Git, contract/spec/scope, runtime/capability,
+lease/fence, or review/evidence drift. It never authorizes a lease, approval,
+dispatch, transition, or closure, and it never performs reset, stash, rebase,
+or automatic worktree serialization.
 
 When a governed target repository already has `.accelerate/`, the opening
 `Branch Entry Packet` should prefer the compact local handoff read first:

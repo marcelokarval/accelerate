@@ -1,0 +1,16 @@
+{
+  "schema_version": "codex26-phase1-c13-current-status-and-reentry-v1",
+  "receipt_id": "CODEX-26-C13-current-status-and-reentry-2026-09-02",
+  "current_work_item": {"provider": "Plane", "sequence_id": "CODEX-26", "id": "549d5c6e-9066-440c-85a6-973a33b7eefe", "local_status": "IN_PROGRESS"},
+  "proposal": {"path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md", "digest": "sha256:749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca"},
+  "authority_lineage": {
+    "historical_codex17": {"path": "planning/evidence/dated-proof-appendix/codex-17-phase1-entry/phase1-entry-current-candidate-supersession.json", "digest": "sha256:244a5efbf2f904d4059a3dbe0c044899f3bf1cfe7a983524949f9e74950cc3c2"},
+    "codex25_phase0_acceptance": {"path": "planning/evidence/dated-proof-appendix/codex-25-phase0-acceptance/round-3/phase0-operator-acceptance.json", "digest": "sha256:f722da4531542f3e2585f111ba8f0d334e5bf3655e44c1cadf3f303cdb4c759d"},
+    "codex26_phase1_authorization": {"path": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase-implementation-authorization.json", "digest": "sha256:88c9589cc0ef6718a9756408bd2c4a52a4f566cbe5cd116d430ad719e18dceb4"},
+    "c13_reentry_authorization": {"path": "planning/evidence/dated-proof-appendix/codex-26-phase1/c13-operator-reentry-authorization.json", "digest": "sha256:3d822296e303db1f871213f4bc3e227827ee38d9c0affdd2dc6adb466315d965"},
+    "rejected_c12_predecessor": {"path": "planning/evidence/dated-proof-appendix/codex-26-phase1/c12-final-independent-gate-failure-and-round-exhaustion.md", "digest": "sha256:abec0e0a98b74e5c1568a8cd92a3efdd5352ad7a5ecf36a109a5a7d38f94fd6b"}
+  },
+  "local_workspace": {"reentry_status": "partial-reonboarding", "historical_cycle": "linear-oauth-runtime-proof-2026-05-08-rc24-rc27", "current_cycle": "codex-26-phase1-c13-reentry"},
+  "suite": {"required_offline_command": "PHASE1_REAL_OPENSPEC=0 bash tests/phase1/run.sh", "real_openspec_opt_in_command": "PHASE1_REAL_OPENSPEC=1 bash tests/phase1/run.sh"},
+  "authority_effect": {"historical_codex17": "HISTORICAL_ONLY", "phase1_status": "IMPLEMENTING_C13_NOT_ACCEPTED", "plane_closure_authorized": false, "runtime_or_promotion_authorized": false}
+}

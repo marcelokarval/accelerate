@@ -21,6 +21,8 @@ for path in "$topology" "$catalog" "$policy" "$validator" "$renderer" "$assignme
 done
 rg -F 'fork_turns_override = "integer-1-to-5-only"' "$topology" >/dev/null || fail 'topology does not declare the 1..5 fork override bound'
 rg -F 'global-budget-exactly-3' "$topology" >/dev/null || fail 'topology does not declare the exact nested physical budget'
+rg -F 'Tester=verifier+verification' "$topology" >/dev/null || fail 'topology does not declare Tester as verifier plus verification'
+rg -F 'specialize assignments by surface and domain_path rather than creating profiles' "$topology" >/dev/null || fail 'topology permits profile explosion instead of assignment specialization'
 
 python3 "$validator" "$topology" "$catalog" "$policy"
 

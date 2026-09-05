@@ -10,6 +10,7 @@ TARGET_ROOT="$(cd "$1" && pwd)"
 WORKSPACE="${TARGET_ROOT}/.accelerate"
 READINESS_FILE="${WORKSPACE}/status/readiness-dashboard.yaml"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+STATE_FILE="${WORKSPACE}/state.yaml"
 
 if [ ! -f "${READINESS_FILE}" ]; then
   echo "missing readiness dashboard: ${READINESS_FILE}" >&2
@@ -21,6 +22,30 @@ yaml_value() {
   local key="$2"
   sed -n "s/^${key}:[[:space:]]*//p" "${path}" | head -n 1
 }
+
+profile=""
+if [ -f "${STATE_FILE}" ]; then
+  profile_count="$(grep -c -E '^materialization_profile[[:space:]]*:' "${STATE_FILE}" || true)"
+  if [ "${profile_count}" -gt 1 ]; then
+    echo "prepare-closure failed: duplicate materialization_profile keys in state file: ${STATE_FILE}" >&2
+    exit 1
+  fi
+  if [ "${profile_count}" -eq 1 ]; then
+    raw_val="$(sed -n 's/^materialization_profile:[[:space:]]*//p' "${STATE_FILE}" | head -n 1 | sed -e 's/[[:space:]]*#.*//')"
+    profile="$(echo "${raw_val}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//' -e 's/^"//' -e 's/"$//' -e "s/^'//" -e "s/'$//")"
+    if [ -z "${profile}" ]; then
+      echo "prepare-closure failed: blank or malformed materialization_profile in state file: ${STATE_FILE}" >&2
+      exit 1
+    fi
+  fi
+fi
+
+if [ "${profile}" = "committed-dogfood-v2-index" ]; then
+  exec bash "${SCRIPT_DIR}/prepare-dogfood-closure.sh" "${TARGET_ROOT}"
+elif [ -n "${profile}" ] && [ "${profile}" != "full-v2" ]; then
+  echo "prepare-closure failed: unknown or malformed materialization profile: ${profile}" >&2
+  exit 1
+fi
 
 "${SCRIPT_DIR}/sync-plan-status.sh" "${TARGET_ROOT}" >/dev/null
 

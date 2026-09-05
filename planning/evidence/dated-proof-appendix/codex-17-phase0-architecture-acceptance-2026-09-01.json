@@ -1,0 +1,107 @@
+{
+  "schema_version": "phase0-operator-architecture-acceptance-v1",
+  "receipt_id": "CODEX-17-phase0-architecture-acceptance-2026-09-01",
+  "issued_at": "2026-09-01T04:54:35-03:00",
+  "timestamp_source": "runtime-america-bahia",
+  "decision": "ACCEPTED",
+  "authority": {
+    "actor": "Marcelo/operator",
+    "role": "operator-architecture-acceptor",
+    "authorization_basis": "explicit_operator_instruction_to_proceed_to_the_next_separate_gate",
+    "attestation_method": "current-session operator instruction plus governed Plane lifecycle readback",
+    "root_self_acceptance": false
+  },
+  "scope": {
+    "phase": "Phase 0 - Architecture acceptance",
+    "proposal_version": "0.5",
+    "artifact_path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "document_digest": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a",
+    "work_item": {
+      "provider": "plane",
+      "workspace_slug": "karval",
+      "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+      "work_item_id": "9a5158ac-8f5a-456f-99c9-0f3091ba3adb",
+      "identifier": "CODEX-17",
+      "web_url": "https://plane.arthuragrelli.com/karval/projects/d6b855ec-77cb-4df0-b471-4f6cea011e02/issues/9a5158ac-8f5a-456f-99c9-0f3091ba3adb"
+    }
+  },
+  "evidence": {
+    "review_set_manifest": {
+      "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/review-set-manifest.json",
+      "digest": "sha256:231d87b4eed01a02e2e4851b128248f40db718ff29a4f33962be4e23bf2ed4ff",
+      "verifier_version": "codex-collaboration-phase0-review-verifier-v1"
+    },
+    "successor_reviews": [
+      {
+        "lens_id": "phase0-lens-control-plane-v1",
+        "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/control-plane-review-receipt.json",
+        "digest": "sha256:82851c278d770bd45abd254b84bb896a4082ae9e987a1f369d98c0b8c5c379e3",
+        "signature": "sha256:7a735e718d9309c09b88a823721ba4107973199710e53d1cc49bc4082f567429",
+        "verdict": "PASS"
+      },
+      {
+        "lens_id": "phase0-lens-runtime-concurrency-v1",
+        "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/runtime-concurrency-review-receipt.json",
+        "digest": "sha256:cc76e24c9c120cfc8ba0230631b5d0a626f4d06151aac4c052c1e834c25f4ac3",
+        "signature": "sha256:01dc0ad2795539d23cab86e2845d21159f1d0b2ca4530051dcad2656d9c636c4",
+        "verdict": "PASS"
+      },
+      {
+        "lens_id": "phase0-lens-migration-security-v1",
+        "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/migration-security-review-receipt.json",
+        "digest": "sha256:296e2493054a022e0d9264d56fc7781139757b470d3ebf5249830d11c6b61c48",
+        "signature": "sha256:a640ccedd359d61a257a4ee712cd9215b2bc51bb2b5c7859d429fa81d02d93c6",
+        "verdict": "PASS"
+      }
+    ],
+    "internal_consistency": {
+      "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/internal-consistency-receipt.json",
+      "digest": "sha256:dfc610e4a8a1d20708b16392f452fecbf8139a9ffbb9317c86613baca0c7a743",
+      "signature": "sha256:49ab84e78f5bb3ccb155ea8f21d095d81647479c367739d4914e9b76e62c1f30",
+      "verdict": "PASS"
+    },
+    "operator_acceptance_payload": {
+      "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/operator-acceptance-payload.json",
+      "digest": "sha256:bfa9b613025da8b16b20a1eb3995c3f0034df64e9cf9938342a3ab42d16cda12",
+      "decision": "ACCEPTED"
+    },
+    "plane_acceptance_readback": {
+      "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/plane-acceptance-readback.json",
+      "digest": "sha256:76cc48cce124f720113868d934e7513522bd89a18e08a3f1ee11588d663460fc",
+      "comment_id": "50aa8209-78bf-4d59-bd9c-1812fd2dbc06",
+      "mutation_applied": true,
+      "readback_verified": true,
+      "state_transition_performed": false
+    }
+  },
+  "accepted_outcome": {
+    "phase0_state": "accepted",
+    "architecture_candidate_accepted": true,
+    "open_implementation_decisions_may_remain_deferred": true,
+    "implementation_authorized": false,
+    "installation_authorized": false,
+    "promotion_authorized": false,
+    "deployment_authorized": false,
+    "migration_authorized": false,
+    "runtime_mutation_authorized": false,
+    "webui_network_exposure_authorized": false
+  },
+  "next_gate": {
+    "phase": "Phase 1 - OpenSpec adapter spike",
+    "entry_requires": [
+      "D01 accepted disposition",
+      "D08 accepted disposition",
+      "D11 accepted disposition"
+    ],
+    "status": "NOT_AUTHORIZED_BY_THIS_RECEIPT"
+  },
+  "residuals": [
+    "The immutable proposal still renders its pre-acceptance document-status line; this external receipt is the current acceptance authority and avoids invalidating the reviewed document digest.",
+    "Plane provider state remains Todo; the non-atomic provider state transition is a separate operator authorization gate.",
+    "All Phase 1 through Phase 7 artifacts, validators, runtime behavior, deployment and migration remain future gated work."
+  ],
+  "receipt_integrity": {
+    "scheme": "sha256-domain-separated-canonical-json-v1",
+    "signature": "sha256:6d92a44c2801f42ff86513a634f1b59ea7230c3486be383c5ab393cfd2907403"
+  }
+}

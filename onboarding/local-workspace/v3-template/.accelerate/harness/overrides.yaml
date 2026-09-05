@@ -1,0 +1,11 @@
+schema_version: 1
+kind: local-harness-narrowing-overrides
+authority_mode: may-narrow-never-widen
+narrowed_paths: []
+narrowed_operations: []
+forbidden_widening:
+  - canonical-writer
+  - provider-or-runtime-activation
+  - planning-root
+  - state-root
+  - external-effect-authorization

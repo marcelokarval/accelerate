@@ -1,0 +1,102 @@
+{
+  "contract_version": "1.0",
+  "state": "DISPATCHED",
+  "artifacts": {
+    "hardening": {
+      "ref": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-exit-revalidation-promptc-hardened-prompt.md",
+      "sha256": "9e0ae75ceecc56b4be58048df1c3942f02a3777e501773a6e102ae45fccfbc9c"
+    },
+    "spec": {
+      "ref": "planning/architecture/2026-09-01-codex-26-phase1-openspec-core-sdd.md",
+      "sha256": "2e037c4063adf4d4088843baf1f655410d74424c2a0866c0bbd5951fe9aadefc"
+    },
+    "task_graph": {
+      "ref": "planning/executive/2026-09-03-codex-26-phase1-promptc-task-graph.md",
+      "sha256": "7c879e73a6e64f8f6c1cd9a7e1b29f306af4e49331a1ca545ff5d02d0bdbaea0"
+    }
+  },
+  "route": "orchestrated",
+  "execution_requested": true,
+  "planned_task_owned_writes": false,
+  "capability_proof": {
+    "collaboration_available": true,
+    "spawn_api": "collaboration.spawn_agent",
+    "checked_at": "2026-09-03T12:10:13-04:00"
+  },
+  "budget": {
+    "max_agents": 3,
+    "active_count": 3
+  },
+  "assignments": [
+    {
+      "assignment_id": "promptc-task004-executor",
+      "kind": "executor",
+      "task_id": "TASK-004",
+      "dependencies": ["Prompt-C authorization", "C14 freeze"],
+      "wave": 1,
+      "role": "isolated-root-suite-tester",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/promptc_task004_root_suite",
+      "call_id": "spawn:/root/promptc_task004_root_suite",
+      "read_scopes": ["AGENTS.md", "SKILL.md", "tests/", "planning/evidence/dated-proof-appendix/codex-26-phase1/"],
+      "write_scopes": ["/tmp/accelerate-promptc-task004-proof"],
+      "proof": "foreground bash tests/all.sh plus C14 pre/post integrity and diff check",
+      "reviewer_assignment_id": "promptc-task006-reviewer",
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    },
+    {
+      "assignment_id": "promptc-task005-executor",
+      "kind": "executor",
+      "task_id": "TASK-005",
+      "dependencies": ["Prompt-C authorization", "C14 freeze"],
+      "wave": 1,
+      "role": "real-openspec-integration-tester",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/promptc_task005_real_openspec",
+      "call_id": "spawn:/root/promptc_task005_real_openspec",
+      "read_scopes": ["AGENTS.md", "SKILL.md", "adapters/openspec/", "core/phase1/", "planning/openspec/", "scripts/phase1/", "tests/phase1/"],
+      "write_scopes": ["/tmp/accelerate-promptc-task005-proof"],
+      "proof": "two isolated PHASE1_REAL_OPENSPEC=1 executions with exact exit and deterministic evidence",
+      "reviewer_assignment_id": "promptc-task006-reviewer",
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    },
+    {
+      "assignment_id": "promptc-task006-reviewer",
+      "kind": "reviewer",
+      "task_id": "TASK-006",
+      "dependencies": ["TASK-004", "TASK-005"],
+      "wave": 2,
+      "role": "independent-governance-reviewer",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/promptc_task006_prelim_audit",
+      "call_id": "spawn:/root/promptc_task006_prelim_audit",
+      "read_scopes": ["AGENTS.md", "SKILL.md", "planning/", "core/phase1/", "adapters/openspec/", "scripts/phase1/", "tests/phase1/"],
+      "write_scopes": [],
+      "proof": "authority baseline now, final audit only after root supplies completed upstream proof",
+      "reviewer_assignment_id": null,
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    }
+  ],
+  "fan_in": {
+    "owner": "root",
+    "assignment_ids": ["promptc-task004-executor", "promptc-task005-executor", "promptc-task006-reviewer"]
+  },
+  "exceptions": [],
+  "root_write_lock": {
+    "mode": "orchestrated-dispatched-scope-lock",
+    "task_owned_writes_forbidden": true,
+    "dispatched_task_scopes": ["/tmp/accelerate-promptc-task004-proof", "/tmp/accelerate-promptc-task005-proof"]
+  }
+}

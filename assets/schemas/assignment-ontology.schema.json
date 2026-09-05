@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assets/schemas/assignment-ontology.schema.json",
+  "title": "Assignment ontology receipt",
+  "description": "Static assignment vocabulary only; this schema does not claim runtime enforcement or isolation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "assignment_id", "logical_profile", "logical_agent", "runtime_instance", "authority_role", "work_role", "verification_mode", "review_mode", "write_mode", "closure_authority", "approval_authority", "target", "proof_lanes", "proof", "review"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "assignment_id": {"type": "string", "minLength": 1},
+    "logical_profile": {"type": "string", "minLength": 1},
+    "logical_agent": {"type": "string", "minLength": 1},
+    "runtime_instance": {"$ref": "#/$defs/runtime_instance"},
+    "authority_role": {"enum": ["executor", "verifier", "reviewer", "root"]},
+    "work_role": {"enum": ["implementation", "verification", "review", "research", "integration", "orchestration"]},
+    "verification_mode": {"enum": ["not-applicable", "standard", "adversarial"]},
+    "review_mode": {"enum": ["none", "self-review", "self-forensic", "independent-adversarial", "runtime-adversarial", "contract-adversarial", "review-of-review", "closure-forensic"]},
+    "write_mode": {"enum": ["read-only", "test-only", "bounded-write", "root-only"]},
+    "closure_authority": {"type": "boolean"},
+    "approval_authority": {"type": "boolean"},
+    "target": {"$ref": "#/$defs/target"},
+    "proof": {"$ref": "#/$defs/proof"},
+    "proof_lanes": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["implementation-proof", "backend-qa", "frontend-qa", "browser-truth", "persistent-e2e", "contract-proof", "runtime-proof", "seam-proof", "forensic-closure"]}},
+    "review": {"$ref": "#/$defs/review"}
+  },
+  "$defs": {
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["surfaces", "domain_path", "seam_proof"],
+      "properties": {
+        "surfaces": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"enum": ["backend", "frontend", "integrations", "data", "runtime", "governance"]}},
+        "domain_path": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1, "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"}},
+        "seam_proof": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "proof": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidence", "negative_evidence"],
+      "properties": {
+        "evidence": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "negative_evidence": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}}
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["assignment_id", "logical_profile", "logical_agent", "runtime_instance"],
+      "properties": {
+        "assignment_id": {"type": "string", "minLength": 1},
+        "logical_profile": {"type": "string", "minLength": 1},
+        "logical_agent": {"type": "string", "minLength": 1},
+        "runtime_instance": {"$ref": "#/$defs/runtime_instance"}
+      }
+    },
+    "runtime_instance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["agent_id", "call_id"],
+      "properties": {
+        "agent_id": {"type": "string", "minLength": 1},
+        "call_id": {"type": "string", "minLength": 1}
+      }
+    },
+    "binding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["locator", "sha256"],
+      "properties": {
+        "locator": {"type": "string", "minLength": 1},
+        "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate", "candidate_binding", "spec_binding", "target", "coverage", "independent", "isolation_reference"],
+      "properties": {
+        "candidate": {"type": ["object", "null"], "oneOf": [{"$ref": "#/$defs/identity"}, {"type": "null"}]},
+        "candidate_binding": {"type": ["object", "null"], "oneOf": [{"$ref": "#/$defs/binding"}, {"type": "null"}]},
+        "spec_binding": {"type": ["object", "null"], "oneOf": [{"$ref": "#/$defs/binding"}, {"type": "null"}]},
+        "target": {"type": ["object", "null"], "oneOf": [{"$ref": "#/$defs/target"}, {"type": "null"}]},
+        "coverage": {"type": ["object", "null"], "oneOf": [{"$ref": "#/$defs/target"}, {"type": "null"}]},
+        "independent": {"type": "boolean"},
+        "isolation_reference": {"type": ["string", "null"], "minLength": 1}
+      }
+    }
+  }
+}

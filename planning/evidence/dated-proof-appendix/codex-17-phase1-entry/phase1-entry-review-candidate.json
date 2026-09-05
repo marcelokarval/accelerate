@@ -1,0 +1,118 @@
+{
+  "schema_version": "accelerate-phase1-entry-review-candidate-v1",
+  "candidate_id": "CODEX-17-phase1-entry-d01-d08-d11-2026-09-01",
+  "frozen_at": "2026-09-01T11:54:07-04:00",
+  "timestamp_source": "runtime",
+  "authority": {
+    "work_item": "CODEX-17",
+    "provider": "plane",
+    "workspace_slug": "karval",
+    "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+    "work_item_id": "9a5158ac-8f5a-456f-99c9-0f3091ba3adb",
+    "operator_authorization": "explicit_current-session_authorization_to_proceed_and_complete_proposal_validation"
+  },
+  "proposal": {
+    "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "digest": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a",
+    "phase0_acceptance_receipt_path": "planning/evidence/dated-proof-appendix/codex-17-phase0-architecture-acceptance-2026-09-01.json",
+    "phase0_acceptance_receipt_digest": "sha256:293ece64c8bc452239ff5e2220dbbd297dfc9d595e45e9f90d148e9818e421a8"
+  },
+  "dispositions": [
+    {
+      "id": "D01",
+      "path": "planning/architecture/decisions/2026-09-01-d01-gauntlet-durable-state.md",
+      "digest": "sha256:073e01db5d3fbd01ae802c1da9d3e0f7501ebdcde2bd6683f9ac49df8ad6d3a9",
+      "author_runtime": "/root/phase1_d01_durable_state",
+      "candidate_decision": "SQLite canonical ledger plus same-filesystem immutable SHA-256 CAS for portable single-host execution state"
+    },
+    {
+      "id": "D08",
+      "path": "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md",
+      "digest": "sha256:926f4dc17ab8de935d03ddb2ae7ac9635813da0896e3186d189b74a092718c0e",
+      "author_runtime": "/root/phase1_d08_openspec_delivery",
+      "candidate_decision": "Pinned OpenSpec Core CLI behind a repo-owned JSON adapter in fixture-only isolation; OpenSpec Plus remains doctrine-only"
+    },
+    {
+      "id": "D11",
+      "path": "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md",
+      "digest": "sha256:bdfe70d6b8cd1a95c1c20da3cbc73b48f276286baf2f3a8d088120714cae5384",
+      "author_runtime": "/root/phase1_d11_artifact_location",
+      "candidate_decision": "Explicit CLI/store root <project_root>/planning with sole canonical child <project_root>/planning/openspec"
+    }
+  ],
+  "cross_decision_bindings": [
+    {
+      "ids": ["D08", "D11"],
+      "invariant": "The CLI uses explicit cwd/store root <project_root>/planning; its upstream openspec child is the single D11 canonical planning/openspec tree; no symlink, copy, mirror, alternate store or parent-walk authority."
+    },
+    {
+      "ids": ["D01", "D11"],
+      "invariant": "D01 owns mutable execution ledger/CAS under .accelerate/gauntlet only; D11 owns tracked specification artifacts under planning/openspec only; neither duplicates canonical bytes or acts as fallback authority for the other."
+    },
+    {
+      "ids": ["D01", "D08", "D11"],
+      "invariant": "Phase-1 execution remains fixture-only; a disposition accepts architecture but creates no store, package installation, live artifact tree, adapter, runtime or provider effect."
+    }
+  ],
+  "source_verification": {
+    "accessed_at": "2026-09-01",
+    "primary_sources": [
+      {
+        "claim": "OpenSpec Core candidate identity",
+        "locator": "https://github.com/Fission-AI/OpenSpec/tree/a0ddb60d040c61f4907436a9d91310934b1dda63",
+        "observed": "@fission-ai/openspec 1.11.0 candidate at frozen commit"
+      },
+      {
+        "claim": "JSON and store-capable CLI boundary",
+        "locator": "https://github.com/Fission-AI/OpenSpec/blob/a0ddb60d040c61f4907436a9d91310934b1dda63/docs/cli.md",
+        "observed": "Selected agent-facing commands document --json; store-capable commands document explicit store selection."
+      },
+      {
+        "claim": "Package identity, license and runtime floor",
+        "locator": "https://github.com/Fission-AI/OpenSpec/blob/a0ddb60d040c61f4907436a9d91310934b1dda63/package.json",
+        "observed": "@fission-ai/openspec 1.11.0, MIT, Node >=20.19.0"
+      }
+    ],
+    "inference_boundary": "The planning/store-root mapping is an Accelerate decision derived from the upstream project/store interfaces; upstream does not enforce Accelerate D11."
+  },
+  "review_contract": {
+    "required_independent_reviews": 2,
+    "fresh_context": true,
+    "read_only": true,
+    "required_verdict": "PASS",
+    "findings_must_be_empty": true,
+    "axes": [
+      "proposal-and-phase0-binding",
+      "decision-completeness",
+      "cross-decision-consistency",
+      "authority-and-no-dual-writer",
+      "durability-cas-restore",
+      "external-provenance-and-delivery",
+      "path-containment-and-cleanup",
+      "fixture-and-rollback-testability",
+      "authorization-boundary",
+      "internal-consistency"
+    ]
+  },
+  "correction_budget": {
+    "maximum_rounds": 1,
+    "consumed_rounds": 1,
+    "reason": "Closed D08-D11 store-root seam and explicit telemetry denial before candidate freeze.",
+    "further_material_finding_result": "BLOCKED"
+  },
+  "forbidden_effects": {
+    "phase1_implementation": false,
+    "package_installation": false,
+    "production_dependency_change": false,
+    "runtime_mutation": false,
+    "provider_state_transition": false,
+    "deployment": false,
+    "migration": false,
+    "webui_exposure": false
+  },
+  "plane_start_comment_id": "6e737b3f-b5df-4fd6-abad-ea2e08ce9d84",
+  "freeze_integrity": {
+    "scheme": "sha256-domain-separated-canonical-json-v1",
+    "signature": "sha256:f9a122b10b9cf059ff29d185eed355e600eb03e2ee5633fe1f2855450d157ed2"
+  }
+}

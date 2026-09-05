@@ -475,3 +475,127 @@ The next correct artifact after this proposal is an executive plan that decides:
 
 That executive plan should not reopen the analysis question. The analysis and
 proposal are now durable.
+
+## Normative Correction Addendum: Root-Dependent Correction Origin
+
+This addendum is authoritative where it is more specific than the earlier
+proposal. It does not change either existing PASS lane or either embedded
+rubric: their content remains an input to the corrected candidate and must be
+rerecorded against that candidate rather than inherited.
+
+### Closed states and legal root transitions
+
+The root state enum is closed:
+`{DRAFT,FROZEN,APPLYING,FAN_IN,REVIEWING,CORRECTING,LIFECYCLE_RECONCILING,CLOSED,BLOCKED,CANCELLED}`.
+The relevant legal transitions are
+`FAN_IN->CORRECTING`, `REVIEWING->CORRECTING`,
+`LIFECYCLE_RECONCILING->CORRECTING`, `CORRECTING->APPLYING`, and
+`APPLYING->FAN_IN`. A root is terminal in `CLOSED`, `BLOCKED`, or `CANCELLED`;
+no terminal root is reopened. In particular, a correction requested after
+`CLOSED` is rejected and must create a successor root run, linked to the closed
+root by a `root_successor_receipt` that names the terminal root, correction
+reason, and operator disposition.
+
+### Unified correction-origin transaction
+
+Recoverable proof failure and required reviewer FAIL use one serializable,
+root-run scheduler-ledger transaction keyed by
+`correction_key=loop_id+root_run_id`. It CAS-checks the current child,
+root revision, fencing token, correction capacity, and the currently frozen
+root child set. A loser of that CAS is `REJECTED` and has no effect.
+
+When the corrected child is already represented by a current
+`root_review_candidate_manifest`, or any later root evidence is bound to that
+child, the transaction performs the following all-or-none effects:
+
+1. CAS the root from `FAN_IN`, `REVIEWING`, or
+   `LIFECYCLE_RECONCILING` to `CORRECTING` as applicable.
+2. Mark the current root manifest superseded and invalidate every candidate-
+   bound global-proof receipt, whole-change review and quorum receipt, derived
+   G7 receipt, closure-eligibility result, and unconsumed
+   `operator_closure_receipt` bound to that manifest.
+3. Mark the predecessor node `REPLACED`, invalidate its proof and review
+   evidence, consume the correction key/counters, and create exactly one child
+   successor with its replacement assignment, lease, and fence.
+
+The root transition, manifest supersession, root-dependent invalidations,
+predecessor invalidation, ledger consumption, and successor creation commit
+together or roll back together. No partial child or root invalidation is
+legal. If no root manifest exists yet, the dependent-root invalidation set is
+empty, but this is still the same serializable transaction and still creates
+the exact one child successor while invalidating predecessor node evidence.
+
+After successor acceptance, the root must advance
+`CORRECTING->APPLYING->FAN_IN`, freeze a new
+`root_review_candidate_manifest` over the complete current child set, and
+rerun candidate-bound global proof plus whole-change review/quorum before a new
+G7 may be derived. Old global proof, whole-change review/quorum, G7, closure
+eligibility, or closure receipt can never satisfy the new candidate.
+
+Late proof, review, receipt, outbox, or reconciliation evidence is accepted
+only as forensic evidence if its root-manifest/child candidate and current CAS
+revision still match. Otherwise reconciliation writes a stale-evidence receipt
+without lifecycle advance or external effect. `LIFECYCLE_RECONCILING` may take
+the correction transition above before `CLOSED`; its unconsumed closure receipt
+is invalidated in the same transaction. Once `CLOSED` is committed, only the
+successor-root path is legal.
+
+### Acceptance fixture closure
+
+Each fixture uses the closed assertion grammar
+`{code,result_state,revision_effect,forbidden_effect,receipt_digests}`. The
+table IDs are unique and exhaustive for this proposal. The two pre-existing
+PASS-lane fixtures and their embedded rubrics
+remain unchanged; this addendum adds only the correction-origin cases below.
+
+| ID | Fixture addition / preserved lane |
+| --- | --- |
+| A01 | binding and lifecycle lane (preserved) |
+| A02 | authority lane (preserved) |
+| A03 | durable-store lane (preserved) |
+| A04 | candidate-manifest lane (preserved) |
+| A05 | state, root-manifest, G7, and closure lane; additions below |
+| A06 | runtime lease/fence lane (preserved) |
+| A07 | scheduler-ledger race and rollback lane; additions below |
+| A08 | independent-review lane (preserved) |
+| A09 | boundary-proof lane (preserved) |
+| A10 | reconciliation lane (preserved) |
+| A11 | source/target parity lane (preserved) |
+
+The state, root-manifest, G7, and closure fixture assertions are:
+
+`review-correction-full-path={ACCEPTED,REPLACED,changed,no_inherited_gate_evidence,predecessor+successor+invalidation+transition}`;
+`post-fanin-child-correction-accepted={ACCEPTED,CORRECTING,changed,no_inherited_gate_evidence,predecessor+successor+invalidation+transition+root-manifest+global-proof+whole-change-quorum+closure}`;
+`concurrent-root-invalidation-race-loser={REJECTED,CONFLICT,unchanged,no_root_or_child_invalidation,predecessor+root-manifest}`;
+`root-correction-transaction-rollback={REJECTED,ROLLED_BACK,unchanged,no_partial_root_or_child_invalidation,predecessor+root-manifest+ledger}`; and
+`closed-root-correction-reject={REJECTED,TERMINAL,unchanged,no_in_place_correction,predecessor+transition}`.
+
+The accepted post-fanin assertion requires receipts for the root transition,
+superseded root manifest, invalidated global proof, invalidated whole-change
+quorum/reviews, invalidated derived G7, invalidated closure eligibility,
+invalidated unconsumed closure receipt, predecessor invalidation, and one
+successor. The closed-root assertion additionally requires a separate
+successor-root receipt before any resumed work.
+
+The scheduler-ledger race and rollback fixture assertions are:
+
+`root-correction-race-one-winner={ACCEPTED,REPLACED,changed,no_second_root_or_child_successor,ledger+predecessor+successor+invalidation+transition}`;
+`root-correction-race-loser={REJECTED,CONFLICT,unchanged,no_root_or_child_invalidation,ledger+predecessor}`; and
+`root-correction-rollback-reject={REJECTED,ROLLED_BACK,unchanged,no_partial_root_or_child_invalidation,ledger+predecessor+root-manifest}`.
+
+### Digest-token registry extension
+
+The exact shorthand registry is closed and includes every token used above:
+`predecessor->predecessor_digest`, `successor->successor_digest`,
+`invalidation->invalidation_digest`, `transition->transition_digest`,
+`root-manifest->root_review_candidate_manifest_digest`,
+`global-proof->global_proof_digest`,
+`whole-change-quorum->whole_change_quorum_digest`,
+`closure->operator_closure_digest`, and `ledger->budget_ledger_digest`.
+The root-dependent invalidation receipt is represented by the registered
+`invalidation` token; it is not an unregistered alias. For the two exact
+closed-root and race effects, `no_in_place_correction`,
+`no_root_or_child_invalidation`, `no_partial_root_or_child_invalidation`, and
+`no_second_root_or_child_successor` are closed forbidden-effect tokens. No
+fixture may introduce a digest shorthand, result-state, or forbidden-effect
+token outside this registry and table.

@@ -1,0 +1,161 @@
+{
+  "schema_version": "accelerate-phase1-entry-independent-review-v1",
+  "reviewer_actor_id": "phase1-entry-architecture-reviewer",
+  "reviewer_actor_epoch": "phase1-entry-architecture-20260901-epoch1",
+  "runtime_instance_id": "/root/phase1_entry_architecture_review",
+  "context_root": "sha256:5ca9d15f3274e1467aa32b85f074e4a03bf3fd19498368b346d8467cfdbb05e5",
+  "lens_id": "phase1-entry-architecture-consistency-v1",
+  "model": "gpt-5.6-sol",
+  "reasoning_effort": "medium",
+  "fork_turns": "all",
+  "fresh_context": true,
+  "read_only_over_candidate": true,
+  "candidate": {
+    "path": "planning/evidence/dated-proof-appendix/codex-17-phase1-entry/phase1-entry-review-candidate.json",
+    "digest": "sha256:47b5ae21a00bf5dc9b7b29d801e0394b4fc3141aedaf88e77395cb93257f87da",
+    "freeze_signature": "sha256:f9a122b10b9cf059ff29d185eed355e600eb03e2ee5633fe1f2855450d157ed2",
+    "freeze_signature_verified": true
+  },
+  "inputs": {
+    "proposal": {
+      "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+      "digest": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a"
+    },
+    "phase0_acceptance_receipt": {
+      "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-architecture-acceptance-2026-09-01.json",
+      "digest": "sha256:293ece64c8bc452239ff5e2220dbbd297dfc9d595e45e9f90d148e9818e421a8"
+    },
+    "dispositions": [
+      {
+        "id": "D01",
+        "path": "planning/architecture/decisions/2026-09-01-d01-gauntlet-durable-state.md",
+        "digest": "sha256:073e01db5d3fbd01ae802c1da9d3e0f7501ebdcde2bd6683f9ac49df8ad6d3a9"
+      },
+      {
+        "id": "D08",
+        "path": "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md",
+        "digest": "sha256:926f4dc17ab8de935d03ddb2ae7ac9635813da0896e3186d189b74a092718c0e"
+      },
+      {
+        "id": "D11",
+        "path": "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md",
+        "digest": "sha256:bdfe70d6b8cd1a95c1c20da3cbc73b48f276286baf2f3a8d088120714cae5384"
+      }
+    ]
+  },
+  "axes": [
+    {
+      "axis": "proposal-and-phase0-binding",
+      "verdict": "PASS",
+      "evidence_locators": [
+        "planning/evidence/dated-proof-appendix/codex-17-phase0-architecture-acceptance-2026-09-01.json:77-101",
+        "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:1845-1857",
+        "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:2004-2020"
+      ],
+      "basis": "The accepted Phase-0 receipt binds the same proposal digest and names D01, D08, and D11 as Phase-1 entry requirements; each disposition binds that proposal digest and remains proposed-for-root-acceptance."
+    },
+    {
+      "axis": "decision-completeness",
+      "verdict": "PASS",
+      "evidence_locators": [
+        "planning/architecture/decisions/2026-09-01-d01-gauntlet-durable-state.md:31-37",
+        "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md:14-55",
+        "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md:28-86"
+      ],
+      "basis": "D01 selects durable state, D08 fixes delivery/provenance and invocation boundaries, and D11 fixes artifact location/containment; their deferred implementation obligations are explicit."
+    },
+    {
+      "axis": "cross-decision-consistency",
+      "verdict": "PASS",
+      "evidence_locators": [
+        "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md:47-55",
+        "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md:101-105",
+        "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md:197-203"
+      ],
+      "basis": "D08 defers artifact location to D11 and both prescribe explicit cwd/store root <project_root>/planning with the sole canonical child planning/openspec; D01 is separately required rather than overwritten."
+    },
+    {
+      "axis": "authority-and-no-dual-writer",
+      "verdict": "PASS",
+      "evidence_locators": [
+        "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:136-177",
+        "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:521-524",
+        "planning/architecture/decisions/2026-09-01-d01-gauntlet-durable-state.md:51-57",
+        "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md:55-77",
+        "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md:134-145"
+      ],
+      "basis": "The proposal assigns lifecycle, active state, and artifacts to distinct owners; D01 owns mutable gauntlet metadata/CAS while D11 owns tracked planning artifacts and prohibits duplicate canonical bytes, fallback authority, and writable projections."
+    },
+    {
+      "axis": "durability-cas-restore",
+      "verdict": "PASS",
+      "evidence_locators": [
+        "planning/architecture/decisions/2026-09-01-d01-gauntlet-durable-state.md:61-85",
+        "planning/architecture/decisions/2026-09-01-d01-gauntlet-durable-state.md:87-136",
+        "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:707-714"
+      ],
+      "basis": "D01 specifies ACID metadata transactions, fenced revision CAS, verified same-filesystem immutable CAS publication, transactional outbox handling, and non-destructive verified restore; it aligns with the proposal state-machine/transaction rules."
+    },
+    {
+      "axis": "external-provenance-and-delivery",
+      "verdict": "PASS",
+      "evidence_locators": [
+        "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md:14-20",
+        "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md:47-55",
+        "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md:73-99"
+      ],
+      "basis": "D08 pins a candidate commit/version, requires immutable tuple/integrity revalidation before any spawn, uses a repo-owned JSON adapter in an isolated tool root, and explicitly rejects moving release selectors, global installation, and Plus runtime adoption."
+    },
+    {
+      "axis": "path-containment-and-cleanup",
+      "verdict": "PASS",
+      "evidence_locators": [
+        "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md:88-120",
+        "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md:147-162",
+        "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md:164-186"
+      ],
+      "basis": "D11 requires an explicit allowlisted root, no-follow containment checks, rejects parent walk/alternate roots/symlink or descriptor races, and limits cleanup to verified adapter-owned fixture residue with quarantine on ambiguity."
+    },
+    {
+      "axis": "fixture-and-rollback-testability",
+      "verdict": "PASS",
+      "evidence_locators": [
+        "planning/architecture/decisions/2026-09-01-d01-gauntlet-durable-state.md:147-155",
+        "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md:75-81",
+        "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md:164-195",
+        "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:1992-1995"
+      ],
+      "basis": "Future positive/negative fixtures cover CAS crash/idempotency/restore, exact store-root and containment/cleanup, and all three manifest schemas; rollback is bounded to isolated prior-candidate/tool roots or verified artifact successors, never shared runtime state."
+    },
+    {
+      "axis": "authorization-boundary",
+      "verdict": "PASS",
+      "evidence_locators": [
+        "planning/evidence/dated-proof-appendix/codex-17-phase0-architecture-acceptance-2026-09-01.json:77-101",
+        "planning/architecture/decisions/2026-09-01-d01-gauntlet-durable-state.md:17-18",
+        "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md:5-10",
+        "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md:3-11"
+      ],
+      "basis": "Phase 0 neither authorizes Phase 1 nor runtime effects, and every D-record is an acceptance proposal/policy disposition only; candidate forbidden-effect flags preserve that separation."
+    },
+    {
+      "axis": "internal-consistency",
+      "verdict": "PASS",
+      "evidence_locators": [
+        "planning/evidence/dated-proof-appendix/codex-17-phase1-entry/phase1-entry-review-candidate.json:1-113",
+        "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:766-827",
+        "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md:197-209"
+      ],
+      "basis": "All candidate paths and declared digests verify; the candidate's freeze signature validates under its stated domain-separated canonical serialization; its 10 required axes, read-only/fresh-context contract, correction-budget state, and cross-decision invariants are coherent with the reviewed documents."
+    }
+  ],
+  "verdict": "PASS",
+  "findings": [],
+  "conflicts": [],
+  "issued_at": "2026-09-01T11:57:18-04:00",
+  "verifier_signature": {
+    "scheme": "sha256-domain-separated-canonical-json-v1",
+    "algorithm": "SHA-256 over literal prefix accelerate-phase1-entry-independent-review-v1 followed by LF and compact key-sorted JSON with verifier_signature removed and no terminal LF",
+    "value": "sha256:cd46dc23ff0150b481fe4a2840f87146b04926e5abcf0037f49c36854bd6f341"
+  }
+}

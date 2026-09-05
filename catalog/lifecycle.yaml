@@ -1,0 +1,43 @@
+schema_version: 1
+states:
+  - defined
+  - registered
+  - projected
+  - loader-confirmed
+  - callable
+  - authorized
+  - retired
+rules:
+  - from: defined
+    to: registered
+    required_receipt: canonical-catalog-validation
+    required_evidence_kind: catalog-validation-readback
+  - from: registered
+    to: projected
+    required_receipt: projection-manifest-and-readback
+    required_evidence_kind: projection-readback
+    requires_projection_artifact: true
+  - from: projected
+    to: loader-confirmed
+    required_receipt: fresh-loader-receipt
+    required_evidence_kind: loader-readback
+  - from: loader-confirmed
+    to: callable
+    required_receipt: fresh-callability-receipt
+    required_evidence_kind: callability-readback
+  - from: callable
+    to: authorized
+    required_receipt: scoped-authorization-receipt
+    required_evidence_kind: authorization-readback
+  - from: authorized
+    to: retired
+    required_receipt: retirement-authorization-and-no-reader-proof
+    required_evidence_kind: retirement-readback
+invariants:
+  - no-state-implies-a-later-state
+  - canonical-catalog-entries-use-lifecycle_state
+  - every-state-above-defined-has-a-complete-asset-bound-receipt-chain
+  - installed-discovery-is-not-loader-confirmation
+  - loader-confirmation-is-not-callability
+  - callability-is-not-authorization
+  - projection-must-record-its-canonical-source-and-digest

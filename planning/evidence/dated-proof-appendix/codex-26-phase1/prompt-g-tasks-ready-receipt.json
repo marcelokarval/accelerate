@@ -1,0 +1,58 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "TASKS_READY",
+  "issued_at": "2026-09-03T23:29:58-04:00",
+  "governing_issue": "CODEX-26",
+  "phase": "Phase 1 closure review",
+  "prompt": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-closure-review-prompt-g.md",
+    "sha256": "f29befd46c70ddd7ffbc6393d1a9783d737366296d7d83442b5457dedaab4fbf"
+  },
+  "task_graph": {
+    "path": "planning/executive/2026-09-04-codex-26-phase1-closure-review-prompt-g-task-graph.md",
+    "sha256": "ee3284205dec610311ffcd4326fbc1a48541cf5d0a4dffeac21f2478553925ee"
+  },
+  "execution_route": "orchestrated",
+  "closure_mode": "GO_FOR_OPERATOR_PHASE1_CLOSURE_or_NO_GO_WITH_FIRST_BROKEN_BOUNDARY",
+  "active_skills": [
+    "accelerate",
+    "prompt-hardening",
+    "subagent-governance",
+    "evidence-reconciliation",
+    "verification-before-completion"
+  ],
+  "active_authority": [
+    "AGENTS.md",
+    "SKILL.md",
+    "phase1-closure-review-prompt-g.md",
+    "2026-09-04-codex-26-phase1-closure-review-prompt-g-task-graph.md",
+    "prompt-f-task-f09-closure-review-go.md",
+    "prompt-f-durable-proof-freeze.json"
+  ],
+  "gate_ledger": {
+    "TASK-G01": "PASS",
+    "TASK-G02": "TASKS_READY",
+    "TASK-G03": "DISPATCHED_HELD_PENDING_WITNESS_RECHECK",
+    "TASK-G04": "NOT_STARTED",
+    "TASK-G05": "NOT_STARTED",
+    "TASK-G06": "NOT_STARTED",
+    "TASK-G07": "REVIEWER_READY_NOT_RELEASED",
+    "TASK-G08": "NOT_APPLICABLE_YET",
+    "TASK-G09": "NOT_STARTED",
+    "TASK-G10": "NOT_STARTED",
+    "TASK-G11": "NOT_STARTED"
+  },
+  "issue_stack": {
+    "authority": "Plane",
+    "issue": "CODEX-26",
+    "entry_state": "In Progress",
+    "child_plane_access": "forbidden",
+    "done_transition": "not_authorized"
+  },
+  "qa_proof_lane": "Prompt-F frozen proof reusable only while frozen inputs remain unchanged",
+  "browser_proof": "not_in_scope",
+  "persistent_e2e": "Prompt-F frozen proof only; no new browser or E2E execution authorized",
+  "dispatch_required": true,
+  "dispatch_satisfied": true,
+  "ready": true
+}

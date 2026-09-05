@@ -13,6 +13,9 @@ Use it for:
 ## Native Artifacts
 
 - `sdd-template.md`
+- `2026-09-01-accelerate-portable-agent-fabric-openspec-design.md`
+- `2026-09-01-codex-22-verification-graph-heartbeat-addendum.md`
+- `decisions/` for digest-bound architecture decisions, including D15--D18
 
 ## Rule
 

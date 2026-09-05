@@ -1,0 +1,43 @@
+{
+  "schema_id": "phase0-read-only-structural-verifier-receipt-v1",
+  "actor_id": "agy:gemini-3.7-flash-low",
+  "actor_epoch": "CODEX-25-round-3-fresh-print-turn",
+  "trust_root": "agy-cli-local",
+  "model": "Gemini 3.7 Flash",
+  "read_only": true,
+  "conversation_id": "994d4c24-24e0-498d-b4fb-0e24bf297b1f",
+  "candidate_digest": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca",
+  "manifest_digest": "44df3d6c4d059a66342e08022886afc15100173d8a9d7cda97a7b1fe070760b2",
+  "handoff_digest": "73c344a5576b7ba9502249c13668ba2b2aed2efb44336e83234ce047ef3811e5",
+  "scan_packet_digest": "9b8d2d5f624b87df150c8a5d8e29bd42e258539a2e2802531ad7bb6783414d16",
+  "block_digests": {
+    "phase0-common-rubric-v1": "616b73aeeb152fb69bf6be3f599a73110386adb364fb5b1c4e7098305e54f576",
+    "phase0-lens-control-plane-v1": "2cd1b0ca01d2c24a75e5cc3db2de764398cc939d16a3dd9d1af4632dac5b96cc",
+    "phase0-lens-runtime-concurrency-v1": "53702a4de07a8ceef483f5ef0195655b9510a2af072d2945347431de78b70d5c",
+    "phase0-lens-migration-security-v1": "9ebee3cec1f27c745473497a210a799c4bd169ae529fbd17b27827ec7c47c634"
+  },
+  "checks": {
+    "candidate_digest_matches": "PASS",
+    "manifest_digest_matches": "PASS",
+    "handoff_digest_matches": "PASS",
+    "scan_packet_digest_matches": "PASS",
+    "block_digests_match": "PASS",
+    "exactly_one_common_rubric": "PASS",
+    "exactly_three_unique_overlays": "PASS",
+    "exactly_three_unique_review_slots": "PASS",
+    "one_to_one_overlay_coverage": "PASS",
+    "codex_25_current_authority_codex_24_predecessor_only": "PASS",
+    "all_referenced_paths_exist": "PASS",
+    "heading_counts_verified": "PASS",
+    "no_active_retired_path_authority": "PASS",
+    "distinct_actor_identities": "PASS",
+    "shared_trust_root_reviewer_independence_rule": "PASS",
+    "handoff_and_scan_packet_structural_integrity": "PASS",
+    "deterministic_scan_evidence_verified": "PASS"
+  },
+  "verdict": "PASS",
+  "conflicts": [],
+  "issued_at": "2026-09-01T22:03:30-04:00",
+  "signature_statement": "Independent structural verification completed with 0 errors and 0 conflicts under strict marked-block normalization and digest matching.",
+  "authority_limitation_statement": "This receipt confirms read-only structural verification only. It grants no architecture acceptance and no Phase 1-7 implementation authorization."
+}

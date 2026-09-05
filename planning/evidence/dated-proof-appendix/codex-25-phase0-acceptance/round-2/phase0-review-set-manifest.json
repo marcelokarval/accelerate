@@ -1,0 +1,91 @@
+{
+  "schema_id": "phase0-review-set-manifest-v1",
+  "review_round": 2,
+  "issue": {
+    "workspace_slug": "karval",
+    "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+    "work_item_id": "6dc9e3a8-b9bf-46f3-ae02-68936a4082a9",
+    "sequence_id": "CODEX-25"
+  },
+  "candidate": {
+    "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "version": "v0.7.24",
+    "digest_algorithm": "sha256",
+    "candidate_digest": "64d2485b92e595544dd19123ee0e46f72d49b47e3a0cad25932e7a611f7484a1",
+    "document_digest": "64d2485b92e595544dd19123ee0e46f72d49b47e3a0cad25932e7a611f7484a1"
+  },
+  "predecessor_successor_handoff_path": "planning/evidence/dated-proof-appendix/codex-25-phase0-acceptance/round-2/predecessor-successor-handoff.json",
+  "predecessor_successor_handoff_digest": "5583ec9d75df3eabede8848b906b9a9b6912d4099eb81a32f5ee3e8d42b8643c",
+  "candidate_author": {
+    "actor_id": "/root/codex25_phase0_correction",
+    "actor_epoch": "v0.7.24-final",
+    "trust_root": "codex-collaboration"
+  },
+  "architecture_owner": {
+    "actor_id": "codex-root-control-plane",
+    "actor_epoch": "CODEX-25-round-2",
+    "trust_root": "codex-root-session"
+  },
+  "review_set_verifier": {
+    "actor_id": "agy:gemini-3.7-flash-low",
+    "actor_epoch": "CODEX-25-round-2-fresh-print-turn",
+    "trust_root": "agy-cli-local",
+    "authority": "structural-verification-only"
+  },
+  "base_rubric": {
+    "id": "phase0-common-rubric-v1",
+    "digest": "616b73aeeb152fb69bf6be3f599a73110386adb364fb5b1c4e7098305e54f576"
+  },
+  "review_slots": [
+    {
+      "review_slot": "P0-CP-R2",
+      "required_overlay_id": "phase0-lens-control-plane-v1",
+      "required_overlay_digest": "2cd1b0ca01d2c24a75e5cc3db2de764398cc939d16a3dd9d1af4632dac5b96cc",
+      "assignment_id": "CODEX-25-P0-CP-R2"
+    },
+    {
+      "review_slot": "P0-RC-R2",
+      "required_overlay_id": "phase0-lens-runtime-concurrency-v1",
+      "required_overlay_digest": "53702a4de07a8ceef483f5ef0195655b9510a2af072d2945347431de78b70d5c",
+      "assignment_id": "CODEX-25-P0-RC-R2"
+    },
+    {
+      "review_slot": "P0-MS-R2",
+      "required_overlay_id": "phase0-lens-migration-security-v1",
+      "required_overlay_digest": "9ebee3cec1f27c745473497a210a799c4bd169ae529fbd17b27827ec7c47c634",
+      "assignment_id": "CODEX-25-P0-MS-R2"
+    }
+  ],
+  "review_policy": {
+    "required_model": "gpt-5.6-terra",
+    "required_reasoning_effort": "medium",
+    "required_fork_turns": "none",
+    "read_only": true,
+    "required_verdict": "PASS",
+    "exact_slot_count": 3,
+    "overlay_coverage": "one-to-one-exhaustive",
+    "independence_dimensions": [
+      "actor_id",
+      "actor_epoch",
+      "runtime_instance",
+      "context_root",
+      "context_lineage"
+    ],
+    "shared_context_or_transcript_forbidden": true,
+    "shared_runtime_trust_root_alone_is_neither_sufficient_nor_disqualifying": true
+  },
+  "operator_acceptor": {
+    "actor_id": "marcelo-karval",
+    "actor_epoch": "CODEX-25-round-2",
+    "trust_root": "explicit-human-operator"
+  },
+  "issued_at": "2026-09-01T21:50:06-04:00",
+  "expires_at": "2026-09-01T23:50:06-04:00",
+  "freshness_basis": "fresh fork_turns=none reviewer sessions plus current candidate and handoff digest revalidation",
+  "non_goals": [
+    "No Phase 1-7 implementation authorization",
+    "No runtime, install, promotion, deployment, migration, WebUI or harness mutation",
+    "No reuse of round-1 reviews",
+    "No Agy architecture acceptance authority"
+  ]
+}

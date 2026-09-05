@@ -1,0 +1,107 @@
+{
+  "schema_version": "phase0-successor-review-v1",
+  "review_id": "proposal_v05_final_runtime_concurrency_validation",
+  "review_set_manifest_digest": "sha256:231d87b4eed01a02e2e4851b128248f40db718ff29a4f33962be4e23bf2ed4ff",
+  "verifier_version": "codex-collaboration-phase0-review-verifier-v1",
+  "document_digest": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a",
+  "reviewer_actor_id": "phase0-runtime-concurrency-reviewer",
+  "reviewer_actor_epoch": "phase0-acceptance-2026-09-01-runtime-concurrency-epoch-1",
+  "runtime_instance_id": "/root/phase0_acceptance_runtime_receipt",
+  "context_root": "sha256:8aaffd2d49cdbdab07e3e5e4bf0d6da1af63bd7d7eb547bf294543e2af4781b2",
+  "fresh_context_receipt": {
+    "fork_turns": "none",
+    "prior_turns_inherited": 0,
+    "verified": true,
+    "context_root": "sha256:8aaffd2d49cdbdab07e3e5e4bf0d6da1af63bd7d7eb547bf294543e2af4781b2"
+  },
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "medium",
+  "read_only": true,
+  "base_rubric_digest": "sha256:25e77374f3d93ea065cd0921078b90e1239fa82bed81863870ecaedc7a79d94b",
+  "lens_overlay": {
+    "id": "phase0-lens-runtime-concurrency-v1",
+    "digest": "sha256:7abc8262099a1ff310ab5667877044d2f54949b308dd9eb1f908d92362d49e01"
+  },
+  "verdict": "PASS",
+  "axis_results": [
+    {
+      "axis": "authority-and-scope",
+      "verdict": "PASS",
+      "claim_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md#field-authority-projection-and-conflict-resolution",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Field authority table; Apply preconditions; Phase-0 input and exit contract.",
+      "required_correction": null
+    },
+    {
+      "axis": "state-and-transition-safety",
+      "verdict": "PASS",
+      "claim_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md#apply-state-machine",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Closed root/node/lease/review enums, legal transition table, terminal-state and UNKNOWN recovery rules.",
+      "required_correction": null
+    },
+    {
+      "axis": "evidence-and-freshness",
+      "verdict": "PASS",
+      "claim_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md#receipt-predicates-and-freshness",
+      "contradiction_or_gap": null,
+      "evidence_locator": "valid, fresh, callable, authorized, and independent predicates; fail-closed NO-GO rule.",
+      "required_correction": null
+    },
+    {
+      "axis": "lineage-and-fencing",
+      "verdict": "PASS",
+      "claim_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md#mission-scheduler-and-fencing",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Current CAS revision and fencing-token envelope, token rotation, one scheduler admission route, cap propagation, and expiry reconciliation.",
+      "required_correction": null
+    },
+    {
+      "axis": "manifest-and-snapshot-integrity",
+      "verdict": "PASS",
+      "claim_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md#content-addressed-execution-input-and-review-candidate-manifests",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Closed JCS manifests, domain-separated SHA-256 prefixes, output snapshot definition, hash regeneration, and reject fixtures.",
+      "required_correction": null
+    },
+    {
+      "axis": "migration-denominator-and-rollback",
+      "verdict": "PASS",
+      "claim_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md#frozen-migration-denominator-inventory",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Closed tracked/excluded root inventory, reader/retention/rollback fields, unclassified-root block, and A11 fixtures.",
+      "required_correction": null
+    },
+    {
+      "axis": "security-and-lan-boundary",
+      "verdict": "PASS",
+      "claim_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md#mandatory-controls-for-0000",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Proxy and backend isolation, authenticated identity, D05 CSRF/origin policy, root containment, limits, canaries, and promotion block.",
+      "required_correction": null
+    },
+    {
+      "axis": "testability-and-negative-fixtures",
+      "verdict": "PASS",
+      "claim_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md#acceptance-criteria-for-the-architecture",
+      "contradiction_or_gap": null,
+      "evidence_locator": "A03-A11 deterministic positive/negative fixture contracts, including runtime lease, scheduler race, review independence, and WebUI deny cases.",
+      "required_correction": null
+    },
+    {
+      "axis": "internal-consistency",
+      "verdict": "PASS",
+      "claim_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md#phase-0-architecture-acceptance",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Recomputed proposal/base-rubric/overlay hashes match the immutable manifest; rubric and overlay preserve the same nine axes.",
+      "required_correction": null
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "issued_at": "2026-09-01T04:45:27-03:00",
+  "verifier_signature": {
+    "scheme": "sha256-domain-separated-canonical-json-v1",
+    "value": "sha256:01dc0ad2795539d23cab86e2845d21159f1d0b2ca4530051dcad2656d9c636c4"
+  }
+}

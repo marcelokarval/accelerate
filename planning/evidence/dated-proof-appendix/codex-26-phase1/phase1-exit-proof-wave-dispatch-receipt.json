@@ -1,0 +1,109 @@
+{
+  "contract_version": "1.0",
+  "state": "DISPATCHED",
+  "artifacts": {
+    "hardening": {
+      "ref": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-exit-revalidation-hardened-prompt.md",
+      "sha256": "1fedfb3b7578afccf3c9807db4dc02ce53e9896236b45fd35e082011181708bf"
+    },
+    "spec": {
+      "ref": "planning/architecture/2026-09-01-codex-26-phase1-openspec-core-sdd.md",
+      "sha256": "2e037c4063adf4d4088843baf1f655410d74424c2a0866c0bbd5951fe9aadefc"
+    },
+    "task_graph": {
+      "ref": "planning/executive/2026-09-02-codex-26-phase1-exit-revalidation-task-graph.md",
+      "sha256": "0e3a7e2e57f169c8dff14406e1883f081d6b06fb0cd96f63e1e5fb8b1bdbe025"
+    }
+  },
+  "route": "orchestrated",
+  "execution_requested": true,
+  "planned_task_owned_writes": false,
+  "capability_proof": {
+    "collaboration_available": true,
+    "spawn_api": "collaboration.spawn_agent",
+    "checked_at": "2026-09-02T23:56:18-04:00"
+  },
+  "budget": {
+    "max_agents": 3,
+    "active_count": 3
+  },
+  "assignments": [
+    {
+      "assignment_id": "task004-root-suite-executor",
+      "kind": "executor",
+      "task_id": "TASK-004",
+      "dependencies": ["TASK-003"],
+      "wave": 1,
+      "role": "isolated-root-suite-tester",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/task004_root_suite",
+      "call_id": "spawn:/root/task004_root_suite",
+      "read_scopes": ["AGENTS.md", "SKILL.md", "tests/", "planning/evidence/dated-proof-appendix/codex-26-phase1/implementation-candidate-c14-full-freeze.json"],
+      "write_scopes": ["/tmp/accelerate-task004-isolated-proof"],
+      "proof": "foreground bash tests/all.sh exact exit plus frozen-candidate pre/post verification",
+      "reviewer_assignment_id": "task006-exit-audit-reviewer",
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    },
+    {
+      "assignment_id": "task005-real-openspec-executor",
+      "kind": "executor",
+      "task_id": "TASK-005",
+      "dependencies": ["TASK-003"],
+      "wave": 1,
+      "role": "real-openspec-integration-tester",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/task005_real_openspec",
+      "call_id": "spawn:/root/task005_real_openspec",
+      "read_scopes": ["AGENTS.md", "SKILL.md", "adapters/openspec/", "core/phase1/", "planning/openspec/", "scripts/phase1/", "tests/phase1/"],
+      "write_scopes": ["/tmp/accelerate-task005-isolated-proof"],
+      "proof": "two disposable PHASE1_REAL_OPENSPEC=1 runs with exact exits and deterministic evidence",
+      "reviewer_assignment_id": "task006-exit-audit-reviewer",
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    },
+    {
+      "assignment_id": "task006-exit-audit-reviewer",
+      "kind": "reviewer",
+      "task_id": "TASK-006",
+      "dependencies": ["TASK-003"],
+      "wave": 2,
+      "role": "independent-governance-reviewer",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/task006_exit_audit",
+      "call_id": "spawn:/root/task006_exit_audit",
+      "read_scopes": ["AGENTS.md", "SKILL.md", "planning/", "adapters/openspec/", "core/phase1/", "scripts/phase1/", "tests/phase1/"],
+      "write_scopes": [],
+      "proof": "independent requirement-by-requirement Phase-1 exit audit",
+      "reviewer_assignment_id": null,
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    }
+  ],
+  "fan_in": {
+    "owner": "root",
+    "assignment_ids": [
+      "task004-root-suite-executor",
+      "task005-real-openspec-executor",
+      "task006-exit-audit-reviewer"
+    ]
+  },
+  "exceptions": [],
+  "root_write_lock": {
+    "mode": "orchestrated-dispatched-scope-lock",
+    "task_owned_writes_forbidden": true,
+    "dispatched_task_scopes": [
+      "/tmp/accelerate-task004-isolated-proof",
+      "/tmp/accelerate-task005-isolated-proof"
+    ]
+  }
+}

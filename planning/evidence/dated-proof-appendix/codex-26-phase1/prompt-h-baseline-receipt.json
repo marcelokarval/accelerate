@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "PROMPT_H_OBSERVED_BASELINE",
+  "observed_at": "2026-09-04T00:16:46-04:00",
+  "governing_issue": "CODEX-26",
+  "change_kind": "hybrid contract-defect and governance correction",
+  "proof_mode": "bug repro plus semantic valid-invalid contract",
+  "baseline": [
+    {
+      "command": "bash onboarding/local-workspace/prepare-closure.sh /home/marcelo-karval/Backup/Projetos/accelerate",
+      "exit_code": 1,
+      "classification": "RED",
+      "result": "missing .accelerate/planning/current-plan.md"
+    },
+    {
+      "command": "bash tests/dogfood-workspace-contract.sh",
+      "exit_code": 1,
+      "classification": "RED",
+      "result": "oracle expects C13 current_plan instead of Prompt G"
+    },
+    {
+      "command": "bash onboarding/local-workspace/validate-dogfood-v2-subset.sh .",
+      "exit_code": 1,
+      "classification": "RED",
+      "result": "12 current lifecycle, backend, status, and cycle-authority violations"
+    },
+    {
+      "command": "python3 scripts/validate-phase1-entry-currentness.py",
+      "exit_code": 0,
+      "classification": "SEMANTIC_RED",
+      "result": "success output incorrectly certifies C13 as current"
+    }
+  ],
+  "source_hashes": {
+    "onboarding/local-workspace/prepare-closure.sh": "3bfff00178cc3553f53ad88794a660770cc592a0863314bb4ead2bf0fa19cc5d",
+    "onboarding/local-workspace/sync-plan-status.sh": "05fb0f53f6284941918cf83b62ed8ff740e5c01f185c6d5b2a2880dc2cca04d2",
+    "onboarding/local-workspace/refresh-readiness.sh": "fd4cddebfc546c2c007854fb41829aa4804c54ee9acd6b915e6c6737440b5a93",
+    "onboarding/local-workspace/validate-dogfood-v2-subset.sh": "a6bf12929f085ced6c68cfee96ba928084334ae6ffdeb799a41f16d5a88a5966",
+    "tests/dogfood-workspace-contract.sh": "7106c86c5502bd56bf864a29174eba45cd20819f6e554c3904bb9fb7292b8fe7",
+    "scripts/validate-phase1-entry-currentness.py": "dab3ab6cd9229ad580fa42461e19d4ef8feb49727cc9743ecd5678bd3968acb2"
+  },
+  "correction_generation": 0,
+  "proof_generation": 0,
+  "independent_reviewer": "Codex Terra Medium",
+  "root_closure_authority": true
+}

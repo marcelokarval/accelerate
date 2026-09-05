@@ -1,0 +1,77 @@
+registry_version: domain-risk-registry/v1
+risk_order: [low, medium, high, critical]
+sensitive_signals: [refund, duplicate, payment, reimburse, overcharge, card]
+domain_locks: {refund: refund, reimbursement: refund, reimburse: refund, overcharge: refund, card: refund, login: authentication, authenticate: authentication, authentication: authentication, migrate: migration, migration: migration, database: migration}
+direct_fast_path_admission:
+  domain: editorial
+  capability: copy-edit
+  required_signals: [typo]
+  exact_signals: true
+  normalized_prompt: correct a typo in a non operative label
+  target_kind: documentation
+domains:
+  refund:
+    minimum_risk: critical
+    required_capability: refund
+    required_invariants: [financial-ledger-integrity, idempotent-provider-request, ledger-reconciliation]
+    required_seams: [payment-provider]
+    required_effects: [financial-ledger-write, refund]
+    required_external_effects: [payment-provider-refund]
+    allowed_reversibility: [irreversible-or-constrained]
+    required_risk_basis: [financial, external-provider]
+    required_implications: [authorization, idempotency, audit-trail, rollback]
+    required_route: orchestrated
+    required_proof: [idempotency, ledger-reconciliation, provider-readback]
+    escalation_required: true
+  authentication:
+    minimum_risk: critical
+    required_capability: login
+    required_invariants: [session-boundary]
+    required_seams: [identity-provider]
+    required_effects: [session-issue]
+    required_external_effects: [identity-provider-session]
+    allowed_reversibility: [reversible-with-rollback]
+    required_risk_basis: [identity, external-provider]
+    required_implications: [authorization, session-security, audit-trail, rollback]
+    required_route: orchestrated
+    required_proof: [session-security, provider-readback]
+    escalation_required: true
+  checkout-seam:
+    minimum_risk: critical
+    required_capability: checkout
+    required_invariants: [checkout-contract, idempotent-provider-request]
+    required_seams: [checkout-boundary, payment-provider]
+    required_effects: [checkout-routing]
+    required_external_effects: [payment-provider-checkout]
+    allowed_reversibility: [reversible-with-rollback]
+    required_risk_basis: [payment, external-provider]
+    required_implications: [authorization, idempotency, compatibility, observability, rollback]
+    required_route: orchestrated
+    required_proof: [idempotency, contract-test, provider-readback]
+    escalation_required: true
+  migration:
+    minimum_risk: critical
+    required_capability: migrate
+    required_invariants: [data-integrity]
+    required_seams: [persistence-store]
+    required_effects: [data-transform]
+    required_external_effects: [none]
+    allowed_reversibility: [reversible-with-rollback]
+    required_risk_basis: [data-persistence]
+    required_implications: [backup-recovery, compatibility, data-integrity, rollback]
+    required_route: orchestrated
+    required_proof: [migration-integrity]
+    escalation_required: true
+  editorial:
+    minimum_risk: low
+    required_capability: copy-edit
+    required_invariants: [copy-accuracy]
+    required_seams: [content-surface]
+    required_effects: [copy-change]
+    required_external_effects: [none]
+    allowed_reversibility: [reversible]
+    required_risk_basis: [editorial]
+    required_implications: [copy-review]
+    required_route: direct-fast-path
+    required_proof: [copy-review]
+    escalation_required: false

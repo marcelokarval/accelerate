@@ -1,0 +1,1 @@
+{"$schema":"https://json-schema.org/draft/2020-12/schema","title":"accelerate-governed draft","type":"object","additionalProperties":false,"required":["change_id","intent","non_goals"],"properties":{"change_id":{"type":"string","pattern":"^[a-z0-9-]+$"},"intent":{"type":"string"},"non_goals":{"type":"array","items":{"type":"string"}}}}

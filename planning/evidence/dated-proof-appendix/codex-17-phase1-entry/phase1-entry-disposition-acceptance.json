@@ -1,0 +1,121 @@
+{
+  "schema_version": "accelerate-phase1-entry-disposition-acceptance-v1",
+  "receipt_id": "CODEX-17-phase1-entry-disposition-acceptance-2026-09-01",
+  "issued_at": "2026-09-01T12:01:59-04:00",
+  "timestamp_source": "runtime",
+  "decision": "ACCEPTED",
+  "authority": {
+    "acceptor": "Codex root",
+    "operator": "Marcelo",
+    "authorization_basis": "explicit_current-session_authorization_to_proceed_and_complete_proposal_validation",
+    "acceptor_authored_dispositions": false,
+    "proposal_self_acceptance": false
+  },
+  "governing_artifacts": {
+    "proposal": {
+      "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+      "digest": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a"
+    },
+    "phase0_acceptance": {
+      "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-architecture-acceptance-2026-09-01.json",
+      "digest": "sha256:293ece64c8bc452239ff5e2220dbbd297dfc9d595e45e9f90d148e9818e421a8",
+      "decision": "ACCEPTED"
+    },
+    "phase1_entry_review_candidate": {
+      "path": "planning/evidence/dated-proof-appendix/codex-17-phase1-entry/phase1-entry-review-candidate.json",
+      "digest": "sha256:47b5ae21a00bf5dc9b7b29d801e0394b4fc3141aedaf88e77395cb93257f87da",
+      "freeze_signature": "sha256:f9a122b10b9cf059ff29d185eed355e600eb03e2ee5633fe1f2855450d157ed2"
+    }
+  },
+  "accepted_dispositions": [
+    {
+      "id": "D01",
+      "path": "planning/architecture/decisions/2026-09-01-d01-gauntlet-durable-state.md",
+      "digest": "sha256:073e01db5d3fbd01ae802c1da9d3e0f7501ebdcde2bd6683f9ac49df8ad6d3a9",
+      "decision": "ACCEPTED",
+      "boundary": "Portable single-host SQLite ledger plus same-filesystem immutable CAS; external distributed storage requires successor ADR."
+    },
+    {
+      "id": "D08",
+      "path": "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md",
+      "digest": "sha256:926f4dc17ab8de935d03ddb2ae7ac9635813da0896e3186d189b74a092718c0e",
+      "decision": "ACCEPTED",
+      "boundary": "Pinned Core CLI behind repo-owned JSON adapter in fixture isolation; no global install, embedded library, fork or Plus runtime dependency."
+    },
+    {
+      "id": "D11",
+      "path": "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md",
+      "digest": "sha256:bdfe70d6b8cd1a95c1c20da3cbc73b48f276286baf2f3a8d088120714cae5384",
+      "decision": "ACCEPTED",
+      "boundary": "Explicit CLI/store root <project_root>/planning and sole canonical OpenSpec child <project_root>/planning/openspec."
+    }
+  ],
+  "independent_reviews": [
+    {
+      "lens_id": "phase1-entry-architecture-consistency-v1",
+      "path": "planning/evidence/dated-proof-appendix/codex-17-phase1-entry/architecture-review-receipt.json",
+      "digest": "sha256:7be7718037f7c8708dafba58db936e98ba8e840cd4c6e5fb4f64584470325317",
+      "signature": "sha256:cd46dc23ff0150b481fe4a2840f87146b04926e5abcf0037f49c36854bd6f341",
+      "verdict": "PASS",
+      "findings": []
+    },
+    {
+      "lens_id": "phase1-entry-provenance-security-v1",
+      "path": "planning/evidence/dated-proof-appendix/codex-17-phase1-entry/adversarial-review-receipt.json",
+      "digest": "sha256:0b541a451b1c15fac8b346a5ab0389089de9c56a6138633a84c7367cf207de62",
+      "signature": "sha256:ab3fe9524daf3c9f2cee0c36c127306b6f78ca370b905af2ba7f3338b37cf7ce",
+      "verdict": "PASS",
+      "findings": []
+    }
+  ],
+  "review_set": {
+    "required": 2,
+    "passed": 2,
+    "pairwise_independence": "PASS",
+    "independence_cardinality": "2:2:2:2:2",
+    "axes_per_review": 10,
+    "all_axes_pass": true,
+    "findings": [],
+    "conflicts": []
+  },
+  "cross_decision_verdict": {
+    "status": "PASS",
+    "d08_d11_store_root": "<project_root>/planning -> sole child planning/openspec",
+    "d01_d11_authority_split": ".accelerate/gauntlet mutable execution state versus planning/openspec tracked specification artifacts",
+    "duplicate_authority_allowed": false,
+    "fallback_authority_allowed": false
+  },
+  "entry_gate": {
+    "phase": "Phase 1 - OpenSpec adapter spike",
+    "d01": "ACCEPTED",
+    "d08": "ACCEPTED",
+    "d11": "ACCEPTED",
+    "phase0": "ACCEPTED",
+    "status": "ENTRY_PREREQUISITES_SATISFIED",
+    "implementation_status": "NOT_AUTHORIZED_BY_THIS_RECEIPT"
+  },
+  "forbidden_effects": {
+    "phase1_implementation": false,
+    "package_installation": false,
+    "production_dependency_change": false,
+    "runtime_mutation": false,
+    "deployment": false,
+    "migration": false,
+    "webui_exposure": false
+  },
+  "correction_history": {
+    "architectural_rounds": 1,
+    "architectural_change": "Closed D08-D11 store-root seam and explicit telemetry denial before review freeze.",
+    "receipt_normalization": "Key-only normalization from overall_verdict/axis_results-or-axis_verdicts to verdict/axes; substantive review content unchanged.",
+    "open_corrections": 0
+  },
+  "residuals": [
+    "The reviewed ADR files retain proposed-for-root-acceptance in their frozen bytes; this external signed receipt is their acceptance authority.",
+    "Phase 1 still requires an implementation plan, exact candidate package-integrity receipt, fixture implementation, A03/A04 proof, rollback receipt and separate execution authorization.",
+    "No package, adapter, store, live planning/openspec tree, runtime, WebUI or provider state transition is created by this receipt."
+  ],
+  "receipt_integrity": {
+    "scheme": "sha256-domain-separated-canonical-json-v1",
+    "signature": "sha256:181ea8315353ba3d4b3e84ad305108efeea5ffac0c0951960db23f74166b9d12"
+  }
+}

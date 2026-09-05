@@ -54,6 +54,8 @@ Native authority now starts here:
 - `durable-learning-registration-gate.md`
 - `ui-mutation-ladder.md`
 - `design-system-rollout-entry-gate.md`
+- `archify-visual-adapter.md`
+- `ai-hero-practice-adoption.md`
 
 Root-facing architectural context still lives in:
 

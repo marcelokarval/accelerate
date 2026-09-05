@@ -6,6 +6,12 @@ cd "$ROOT"
 
 required_tests=(
   "tests/recursive-self-improvement-contract.sh"
+  "tests/semantic-implication-python-contract.sh"
+  "tests/test_semantic_implication.py"
+  "tests/test_harness_catalog.py"
+  "tests/test_phase1_entry_currentness.py"
+  "tests/test_assignment_ontology.py"
+  "tests/test_task_graph_heartbeat.py"
 )
 
 for required_test in "${required_tests[@]}"; do
@@ -14,6 +20,15 @@ for required_test in "${required_tests[@]}"; do
     exit 1
   fi
 done
+
+python3 -m pytest -q \
+  tests/test_assignment_ontology.py \
+  tests/test_task_graph_heartbeat.py \
+  tests/test_phase1_entry_currentness.py
+
+printf '%s\n' 'running required offline Phase-1 regression lane'
+PHASE1_REAL_OPENSPEC=0 bash tests/phase1/run.sh
+printf '%s\n' 'real OpenSpec is separately opt-in: PHASE1_REAL_OPENSPEC=1 bash tests/phase1/run.sh'
 
 while IFS= read -r test_script; do
   case "${test_script}" in

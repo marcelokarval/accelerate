@@ -1,0 +1,98 @@
+{
+  "schema_version": "phase-implementation-authorization-v1",
+  "receipt_id": "CODEX-26-phase1-exit-revalidation-promptc-20260903-v1",
+  "authorization_work_item": {
+    "identifier": "CODEX-26",
+    "id": "549d5c6e-9066-440c-85a6-973a33b7eefe",
+    "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+    "workspace_slug": "karval"
+  },
+  "kind": "proof-only-phase1-exit-revalidation",
+  "governing_proposal": {
+    "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "algorithm": "sha256",
+    "digest": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca"
+  },
+  "accepted_phase0_reaffirmation": {
+    "path": "planning/evidence/dated-proof-appendix/codex-25-phase0-acceptance/phase0-operator-reaffirmation-promptc.json",
+    "digest": "8a91edce5e471b213cfad2d1c68a4418874b35eb63aa4763c861f16ae67c730c",
+    "expires_at": "2026-09-04T12:10:13-04:00",
+    "historical_predecessor_digest": "f722da4531542f3e2585f111ba8f0d334e5bf3655e44c1cadf3f303cdb4c759d"
+  },
+  "historical_phase1_authorization": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase-implementation-authorization.json",
+    "digest": "88c9589cc0ef6718a9756408bd2c4a52a4f566cbe5cd116d430ad719e18dceb4",
+    "expires_at": "2026-09-02T22:12:53-04:00",
+    "disposition": "EXPIRED_HISTORICAL_PREDECESSOR_PRESERVED"
+  },
+  "target_phases": ["phase1"],
+  "allowed_tasks": ["TASK-004", "TASK-005", "TASK-006", "TASK-007", "TASK-008", "TASK-009", "TASK-010", "TASK-011"],
+  "allowed_effects": [
+    "isolated-disposable-test-root-create-and-cleanup",
+    "local-test-process-execution",
+    "read-only-independent-test-and-review",
+    "candidate-bound-evidence-write-by-root-only",
+    "one-governed-plane-progress-comment-at-task010-only-after-fresh-preparation-and-readback"
+  ],
+  "candidate": {
+    "freeze_path": "planning/evidence/dated-proof-appendix/codex-26-phase1/implementation-candidate-c14-full-freeze.json",
+    "freeze_digest": "7215486904c9fee3172ad1f53c3c3a63d4aa9ba62cea424d5bf8da60fcf72bc2",
+    "aggregate_sha256": "cbf26086ca9af5e7d927d7ee324818af35d74d972dfcdbfcce0cd562bc3780d4",
+    "file_count": 23,
+    "status": "FROZEN_UNRUN"
+  },
+  "prerequisites": {
+    "sdd": "2e037c4063adf4d4088843baf1f655410d74424c2a0866c0bbd5951fe9aadefc",
+    "test_design": "f9a3f4f9708a54b9815b980cbfe342fe230744f97d1b37413175ed294a9eb147",
+    "original_task_graph": "a933d443fdc139cbafde884cc016447433b5b242ded8e415f1dd5e6fa4711d21",
+    "promptb_exit_revalidation_task_graph": "0e3a7e2e57f169c8dff14406e1883f081d6b06fb0cd96f63e1e5fb8b1bdbe025",
+    "promptc_exit_revalidation_task_graph": "7c879e73a6e64f8f6c1cd9a7e1b29f306af4e49331a1ca545ff5d02d0bdbaea0",
+    "sdd_independent_acceptance": "d09045c4df07de66b3066a76b667e01c6e42e9a2553f01f595110e8f3e149eb4"
+  },
+  "d_record_digests": {
+    "D01": "eda61a2316826217d9f0a94cf1be38caf110d4f3c4e2ac0cfca942597f0376f0",
+    "D08": "aa63b3de4ad72d3d4dee433548f319a935fbf2b6a83e55b042b9249c5f38c8ba",
+    "D11": "0d46e9c0ddf875c489dd74c465d925f99ca3105c7b31db40bb964bea726b036b",
+    "D12": "62f05ee362aaf9967f3cf5749f41977a9c798690c8be13f83b6a4db9afd960ea",
+    "D14": "261e4d7005b11d3f769ee65d05743b5dd80d12f332be23f1a881c7ff2e0dffb2",
+    "decision_rebinding": "fc9ba212ca715a413470fb0b69cb17f5719d7678e9e7b15c226f254d7f448c16"
+  },
+  "authorizer": {
+    "id": "marcelo-karval",
+    "epoch": "authenticated-current-conversation-20260903",
+    "trust_root": "authenticated-user-session",
+    "signature_scheme": "explicit-user-message-authorization-v1",
+    "signature": "autorizo-explicitamente-o-prompt-c"
+  },
+  "recorded_by": "codex-root",
+  "issued_at": "2026-09-03T12:10:13-04:00",
+  "expires_at": "2026-09-04T12:10:13-04:00",
+  "freshness_basis": "fresh governed Plane CODEX-25 Done and provider-backed FINISH readback, exact local digest revalidation, and explicit Prompt-C operator authorization",
+  "revocation_status": "not_revoked_at_issue",
+  "single_consumption": true,
+  "idempotency_key": "CODEX-26-phase1-exit-revalidation-promptc-20260903-v1",
+  "cas_currentness": {
+    "proposal_digest_revalidated": true,
+    "phase0_reaffirmation_digest_revalidated": true,
+    "d_record_digests_revalidated": true,
+    "task_graph_digests_revalidated": true,
+    "c14_freeze_digest_revalidated": true,
+    "c14_aggregate_revalidated": true
+  },
+  "decision": "AUTHORIZED_PHASE1_PROOF_ONLY_THROUGH_TASK011",
+  "non_goals": [
+    "repository-source-code-or-test-correction",
+    "frozen-proposal-or-historical-receipt-rewrite",
+    "global-or-user-home-install-or-sync",
+    "production-dependency-change",
+    "active-runtime-or-catalog-projection",
+    "symlink-or-loader-mutation",
+    "namespace-migration-or-alias-activation",
+    "reader-retirement",
+    "real-project-openspec-archive",
+    "webui-or-lan-exposure",
+    "deployment",
+    "phase2-through-phase7",
+    "plane-done-transition-without-separate-post-task011-operator-go"
+  ]
+}
