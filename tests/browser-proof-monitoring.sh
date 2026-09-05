@@ -14,10 +14,15 @@ script="onboarding/local-workspace/capture-browser-proof.sh"
 
 workdir="$(mktemp -d "${TMPDIR:-/tmp}/accelerate-browser-proof.XXXXXX")"
 server_pid=""
+watcher_pid=""
 cleanup() {
-  if [ -n "${server_pid}" ] && kill -0 "${server_pid}" 2>/dev/null; then
-    kill "${server_pid}" 2>/dev/null || true
+  if [ -n "${server_pid}" ]; then
+    if kill -0 "${server_pid}" 2>/dev/null; then kill "${server_pid}" 2>/dev/null || true; fi
     wait "${server_pid}" 2>/dev/null || true
+  fi
+  if [ -n "${watcher_pid}" ]; then
+    if kill -0 "${watcher_pid}" 2>/dev/null; then kill "${watcher_pid}" 2>/dev/null || true; fi
+    wait "${watcher_pid}" 2>/dev/null || true
   fi
   rm -rf "${workdir}"
 }
@@ -184,8 +189,9 @@ kill "${server_pid}" 2>/dev/null || true
 wait "${server_pid}" 2>/dev/null || true
 server_pid=""
 
-cat >"${workdir}/oneshot_server.py" <<'PY'
+cat >"${workdir}/two-request-server.py" <<'PY'
 import http.server
+import os
 import sys
 from pathlib import Path
 
@@ -193,12 +199,14 @@ class Handler(http.server.BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(b'<!doctype html><title>one shot</title><h1>ready then crash</h1>')
+        self.wfile.write(b'<!doctype html><title>fixture</title><h1>request served</h1>')
     def log_message(self, fmt, *args):
         print(fmt % args, file=sys.stderr)
 
 server = http.server.HTTPServer(('127.0.0.1', int(sys.argv[1])), Handler)
+Path(sys.argv[3]).write_text(f'{os.getpid()}\n')
 Path(sys.argv[2]).write_text('ready\n')
+server.handle_request()
 server.handle_request()
 server.server_close()
 PY
@@ -210,18 +218,54 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
 PY
 )"
 crash_ready="${workdir}/crash-server.ready"
-python3 "${workdir}/oneshot_server.py" "${crash_port}" "${crash_ready}" >"${workdir}/crash-server.stdout" 2>"${workdir}/crash-server.stderr" &
-server_pid=$!
+crash_pid_file="${workdir}/crash-server.pid"
+# A watcher reaps the request server, so a bounded node stub can prove the
+# tracked PID is dead after its second request rather than racing a zombie.
+bash -c '
+  child=""
+  cleanup() {
+    if [ -n "$child" ] && kill -0 "$child" 2>/dev/null; then kill "$child" 2>/dev/null || true; fi
+    if [ -n "$child" ]; then wait "$child" 2>/dev/null || true; fi
+  }
+  trap cleanup EXIT INT TERM
+  python3 "$1" "$2" "$3" "$4" >"$5" 2>"$6" & child=$!
+  wait "$child"
+' _ \
+  "${workdir}/two-request-server.py" "${crash_port}" "${crash_ready}" "${crash_pid_file}" \
+  "${workdir}/crash-server.stdout" "${workdir}/crash-server.stderr" &
+watcher_pid=$!
 for _ in $(seq 1 50); do
-  [ -f "${crash_ready}" ] && break
-  if ! kill -0 "${server_pid}" 2>/dev/null; then
-    fail "one-shot fixture server exited before readiness marker"
+  [ -f "${crash_ready}" ] && [ -f "${crash_pid_file}" ] && break
+  if ! kill -0 "${watcher_pid}" 2>/dev/null; then
+    fail "two-request fixture server exited before readiness marker"
   fi
   sleep 0.1
 done
-[ -f "${crash_ready}" ] || fail "one-shot fixture server did not become ready"
+[ -f "${crash_ready}" ] && [ -f "${crash_pid_file}" ] || fail "two-request fixture server did not become ready"
+server_pid="$(cat "${crash_pid_file}")"
+
+# This is a mock capture-failure lifecycle test. The real capture scenario
+# above remains unchanged. The stub makes the second local request, waits for
+# the watched server PID to be reaped, and fails at the capture boundary.
+mkdir -p "${workdir}/node-stub"
+cat >"${workdir}/node-stub/node" <<'SH'
+#!/usr/bin/env bash
+set -euo pipefail
+curl --silent --show-error --max-time 1 --output /dev/null "$2"
+for _ in $(seq 1 100); do
+  if ! kill -0 "${ACCELERATE_TEST_CRASH_SERVER_PID}" 2>/dev/null; then
+    exit 17
+  fi
+  sleep 0.01
+done
+echo "mock capture did not observe server termination" >&2
+exit 18
+SH
+chmod +x "${workdir}/node-stub/node"
 
 set +e
+PATH="${workdir}/node-stub:${PATH}" \
+ACCELERATE_TEST_CRASH_SERVER_PID="${server_pid}" \
 ACCELERATE_BROWSER_PROOF_SERVER_PID="${server_pid}" \
 ACCELERATE_BROWSER_PROOF_SERVER_STDOUT="${workdir}/crash-server.stdout" \
 ACCELERATE_BROWSER_PROOF_SERVER_STDERR="${workdir}/crash-server.stderr" \
@@ -244,7 +288,8 @@ assert packet["reason"] == "server_crashed_after_readiness", packet
 assert packet["correction_signal"] == "restart_or_fix_the_local_server_then_retry_browser_capture", packet
 assert "not_alive_after_readiness" in packet["server_readiness"]["detail"], packet
 PY
-wait "${server_pid}" 2>/dev/null || true
+wait "${watcher_pid}" 2>/dev/null || true
+watcher_pid=""
 server_pid=""
 
 if [ -d "${workdir}/app/.tmp/browser-proof" ] && find "${workdir}/app/.tmp/browser-proof" -mindepth 1 -maxdepth 1 -type d | grep -q .; then
