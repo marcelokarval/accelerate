@@ -8,6 +8,7 @@ stage_root="$(mktemp -d)"
 trap 'rm -rf "$stage_root"' EXIT
 printf 'accelerate-test-root-v1\n' > "$stage_root/.accelerate-test-root"
 mkdir -p "$stage_root/.codex" "$stage_root/.agents"
+
 mkdir -p "$stage_root/.codex/skills" "$stage_root/.agents/skills"
 "${materialize[@]}" --test-root "$stage_root" \
   --codex-root "$stage_root/.codex/skills" --hermes-root "$stage_root/.agents/skills"

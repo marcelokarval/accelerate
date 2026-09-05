@@ -27,12 +27,14 @@ rg -n 'never use a wildcard' "$target/references/codex-collaboration-routing.md"
 cmp -s "$ROOT/core/runtime-packets/delegation-dispatch-receipt.schema.json" "$target/assets/delegation-dispatch-receipt.schema.json"
 cmp -s "$ROOT/scripts/validate-delegation-dispatch-receipt.py" "$target/scripts/validate-delegation-dispatch-receipt.py"
 python3 "$target/scripts/validate-delegation-dispatch-receipt.py" "$ROOT/tests/fixtures/delegation-dispatch/valid-orchestrated.json" >/dev/null
-check="$(HOME=/tmp/accelerate-empty-home-codex26-green CODEX_SKILLS_DIR="$stage_root/.codex/skills" HERMES_SKILLS_DIR="$stage_root/.agents/skills" bash "$ROOT/scripts/check-global-skill-mirror.sh")"
+empty_home="$stage_root/empty-home"
+mkdir "$empty_home"
+check="$(HOME="$empty_home" CODEX_SKILLS_DIR="$stage_root/.codex/skills" HERMES_SKILLS_DIR="$stage_root/.agents/skills" bash "$ROOT/scripts/check-global-skill-mirror.sh")"
 mirror_line="$(grep '^Accelerate runtime mirror: expected=[1-9][0-9]* verified=[1-9][0-9]*$' <<<"$check")"
 [[ "$mirror_line" =~ expected=([1-9][0-9]*)\ verified=([1-9][0-9]*)$ ]]
 [[ "${BASH_REMATCH[1]}" == "${BASH_REMATCH[2]}" ]]
 must_fail() { if "$@" >/dev/null 2>&1; then echo "expected failure: $*" >&2; exit 1; fi; }
-must_fail env HOME=/tmp/accelerate-empty-home-codex26-green bash "$ROOT/scripts/check-global-skill-mirror.sh"
+must_fail env HOME="$empty_home" bash "$ROOT/scripts/check-global-skill-mirror.sh"
 must_fail env CODEX_SKILLS_DIR="$stage_root/.codex/skills" bash "$ROOT/scripts/check-global-skill-mirror.sh"
 must_fail env CODEX_SKILLS_DIR='' HERMES_SKILLS_DIR='' bash "$ROOT/scripts/check-global-skill-mirror.sh"
 must_fail env CODEX_SKILLS_DIR='' HERMES_SKILLS_DIR="$stage_root/.agents/skills" bash "$ROOT/scripts/check-global-skill-mirror.sh"
