@@ -13,7 +13,7 @@ fail() {
 fragment="$ROOT/adapters/runtime/codex/global-bootstrap-orchestration.fragment.md"
 renderer="$ROOT/scripts/render-codex-global-bootstrap.py"
 installer="$ROOT/scripts/install-codex-global-bootstrap.py"
-real_agents="${CODEX_GLOBAL_AGENTS:-/home/marcelo-karval/.codex/AGENTS.md}"
+real_agents="${CODEX_GLOBAL_AGENTS:-$ROOT/tests/fixtures/codex-global-bootstrap/current-real-legacy-block.md}"
 
 [[ -f "$fragment" ]] || fail 'missing repo-owned fragment'
 [[ -f "$renderer" ]] || fail 'missing renderer'
@@ -28,7 +28,7 @@ if rg -F 'spawn_failed_operator_authorized_degradation' "$fragment" >/dev/null; 
   fail 'non-canonical exception code remains'
 fi
 
-[[ -f "$real_agents" ]] || fail 'missing real global AGENTS fixture source'
+[[ -f "$real_agents" ]] || fail 'missing checked-in legacy AGENTS fixture source'
 real_target="$stage_root/real-AGENTS.md"
 cp "$real_agents" "$real_target"
 python3 "$renderer" --target "$real_target" >/dev/null

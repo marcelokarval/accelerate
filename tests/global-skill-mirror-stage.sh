@@ -3,17 +3,15 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 tool=(python3 "$ROOT/scripts/sync-accelerate-governed-drift.py")
+materialize=(bash "$ROOT/tests/helpers/stage-runtime-mirror-fixture.sh")
 stage_root="$(mktemp -d)"
 trap 'rm -rf "$stage_root"' EXIT
 printf 'accelerate-test-root-v1\n' > "$stage_root/.accelerate-test-root"
 mkdir -p "$stage_root/.codex" "$stage_root/.agents"
 
-# The installed mirror is read-only input for this disposable fixture. The
-# production broad exporter stays fail-closed.
-installed="${HOME}/.codex/skills"
-[[ -d "$installed/accelerate" ]]
-cp -a "$installed" "$stage_root/.codex/skills"
-cp -a "$installed" "$stage_root/.agents/skills"
+mkdir -p "$stage_root/.codex/skills" "$stage_root/.agents/skills"
+"${materialize[@]}" --test-root "$stage_root" \
+  --codex-root "$stage_root/.codex/skills" --hermes-root "$stage_root/.agents/skills"
 
 snapshot_other() {
   find "$1/accelerate" -type f \
@@ -42,9 +40,11 @@ for mirror in codex agents; do
   cmp -s "$ROOT/scripts/validate-delegation-dispatch-receipt.py" "$target/scripts/validate-delegation-dispatch-receipt.py"
   snapshot_other "$stage_root/.${mirror}/skills" > "$stage_root/$mirror.other.after"
   cmp -s "$stage_root/$mirror.other.before" "$stage_root/$mirror.other.after"
-  mirror_output="$(CODEX_SKILLS_DIR="$stage_root/.${mirror}/skills" HERMES_SKILLS_DIR="$stage_root/.${mirror}/skills" bash "$ROOT/scripts/check-global-skill-mirror.sh")"
+  mirror_output="$(CODEX_SKILLS_DIR="$stage_root/.codex/skills" HERMES_SKILLS_DIR="$stage_root/.agents/skills" bash "$ROOT/scripts/check-global-skill-mirror.sh")"
   printf '%s\n' "$mirror_output"
-  grep -q '^Accelerate runtime mirror: expected=211 verified=211$' <<<"$mirror_output"
+  mirror_line="$(grep '^Accelerate runtime mirror: expected=[1-9][0-9]* verified=[1-9][0-9]*$' <<<"$mirror_output")"
+  [[ "$mirror_line" =~ expected=([1-9][0-9]*)\ verified=([1-9][0-9]*)$ ]]
+  [[ "${BASH_REMATCH[1]}" == "${BASH_REMATCH[2]}" ]]
 done
 
 echo "staged global skill mirror passed"

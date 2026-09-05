@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "security": {"contains_values": false},
+  "systems": [
+    {
+      "id": "hermes-core-api-webui-state-governance",
+      "display_name": "Hermes",
+      "aliases": ["hermes"],
+      "env_names": [],
+      "env_posture": {"total": 0, "defined": 0, "empty": 0},
+      "policy_state": "available",
+      "source_of_truth": "PostgreSQL",
+      "preferred_access": {"kind": "postgresql"},
+      "forbidden_fallbacks": ["SQLite"],
+      "availability": "fixture",
+      "read_probe": "fixture-only",
+      "write_policy": "governed"
+    },
+    {
+      "id": "manychat",
+      "display_name": "ManyChat",
+      "aliases": ["manychat"],
+      "env_names": [],
+      "env_posture": {"total": 0, "defined": 0, "empty": 0},
+      "policy_state": "disabled",
+      "source_of_truth": "not-applicable",
+      "preferred_access": {"kind": "none"},
+      "forbidden_fallbacks": ["all"],
+      "availability": "disabled",
+      "read_probe": "none",
+      "write_policy": "disabled"
+    }
+  ],
+  "summary": {"system_total": 2, "env_total": 0, "env_defined": 0, "env_empty": 0}
+}
