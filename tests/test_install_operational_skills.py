@@ -553,3 +553,136 @@ def test_cli_codex_runtime_invocation_guides_operator_to_agents():
         f"CLI failed to guide operator to use 'agents' runtime. Output was:\n"
         f"STDERR: {result.stderr}\nSTDOUT: {result.stdout}"
     )
+
+
+def test_rollback_rejects_tampered_marker_sha256(tmp_path):
+    """T3 (Defect C33-P1-04): Rollback preflight must reject backups whose marker (.accelerate-operational-skill.json) was tampered with."""
+    root, registry, home = fixture(tmp_path)
+    module = load_installer()
+    # Install version 1
+    module.reconcile(
+        "opencode",
+        home=home,
+        registry_path=registry,
+        repo_root=root,
+        apply=True,
+        run_id="20260821T120000Z-opencode",
+    )
+    # Drift source to trigger version 2 and create a backup of version 1
+    source = root / "skills/operations/example-operations"
+    (source / "extra.txt").write_text("v2\n", encoding="utf-8")
+    run2_id = "20260821T130000Z-opencode"
+    module.reconcile(
+        "opencode",
+        home=home,
+        registry_path=registry,
+        repo_root=root,
+        apply=True,
+        run_id=run2_id,
+    )
+    backup_marker = (
+        home
+        / ".local/state/accelerate/backups/operational-skills"
+        / run2_id
+        / "example-operations.previous"
+        / module.MARKER
+    )
+    assert backup_marker.exists()
+
+    # Tamper with the marker inside the backup directory
+    marker_data = json.loads(backup_marker.read_text(encoding="utf-8"))
+    marker_data["source_digest"] = "tampered_digest_00000000000000000000"
+    backup_marker.write_text(json.dumps(marker_data), encoding="utf-8")
+
+    # Attempt rollback: must fail closed and refuse rollback due to tampered marker
+    with pytest.raises(ValueError, match=r"tampered|marker"):
+        module.rollback("opencode", run2_id, home=home, registry_path=registry, repo_root=root)
+
+
+def test_rollback_batch_failure_compensates_all_destinations(tmp_path, monkeypatch):
+    """T4 (Defect C33-P1-05): If rollback fails mid-batch on skill 2, skill 1 must be compensated back to its pre-rollback state."""
+    root = tmp_path / "repo"
+    home = tmp_path / "home"
+    home.mkdir()
+    source_a = root / "skills/operations/skill-a"
+    source_b = root / "skills/operations/skill-b"
+    source_a.mkdir(parents=True)
+    source_b.mkdir(parents=True)
+    (source_a / "SKILL.md").write_text("---\nname: skill-a\ndescription: a\n---\n# A1\n", encoding="utf-8")
+    (source_b / "SKILL.md").write_text("---\nname: skill-b\ndescription: b\n---\n# B1\n", encoding="utf-8")
+    registry = root / "registry.toml"
+    registry.write_text(
+        "schema_version = 1\n"
+        'managed_by = "accelerate"\n'
+        'marker = ".accelerate-operational-skill.json"\n\n'
+        "[[skills]]\n"
+        'name = "skill-a"\n'
+        'source = "skills/operations/skill-a"\n\n'
+        "[[skills]]\n"
+        'name = "skill-b"\n'
+        'source = "skills/operations/skill-b"\n\n'
+        "[[targets]]\n"
+        'runtime = "opencode"\n'
+        'home_suffix = ".config/opencode/skills"\n\n'
+        "[[targets]]\n"
+        'runtime = "agents"\n'
+        'home_suffix = ".agents/skills"\n\n'
+        "[[targets]]\n"
+        'runtime = "hermes"\n'
+        'home_suffix = ".hermes/skills/runtime"\n',
+        encoding="utf-8",
+    )
+    module = load_installer()
+    # Run 1: initial install
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id="20260821T120000Z-opencode")
+    # Drift both skills for run 2
+    (source_a / "SKILL.md").write_text("---\nname: skill-a\ndescription: a\n---\n# A2\n", encoding="utf-8")
+    (source_b / "SKILL.md").write_text("---\nname: skill-b\ndescription: b\n---\n# B2\n", encoding="utf-8")
+    run2_id = "20260821T130000Z-opencode"
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id=run2_id)
+
+    dest_a = home / ".config/opencode/skills/skill-a"
+    dest_b = home / ".config/opencode/skills/skill-b"
+    digest_a_run2 = module.tree_digest(dest_a)
+    digest_b_run2 = module.tree_digest(dest_b)
+
+    # Note: entries are processed in reversed(entries) -> skill-b first, then skill-a.
+    # We simulate a failure on the second skill swapped (skill-a).
+    original_replace = module._replace
+    def faulty_replace(destination, staged):
+        if destination.name == "skill-a":
+            raise OSError("Injected disk failure during skill-a rollback swap")
+        return original_replace(destination, staged)
+
+    monkeypatch.setattr(module, "_replace", faulty_replace)
+
+    with pytest.raises(OSError, match="Injected disk failure"):
+        module.rollback("opencode", run2_id, home=home, registry_path=registry, repo_root=root)
+
+    # Both destinations must remain or be compensated to their pre-rollback (run 2) state!
+    # Neither skill should be left in a half-rolled-back state.
+    assert module.tree_digest(dest_a) == digest_a_run2, "skill-a was left modified after failed rollback"
+    assert module.tree_digest(dest_b) == digest_b_run2, "skill-b was NOT compensated back to pre-rollback state after mid-batch failure"
+
+
+def test_install_and_backup_strict_permissions(tmp_path):
+    """T6 (Defect C33-P2-01): Backup directory and files must strictly enforce 0700 for directories and 0600 for manifest."""
+    root, registry, home = fixture(tmp_path)
+    module = load_installer()
+    run_id = "20260821T120000Z-opencode"
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id=run_id)
+    # Drift and create backup
+    (root / "skills/operations/example-operations/SKILL.md").write_text("---\nname: example-operations\ndescription: v2\n---\n# V2\n", encoding="utf-8")
+    run2_id = "20260821T130000Z-opencode"
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id=run2_id)
+
+    backup_dir = home / ".local/state/accelerate/backups/operational-skills" / run2_id
+    manifest_path = backup_dir / "manifest.json"
+    skill_backup = backup_dir / "example-operations.previous"
+
+    # Directory permissions must be 0700
+    assert (backup_dir.stat().st_mode & 0o777) == 0o700, f"backup_dir mode is {oct(backup_dir.stat().st_mode & 0o777)}"
+    assert (skill_backup.stat().st_mode & 0o777) == 0o700, f"skill_backup mode is {oct(skill_backup.stat().st_mode & 0o777)}"
+    # Manifest must be 0600
+    assert (manifest_path.stat().st_mode & 0o777) == 0o600, f"manifest mode is {oct(manifest_path.stat().st_mode & 0o777)}"
+

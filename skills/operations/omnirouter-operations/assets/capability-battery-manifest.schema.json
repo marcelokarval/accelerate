@@ -12,7 +12,7 @@
   ],
   "properties": {
     "schema_version": {
-      "enum": ["2.0", "1.0"]
+      "enum": ["2.0"]
     },
     "battery_id": {
       "type": "string",
@@ -22,19 +22,19 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 240,
-      "pattern": "^[^\r\n]+$"
+      "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
     },
     "provider": {
       "type": "string",
       "minLength": 1,
       "maxLength": 100,
-      "pattern": "^[^\r\n]+$"
+      "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
     },
     "route": {
       "type": "string",
       "minLength": 1,
       "maxLength": 160,
-      "pattern": "^[^\r\n]+$"
+      "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
     },
     "harness": {
       "type": "string",
@@ -46,31 +46,31 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 100,
-      "pattern": "^[^\r\n]+$"
+      "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
     },
     "gateway_version": {
       "type": "string",
       "minLength": 1,
       "maxLength": 100,
-      "pattern": "^[^\r\n]+$"
+      "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
     },
     "stop_rule": {
       "type": "string",
       "minLength": 1,
       "maxLength": 100,
-      "pattern": "^[^\r\n]+$"
+      "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
     },
     "cost_tracking": {
       "type": "string",
       "minLength": 1,
       "maxLength": 100,
-      "pattern": "^[^\r\n]+$"
+      "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
     },
     "final_classification": {
       "type": "string",
       "minLength": 1,
       "maxLength": 100,
-      "pattern": "^[^\r\n]+$"
+      "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
     },
     "controls": {
       "type": "object",
@@ -83,7 +83,7 @@
             "type": "string",
             "minLength": 1,
             "maxLength": 240,
-            "pattern": "^[^\r\n]+$"
+            "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
           }
         ]
       },
@@ -115,13 +115,13 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 240,
-          "pattern": "^[^\r\n]+$"
+          "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
         },
         "rubric_version": {
           "type": "string",
           "minLength": 1,
           "maxLength": 240,
-          "pattern": "^[^\r\n]+$"
+          "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
         },
         "input_sha256": {
           "type": "string",
@@ -137,7 +137,7 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 100,
-          "pattern": "^[^\r\n]+$"
+          "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
         },
         "timeout_seconds": {
           "type": "integer",
@@ -184,7 +184,7 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 240,
-          "pattern": "^[^\r\n]+$"
+          "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
         },
         "http_status": {
           "type": "integer",
@@ -195,7 +195,7 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 240,
-          "pattern": "^[^\r\n]+$"
+          "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
         },
         "response_sha256": {
           "type": "string",
@@ -205,19 +205,19 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 240,
-          "pattern": "^[^\r\n]+$"
+          "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
         },
         "reason": {
           "type": "string",
           "minLength": 1,
           "maxLength": 240,
-          "pattern": "^[^\r\n]+$"
+          "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
         },
         "attempt_timestamp": {
           "type": "string",
           "minLength": 1,
           "maxLength": 100,
-          "pattern": "^[^\r\n]+$"
+          "pattern": "^[^\r\n\t\u0000-\u001f\u007f-\u009f]+$"
         }
       },
       "additionalProperties": false

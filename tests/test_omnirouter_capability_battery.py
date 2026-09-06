@@ -356,6 +356,16 @@ def test_semantic_fail_requires_completed_http():
         validator.validate_manifest(manifest)
 
 
+def test_valid_manifest_with_semantic_fail():
+    """T-SF: Manifest with valid semantic_fail evidence must validate successfully."""
+    manifest = full_valid_manifest_v2()
+    manifest["evidence"][0]["status"] = "semantic_fail"
+    manifest["evidence"][0]["reason"] = "failed custom rubric assertion"
+    manifest["evidence"][0]["effective_model"] = "anthropic/claude-sonnet-4.6"
+    counts = validator.validate_manifest(manifest)
+    assert counts["evidence_count"] == 3
+
+
 # Test 20: Safe migration from v1.0 to v2.0
 def test_safe_v1_to_v2_migration():
     v1_manifest = {
@@ -509,3 +519,211 @@ def test_migrate_v1_invalid_does_not_modify_input(tmp_path):
         assert manifest_path.read_text(encoding="utf-8") == original_content
     finally:
         sys.argv = old_argv
+
+
+# ==============================================================================
+# Wave 1 (T1) — Migration Semantics RED Tests
+# ==============================================================================
+
+def test_migrate_v1_without_migrated_out_fails_and_preserves_input(tmp_path):
+    """T1.1: Running --migrate-v1 without --migrated-out MUST fail and leave input byte-for-byte identical."""
+    v1_manifest = {
+        "schema_version": "1.0",
+        "battery_id": "legacy-battery-01",
+        "catalog_snapshot_id": "snap-legacy",
+        "controls": {"temp": 0},
+        "planned_slots": [
+            {
+                "slot_id": "s1",
+                "capability": "c1",
+                "rubric_version": "r1",
+                "input_sha256": "0" * 64,
+            }
+        ],
+        "evidence": [
+            {
+                "slot_id": "s1",
+                "attempt": 1,
+                "status": "pass",
+                "requested_model": "model-1",
+                "effective_model": "model-1",
+                "http_status": 200,
+                "response_sha256": "1" * 64,
+                "semantic_verdict": "pass",
+            }
+        ],
+    }
+    manifest_path = tmp_path / "valid_v1.json"
+    original_bytes = (json.dumps(v1_manifest, indent=2) + "\n").encode("utf-8")
+    manifest_path.write_bytes(original_bytes)
+    orig_hash = hashlib.sha256(original_bytes).hexdigest()
+    receipt_path = tmp_path / "receipt.json"
+
+    old_argv = sys.argv
+    try:
+        sys.argv = [
+            "validate_capability_battery.py",
+            "--manifest", str(manifest_path),
+            "--receipt-out", str(receipt_path),
+            "--migrate-v1",
+        ]
+        exit_code = validator.main()
+        # Must fail closed because --migrated-out is mandatory for migration
+        assert exit_code == 2, "Expected migration without --migrated-out to be rejected"
+        assert hashlib.sha256(manifest_path.read_bytes()).hexdigest() == orig_hash
+    finally:
+        sys.argv = old_argv
+
+
+def test_migrate_v1_rejects_same_input_and_output_path(tmp_path):
+    """T1.2: --migrated-out cannot point to the same file as --manifest."""
+    v1_manifest = {
+        "schema_version": "1.0",
+        "battery_id": "legacy-battery-02",
+        "catalog_snapshot_id": "snap-legacy",
+        "controls": {"temp": 0},
+        "planned_slots": [
+            {
+                "slot_id": "s1",
+                "capability": "c1",
+                "rubric_version": "r1",
+                "input_sha256": "0" * 64,
+            }
+        ],
+        "evidence": [
+            {
+                "slot_id": "s1",
+                "attempt": 1,
+                "status": "pass",
+                "requested_model": "model-1",
+                "effective_model": "model-1",
+                "http_status": 200,
+                "response_sha256": "1" * 64,
+                "semantic_verdict": "pass",
+            }
+        ],
+    }
+    manifest_path = tmp_path / "manifest.json"
+    original_bytes = (json.dumps(v1_manifest, indent=2) + "\n").encode("utf-8")
+    manifest_path.write_bytes(original_bytes)
+    orig_hash = hashlib.sha256(original_bytes).hexdigest()
+    receipt_path = tmp_path / "receipt.json"
+
+    old_argv = sys.argv
+    try:
+        sys.argv = [
+            "validate_capability_battery.py",
+            "--manifest", str(manifest_path),
+            "--receipt-out", str(receipt_path),
+            "--migrate-v1",
+            "--migrated-out", str(manifest_path),
+        ]
+        exit_code = validator.main()
+        assert exit_code == 2, "Expected migration with identical in/out paths to be rejected"
+        assert hashlib.sha256(manifest_path.read_bytes()).hexdigest() == orig_hash
+    finally:
+        sys.argv = old_argv
+
+
+def test_migrate_v1_rejects_output_symlink(tmp_path):
+    """T1.3: Output file cannot be a symlink."""
+    v1_manifest = {
+        "schema_version": "1.0",
+        "battery_id": "legacy-battery-03",
+        "catalog_snapshot_id": "snap-legacy",
+        "controls": {"temp": 0},
+        "planned_slots": [
+            {
+                "slot_id": "s1",
+                "capability": "c1",
+                "rubric_version": "r1",
+                "input_sha256": "0" * 64,
+            }
+        ],
+        "evidence": [
+            {
+                "slot_id": "s1",
+                "attempt": 1,
+                "status": "pass",
+                "requested_model": "model-1",
+                "effective_model": "model-1",
+                "http_status": 200,
+                "response_sha256": "1" * 64,
+                "semantic_verdict": "pass",
+            }
+        ],
+    }
+    manifest_path = tmp_path / "manifest.json"
+    manifest_path.write_text(json.dumps(v1_manifest, indent=2) + "\n", encoding="utf-8")
+    receipt_path = tmp_path / "receipt.json"
+
+    target_real = tmp_path / "some_real_file.json"
+    target_real.write_text("pre-existing\n", encoding="utf-8")
+    symlink_out = tmp_path / "symlink_out.json"
+    symlink_out.symlink_to(target_real)
+
+    old_argv = sys.argv
+    try:
+        sys.argv = [
+            "validate_capability_battery.py",
+            "--manifest", str(manifest_path),
+            "--receipt-out", str(receipt_path),
+            "--migrate-v1",
+            "--migrated-out", str(symlink_out),
+        ]
+        exit_code = validator.main()
+        assert exit_code == 2, "Expected migration to symlink output to be rejected"
+        assert target_real.read_text(encoding="utf-8") == "pre-existing\n"
+    finally:
+        sys.argv = old_argv
+
+
+# ==============================================================================
+# Wave 1 (T2) — Differential Structural Parity Matrix
+# ==============================================================================
+
+@pytest.mark.parametrize(
+    ("mutator", "description"),
+    [
+        (lambda m: m.update({"provider": "x" * 101}), "provider with 101 characters"),
+        (lambda m: m.update({"route": "r" * 161}), "route with 161 characters"),
+        (lambda m: m.update({"harness": "invalid harness with space"}), "harness containing space"),
+        (lambda m: m["controls"].update({"key": "val\twith_tab"}), "control string containing tab"),
+        (lambda m: m["planned_slots"][0].update({"reasoning_effort": "e" * 101}), "reasoning_effort with 101 characters"),
+        (lambda m: m["planned_slots"][0].update({"timeout_seconds": True}), "timeout_seconds=True (bool as int)"),
+        (lambda m: m["planned_slots"][0].update({"max_retries": True}), "max_retries=True (bool as int)"),
+        (lambda m: m["evidence"][0].update({"attempt": True}), "attempt=True (bool as int)"),
+        (lambda m: m.update({"unknown_property_top": "fail"}), "unknown top-level property"),
+        (lambda m: m["planned_slots"][0].update({"unknown_slot_prop": 123}), "unknown slot property"),
+        (lambda m: m["evidence"][0].update({"unknown_evidence_prop": "bad"}), "unknown evidence property"),
+        (lambda m: m.update({"schema_version": "1.0"}), "schema_version=1.0 presented to v2 validator"),
+        (lambda m: m["planned_slots"][0].update({"timeout_seconds": "not_an_int"}), "timeout_seconds wrong type string"),
+        (lambda m: m["planned_slots"][0].update({"timeout_seconds": 0}), "timeout_seconds below minimum (0)"),
+        (lambda m: m["planned_slots"][0].update({"max_retries": -1}), "max_retries below minimum (-1)"),
+    ],
+)
+def test_structural_parity_differential_matrix(mutator, description):
+    """T2: Structural negative parity matrix between JSON Schema and Python validator.
+
+    Both surfaces MUST reject these structural defects. If Python accepts while Schema rejects
+    or vice-versa, parity is broken.
+    """
+    manifest = full_valid_manifest_v2()
+    mutator(manifest)
+    schema = validator.load_json(MANIFEST_SCHEMA_PATH)
+
+    schema_rejected = False
+    try:
+        jsonschema.validate(manifest, schema)
+    except jsonschema.ValidationError:
+        schema_rejected = True
+
+    python_rejected = False
+    try:
+        validator.validate_manifest(manifest)
+    except ValueError:
+        python_rejected = True
+
+    assert schema_rejected, f"JSON Schema failed to reject structural defect: {description}"
+    assert python_rejected, f"Python validator failed to reject structural defect: {description}"
+
