@@ -1,0 +1,85 @@
+{
+  "schema_version": 2,
+  "kind": "accelerate-v020-s1a-pre-entry-admission-receipt",
+  "recorded_at": "2026-09-06T14:22:30Z",
+  "branch": "v0.2.0-s1a",
+  "predecessor": "planning/evidence/dated-proof-appendix/codex-34-s1a/pre-entry-admission-receipt.json",
+  "invalidation_causes": [
+    "Independent review tied to historical commit d7f18a015d2f3bfe1fce4b8f7787e7d774c735bf",
+    "Subsequent material commits 50c9278f922320041265d0f78418f1ea39586f93 and 483d5fe00052afbf00f4224c2757777772c77106",
+    "Integration of CODEX-33 / PR #11 into v0.2.0, establishing new base 710db6474292ff3deb74728c1d754aea6e7f806e",
+    "P06 concrete implementation path was not previously frozen (now explicitly scripts/validate-accelerate-v020-s1a-authority.py)",
+    "Previous explicit_user_opt_out is superseded; mandatory physical dispatch is enforced",
+    "No physical dispatch or RED proof occurred under previous generation"
+  ],
+  "new_base": "710db6474292ff3deb74728c1d754aea6e7f806e",
+  "stale_artifacts": [
+    "planning/evidence/dated-proof-appendix/codex-34-s1a/pre-entry-admission-receipt.json",
+    "planning/evidence/dated-proof-appendix/codex-34-s1a/pre-entry-independent-review-receipt.json",
+    "planning/evidence/dated-proof-appendix/codex-34-s1a/pre-entry-baseline-proof.json"
+  ],
+  "gates": {
+    "G01": "reopened-for-new-base",
+    "G02": "satisfied-for-s1a-provenance-only",
+    "G03": "reopened-for-successor-review",
+    "G04": "reopened-for-successor-freeze",
+    "G05": "satisfied",
+    "G06": "superseded-physical-dispatch-mandatory",
+    "G07": "not_started",
+    "G08": "not_started"
+  },
+  "no_inherited_proofs": true,
+  "tasks_ready": false,
+  "execution_admitted": false,
+  "plane": {
+    "workspace_slug": "karval",
+    "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+    "work_item": "CODEX-34",
+    "work_item_id": "79b4d3f4-a30f-4ebe-85cf-deb8c4dce128",
+    "state": "Todo",
+    "state_id": "caff4483-d337-47ae-ab44-2b5263ecc0e4"
+  },
+  "staffing": {
+    "P05": {
+      "role": "independent-qa",
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "fork_turns": "none",
+      "timeout_minutes": 30,
+      "max_corrections": 2
+    },
+    "P06": {
+      "role": "distinct-implementer",
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "fork_turns": "none",
+      "timeout_minutes": 45,
+      "max_corrections": 2
+    },
+    "P07": {
+      "role": "independent-reviewer",
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "fork_turns": "none",
+      "timeout_minutes": 30,
+      "max_successor_reviews": 1
+    }
+  },
+  "write_scope": [
+    "tests/fixtures/contract-v1-authority/",
+    "tests/accelerate-v020-s1a-authority.sh",
+    "scripts/validate-accelerate-v020-s1a-authority.py",
+    "planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md",
+    "planning/architecture/2026-09-06-accelerate-v020-s1a-test-design.md",
+    "planning/executive/2026-09-06-accelerate-v020-s1a-pre-entry-task-graph.md",
+    "planning/evidence/dated-proof-appendix/codex-34-s1a/"
+  ],
+  "forbidden_scope": [
+    "core/contracts/v1/",
+    "global-runtime/",
+    "adapters/",
+    ".accelerate/",
+    "user-home"
+  ],
+  "rollback": "Revert only bounded S1A commits after confirming no overlap; otherwise stop and replan in an isolated worktree."
+}

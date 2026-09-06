@@ -25,7 +25,8 @@ Não existe candidato de implementação S1A neste desenho. Antes de executar, o
 | Emenda/mapa | **Materializado, candidato e não aceito:** `planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md` | Cada requisito ACV1 recebe a disposição normativa `mantido`, `alterado` ou `substituído`, vínculo de Wave 0 e, quando necessário, observação de gate em campo separado. Artefato adicional só pode ser proposto posteriormente sob escopo explícito. |
 | Task graph pré-entrada | **Materializado, candidato e não aceito:** `planning/executive/2026-09-06-accelerate-v020-s1a-pre-entry-task-graph.md` | Delimita a pré-entrada de S1A sem reescrever o plano histórico. Artefato adicional só pode ser proposto posteriormente sob escopo explícito. |
 | Fixture | **Ainda não criado:** `tests/fixtures/contract-v1-authority/` | Esperados imutáveis: classes, precedência, disposições e guardas de autorização; não derivados do resolvedor. |
-| Teste focal | **Ainda não criado:** `tests/accelerate-v020-s1a-authority.sh` ou nome equivalente aprovado pelo task graph | Exercita precedência/denominador e guarda R01 de S1A somente. |
+| Teste focal | **Ainda não criado:** `tests/accelerate-v020-s1a-authority.sh` | Exercita precedência/denominador e guarda R01 de S1A somente. |
+| Implementação P06 | **Ainda não criado:** `scripts/validate-accelerate-v020-s1a-authority.py` | Validador determinístico de precedência repo-local e mapa ACV1↔v0.2.0. |
 
 Excluídos: `core/contracts/v1/`, `global-runtime/accelerate/`, user-home, adapters ativos, loaders, CLI, stores remotos e estado `.accelerate/`.
 

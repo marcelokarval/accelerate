@@ -71,15 +71,15 @@ autorização de início.
 ## Gates
 
 | Gate | Owner | Antes de | Prova exigida | Estado |
-| --- | --- | --- | --- |
-| G01 baseline | root | P02/P03 | branch, `HEAD`, status, diff e reabertura de locators | satisfeito no freeze `d7f18a0`; branch `v0.2.0`, base anterior `6d41fed`, escopo documental explícito. |
-| G02 proveniência | root + pesquisa independente | P04 | tag/commit/licença OpenSpec, tree digest e limites do delta | satisfeito para S1A por receipt nesta geração; compatibilidade fica fora de S1A. |
-| G03 Test Design | QA independente | P04 | R01/ACV1 e fixtures/oráculos completos | satisfeito para entrada; autoria QA e PASS independente registrados, sem prova observada. |
-| G04 freeze | root | P05 | denominator, DAG, write scopes, modelo/esforço, orçamento e rollback | satisfeito para `TASKS_READY` pelo receipt pre-entry; mudança material exige reentrada. |
-| G05 Plane | root via MCP | P05 | unidade de execução criada/readback, sem encerrar CODEX-26 | satisfeito: `CODEX-34` criado em `Todo`, provider ID `79b4d3f4-a30f-4ebe-85cf-deb8c4dce128`, mutation/readback verificados. |
-| G06 dispatch | root | P05 | adapter suportado/callable; missão e escopo entregues | exceção `explicit_user_opt_out` registrada; nenhum dispatch ocorreu. A exceção não remove a separação QA/implementador/revisor. |
-| G07 red válido | QA de P05, seguido pelo implementador P06 | P06 | primeiro teste falha pelo comportamento ausente, não infraestrutura | pendente. |
-| G08 revisão | revisor + root | avanço posterior | candidato congelado, `BASE..HEAD`, comandos e resultado | pendente. |
+| --- | --- | --- | --- | --- |
+| G01 baseline | root | P02/P03 | branch, `HEAD`, status, diff e reabertura de locators | Reaberto na nova base `710db64` (CODEX-33 integrada); worktree `v0.2.0-s1a` limpo. |
+| G02 proveniência | root + pesquisa independente | P04 | tag/commit/licença OpenSpec, tree digest e limites do delta | Satisfeito para S1A por receipt de proveniência externa `v1.12.0` commit `e062b95`. |
+| G03 Test Design | QA independente | P04 | R01/ACV1 e fixtures/oráculos completos | Reaberto para revisão sucessora do candidato com path P06 explícito. |
+| G04 freeze | root | P05 | denominator, DAG, write scopes, modelo/esforço, orçamento e rollback | Reaberto para freeze do pacote sucessor; requer revisão independente antes de TASKS_READY. |
+| G05 Plane | root via MCP | P05 | unidade de execução criada/readback, sem encerrar CODEX-26 | Satisfeito: `CODEX-34` criado em `Todo` (`caff4483-d337-47ae-ab44-2b5263ecc0e4`), lido de volta via MCP. |
+| G06 dispatch | root | P05 | adapter suportado/callable; missão e escopo entregues | Opt-out anterior expressamente superseded; dispatch físico obrigatório com identidades distintas para P05, P06 e P07. |
+| G07 red válido | QA de P05, seguido pelo implementador P06 | P06 | primeiro teste falha pelo comportamento ausente, não infraestrutura | not_started. |
+| G08 revisão | revisor + root | avanço posterior | candidato congelado, `BASE..HEAD`, comandos e resultado | not_started. |
 
 ## Contrato da futura unidade Plane e staffing
 
@@ -106,9 +106,11 @@ cobertura.
 Paths candidatos exclusivos:
 
 - `tests/fixtures/contract-v1-authority/`;
-- um teste focado novo de precedência/denominador sob `tests/`;
-- documentação/addendum explicitamente aprovada em `planning/architecture/` e
-  `planning/executive/`.
+- `tests/accelerate-v020-s1a-authority.sh`;
+- `scripts/validate-accelerate-v020-s1a-authority.py`;
+- `planning/architecture/2026-09-06-accelerate-v020-*.md`;
+- `planning/executive/2026-09-06-accelerate-v020-s1a-*.md`;
+- `planning/evidence/dated-proof-appendix/codex-34-s1a/`.
 
 Proibidos: `core/contracts/v1/`, todo adapter ativo, `global-runtime/`,
 user-home, `.accelerate/` de CODEX-26, install/CLI remoto e qualquer estado
