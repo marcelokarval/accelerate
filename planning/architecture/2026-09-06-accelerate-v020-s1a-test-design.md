@@ -2,7 +2,7 @@
 
 ## Estado, limite e autoridades
 
-**Estado:** `planned-only`, design de teste independente. Não é Wave Packet, não fixa uma unidade executável, não aceita S1A e não relata teste observado. O SDD v0.2.0 é `design-only`; comandos e resultados deste documento são futuros.
+**Estado:** `accepted`, estratégia pre-code de S1A aceita pelo root após revisão independente do candidato congelado em `d7f18a015d2f3bfe1fce4b8f7787e7d774c735bf`. Não é Wave Packet, não aceita a emenda S1A e não relata teste observado. O SDD v0.2.0 continua `design-only`; comandos e resultados deste documento permanecem futuros até P05.
 
 **Denominador:** apenas R01 e reconciliação ACV1↔v0.2.0 de S1A. R02, R03 e R05 pertencem ao futuro S1B/produto e estão excluídos, conforme a matriz, “Mapa de requisitos para o primeiro slice”. Nada aqui autoriza `core/contracts/v1/`, adapter, runtime, OpenSpec, Plane, `.accelerate/` ou export global.
 
@@ -96,7 +96,7 @@ O receipt futuro preserva comando, exit code, marcador esperado, IDs/digest dos 
 
 ## Bloqueios futuros
 
-1. Este Test Design e task graph S1A ainda precisam de aceite; não o substituem.
+1. Este Test Design e o task graph estão aceitos somente para entrada; não aceitam a emenda, não provam RED/GREEN e não substituem P07–P09.
 2. A emenda ACV1↔v0.2.0 deve estar aceita e vinculada verificavelmente à Wave 0 antes de S1B.
 3. Integridade/formato/compatibilidade de OpenSpec 1.12.0 seguem pendentes no gate próprio e não podem entrar como autoridade R01.
-4. Unidade de execução, dispatch físico, revisão independente e aceite seguem futuros; este arquivo não fecha CODEX-31.
+4. A unidade Plane `CODEX-34` foi criada em `Todo` e lida de volta; START, autoria independente P05, implementação P06, revisão P07 e aceite P09 seguem futuros. Este arquivo não fecha CODEX-31.

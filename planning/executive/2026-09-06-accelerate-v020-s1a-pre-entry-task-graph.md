@@ -2,10 +2,13 @@
 
 ## Estado e autoridade
 
-Estado: `draft-pre-s1a`, planejamento somente. Issue canônica desta geração de
-design: Plane `CODEX-31` / `e31850d4-275d-4ef1-a078-50c79ea60020`. Plane
-continua sendo a única autoridade de lifecycle; este arquivo não atualiza o
-item, não inicia S1A e não fecha `CODEX-26`.
+Estado: `accepted`, planejamento de entrada aceito pelo root após revisão
+independente do candidato congelado em
+`d7f18a015d2f3bfe1fce4b8f7787e7d774c735bf`. A issue de design permanece
+Plane `CODEX-31` / `e31850d4-275d-4ef1-a078-50c79ea60020`; a unidade executável
+é Plane `CODEX-34` / `79b4d3f4-a30f-4ebe-85cf-deb8c4dce128`, criada em `Todo`
+e lida de volta. Plane continua sendo a única autoridade de lifecycle; este
+aceite não executa START, não inicia P05 e não fecha `CODEX-26`.
 
 Governing sources: `AGENTS.md`; SDD consolidado v0.2.0 aceito como design;
 matriz de reconciliação; Contract v1 SDD, review index, master plan, Wave 0 e
@@ -26,8 +29,9 @@ problemas; encerrar `CODEX-26`; promover/release/merge.
 
 ## Denominador de unidades
 
-Este denominador está em rascunho até revisão independente. IDs são estáveis
-para esta geração; uma mudança de membership invalida a validação da DAG.
+Este denominador foi congelado pelo root após revisão independente. IDs são
+estáveis para esta geração; uma mudança de membership invalida a validação da
+DAG e o receipt de entrada.
 
 | ID | Resultado verificável | Owner/executor proposto | Escrita permitida | Prova planejada | Stop rule |
 | --- | --- | --- | --- | --- | --- |
@@ -68,30 +72,34 @@ autorização de início.
 
 | Gate | Owner | Antes de | Prova exigida | Estado |
 | --- | --- | --- | --- |
-| G01 baseline | root | P02/P03 | branch, `HEAD`, status, diff e reabertura de locators | planejado. |
+| G01 baseline | root | P02/P03 | branch, `HEAD`, status, diff e reabertura de locators | satisfeito no freeze `d7f18a0`; branch `v0.2.0`, base anterior `6d41fed`, escopo documental explícito. |
 | G02 proveniência | root + pesquisa independente | P04 | tag/commit/licença OpenSpec, tree digest e limites do delta | satisfeito para S1A por receipt nesta geração; compatibilidade fica fora de S1A. |
-| G03 Test Design | QA independente | P04 | R01/ACV1 e fixtures/oráculos completos | planejado, aguardando revisão root. |
-| G04 freeze | root | P05 | denominator, DAG, write scopes, modelo/esforço, orçamento e rollback | pendente. |
-| G05 Plane | root via MCP | P05 | unidade de execução criada/readback, sem encerrar CODEX-26 | pendente. |
-| G06 dispatch | root | P05 | adapter suportado/callable; missão e escopo entregues | pendente. |
+| G03 Test Design | QA independente | P04 | R01/ACV1 e fixtures/oráculos completos | satisfeito para entrada; autoria QA e PASS independente registrados, sem prova observada. |
+| G04 freeze | root | P05 | denominator, DAG, write scopes, modelo/esforço, orçamento e rollback | satisfeito para `TASKS_READY` pelo receipt pre-entry; mudança material exige reentrada. |
+| G05 Plane | root via MCP | P05 | unidade de execução criada/readback, sem encerrar CODEX-26 | satisfeito: `CODEX-34` criado em `Todo`, provider ID `79b4d3f4-a30f-4ebe-85cf-deb8c4dce128`, mutation/readback verificados. |
+| G06 dispatch | root | P05 | adapter suportado/callable; missão e escopo entregues | exceção `explicit_user_opt_out` registrada; nenhum dispatch ocorreu. A exceção não remove a separação QA/implementador/revisor. |
 | G07 red válido | QA de P05, seguido pelo implementador P06 | P06 | primeiro teste falha pelo comportamento ausente, não infraestrutura | pendente. |
 | G08 revisão | revisor + root | avanço posterior | candidato congelado, `BASE..HEAD`, comandos e resultado | pendente. |
 
 ## Contrato da futura unidade Plane e staffing
 
-Antes de P05, criar ou reidratar uma **unidade de execução S1A** separada de
-`CODEX-31` e de `CODEX-26`. Ela deve conter objetivo, paths, exclusões,
-aceites, dependências, responsável, revisão, stop rules e validação. O título,
-taxonomia, assignee, estado e payload são pendentes de descoberta/preflight;
-este documento não os inventa.
+Antes de P05, foi criada e lida de volta a **unidade de execução S1A**
+`CODEX-34`, separada de `CODEX-31` e de `CODEX-26`. Ela contém objetivo,
+escopo, exclusões, aceites, dependências, responsável, revisão, stop rules e
+validação. Título, labels, assignee e estado `Todo` foram descobertos e
+validados via MCP governado. START permanece pendente até autoria P05 válida.
 
-O dispatch físico usa somente um adapter comprovadamente callable. P05 vai a
-QA independente; P06 vai a implementador distinto (Terra/medium,
-`fork_turns=none`, salvo receipt que determine outro); P07 vai a revisor
-distinto (Terra/medium, `fork_turns=none`). O packet também fixa
-`fork_turns=none` para a autoria QA de P05. Root retém integração e
-review-of-review; o operador do projeto decide P09. Autor de fixture/teste não
-aceita a própria cobertura.
+O dispatch físico usa somente um adapter comprovadamente callable. P05 está
+fixado em QA independente, Terra/medium, `fork_turns=none`, uma tentativa
+inicial de até 30 minutos e no máximo duas correções. P06 está fixado em
+implementador distinto, Terra/medium, `fork_turns=none`, uma tentativa inicial
+de até 45 minutos e no máximo duas correções. P07 está fixado em revisor
+distinto, Terra/medium, `fork_turns=none`, read-only, até 30 minutos e uma
+revisão sucessora após correção material. Não há token budget explícito porque
+o operador não o solicitou; timeouts e correction caps são os limites
+operacionais. Root retém integração e review-of-review; o operador do projeto
+decide P09. Autor de fixture/teste não implementa P06 nem aceita a própria
+cobertura.
 
 ## Escopo, TDD e rollback de P05/P06
 
@@ -118,12 +126,15 @@ não possui payload runtime.
 
 ## Critério para `TASKS_READY`
 
-O grafo alcança `TASKS_READY` somente quando P01–P04 estão completos, o
+O grafo alcançou `TASKS_READY` quando P01–P04 foram completados, o
 denominador e as arestas foram validados, o Test Design foi revisado, G01–G04
-passaram, e o escopo de P05/P06 está congelado. Isso ainda não admite execução.
-G05 e G06 são necessários antes de qualquer mutação da parte executável. P09
-é necessário para chamar S1A de aceito; Wave 0/S1B continuam bloqueadas até
-essa decisão e seus próprios gates.
+passaram, e o escopo de P05/P06 foi congelado. G05 também passou. G06 recebeu
+a exceção autorizada `explicit_user_opt_out`, portanto nenhum agente foi
+despachado; essa exceção não torna o root uma QA independente nem um
+implementador distinto. P05 permanece `not started` até existir uma identidade
+de autoria compatível ou uma reentrada de Test Design independentemente
+revisada. P09 é necessário para chamar S1A de aceito; Wave 0/S1B continuam
+bloqueadas até essa decisão e seus próprios gates.
 
 ## Regra de reentrada
 
