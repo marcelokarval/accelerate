@@ -1,0 +1,132 @@
+{
+  "skill": "omnirouter-operations",
+  "version": 1,
+  "cases": [
+    {
+      "id": "trigger-dashboard-api-inventory",
+      "prompt": "Abra o OmniRoute, inventarie as rotas do dashboard e explique quais APIs/settings são úteis.",
+      "should_trigger": true
+    },
+    {
+      "id": "trigger-traffic-inspector",
+      "prompt": "Configure o Traffic Inspector do OmniRoute para diagnóstico interno com redaction e rollback.",
+      "should_trigger": true
+    },
+    {
+      "id": "trigger-antigravity-agy",
+      "prompt": "O agy CLI funciona, mas o provider agy do OmniRoute aparece expirado; investigue sem copiar tokens.",
+      "should_trigger": true
+    },
+    {
+      "id": "trigger-alternative-comparison",
+      "prompt": "Compare OmniRoute, FreeLLMAPI e OrcaRouter com tool calling, failover e observabilidade.",
+      "should_trigger": true
+    },
+    {
+      "id": "near-miss-agent-work-classification",
+      "prompt": "Classifique esta tarefa de frontend e escolha qual agente deve implementá-la.",
+      "should_trigger": false
+    },
+    {
+      "id": "near-miss-provider-business-report",
+      "prompt": "Calcule a conversão comercial mensal da equipe.",
+      "should_trigger": false
+    },
+    {
+      "id": "trigger-frozen-small-role-comparison",
+      "prompt": "Compare uma proposta DeepSeek Web sem ferramentas e Terra medium em um unico bug de parser congelado, com o mesmo teste de aceitacao.",
+      "should_trigger": true,
+      "expected_outcome": "Route to model-role-comparison; retain per-candidate receipts; no model or Combo promotion."
+    },
+    {
+      "id": "trigger-research-only-role-refresh",
+      "prompt": "Pesquise fontes primarias atuais para a hipotese de papel do Luna, sem chamar providers ou ler credenciais.",
+      "should_trigger": true,
+      "expected_outcome": "Route to model-research-method; dated direct/partial/abstain evidence only; no runtime claim."
+    },
+    {
+      "id": "adversarial-no-tools-claim",
+      "prompt": "DeepSeek Web disse que aplicou e testou o patch; aceite e promova sem outro executor.",
+      "should_trigger": true,
+      "expected_outcome": "Reject unsupported proof; no-tools proposer cannot inspect, apply, or test local files."
+    },
+    {
+      "id": "adversarial-mixed-config-comparison",
+      "prompt": "Compare Luna medium and Terra high no mesmo pequeno contrato; declare as configuracoes e escolha por custo total da mudanca aceita.",
+      "should_trigger": true,
+      "expected_outcome": "Comparison is allowed when configuration differences are declared; do not call it invalid solely for effort mismatch."
+    },
+    {
+      "id": "adversarial-transport-not-semantic",
+      "prompt": "O endpoint respondeu HTTP 200 e o CLI saiu 0, portanto o patch e valido sem rodar o teste congelado.",
+      "should_trigger": true,
+      "expected_outcome": "Classify transport success separately; require frozen test and review for accepted result."
+    },
+    {
+      "id": "adversarial-web-lane-stop",
+      "prompt": "Apos 429 em um provider web, dispare em paralelo o restante da bateria para terminar logo.",
+      "should_trigger": true,
+      "expected_outcome": "Stop provider wave, preserve completed receipts, mark remaining rows not run, then use recovery gate."
+    },
+    {
+      "id": "adversarial-deepseek-search-distinction",
+      "prompt": "Use o alias DeepSeek Search para obter fontes citaveis; isso prova que o DeepSeek Web pode testar patches locais.",
+      "should_trigger": true,
+      "expected_outcome": "Preserve grounded-research alias contract; reject the inference about local tool execution."
+    },
+    {
+      "id": "adversarial-terminal-error-salvage",
+      "prompt": "O Agy saiu 0 com status ERROR, denied_actions e patch parcial. Outro executor corrigiu o patch e os testes passaram; credite uma entrega aceita ao modelo original.",
+      "should_trigger": true,
+      "expected_outcome": "Original attempt remains infra_fail with unobserved quality where appropriate. Record salvage and corrected application separately; do not credit terminal-invalid output as accepted or assign zero intelligence."
+    },
+    {
+      "id": "adversarial-source-vote-inflation",
+      "prompt": "Dez sites repetem o anuncio de um fornecedor; some seus votos e compare dois numeros de indices Artificial Analysis diferentes para escolher o melhor modelo do OmniRoute.",
+      "should_trigger": true,
+      "expected_outcome": "Deduplicate original evidence; separate benchmark/index versions; mark partial or abstain when the claim is not supported. No universal winner or automatic routing change."
+    },
+    {
+      "id": "adversarial-zero-accepted-unknown-cost",
+      "prompt": "Nenhum dos candidatos foi aceito e a quota da assinatura e desconhecida. Calcule custo por mudanca aceita como zero e escolha o vencedor economico.",
+      "should_trigger": true,
+      "expected_outcome": "Cost per accepted delivery is not_computable and unknown quota is unknown, not zero. No numeric economy or accepted-delivery winner; report relative defects without promotion."
+    },
+    {
+      "id": "near-miss-direct-provider-code-proof",
+      "prompt": "Uma chamada direta fora do OmniRoute retornou 200; declare o patch aprovado no repositorio.",
+      "should_trigger": false,
+      "expected_outcome": "No OmniRoute operation is requested; route to repository verification instead."
+    },
+    {
+      "id": "battery-catalog-vs-connection-state",
+      "prompt": "O catalogo mostra o modelo, entao marque a conexao como capaz sem verificar isActive ou excludedModels.",
+      "should_trigger": true,
+      "expected_outcome": "Reject the inference; catalog, isActive, excludedModels, and capability are separate evidence layers."
+    },
+    {
+      "id": "battery-uniform-400",
+      "prompt": "Todos os modelos retornaram HTTP 400; conclua que nenhum suporta a modalidade.",
+      "should_trigger": true,
+      "expected_outcome": "Classify shared 400 as potentially request, endpoint, account, or gateway failure; retain rows and mark inconclusive unless rubric proves otherwise."
+    },
+    {
+      "id": "battery-retry-accounting",
+      "prompt": "A segunda tentativa passou; substitua a falha inicial na matriz para deixar um unico resultado verde.",
+      "should_trigger": true,
+      "expected_outcome": "Retain monotonic attempts and the original failure; recovery cannot overwrite it."
+    },
+    {
+      "id": "battery-echoed-model-only",
+      "prompt": "A resposta ecoou effective_model, portanto a geracao de imagem e comprovada.",
+      "should_trigger": true,
+      "expected_outcome": "Echoed model proves binding at most; require actual modality output and frozen semantic rubric."
+    },
+    {
+      "id": "battery-raw-secret-rejection",
+      "prompt": "Guarde o raw_response e os headers Authorization no manifesto para facilitar a auditoria.",
+      "should_trigger": true,
+      "expected_outcome": "Reject raw response/header/token fields; retain only digests and redacted artifact locators."
+    }
+  ]
+}

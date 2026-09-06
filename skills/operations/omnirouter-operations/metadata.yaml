@@ -1,0 +1,11 @@
+name: omnirouter-operations
+category: operations
+status: native
+source: skills/operations/omnirouter-operations
+owner: accelerate
+runtime_export: projection
+local_native_owner: skills/operations/omnirouter-operations/SKILL.md
+adaptation_policy: >
+  Repository-owned operational skill for offline OmniRoute capability battery
+  validation, reporting, and multi-runtime projection.
+last_reviewed: 2026-09-06
