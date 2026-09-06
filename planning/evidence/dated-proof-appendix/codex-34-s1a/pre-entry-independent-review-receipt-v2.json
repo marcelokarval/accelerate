@@ -1,0 +1,53 @@
+{
+  "schema_version": 2,
+  "kind": "accelerate-v020-s1a-pre-entry-independent-review-receipt",
+  "recorded_at": "2026-09-06T14:27:06Z",
+  "candidate_commit": "7311875ad94e2ad489f3990d2a64642d5faadc4a",
+  "candidate_tree": "9648656e02f0b95dc79b3d25df460a97825f1e2d",
+  "candidate_base": "710db6474292ff3deb74728c1d754aea6e7f806e",
+  "reviewer": {
+    "subagent_conversation_id": "500e4d43-3bd0-4802-b50e-a71e73364698",
+    "role": "independent-read-only-reviewer",
+    "model_metadata": "gpt-5.6-terra/medium, fork_turns: none",
+    "authorship": "no-authorship-of-reviewed-artifacts"
+  },
+  "reviewed_artifacts": [
+    {
+      "path": "planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md",
+      "sha256": "d51e0d0420ed5f9c0433d9f7d5646d3f88042722f1fcf0a337a779ee17f74e05"
+    },
+    {
+      "path": "planning/architecture/2026-09-06-accelerate-v020-s1a-test-design.md",
+      "sha256": "6418724c9b17fd3902256b3962f3347425e0e5b30b549977b105af2245b833ab"
+    },
+    {
+      "path": "planning/executive/2026-09-06-accelerate-v020-s1a-pre-entry-task-graph.md",
+      "sha256": "f1fc87f9cd2aff233d25ffb971be01b03da1c33f94b351593de02e0dafc65f23"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-34-s1a/pre-entry-admission-receipt-v2.json",
+      "sha256": "2f249660f6fec8fef0b73aeec7a412cdba58102c3cb7ffcf381cf828b001a0bd"
+    }
+  ],
+  "verdict": "PASS",
+  "rubric_results": {
+    "item1_acv1_amendment": "PASS",
+    "item2_test_design": "PASS",
+    "item3_concrete_implementation_path": "PASS",
+    "item4_dag_and_reopened_gates": "PASS",
+    "item5_staffing_and_governance": "PASS",
+    "item6_restricted_scope": "PASS",
+    "item7_plane_unit_binding": "PASS"
+  },
+  "findings": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 0,
+    "P3": 0
+  },
+  "authority_boundary": "This receipt validates the pre-entry candidate package only. It does not accept the ACV1 amendment, authorize Wave 0/S1B, or replace operator decision P09.",
+  "root_review_of_review": {
+    "status": "accepted-for-pre-entry-freeze",
+    "basis": "The independent PASS is consistent with root re-evaluation; pre-entry package meets all 7 rubric criteria; TASKS_READY declared."
+  }
+}

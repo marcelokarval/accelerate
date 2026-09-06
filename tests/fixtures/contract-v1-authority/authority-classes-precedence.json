@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "contract_name": "accelerate-contract-v1-authority-classes-precedence",
+  "version": "1.0.0",
+  "description": "Definição formal das 6 classes de autoridade, níveis de precedência e regras de arbitragem para a governança do repositório Accelerate.",
+  "classes": {
+    "governing-authority": {
+      "rank": 1,
+      "meaning": "Repo-local source that directly governs Accelerate behavior.",
+      "may_decide_runtime": true,
+      "scope_rule": "Highest authority within repository boundary. Overrules all lower classes.",
+      "examples": [
+        "AGENTS.md",
+        "SKILL.md",
+        "README.md",
+        "core/",
+        "adapters/",
+        "profiles/",
+        "skills/",
+        "planning/"
+      ]
+    },
+    "decision-artifact": {
+      "rank": 2,
+      "meaning": "A specific plan, packet, review, ADR, or task ledger accepted for a run.",
+      "may_decide_runtime": true,
+      "scope_rule": "Decides behavior for the bounded run and only under root laws and governing authority.",
+      "examples": [
+        "planning/executive/*.md",
+        "planning/architecture/*.md",
+        "PRD-lite",
+        "SDD",
+        "task breakdown",
+        "branch entry packet"
+      ]
+    },
+    "backend-authority": {
+      "rank": 3,
+      "meaning": "State read from the active workflow/runtime backend through an implemented adapter.",
+      "may_decide_runtime": true,
+      "scope_rule": "Authoritative only through an implemented, selected adapter and only for backend facts it owns.",
+      "examples": [
+        ".accelerate/work-item.yaml",
+        "workflow adapter rehydration packet",
+        "tested runtime proof output"
+      ]
+    },
+    "supporting-reference": {
+      "rank": 4,
+      "meaning": "Inherited or comparative material that informs but does not override native authority.",
+      "may_decide_runtime": false,
+      "scope_rule": "Informs, explains, compares, or provides depth; cannot override root laws, native core docs, or accepted decisions.",
+      "examples": [
+        "references/",
+        "external docs imported for comparison",
+        "design benchmark corpora",
+        "upstream specifications"
+      ]
+    },
+    "generated-export": {
+      "rank": 5,
+      "meaning": "Outward runtime host material generated from this repository.",
+      "may_decide_runtime": false,
+      "scope_rule": "Deployment products downstream of repository validation. Reverse edge (export -> source) is strictly forbidden.",
+      "examples": [
+        "global-runtime/",
+        "host export files",
+        "generated runtime bundles"
+      ]
+    },
+    "forbidden-authority": {
+      "rank": 6,
+      "meaning": "Any source that must not govern this repository unless imported, adapted, registered, and enforced here first.",
+      "may_decide_runtime": false,
+      "scope_rule": "Strictly prohibited as source of truth. Denies advancement closed.",
+      "examples": [
+        "user-home skill catalogs",
+        "stale global mirrors",
+        "unvetted external agent files",
+        "chat memory as sole evidence"
+      ]
+    }
+  },
+  "precedence_order": [
+    "governing-authority",
+    "decision-artifact",
+    "backend-authority",
+    "supporting-reference",
+    "generated-export",
+    "forbidden-authority"
+  ],
+  "enforcement_rules": [
+    {
+      "id": "RULE-01-REPO-LOCAL-FIRST",
+      "description": "Native repo authority wins over inherited references or external sources when covering the same surface."
+    },
+    {
+      "id": "RULE-02-NO-REVERSE-EDGE",
+      "description": "Generated exports are downstream deployment outputs; treating an export as canonical authority violates the reverse edge invariant."
+    },
+    {
+      "id": "RULE-03-SUPPORTING-CANNOT-OVERRIDE",
+      "description": "Supporting references cannot overrule root laws, native core docs, or accepted decision artifacts."
+    },
+    {
+      "id": "RULE-04-BACKEND-STATE-BOUNDED",
+      "description": "Backend authority is valid only through an implemented adapter and only for facts that backend owns."
+    },
+    {
+      "id": "RULE-05-FORBIDDEN-STRICT-REJECTION",
+      "description": "User-home catalogs, external catalogs, and stale global mirrors are strictly rejected without local import and registration."
+    }
+  ]
+}

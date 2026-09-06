@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "fixture_id": "NEG-R01-01",
+  "contract_name": "accelerate-contract-v1-neg-r01-01-external-authority-override",
+  "version": "1.0.0",
+  "description": "Prova de autoridade externa tentando se sobrepor à autoridade repo-local em decisão R01 (violação da precedência soberana do repositório).",
+  "slice": "S1A",
+  "target_repository": "/home/marcelo-karval/Backup/Projetos/accelerate",
+  "authority_set": {
+    "governing-authority": [
+      "external:Fission-AI/OpenSpec@v1.12.0"
+    ],
+    "decision-artifact": [
+      "planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md"
+    ],
+    "backend-authority": [],
+    "supporting-reference": [
+      "references/"
+    ],
+    "generated-export": [],
+    "forbidden-authority": []
+  },
+  "external_provenance": {
+    "source": "Fission-AI/OpenSpec",
+    "tag": "v1.12.0",
+    "commit": "e062b9572be933564ba3899d059377dfa1393e32",
+    "license": "MIT",
+    "authority_class": "governing-authority",
+    "is_governing": true,
+    "overrides_repo_local": true
+  },
+  "violation": {
+    "type": "EXTERNAL_AUTHORITY_OVERRIDE",
+    "rule": "AGENTS.md / Self-Contained Authority / Authority Set Gate",
+    "detail": "External specification Fission-AI/OpenSpec is placed under governing-authority and attempts to override repo-local doctrine."
+  },
+  "expected_verdict": "REJECT",
+  "expected_rejection_marker": "[NEG-R01-01: EXTERNAL_AUTHORITY_OVERRIDE_REJECTED]"
+}

@@ -1,0 +1,261 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "contract_name": "accelerate-contract-v1-acv1-expected-mapping",
+  "version": "1.0.0",
+  "total_requirements": 24,
+  "allowed_dispositions": [
+    "mantido",
+    "alterado",
+    "substituído"
+  ],
+  "allowed_waves": [
+    "Wave 0",
+    "Wave 1",
+    "Wave 2",
+    "Wave 3",
+    "Wave 4",
+    "Wave 5"
+  ],
+  "decisions": [
+    {
+      "id": "ACV1-D001",
+      "short_id": "D001",
+      "topic": "autoridade repo-first",
+      "canonical_topic": "Canonical authority direction",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 0",
+      "wave": "Wave 0",
+      "gate_note": "S1A guarda a precedência: fixture rejeita fonte externa/export como autoridade."
+    },
+    {
+      "id": "ACV1-D002",
+      "short_id": "D002",
+      "topic": "classes/modos fechados",
+      "canonical_topic": "Class and mode model",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 1",
+      "wave": "Wave 1",
+      "gate_note": "mapa declara sem mudança de vocabulário."
+    },
+    {
+      "id": "ACV1-D003",
+      "short_id": "D003",
+      "topic": "schemas estritos",
+      "canonical_topic": "Schema strictness",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 1",
+      "wave": "Wave 1",
+      "gate_note": "nenhum schema paralelo é criado."
+    },
+    {
+      "id": "ACV1-D004",
+      "short_id": "D004",
+      "topic": "validador Draft 2020-12",
+      "canonical_topic": "JSON Schema runtime",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 1",
+      "wave": "Wave 1",
+      "gate_note": "escolha concreta segue pendente; S1A não introduz dependência."
+    },
+    {
+      "id": "ACV1-D005",
+      "short_id": "D005",
+      "topic": "catálogo + manifesto em paridade",
+      "canonical_topic": "Wave denominator",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 0",
+      "wave": "Wave 0",
+      "gate_note": "S1A tem denominator próprio sem editar os 45 IDs."
+    },
+    {
+      "id": "ACV1-D006",
+      "short_id": "D006",
+      "topic": "cobertura P0/threshold",
+      "canonical_topic": "Coverage threshold",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 0 e posteriores",
+      "wave": "Wave 0",
+      "gate_note": "critérios não são relaxados."
+    },
+    {
+      "id": "ACV1-D007",
+      "short_id": "D007",
+      "topic": "histórico de rollback append-only",
+      "canonical_topic": "Rollback history",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 3",
+      "wave": "Wave 3",
+      "gate_note": "S1A tem rollback apenas por commit isolado."
+    },
+    {
+      "id": "ACV1-D008",
+      "short_id": "D008",
+      "topic": "gates adaptativos monotônicos",
+      "canonical_topic": "Adaptive gates",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 2",
+      "wave": "Wave 2",
+      "gate_note": "nenhum gate é dispensado por texto."
+    },
+    {
+      "id": "ACV1-D009",
+      "short_id": "D009",
+      "topic": "evidência tipada",
+      "canonical_topic": "Evidence model",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 3",
+      "wave": "Wave 3",
+      "gate_note": "planejamento separa prova planejada de observada."
+    },
+    {
+      "id": "ACV1-D010",
+      "short_id": "D010",
+      "topic": "invalidação transitiva",
+      "canonical_topic": "Invalidation",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 3",
+      "wave": "Wave 3",
+      "gate_note": "revisão/material change torna proof planejada stale."
+    },
+    {
+      "id": "ACV1-D011",
+      "short_id": "D011",
+      "topic": "pós-merge condicionado",
+      "canonical_topic": "Merge semantics",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 3",
+      "wave": "Wave 3",
+      "gate_note": "não aplicável a docs pré-S1A sem merge claim."
+    },
+    {
+      "id": "ACV1-D012",
+      "short_id": "D012",
+      "topic": "workers tardios",
+      "canonical_topic": "Late workers",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 3",
+      "wave": "Wave 3",
+      "gate_note": "não aplicável; não há worker de execução."
+    },
+    {
+      "id": "ACV1-D013",
+      "short_id": "D013",
+      "topic": "cleanup tipado",
+      "canonical_topic": "Cleanup",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 3",
+      "wave": "Wave 3",
+      "gate_note": "não aplicável; não cria recurso gerenciado."
+    },
+    {
+      "id": "ACV1-D014",
+      "short_id": "D014",
+      "topic": "loop de incidente",
+      "canonical_topic": "Incident correction",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 3",
+      "wave": "Wave 3",
+      "gate_note": "não aplicável; não corrige incidente."
+    },
+    {
+      "id": "ACV1-D015",
+      "short_id": "D015",
+      "topic": "export repo -> runtime",
+      "canonical_topic": "Runtime sync",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 5",
+      "wave": "Wave 5",
+      "gate_note": "export/runtime é exclusão explícita."
+    },
+    {
+      "id": "ACV1-D016",
+      "short_id": "D016",
+      "topic": "migração dry-run-first",
+      "canonical_topic": "Migration",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 5",
+      "wave": "Wave 5",
+      "gate_note": "não há migração nem dual-write."
+    },
+    {
+      "id": "ACV1-D017",
+      "short_id": "D017",
+      "topic": "validação final forense",
+      "canonical_topic": "Final validation",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 5",
+      "wave": "Wave 5",
+      "gate_note": "S1A prevê revisão, não fechamento."
+    },
+    {
+      "id": "ACV1-D018",
+      "short_id": "D018",
+      "topic": "pacote canônico core/contracts/v1/",
+      "canonical_topic": "Canonical package",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 1 após Wave 0",
+      "wave": "Wave 1",
+      "gate_note": "fixture recusa pacote concorrente/antecipado."
+    },
+    {
+      "id": "ACV1-D019",
+      "short_id": "D019",
+      "topic": "mapeamento de labels legado",
+      "canonical_topic": "Class/mode vocabulary",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 4",
+      "wave": "Wave 4",
+      "gate_note": "nenhuma label é tratada como enum canônico."
+    },
+    {
+      "id": "ACV1-D020",
+      "short_id": "D020",
+      "topic": "evento material pós-close",
+      "canonical_topic": "Post-close late event",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 3",
+      "wave": "Wave 3",
+      "gate_note": "não aplicável; não existe fechamento."
+    },
+    {
+      "id": "ACV1-D021",
+      "short_id": "D021",
+      "topic": "cutover somente Wave 5",
+      "canonical_topic": "Closure rollout",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 5",
+      "wave": "Wave 5",
+      "gate_note": "shadow/runtime são exclusões explícitas."
+    },
+    {
+      "id": "ACV1-D022",
+      "short_id": "D022",
+      "topic": "fechamento lógico preparado",
+      "canonical_topic": "Closure commit boundary",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 3/5",
+      "wave": "Wave 3",
+      "gate_note": "não aplicável; sem lifecycle local novo."
+    },
+    {
+      "id": "ACV1-D023",
+      "short_id": "D023",
+      "topic": "ferramenta forense é da Wave 4",
+      "canonical_topic": "Forensic tool ownership",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 4",
+      "wave": "Wave 4",
+      "gate_note": "revisores apenas usam provas futuras."
+    },
+    {
+      "id": "ACV1-D024",
+      "short_id": "D024",
+      "topic": "export/rollback com intent/anchor",
+      "canonical_topic": "Export target and rollback",
+      "disposition": "mantido",
+      "implementation_owner": "Wave 5",
+      "wave": "Wave 5",
+      "gate_note": "não aplicável; sem export, host ou rollback operacional."
+    }
+  ]
+}
