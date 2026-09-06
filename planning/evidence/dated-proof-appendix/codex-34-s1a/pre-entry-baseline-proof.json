@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "kind": "accelerate-v020-s1a-pre-entry-baseline-proof",
+  "observed_at": "2026-09-06T01:28:40-04:00",
+  "branch": "v0.2.0-s1a",
+  "candidate_commit": "50c9278f922320041265d0f78418f1ea39586f93",
+  "workspace": ".worktrees/v0.2.0-s1a",
+  "commands": [
+    {
+      "command": "python3 -m json.tool planning/evidence/dated-proof-appendix/codex-34-s1a/pre-entry-independent-review-receipt.json",
+      "exit_code": 0
+    },
+    {
+      "command": "python3 -m json.tool planning/evidence/dated-proof-appendix/codex-34-s1a/pre-entry-admission-receipt.json",
+      "exit_code": 0
+    },
+    {
+      "command": "bash tests/authority-set-gate.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash tests/doctrine-integrity.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash tests/markdown-link-integrity.sh",
+      "exit_code": 0
+    },
+    {
+      "command": "bash tests/all.sh",
+      "exit_code": 0,
+      "summary": "all tests passed; included 32 pytest cases and 81 offline Phase-1 cases with one explicitly opt-in real OpenSpec case skipped"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "scope": "Clean baseline and pre-entry document verification only; no S1A RED, GREEN, implementation, runtime, browser, provider execution, or OpenSpec installation claim.",
+  "generated_residuals": {
+    "pycache_removed": true,
+    "worktree_clean_after_cleanup": true
+  },
+  "verdict": "baseline-supported",
+  "execution_effect": "none"
+}
