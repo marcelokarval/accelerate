@@ -2,6 +2,9 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import re
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -335,3 +338,218 @@ def test_rollback_validates_all_backups_before_touching_destination(tmp_path: Pa
     # Both destinations must remain fully intact
     assert dest_b.is_dir() and (dest_b / "SKILL.md").is_file(), "dest_b was deleted during partial rollback!"
     assert dest_a.is_dir() and (dest_a / "SKILL.md").is_file(), "dest_a was deleted during partial rollback!"
+
+
+# ==============================================================================
+# Phase C33-2: Defect Reproduction Tests (CODEX-33)
+# ==============================================================================
+
+
+def test_tree_digest_excludes_pycache_and_bytecode_caches(tmp_path: Path):
+    """Defect C33-R1: tree_digest() must exclude Python bytecode and cache files.
+
+    Currently, tree_digest() traverses all files and directories unconditionally via
+    rglob('*'), hashing __pycache__ and *.pyc/*.pyo files. This causes non-reproducible
+    digests and false drift whenever bytecode caches are generated.
+
+    The canonical enumeration must exclude only known Python caches (__pycache__/, *.pyc, *.pyo),
+    while preserving arbitrary unknown files in the digest, and keeping symlinks fail-closed.
+    """
+    root, registry, home = fixture(tmp_path)
+    module = load_installer()
+    source = root / "skills/operations/example-operations"
+
+    # Add a legitimate python script to the skill
+    script = source / "scripts/tool.py"
+    script.parent.mkdir(parents=True, exist_ok=True)
+    script.write_text("print('operational tool')\n", encoding="utf-8")
+
+    clean_digest = module.tree_digest(source)
+
+    # Contaminate source tree with Python cache directories and bytecode files
+    pycache_dir = source / "__pycache__"
+    pycache_dir.mkdir()
+    (pycache_dir / "tool.cpython-312.pyc").write_bytes(b"\x00\x00\x00\x00transient-bytecode-1")
+
+    sub_pycache = source / "scripts/__pycache__"
+    sub_pycache.mkdir()
+    (sub_pycache / "tool.cpython-312.pyc").write_bytes(b"\x00\x00\x00\x00transient-bytecode-2")
+
+    (source / "tool.pyc").write_bytes(b"\x00\x00\x00\x00standalone-pyc")
+    (source / "tool.pyo").write_bytes(b"\x00\x00\x00\x00standalone-pyo")
+
+    # Contract requirement: digest must remain identical despite python bytecode cache presence
+    assert module.tree_digest(source) == clean_digest, (
+        "tree_digest() is contaminated by __pycache__ and bytecode files (.pyc/.pyo)"
+    )
+
+    # Invariant requirement: arbitrary unknown non-cache files MUST still change digest
+    unknown_file = source / "unexpected_artifact.dat"
+    unknown_file.write_bytes(b"arbitrary-unknown-data")
+    assert module.tree_digest(source) != clean_digest, (
+        "tree_digest() failed to include arbitrary unknown non-cache file in digest"
+    )
+    unknown_file.unlink()
+
+    # Invariant requirement: symlinks must remain fail-closed, even with pycache/pyc names
+    symlink_cache = source / "cache_link"
+    symlink_cache.symlink_to(script)
+    with pytest.raises(ValueError, match=r"unsafe source"):
+        module.tree_digest(source)
+
+
+def test_stage_excludes_pycache_and_bytecode_from_destination(tmp_path: Path):
+    """Defect C33-R1: _stage() and reconcile() must exclude __pycache__ and bytecode from target.
+
+    Currently, _stage() uses shutil.copytree(source, stage) without filtering, copying
+    __pycache__ and .pyc/.pyo files into the staged tree and destination target.
+    """
+    root, registry, home = fixture(tmp_path)
+    module = load_installer()
+    source = root / "skills/operations/example-operations"
+
+    # Add python script and bytecode caches to source
+    script = source / "scripts/tool.py"
+    script.parent.mkdir(parents=True, exist_ok=True)
+    script.write_text("print('operational tool')\n", encoding="utf-8")
+
+    pycache_dir = source / "__pycache__"
+    pycache_dir.mkdir()
+    (pycache_dir / "tool.cpython-312.pyc").write_bytes(b"bytecode-payload")
+
+    (source / "standalone.pyc").write_bytes(b"bytecode-standalone")
+    (source / "standalone.pyo").write_bytes(b"bytecode-optimized")
+
+    # Also add a valid operational asset that MUST be copied
+    data_file = source / "config.json"
+    data_file.write_text('{"key": "value"}\n', encoding="utf-8")
+
+    # Reconcile/materialize the skill
+    module.reconcile(
+        "opencode",
+        home=home,
+        registry_path=registry,
+        repo_root=root,
+        apply=True,
+        run_id="20260821T120000Z-opencode",
+    )
+
+    destination = home / ".config/opencode/skills/example-operations"
+    assert destination.is_dir()
+
+    # Legitimate files must be present
+    assert (destination / "SKILL.md").is_file()
+    assert (destination / "scripts/tool.py").is_file()
+    assert (destination / "config.json").is_file()
+
+    # Bytecode and pycache artifacts MUST NOT be present in destination
+    assert not (destination / "__pycache__").exists(), (
+        "_stage() copied __pycache__ directory into target destination"
+    )
+    copied_pyc = list(destination.rglob("*.pyc"))
+    assert copied_pyc == [], (
+        f"_stage() copied .pyc bytecode files into target destination: {copied_pyc}"
+    )
+    copied_pyo = list(destination.rglob("*.pyo"))
+    assert copied_pyo == [], (
+        f"_stage() copied .pyo bytecode files into target destination: {copied_pyo}"
+    )
+
+
+def test_reconcile_prevents_false_drift_from_pycache_and_bytecode(tmp_path: Path):
+    """Defect C33-R1: Post-install bytecode generation must not trigger false DRIFT.
+
+    Currently, after a skill is installed, running pytest or importing a python tool
+    creates __pycache__ and *.pyc files in the source tree or target directory.
+    Because tree_digest() includes these, reconcile() reports false drift.
+    """
+    root, registry, home = fixture(tmp_path)
+    module = load_installer()
+    source = root / "skills/operations/example-operations"
+
+    script = source / "tool.py"
+    script.write_text("def run(): pass\n", encoding="utf-8")
+
+    # Initial clean installation
+    result1 = module.reconcile(
+        "opencode",
+        home=home,
+        registry_path=registry,
+        repo_root=root,
+        apply=True,
+        run_id="20260821T120000Z-opencode",
+    )
+    assert result1["changed"] == ["example-operations"]
+
+    destination = home / ".config/opencode/skills/example-operations"
+
+    # Simulate Python runtime compiling bytecode during execution in both source and target
+    source_cache = source / "__pycache__"
+    source_cache.mkdir(exist_ok=True)
+    (source_cache / "tool.cpython-312.pyc").write_bytes(b"compiled-source-bytecode")
+    (source / "tool.pyc").write_bytes(b"standalone-pyc")
+
+    dest_cache = destination / "__pycache__"
+    dest_cache.mkdir(exist_ok=True)
+    (dest_cache / "tool.cpython-312.pyc").write_bytes(b"compiled-dest-bytecode")
+
+    # Contract requirement: dry-run check must not report false drift
+    result2 = module.reconcile(
+        "opencode",
+        home=home,
+        registry_path=registry,
+        repo_root=root,
+        apply=False,
+    )
+    assert result2["drift"] == 0, (
+        f"False drift detected ({result2['drift']} drift): reconcile() was contaminated by Python bytecode caches"
+    )
+
+
+def test_cli_codex_runtime_choices_do_not_announce_unsupported_target():
+    """Defect C33-R2: CLI choices must not announce 'codex' as a separate target.
+
+    Codex consumes the shared 'agents' hub (.agents/skills) and has no separate
+    projection target in operational-skill-projections.toml.
+    The CLI argument parser currently announces choices=('opencode', 'agents', 'codex', ...),
+    misleading operators that --runtime codex is a valid materialization target.
+    """
+    result = subprocess.run(
+        [sys.executable, str(INSTALLER), "--help"],
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    match = re.search(r"--runtime\s+\{([^}]+)\}", result.stdout)
+    assert match is not None, "Could not locate --runtime choices in --help output"
+    choices = [c.strip() for c in match.group(1).split(",")]
+    assert "codex" not in choices, (
+        f"CLI announces nonexistent target 'codex' in choices: {choices}. "
+        "Codex consumes the 'agents' hub and must not be advertised as an independent target."
+    )
+
+
+def test_cli_codex_runtime_invocation_guides_operator_to_agents():
+    """Defect C33-R2: Invoking --runtime codex must guide operator to use 'agents'.
+
+    Currently, the CLI accepts --runtime codex because 'codex' is listed in choices,
+    but reconcile() crashes with 'FAIL: unknown runtime: codex' because operational-skill-projections.toml
+    does not and should not have a codex target.
+    The CLI must not crash with raw 'unknown runtime: codex' and must explicitly guide
+    the operator that Codex uses the 'agents' runtime hub.
+    """
+    result = subprocess.run(
+        [sys.executable, str(INSTALLER), "--runtime", "codex"],
+        capture_output=True,
+        text=True,
+    )
+    # Proves the current failure: CLI accepts argument but crashes with raw 'unknown runtime: codex'
+    assert "unknown runtime: codex" not in result.stderr, (
+        f"CLI crashed with unhandled 'unknown runtime: codex' instead of guiding operator: {result.stderr.strip()}"
+    )
+    # Requires clear operator guidance pointing to 'agents'
+    combined_output = (result.stderr + "\n" + result.stdout).lower()
+    assert "agents" in combined_output, (
+        f"CLI failed to guide operator to use 'agents' runtime. Output was:\n"
+        f"STDERR: {result.stderr}\nSTDOUT: {result.stdout}"
+    )

@@ -26,6 +26,15 @@ VALID_NAME = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 VALID_RUN = re.compile(r"^\d{8}T\d{6}Z-[a-z0-9-]+$")
 
 
+def _is_python_cache(entry: Path, root: Path) -> bool:
+    if entry.is_symlink():
+        return False
+    rel_parts = entry.relative_to(root).parts
+    if "__pycache__" in rel_parts:
+        return True
+    return entry.is_file() and entry.name.endswith((".pyc", ".pyo"))
+
+
 def assert_regular_tree(path: Path) -> None:
     if path.is_symlink() or not path.is_dir():
         raise ValueError(f"unsafe source tree: {path}")
@@ -33,7 +42,11 @@ def assert_regular_tree(path: Path) -> None:
     if skill.is_symlink() or not skill.is_file():
         raise ValueError(f"unsafe source tree lacks regular SKILL.md: {path}")
     for entry in path.rglob("*"):
-        if entry.is_symlink() or not (entry.is_dir() or entry.is_file()):
+        if entry.is_symlink():
+            raise ValueError(f"unsafe source entry: {entry}")
+        if _is_python_cache(entry, path):
+            continue
+        if not (entry.is_dir() or entry.is_file()):
             raise ValueError(f"unsafe source entry: {entry}")
 
 
@@ -41,6 +54,8 @@ def tree_digest(path: Path) -> str:
     assert_regular_tree(path)
     digest = hashlib.sha256()
     for entry in sorted(path.rglob("*")):
+        if _is_python_cache(entry, path):
+            continue
         relative = entry.relative_to(path).as_posix()
         if relative == MARKER:
             continue
@@ -146,7 +161,11 @@ def _stage(source: Path, target_root: Path, name: str, runtime: str, digest: str
     stage_root = Path(tempfile.mkdtemp(prefix=f".{name}.", dir=target_root))
     stage = stage_root / name
     try:
-        shutil.copytree(source, stage)
+        shutil.copytree(
+            source,
+            stage,
+            ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"),
+        )
         (stage / MARKER).write_text(_marker(name, runtime, digest), encoding="utf-8")
         return stage
     except Exception:
@@ -191,6 +210,10 @@ def reconcile(
 ) -> dict[str, object]:
     skills, targets = load_registry(registry_path, repo_root)
     if runtime not in targets:
+        if runtime == "codex":
+            raise ValueError(
+                "codex runtime uses the shared '.agents/skills' hub; please use '--runtime agents'"
+            )
         raise ValueError(f"unknown runtime: {runtime}")
     target_root = home / targets[runtime]
     _assert_safe_root(home, target_root, create=False)
@@ -238,7 +261,11 @@ def reconcile(
         if previous:
             prev_digest = tree_digest(destination)
             backup_path = run_root / f"{name}.previous"
-            shutil.copytree(destination, backup_path)
+            shutil.copytree(
+                destination,
+                backup_path,
+                ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"),
+            )
             assert_regular_tree(backup_path)
             if tree_digest(backup_path) != prev_digest:
                 raise ValueError(f"backup copy integrity failed for {name}")
@@ -267,7 +294,11 @@ def reconcile(
             if destination.exists():
                 shutil.rmtree(destination)
             if entry["previous"]:
-                shutil.copytree(run_root / f"{name}.previous", destination)
+                shutil.copytree(
+                    run_root / f"{name}.previous",
+                    destination,
+                    ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"),
+                )
         manifest["status"] = "failed-rolled-back"
         _write_manifest(manifest_path, manifest)
         raise
@@ -287,6 +318,10 @@ def rollback(
         raise ValueError("invalid rollback id")
     _skills, targets = load_registry(registry_path, repo_root)
     if runtime not in targets:
+        if runtime == "codex":
+            raise ValueError(
+                "codex runtime uses the shared '.agents/skills' hub; please use '--runtime agents'"
+            )
         raise ValueError(f"unknown runtime: {runtime}")
     target_root = home / targets[runtime]
     _assert_safe_root(home, target_root, create=False)
@@ -348,9 +383,20 @@ def rollback(
     _write_manifest(manifest_path, manifest)
 
 
+class OperationalSkillsArgumentParser(argparse.ArgumentParser):
+    def error(self, message: str) -> None:
+        if "codex" in message.lower():
+            self.exit(
+                2,
+                "FAIL: codex runtime uses the shared '.agents/skills' hub; "
+                "please use '--runtime agents'.\n",
+            )
+        super().error(message)
+
+
 def main() -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--runtime", required=True, choices=("opencode", "agents", "codex", "hermes", "claude"))
+    parser = OperationalSkillsArgumentParser()
+    parser.add_argument("--runtime", required=True, choices=("opencode", "agents", "hermes", "claude"))
     parser.add_argument("--home", type=Path, default=Path.home())
     parser.add_argument("--registry", type=Path, default=REGISTRY)
     parser.add_argument("--backup-root", type=Path)
