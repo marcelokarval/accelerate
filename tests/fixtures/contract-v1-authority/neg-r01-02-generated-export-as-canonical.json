@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "fixture_id": "NEG-R01-02",
+  "contract_name": "accelerate-contract-v1-neg-r01-02-generated-export-as-canonical",
+  "version": "1.0.0",
+  "description": "Prova de export gerado ou runtime global sendo apresentado como autoridade canônica (violação da borda reversa export -> source).",
+  "slice": "S1A",
+  "target_repository": "/home/marcelo-karval/Backup/Projetos/accelerate",
+  "authority_set": {
+    "governing-authority": [
+      "global-runtime/accelerate/SKILL.md"
+    ],
+    "decision-artifact": [
+      "planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md"
+    ],
+    "backend-authority": [],
+    "supporting-reference": [],
+    "generated-export": [
+      "global-runtime/accelerate/"
+    ],
+    "forbidden-authority": []
+  },
+  "reverse_edge_claim": {
+    "export_path": "global-runtime/accelerate/SKILL.md",
+    "claimed_as_canonical": true,
+    "derives_expected_from_export": true
+  },
+  "violation": {
+    "type": "REVERSE_EDGE_EXPORT_AS_CANONICAL",
+    "rule": "AGENTS.md / SDD Contract v1 Generated Export Rule / Authority Set Gate",
+    "detail": "global-runtime/accelerate/SKILL.md is an outward deployment artifact and cannot be treated as canonical governing authority."
+  },
+  "expected_verdict": "REJECT",
+  "expected_rejection_marker": "[NEG-R01-02: REVERSE_EDGE_EXPORT_AS_CANONICAL_REJECTED]"
+}

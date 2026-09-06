@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "fixture_id": "CANONICAL-POSITIVE-S1A",
+  "contract_name": "accelerate-contract-v1-canonical-authority-positive",
+  "version": "1.0.0",
+  "description": "Fixture canônico positivo (happy-path) refletindo o estado e as regras da emenda planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md.",
+  "slice": "S1A",
+  "status": "draft-pre-s1a",
+  "target_repository": "/home/marcelo-karval/Backup/Projetos/accelerate",
+  "baseline": {
+    "factual": "7c2966c5b86ceba9e4217c17b8fbbd1a90248a2e",
+    "integrated_base": "710db6474292ff3deb74728c1d754aea6e7f806e"
+  },
+  "authority_set": {
+    "governing-authority": [
+      "AGENTS.md",
+      "SKILL.md",
+      "README.md",
+      "core/",
+      "adapters/",
+      "profiles/",
+      "skills/"
+    ],
+    "decision-artifact": [
+      "planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md",
+      "planning/executive/2026-09-06-accelerate-v020-s1a-pre-entry-task-graph.md",
+      "planning/architecture/2026-09-06-accelerate-v020-s1a-test-design.md"
+    ],
+    "backend-authority": [],
+    "supporting-reference": [
+      "references/",
+      "external:Fission-AI/OpenSpec@v1.12.0"
+    ],
+    "generated-export": [
+      "global-runtime/accelerate/"
+    ],
+    "forbidden-authority": []
+  },
+  "external_provenance": {
+    "source": "Fission-AI/OpenSpec",
+    "tag": "v1.12.0",
+    "commit": "e062b9572be933564ba3899d059377dfa1393e32",
+    "license": "MIT",
+    "authority_class": "supporting-reference",
+    "is_governing": false,
+    "is_runtime_integrated": false
+  },
+  "advance_gates": {
+    "wave_0_allowed": false,
+    "s1b_allowed": false,
+    "core_contracts_v1_mutation_allowed": false,
+    "operator_acceptance_required": true,
+    "operator_acceptance": {
+      "status": "pending",
+      "accepted_by": null,
+      "accepted_at": null
+    },
+    "reason": "Amendment is in draft-pre-s1a state; advance requires explicit operator acceptance."
+  },
+  "expected_verdict": "PASS",
+  "expected_marker": "[PASS: S1A_AUTHORITY_CANONICAL_VALID]"
+}

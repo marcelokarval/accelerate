@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "manifest_name": "contract-v1-authority-fixtures-manifest",
+  "version": "1.0.0",
+  "suite": "CODEX-34 / S1A Authority Gate",
+  "fixtures": [
+    {
+      "path": "authority-classes-precedence.json",
+      "kind": "specification",
+      "description": "Definição das 6 classes de autoridade, ordem de precedência e regras de arbitragem soberanas do repositório."
+    },
+    {
+      "path": "acv1-expected-mapping.json",
+      "kind": "specification",
+      "description": "Mapeamento completo dos 24 requisitos ACV1 (D001..D024), disposições estritas, vínculo com Wave e notas de gate separadas."
+    },
+    {
+      "path": "canonical-authority-positive.json",
+      "kind": "positive-test",
+      "case_id": "CANONICAL-POSITIVE-S1A",
+      "expected_verdict": "PASS",
+      "expected_marker": "[PASS: S1A_AUTHORITY_CANONICAL_VALID]"
+    },
+    {
+      "path": "neg-r01-01-external-authority-override.json",
+      "kind": "negative-test",
+      "case_id": "NEG-R01-01",
+      "expected_verdict": "REJECT",
+      "expected_marker": "[NEG-R01-01: EXTERNAL_AUTHORITY_OVERRIDE_REJECTED]"
+    },
+    {
+      "path": "neg-r01-02-generated-export-as-canonical.json",
+      "kind": "negative-test",
+      "case_id": "NEG-R01-02",
+      "expected_verdict": "REJECT",
+      "expected_marker": "[NEG-R01-02: REVERSE_EDGE_EXPORT_AS_CANONICAL_REJECTED]"
+    },
+    {
+      "path": "neg-acv1-03-invalid-disposition-or-missing-id.json",
+      "kind": "negative-test",
+      "case_id": "NEG-ACV1-03",
+      "expected_verdict": "REJECT",
+      "expected_marker": "[NEG-ACV1-03: ACV1_MAPPING_NON_COMPLIANT_REJECTED]"
+    },
+    {
+      "path": "neg-seq-04-draft-authorizing-advance.json",
+      "kind": "negative-test",
+      "case_id": "NEG-SEQ-04",
+      "expected_verdict": "REJECT",
+      "expected_marker": "[NEG-SEQ-04: DRAFT_AUTHORIZATION_OF_ADVANCE_REJECTED]"
+    },
+    {
+      "path": "neg-seq-05-s1b-started-before-amendment-accepted.json",
+      "kind": "negative-test",
+      "case_id": "NEG-SEQ-05",
+      "expected_verdict": "REJECT",
+      "expected_marker": "[NEG-SEQ-05: S1B_PREMATURE_START_REJECTED]"
+    }
+  ]
+}
