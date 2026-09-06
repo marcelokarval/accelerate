@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "kind": "accelerate-v020-s1a-pre-entry-admission-receipt",
+  "recorded_at": "2026-09-06T01:13:45-04:00",
+  "branch": "v0.2.0",
+  "reviewed_candidate_commit": "d7f18a015d2f3bfe1fce4b8f7787e7d774c735bf",
+  "reviewed_candidate_tree": "c2ac7de9708cc7e016f692459af6f4233e243b74",
+  "gates": {
+    "G01": "satisfied",
+    "G02": "satisfied-for-s1a-provenance-only",
+    "G03": "satisfied-for-pre-entry",
+    "G04": "satisfied",
+    "G05": "satisfied",
+    "G06": "explicit_user_opt_out",
+    "G07": "not_started",
+    "G08": "not_started"
+  },
+  "tasks_ready": true,
+  "execution_admitted": false,
+  "execution_blocker": "The explicit dispatch opt-out does not satisfy the accepted requirement for distinct P05 QA, P06 implementation, and P07 review identities. P05 must not start until a compatible author exists or a newly independent-reviewed Test Design reentry changes staffing.",
+  "plane": {
+    "workspace_slug": "karval",
+    "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+    "work_item": "CODEX-34",
+    "work_item_id": "79b4d3f4-a30f-4ebe-85cf-deb8c4dce128",
+    "state": "Todo",
+    "state_id": "caff4483-d337-47ae-ab44-2b5263ecc0e4",
+    "mutation_applied": true,
+    "readback_verified": true,
+    "web_url": "https://plane.arthuragrelli.com/karval/projects/d6b855ec-77cb-4df0-b471-4f6cea011e02/issues/79b4d3f4-a30f-4ebe-85cf-deb8c4dce128"
+  },
+  "preserved_state": {
+    "local_accelerate_owner": "CODEX-26",
+    "local_accelerate_mutated": false,
+    "codex_31_closed": false,
+    "core_contracts_v1_mutated": false,
+    "wave_0_started": false,
+    "s1b_started": false
+  },
+  "staffing": {
+    "P05": {"role": "independent-qa", "model": "gpt-5.6-terra", "reasoning_effort": "medium", "fork_turns": "none", "timeout_minutes": 30, "max_corrections": 2},
+    "P06": {"role": "distinct-implementer", "model": "gpt-5.6-terra", "reasoning_effort": "medium", "fork_turns": "none", "timeout_minutes": 45, "max_corrections": 2},
+    "P07": {"role": "independent-reviewer", "model": "gpt-5.6-terra", "reasoning_effort": "medium", "fork_turns": "none", "timeout_minutes": 30, "max_successor_reviews": 1}
+  },
+  "write_scope": [
+    "tests/fixtures/contract-v1-authority/",
+    "tests/accelerate-v020-s1a-authority.sh",
+    "planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md",
+    "planning/architecture/2026-09-06-accelerate-v020-s1a-test-design.md",
+    "planning/executive/2026-09-06-accelerate-v020-s1a-pre-entry-task-graph.md",
+    "planning/evidence/dated-proof-appendix/codex-34-s1a/"
+  ],
+  "forbidden_scope": [
+    "core/contracts/v1/",
+    "global-runtime/",
+    "adapters/",
+    ".accelerate/",
+    "user-home runtime mirrors"
+  ],
+  "rollback": "Revert only bounded S1A commits after confirming no overlap; otherwise stop and replan in an isolated worktree."
+}
