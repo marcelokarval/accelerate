@@ -13,6 +13,11 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import jsonschema
+
+SCHEMA_PATH = Path(__file__).resolve().parent.parent / "assets/capability-battery-manifest.schema.json"
+_SCHEMA_CACHE: dict[str, Any] | None = None
+
 STATUSES = {"pass", "semantic_fail", "transport_fail", "protocol_fail", "not_run", "inconclusive"}
 ID_RE = re.compile(r"^[A-Za-z0-9._-]{1,160}$")
 MODEL_ID_RE = re.compile(r"^[A-Za-z0-9._/:@-]{1,160}$")
@@ -65,84 +70,40 @@ def migrate_manifest_v1_to_v2(data: dict[str, Any]) -> dict[str, Any]:
     return migrated
 
 
+def get_schema() -> dict[str, Any]:
+    global _SCHEMA_CACHE
+    if _SCHEMA_CACHE is None:
+        _SCHEMA_CACHE = load_json(SCHEMA_PATH)
+    return _SCHEMA_CACHE
+
+
 def validate_manifest(data: dict[str, Any]) -> dict[str, int]:
     """Validate the manifest against structural, schema, and semantic invariants."""
     reject_secrets(data)
     if not isinstance(data, dict):
         raise ValueError("manifest must be a JSON object")
 
-    schema_version = data.get("schema_version")
-    if schema_version not in {"1.0", "2.0"}:
-        raise ValueError(f"unsupported schema_version: {schema_version!r}; expected '2.0' (or '1.0' legacy)")
+    # Authoritative structural validation via JSON Schema
+    schema = get_schema()
+    try:
+        jsonschema.validate(instance=data, schema=schema)
+    except jsonschema.ValidationError as exc:
+        field = ".".join(str(p) for p in exc.path) or "manifest"
+        msg = exc.message
+        if exc.validator == "pattern" and isinstance(exc.instance, str) and ("\n" in exc.instance or "\r" in exc.instance):
+            msg = f"{field} must be a non-empty, single-line string: {msg}"
+        elif exc.validator in ("maxLength", "maxProperties"):
+            msg = f"oversized {field}: {msg}"
+        raise ValueError(f"schema validation error at {field}: {msg}") from exc
 
-    required_keys = {"schema_version", "battery_id", "catalog_snapshot_id", "controls", "planned_slots", "evidence"}
-    optional_top_keys = {"provider", "route", "harness", "client_version", "gateway_version", "stop_rule", "cost_tracking", "final_classification"}
-    if not required_keys <= set(data) or (set(data) - required_keys - optional_top_keys):
-        raise ValueError("manifest fields must exactly match the redacted schema")
-
-    if not isinstance(data["battery_id"], str) or not ID_RE.fullmatch(data["battery_id"]):
-        raise ValueError(f"invalid battery_id: {data.get('battery_id')!r}")
-
-    safe_text(data["catalog_snapshot_id"], "catalog_snapshot_id")
-
-    # Optional top-level fields validation
-    for opt_field in optional_top_keys:
-        if opt_field in data:
-            safe_text(data[opt_field], opt_field)
-
-    # Controls must be a non-empty mapping of scalar safe values
-    controls = data.get("controls")
-    if not isinstance(controls, dict) or not controls:
-        raise ValueError("controls must be a non-empty object")
-    for key, value in controls.items():
-        if not ID_RE.fullmatch(key):
-            raise ValueError(f"invalid control key: {key!r}")
-        if isinstance(value, bool) or isinstance(value, int):
-            continue
-        if isinstance(value, str):
-            safe_text(value, f"control {key}")
-        else:
-            raise ValueError(f"invalid control value type for {key}: must be scalar bool, int, or safe string")
-
-    slots = data.get("planned_slots")
-    evidence = data.get("evidence")
-    if not isinstance(slots, list) or not slots or not isinstance(evidence, list) or not evidence:
-        raise ValueError("planned_slots and evidence must be non-empty lists")
+    slots = data["planned_slots"]
+    evidence = data["evidence"]
 
     slot_defs: dict[str, dict[str, Any]] = {}
     for slot in slots:
-        if not isinstance(slot, dict):
-            raise ValueError("planned slot must be an object")
-        slot_required = {"slot_id", "capability", "rubric_version", "input_sha256"}
-        slot_optional = {"requested_model", "reasoning_effort", "timeout_seconds", "max_retries"}
-        if not slot_required <= set(slot) or (set(slot) - slot_required - slot_optional):
-            raise ValueError("invalid planned slot fields")
-
         slot_id = slot["slot_id"]
-        if not isinstance(slot_id, str) or not ID_RE.fullmatch(slot_id):
-            raise ValueError(f"invalid slot identifier: {slot_id!r}")
         if slot_id in slot_defs:
             raise ValueError(f"duplicate planned slot: {slot_id}")
-
-        safe_text(slot["capability"], f"slot {slot_id} capability")
-        safe_text(slot["rubric_version"], f"slot {slot_id} rubric_version")
-
-        input_sha = slot["input_sha256"]
-        if not isinstance(input_sha, str) or not SHA_RE.fullmatch(input_sha):
-            raise ValueError(f"invalid input hash for slot {slot_id}")
-
-        if "requested_model" in slot:
-            if not isinstance(slot["requested_model"], str) or not MODEL_ID_RE.fullmatch(slot["requested_model"]):
-                raise ValueError(f"invalid slot requested_model for slot {slot_id}")
-        if "reasoning_effort" in slot:
-            safe_text(slot["reasoning_effort"], f"slot {slot_id} reasoning_effort")
-        if "timeout_seconds" in slot:
-            if not isinstance(slot["timeout_seconds"], int) or slot["timeout_seconds"] < 1:
-                raise ValueError(f"invalid slot timeout_seconds for slot {slot_id}")
-        if "max_retries" in slot:
-            if not isinstance(slot["max_retries"], int) or slot["max_retries"] < 0:
-                raise ValueError(f"invalid slot max_retries for slot {slot_id}")
-
         slot_defs[slot_id] = slot
 
     seen_attempts: set[tuple[str, int]] = set()
@@ -150,91 +111,56 @@ def validate_manifest(data: dict[str, Any]) -> dict[str, int]:
     attempts_by_slot: dict[str, list[int]] = {}
     requested_model_by_slot: dict[str, str] = {}
 
-    permitted_evidence_keys = {
-        "slot_id", "attempt", "status", "requested_model", "effective_model",
-        "http_status", "artifact_locator", "response_sha256", "semantic_verdict",
-        "reason", "attempt_timestamp"
-    }
-
     for index, row in enumerate(evidence):
-        if not isinstance(row, dict):
-            raise ValueError(f"evidence entry at index {index} must be an object")
-        required_evidence = {"slot_id", "attempt", "status", "requested_model"}
-        if not required_evidence <= set(row) or (set(row) - permitted_evidence_keys):
-            raise ValueError(f"invalid evidence fields at index {index}")
-
         slot_id = row["slot_id"]
         if slot_id not in slot_defs:
             raise ValueError(f"evidence references unplanned slot: {slot_id}")
 
         attempt = row["attempt"]
-        if not isinstance(attempt, int) or attempt < 1:
-            raise ValueError(f"invalid attempt number for {slot_id}: {attempt}")
-
         if (slot_id, attempt) in seen_attempts:
             raise ValueError(f"duplicate attempt {attempt} for slot {slot_id}")
         seen_attempts.add((slot_id, attempt))
         represented_slots.add(slot_id)
         attempts_by_slot.setdefault(slot_id, []).append(attempt)
 
+        if slot_id not in requested_model_by_slot:
+            planned = slot_defs[slot_id]
+            if "requested_model" in planned and planned["requested_model"] != row["requested_model"]:
+                raise ValueError(
+                    f"requested_model {row['requested_model']!r} does not match planned slot {planned['requested_model']!r} for {slot_id}"
+                )
+            requested_model_by_slot[slot_id] = row["requested_model"]
+        elif requested_model_by_slot[slot_id] != row["requested_model"]:
+            raise ValueError(
+                f"retry changing requested_model is forbidden for slot {slot_id}: "
+                f"{requested_model_by_slot[slot_id]!r} -> {row['requested_model']!r}"
+            )
+
         status = row["status"]
-        if status not in STATUSES:
-            raise ValueError(f"invalid status {status!r} for slot {slot_id}")
-
-        req_model = row["requested_model"]
-        if not isinstance(req_model, str) or not MODEL_ID_RE.fullmatch(req_model):
-            raise ValueError(f"invalid requested_model {req_model!r} for slot {slot_id}")
-
-        # Slot requested_model consistency across retries:
-        if slot_id in requested_model_by_slot:
-            if requested_model_by_slot[slot_id] != req_model:
-                raise ValueError(
-                    f"retry changing requested_model is forbidden for slot {slot_id}: "
-                    f"was {requested_model_by_slot[slot_id]!r}, now {req_model!r}"
-                )
-        else:
-            # Check consistency with slot definition if present
-            if "requested_model" in slot_defs[slot_id] and slot_defs[slot_id]["requested_model"] != req_model:
-                raise ValueError(
-                    f"evidence requested_model {req_model!r} does not match planned slot {slot_defs[slot_id]['requested_model']!r}"
-                )
-            requested_model_by_slot[slot_id] = req_model
-
-        # Safe text checks for optional string fields
-        for key in ("effective_model", "artifact_locator", "semantic_verdict", "reason", "attempt_timestamp"):
-            if key in row:
-                safe_text(row[key], f"evidence {slot_id} attempt {attempt} {key}")
-
-        if "response_sha256" in row and (not isinstance(row["response_sha256"], str) or not SHA_RE.fullmatch(row["response_sha256"])):
-            raise ValueError(f"invalid response_sha256 for slot {slot_id} attempt {attempt}")
-
         http_status = row.get("http_status")
-        if http_status is not None:
-            if not isinstance(http_status, int) or not 100 <= http_status <= 599:
-                raise ValueError(f"invalid http_status {http_status} for slot {slot_id} attempt {attempt}")
+        response_sha = row.get("response_sha256")
 
-        # Cross-invariant rules per status:
         if status == "pass":
-            if http_status is None or not (200 <= http_status <= 299):
-                raise ValueError(
-                    f"status 'pass' requires successful HTTP 2xx transport; received http_status={http_status} for {slot_id}"
-                )
-            if "response_sha256" not in row:
-                raise ValueError(f"status 'pass' requires response_sha256 for {slot_id}")
+            if http_status is None or not (200 <= http_status < 300):
+                raise ValueError(f"status 'pass' requires successful HTTP 2xx transport; received http_status={http_status} for {slot_id}")
+            if not response_sha:
+                raise ValueError(f"status 'pass' requires non-empty response_sha256 for {slot_id}")
 
         elif status == "semantic_fail":
-            if http_status is None or not (200 <= http_status <= 299):
-                raise ValueError(
-                    f"status 'semantic_fail' requires completed HTTP transport (2xx); received http_status={http_status} for {slot_id}"
-                )
-            if "response_sha256" not in row:
-                raise ValueError(f"status 'semantic_fail' requires response_sha256 for {slot_id}")
+            if http_status is None or not (200 <= http_status < 300):
+                raise ValueError(f"status 'semantic_fail' requires completed HTTP transport (2xx); received http_status={http_status} for {slot_id}")
+            if not response_sha:
+                raise ValueError(f"status 'semantic_fail' requires non-empty response_sha256 for {slot_id}")
+            if not effective_model:
+                raise ValueError(f"status 'semantic_fail' requires non-empty effective_model for {slot_id}")
+            if "reason" not in row or not row["reason"]:
+                raise ValueError(f"status 'semantic_fail' requires an explanatory reason for {slot_id}")
 
         elif status == "transport_fail":
-            if http_status is not None and (200 <= http_status <= 299):
-                raise ValueError(
-                    f"status 'transport_fail' cannot have successful HTTP 2xx status; received {http_status} for {slot_id}"
-                )
+            if http_status is not None and (200 <= http_status < 300):
+                raise ValueError(f"status 'transport_fail' cannot have 2xx HTTP status: {http_status} for {slot_id}")
+            if "reason" not in row or not row["reason"]:
+                raise ValueError(f"status 'transport_fail' requires an explanatory reason for {slot_id}")
 
         elif status == "protocol_fail":
             if "reason" not in row or not row["reason"]:
@@ -271,33 +197,33 @@ def main() -> int:
     parser.add_argument("--receipt-out", required=True, type=Path)
     parser.add_argument("--migrate-v1", action="store_true", help="safely migrate v1 manifest to v2.0")
     parser.add_argument("--migrated-out", type=Path, help="path to write migrated v2.0 manifest")
-    parser.add_argument("--in-place", action="store_true", help="authorize in-place atomic update of manifest file")
     args = parser.parse_args()
     try:
         manifest_data = load_json(args.manifest)
         if args.migrate_v1:
+            if not args.migrated_out:
+                raise ValueError("--migrate-v1 requires --migrated-out to be specified")
+            if args.migrated_out.is_symlink():
+                raise ValueError(f"--migrated-out cannot be a symlink: {args.migrated_out}")
+            if args.manifest.resolve() == args.migrated_out.resolve():
+                raise ValueError("--migrated-out cannot point to the same file as --manifest")
+
             migrated_data = migrate_manifest_v1_to_v2(manifest_data)
             # Validate in-memory representation FIRST before touching any file on disk!
             counts = validate_manifest(migrated_data)
             manifest_data = migrated_data
             serialized = json.dumps(manifest_data, indent=2, sort_keys=True) + "\n"
 
-            target_out = None
-            if args.migrated_out:
-                target_out = args.migrated_out
-            elif args.in_place or not args.migrated_out:
-                target_out = args.manifest
-
-            if target_out is not None:
-                target_out.parent.mkdir(parents=True, exist_ok=True)
-                with tempfile.NamedTemporaryFile("w", dir=target_out.parent, prefix=".migrated-", delete=False, encoding="utf-8") as tmp:
-                    tmp.write(serialized)
-                    tmp_path = Path(tmp.name)
-                try:
-                    os.replace(tmp_path, target_out)
-                finally:
-                    if tmp_path.exists():
-                        tmp_path.unlink()
+            target_out = args.migrated_out
+            target_out.parent.mkdir(parents=True, exist_ok=True)
+            with tempfile.NamedTemporaryFile("w", dir=target_out.parent, prefix=".migrated-", delete=False, encoding="utf-8") as tmp:
+                tmp.write(serialized)
+                tmp_path = Path(tmp.name)
+            try:
+                os.replace(tmp_path, target_out)
+            finally:
+                if tmp_path.exists():
+                    tmp_path.unlink()
             raw = serialized.encode("utf-8")
         else:
             counts = validate_manifest(manifest_data)

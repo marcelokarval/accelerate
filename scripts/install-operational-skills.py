@@ -196,6 +196,16 @@ def _write_manifest(path: Path, payload: dict[str, Any]) -> None:
     temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     os.chmod(temporary, 0o600)
     os.replace(temporary, path)
+    os.chmod(path, 0o600)
+
+
+def _enforce_backup_permissions(path: Path) -> None:
+    os.chmod(path, 0o700)
+    for entry in path.rglob("*"):
+        if entry.is_dir():
+            os.chmod(entry, 0o700)
+        elif entry.is_file():
+            os.chmod(entry, 0o600)
 
 
 def reconcile(
@@ -242,10 +252,12 @@ def reconcile(
     if backup_root.exists() and (backup_root.is_symlink() or not backup_root.is_dir()):
         raise ValueError("unsafe backup root")
     backup_root.mkdir(mode=0o700, parents=True, exist_ok=True)
+    os.chmod(backup_root, 0o700)
     run_root = backup_root / run_id
     if run_root.exists() or run_root.is_symlink():
         raise ValueError(f"rollback id already exists: {run_id}")
     run_root.mkdir(mode=0o700)
+    os.chmod(run_root, 0o700)
     manifest: dict[str, Any] = {
         "schema_version": 1,
         "runtime": runtime,
@@ -258,8 +270,12 @@ def reconcile(
         digest = expected[name]
         previous = destination.exists()
         prev_digest = None
+        prev_marker_sha = None
         if previous:
             prev_digest = tree_digest(destination)
+            marker_file = destination / MARKER
+            if marker_file.is_file():
+                prev_marker_sha = hashlib.sha256(marker_file.read_bytes()).hexdigest()
             backup_path = run_root / f"{name}.previous"
             shutil.copytree(
                 destination,
@@ -267,12 +283,18 @@ def reconcile(
                 ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"),
             )
             assert_regular_tree(backup_path)
+            _enforce_backup_permissions(backup_path)
             if tree_digest(backup_path) != prev_digest:
                 raise ValueError(f"backup copy integrity failed for {name}")
+            backup_marker = backup_path / MARKER
+            if prev_marker_sha is not None:
+                if not backup_marker.is_file() or hashlib.sha256(backup_marker.read_bytes()).hexdigest() != prev_marker_sha:
+                    raise ValueError(f"backup marker copy integrity failed for {name}")
         entry = {
             "name": name,
             "previous": previous,
             "previous_digest": prev_digest,
+            "previous_marker_sha256": prev_marker_sha,
             "installed_digest": digest,
         }
         manifest["entries"].append(entry)
@@ -365,22 +387,63 @@ def rollback(
                         f"refusing rollback: backup for {name} has tampered digest "
                         f"(expected {expected_prev_digest}, got {actual_prev_digest})"
                     )
-            if not (backup / MARKER).is_file():
+            backup_marker = backup / MARKER
+            if not backup_marker.is_file():
                 raise ValueError(f"backup for {name} is missing managed marker")
+            expected_marker_sha = entry.get("previous_marker_sha256")
+            if expected_marker_sha is not None:
+                actual_marker_sha = hashlib.sha256(backup_marker.read_bytes()).hexdigest()
+                if actual_marker_sha != expected_marker_sha:
+                    raise ValueError(
+                        f"refusing rollback: backup marker for {name} has tampered digest "
+                        f"(expected {expected_marker_sha}, got {actual_marker_sha})"
+                    )
 
-    # Execution phase: perform rollback atomically per skill
-    for entry in reversed(entries):
-        name = entry["name"]
-        destination = target_root / name
-        if entry.get("previous"):
-            backup = run_root / f"{name}.previous"
-            staged = _stage(backup, target_root, name, runtime, tree_digest(backup))
-            shutil.copy2(backup / MARKER, staged / MARKER)
-            _replace(destination, staged)
-        else:
-            shutil.rmtree(destination)
-    manifest["status"] = "rolled-back"
-    _write_manifest(manifest_path, manifest)
+    # Execution phase: perform rollback with batch compensation
+    compensated_rollbacks: list[tuple[str, Path | None]] = []
+    temp_preservation_dir = Path(tempfile.mkdtemp(prefix=".rollback-preservation-", dir=target_root))
+    os.chmod(temp_preservation_dir, 0o700)
+    try:
+        for entry in reversed(entries):
+            name = entry["name"]
+            destination = target_root / name
+            saved_original: Path | None = None
+            if destination.exists():
+                saved_original = temp_preservation_dir / f"{name}.installed"
+                shutil.copytree(
+                    destination,
+                    saved_original,
+                    ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"),
+                )
+
+            if entry.get("previous"):
+                backup = run_root / f"{name}.previous"
+                staged = _stage(backup, target_root, name, runtime, tree_digest(backup))
+                shutil.copy2(backup / MARKER, staged / MARKER)
+                _replace(destination, staged)
+            else:
+                shutil.rmtree(destination)
+
+            compensated_rollbacks.append((name, saved_original))
+
+        manifest["status"] = "rolled-back"
+        _write_manifest(manifest_path, manifest)
+    except Exception:
+        for name, saved_original in reversed(compensated_rollbacks):
+            dest = target_root / name
+            if dest.exists():
+                shutil.rmtree(dest)
+            if saved_original is not None and saved_original.exists():
+                shutil.copytree(
+                    saved_original,
+                    dest,
+                    ignore=shutil.ignore_patterns("__pycache__", "*.pyc", "*.pyo"),
+                )
+        manifest["status"] = "failed-rolled-back"
+        _write_manifest(manifest_path, manifest)
+        raise
+    finally:
+        shutil.rmtree(temp_preservation_dir, ignore_errors=True)
 
 
 class OperationalSkillsArgumentParser(argparse.ArgumentParser):
