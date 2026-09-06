@@ -1,0 +1,107 @@
+{
+  "schema_version": "phase0-successor-review-v1",
+  "review_id": "proposal_v05_final_migration_security_validation",
+  "review_set_manifest_digest": "sha256:231d87b4eed01a02e2e4851b128248f40db718ff29a4f33962be4e23bf2ed4ff",
+  "verifier_version": "codex-collaboration-phase0-review-verifier-v1",
+  "document_digest": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a",
+  "reviewer_actor_id": "phase0-migration-security-reviewer",
+  "reviewer_actor_epoch": "phase0-acceptance-2026-09-01-migration-security-epoch-1",
+  "runtime_instance_id": "/root/phase0_acceptance_migration_security_receipt",
+  "context_root": "sha256:542b29285993c764441956185138ab92c55cda9fcaa4432fdaf065da2b56be05",
+  "fresh_context_receipt": {
+    "fork_turns": "none",
+    "prior_turns_inherited": 0,
+    "verified": true,
+    "context_root": "sha256:542b29285993c764441956185138ab92c55cda9fcaa4432fdaf065da2b56be05"
+  },
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "medium",
+  "read_only": true,
+  "base_rubric_digest": "sha256:25e77374f3d93ea065cd0921078b90e1239fa82bed81863870ecaedc7a79d94b",
+  "lens_overlay": {
+    "id": "phase0-lens-migration-security-v1",
+    "digest": "sha256:9f038e9b91856126a8d59a50c2561020313806ffc95532dad1947c29f47d15a8"
+  },
+  "verdict": "PASS",
+  "axis_results": [
+    {
+      "axis": "authority-and-scope",
+      "verdict": "PASS",
+      "claim_locator": "#architectural-principles > One authority per concern; #canonical-binding-and-openspec-reconciliation > Authority rules",
+      "contradiction_or_gap": null,
+      "evidence_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:136-190,1388-1444",
+      "required_correction": null
+    },
+    {
+      "axis": "state-and-transition-safety",
+      "verdict": "PASS",
+      "claim_locator": "#governed-apply-protocol > Apply state machine; #domain-gauntlet-state-and-loops",
+      "contradiction_or_gap": null,
+      "evidence_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:224-252,707-730,974-989",
+      "required_correction": null
+    },
+    {
+      "axis": "evidence-and-freshness",
+      "verdict": "PASS",
+      "claim_locator": "#evidence-packet; #proof-architecture; #phase-0-immutable-common-review-rubric",
+      "contradiction_or_gap": null,
+      "evidence_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:316-324,844-853,1421-1444,1762-1841",
+      "required_correction": null
+    },
+    {
+      "axis": "lineage-and-fencing",
+      "verdict": "PASS",
+      "claim_locator": "#field-authority-projection-and-conflict-resolution; #candidate-and-root-run-lineage; #mission-scheduler-and-fencing",
+      "contradiction_or_gap": null,
+      "evidence_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:151-190,730-766,923-1027",
+      "required_correction": null
+    },
+    {
+      "axis": "manifest-and-snapshot-integrity",
+      "verdict": "PASS",
+      "claim_locator": "#content-addressed-execution-input-and-review-candidate-manifests; #phase-0-immutable-common-review-rubric",
+      "contradiction_or_gap": null,
+      "evidence_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:766-853,1762-1841",
+      "required_correction": null
+    },
+    {
+      "axis": "migration-denominator-and-rollback",
+      "verdict": "PASS",
+      "claim_locator": "#source-to-target-migration-and-parity; #frozen-migration-denominator-inventory; A11",
+      "contradiction_or_gap": null,
+      "evidence_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:402-485,2002-2013",
+      "required_correction": null
+    },
+    {
+      "axis": "security-and-lan-boundary",
+      "verdict": "PASS",
+      "claim_locator": "#webui-decision-authorized-lan-exposure; #mandatory-controls-for-0000; #recommended-integration-shape",
+      "contradiction_or_gap": null,
+      "evidence_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:1465-1578,1912-1923",
+      "required_correction": null
+    },
+    {
+      "axis": "testability-and-negative-fixtures",
+      "verdict": "PASS",
+      "claim_locator": "#machine-readable-contracts-to-implement-later; A01-A11 acceptance criteria",
+      "contradiction_or_gap": null,
+      "evidence_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:1712-1757,1990-2002",
+      "required_correction": null
+    },
+    {
+      "axis": "internal-consistency",
+      "verdict": "PASS",
+      "claim_locator": "#phase-0-immutable-common-review-rubric; #acceptance-criteria-for-the-architecture; #open-decisions-for-the-next-analysis",
+      "contradiction_or_gap": null,
+      "evidence_locator": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md:1762-1844,1936-2045",
+      "required_correction": null
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "issued_at": "2026-09-01T03:46:18-04:00",
+  "verifier_signature": {
+    "scheme": "sha256-domain-separated-canonical-json-v1",
+    "value": "sha256:a640ccedd359d61a257a4ee712cd9215b2bc51bb2b5c7859d429fa81d02d93c6"
+  }
+}

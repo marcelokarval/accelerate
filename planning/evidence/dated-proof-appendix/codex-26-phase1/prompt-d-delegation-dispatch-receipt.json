@@ -1,0 +1,118 @@
+{
+  "contract_version": "1.0",
+  "state": "DISPATCHED",
+  "artifacts": {
+    "hardening": {
+      "ref": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-root-proof-boundary-prompt-d.md",
+      "sha256": "ffbfcc112a58f92bf4ac867906c54eb9de164ef5fa2323e0cff0a7657f8b3eb1"
+    },
+    "spec": {
+      "ref": "planning/architecture/2026-09-03-codex-26-root-proof-boundary-sdd.md",
+      "sha256": "3d40d22d856210fc118818d6109010c8eeb7155126272d4046c1ceba00631995"
+    },
+    "task_graph": {
+      "ref": "planning/executive/2026-09-03-codex-26-prompt-d-task-graph.md",
+      "sha256": "c7e8b3bf1eec59ecdd83e7736130092f8914bb5be70cdd77ec750dac05aa085f"
+    }
+  },
+  "route": "orchestrated",
+  "execution_requested": true,
+  "planned_task_owned_writes": true,
+  "capability_proof": {
+    "collaboration_available": true,
+    "spawn_api": "collaboration.spawn_agent",
+    "checked_at": "2026-09-03T17:36:03-04:00"
+  },
+  "budget": {
+    "max_agents": 3,
+    "active_count": 3
+  },
+  "assignments": [
+    {
+      "assignment_id": "promptd-boundary-review",
+      "kind": "reviewer",
+      "task_id": "TASK-016",
+      "dependencies": ["TASK-015"],
+      "wave": 1,
+      "role": "boundary-architect-reviewer",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/promptd_boundary_review",
+      "call_id": "collaboration.spawn_agent:/root/promptd_boundary_review",
+      "read_scopes": ["repository authority, mirror tests, checker, Prompt-D artifacts"],
+      "write_scopes": [],
+      "proof": "APPROVE_SOURCE_ONLY_BOUNDARY_FIX after bounded SDD correction",
+      "reviewer_assignment_id": null,
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    },
+    {
+      "assignment_id": "promptd-harness-executor",
+      "kind": "executor",
+      "task_id": "TASK-018-TASK-020",
+      "dependencies": ["TASK-016", "TASK-017"],
+      "wave": 2,
+      "role": "proof-harness-implementer",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/promptd_harness_implementer",
+      "call_id": "collaboration.spawn_agent:/root/promptd_harness_implementer",
+      "read_scopes": ["Prompt-D artifacts", "repository mirror/export/check contracts", "C14 freeze read-only"],
+      "write_scopes": [
+        "scripts/check-global-skill-mirror.sh",
+        "tests/helpers/stage-runtime-mirror-fixture.sh",
+        "tests/global-skill-mirror-stage.sh",
+        "tests/runtime-sync-codex-collaboration.sh",
+        "tests/runtime-sync-direct-fast-path.sh"
+      ],
+      "proof": "honest empty-HOME RED then focused Green matrix; no full suite",
+      "reviewer_assignment_id": "promptd-independent-test-review",
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    },
+    {
+      "assignment_id": "promptd-independent-test-review",
+      "kind": "reviewer",
+      "task_id": "TASK-024",
+      "dependencies": ["TASK-021", "TASK-022", "TASK-023"],
+      "wave": 3,
+      "role": "independent-test-reviewer",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/promptd_independent_tester",
+      "call_id": "collaboration.spawn_agent:/root/promptd_independent_tester",
+      "read_scopes": ["frozen objective, SDD-lite, diff/hash freeze, C14 freeze, proof outputs, authority and non-goals"],
+      "write_scopes": [],
+      "proof": "fresh independent adversarial review after frozen proof packet",
+      "reviewer_assignment_id": null,
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    }
+  ],
+  "fan_in": {
+    "owner": "root",
+    "assignment_ids": [
+      "promptd-boundary-review",
+      "promptd-harness-executor",
+      "promptd-independent-test-review"
+    ]
+  },
+  "exceptions": [],
+  "root_write_lock": {
+    "mode": "orchestrated-dispatched-scope-lock",
+    "task_owned_writes_forbidden": true,
+    "dispatched_task_scopes": [
+      "scripts/check-global-skill-mirror.sh",
+      "tests/helpers/stage-runtime-mirror-fixture.sh",
+      "tests/global-skill-mirror-stage.sh",
+      "tests/runtime-sync-codex-collaboration.sh",
+      "tests/runtime-sync-direct-fast-path.sh"
+    ]
+  }
+}

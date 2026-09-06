@@ -1,0 +1,79 @@
+{
+  "schema_version": "codex26-phase1-exit-revalidation-authorization-v1",
+  "issue_id": "CODEX-26",
+  "candidate_family": "CODEX-26-P1",
+  "authorization_basis": "explicit-user-message-authorization-v1",
+  "operator_message": "esta autorizado explicitamente o Prompt B",
+  "prompt_b_scope": "Execute the numbered Phase-1 exit revalidation sequence through TASK-011 and stop at CLOSURE_READY or the first evidenced NO-GO.",
+  "issued_at": "2026-09-02T23:51:52-04:00",
+  "expires_at": "2026-09-03T23:51:52-04:00",
+  "status": "ACTIVE",
+  "governing_proposal": {
+    "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "sha256": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca"
+  },
+  "predecessor_authorization": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/c13-operator-reentry-authorization.json",
+    "sha256": "3d822296e303db1f871213f4bc3e227827ee38d9c0affdd2dc6adb466315d965",
+    "disposition": "SUPERSEDED_FOR_EXIT_REVALIDATION"
+  },
+  "predecessor_candidate": {
+    "candidate_id": "CODEX-26-P1-IMPLEMENT-C13",
+    "delta_manifest_path": "planning/evidence/dated-proof-appendix/codex-26-phase1/c13-successor-frozen-candidate-manifest.sha256",
+    "delta_manifest_sha256": "221d48446a490930a1c1c54eaa58fbca74e5178bb5dbd2964f48b2d8b9997308",
+    "disposition": "SEMANTIC_CORRECTION_VALIDATED_BUT_FULL_PHASE1_DENOMINATOR_NOT_YET_FROZEN"
+  },
+  "plane_authority": {
+    "workspace_slug": "karval",
+    "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+    "work_item_id": "549d5c6e-9066-440c-85a6-973a33b7eefe",
+    "work_item_identifier": "CODEX-26",
+    "current_state_id": "e1e78b18-5b23-4b77-9a69-3e09f0b4cc33",
+    "current_state_name": "In Progress"
+  },
+  "authorized_tasks": [
+    "TASK-001",
+    "TASK-002",
+    "TASK-003",
+    "TASK-004",
+    "TASK-005",
+    "TASK-006",
+    "TASK-007",
+    "TASK-008",
+    "TASK-009",
+    "TASK-010",
+    "TASK-011"
+  ],
+  "allowed_effects": [
+    "root_owned_authorization_task_graph_and_candidate_freeze_artifacts",
+    "read_only_repository_and_provider_diagnostics",
+    "isolated_disposable_test_and_review_execution",
+    "one_governed_plane_progress_attempt_only_after_safe_handshake_diagnosis",
+    "fresh_plane_readback_after_any_attempt"
+  ],
+  "forbidden_effects": [
+    "task_owned_product_or_workflow_code_mutation",
+    "frozen_proposal_or_historical_receipt_rewrite",
+    "global_or_user_home_install_or_sync",
+    "runtime_or_catalog_projection_activation",
+    "namespace_migration_or_reader_retirement",
+    "webui_or_lan_exposure",
+    "deployment_or_release",
+    "phase2_implementation",
+    "broad_unrelated_worktree_cleanup",
+    "direct_plane_http_or_ungoverned_fallback",
+    "plane_done_transition_before_separate_post_task011_operator_go"
+  ],
+  "stop_rules": [
+    "authority_failure_or_expiry",
+    "candidate_hash_drift",
+    "root_suite_failure",
+    "real_openspec_failure_or_cross_run_divergence",
+    "independent_tester_or_reviewer_rejection",
+    "ambiguous_plane_mutation_result",
+    "new_material_p0",
+    "required_task_owned_code_change",
+    "scope_expansion"
+  ],
+  "authority_effect": "Authorizes proof, freeze, review, root review-of-review, and at most one governed Plane PROGRESS attempt through TASK-011. It does not authorize Done, Phase 2 implementation, deployment, global sync, or correction of a failed candidate."
+}

@@ -1,0 +1,20 @@
+schema_version: 1
+provenance:
+  - subject: prop4you.accelerate
+    source_class: repository-owned
+    canonical_location: .
+    projection_rule: outbound-only
+  - subject: installed-discovery-catalog
+    source_class: installed-projection
+    location: ~/.agents
+    authority: discovery-only
+    prohibited_inference: [source-authority, loader-success, callability, authorization]
+  - subject: external.huggingface.huggingface-accelerate
+    source_class: external-package
+    authority: upstream-package-and-its-lockfile-entry
+    relation_to_catalog: collision-guarded-external
+  - subject: paperclip
+    source_class: external-service
+    authority: paperclip-api
+    relation_to_catalog: api-projection-only
+    prohibited_fallbacks: [direct-database-write, copied-credential-http]

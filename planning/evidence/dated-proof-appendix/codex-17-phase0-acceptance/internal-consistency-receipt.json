@@ -1,0 +1,94 @@
+{
+  "schema_version": "phase0-internal-consistency-receipt-v1",
+  "receipt_id": "CODEX-17-phase0-internal-consistency-2026-09-01",
+  "issued_at": "2026-09-01T04:38:37-03:00",
+  "verifier_actor_id": "codex-root-review-of-review",
+  "verifier_version": "codex-phase0-internal-consistency-v1",
+  "candidate": {
+    "artifact_path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "document_digest": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a"
+  },
+  "review_set_manifest": {
+    "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/review-set-manifest.json",
+    "digest": "sha256:231d87b4eed01a02e2e4851b128248f40db718ff29a4f33962be4e23bf2ed4ff",
+    "verifier_version": "codex-collaboration-phase0-review-verifier-v1"
+  },
+  "review_receipts": [
+    {
+      "lens_id": "phase0-lens-control-plane-v1",
+      "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/control-plane-review-receipt.json",
+      "digest": "sha256:82851c278d770bd45abd254b84bb896a4082ae9e987a1f369d98c0b8c5c379e3",
+      "verdict": "PASS"
+    },
+    {
+      "lens_id": "phase0-lens-runtime-concurrency-v1",
+      "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/runtime-concurrency-review-receipt.json",
+      "digest": "sha256:cc76e24c9c120cfc8ba0230631b5d0a626f4d06151aac4c052c1e834c25f4ac3",
+      "verdict": "PASS"
+    },
+    {
+      "lens_id": "phase0-lens-migration-security-v1",
+      "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/migration-security-review-receipt.json",
+      "digest": "sha256:296e2493054a022e0d9264d56fc7781139757b470d3ebf5249830d11c6b61c48",
+      "verdict": "PASS"
+    }
+  ],
+  "checks": [
+    {
+      "id": "candidate-digest",
+      "method": "SHA-256 over exact proposal bytes",
+      "expected": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a",
+      "observed": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a",
+      "status": "PASS"
+    },
+    {
+      "id": "rubric-and-overlay-digests",
+      "method": "UTF-8 LF normalized marked-block SHA-256 with terminal LF",
+      "expected": "common plus three ordered overlays from review-set-manifest",
+      "observed": "all four digests matched",
+      "status": "PASS"
+    },
+    {
+      "id": "review-receipt-signatures",
+      "method": "SHA-256 over domain prefix phase0-successor-review-v1 plus canonical JSON excluding verifier_signature",
+      "expected": "three schema-valid signed PASS receipts",
+      "observed": "three signatures and receipt digests matched",
+      "status": "PASS"
+    },
+    {
+      "id": "review-independence",
+      "method": "pairwise cardinality check over actor_id, actor_epoch, runtime_instance_id, context_root and lens_id",
+      "expected": "cardinality 3 for every field",
+      "observed": "cardinality 3 for every field; fork_turns none and prior_turns_inherited 0",
+      "status": "PASS"
+    },
+    {
+      "id": "acceptance-matrix",
+      "method": "exact A01 through A11 row count plus fixture identity scan",
+      "expected": "A01-A11 once each; failed-child and blocked-child twice each; combined alias absent",
+      "observed": "matched",
+      "status": "PASS"
+    },
+    {
+      "id": "source-and-path-consistency",
+      "method": "heading, source-locator, retired-path and current-authority scan",
+      "expected": "one current proposal authority and no active historical duplicate",
+      "observed": "matched",
+      "status": "PASS"
+    },
+    {
+      "id": "whitespace-and-patch-integrity",
+      "method": "git diff --check plus byte-level reverse transform",
+      "expected": "clean diff and exact reconstruction of prior candidate digest",
+      "observed": "PASS; prior digest sha256:af02a188cefaf4e296c79e9738ac4b91b125ca20200ec0ef58c56848db543b2a reconstructed",
+      "status": "PASS"
+    }
+  ],
+  "verdict": "PASS",
+  "findings": [],
+  "conflicts": [],
+  "verifier_signature": {
+    "scheme": "sha256-domain-separated-canonical-json-v1",
+    "value": "sha256:49ab84e78f5bb3ccb155ea8f21d095d81647479c367739d4914e9b76e62c1f30"
+  }
+}

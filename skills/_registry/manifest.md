@@ -113,6 +113,7 @@ The historical migration manifest remains available at:
 | `apply-design-system-contract` | `design-system` | `../design-system/apply-design-system-contract/` | `native` | optional | `local-authoritative` |
 | `premium-design-benchmark-corpus` | `design-system` | `../design-system/premium-design-benchmark-corpus/` | `native` | optional | `local-authoritative` |
 | `design-md-corpus-patterns` | `design-system` | `../design-system/design-md-corpus-patterns/` | `native` | optional | `local-authoritative` |
+| `omnirouter-operations` | `operations` | `../operations/omnirouter-operations/` | `native` | optional | `local-authoritative` |
 
 ## Migration Backlog
 

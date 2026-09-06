@@ -1,0 +1,16 @@
+{
+  "schema_id": "phase0-review-round-failure-summary-v1",
+  "round": 2,
+  "candidate_version": "v0.7.24",
+  "candidate_digest": "64d2485b92e595544dd19123ee0e46f72d49b47e3a0cad25932e7a611f7484a1",
+  "manifest_digest": "29b3ec1be2e6a93bb1846cc98ea76487d80d3efd22829db5bc47dd61274c9def",
+  "verdict": "FAIL",
+  "mandatory_finding": "The normalization contract did not specify whether the terminal LF after an end marker was included, producing two valid but different block digests.",
+  "computed_examples": {
+    "common_without_terminal_lf": "616b73aeeb152fb69bf6be3f599a73110386adb364fb5b1c4e7098305e54f576",
+    "common_with_terminal_lf": "25e77374f3d93ea065cd0921078b90e1239fa82bed81863870ecaedc7a79d94b",
+    "runtime_without_terminal_lf": "53702a4de07a8ceef483f5ef0195655b9510a2af072d2945347431de78b70d5c",
+    "runtime_with_terminal_lf": "7abc8262099a1ff310ab5667877044d2f54949b308dd9eb1f908d92362d49e01"
+  },
+  "disposition": "No acceptance was issued. Candidate v0.7.25 makes no-terminal-LF canonical and requires complete redispatch."
+}

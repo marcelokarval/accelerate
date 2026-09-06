@@ -1,0 +1,36 @@
+{
+  "schema_id": "phase0-predecessor-successor-handoff-v1",
+  "predecessor": {
+    "work_item": "CODEX-24",
+    "candidate_version": "v0.7.23",
+    "candidate_path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "candidate_digest": "45cca9d97786548be2495190bed5f53997a2aeb00e488c0ce77db43380e6176e",
+    "locator": "planning/evidence/dated-proof-appendix/codex-25-phase0-acceptance/phase0-review-set-manifest.json",
+    "disposition": "historical-predecessor-rejected-by-successor-review"
+  },
+  "successor": {
+    "work_item": "CODEX-25",
+    "candidate_version": "v0.7.24",
+    "candidate_path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "candidate_digest": "64d2485b92e595544dd19123ee0e46f72d49b47e3a0cad25932e7a611f7484a1",
+    "scope": "Phase-0 architecture acceptance only"
+  },
+  "scope_lineage_rationale": "CODEX-25 owns the fresh Phase-0 acceptance attempt after CODEX-24 candidate lineage produced mandatory successor-review findings; no implementation or runtime authority transfers.",
+  "issuer": {
+    "actor_id": "codex-root-control-plane",
+    "actor_epoch": "CODEX-25-round-2",
+    "trust_root": "codex-root-session"
+  },
+  "verifier": {
+    "actor_id": "agy:gemini-3.7-flash-low",
+    "actor_epoch": "CODEX-25-round-2-fresh-print-turn",
+    "trust_root": "agy-cli-local",
+    "status": "pending-structural-verification"
+  },
+  "issued_at": "2026-09-01T21:50:06-04:00",
+  "non_authorities": [
+    "No architecture acceptance",
+    "No Phase 1-7 implementation authorization",
+    "No runtime, install, promotion, deployment, migration or WebUI effect"
+  ]
+}

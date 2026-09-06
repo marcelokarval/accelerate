@@ -1,0 +1,67 @@
+{
+  "schema_id": "codex26_prompt_e_proof_authorization_v1",
+  "work_item": {
+    "identifier": "CODEX-26",
+    "id": "549d5c6e-9066-440c-85a6-973a33b7eefe",
+    "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+    "workspace_slug": "karval",
+    "provider_state": "In Progress",
+    "completed_at": null
+  },
+  "operator_authorization": {
+    "text": "Prossiga para o Prompt E",
+    "scope": "proof-only TASK-E01 through TASK-E09"
+  },
+  "prompt": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-proof-continuation-prompt-e.md",
+    "sha256": "b121325d2b3bed71c825201e0ac0e9aea700731a7acfa3180a8ecd99fcb0600c"
+  },
+  "c14": {
+    "freeze_sha256": "7215486904c9fee3172ad1f53c3c3a63d4aa9ba62cea424d5bf8da60fcf72bc2",
+    "aggregate_sha256": "cbf26086ca9af5e7d927d7ee324818af35d74d972dfcdbfcce0cd562bc3780d4",
+    "file_count": 23,
+    "mutation_authorized": false
+  },
+  "proof_harness_r1": {
+    "freeze_sha256": "23ec174a784f5a0570419086cbccda39f9b08f8dd780889b0e30e449c0a73ecb",
+    "aggregate_sha256": "aa9551f4b2f33fe382b043059034fe1b107e50ee8b99c5975869bdc67e5eaeed",
+    "file_count": 5,
+    "mutation_authorized": false
+  },
+  "allowed_tasks": [
+    "TASK-E01",
+    "TASK-E02",
+    "TASK-E03",
+    "TASK-E04",
+    "TASK-E05",
+    "TASK-E06",
+    "TASK-E07",
+    "TASK-E08",
+    "TASK-E09"
+  ],
+  "allowed_effects": [
+    "one normal-environment global test invocation",
+    "one real-OpenSpec confirmation after global PASS",
+    "proof evidence artifacts",
+    "independent read-only review",
+    "root review-of-review",
+    "at most one governed Plane PROGRESS comment after all proof/review PASS"
+  ],
+  "forbidden_effects": [
+    "source correction",
+    "C14 mutation",
+    "R1 mutation",
+    "user-home mutation",
+    "global sync",
+    "runtime promotion",
+    "deployment",
+    "Phase 2 entry",
+    "proposal rewrite",
+    "Plane state transition",
+    "Plane Done"
+  ],
+  "issued_at": "2026-09-03T18:49:59-04:00",
+  "expires_at": "2026-09-04T18:49:59-04:00",
+  "revocation_status": "NOT_REVOKED_AT_ISSUE",
+  "decision": "AUTHORIZED_PROMPT_E_THROUGH_TASK_E09"
+}

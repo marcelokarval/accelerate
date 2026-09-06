@@ -1,0 +1,69 @@
+{
+  "schema_id": "codex26_prompt_d_correction_authorization_v1",
+  "work_item": {
+    "identifier": "CODEX-26",
+    "id": "549d5c6e-9066-440c-85a6-973a33b7eefe",
+    "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+    "workspace_slug": "karval",
+    "provider_state": "In Progress",
+    "completed_at": null
+  },
+  "operator_authorization": {
+    "text": "Autorizo explicitametne o Promp D, TASK-014 até TAKS-027.",
+    "interpreted_typo_normalization": "Authorize Prompt D, TASK-014 through TASK-027.",
+    "scope": "repository-local root-proof-boundary correction, proof, independent review, root review-of-review, and at most one governed Plane PROGRESS comment"
+  },
+  "prompt": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-root-proof-boundary-prompt-d.md",
+    "sha256": "ffbfcc112a58f92bf4ac867906c54eb9de164ef5fa2323e0cff0a7657f8b3eb1"
+  },
+  "phase0_reaffirmation": {
+    "path": "planning/evidence/dated-proof-appendix/codex-25-phase0-acceptance/phase0-operator-reaffirmation-promptc.json",
+    "sha256": "8a91edce5e471b213cfad2d1c68a4418874b35eb63aa4763c861f16ae67c730c",
+    "status": "CURRENT_REAFFIRMED_AT_ISSUE"
+  },
+  "phase1_candidate": {
+    "id": "CODEX-26-P1-IMPLEMENT-C14",
+    "freeze_path": "planning/evidence/dated-proof-appendix/codex-26-phase1/implementation-candidate-c14-full-freeze.json",
+    "freeze_sha256": "7215486904c9fee3172ad1f53c3c3a63d4aa9ba62cea424d5bf8da60fcf72bc2",
+    "aggregate_sha256": "cbf26086ca9af5e7d927d7ee324818af35d74d972dfcdbfcce0cd562bc3780d4",
+    "file_count": 23,
+    "mutation_authorized": false
+  },
+  "predecessor_failure": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/c14-promptc-task004-no-go.md",
+    "sha256": "abea7063309b7ba078ee0f79686eeb60c14654c6a476022230d6990ebc16d6f8",
+    "disposition": "CURRENT_BOUNDARY_DEFECT_INPUT"
+  },
+  "allowed_tasks": [
+    "TASK-014",
+    "TASK-015",
+    "TASK-016",
+    "TASK-017",
+    "TASK-018",
+    "TASK-019",
+    "TASK-020",
+    "TASK-021",
+    "TASK-022",
+    "TASK-023",
+    "TASK-024",
+    "TASK-025",
+    "TASK-026",
+    "TASK-027"
+  ],
+  "forbidden_effects": [
+    "Plane Done transition",
+    "global skill sync",
+    "user-home mutation",
+    "C14 mutation",
+    "runtime promotion",
+    "deployment",
+    "Phase 2 entry",
+    "accepted proposal in-place rewrite",
+    "known Prompt-C temp residual deletion"
+  ],
+  "issued_at": "2026-09-03T17:26:23-04:00",
+  "expires_at": "2026-09-04T17:26:23-04:00",
+  "revocation_status": "NOT_REVOKED_AT_ISSUE",
+  "decision": "AUTHORIZED_PROMPT_D_THROUGH_TASK027"
+}

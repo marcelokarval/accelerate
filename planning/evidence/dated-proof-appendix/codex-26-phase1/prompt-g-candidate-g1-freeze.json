@@ -1,0 +1,90 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "PROMPT_G_BLOCKED_CANDIDATE_FREEZE",
+  "frozen_at": "2026-09-03T23:44:46-04:00",
+  "governing_issue": "CODEX-26",
+  "generation": 1,
+  "candidate_status": "BLOCKED",
+  "implementer": {
+    "agent": "pgimpl-haka",
+    "model": "gemini-3.8-flash-high",
+    "reasoning_effort": "high",
+    "fork_turns": "none"
+  },
+  "candidate_files": [
+    {
+      "path": ".accelerate/state.yaml",
+      "sha256": "2fbf9e65d132d77d89ab89130249d482c7fc7d584fcce5f2d070aa9948f6d448"
+    },
+    {
+      "path": ".accelerate/status/readiness-dashboard.yaml",
+      "sha256": "2efc125ee1003673d951da5aa4e6428269c0c7f1a198dfe30714fc6f3e6b7fce"
+    },
+    {
+      "path": ".accelerate/workflow/active-work-item.yaml",
+      "sha256": "19b05632c0f564a842698f36f1d17f0aec7ac6f4478130c40d562509676ba105"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-g-agy-closure-candidate.md",
+      "sha256": "4d756816753d075a4700b8b1bf50848cf613151ac879873f2f605e150236d9d5"
+    }
+  ],
+  "preserved_authority": [
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/implementation-candidate-c14-full-freeze.json",
+      "sha256": "7215486904c9fee3172ad1f53c3c3a63d4aa9ba62cea424d5bf8da60fcf72bc2",
+      "aggregate": "cbf26086ca9af5e7d927d7ee324818af35d74d972dfcdbfcce0cd562bc3780d4"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/root-proof-harness-r1-freeze.json",
+      "sha256": "23ec174a784f5a0570419086cbccda39f9b08f8dd780889b0e30e449c0a73ecb",
+      "aggregate": "aa9551f4b2f33fe382b043059034fe1b107e50ee8b99c5975869bdc67e5eaeed"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-f-task-f09-closure-review-go.md",
+      "sha256": "fcb91ad773a46b20467778cbb82959aa0a38d8d4f1b2927b9dd9a93aa57085aa"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-f-durable-proof-freeze.json",
+      "sha256": "1d21bbe918886ff8ff3acf696bd20f9f736a6b81d445e28f7e037e7245cbebda"
+    }
+  ],
+  "proof_results": [
+    {
+      "command": "bash onboarding/local-workspace/prepare-closure.sh /home/marcelo-karval/Backup/Projetos/accelerate",
+      "exit_code": 1,
+      "classification": "FIRST_BROKEN_BOUNDARY",
+      "evidence": "missing .accelerate/planning/current-plan.md required by the full-V2 closure path"
+    },
+    {
+      "command": "bash tests/dogfood-workspace-contract.sh",
+      "exit_code": 1,
+      "classification": "SECOND_INDEPENDENT_BOUNDARY",
+      "evidence": "test denominator requires C13 while Prompt G requires Prompt-G current projection"
+    },
+    {
+      "command": "bash tests/local-workspace-proof-gates.sh",
+      "exit_code": 0,
+      "classification": "DISPOSABLE_FIXTURE_PASS_ONLY"
+    },
+    {
+      "command": "python3 scripts/validate-phase1-entry-currentness.py",
+      "exit_code": 0,
+      "classification": "MECHANICAL_PASS_SEMANTIC_FAIL_FOR_PROMPT_G",
+      "evidence": "validator explicitly certifies C13 as current"
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0,
+      "classification": "PASS"
+    }
+  ],
+  "root_static_corroboration": {
+    "dogfood_profile": "committed-dogfood-v2-index",
+    "full_v2_surfaces_intentionally_absent": true,
+    "dogfood_test_c13_literals_confirmed": true,
+    "phase1_validator_c13_authority_confirmed": true
+  },
+  "mutable_after_freeze": false,
+  "review_target": "determine whether the blocked result and first broken boundary are correctly evidenced; this is not a successful closure candidate"
+}

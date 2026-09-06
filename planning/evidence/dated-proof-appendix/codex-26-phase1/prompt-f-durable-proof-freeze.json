@@ -1,0 +1,84 @@
+{
+  "schema_id": "codex26_prompt_f_durable_proof_freeze_v1",
+  "issue_id": "CODEX-26",
+  "status": "FROZEN_FOR_INDEPENDENT_REVIEW",
+  "frozen_at": "2026-09-03T23:11:29-04:00",
+  "authorization": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-durable-proof-prompt-f.md",
+    "sha256": "c086603743c24982a16aed1e27e7fb87a28b90f9a28a83490853d4ef13817589"
+  },
+  "correction_generations": [
+    {
+      "generation": 1,
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-f-f04-correction-generation-1.md",
+      "sha256": "9a5dc129ad7410eaaf447c31ccc3bf14e9a45200d58398656d4f0e9ee623189e",
+      "reviewer_disposition": "CORRECTION_G1_PASS"
+    },
+    {
+      "generation": 2,
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-f-f04-correction-generation-2.md",
+      "sha256": "580c1d414fdf8ffc97633b8b8c1d0b1c53d0e0db67e372a0897361da751a693f",
+      "reviewer_disposition": "CORRECTION_G2_PASS"
+    }
+  ],
+  "corrected_control_inputs": {
+    "root_skill": {
+      "path": "SKILL.md",
+      "sha256": "a96bc85ca1e9b3ae024f16e2c4b5ea36b59923be89fdafca63d3e7de09309087"
+    },
+    "v3_planning_pointer": {
+      "path": "onboarding/local-workspace/v3-template/.accelerate/planning-pointer.yaml",
+      "sha256": "ecf5627f1314bcb574d26916ac1ec638cf2c42fa9b24eff167b3247d4216f0de"
+    },
+    "governing_design": {
+      "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+      "sha256": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca"
+    }
+  },
+  "f04_global_suite": {
+    "generation": 3,
+    "command": "bash tests/all.sh",
+    "proof_directory": "/tmp/codex26-prompt-f-f04-g3-1PV1s5GS",
+    "started_at": "2026-09-03T23:02:02-04:00",
+    "ended_at": "2026-09-03T23:09:36-04:00",
+    "exit": 0,
+    "timing": {"real": 453.64, "user": 212.96, "sys": 302.89},
+    "output_log_sha256": "ff5030853f4105ee1724f7777d33af2b520ab9f187841f870e43c6c1dd530142",
+    "terminal_marker": "all tests passed",
+    "exact_command_residual": false,
+    "wrapper_residual": false,
+    "cwd_classification": "repository_root",
+    "home_classification": "normal_operator_home"
+  },
+  "f05_real_openspec": {
+    "generation": 1,
+    "command": "PHASE1_REAL_OPENSPEC=1 bash tests/phase1/run.sh",
+    "proof_directory": "/tmp/codex26-prompt-f-f05-9KOUp7W8",
+    "started_at": "2026-09-03T23:10:11-04:00",
+    "ended_at": "2026-09-03T23:10:50-04:00",
+    "exit": 0,
+    "timing": {"real": 38.70, "user": 28.91, "sys": 8.98},
+    "output_log_sha256": "e27dea319904dea1f2874e0bca225fc2e4bf920ecd8d9a7cd07af59bee39d4c8",
+    "test_count": 81,
+    "terminal_marker": "OK",
+    "exact_command_residual": false,
+    "wrapper_residual": false,
+    "cwd_classification": "repository_root",
+    "home_classification": "normal_operator_home"
+  },
+  "frozen_inputs_post_proof": {
+    "c14": {
+      "file_count": 23,
+      "mismatches": 0,
+      "aggregate_sha256": "cbf26086ca9af5e7d927d7ee324818af35d74d972dfcdbfcce0cd562bc3780d4",
+      "freeze_file_sha256": "7215486904c9fee3172ad1f53c3c3a63d4aa9ba62cea424d5bf8da60fcf72bc2"
+    },
+    "r1": {
+      "file_count": 5,
+      "mismatches": 0,
+      "aggregate_sha256": "aa9551f4b2f33fe382b043059034fe1b107e50ee8b99c5975869bdc67e5eaeed",
+      "freeze_file_sha256": "23ec174a784f5a0570419086cbccda39f9b08f8dd780889b0e30e449c0a73ecb"
+    }
+  },
+  "authority_effect": "Permits only TASK-F07 independent review and root review-of-review. It does not authorize source correction without a new evidenced loop, Plane Done, lifecycle transition, global sync, runtime promotion, deployment, or Phase 2."
+}

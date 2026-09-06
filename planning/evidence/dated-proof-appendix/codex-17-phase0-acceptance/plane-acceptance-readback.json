@@ -1,0 +1,25 @@
+{
+  "schema_version": "phase0-plane-acceptance-readback-v1",
+  "provider": "plane",
+  "action": "add_work_item_comment",
+  "workspace_slug": "karval",
+  "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+  "work_item_id": "9a5158ac-8f5a-456f-99c9-0f3091ba3adb",
+  "identifier": "CODEX-17",
+  "web_url": "https://plane.arthuragrelli.com/karval/projects/d6b855ec-77cb-4df0-b471-4f6cea011e02/issues/9a5158ac-8f5a-456f-99c9-0f3091ba3adb",
+  "comment_id": "50aa8209-78bf-4d59-bd9c-1812fd2dbc06",
+  "comment_phase": "REVIEW",
+  "operator_acceptance_payload_digest": "sha256:bfa9b613025da8b16b20a1eb3995c3f0034df64e9cf9938342a3ab42d16cda12",
+  "mutation_applied": true,
+  "duplicate": false,
+  "readback_verified": true,
+  "provider_state_before": "Todo",
+  "provider_state_after": "Todo",
+  "state_transition_performed": false,
+  "non_atomic_state_transition_authorized": false,
+  "checked_at": "2026-09-01T07:54:35.925071Z",
+  "receipt_integrity": {
+    "scheme": "sha256-domain-separated-canonical-json-v1",
+    "signature": "sha256:622f1cb4bace3c642b99b10e91aca5e22216c8565621519091453a3affb2c8c6"
+  }
+}

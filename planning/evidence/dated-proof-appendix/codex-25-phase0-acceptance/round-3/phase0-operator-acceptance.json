@@ -1,0 +1,54 @@
+{
+  "schema_id": "phase0-operator-acceptance-v1",
+  "work_item": {
+    "sequence_id": "CODEX-25",
+    "id": "6dc9e3a8-b9bf-46f3-ae02-68936a4082a9",
+    "provider": "Plane"
+  },
+  "candidate": {
+    "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "version": "v0.7.25",
+    "digest_algorithm": "sha256",
+    "candidate_digest": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca",
+    "document_digest": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca"
+  },
+  "review_set_manifest_digest": "44df3d6c4d059a66342e08022886afc15100173d8a9d7cda97a7b1fe070760b2",
+  "predecessor_successor_handoff_digest": "73c344a5576b7ba9502249c13668ba2b2aed2efb44336e83234ce047ef3811e5",
+  "slot_overlay_mapping_digest": "5e06c4566b1335cbba1ed5b2547e4268cef5c8a90ab68a83c880baccb3970e83",
+  "internal_consistency_receipt_v2_digest": "adbaea654bf76eb0b4b502df8281b271594a767aacf1b4ab317fa3c6405a9f4d",
+  "structural_verifier_receipt_digest": "081aaf199d1830d1f2044c4537d0c17da9d30d158689db487f60057d76a181ea",
+  "root_review_of_review_digest": "87cc6b6aa83466db4c0d5819d8dc76eb1b9e67047fc44d1b2abaf7a98c76a447",
+  "ordered_pass_review_receipt_digests": [
+    "02f7298ac78f14f6ef71678383838fff826f0fccd4d7aa8a4fd4865ed7b6c15a",
+    "c19311c00890a5e78b045cb2cf160881990b53c8d4b0ef15e75c870fb1e71215",
+    "b694ab011d32fabb1bba3b5f247dc644d75db3e8555e50965bcc5760285d7b9a"
+  ],
+  "acceptor": {
+    "actor_id": "marcelo-karval",
+    "actor_epoch": "CODEX-25-round-3",
+    "trust_root": "explicit-human-operator",
+    "authorization_basis": "explicit_human_operator_authorization"
+  },
+  "signer_authority": "Human operator authorization bound through governed Plane non-atomic lifecycle transition and provider readback",
+  "signature": {
+    "scheme": "plane-provider-readback-v1",
+    "state_id": "ed644a27-2d9b-403a-9b23-574715cb7c14",
+    "completed_at": "2026-09-02T02:12:51.594473Z",
+    "updated_at": "2026-09-02T02:12:53.738928Z",
+    "state_readback_verified": true,
+    "comment_readback_verified": true,
+    "manual_reconciliation_required": false
+  },
+  "cas_current_digest_revalidation": "PASS",
+  "freshness_status": "CURRENT",
+  "revocation_status": "NOT_REVOKED",
+  "issued_at": "2026-09-01T22:12:53-04:00",
+  "expires_at": "2026-09-02T22:12:53-04:00",
+  "single_consumption_idempotency_key": "CODEX-25-phase0-accept-v0.7.25",
+  "decision": "ACCEPTED_PHASE_0_ONLY",
+  "non_authorities": [
+    "No Phase 1-7 implementation authorization",
+    "No runtime, install, promotion, deployment, migration, WebUI or harness mutation",
+    "No automatic issue or lifecycle authority outside CODEX-25 Phase 0"
+  ]
+}

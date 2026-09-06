@@ -1,0 +1,63 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "TASKS_READY",
+  "issued_at": "2026-09-04T00:17:20-04:00",
+  "governing_issue": "CODEX-26",
+  "phase": "Phase 1 dogfood closure correction",
+  "prompt": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-dogfood-closure-correction-prompt-h.md",
+    "sha256": "d8d91f73a4943c7e236a9ec1edac70ed3342d3522fa3c44c6e2a365bb0ddfd44"
+  },
+  "task_graph": {
+    "path": "planning/executive/2026-09-04-codex-26-phase1-dogfood-closure-prompt-h-task-graph.md",
+    "sha256": "e2c963fb5eb76c1584edb11bdb7e87bcc2f2b69f09c54dabea24034a4599ddec"
+  },
+  "current_authority": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-h-current-authority.json",
+    "sha256": "a497bd5fd09a3d5cb92a4fa5137b147b8575ce4616ca54374a73cd5c1dd405d2"
+  },
+  "baseline": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-h-baseline-receipt.json",
+    "sha256": "95a59b006f36ae2fe48146867d1d179cf9d85eb7be673df1ce6800305878bb69"
+  },
+  "execution_route": "orchestrated",
+  "closure_mode": "GO_FOR_OPERATOR_PHASE1_CLOSURE_or_NO_GO_WITH_FIRST_BROKEN_BOUNDARY",
+  "active_skills": [
+    "accelerate",
+    "prompt-hardening",
+    "subagent-governance",
+    "test-driven-development",
+    "systematic-debugging",
+    "test-engineering",
+    "evidence-reconciliation",
+    "verification-before-completion"
+  ],
+  "gate_ledger": {
+    "TASK-H01": "PASS",
+    "TASK-H02": "TASKS_READY",
+    "TASK-H03": "PENDING_PHYSICAL_DISPATCH",
+    "TASK-H04": "NOT_STARTED",
+    "TASK-H05": "NOT_STARTED",
+    "TASK-H06": "NOT_STARTED",
+    "TASK-H07": "NOT_STARTED",
+    "TASK-H08": "NOT_STARTED",
+    "TASK-H09": "NOT_APPLICABLE_YET",
+    "TASK-H10": "NOT_STARTED",
+    "TASK-H11": "NOT_STARTED",
+    "TASK-H12": "NOT_STARTED"
+  },
+  "issue_stack": {
+    "authority": "Plane",
+    "issue": "CODEX-26",
+    "entry_state": "In Progress",
+    "completed_at": null,
+    "child_plane_access": "forbidden",
+    "done_transition": "not_authorized"
+  },
+  "qa_proof_lane": "fresh Prompt H proof required after final material correction",
+  "browser_proof": "not_in_scope",
+  "persistent_e2e": "not_in_scope",
+  "dispatch_required": true,
+  "dispatch_satisfied": false,
+  "ready": true
+}

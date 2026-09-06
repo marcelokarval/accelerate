@@ -1,0 +1,42 @@
+{
+  "schema_id": "phase0-root-review-of-review-v1",
+  "work_item": "CODEX-25",
+  "candidate_digest": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca",
+  "review_set_manifest_digest": "44df3d6c4d059a66342e08022886afc15100173d8a9d7cda97a7b1fe070760b2",
+  "slot_overlay_mapping_digest": "5e06c4566b1335cbba1ed5b2547e4268cef5c8a90ab68a83c880baccb3970e83",
+  "internal_consistency_receipt_v2_digest": "adbaea654bf76eb0b4b502df8281b271594a767aacf1b4ab317fa3c6405a9f4d",
+  "structural_verifier_receipt_digest": "081aaf199d1830d1f2044c4537d0c17da9d30d158689db487f60057d76a181ea",
+  "ordered_review_receipts": [
+    {"slot":"P0-CP-R3","path":"planning/evidence/dated-proof-appendix/codex-25-phase0-acceptance/round-3/review-control-plane.json","digest":"02f7298ac78f14f6ef71678383838fff826f0fccd4d7aa8a4fd4865ed7b6c15a","verdict":"PASS"},
+    {"slot":"P0-RC-R3","path":"planning/evidence/dated-proof-appendix/codex-25-phase0-acceptance/round-3/review-runtime-concurrency.json","digest":"c19311c00890a5e78b045cb2cf160881990b53c8d4b0ef15e75c870fb1e71215","verdict":"PASS"},
+    {"slot":"P0-MS-R3","path":"planning/evidence/dated-proof-appendix/codex-25-phase0-acceptance/round-3/review-migration-security.json","digest":"b694ab011d32fabb1bba3b5f247dc644d75db3e8555e50965bcc5760285d7b9a","verdict":"PASS"}
+  ],
+  "checks": {
+    "candidate_manifest_handoff_and_internal_receipt_current": "PASS",
+    "exactly_three_slots_and_overlays": "PASS",
+    "one_to_one_exhaustive_mapping": "PASS",
+    "all_three_receipts_pass_all_nine_axes": "PASS",
+    "all_three_assigned_overlays_substantive_and_pass": "PASS",
+    "pairwise_distinct_actor_epoch_runtime_context_root_context_lineage": "PASS",
+    "candidate_author_architecture_owner_verifier_operator_distinct_from_reviewers": "PASS",
+    "agy_structural_verifier_distinct_and_pass": "PASS",
+    "receipts_unexpired_and_non_revoked": "PASS",
+    "failed_round_receipts_not_reused": "PASS",
+    "git_diff_check": "PASS",
+    "phase_1_7_and_runtime_effects_remain_blocked": "PASS"
+  },
+  "plane_review_comment": {
+    "comment_id": "29d2ec12-e4c6-45f4-bf62-1f5036dbf59e",
+    "updated_at": "2026-09-02T02:11:40.944597Z",
+    "readback_verified": true
+  },
+  "verdict": "PASS",
+  "reviewer": {
+    "actor_id": "codex-root-review-of-review",
+    "actor_epoch": "CODEX-25-round-3-final",
+    "trust_root": "codex-root-session"
+  },
+  "issued_at": "2026-09-01T22:11:41-04:00",
+  "expires_at": "2026-09-01T23:56:46-04:00",
+  "authority_limitation": "Root review-of-review only; root cannot self-accept and grants no Phase 1-7 implementation or runtime authority."
+}

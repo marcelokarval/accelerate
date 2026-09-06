@@ -142,19 +142,21 @@ have native homes under `core/`.
 
 At a high level, `accelerate` works like this:
 
-1. classify the run
-2. preserve the user's response locale
-3. decide the prompt-hardening level
-4. decide the lowest safe reasoning effort
-5. when a governed target repository is in scope, decide local `.accelerate/`
+1. preserve the user's response locale
+2. run **Stage A: Semantic Pre-scan** before choosing a hardening level
+3. decide micro- versus full prompt hardening from that pre-scan
+4. run **Stage B: Semantic Implication Receipt** after hardening and before
+   classification
+5. classify the run and decide the lowest safe reasoning effort
+6. when a governed target repository is in scope, decide local `.accelerate/`
    entry state
-6. decide the honest issue topology
-7. decide which lanes and skills are required
-8. decide whether the work should stay root-only or use bounded agents
-9. execute with visible runtime packets and active gates
-10. keep readiness, timeline, and learning disposition visible when local workspace state is active
-11. force proof in the correct order
-12. enter root closure mode before `Done`
+7. decide the honest issue topology
+8. decide which lanes and skills are required
+9. decide whether the work should stay root-only or use bounded agents
+10. execute with visible runtime packets and active gates
+11. keep readiness, timeline, and learning disposition visible when local workspace state is active
+12. force proof in the correct order
+13. enter root closure mode before `Done`
 
 The control plane should be visible, not implied.
 
@@ -192,6 +194,194 @@ For trivial bounded work, use micro-hardening:
 - `goal`
 - `done means`
 - material constraints, when any exist
+
+### Semantic Implication Gate
+
+Prompt length is not a risk classifier. The gate has two ordered stages so it
+does not rely on a hardening decision that it has not yet justified.
+
+**Stage A — Semantic Pre-scan** happens before micro- or full-hardening is
+selected. It is a lightweight, non-authorizing read of the raw request: it
+spots candidate domains, authority/effect boundaries, likely seams, and risk
+signals sufficient to choose the safe hardening level. Unclear or evidently
+material implications choose full hardening or escalate; Stage A does not make
+a final scope or routing claim.
+
+**Stage B — Semantic Implication Receipt** happens after hardening and before
+run classification, issue topology, or assignment. It records what a truthful
+completion necessarily implies: the domain and capability affected, owned and
+implicated technical surfaces, seams whose contracts could change, authority
+boundary, risk class, proof lane, and any required escalation.
+
+The gate may expand analysis, routing, safeguards, and proof; it must not
+silently expand the user's requested outcome or authorize an unrelated
+mutation. Material ambiguity about the implied domain, authority, or external
+effect returns to the user or the designated authority before execution.
+
+Short prompts can therefore have very different routes:
+
+- “Fix this typo in an isolated README paragraph” normally remains
+  micro-hardened, with a focused documentation check.
+- “Add a refund button” is short, but implies the Financial domain, refund
+  authorization and idempotency seams, provider-effect controls, and UI/API
+  proof. It needs full hardening and the applicable risk/authority gates.
+- “Make SSO redirect work” is short, but touches an authentication boundary;
+  it requires full hardening, security/ownership analysis, and negative-path
+  proof before a route is chosen.
+
+### From prompt to governed closure
+
+The following flow makes the distinction operational. The entry wording is an
+input to classification, not a shortcut around domain, seam, or authority
+analysis.
+
+```text
+raw user prompt
+  |
+  +-- isolated editorial/read request
+  |     "Correct this README typo"
+  |     -> pre-scan signal: likely local documentation surface
+  |
+  +-- short but domain-bearing request
+  |     "Add a refund button" / "Repair SSO redirect"
+  |     -> pre-scan signal: Financial/Refund or Authentication capability,
+  |        likely seams and material authority/risk boundary
+  |
+  `-- explicitly broad delivery request
+        "Design, build, test, and release the new checkout"
+        -> pre-scan signal: multi-domain delivery denominator and gates
+  |
+  v
+Stage A: Semantic Pre-scan (raw prompt only)
+  -> candidate domain/seam/authority/risk signals
+  -> choose micro-hardening, full hardening, or early escalation
+  |
+  v
+Prompt hardening
+  -> bounded goal, constraints, non-goals, success/proof criteria
+  |
+  v
+Stage B: Semantic Implication Receipt
+  -> hardened domain/capability, surfaces, seams, authority, risk, proof
+  -> material ambiguity or external effect? escalate before classification
+  |
+  v
+run classification and route selection
+  |
+  v
+SDD / OpenSpec artifact readiness
+  -> accepted specification and contract deltas
+  |
+  v
+task graph + immutable assignments
+  -> owned domains, surfaces, seams, proof, and forbidden operations
+  |
+  v
+local Domain Gauntlet pairs
+  implementation <-> proof/review
+  -> a local GO advances only its direct parent
+  |
+  v
+seam and integration-flow fan-in
+  -> contract proof, candidate freeze, independent whole-change review
+  |
+  v
+global root review, closure receipt, and lifecycle reconciliation
+  -> human/operator feedback, acceptance, or a bounded correction successor
+```
+
+The low-risk editorial entry can stop after its focused proof. The refund,
+authentication, and delivery entries cannot skip the lower loops simply
+because their first sentence was short; a local green result is never global
+closure.
+
+### Verification, review, graph, and heartbeat topology
+
+#### Visual Modeling Packet
+
+- diagram type: agent communication plus governance topology
+- source truth: `core/delegation/assignment-ontology.md`,
+  `core/runtime-packets/qa-proof-stack.md`, and `core/task-graph/`
+- decision surface: who builds, verifies, reviews, integrates, and closes
+- binding: assignment receipts, proof lanes, candidate bindings, and root gates
+- excluded scope: live-agent health, provider truth, promotion, and deployment
+
+```text
+HARDENED PROMPT + SEMANTIC IMPLICATION RECEIPT
+  domain_path = financial.gateway.refund
+  surfaces    = backend + integrations + frontend
+  non-goals   = no deploy; no provider effect during local proof
+                       │
+                       ▼
+╔══════════════════════════════════════════════════════════════════════╗
+║ ROOT / ORCHESTRATOR                                                 ║
+║ freezes graph, assignments, candidate denominator and closure gates ║
+╚══════════════════════╦═══════════════════════════════════════════════╝
+                       │ bounded assignment packets
+          ┌────────────┼───────────────┐
+          ▼            ▼               ▼
+  ┌─────────────┐ ┌─────────────┐ ┌────────────────┐
+  │ backend     │ │ integrations│ │ frontend       │
+  │ executor    │ │ executor    │ │ executor       │
+  └──────┬──────┘ └──────┬──────┘ └───────┬────────┘
+         └─────────────── seam candidate ──┘
+                         │
+                         ▼
+              ┌──────────────────────┐
+              │ TESTER / VERIFIER    │
+              │ executes positive,   │
+              │ negative, contract,  │
+              │ race/retry/idempotency│
+              │ and adversarial tests│
+              └──────────┬───────────┘
+                         │ evidence; never approval
+                         ▼
+              ┌──────────────────────┐
+              │ QA PROOF DISCIPLINE  │
+              │ backend/frontend QA  │
+              │ browser truth / E2E  │
+              │ runtime + seam proof │
+              └──────────┬───────────┘
+                         │ candidate-bound proof set
+                         ▼
+              ┌──────────────────────┐
+              │ INDEPENDENT REVIEWER │
+              │ distinct agent+call, │
+              │ isolated context,    │
+              │ adversarial critique │
+              └──────────┬───────────┘
+                         │ findings or PASS
+             FAIL ───────┴─────── PASS
+               │                     │
+               ▼                     ▼
+       bounded successor       ROOT REVIEW-OF-REVIEW
+       correction loop         + integration + closure
+
+SIDE OBSERVATION LANES (never authority):
+  Git baseline ──> heartbeat/currentness ──> reanalysis trigger only
+  source facts ──> typed visual IR ──> optional standalone diagram only
+```
+
+Callouts:
+
+- Tester is `verifier + verification`; it creates executable evidence but
+  cannot approve or close. Adversarial test design does not turn it into a
+  reviewer.
+- QA is the ordered proof discipline, not a permanent physical identity.
+- Adversarial posture and independence are different axes. Independence needs
+  distinct runtime IDs, isolated context, and exact candidate/spec bindings.
+- `backend / financial.gateway.refund` separates technical surface from domain
+  lineage. Adding `frontend` or `integrations` changes seam/proof coverage, not
+  the domain identity and not the physical-profile count.
+- A heartbeat reports change against a frozen delta baseline. It cannot renew
+  a lease, declare health, approve work, repair Git, or close Plane.
+- The optional Archify-inspired adapter may render validated typed IR, but a
+  polished diagram cannot prove source completeness, runtime truth, impact,
+  safety, or mergeability.
+
+Accepted: the source ontology, validators, negative fixtures, reanalysis
+contract, and selective AI Hero doctrine. Deferred: live adapter enforcement,
+Archify installation/invocation, heartbeat service, promotion, and deployment.
 
 For non-trivial or ambiguous work, use full prompt hardening. Hardening is not
 cosmetic rewriting. It is a blocking gate when the request is:
@@ -318,6 +508,7 @@ The gate owner is:
 The native proof-order and lane-ownership authority now lives in:
 
 - [qa-proof-stack.md](./core/runtime-packets/qa-proof-stack.md)
+- [assignment-ontology.md](./core/delegation/assignment-ontology.md)
 
 Proof ordering is:
 
@@ -414,6 +605,7 @@ automatic promotion and a catalog/thread budget alone never chooses a route.
 The native bounded-delegation authority now lives in:
 
 - [subagent-model.md](./core/delegation/subagent-model.md)
+- [assignment-ontology.md](./core/delegation/assignment-ontology.md)
 
 When delegated correction is used under the one-shot protocol, subagents must
 return correction/reproof status, self-review, self-forensic review, unresolved
@@ -934,7 +1126,7 @@ Expected behavior:
 - it moves the issue to `In Review`
 - the root still performs final AI review and closure
 
-### Example 7. Ambiguous prompt triggers hardening first
+### Example 7. Ambiguous prompt triggers semantic pre-scan and hardening
 
 The request is long, multi-phase, and still allows several honest execution
 interpretations.
@@ -942,8 +1134,10 @@ interpretations.
 Expected behavior:
 
 - `accelerate` does not jump into implementation
-- prompt hardening runs first
+- Stage A semantic pre-scan runs before the hardening-depth decision
+- prompt hardening then makes scope and non-goals explicit
 - the hardened prompt exposes bounded scope and explicit non-goals
+- Stage B records the full semantic implication receipt
 - only then does the root classify topology and staffing
 
 ### Example 8. Mutating work cannot skip the issue stack
@@ -1045,6 +1239,10 @@ Current native execution/review protocol additions:
 
 - [one-shot-side-by-side-protocol.md](./core/review/one-shot-side-by-side-protocol.md)
 - [one-shot-task-ledger-template.md](./planning/execution/one-shot-task-ledger-template.md)
+- [CODEX-22 verification/graph/heartbeat addendum](./planning/architecture/2026-09-01-codex-22-verification-graph-heartbeat-addendum.md)
+- [task graph and heartbeat contract](./core/task-graph/README.md)
+- [optional Archify visual-adapter boundary](./core/control-plane/archify-visual-adapter.md)
+- [AI Hero practice-adoption boundary](./core/control-plane/ai-hero-practice-adoption.md)
 
 Current native fullstack profile additions:
 

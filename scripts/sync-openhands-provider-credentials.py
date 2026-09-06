@@ -13,14 +13,6 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
 PARITY = REPO / "adapters/runtime/model-lanes/cross-runtime-agent-parity.toml"
-LEGACY_PROFILE_ENV = {
-    "default": "DEEPSEEK_API_KEY",
-    "deepseek-v4-pro": "DEEPSEEK_API_KEY",
-}
-LEGACY_PROFILE_MODELS = {
-    "default": "deepseek/deepseek-v4-flash",
-    "deepseek-v4-pro": "deepseek/deepseek-v4-pro",
-}
 MANAGED_BY = "accelerate"
 MANAGED_SCHEMA = 1
 
@@ -29,7 +21,7 @@ def profile_env(path: Path = PARITY) -> dict[str, str]:
     """Return only ENV-backed profiles; subscription profiles never copy secrets."""
     with path.open("rb") as stream:
         registry = tomllib.load(stream)["openhands_llm_profile_registry"]["profiles"]
-    expected = dict(LEGACY_PROFILE_ENV)
+    expected: dict[str, str] = {}
     for profile in registry:
         credential_env = profile.get("credential_env")
         if credential_env:
@@ -59,15 +51,9 @@ def _write_atomic(path: Path, payload: dict) -> None:
 def _is_governed_profile(profile_name: str, payload: dict) -> bool:
     """Reject secret writes to an arbitrary user profile.
 
-    The two legacy DeepSeek profiles predate the materializer and are retained
-    only under their exact historical model contract. Every generated profile
-    must carry the explicit Accelerate ownership marker.
+    Every generated API-key profile must carry the explicit Accelerate ownership
+    marker. Subscription profiles are credential-free by contract.
     """
-    if profile_name in LEGACY_PROFILE_MODELS:
-        return (
-            payload.get("model") == LEGACY_PROFILE_MODELS[profile_name]
-            and payload.get("auth_type") == "api_key"
-        )
     return (
         payload.get("managed_by") == MANAGED_BY
         and payload.get("managed_schema") == MANAGED_SCHEMA

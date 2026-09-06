@@ -4,8 +4,25 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SKILLS_DIR="${ROOT_DIR}/skills"
 ROOT_RUNTIME_DIR="${ROOT_DIR}/global-runtime/accelerate"
-GLOBAL_SKILLS_DIR="${CODEX_SKILLS_DIR:-${GLOBAL_SKILLS_DIR:-${HOME}/.codex/skills}}"
-HERMES_SKILLS_DIR="${HERMES_SKILLS_DIR:-${HOME}/.hermes/skills}"
+if [[ -n "${GLOBAL_SKILLS_DIR+x}" ]]; then
+  echo "GLOBAL_SKILLS_DIR is not accepted; provide both CODEX_SKILLS_DIR and HERMES_SKILLS_DIR." >&2
+  exit 2
+fi
+
+if [[ -n "${CODEX_SKILLS_DIR+x}" || -n "${HERMES_SKILLS_DIR+x}" ]]; then
+  if [[ -z "${CODEX_SKILLS_DIR+x}" || -z "${HERMES_SKILLS_DIR+x}" || -z "${CODEX_SKILLS_DIR:-}" || -z "${HERMES_SKILLS_DIR:-}" ]]; then
+    echo "Disposable mirror checks require both CODEX_SKILLS_DIR and HERMES_SKILLS_DIR." >&2
+    exit 2
+  fi
+  GLOBAL_SKILLS_DIR="${CODEX_SKILLS_DIR}"
+  HERMES_SKILLS_DIR="${HERMES_SKILLS_DIR}"
+elif [[ "${ACCELERATE_ALLOW_INSTALLED_MIRROR_AUDIT:-}" == "1" ]]; then
+  GLOBAL_SKILLS_DIR="${HOME}/.codex/skills"
+  HERMES_SKILLS_DIR="${HOME}/.hermes/skills"
+else
+  echo "Installed mirror audit requires ACCELERATE_ALLOW_INSTALLED_MIRROR_AUDIT=1 or both explicit target roots." >&2
+  exit 2
+fi
 CAPABILITY_SEEDS_DIR="${ROOT_DIR}/docs/codex-skill-seeds/skills"
 
 if [[ ! -d "${SKILLS_DIR}" ]]; then

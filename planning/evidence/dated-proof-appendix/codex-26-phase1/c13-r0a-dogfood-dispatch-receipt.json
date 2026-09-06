@@ -1,0 +1,59 @@
+{
+  "contract_version": "1.0",
+  "state": "DISPATCHED",
+  "artifacts": {
+    "hardening": {"ref": "planning/evidence/dated-proof-appendix/codex-26-phase1/c13-hardened-prompt.md", "sha256": "4a94adeda91a5763590e4b86c84bb9b3691a310f44933793fa74800120e16abd"},
+    "spec": {"ref": "planning/architecture/2026-09-02-codex-26-phase1-reentry-c13-sdd.md", "sha256": "9e19fddf816d30b8d12446f71b2fe9b37ab26a31f1d1cb57e011916bbd2f81f3"},
+    "task_graph": {"ref": "planning/executive/2026-09-02-codex-26-phase1-r0a-dogfood-contract-amendment.md", "sha256": "048c990a6a55832fd99e27c2c59c5750d3a936323accc307d00490826a33af4c"}
+  },
+  "route": "orchestrated",
+  "execution_requested": true,
+  "planned_task_owned_writes": true,
+  "capability_proof": {"collaboration_available": true, "spawn_api": "collaboration.spawn_agent", "checked_at": "2026-09-02T19:27:00-04:00"},
+  "budget": {"max_agents": 2, "active_count": 2},
+  "assignments": [
+    {
+      "assignment_id": "c13-r0a-dogfood-executor",
+      "kind": "executor",
+      "task_id": "R0a",
+      "dependencies": ["c13-r0-executor"],
+      "wave": 2,
+      "role": "dogfood-contract-successor-implementer",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/phase1_c13_r0a_dogfood",
+      "call_id": "spawn:/root/phase1_c13_r0a_dogfood",
+      "read_scopes": ["AGENTS.md", ".accelerate/", "tests/dogfood-workspace-contract.sh", "planning/"],
+      "write_scopes": ["tests/dogfood-workspace-contract.sh"],
+      "proof": "current positive dogfood proof plus deliberate stale-promotion negative probes",
+      "reviewer_assignment_id": "c13-r0a-dogfood-reviewer",
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    },
+    {
+      "assignment_id": "c13-r0a-dogfood-reviewer",
+      "kind": "reviewer",
+      "task_id": "R0a-independent-review",
+      "dependencies": ["c13-r0a-dogfood-executor"],
+      "wave": 3,
+      "role": "dogfood-contract-independent-reviewer",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/phase1_c13_r0a_reviewer",
+      "call_id": "spawn:/root/phase1_c13_r0a_reviewer",
+      "read_scopes": ["AGENTS.md", ".accelerate/", "tests/dogfood-workspace-contract.sh", "planning/"],
+      "write_scopes": [],
+      "proof": "independent read-only review that rejects stale current authority or implicit C13 acceptance",
+      "reviewer_assignment_id": null,
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    }
+  ],
+  "fan_in": {"owner": "root", "assignment_ids": ["c13-r0a-dogfood-executor", "c13-r0a-dogfood-reviewer"]},
+  "exceptions": [],
+  "root_write_lock": {"mode": "orchestrated-dispatched-scope-lock", "task_owned_writes_forbidden": true, "dispatched_task_scopes": ["tests/dogfood-workspace-contract.sh"]}
+}

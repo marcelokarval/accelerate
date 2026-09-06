@@ -1,0 +1,61 @@
+{
+  "schema_version": "phase0-review-set-manifest-v1",
+  "verifier_version": "codex-collaboration-phase0-review-verifier-v1",
+  "candidate": {
+    "artifact_path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "document_digest": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a"
+  },
+  "normalization": {
+    "encoding": "UTF-8",
+    "line_endings": "LF",
+    "trailing_whitespace": "removed-per-line",
+    "block_markers": "included",
+    "terminal_lf": "required"
+  },
+  "base_rubric": {
+    "id": "phase0-common-rubric-v1",
+    "digest": "sha256:25e77374f3d93ea065cd0921078b90e1239fa82bed81863870ecaedc7a79d94b"
+  },
+  "reviews": [
+    {
+      "lens_id": "phase0-lens-control-plane-v1",
+      "lens_digest": "sha256:3188fb43b2ece8377891185d1e35a0619b5a4b53186b2223fda88c75d165e1ba",
+      "receipt_path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/control-plane-review-receipt.json",
+      "reviewer_actor_id": "phase0-control-plane-reviewer",
+      "reviewer_actor_epoch": "phase0-acceptance-2026-09-01-control-plane-epoch-1",
+      "runtime_instance_id": "/root/phase0_acceptance_control_plane_receipt",
+      "context_root": "sha256:24478524f601daef49bd7793f2631a16d263815f83c6e35ecf439d543ea82e22"
+    },
+    {
+      "lens_id": "phase0-lens-runtime-concurrency-v1",
+      "lens_digest": "sha256:7abc8262099a1ff310ab5667877044d2f54949b308dd9eb1f908d92362d49e01",
+      "receipt_path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/runtime-concurrency-review-receipt.json",
+      "reviewer_actor_id": "phase0-runtime-concurrency-reviewer",
+      "reviewer_actor_epoch": "phase0-acceptance-2026-09-01-runtime-concurrency-epoch-1",
+      "runtime_instance_id": "/root/phase0_acceptance_runtime_receipt",
+      "context_root": "sha256:8aaffd2d49cdbdab07e3e5e4bf0d6da1af63bd7d7eb547bf294543e2af4781b2"
+    },
+    {
+      "lens_id": "phase0-lens-migration-security-v1",
+      "lens_digest": "sha256:9f038e9b91856126a8d59a50c2561020313806ffc95532dad1947c29f47d15a8",
+      "receipt_path": "planning/evidence/dated-proof-appendix/codex-17-phase0-acceptance/migration-security-review-receipt.json",
+      "reviewer_actor_id": "phase0-migration-security-reviewer",
+      "reviewer_actor_epoch": "phase0-acceptance-2026-09-01-migration-security-epoch-1",
+      "runtime_instance_id": "/root/phase0_acceptance_migration_security_receipt",
+      "context_root": "sha256:542b29285993c764441956185138ab92c55cda9fcaa4432fdaf065da2b56be05"
+    }
+  ],
+  "independence_policy": {
+    "required_review_count": 3,
+    "fork_turns": "none",
+    "prior_turns_inherited": 0,
+    "read_only": true,
+    "pairwise_distinct": [
+      "reviewer_actor_id",
+      "reviewer_actor_epoch",
+      "runtime_instance_id",
+      "context_root",
+      "lens_id"
+    ]
+  }
+}

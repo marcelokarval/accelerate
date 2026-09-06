@@ -1,0 +1,28 @@
+{
+  "schema_version": "codex26-phase1-implementation-candidate-freeze-v1",
+  "candidate_id": "CODEX-26-P1-IMPLEMENT-C1",
+  "frozen_at": "2026-09-01T22:40:00-04:00",
+  "aggregate_scheme": "sha256 of sorted sha256sum output for every regular file in the five authorized implementation roots",
+  "aggregate_sha256": "d3dfe13653096e2c3c3451bcf0c1e93620ade929e37e1e7d77f4c104bcf2df5c",
+  "roots": [
+    "core/phase1",
+    "adapters/openspec",
+    "planning/openspec",
+    "scripts/phase1",
+    "tests/phase1"
+  ],
+  "file_count": 10,
+  "cache_artifacts_present": false,
+  "builder_self_test": {
+    "command": "tests/phase1/run.sh",
+    "tests": 9,
+    "result": "PASS",
+    "authority": "diagnostic_only_pending_independent_test_and_review"
+  },
+  "declared_limitations": [
+    "RFC 8785 full numeric corpus not independently proven",
+    "A04 scenarios are enumerated but many share generic assertions rather than one behavioral test per named fixture",
+    "OpenSpec behavior uses a local protocol fixture rather than the verified v1.11.0 package"
+  ],
+  "mutation_authority_after_freeze": "none except a separately dispatched correction successor"
+}

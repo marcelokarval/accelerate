@@ -1,0 +1,58 @@
+{
+  "schema_version": "prompt-h-cross-runtime-dispatch-v1",
+  "state": "DISPATCHED",
+  "issued_at": "2026-09-04T00:21:05-04:00",
+  "governing_issue": "CODEX-26",
+  "route": "orchestrated",
+  "tasks_ready": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-h-tasks-ready-receipt.json",
+    "sha256": "ee01c57f28bdbfdd7a646032f8594f3ec8bd2f9344012553f0d25df22fcc6c83"
+  },
+  "native_dispatch_witness": {
+    "agent": "prompt_h_dispatch_witness",
+    "model": "gpt-5.6-luna",
+    "effort": "low",
+    "fork_turns": "none",
+    "initial_result": "FAIL_DISPATCH_EVIDENCE_INCOMPLETE",
+    "successor_result": "PASS_RELEASE_ELIGIBLE"
+  },
+  "assignments": [
+    {
+      "role": "executor",
+      "agent": "phimpl-zuli",
+      "runtime": "Antigravity CLI 1.1.26",
+      "model": "gemini-3.8-flash-high",
+      "effort": "high",
+      "fork_turns": "none",
+      "process_call_id": "e6f801e4-d059-4bec-bf1a-846130c088e9",
+      "session_id": "28f1cdf1-7725-4a57-90d0-7cfd7e584eb4",
+      "ack_message_id": 7439,
+      "write_bounded": true,
+      "nested_spawn": false,
+      "plane_access": false
+    },
+    {
+      "role": "independent_reviewer",
+      "agent": "phreview-mivi",
+      "runtime": "Codex CLI 0.153.2",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork_turns": "none",
+      "process_call_id": "32b2c03f-3fd2-449d-93cf-5bd4f989b11b",
+      "session_id": "01a06aa3-bffc-7a11-8da5-670f48b80d30",
+      "ack_message_id": 7386,
+      "read_only": true,
+      "nested_spawn": false,
+      "plane_access": false
+    }
+  ],
+  "fan_in_owner": "root",
+  "root_task_owned_write_lock": true,
+  "reviewer_release_condition": "root_frozen_candidate",
+  "forbidden_authority": [
+    "Plane lifecycle transition",
+    "Phase 2",
+    "runtime or global sync",
+    "commit, push, merge, deploy, or release"
+  ]
+}
