@@ -25,8 +25,8 @@
     "G04": "satisfied",
     "G05": "satisfied",
     "G06": "satisfied-physical-dispatch-enforced",
-    "G07": "in_progress",
-    "G08": "not_started"
+    "G07": "satisfied",
+    "G08": "pending_operator_decision_p09"
   },
   "no_inherited_proofs": true,
   "tasks_ready": true,
@@ -36,10 +36,12 @@
     "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
     "work_item": "CODEX-34",
     "work_item_id": "79b4d3f4-a30f-4ebe-85cf-deb8c4dce128",
-    "state": "In Progress",
-    "state_id": "e1e78b18-5b23-4b77-9a69-3e09f0b4cc33",
+    "state": "Review",
+    "state_id": "5bd11790-8a7d-431c-8641-a4b4b72aee83",
     "start_receipt_fingerprint": "f2f7eb6fd4498fd00b1a90e3be89aef3f0ac91d631e20e1e108b6f6b4513b5ac",
-    "start_transition_id": "RYCQDZSHc8ZG5bXiq6NvrubOTYzpfpmF"
+    "start_transition_id": "RYCQDZSHc8ZG5bXiq6NvrubOTYzpfpmF",
+    "review_receipt_fingerprint": "41f2acb6fbc27cd87dec57b619fef10aea7a612c179f8f577d54420f668c8415",
+    "review_transition_id": "njrj_n_XmDmXEWWOzNxDhXvgDIqrugoJ"
   },
   "staffing": {
     "P05": {
@@ -85,5 +87,5 @@
   ],
   "rollback": "Revert only bounded S1A commits after confirming no overlap; otherwise stop and replan in an isolated worktree.",
   "successor_review_receipt": "planning/evidence/dated-proof-appendix/codex-34-s1a/pre-entry-independent-review-receipt-v2.json",
-  "updated_at": "2026-09-06T14:28:53Z"
+  "updated_at": "2026-09-06T15:09:17Z"
 }
