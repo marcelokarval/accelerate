@@ -28,7 +28,7 @@
       "type": "string",
       "minLength": 1,
       "maxLength": 100,
-      "pattern": "^[A-Za-z0-9._-]{1,100}$"
+      "pattern": "^[^\r\n]+$"
     },
     "route": {
       "type": "string",
@@ -41,6 +41,36 @@
       "minLength": 1,
       "maxLength": 100,
       "pattern": "^[A-Za-z0-9._-]{1,100}$"
+    },
+    "client_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "^[^\r\n]+$"
+    },
+    "gateway_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "^[^\r\n]+$"
+    },
+    "stop_rule": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "^[^\r\n]+$"
+    },
+    "cost_tracking": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "^[^\r\n]+$"
+    },
+    "final_classification": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "^[^\r\n]+$"
     },
     "controls": {
       "type": "object",
@@ -102,6 +132,22 @@
           "minLength": 1,
           "maxLength": 160,
           "pattern": "^[A-Za-z0-9._/:@-]{1,160}$"
+        },
+        "reasoning_effort": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
+          "pattern": "^[^\r\n]+$"
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 86400
+        },
+        "max_retries": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
         }
       },
       "additionalProperties": false
@@ -165,6 +211,12 @@
           "type": "string",
           "minLength": 1,
           "maxLength": 240,
+          "pattern": "^[^\r\n]+$"
+        },
+        "attempt_timestamp": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 100,
           "pattern": "^[^\r\n]+$"
         }
       },

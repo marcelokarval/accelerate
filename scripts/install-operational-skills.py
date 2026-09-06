@@ -88,7 +88,7 @@ def load_registry(
         if not isinstance(runtime, str) or not VALID_NAME.fullmatch(runtime) or runtime in targets:
             raise ValueError(f"invalid or duplicate runtime: {runtime!r}")
         targets[runtime] = _safe_relative(item["home_suffix"], "target")
-    if not skills or not ({"opencode", "agents", "codex", "hermes"} <= set(targets) <= {"opencode", "agents", "codex", "hermes", "claude"}):
+    if not skills or not ({"opencode", "agents", "hermes"} <= set(targets) <= {"opencode", "agents", "codex", "hermes", "claude"}):
         raise ValueError("projection denominator drift")
     return skills, targets
 
@@ -234,13 +234,20 @@ def reconcile(
         destination = target_root / name
         digest = expected[name]
         previous = destination.exists()
+        prev_digest = None
+        if previous:
+            prev_digest = tree_digest(destination)
+            backup_path = run_root / f"{name}.previous"
+            shutil.copytree(destination, backup_path)
+            assert_regular_tree(backup_path)
+            if tree_digest(backup_path) != prev_digest:
+                raise ValueError(f"backup copy integrity failed for {name}")
         entry = {
             "name": name,
             "previous": previous,
+            "previous_digest": prev_digest,
             "installed_digest": digest,
         }
-        if previous:
-            shutil.copytree(destination, run_root / f"{name}.previous")
         manifest["entries"].append(entry)
     manifest_path = run_root / "manifest.json"
     _write_manifest(manifest_path, manifest)
@@ -299,6 +306,8 @@ def rollback(
     entries = manifest.get("entries")
     if not isinstance(entries, list):
         raise ValueError("rollback manifest entries are invalid")
+
+    # Preflight phase: validate all destinations and all backups before any mutation
     for entry in entries:
         name = entry.get("name")
         if not isinstance(name, str) or not VALID_NAME.fullmatch(name):
@@ -307,17 +316,34 @@ def rollback(
         marker = _managed_payload(destination, name, runtime)
         if marker is None or marker["source_digest"] != entry.get("installed_digest"):
             raise ValueError(f"refusing rollback after target drift: {name}")
+
+        if entry.get("previous"):
+            backup = run_root / f"{name}.previous"
+            if not backup.exists() or backup.is_symlink() or not backup.is_dir():
+                raise ValueError(f"missing or unsafe backup directory for {name}")
+            assert_regular_tree(backup)
+            expected_prev_digest = entry.get("previous_digest")
+            if expected_prev_digest is not None:
+                actual_prev_digest = tree_digest(backup)
+                if actual_prev_digest != expected_prev_digest:
+                    raise ValueError(
+                        f"refusing rollback: backup for {name} has tampered digest "
+                        f"(expected {expected_prev_digest}, got {actual_prev_digest})"
+                    )
+            if not (backup / MARKER).is_file():
+                raise ValueError(f"backup for {name} is missing managed marker")
+
+    # Execution phase: perform rollback atomically per skill
     for entry in reversed(entries):
         name = entry["name"]
         destination = target_root / name
-        shutil.rmtree(destination)
         if entry.get("previous"):
             backup = run_root / f"{name}.previous"
-            assert_regular_tree(backup)
             staged = _stage(backup, target_root, name, runtime, tree_digest(backup))
-            # Preserve the prior marker copied in the backup rather than a new digest marker.
             shutil.copy2(backup / MARKER, staged / MARKER)
             _replace(destination, staged)
+        else:
+            shutil.rmtree(destination)
     manifest["status"] = "rolled-back"
     _write_manifest(manifest_path, manifest)
 

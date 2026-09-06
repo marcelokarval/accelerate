@@ -5,8 +5,10 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import re
 import sys
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -15,7 +17,7 @@ STATUSES = {"pass", "semantic_fail", "transport_fail", "protocol_fail", "not_run
 ID_RE = re.compile(r"^[A-Za-z0-9._-]{1,160}$")
 MODEL_ID_RE = re.compile(r"^[A-Za-z0-9._/:@-]{1,160}$")
 SHA_RE = re.compile(r"^[a-f0-9]{64}$")
-SAFE_TEXT_RE = re.compile(r"^[ A-Za-z0-9._:/@+=,;()\[\]{}|\\-]{1,240}$")
+SAFE_TEXT_RE = re.compile(r"^[^\r\n\t\x00-\x1f\x7f-\x9f]{1,240}$")
 FORBIDDEN_KEY = re.compile(
     r"(?:^|_)(?:raw|authorization|cookie|token|secret|api_key|password|headers?|body|prompt|response)(?:_|$)",
     re.I,
@@ -50,7 +52,7 @@ def reject_secrets(value: Any, trail: str = "$") -> None:
 def safe_text(value: Any, name: str) -> None:
     if not isinstance(value, str) or not value or "\n" in value or "\r" in value:
         raise ValueError(f"{name} must be a non-empty, single-line string")
-    if not SAFE_TEXT_RE.fullmatch(value):
+    if len(value) > 240 or not SAFE_TEXT_RE.fullmatch(value):
         raise ValueError(f"unsafe or oversized {name}")
 
 
@@ -84,7 +86,7 @@ def validate_manifest(data: dict[str, Any]) -> dict[str, int]:
     safe_text(data["catalog_snapshot_id"], "catalog_snapshot_id")
 
     # Optional top-level fields validation
-    for opt_field in ("provider", "route", "harness"):
+    for opt_field in optional_top_keys:
         if opt_field in data:
             safe_text(data[opt_field], opt_field)
 
@@ -132,6 +134,14 @@ def validate_manifest(data: dict[str, Any]) -> dict[str, int]:
         if "requested_model" in slot:
             if not isinstance(slot["requested_model"], str) or not MODEL_ID_RE.fullmatch(slot["requested_model"]):
                 raise ValueError(f"invalid slot requested_model for slot {slot_id}")
+        if "reasoning_effort" in slot:
+            safe_text(slot["reasoning_effort"], f"slot {slot_id} reasoning_effort")
+        if "timeout_seconds" in slot:
+            if not isinstance(slot["timeout_seconds"], int) or slot["timeout_seconds"] < 1:
+                raise ValueError(f"invalid slot timeout_seconds for slot {slot_id}")
+        if "max_retries" in slot:
+            if not isinstance(slot["max_retries"], int) or slot["max_retries"] < 0:
+                raise ValueError(f"invalid slot max_retries for slot {slot_id}")
 
         slot_defs[slot_id] = slot
 
@@ -191,7 +201,7 @@ def validate_manifest(data: dict[str, Any]) -> dict[str, int]:
             requested_model_by_slot[slot_id] = req_model
 
         # Safe text checks for optional string fields
-        for key in ("effective_model", "artifact_locator", "semantic_verdict", "reason"):
+        for key in ("effective_model", "artifact_locator", "semantic_verdict", "reason", "attempt_timestamp"):
             if key in row:
                 safe_text(row[key], f"evidence {slot_id} attempt {attempt} {key}")
 
@@ -260,14 +270,39 @@ def main() -> int:
     parser.add_argument("--manifest", required=True, type=Path)
     parser.add_argument("--receipt-out", required=True, type=Path)
     parser.add_argument("--migrate-v1", action="store_true", help="safely migrate v1 manifest to v2.0")
+    parser.add_argument("--migrated-out", type=Path, help="path to write migrated v2.0 manifest")
+    parser.add_argument("--in-place", action="store_true", help="authorize in-place atomic update of manifest file")
     args = parser.parse_args()
     try:
         manifest_data = load_json(args.manifest)
         if args.migrate_v1:
-            manifest_data = migrate_manifest_v1_to_v2(manifest_data)
-            args.manifest.write_text(json.dumps(manifest_data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        counts = validate_manifest(manifest_data)
-        raw = args.manifest.read_bytes()
+            migrated_data = migrate_manifest_v1_to_v2(manifest_data)
+            # Validate in-memory representation FIRST before touching any file on disk!
+            counts = validate_manifest(migrated_data)
+            manifest_data = migrated_data
+            serialized = json.dumps(manifest_data, indent=2, sort_keys=True) + "\n"
+
+            target_out = None
+            if args.migrated_out:
+                target_out = args.migrated_out
+            elif args.in_place or not args.migrated_out:
+                target_out = args.manifest
+
+            if target_out is not None:
+                target_out.parent.mkdir(parents=True, exist_ok=True)
+                with tempfile.NamedTemporaryFile("w", dir=target_out.parent, prefix=".migrated-", delete=False, encoding="utf-8") as tmp:
+                    tmp.write(serialized)
+                    tmp_path = Path(tmp.name)
+                try:
+                    os.replace(tmp_path, target_out)
+                finally:
+                    if tmp_path.exists():
+                        tmp_path.unlink()
+            raw = serialized.encode("utf-8")
+        else:
+            counts = validate_manifest(manifest_data)
+            raw = args.manifest.read_bytes()
+
         receipt = {
             "schema_version": manifest_data.get("schema_version", "2.0"),
             "status": "valid",
@@ -276,7 +311,14 @@ def main() -> int:
             **counts,
         }
         args.receipt_out.parent.mkdir(parents=True, exist_ok=True)
-        args.receipt_out.write_text(json.dumps(receipt, sort_keys=True, indent=2) + "\n", encoding="utf-8")
+        with tempfile.NamedTemporaryFile("w", dir=args.receipt_out.parent, prefix=".receipt-", delete=False, encoding="utf-8") as tmp:
+            tmp.write(json.dumps(receipt, sort_keys=True, indent=2) + "\n")
+            tmp_path = Path(tmp.name)
+        try:
+            os.replace(tmp_path, args.receipt_out)
+        finally:
+            if tmp_path.exists():
+                tmp_path.unlink()
         print(json.dumps(receipt, sort_keys=True))
     except ValueError as exc:
         print(f"validation failed: {exc}", file=sys.stderr)

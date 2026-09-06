@@ -5,7 +5,9 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import sys
+import tempfile
 from collections import Counter, defaultdict
 from datetime import datetime
 from pathlib import Path
@@ -151,18 +153,36 @@ def main() -> int:
         if args.out_dir.is_symlink():
             raise ValueError(f"refusing symlink out-dir: {args.out_dir}")
         out_dir = args.out_dir.resolve()
-        if out_dir.exists() and out_dir.is_symlink():
-            raise ValueError(f"refusing symlink out-dir: {out_dir}")
+        if out_dir.exists() and (out_dir.is_symlink() or not out_dir.is_dir()):
+            raise ValueError(f"refusing symlink or non-directory out-dir: {out_dir}")
         out_dir.mkdir(parents=True, exist_ok=True)
 
-        target = (out_dir / "capability-battery-report.md").resolve()
-        if not str(target).startswith(str(out_dir)):
-            raise ValueError(f"path traversal detected for output: {target}")
-        if target.exists() and target.is_symlink():
+        target = out_dir / "capability-battery-report.md"
+        if target.is_symlink() or (target.exists() and target.is_symlink()):
             raise ValueError(f"refusing symlink target file: {target}")
 
+        resolved_target = target.resolve()
+        try:
+            if not resolved_target.is_relative_to(out_dir):
+                raise ValueError(f"path traversal detected for output: {resolved_target}")
+        except AttributeError:
+            if os.path.commonpath([str(out_dir), str(resolved_target)]) != str(out_dir):
+                raise ValueError(f"path traversal detected for output: {resolved_target}")
+
+        if resolved_target.exists() and resolved_target.is_symlink():
+            raise ValueError(f"refusing symlink target file: {resolved_target}")
+
         content = render_report(manifest, digest, args.validation_receipt.name, counts)
-        target.write_text(content, encoding="utf-8")
+        with tempfile.NamedTemporaryFile("w", dir=out_dir, prefix=".report-", delete=False, encoding="utf-8") as tmp:
+            tmp.write(content)
+            temp_target = Path(tmp.name)
+        try:
+            if target.is_symlink():
+                raise ValueError(f"refusing symlink target file: {target}")
+            os.replace(temp_target, target)
+        finally:
+            if temp_target.exists():
+                temp_target.unlink()
         print(target)
     except (ValueError, KeyError, TypeError) as exc:
         print(f"render failed: {exc}", file=sys.stderr)

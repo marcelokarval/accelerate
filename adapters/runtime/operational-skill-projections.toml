@@ -15,10 +15,6 @@ runtime = "agents"
 home_suffix = ".agents/skills"
 
 [[targets]]
-runtime = "codex"
-home_suffix = ".codex/skills"
-
-[[targets]]
 runtime = "hermes"
 home_suffix = ".hermes/skills/runtime"
 

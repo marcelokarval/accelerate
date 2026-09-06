@@ -386,3 +386,126 @@ def test_safe_v1_to_v2_migration():
     assert migrated["schema_version"] == "2.0"
     counts = validator.validate_manifest(migrated)
     assert counts["planned_slot_count"] == 1
+
+
+# Test 21: (T1) Renderer prefix/symlink escape (out vs outside)
+def test_renderer_out_vs_outside_prefix_escape(tmp_path):
+    manifest_file = tmp_path / "manifest.json"
+    receipt_file = tmp_path / "receipt.json"
+    manifest = full_valid_manifest_v2()
+    manifest_file.write_text(json.dumps(manifest))
+    counts = validator.validate_manifest(manifest)
+    raw = manifest_file.read_bytes()
+    digest = hashlib.sha256(raw).hexdigest()
+    receipt = {
+        "schema_version": "2.0",
+        "status": "valid",
+        "manifest_sha256": digest,
+        "planned_slot_count": counts["planned_slot_count"],
+        "evidence_count": counts["evidence_count"],
+        "validated_at": "2026-09-06T00:00:00+00:00",
+    }
+    receipt_file.write_text(json.dumps(receipt))
+
+    out_dir = tmp_path / "out"
+    out_dir.mkdir()
+    outside_dir = tmp_path / "outside"
+    outside_dir.mkdir()
+
+    symlink_target = out_dir / "capability-battery-report.md"
+    escaped_file = outside_dir / "capability-battery-report.md"
+    symlink_target.symlink_to(escaped_file)
+
+    old_argv = sys.argv
+    try:
+        sys.argv = [
+            "render_capability_report.py",
+            "--manifest", str(manifest_file),
+            "--validation-receipt", str(receipt_file),
+            "--out-dir", str(out_dir),
+        ]
+        exit_code = renderer.main()
+        assert exit_code == 2, "renderer must exit with code 2 when target escapes out_dir"
+        assert not escaped_file.exists(), "escaped file in outside dir must not be written"
+    finally:
+        sys.argv = old_argv
+
+
+# Test 22: (T2) Structural parity between Python and JSON Schema
+def test_schema_python_comprehensive_matrix():
+    schema = json.loads(MANIFEST_SCHEMA_PATH.read_text(encoding="utf-8"))
+
+    # Case 1: planned slot with reasoning_effort, timeout_seconds, max_retries
+    m1 = full_valid_manifest_v2()
+    m1["planned_slots"][0]["reasoning_effort"] = "high"
+    m1["planned_slots"][0]["timeout_seconds"] = 30
+    m1["planned_slots"][0]["max_retries"] = 2
+    validator.validate_manifest(m1)
+    jsonschema.validate(m1, schema)
+
+    # Case 2: provider name with spaces
+    m2 = full_valid_manifest_v2()
+    m2["provider"] = "OmniRoute Main Provider"
+    validator.validate_manifest(m2)
+    jsonschema.validate(m2, schema)
+
+    # Case 3: capability with non-ASCII unicode
+    m3 = full_valid_manifest_v2()
+    m3["planned_slots"][0]["capability"] = "visão computacional e raciocínio multi-etapa"
+    jsonschema.validate(m3, schema)
+    validator.validate_manifest(m3)
+
+    # Case 4: top-level optional fields and evidence attempt_timestamp
+    m4 = full_valid_manifest_v2()
+    m4["client_version"] = "2.5.0"
+    m4["gateway_version"] = "1.0.0"
+    m4["stop_rule"] = "first_pass"
+    m4["cost_tracking"] = "tokens_offline"
+    m4["final_classification"] = "offline_verified"
+    m4["evidence"][0]["attempt_timestamp"] = "2026-09-06T00:00:00Z"
+    validator.validate_manifest(m4)
+    jsonschema.validate(m4, schema)
+
+
+# Test 23: (T3) Destructive / in-place migration does not mutate input on invalid manifest
+def test_migrate_v1_invalid_does_not_modify_input(tmp_path):
+    invalid_v1 = {
+        "schema_version": "1.0",
+        "battery_id": "legacy-battery",
+        "catalog_snapshot_id": "snap-legacy",
+        "controls": {"temp": 0},
+        "planned_slots": [
+            {
+                "slot_id": "s1",
+                "capability": "c1",
+                "rubric_version": "r1",
+                "input_sha256": "0" * 64,
+            }
+        ],
+        "evidence": [
+            {
+                "slot_id": "s1",
+                "attempt": 1,
+                "status": "invalid_unknown_status",
+                "requested_model": "model-1",
+            }
+        ],
+    }
+    manifest_path = tmp_path / "manifest_v1.json"
+    original_content = json.dumps(invalid_v1, indent=2) + "\n"
+    manifest_path.write_text(original_content, encoding="utf-8")
+    receipt_path = tmp_path / "receipt.json"
+
+    old_argv = sys.argv
+    try:
+        sys.argv = [
+            "validate_capability_battery.py",
+            "--manifest", str(manifest_path),
+            "--receipt-out", str(receipt_path),
+            "--migrate-v1",
+        ]
+        exit_code = validator.main()
+        assert exit_code == 2
+        assert manifest_path.read_text(encoding="utf-8") == original_content
+    finally:
+        sys.argv = old_argv
