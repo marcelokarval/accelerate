@@ -2,8 +2,9 @@
 
 ## Estado e autoridade
 
-- Estado deste artefato: `draft`; ele orienta revisão, mas **não** autoriza
-  implementação, instalação, promoção ou cutover.
+- Estado deste artefato: `accepted` para **design-only**. Ele não autoriza
+  implementação, instalação, promoção, cutover, mudança de runtime ou início
+  de S1A.
 - Modo de especificação: `hierarchical`. O trabalho define fronteiras entre
   core, adapters de workflow/runtime, contrato de evidência, avaliação e mais
   de um harness. Esse é o gatilho objetivo do modo hierárquico; não é um rótulo
@@ -20,13 +21,32 @@
   compatibilidade seguem pendentes para o gate de S1A.
 - `CODEX-31` é lifecycle externo, não uma alegação derivada do repositório. A
   última leitura governada desta rodada identificou o item
-  `e31850d4-275d-4ef1-a078-50c79ea60020`; aceite futuro deve reler o provider.
+  `e31850d4-275d-4ef1-a078-50c79ea60020`; toda decisão lifecycle futura deve
+  reler o provider.
 
 Este SDD deriva da [discussion literal](2026-09-05-accelerate-consolidation-discussion-verbatim.md)
 e das [decisões D01–D10](2026-09-05-accelerate-consolidation-decision-intake.md).
 Esses registros continuam sendo evidência histórica da decisão. Este arquivo
-é a autoridade de design proposta para o produto v0.2.0 somente depois de
-aceite independente explícito.
+é a autoridade de design do produto v0.2.0 somente no escopo aceito abaixo.
+
+### Aceite de design
+
+- Aceitador: operador do projeto.
+- Data: 2026-09-05.
+- Autoridade: instrução explícita “Aceito o SDD v0.2.0 somente como design”.
+- Revisão independente prévia: `PASS`, sem findings P0–P3, sobre o candidato
+  desta geração.
+- Efeito: autoriza usar este SDD e sua matriz como direção de design; não
+  autoriza S1A, Wave 0, escrita em `core/contracts/v1/`, dispatch físico,
+  instalação OpenSpec, qualificação Hermes, avaliação paga ou encerramento de
+  `CODEX-26`.
+- Residual de lifecycle: o receipt Plane
+  `997657c897c63c6042c3024b45d10377f13e028aecfc7728b0f11ff6e29f2bd1`
+  permanece pendente de reconciliação de adapter. O comentário foi lido, o
+  item permaneceu `In Progress`, mas o reconciliador v3 recusou-o por não ser
+  um receipt `comment-pending`; nenhuma repetição/PATCH foi realizada. Isso
+  não altera este aceite documental e não pode ser escondido como receipt
+  reconciliado.
 
 ### Limite de autoridade
 

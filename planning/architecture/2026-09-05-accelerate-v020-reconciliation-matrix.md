@@ -2,9 +2,10 @@
 
 ## Status, método e legenda
 
-Estado: `draft`, ligado ao SDD consolidado de v0.2.0 e ao issue `CODEX-31`.
-Esta matriz não muda autoridade nem aceita artefatos; ela torna as disposições
-revisáveis antes de qualquer task de implementação.
+Estado: `accepted` como artefato de reconciliação de **design-only**, ligado ao
+SDD consolidado de v0.2.0 e ao issue `CODEX-31`. Ela não muda authority de
+runtime, não aceita artefatos de implementação e não libera qualquer task; ela
+torna as disposições revisáveis antes de implementação.
 
 Os termos abaixo são campos independentes, não uma escala que permita pular
 etapas:
@@ -115,7 +116,7 @@ commit, caminho, comando/recibo e revisão exatos. Linhas `parcial`,
 | “OpenSpec 1.12.0 está integrado.” | Não. | Esta matriz não instala nem implementa integração. |
 | “Os testes atuais comprovam resolução de problemas.” | Não. | Há tests/fixtures estruturais, não benchmark de engenharia/harness. |
 | “Hermes garante isolamento cego.” | Não. | Ainda falta qualificação e sentinelas. |
-| “A arquitetura v0.2.0 está aceita.” | Não. | SDD/matriz são drafts até revisão independente. |
+| “A arquitetura v0.2.0 está aceita.” | Sim, somente como design. | Revisão independente passou e o operador aceitou o SDD/matriz; implementação continua bloqueada pelos gates de S1A/Wave 0. |
 
 ## Mapa de requisitos para o primeiro slice
 
@@ -138,5 +139,5 @@ intenção de sequência, não autorização de tarefa.
    prova delimitada;
 3. criar a emenda ACV1↔v0.2.0 e Test Design de S1A, congelar fixtures e task
    graph;
-4. aceitar ou devolver o SDD/matriz; nenhum código é iniciado enquanto o estado
-   de design for `draft`.
+4. preparar S1A somente sob seus gates; nenhum código é iniciado apenas pelo
+   aceite de design.
