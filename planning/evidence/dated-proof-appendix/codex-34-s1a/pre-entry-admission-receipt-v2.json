@@ -36,8 +36,10 @@
     "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
     "work_item": "CODEX-34",
     "work_item_id": "79b4d3f4-a30f-4ebe-85cf-deb8c4dce128",
-    "state": "Todo",
-    "state_id": "caff4483-d337-47ae-ab44-2b5263ecc0e4"
+    "state": "In Progress",
+    "state_id": "e1e78b18-5b23-4b77-9a69-3e09f0b4cc33",
+    "start_receipt_fingerprint": "f2f7eb6fd4498fd00b1a90e3be89aef3f0ac91d631e20e1e108b6f6b4513b5ac",
+    "start_transition_id": "RYCQDZSHc8ZG5bXiq6NvrubOTYzpfpmF"
   },
   "staffing": {
     "P05": {
@@ -83,5 +85,5 @@
   ],
   "rollback": "Revert only bounded S1A commits after confirming no overlap; otherwise stop and replan in an isolated worktree.",
   "successor_review_receipt": "planning/evidence/dated-proof-appendix/codex-34-s1a/pre-entry-independent-review-receipt-v2.json",
-  "updated_at": "2026-09-06T14:28:00Z"
+  "updated_at": "2026-09-06T14:28:53Z"
 }
