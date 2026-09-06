@@ -139,6 +139,7 @@ def validate_manifest(data: dict[str, Any]) -> dict[str, int]:
         status = row["status"]
         http_status = row.get("http_status")
         response_sha = row.get("response_sha256")
+        effective_model = row.get("effective_model")
 
         if status == "pass":
             if http_status is None or not (200 <= http_status < 300):

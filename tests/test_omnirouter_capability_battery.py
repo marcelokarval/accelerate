@@ -356,6 +356,16 @@ def test_semantic_fail_requires_completed_http():
         validator.validate_manifest(manifest)
 
 
+def test_valid_manifest_with_semantic_fail():
+    """T-SF: Manifest with valid semantic_fail evidence must validate successfully."""
+    manifest = full_valid_manifest_v2()
+    manifest["evidence"][0]["status"] = "semantic_fail"
+    manifest["evidence"][0]["reason"] = "failed custom rubric assertion"
+    manifest["evidence"][0]["effective_model"] = "anthropic/claude-sonnet-4.6"
+    counts = validator.validate_manifest(manifest)
+    assert counts["evidence_count"] == 3
+
+
 # Test 20: Safe migration from v1.0 to v2.0
 def test_safe_v1_to_v2_migration():
     v1_manifest = {
