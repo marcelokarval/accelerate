@@ -19,18 +19,18 @@
     "planning/evidence/dated-proof-appendix/codex-34-s1a/pre-entry-baseline-proof.json"
   ],
   "gates": {
-    "G01": "reopened-for-new-base",
+    "G01": "satisfied",
     "G02": "satisfied-for-s1a-provenance-only",
-    "G03": "reopened-for-successor-review",
-    "G04": "reopened-for-successor-freeze",
+    "G03": "satisfied",
+    "G04": "satisfied",
     "G05": "satisfied",
-    "G06": "superseded-physical-dispatch-mandatory",
-    "G07": "not_started",
+    "G06": "satisfied-physical-dispatch-enforced",
+    "G07": "in_progress",
     "G08": "not_started"
   },
   "no_inherited_proofs": true,
-  "tasks_ready": false,
-  "execution_admitted": false,
+  "tasks_ready": true,
+  "execution_admitted": true,
   "plane": {
     "workspace_slug": "karval",
     "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
@@ -81,5 +81,7 @@
     ".accelerate/",
     "user-home"
   ],
-  "rollback": "Revert only bounded S1A commits after confirming no overlap; otherwise stop and replan in an isolated worktree."
+  "rollback": "Revert only bounded S1A commits after confirming no overlap; otherwise stop and replan in an isolated worktree.",
+  "successor_review_receipt": "planning/evidence/dated-proof-appendix/codex-34-s1a/pre-entry-independent-review-receipt-v2.json",
+  "updated_at": "2026-09-06T14:28:00Z"
 }
