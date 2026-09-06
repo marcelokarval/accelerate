@@ -38,8 +38,8 @@ metadata:
       - hermes-runtime-truth
       - production-runtime-operations
       - verification-before-completion
-    canonical_source: ~/.hermes/skills/runtime/omnirouter-operations
-    governed_by: thor/default
+    canonical_source: skills/operations/omnirouter-operations
+    governed_by: accelerate/root
 ---
 
 # OmniRoute Operations
