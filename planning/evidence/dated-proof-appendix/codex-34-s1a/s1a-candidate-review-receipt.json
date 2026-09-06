@@ -1,0 +1,48 @@
+{
+  "schema_version": 2,
+  "kind": "accelerate-v020-s1a-candidate-review-receipt",
+  "recorded_at": "2026-09-06T15:08:30Z",
+  "candidate_base": "710db6474292ff3deb74728c1d754aea6e7f806e",
+  "candidate_head": "be16eef6957a07fc2f558a268e31fc5d14df9fe6",
+  "candidate_tree": "c7b270b5fd985c3aa3d9871f2a48b1203440e842",
+  "candidate_diff_hash": "51e5a746cd2c5e6a174f616afb3687a0fcda1811476e65c64ae34f5b405c268f",
+  "candidate_changed_files_count": 16,
+  "qa_p05": {
+    "subagent_conversation_id": "ea6c2544-b9bf-4320-8773-5f91dd22c06d",
+    "role": "independent-qa",
+    "commit": "9b66682",
+    "observed_red_marker": "[RED-S1A-00: VALIDATOR_MISSING_OR_NON_COMPLIANT]"
+  },
+  "implementer_p06": {
+    "subagent_conversation_id": "0b5a08be-f2bf-4889-b815-d47b14f4bbbe",
+    "role": "distinct-implementer",
+    "commit": "be16eef",
+    "observed_green": true
+  },
+  "reviewer_p07": {
+    "subagent_conversation_id": "06c28a08-b20e-4b10-904e-40e2da0af5cf",
+    "role": "independent-reviewer",
+    "verdict": "PASS",
+    "findings": {
+      "P0": 0,
+      "P1": 0,
+      "P2": 0,
+      "P3": 0
+    }
+  },
+  "tests_verified": {
+    "tests/accelerate-v020-s1a-authority.sh": "pass",
+    "tests/authority-set-gate.sh": "pass",
+    "tests/doctrine-integrity.sh": "pass",
+    "tests/markdown-link-integrity.sh": "pass",
+    "tests/all.sh": "pass"
+  },
+  "root_review_of_review_p08": {
+    "status": "accepted-for-operator-decision",
+    "basis": "Candidate complies with all 8 rubric criteria. Scope is strictly isolated. All negative and positive authority tests pass deterministically. Operator decision point P09 is preserved."
+  },
+  "operator_decision_point_p09": {
+    "status": "pending_human_operator_decision",
+    "prompt": "Voc\u00ea aceita ou rejeita a emenda S1A deste candidato?"
+  }
+}
