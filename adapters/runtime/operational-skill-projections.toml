@@ -1,0 +1,27 @@
+schema_version = 1
+managed_by = "accelerate"
+marker = ".accelerate-operational-skill.json"
+
+[[skills]]
+name = "omnirouter-operations"
+source = "skills/operations/omnirouter-operations"
+
+[[targets]]
+runtime = "opencode"
+home_suffix = ".config/opencode/skills"
+
+[[targets]]
+runtime = "agents"
+home_suffix = ".agents/skills"
+
+[[targets]]
+runtime = "codex"
+home_suffix = ".codex/skills"
+
+[[targets]]
+runtime = "hermes"
+home_suffix = ".hermes/skills/runtime"
+
+[[targets]]
+runtime = "claude"
+home_suffix = ".claude/skills"
