@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "kind": "bounded-s1a-post-integration-review-v2",
+  "date": "2026-09-10",
+  "work_item": "CODEX-34",
+  "pr": 12,
+  "url": "https://github.com/marcelokarval/accelerate/pull/12",
+  "candidate": {
+    "head": "2bef8e8a73e345f648714f9ae1f638b5a516c39c",
+    "tree": "82be5ac58e0ea98e523a86664d68c1f4f1e5e093",
+    "parents": [
+      "cf6c92646f603d248a4b34a408371d25406a77ff",
+      "8dc934bf6590c669499f4a54299f68758a387be8"
+    ],
+    "integration_commit_exists": true,
+    "branch": "v0.2.0-s1a",
+    "local_hardening_commit": "cf6c92646f603d248a4b34a408371d25406a77ff",
+    "integrated_base": "8dc934bf6590c669499f4a54299f68758a387be8",
+    "worktree_clean": true,
+    "ahead": 7,
+    "commit": false,
+    "push": false,
+    "receipt_commit_status": "pending_at_creation",
+    "branch_push_status": "pending_at_creation"
+  },
+  "lineage": {
+    "predecessor": "planning/evidence/dated-proof-appendix/codex-34-s1a/2026-09-10-s1a-post-integration-review.json",
+    "predecessor_sha256": "1069072e4ae3f4358c95463c2c4110f7098eec42e53faa9d89318881ba1d0997",
+    "disposition": "superseded_for_commit_state_clarity_only",
+    "predecessor_receipts_preserved_append_only": true,
+    "predecessor_is_current_head_proof": false
+  },
+  "evidence": {
+    "native_task": {
+      "id": "ses_f74049136ffeRWZZHM0lvHd9zR",
+      "requested_binding": "openai/gpt-5.6-luna/medium",
+      "reasoning_effort": "medium",
+      "effective_model": "not exposed"
+    },
+    "commands": [
+      {"command": "conformance22", "exit_code": 0, "result": "pass"},
+      {"command": "metadata4", "exit_code": 0, "result": "pass"},
+      {"command": "focal compliant", "exit_code": 0, "result": "pass"},
+      {"command": "PYTHONDONTWRITEBYTECODE=1 bash tests/all.sh", "exit_code": 0, "result": "all tests passed; reported 32+81+61 and 1 explicit opt-in skip"},
+      {"command": "diff-check", "exit_code": 0, "result": "pass"},
+      {"command": "status", "result": "clean; ahead 7"}
+    ],
+    "runtime_limits": [
+      "Real OpenSpec proof not run",
+      "Live Codex proof not run",
+      "Logical runtime proof not run"
+    ]
+  },
+  "review": {
+    "task": {
+      "id": "ses_f73f94432ffe3QV5YZynVgwIyp",
+      "requested_binding": "openai/gpt-5.6-terra/medium",
+      "effective_model": "not exposed",
+      "result": "PUSH_GATE PASS; no P0-P1",
+      "shell_rerun": false
+    },
+    "integration_task": {
+      "id": "ses_f74064c72ffeOIs3jIaUzuq56q",
+      "requested_binding": "openai/gpt-5.6-terra/medium",
+      "effective_model": "not exposed"
+    }
+  },
+  "decision": {
+    "eligible_for_normal_push_to_existing_pr12": true,
+    "push": "pending",
+    "operator_acceptance": "NOT ISSUED",
+    "pr_merge": "NOT AUTHORIZED/EXECUTED",
+    "plane_write": false,
+    "amendment": "draft-pre-s1a",
+    "wave0_s1b_core_mutation": "NOT AUTHORIZED",
+    "release_runtime": "NOT AUTHORIZED",
+    "residual_p2": "Markdown parser permits contradictory nonblank content after blank following 24-row map before next H2; nonblocking for push, follow-up required."
+  },
+  "notes": {
+    "no_provider_or_plane_write": true,
+    "no_commit_or_push": true,
+    "correction": "V1 commit:false and no_commit_or_push described receipt creation moment; they did not mean the integration HEAD lacked a commit.",
+    "final_receipt_commit_sha": "not predicted"
+  }
+}
