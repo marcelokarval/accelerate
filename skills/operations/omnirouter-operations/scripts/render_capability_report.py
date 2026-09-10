@@ -13,7 +13,10 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-from validate_capability_battery import load_json, validate_manifest
+from validate_capability_battery import load_json, parse_json_bytes, read_manifest_bytes, validate_manifest
+import jsonschema
+
+RECEIPT_SCHEMA_PATH = Path(__file__).resolve().parent.parent / "assets/capability-battery-validation-receipt.schema.json"
 
 
 def escape_markdown(value: Any) -> str:
@@ -40,9 +43,13 @@ def validate_receipt(receipt: dict[str, Any], digest: str, counts: dict[str, int
         "planned_slot_count",
         "evidence_count",
     }
-    if not isinstance(receipt, dict) or not required <= set(receipt):
-        raise ValueError("invalid receipt schema: missing required fields")
-    if receipt["schema_version"] not in {"1.0", "2.0"}:
+    if not isinstance(receipt, dict) or set(receipt) != required:
+        raise ValueError("invalid receipt schema: exact fields required")
+    try:
+        jsonschema.validate(instance=receipt, schema=load_json(RECEIPT_SCHEMA_PATH))
+    except jsonschema.ValidationError as exc:
+        raise ValueError(f"invalid receipt schema at {'.'.join(map(str, exc.path)) or 'receipt'}") from exc
+    if receipt["schema_version"] != "2.0":
         raise ValueError("unsupported receipt schema_version")
     if receipt["status"] != "valid":
         raise ValueError("receipt status must be 'valid'")
@@ -143,8 +150,8 @@ def main() -> int:
     parser.add_argument("--out-dir", required=True, type=Path)
     args = parser.parse_args()
     try:
-        raw = args.manifest.read_bytes()
-        manifest = load_json(args.manifest)
+        raw = read_manifest_bytes(args.manifest)
+        manifest = parse_json_bytes(raw)
         counts = validate_manifest(manifest)
         digest = hashlib.sha256(raw).hexdigest()
         receipt = load_json(args.validation_receipt)
