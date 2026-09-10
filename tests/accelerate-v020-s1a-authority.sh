@@ -26,7 +26,7 @@ if [ ! -d "$FIXTURES_DIR" ]; then
   exit 2
 fi
 
-required_fixtures=(
+REQUIRED_FIXTURES=(
   "authority-classes-precedence.json"
   "acv1-expected-mapping.json"
   "canonical-authority-positive.json"
@@ -38,13 +38,22 @@ required_fixtures=(
   "manifest.json"
 )
 
-for f in "${required_fixtures[@]}"; do
+for f in "${REQUIRED_FIXTURES[@]}"; do
   fpath="${FIXTURES_DIR}/${f}"
   if [ ! -f "$fpath" ]; then
     printf '[BLOCKED: FIXTURE_MISSING] Required fixture missing: %s\n' "$fpath" >&2
     exit 2
   fi
-  if ! python3 -c 'import json, sys; json.load(open(sys.argv[1]))' "$fpath" 2>/dev/null; then
+  if ! python3 -c 'import json, sys
+def reject_duplicate_keys(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("duplicate JSON key")
+        result[key] = value
+    return result
+with open(sys.argv[1], encoding="utf-8") as stream:
+    json.load(stream, object_pairs_hook=reject_duplicate_keys)' "$fpath" 2>/dev/null; then
     printf '[BLOCKED: FIXTURE_CORRUPTED] Corrupted JSON in fixture: %s\n' "$fpath" >&2
     exit 2
   fi
@@ -69,8 +78,17 @@ if [ "$RED_FIRST" -eq 1 ]; then
   probe_out=$(python3 "$VALIDATOR" --fixture "${FIXTURES_DIR}/canonical-authority-positive.json" 2>&1)
   probe_code=$?
   set -e
-  if [ "$probe_code" -ne 0 ] || grep -Fq "RED-S1A-00" <<< "$probe_out"; then
+  if [ "$probe_code" -eq 2 ] || grep -Fq "[ERROR:" <<< "$probe_out"; then
+    printf '[BLOCKED: RED_FIRST_PROBE_ERROR] Validator probe could not establish RED state (exit %d):\n%s\n' "$probe_code" "$probe_out" >&2
+    exit 2
+  elif [ "$probe_code" -eq 1 ] && grep -Fq "RED-S1A-00" <<< "$probe_out"; then
     printf '[RED-S1A-00: VALIDATOR_MISSING_OR_NON_COMPLIANT] Validator present but non-compliant or reporting RED state:\n%s\n' "$probe_out" >&2
+    exit 1
+  elif [ "$probe_code" -eq 1 ]; then
+    printf '[BLOCKED: RED_FIRST_PROBE_ERROR] Validator probe failed without proving RED state (exit %d):\n%s\n' "$probe_code" "$probe_out" >&2
+    exit 2
+  elif grep -Fq "RED-S1A-00" <<< "$probe_out"; then
+    printf '[RED-S1A-00: VALIDATOR_MISSING_OR_NON_COMPLIANT] Validator reported RED state:\n%s\n' "$probe_out" >&2
     exit 1
   else
     printf 'Validator is already implemented and passing canonical checks; red-first phase has concluded.\n'
@@ -114,6 +132,11 @@ test_negative() {
     exit 1
   fi
 
+  if [ "$ret" -ne 1 ]; then
+    printf '[BLOCKED: NEGATIVE_VALIDATION_ERROR] Validator infrastructure failure for %s (exit %d):\n%s\n' "$test_id" "$ret" "$out" >&2
+    exit 2
+  fi
+
   if ! grep -Fq "$expected_marker" <<< "$out"; then
     printf '[FAIL: %s_WRONG_MARKER] Negative fixture rejected with exit %d but missing expected marker "%s". Output:\n%s\n' \
       "$test_id" "$ret" "$expected_marker" "$out" >&2
@@ -137,6 +160,9 @@ test_negative "6a/6" "NEG-SEQ-04" "neg-seq-04-draft-authorizing-advance.json" "[
 
 # 6. NEG-SEQ-05: S1B premature start
 test_negative "6b/6" "NEG-SEQ-05" "neg-seq-05-s1b-started-before-amendment-accepted.json" "[NEG-SEQ-05: S1B_PREMATURE_START_REJECTED]"
+
+python3 -B "$ROOT/tests/test_s1a_conformance_enforcement.py"
+python3 -B "$ROOT/tests/test_s1a_metadata_independence.py"
 
 printf '\n[PASS: S1A_AUTHORITY_SUITE_COMPLIANT] All positive and negative authority tests passed.\n'
 exit 0

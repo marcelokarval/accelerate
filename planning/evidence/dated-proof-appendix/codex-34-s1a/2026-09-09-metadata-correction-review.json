@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "kind": "bounded-s1a-metadata-correction-review",
+  "session_date": "2026-09-09",
+  "scope": "Five metadata-dependent rejection shortcuts and equivalent ACV1 diagnostic summaries only",
+  "work_item_reference": "CODEX-34",
+  "candidate": {
+    "pr_base": "710db6474292ff3deb74728c1d754aea6e7f806e",
+    "head": "2ac5156644d480f233560bff167f7990dcee5bde",
+    "revision_kind": "head-plus-uncommitted-correction",
+    "tracked_correction_diff_sha256": "8f3694fe24343d54153bc2246cd649d7aa858308b5253663646e405fc8174360",
+    "tracked_diff_command": "git diff --binary HEAD -- scripts/validate-accelerate-v020-s1a-authority.py tests/accelerate-v020-s1a-authority.sh",
+    "files_sha256": {
+      "scripts/validate-accelerate-v020-s1a-authority.py": "431b9004f7a34cc25794a21748e00c6ccef89d03da63fe440ae7ef0ec99db4f1",
+      "tests/accelerate-v020-s1a-authority.sh": "d3e38f9bc58e80076b0f487612fc177ae11fd7a6679f9aa51801d8dfabc9c290",
+      "tests/test_s1a_metadata_independence.py": "daeb0af6afdf69a5f97cc949d5077733b4ff035c050bd6ef6394b985130133ac"
+    },
+    "exclusions": ["This receipt does not hash itself", "Ignored disposable test artifacts", "Separate main-worktree v0.3.0 roadmap"],
+    "commit_created": false,
+    "pushed": false
+  },
+  "independence": {
+    "test_author_task": "ses_f76d7c981ffecwxyOtRYFpYQYC",
+    "test_author_requested_binding": "openai/gpt-5.6-luna/medium",
+    "implementer_task": "ses_f76d5beadffe5MnbsLtzu6hrtL",
+    "implementer_requested_binding": "openai/gpt-5.6-terra/medium",
+    "qa_task": "ses_f76cb5763ffexSSXZcjgbOGHGi",
+    "reviewer_task": "ses_f76cb56dcffee6OTPDVONCK1dm",
+    "qa_and_reviewer_requested_binding": "openai/gpt-5.6-terra/medium",
+    "native_effective_model_metadata": "not_exposed_to_runtime",
+    "fork_turns": "none",
+    "verification_executor": "root",
+    "qa_mode": "assessment-of-parent-supplied-evidence",
+    "review_mode": "independent-source-read-only"
+  },
+  "red_evidence": {
+    "source": "test-author terminal receipt, before implementation patch",
+    "command": "python3 -B tests/test_s1a_metadata_independence.py",
+    "exit_code": 1,
+    "methods": 4,
+    "cli_scenarios": 25,
+    "reported_metadata_failures": 16,
+    "missing_test_file_exit_2_is_red_proof": false
+  },
+  "root_observed_checks": [
+    {"command": "python3 -B tests/test_s1a_metadata_independence.py", "exit_code": 0, "result": "4 methods covering 25 CLI scenarios passed"},
+    {"command": "bash tests/accelerate-v020-s1a-authority.sh", "exit_code": 0, "result": "Canonical, amendment, five semantic negatives and metadata regressions passed"},
+    {"command": "bash tests/authority-set-gate.sh", "exit_code": 0, "result": "Passed before initial aggregate timeout"},
+    {"command": "PYTHONDONTWRITEBYTECODE=1 bash tests/all.sh", "exit_code": 0, "result": "all tests passed; includes doctrine and Markdown link checks", "limits": "Real OpenSpec explicitly skipped; live Codex canary and logical runtime proof not run"},
+    {"command": "python3 -B scripts/validate-accelerate-v020-s1a-authority.py --fixture tests/fixtures/contract-v1-authority/acv1-expected-mapping.json", "exit_code": 0, "result": "Unchanged expected-mapping positive control passed"},
+    {"command": "python3 -B /tmp/opencode/s1a-v3-metadata-probe.py", "exit_code": 0, "result": "Original canonical and canonical with only fixture_id changed both passed", "portability": "Temporary historical probe; permanent regressions cover the same property"},
+    {"command": "git diff --check", "exit_code": 0}
+  ],
+  "interrupted_verification": {
+    "description": "Initial chained focal/authority/doctrine/link run exceeded the 120-second shell limit during broader doctrine checks",
+    "aggregate_success_claimed": false,
+    "reconciliation": "No matching doctrine/link/all shell process remained; candidate status unchanged; subsequent full offline suite completed successfully with a 600-second budget"
+  },
+  "historical_identity": {
+    "prior_receipt": "planning/evidence/dated-proof-appendix/codex-34-s1a/s1a-candidate-review-receipt.json",
+    "preserved_unchanged": true,
+    "recorded_head": "be16eef6957a07fc2f558a268e31fc5d14df9fe6",
+    "recorded_head_local_object_check": "git cat-file -t failed to resolve the object locally; not a claim of global nonexistence",
+    "actual_implementation_commit": "be16eef0094fde714aef7e4da2ee32566257c8d7",
+    "actual_implementation_tree": "c7b270b5fd985c3aa3d9871f2a48b1203440e842",
+    "tree_matches_prior_receipt": true,
+    "disposition": "Do not silently correct or reuse the prior whole-candidate acceptance claim. This record supports only the explicitly hashed local correction."
+  },
+  "root_review_of_review": {
+    "bounded_correction": "supported",
+    "introduced_review_findings": 0,
+    "qa_expected_mapping_control_gap": "Additional root CLI control passed; no permanent control added in this slice",
+    "whole_s1a_acceptance": "blocked",
+    "residuals": [
+      "Accepted S1A denominator still lacks complete six-class precedence and ACV1-to-Wave linkage enforcement",
+      "Historical full-candidate receipt has an unresolved head identity inconsistency; no retrospective acceptance inferred",
+      "Correction is local and uncommitted; remote PR has not received these changes"
+    ],
+    "next_action": "Bound and authorize remaining S1A conformance work, then freeze and independently review the full successor candidate"
+  },
+  "plane": {
+    "codex_session": "01a08925-9b0a-7443-9396-1c725a474d23",
+    "governed_readback": "CODEX-34 Review",
+    "write_applied": false,
+    "write_status": "Pending exact frozen-payload authorization; session handoff is not a published progress comment"
+  },
+  "release_or_runtime_effects": "No commit, push, merge, release, deployment, S1B admission or live runtime qualification"
+}

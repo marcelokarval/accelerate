@@ -1,30 +1,5 @@
 #!/usr/bin/env python3
-"""
-scripts/validate-accelerate-v020-s1a-authority.py
-
-S1A Authority Gate Validator (CODEX-34 / S1A, P06 GREEN).
-Validates repo-local authority sovereignty (R01) and ACV1 amendment mapping.
-
-Conformance requirements:
-  1. Pure Python 3 standard library implementation.
-  2. Fixture mode (--fixture <path>):
-     - Validates fixture against canonical rules.
-     - Detects and rejects:
-       * NEG-R01-01: External authority override
-       * NEG-R01-02: Reverse edge export as canonical
-       * NEG-ACV1-03: ACV1 mapping non-compliant (missing ID, invalid disposition, merged notes)
-       * NEG-SEQ-04: Draft authorizing advance (Wave 0, core contracts mutation, skipping operator)
-       * NEG-SEQ-05: S1B premature start before amendment accepted
-     - Canonical positive fixture passes with code 0 and [PASS: S1A_AUTHORITY_CANONICAL_VALID].
-  3. Default mode (without --fixture):
-     - Validates repository amendment markdown:
-       planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md
-     - Parses the normative ACV1 table under '## Mapa completo de ACV1'.
-     - Verifies all 24 requirements (D001..D024) are present with strict dispositions.
-     - Confirms gate notes are strictly in separate column without polluting disposition.
-     - Confirms amendment status is draft-pre-s1a (not accepted, preserving P09).
-     - Passes with code 0 and success message.
-"""
+"""Deterministic, repo-local S1A authority and ACV1 conformance validator."""
 
 from __future__ import annotations
 
@@ -35,17 +10,78 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Set, Tuple
 
+
 ALLOWED_DISPOSITIONS: Set[str] = {"mantido", "alterado", "substituído"}
-EXPECTED_DECISION_IDS: Set[str] = {f"D{i:03d}" for i in range(1, 25)}
-TOTAL_EXPECTED_DECISIONS: int = 24
+EXPECTED_DECISION_IDS: Tuple[str, ...] = tuple(f"D{i:03d}" for i in range(1, 25))
+EXPECTED_DECISION_SET = set(EXPECTED_DECISION_IDS)
+TOTAL_EXPECTED_DECISIONS = len(EXPECTED_DECISION_IDS)
+CLASS_NAMES = (
+    "governing-authority", "decision-artifact", "backend-authority",
+    "supporting-reference", "generated-export", "forbidden-authority",
+)
+RULE_IDS = (
+    "RULE-01-REPO-LOCAL-FIRST", "RULE-02-NO-REVERSE-EDGE",
+    "RULE-03-SUPPORTING-CANNOT-OVERRIDE", "RULE-04-BACKEND-STATE-BOUNDED",
+    "RULE-05-FORBIDDEN-STRICT-REJECTION",
+)
+OWNER_WAVE = {
+    "D001": ("Wave 0", "Wave 0"), "D002": ("Wave 1", "Wave 1"),
+    "D003": ("Wave 1", "Wave 1"), "D004": ("Wave 1", "Wave 1"),
+    "D005": ("Wave 0", "Wave 0"), "D006": ("Wave 0 e posteriores", "Wave 0"),
+    "D007": ("Wave 3", "Wave 3"), "D008": ("Wave 2", "Wave 2"),
+    "D009": ("Wave 3", "Wave 3"), "D010": ("Wave 3", "Wave 3"),
+    "D011": ("Wave 3", "Wave 3"), "D012": ("Wave 3", "Wave 3"),
+    "D013": ("Wave 3", "Wave 3"), "D014": ("Wave 3", "Wave 3"),
+    "D015": ("Wave 5", "Wave 5"), "D016": ("Wave 5", "Wave 5"),
+    "D017": ("Wave 5", "Wave 5"), "D018": ("Wave 1 após Wave 0", "Wave 1"),
+    "D019": ("Wave 4", "Wave 4"), "D020": ("Wave 3", "Wave 3"),
+    "D021": ("Wave 5", "Wave 5"), "D022": ("Wave 3/5", "Wave 3"),
+    "D023": ("Wave 4", "Wave 4"), "D024": ("Wave 5", "Wave 5"),
+}
+MARKDOWN_ROWS = {
+    "D001": ("D001 autoridade repo-first", "S1A guarda a precedência: fixture rejeita fonte externa/export como autoridade."),
+    "D002": ("D002 classes/modos fechados", "mapa declara sem mudança de vocabulário."),
+    "D003": ("D003 schemas estritos", "nenhum schema paralelo é criado."),
+    "D004": ("D004 validador Draft 2020-12", "escolha concreta segue pendente; S1A não introduz dependência."),
+    "D005": ("D005 catálogo + manifesto em paridade", "S1A tem denominator próprio sem editar os 45 IDs."),
+    "D006": ("D006 cobertura P0/threshold", "critérios não são relaxados."),
+    "D007": ("D007 histórico de rollback append-only", "S1A tem rollback apenas por commit isolado."),
+    "D008": ("D008 gates adaptativos monotônicos", "nenhum gate é dispensado por texto."),
+    "D009": ("D009 evidência tipada", "planejamento separa prova planejada de observada."),
+    "D010": ("D010 invalidação transitiva", "revisão/material change torna proof planejada stale."),
+    "D011": ("D011 pós-merge condicionado", "não aplicável a docs pré-S1A sem merge claim."),
+    "D012": ("D012 workers tardios", "não aplicável; não há worker de execução."),
+    "D013": ("D013 cleanup tipado", "não aplicável; não cria recurso gerenciado."),
+    "D014": ("D014 loop de incidente", "não aplicável; não corrige incidente."),
+    "D015": ("D015 export repo -> runtime", "export/runtime é exclusão explícita."),
+    "D016": ("D016 migração dry-run-first", "não há migração nem dual-write."),
+    "D017": ("D017 validação final forense", "S1A prevê revisão, não fechamento."),
+    "D018": ("D018 pacote canônico `core/contracts/v1/`", "fixture recusa pacote concorrente/antecipado."),
+    "D019": ("D019 mapeamento de labels legado", "nenhuma label é tratada como enum canônico."),
+    "D020": ("D020 evento material pós-close", "não aplicável; não existe fechamento."),
+    "D021": ("D021 cutover somente Wave 5", "shadow/runtime são exclusões explícitas."),
+    "D022": ("D022 fechamento lógico preparado", "não aplicável; sem lifecycle local novo."),
+    "D023": ("D023 ferramenta forense é da Wave 4", "revisores apenas usam provas futuras."),
+    "D024": ("D024 export/rollback com intent/anchor", "não aplicável; sem export, host ou rollback operacional."),
+}
+ALLOWED_ROOT_FILES = {"AGENTS.md", "SKILL.md", "README.md"}
+ALLOWED_ROOT_DIRECTORIES = {
+    "core", "adapters", "profiles", "onboarding", "planning", "skills", "references",
+}
+NEGATIVE_CONTRACTS = {
+    "accelerate-contract-v1-neg-r01-01-external-authority-override": "NEG-R01-01",
+    "accelerate-contract-v1-neg-r01-02-generated-export-as-canonical": "NEG-R01-02",
+    "accelerate-contract-v1-neg-acv1-03-invalid-disposition-or-missing-id": "NEG-ACV1-03",
+    "accelerate-contract-v1-neg-seq-04-draft-authorizing-advance": "NEG-SEQ-04",
+    "accelerate-contract-v1-neg-seq-05-s1b-started-before-amendment-accepted": "NEG-SEQ-05",
+}
 
 
 def find_repo_root() -> Path:
-    """Locate repository root by searching upward for AGENTS.md and SKILL.md."""
-    script_path = Path(__file__).resolve()
-    candidate = script_path.parent.parent
-    if (candidate / "AGENTS.md").is_file() and (candidate / "SKILL.md").is_file():
-        return candidate
+    """Locate a repository root without trusting an export or home directory."""
+    script_root = Path(__file__).resolve().parent.parent
+    if (script_root / "AGENTS.md").is_file() and (script_root / "SKILL.md").is_file():
+        return script_root
     cwd = Path.cwd().resolve()
     for parent in [cwd, *cwd.parents]:
         if (parent / "AGENTS.md").is_file() and (parent / "SKILL.md").is_file():
@@ -53,352 +89,505 @@ def find_repo_root() -> Path:
     return cwd
 
 
+class DuplicateJsonKeyError(Exception):
+    """Raised only by the JSON object-pairs hook for repeated object keys."""
+
+
+def duplicate_key_object(pairs: List[Tuple[str, Any]]) -> Dict[str, Any]:
+    result: Dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise DuplicateJsonKeyError(key)
+        result[key] = value
+    return result
+
+
+def fixture_structure_error(data: Any) -> Optional[str]:
+    if not isinstance(data, dict):
+        return "fixture root must be a JSON object"
+    meaningful = {"authority_set", "classes", "precedence_order", "decisions", "status",
+                  "operator_acceptance", "advance_gates", "advance_claims", "s1b_execution",
+                  "s1a_amendment"}
+    if not meaningful.intersection(data):
+        return "fixture has no recognized S1A contract content"
+    if "authority_set" in data:
+        authority_set = data["authority_set"]
+        if not isinstance(authority_set, dict):
+            return "authority_set must be an object"
+        if tuple(authority_set.keys()) != CLASS_NAMES:
+            return "authority_set must contain exactly the six canonical authority classes in order"
+        if not all(isinstance(value, list) and all(isinstance(item, str) for item in value) for value in authority_set.values()):
+            return "each authority_set class must be a list of strings"
+    for field in ("external_provenance", "reverse_edge_claim"):
+        if field in data and not isinstance(data[field], dict):
+            return f"{field} must be an object"
+    provenance = data.get("external_provenance")
+    if isinstance(provenance, dict):
+        for field in ("overrides_repo_local", "is_governing"):
+            if field in provenance and not isinstance(provenance[field], bool):
+                return f"external_provenance.{field} must be a boolean"
+        if "authority_class" in provenance and (
+            not isinstance(provenance["authority_class"], str)
+            or provenance["authority_class"] not in CLASS_NAMES
+        ):
+            return "external_provenance.authority_class must be a canonical authority class"
+    reverse_edge_claim = data.get("reverse_edge_claim")
+    if isinstance(reverse_edge_claim, dict):
+        for field in ("claimed_as_canonical", "derives_expected_from_export"):
+            if field in reverse_edge_claim and not isinstance(reverse_edge_claim[field], bool):
+                return f"reverse_edge_claim.{field} must be a boolean"
+    for field in (
+        "operator_acceptance", "advance_gates", "advance_claims", "s1b_execution",
+        "s1a_amendment",
+    ):
+        if field in data and not isinstance(data[field], dict):
+            return f"{field} must be an object"
+    execution = data.get("s1b_execution")
+    if isinstance(execution, dict):
+        for field in ("initiated", "inferred_acceptance"):
+            if field in execution and not isinstance(execution[field], bool):
+                return f"s1b_execution.{field} must be a boolean"
+    amendment = data.get("s1a_amendment")
+    if isinstance(amendment, dict) and "operator_acceptance" in amendment:
+        if not isinstance(amendment["operator_acceptance"], dict):
+            return "s1a_amendment.operator_acceptance must be an object"
+    gates = data.get("advance_gates")
+    if isinstance(gates, dict):
+        if "operator_acceptance" in gates and not isinstance(gates["operator_acceptance"], dict):
+            return "advance_gates.operator_acceptance must be an object"
+        for field in (
+            "wave_0_allowed", "core_contracts_v1_mutation_allowed", "s1b_allowed",
+        ):
+            if field in gates and not isinstance(gates[field], bool):
+                return f"advance_gates.{field} must be a boolean"
+    claims = data.get("advance_claims")
+    if isinstance(claims, dict):
+        for field in (
+            "authorize_wave_0", "authorize_core_contracts_v1_mutation",
+            "skip_operator_acceptance",
+        ):
+            if field in claims and not isinstance(claims[field], bool):
+                return f"advance_claims.{field} must be a boolean"
+    return None
+
+
+def valid_governing_path(value: str) -> bool:
+    if not value or value.startswith(("/", "~")) or value in {".", ".."}:
+        return False
+    if value.startswith(".") or "\\" in value or ":" in value:
+        return False
+    parts = value.split("/")
+    if any(part in {"", ".", ".."} for part in parts[:-1]) or ".." in parts:
+        return False
+    root = parts[0]
+    if root in ALLOWED_ROOT_FILES:
+        return len(parts) == 1
+    return root in ALLOWED_ROOT_DIRECTORIES
+
+
 def check_external_authority_override(data: Dict[str, Any]) -> Optional[str]:
-    """NEG-R01-01: External authority override check."""
-    gov_auth = data.get("authority_set", {}).get("governing-authority", [])
-    for item in gov_auth:
-        if isinstance(item, str):
-            if item.startswith("external:") or item.startswith("user-home") or "OpenSpec" in item:
-                return f"External authority '{item}' placed under governing-authority"
-
-    ext_prov = data.get("external_provenance", {})
-    if ext_prov:
-        if ext_prov.get("overrides_repo_local") is True:
-            return "external_provenance specifies overrides_repo_local: true"
-        if ext_prov.get("is_governing") is True:
-            return "external_provenance specifies is_governing: true"
-        if ext_prov.get("authority_class") == "governing-authority":
-            return "external_provenance specifies authority_class: governing-authority"
-
-    violation = data.get("violation", {})
-    if violation.get("type") == "EXTERNAL_AUTHORITY_OVERRIDE":
-        return violation.get("detail", "External authority override violation detected")
-
-    if data.get("fixture_id") == "NEG-R01-01":
-        return "Fixture identified as NEG-R01-01 violation"
-
+    provenance = data.get("external_provenance")
+    if isinstance(provenance, dict) and (
+        provenance.get("overrides_repo_local") is True
+        or provenance.get("is_governing") is True
+        or provenance.get("authority_class") == "governing-authority"
+    ):
+        return "external provenance claims governing or overriding authority"
     return None
 
 
 def check_reverse_edge_export(data: Dict[str, Any]) -> Optional[str]:
-    """NEG-R01-02: Reverse edge export as canonical check."""
-    gov_auth = data.get("authority_set", {}).get("governing-authority", [])
-    gen_exports = data.get("authority_set", {}).get("generated-export", [])
-    for item in gov_auth:
-        if isinstance(item, str):
-            if item.startswith("global-runtime/") or item in gen_exports:
-                return f"Generated export '{item}' placed in governing-authority"
-
-    rev_claim = data.get("reverse_edge_claim", {})
-    if rev_claim:
-        if rev_claim.get("claimed_as_canonical") is True:
-            return "reverse_edge_claim specifies claimed_as_canonical: true"
-        if rev_claim.get("derives_expected_from_export") is True:
-            return "reverse_edge_claim specifies derives_expected_from_export: true"
-
-    violation = data.get("violation", {})
-    if violation.get("type") == "REVERSE_EDGE_EXPORT_AS_CANONICAL":
-        return violation.get("detail", "Reverse edge export as canonical violation detected")
-
-    if data.get("fixture_id") == "NEG-R01-02":
-        return "Fixture identified as NEG-R01-02 violation"
-
+    claim = data.get("reverse_edge_claim")
+    if isinstance(claim, dict) and (
+        claim.get("claimed_as_canonical") is True or claim.get("derives_expected_from_export") is True
+    ):
+        return "reverse edge claim treats a generated export as canonical"
     return None
 
 
-def check_acv1_mapping(data: Dict[str, Any]) -> Optional[str]:
-    """NEG-ACV1-03: ACV1 mapping non-compliant check."""
-    if data.get("missing_decision_ids"):
-        return f"Missing required ACV1 decision IDs: {data['missing_decision_ids']}"
-
-    if data.get("invalid_dispositions"):
-        return f"Invalid ACV1 dispositions declared: {data['invalid_dispositions']}"
-
-    if "decisions_count" in data and data["decisions_count"] != TOTAL_EXPECTED_DECISIONS:
-        return f"Decisions count is {data['decisions_count']}, expected {TOTAL_EXPECTED_DECISIONS}"
-
-    violation = data.get("violation", {})
-    if violation.get("type") == "ACV1_MAPPING_NON_COMPLIANT":
-        return violation.get("detail", "ACV1 mapping non-compliant violation detected")
-
-    if data.get("fixture_id") == "NEG-ACV1-03":
-        return "Fixture identified as NEG-ACV1-03 violation"
-
-    if "decisions" in data:
-        decisions = data["decisions"]
-        if len(decisions) != TOTAL_EXPECTED_DECISIONS:
-            return f"Found {len(decisions)} decisions in mapping, expected {TOTAL_EXPECTED_DECISIONS}"
-
-        found_ids: Set[str] = set()
-        for idx, dec in enumerate(decisions, start=1):
-            raw_id = dec.get("short_id") or dec.get("id")
-            if not raw_id:
-                return f"Decision at position {idx} missing ID"
-            m = re.search(r"\b(D\d{3})\b", str(raw_id))
-            if not m:
-                return f"Decision ID '{raw_id}' does not match expected format D001..D024"
-            short_id = m.group(1)
-            found_ids.add(short_id)
-
-            disp = dec.get("disposition")
-            if disp is None:
-                return f"Decision '{short_id}' missing disposition"
-            disp_str = str(disp).strip()
-
-            if " - " in disp_str or len(disp_str.split()) > 1:
-                return f"Decision '{short_id}' has gate note merged into disposition: '{disp_str}'"
-
-            if disp_str not in ALLOWED_DISPOSITIONS:
-                return f"Decision '{short_id}' has invalid disposition '{disp_str}' (allowed: {sorted(ALLOWED_DISPOSITIONS)})"
-
-        missing = EXPECTED_DECISION_IDS - found_ids
-        if missing:
-            return f"Missing ACV1 decision IDs: {sorted(missing)}"
-
+def check_governing_paths(data: Dict[str, Any]) -> Optional[str]:
+    authority_set = data.get("authority_set")
+    if not isinstance(authority_set, dict):
+        return None
+    for path in authority_set.get("governing-authority", []):
+        if not valid_governing_path(path):
+            return f"governing authority path is not a repo-local allowed root: {path!r}"
     return None
 
 
-def check_draft_advance(data: Dict[str, Any]) -> Optional[str]:
-    """NEG-SEQ-04: Draft authorizing advance check."""
+def decision_short_id(decision: Any) -> Optional[str]:
+    if not isinstance(decision, dict):
+        return None
+    short_id = decision.get("short_id")
+    if not isinstance(short_id, str) or short_id not in EXPECTED_DECISION_SET:
+        return None
+    return short_id
+
+
+def generic_mapping_error(data: Dict[str, Any]) -> Optional[str]:
+    if "decisions" not in data:
+        return None
+    decisions = data["decisions"]
+    if not isinstance(decisions, list):
+        return "decisions must be a list"
+    if len(decisions) != TOTAL_EXPECTED_DECISIONS:
+        return f"found {len(decisions)} decisions, expected {TOTAL_EXPECTED_DECISIONS}"
+    found: List[str] = []
+    for index, decision in enumerate(decisions, start=1):
+        short_id = decision_short_id(decision)
+        if short_id is None:
+            return f"decision at position {index} has an invalid short_id"
+        disposition = decision.get("disposition")
+        if not isinstance(disposition, str) or disposition.strip() != disposition:
+            return f"decision {short_id} has an invalid disposition representation"
+        if " - " in disposition or len(disposition.split()) != 1 or disposition not in ALLOWED_DISPOSITIONS:
+            return f"decision {short_id} has invalid disposition {disposition!r}"
+        found.append(short_id)
+    if len(set(found)) != len(found):
+        return "mapping contains duplicate decision IDs"
+    if set(found) != EXPECTED_DECISION_SET:
+        return f"mapping IDs do not equal D001..D024 (missing {sorted(EXPECTED_DECISION_SET - set(found))})"
+    return None
+
+
+def authority_model_error(data: Dict[str, Any]) -> Optional[str]:
+    is_model = data.get("contract_name") == "accelerate-contract-v1-authority-classes-precedence" or (
+        "classes" in data and "precedence_order" in data
+    )
+    if not is_model:
+        return None
+    classes = data.get("classes")
+    if not isinstance(classes, dict) or tuple(classes.keys()) != CLASS_NAMES:
+        return "classes must contain exactly the six canonical class keys in order"
+    if data.get("precedence_order") != list(CLASS_NAMES):
+        return "precedence_order must be the canonical six-class order"
+    for rank, name in enumerate(CLASS_NAMES, start=1):
+        entry = classes[name]
+        if not isinstance(entry, dict) or entry.get("rank") != rank:
+            return f"class {name} must have rank {rank}"
+        if entry.get("may_decide_runtime") is not (rank <= 3):
+            return f"class {name} has an invalid may_decide_runtime value"
+    rules = data.get("enforcement_rules")
+    if not isinstance(rules, list) or [rule.get("id") if isinstance(rule, dict) else None for rule in rules] != list(RULE_IDS):
+        return "enforcement_rules must contain the exact canonical rule IDs in order"
+    return None
+
+
+def canonical_mapping_error(data: Dict[str, Any]) -> Optional[str]:
+    if not is_canonical_mapping(data):
+        return None
+    if data.get("allowed_dispositions") != ["mantido", "alterado", "substituído"]:
+        return "allowed_dispositions is not canonical"
+    if data.get("allowed_waves") != [f"Wave {number}" for number in range(6)]:
+        return "allowed_waves is not canonical"
+    decisions = data.get("decisions")
+    if not isinstance(decisions, list) or len(decisions) != TOTAL_EXPECTED_DECISIONS:
+        return "canonical mapping must contain exactly 24 decisions"
+    for expected_id, decision in zip(EXPECTED_DECISION_IDS, decisions):
+        if not isinstance(decision, dict) or decision.get("short_id") != expected_id:
+            return f"canonical mapping decision order must contain {expected_id}"
+        if decision.get("id") != f"ACV1-{expected_id}":
+            return f"decision {expected_id} has conflicting id and short_id"
+        if decision.get("disposition") != "mantido":
+            return f"decision {expected_id} disposition must remain mantido"
+        if (decision.get("implementation_owner"), decision.get("wave")) != OWNER_WAVE[expected_id]:
+            return f"decision {expected_id} has an invalid owner/wave pair"
+    return None
+
+
+def is_canonical_mapping(data: Dict[str, Any]) -> bool:
+    """Recognize the full mapping by its normative shape, not its metadata."""
+    if data.get("contract_name") == "accelerate-contract-v1-acv1-expected-mapping":
+        return True
+    decisions = data.get("decisions")
+    if not isinstance(decisions, list):
+        return False
+    if "allowed_dispositions" in data or "allowed_waves" in data:
+        return True
+    short_ids = [decision.get("short_id") for decision in decisions if isinstance(decision, dict)]
+    return (
+        len(decisions) == TOTAL_EXPECTED_DECISIONS
+        and len(short_ids) == TOTAL_EXPECTED_DECISIONS
+        and tuple(short_ids) == EXPECTED_DECISION_IDS
+        and set(short_ids) == EXPECTED_DECISION_SET
+    )
+
+
+def acceptance_record(
+    value: Any, *, pending_requires_null: bool = True,
+) -> Optional[Tuple[str, Optional[str]]]:
+    if not isinstance(value, dict):
+        return None
+    status = value.get("status")
+    accepted_by = value.get("accepted_by")
+    if not isinstance(status, str):
+        return ("invalid", None)
+    normalized = status.strip().lower()
+    if normalized not in {"pending", "accepted"}:
+        return ("invalid", None)
+    if normalized == "pending":
+        if pending_requires_null and accepted_by is not None:
+            return ("invalid", None)
+        if not pending_requires_null and isinstance(accepted_by, str) and accepted_by.strip():
+            return ("invalid", None)
+    if normalized == "accepted" and (not isinstance(accepted_by, str) or not accepted_by.strip()):
+        return ("invalid", None)
+    return (normalized, accepted_by.strip() if isinstance(accepted_by, str) else None)
+
+
+def amendment_acceptance_error(data: Dict[str, Any]) -> Optional[str]:
+    """Validate a present S1A amendment independently of S1B execution."""
+    if "s1a_amendment" not in data:
+        return None
+    amendment = data["s1a_amendment"]
+    assert isinstance(amendment, dict)
+    status = amendment.get("status")
+    if not isinstance(status, str) or status.strip().lower() not in {
+        "draft", "draft-pre-s1a", "accepted",
+    }:
+        return "S1A amendment status must normalize to draft, draft-pre-s1a, or accepted"
+    record = (
+        acceptance_record(
+            amendment.get("operator_acceptance"), pending_requires_null=False,
+        )
+        if "operator_acceptance" in amendment
+        else None
+    )
+    if record == ("invalid", None):
+        return "S1A amendment operator acceptance must be pending without a nonempty accepted_by or accepted with a nonempty accepted_by"
+    normalized_status = status.strip().lower()
+    if normalized_status == "accepted" and (record is None or record[0] != "accepted"):
+        return "accepted S1A amendment requires accepted operator evidence"
+    if normalized_status in {"draft", "draft-pre-s1a"} and record is not None and record[0] == "accepted":
+        return "draft S1A amendment cannot carry accepted operator evidence"
+    return None
+
+
+def sequence_error(data: Dict[str, Any]) -> Optional[str]:
+    has_status = "status" in data
     status = data.get("status")
-    op_acc = data.get("operator_acceptance", {})
-    is_draft = (status == "draft-pre-s1a" or "draft" in str(status))
-    op_pending = (op_acc.get("status") == "pending" or op_acc.get("accepted_by") is None)
-
-    adv_claims = data.get("advance_claims", {})
-    if adv_claims:
-        if adv_claims.get("authorize_wave_0") is True:
-            return "advance_claims declares authorize_wave_0: true while in draft/pending status"
-        if adv_claims.get("authorize_core_contracts_v1_mutation") is True:
-            return "advance_claims declares authorize_core_contracts_v1_mutation: true while in draft/pending status"
-        if adv_claims.get("skip_operator_acceptance") is True:
-            return "advance_claims declares skip_operator_acceptance: true"
-
-    adv_gates = data.get("advance_gates", {})
-    if adv_gates:
-        gates_op = adv_gates.get("operator_acceptance", {})
-        gates_op_pending = (gates_op.get("status") == "pending" or gates_op.get("accepted_by") is None)
-        if is_draft or gates_op_pending:
-            if adv_gates.get("wave_0_allowed") is True:
-                return "advance_gates declares wave_0_allowed: true while in draft/pending status"
-            if adv_gates.get("core_contracts_v1_mutation_allowed") is True:
-                return "advance_gates declares core_contracts_v1_mutation_allowed: true while in draft/pending status"
-
-    violation = data.get("violation", {})
-    if violation.get("type") == "DRAFT_AUTHORIZATION_OF_ADVANCE":
-        return violation.get("detail", "Draft authorization of advance violation detected")
-
-    if data.get("fixture_id") == "NEG-SEQ-04":
-        return "Fixture identified as NEG-SEQ-04 violation"
-
+    normalized_status = status.strip().lower() if isinstance(status, str) else ""
+    if has_status and normalized_status not in {"draft", "draft-pre-s1a", "accepted"}:
+        return "explicit status must normalize to draft, draft-pre-s1a, or accepted"
+    root_record = acceptance_record(data.get("operator_acceptance")) if "operator_acceptance" in data else None
+    gates = data.get("advance_gates")
+    gate_record = acceptance_record(gates.get("operator_acceptance")) if isinstance(gates, dict) and "operator_acceptance" in gates else None
+    if root_record == ("invalid", None) or gate_record == ("invalid", None):
+        return "operator acceptance must be pending with accepted_by null or accepted with a nonempty accepted_by"
+    if root_record is not None and gate_record is not None and root_record != gate_record:
+        return "operator acceptance records disagree"
+    is_draft = normalized_status in {"draft", "draft-pre-s1a"}
+    if normalized_status == "accepted" and not any(record is not None and record[0] == "accepted" for record in (root_record, gate_record)):
+        return "accepted status requires effective accepted operator evidence"
+    if is_draft and any(record is not None and record[0] == "accepted" for record in (root_record, gate_record)):
+        return "draft status cannot be overridden by accepted operator evidence"
+    claims = data.get("advance_claims")
+    if isinstance(claims, dict) and claims.get("skip_operator_acceptance") is True:
+        return "advance_claims.skip_operator_acceptance is an unauthorized bypass"
+    claims_true = isinstance(claims, dict) and any(claims.get(name) is True for name in (
+        "authorize_wave_0", "authorize_core_contracts_v1_mutation",
+    ))
+    gates_true = isinstance(gates, dict) and any(gates.get(name) is True for name in (
+        "wave_0_allowed", "core_contracts_v1_mutation_allowed", "s1b_allowed",
+    ))
+    if claims_true or gates_true:
+        if normalized_status != "accepted":
+            return "advance authorization requires accepted status"
+        if not any(record is not None and record[0] == "accepted" for record in (root_record, gate_record)):
+            return "advance authorization requires effective accepted operator evidence"
     return None
 
 
-def check_s1b_premature_start(data: Dict[str, Any]) -> Optional[str]:
-    """NEG-SEQ-05: S1B premature start check."""
-    s1b_exec = data.get("s1b_execution", {})
-    s1a_amendment = data.get("s1a_amendment", {})
-    s1a_status = s1a_amendment.get("status")
-    s1a_op = s1a_amendment.get("operator_acceptance", {})
-    s1a_pending = (s1a_op.get("status") == "pending" or s1a_op.get("accepted_by") is None or s1a_status == "draft-pre-s1a")
-
-    if s1b_exec:
-        if s1b_exec.get("initiated") is True and s1a_pending:
-            return "s1b_execution initiated while S1A authority amendment operator acceptance is pending"
-        if s1b_exec.get("inferred_acceptance") is True:
-            return "s1b_execution declares inferred_acceptance: true (operator acceptance cannot be inferred)"
-
-    adv_gates = data.get("advance_gates", {})
-    if adv_gates and adv_gates.get("s1b_allowed") is True:
-        gates_op = adv_gates.get("operator_acceptance", {})
-        if gates_op.get("status") == "pending" or gates_op.get("accepted_by") is None:
-            return "advance_gates declares s1b_allowed: true while amendment operator acceptance is pending"
-
-    violation = data.get("violation", {})
-    if violation.get("type") == "S1B_PREMATURE_START":
-        return violation.get("detail", "S1B premature start violation detected")
-
-    if data.get("fixture_id") == "NEG-SEQ-05":
-        return "Fixture identified as NEG-SEQ-05 violation"
-
+def s1b_error(data: Dict[str, Any]) -> Optional[str]:
+    execution = data.get("s1b_execution")
+    if not isinstance(execution, dict):
+        return None
+    if execution.get("inferred_acceptance") is True:
+        return "S1B operator acceptance cannot be inferred"
+    if execution.get("initiated") is True:
+        amendment = data.get("s1a_amendment")
+        amendment = amendment if isinstance(amendment, dict) else {}
+        record = acceptance_record(
+            amendment.get("operator_acceptance"), pending_requires_null=False,
+        )
+        status = amendment.get("status")
+        if (
+            not isinstance(status, str)
+            or status.strip().lower() != "accepted"
+            or record is None
+            or record[0] != "accepted"
+        ):
+            return "S1B was initiated before the S1A amendment was accepted"
     return None
+
+
+def negative_marker(data: Dict[str, Any], kind: str, default: str) -> str:
+    """Keep legacy markers only for their semantic contract kinds, never metadata."""
+    contract_name = data.get("contract_name")
+    return default if isinstance(contract_name, str) and NEGATIVE_CONTRACTS.get(contract_name) == kind else ""
 
 
 def validate_fixture(fixture_path: Path) -> int:
-    """Validate a fixture JSON file and output compliance status."""
     if not fixture_path.is_file():
         print(f"[ERROR: FIXTURE_NOT_FOUND] Fixture file not found: {fixture_path}", file=sys.stderr)
         return 2
-
     try:
-        data = json.loads(fixture_path.read_text(encoding="utf-8"))
-    except Exception as e:
-        print(f"[ERROR: INVALID_FIXTURE_JSON] Failed to parse JSON in {fixture_path}: {e}", file=sys.stderr)
+        data = json.loads(fixture_path.read_text(encoding="utf-8"), object_pairs_hook=duplicate_key_object)
+    except DuplicateJsonKeyError as error:
+        print(f"[ERROR: DUPLICATE_JSON_KEY] Duplicate JSON object key: {error}", file=sys.stderr)
+        return 2
+    except (OSError, json.JSONDecodeError) as error:
+        print(f"[ERROR: INVALID_FIXTURE_JSON] Failed to parse JSON in {fixture_path}: {error}", file=sys.stderr)
         return 2
 
-    # Step 1: External authority override check
-    err = check_external_authority_override(data)
-    if err:
-        print(f"[NEG-R01-01: EXTERNAL_AUTHORITY_OVERRIDE_REJECTED] {err}", file=sys.stderr)
+    structure = fixture_structure_error(data)
+    if structure:
+        print(f"[ERROR: INVALID_FIXTURE_STRUCTURE] {structure}", file=sys.stderr)
+        return 2
+
+    for check, kind, legacy, marker in (
+        (check_external_authority_override, "NEG-R01-01", "[NEG-R01-01: EXTERNAL_AUTHORITY_OVERRIDE_REJECTED]", "[ERROR: AUTHORITY_PATH_INVALID]"),
+        (check_reverse_edge_export, "NEG-R01-02", "[NEG-R01-02: REVERSE_EDGE_EXPORT_AS_CANONICAL_REJECTED]", "[ERROR: AUTHORITY_PATH_INVALID]"),
+        (check_governing_paths, "", "", "[ERROR: AUTHORITY_PATH_INVALID]"),
+    ):
+        error = check(data)
+        if error:
+            print(f"{negative_marker(data, kind, legacy) or marker} {error}", file=sys.stderr)
+            return 1
+
+    error = authority_model_error(data)
+    if error:
+        print(f"[ERROR: AUTHORITY_MODEL_INVALID] {error}", file=sys.stderr)
+        return 1
+    error = canonical_mapping_error(data)
+    if error:
+        print(f"[ERROR: ACV1_MAPPING_INVALID] {error}", file=sys.stderr)
+        legacy_error = generic_mapping_error(data)
+        if legacy_error:
+            print(f"[NEG-ACV1-03: ACV1_MAPPING_NON_COMPLIANT_REJECTED] {legacy_error}", file=sys.stderr)
+        return 1
+    error = generic_mapping_error(data)
+    if error:
+        print(f"[NEG-ACV1-03: ACV1_MAPPING_NON_COMPLIANT_REJECTED] {error}", file=sys.stderr)
+        return 1
+    error = amendment_acceptance_error(data)
+    if error:
+        print(f"[ERROR: SEQUENCE_GATE_INVALID] {error}", file=sys.stderr)
+        return 1
+    error = sequence_error(data)
+    if error:
+        print(f"{negative_marker(data, 'NEG-SEQ-04', '[NEG-SEQ-04: DRAFT_AUTHORIZATION_OF_ADVANCE_REJECTED]') or '[ERROR: SEQUENCE_GATE_INVALID]'} {error}", file=sys.stderr)
+        return 1
+    error = s1b_error(data)
+    if error:
+        print(f"{negative_marker(data, 'NEG-SEQ-05', '[NEG-SEQ-05: S1B_PREMATURE_START_REJECTED]') or '[ERROR: SEQUENCE_GATE_INVALID]'} {error}", file=sys.stderr)
         return 1
 
-    # Step 2: Reverse edge export as canonical check
-    err = check_reverse_edge_export(data)
-    if err:
-        print(f"[NEG-R01-02: REVERSE_EDGE_EXPORT_AS_CANONICAL_REJECTED] {err}", file=sys.stderr)
-        return 1
-
-    # Step 3: ACV1 mapping non-compliant check
-    err = check_acv1_mapping(data)
-    if err:
-        print(f"[NEG-ACV1-03: ACV1_MAPPING_NON_COMPLIANT_REJECTED] {err}", file=sys.stderr)
-        return 1
-
-    # Step 4: Draft authorizing advance check
-    err = check_draft_advance(data)
-    if err:
-        print(f"[NEG-SEQ-04: DRAFT_AUTHORIZATION_OF_ADVANCE_REJECTED] {err}", file=sys.stderr)
-        return 1
-
-    # Step 5: S1B premature start check
-    err = check_s1b_premature_start(data)
-    if err:
-        print(f"[NEG-SEQ-05: S1B_PREMATURE_START_REJECTED] {err}", file=sys.stderr)
-        return 1
-
-    # Positive Canonical Verification
-    fixture_id = data.get("fixture_id", fixture_path.stem)
-    print(f"[PASS: S1A_AUTHORITY_CANONICAL_VALID] Fixture '{fixture_id}' ({fixture_path.name}) is fully compliant with S1A authority rules.")
+    label = data.get("fixture_id", fixture_path.stem)
+    print(f"[PASS: S1A_AUTHORITY_CANONICAL_VALID] Fixture '{label}' ({fixture_path.name}) is fully compliant with S1A authority rules.")
     return 0
 
 
-def parse_amendment_acv1_table(text: str) -> Tuple[Dict[str, Dict[str, str]], List[str]]:
-    """Parse the ACV1 decisions table from the amendment markdown text."""
-    decisions: Dict[str, Dict[str, str]] = {}
-    errors: List[str] = []
-    in_table = False
+def parse_amendment_acv1_table(text: str) -> Tuple[Optional[List[Dict[str, str]]], Optional[str]]:
+    lines = text.splitlines()
+    headings = [index for index, line in enumerate(lines) if line == "## Mapa completo de ACV1"]
+    if len(headings) != 1:
+        return None, "expected exactly one '## Mapa completo de ACV1' section"
+    start = headings[0] + 1
+    end = next((index for index in range(start, len(lines)) if lines[index].startswith("## ")), len(lines))
+    header = "| Decisão | Disposição v0.2.0 | Dono de implementação | Condição/verificação de S1A |"
+    try:
+        header_index = next(index for index in range(start, end) if lines[index] == header)
+    except StopIteration:
+        return None, "missing exact four-column ACV1 table header"
+    if header_index + 1 >= end or lines[header_index + 1] != "| --- | --- | --- | --- |":
+        return None, "missing exact ACV1 table separator"
+    rows: List[Dict[str, str]] = []
+    for line_number in range(header_index + 2, end):
+        line = lines[line_number]
+        if not line.strip():
+            break
+        if not line.startswith("|"):
+            return None, f"unexpected content at table line {line_number + 1}"
+        parts = [part.strip() for part in line.strip().strip("|").split("|")]
+        if len(parts) != 4:
+            return None, f"table line {line_number + 1} does not have exactly four columns"
+        match = re.fullmatch(r"(D\d{3})\s+.+", parts[0])
+        if not match:
+            return None, f"table line {line_number + 1} has invalid decision ID"
+        rows.append({"short_id": match.group(1), "label": parts[0], "disposition": parts[1], "owner": parts[2], "gate_note": parts[3]})
+    if len(rows) != TOTAL_EXPECTED_DECISIONS:
+        return None, f"table has {len(rows)} rows, expected {TOTAL_EXPECTED_DECISIONS}"
+    for expected_id, row in zip(EXPECTED_DECISION_IDS, rows):
+        if row["short_id"] != expected_id:
+            return None, f"table decision order must contain {expected_id}"
+        if row["disposition"] != "mantido":
+            return None, f"table decision {expected_id} disposition must be mantido"
+        if row["owner"] != OWNER_WAVE[expected_id][0]:
+            return None, f"table decision {expected_id} owner does not match canonical wave ownership"
+        expected_label, expected_gate_note = MARKDOWN_ROWS[expected_id]
+        if row["label"] != expected_label:
+            return None, f"table decision {expected_id} label does not match the frozen contract"
+        if row["gate_note"] != expected_gate_note:
+            return None, f"table decision {expected_id} S1A condition does not match the frozen contract"
+    return rows, None
 
-    for line_num, line in enumerate(text.splitlines(), start=1):
-        if "| Decisão |" in line:
-            in_table = True
-            continue
-        if in_table and line.startswith("| ---"):
-            continue
-        if in_table and not line.startswith("|"):
-            in_table = False
-            continue
-        if in_table:
-            parts = [p.strip() for p in line.strip().strip("|").split("|")]
-            if len(parts) >= 4:
-                raw_id_col = parts[0]
-                m = re.search(r"\b(D\d{3})\b", raw_id_col)
-                if not m:
-                    errors.append(f"Line {line_num}: Could not find decision ID (Dxxx) in column '{raw_id_col}'")
-                    continue
-                short_id = m.group(1)
-                if short_id in decisions:
-                    errors.append(f"Line {line_num}: Duplicate decision ID '{short_id}'")
-                    continue
 
-                disposition = parts[1]
-                owner = parts[2]
-                gate_note = parts[3]
-
-                decisions[short_id] = {
-                    "line": str(line_num),
-                    "raw_id": raw_id_col,
-                    "disposition": disposition,
-                    "owner": owner,
-                    "gate_note": gate_note,
-                }
-
-    return decisions, errors
+def parse_amendment_status(text: str) -> Tuple[Optional[str], Optional[str]]:
+    """Read the single status declaration only from its normative H2 section."""
+    lines = text.splitlines()
+    headings = [index for index, line in enumerate(lines) if line == "## Estado, propósito e limite"]
+    if len(headings) != 1:
+        return None, "expected exactly one '## Estado, propósito e limite' section"
+    start = headings[0] + 1
+    end = next((index for index in range(start, len(lines)) if lines[index].startswith("## ")), len(lines))
+    matches = [re.fullmatch(r"Estado: `([^`]+)`(?:\..*)?", line) for line in lines[start:end]]
+    values = [match.group(1).strip() for match in matches if match]
+    if len(values) != 1:
+        return None, "expected exactly one anchored 'Estado: `...`' declaration in the status section"
+    return values[0], None
 
 
-def validate_repository(repo_root: Path, amendment_rel: str = "planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md") -> int:
-    """Validate repository amendment markdown against sovereign authority and mapping rules."""
-    amendment_path = repo_root / amendment_rel
+def validate_repository(repo_root: Path, amendment_rel: str) -> int:
+    amendment_path = Path(amendment_rel)
+    if not amendment_path.is_absolute():
+        amendment_path = repo_root / amendment_path
     if not amendment_path.is_file():
         print(f"[FAIL: AMENDMENT_MISSING] Amendment document not found: {amendment_path}", file=sys.stderr)
         return 1
-
-    text = amendment_path.read_text(encoding="utf-8")
-
-    # 1. Check status (must be draft-pre-s1a, NOT accepted)
-    m_status = re.search(r"Estado:\s*`([^`]+)`", text)
-    if not m_status:
-        print(f"[FAIL: AMENDMENT_STATUS_MISSING] Missing 'Estado: `...`' in {amendment_rel}", file=sys.stderr)
+    try:
+        text = amendment_path.read_text(encoding="utf-8")
+    except OSError as error:
+        print(f"[FAIL: AMENDMENT_MISSING] Unable to read amendment: {error}", file=sys.stderr)
         return 1
-    status = m_status.group(1).strip()
+    _, table_error = parse_amendment_acv1_table(text)
+    if table_error:
+        print(f"[ERROR: MARKDOWN_CONTRACT_INVALID] {table_error}", file=sys.stderr)
+        return 1
+    status, status_error = parse_amendment_status(text)
+    if status_error:
+        print(f"[ERROR: MARKDOWN_CONTRACT_INVALID] {status_error}", file=sys.stderr)
+        return 1
+    assert status is not None
     if status.lower() in {"accepted", "aceito", "aceita"}:
-        print(f"[FAIL: AMENDMENT_PREMATURELY_ACCEPTED] Amendment status is '{status}'; operator acceptance P09 must not be pre-accepted", file=sys.stderr)
+        print(f"[FAIL: AMENDMENT_PREMATURELY_ACCEPTED] Amendment status is '{status}'", file=sys.stderr)
         return 1
     if status != "draft-pre-s1a":
         print(f"[FAIL: AMENDMENT_UNEXPECTED_STATUS] Amendment status is '{status}', expected 'draft-pre-s1a'", file=sys.stderr)
         return 1
-
-    # 2. Parse and validate ACV1 table
-    decisions, parse_errors = parse_amendment_acv1_table(text)
-    if parse_errors:
-        for pe in parse_errors:
-            print(f"[FAIL: ACV1_TABLE_PARSE_ERROR] {pe}", file=sys.stderr)
-        return 1
-
-    if len(decisions) != TOTAL_EXPECTED_DECISIONS:
-        print(f"[FAIL: ACV1_TABLE_INCOMPLETE] Parsed {len(decisions)} decisions, expected {TOTAL_EXPECTED_DECISIONS}", file=sys.stderr)
-        return 1
-
-    missing_ids = EXPECTED_DECISION_IDS - set(decisions.keys())
-    if missing_ids:
-        print(f"[FAIL: ACV1_TABLE_MISSING_IDS] Missing expected decision IDs: {sorted(missing_ids)}", file=sys.stderr)
-        return 1
-
-    for short_id in sorted(EXPECTED_DECISION_IDS):
-        info = decisions[short_id]
-        disp = info["disposition"].strip()
-        owner = info["owner"].strip()
-        gate_note = info["gate_note"].strip()
-
-        # Gate note merged into disposition check
-        if " - " in disp or len(disp.split()) > 1:
-            print(f"[FAIL: ACV1_TABLE_MERGED_DISPOSITION] Decision '{short_id}' (line {info['line']}) has gate note merged into disposition: '{disp}'", file=sys.stderr)
-            return 1
-
-        # Allowed disposition check
-        if disp not in ALLOWED_DISPOSITIONS:
-            print(f"[FAIL: ACV1_TABLE_INVALID_DISPOSITION] Decision '{short_id}' (line {info['line']}) has invalid disposition '{disp}' (must be one of {sorted(ALLOWED_DISPOSITIONS)})", file=sys.stderr)
-            return 1
-
-        # Owner check
-        if not owner:
-            print(f"[FAIL: ACV1_TABLE_MISSING_OWNER] Decision '{short_id}' (line {info['line']}) missing implementation owner", file=sys.stderr)
-            return 1
-
-        # Gate note check
-        if not gate_note:
-            print(f"[FAIL: ACV1_TABLE_MISSING_GATE_NOTE] Decision '{short_id}' (line {info['line']}) missing gate note", file=sys.stderr)
-            return 1
-
-    # 3. Check repo-local governing authority surfaces
-    required_repo_surfaces = ["AGENTS.md", "SKILL.md", "README.md", "core", "adapters", "profiles", "skills"]
-    for surface in required_repo_surfaces:
+    for surface in ("AGENTS.md", "SKILL.md", "README.md", "core", "adapters", "profiles", "skills"):
         if not (repo_root / surface).exists():
             print(f"[FAIL: REPO_SURFACE_MISSING] Sovereign authority surface missing: {surface}", file=sys.stderr)
             return 1
-
-    # 4. Check external provenance delimitation
-    if "Fission-AI/OpenSpec" not in text or "v1.12.0" not in text or "e062b9572be933564ba3899d059377dfa1393e32" not in text:
-        print(f"[FAIL: OPEN_SPEC_PROVENANCE_INCOMPLETE] Amendment missing pinned OpenSpec provenance receipts", file=sys.stderr)
+    if not all(value in text for value in ("Fission-AI/OpenSpec", "v1.12.0", "e062b9572be933564ba3899d059377dfa1393e32")):
+        print("[FAIL: OPEN_SPEC_PROVENANCE_INCOMPLETE] Amendment missing pinned OpenSpec provenance receipts", file=sys.stderr)
         return 1
     if "OpenSpec é referência para o novo produto, não autoridade de execução" not in text:
-        print(f"[FAIL: OPEN_SPEC_PROVENANCE_UNDELIMITED] OpenSpec must be explicitly delimited as reference, not execution authority", file=sys.stderr)
+        print("[FAIL: OPEN_SPEC_PROVENANCE_UNDELIMITED] OpenSpec must be delimited as reference", file=sys.stderr)
         return 1
-
-    # 5. Check operator acceptance boundary
     if "operador do projeto" not in text:
-        print(f"[FAIL: OPERATOR_ACCEPTANCE_MISSING] Amendment must declare project operator as designated acceptor", file=sys.stderr)
+        print("[FAIL: OPERATOR_ACCEPTANCE_MISSING] Amendment must declare project operator", file=sys.stderr)
         return 1
-
     print(f"[PASS: S1A_AUTHORITY_CANONICAL_VALID] Repository amendment {amendment_rel} is fully compliant (24/24 ACV1 decisions verified, status: draft-pre-s1a).")
     return 0
 
@@ -407,15 +596,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Accelerate v0.2.0 S1A Authority Gate Validator")
     parser.add_argument("--fixture", type=Path, default=None, help="Path to fixture JSON file to validate")
     parser.add_argument("--repo-root", type=Path, default=None, help="Repository root path (default: auto-detected)")
-    parser.add_argument("--amendment", type=str, default="planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md", help="Relative path to authority amendment markdown")
-
+    parser.add_argument("--amendment", type=str, default="planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md", help="Relative or absolute authority amendment markdown path")
     args = parser.parse_args()
-
     if args.fixture:
         return validate_fixture(args.fixture)
-
-    repo_root = (args.repo_root or find_repo_root()).resolve()
-    return validate_repository(repo_root, args.amendment)
+    return validate_repository((args.repo_root or find_repo_root()).resolve(), args.amendment)
 
 
 if __name__ == "__main__":
