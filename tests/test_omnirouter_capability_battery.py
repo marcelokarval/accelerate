@@ -389,6 +389,8 @@ def test_safe_v1_to_v2_migration():
                 "requested_model": "model-1",
                 "http_status": 200,
                 "response_sha256": "1" * 64,
+                "effective_model": "model-1",
+                "semantic_verdict": "pass",
             }
         ],
     }
@@ -678,6 +680,31 @@ def test_migrate_v1_rejects_output_symlink(tmp_path):
         sys.argv = old_argv
 
 
+def test_migration_receipt_hashes_emitted_v2_bytes_and_requires_slot_model(tmp_path):
+    legacy = {
+        "schema_version": "1.0", "battery_id": "legacy-hash", "catalog_snapshot_id": "snap",
+        "controls": {"temp": 0},
+        "planned_slots": [{"slot_id": "s1", "capability": "c", "rubric_version": "r", "input_sha256": "0" * 64}],
+        "evidence": [{"slot_id": "s1", "attempt": 1, "status": "pass", "requested_model": "model-1",
+                      "http_status": 200, "response_sha256": "1" * 64, "effective_model": "model-1",
+                      "semantic_verdict": "pass"}],
+    }
+    source = tmp_path / "v1.json"; output = tmp_path / "v2.json"; receipt = tmp_path / "receipt.json"
+    source.write_text(json.dumps(legacy, indent=2) + "\n")
+    old_argv = sys.argv
+    try:
+        sys.argv = ["validator", "--manifest", str(source), "--receipt-out", str(receipt), "--migrate-v1", "--migrated-out", str(output)]
+        assert validator.main() == 0
+    finally:
+        sys.argv = old_argv
+    assert json.loads(receipt.read_text())["manifest_sha256"] == hashlib.sha256(output.read_bytes()).hexdigest()
+    invalid = dict(legacy); invalid["evidence"] = [dict(legacy["evidence"][0], requested_model="")]
+    with pytest.raises(ValueError, match="requested_model"):
+        validator.migrate_manifest_v1_to_v2(invalid)
+    with pytest.raises(ValueError, match="v1.0"):
+        validator.migrate_manifest_v1_to_v2({"schema_version": "2.0"})
+
+
 # ==============================================================================
 # Wave 1 (T2) — Differential Structural Parity Matrix
 # ==============================================================================
@@ -726,4 +753,3 @@ def test_structural_parity_differential_matrix(mutator, description):
 
     assert schema_rejected, f"JSON Schema failed to reject structural defect: {description}"
     assert python_rejected, f"Python validator failed to reject structural defect: {description}"
-

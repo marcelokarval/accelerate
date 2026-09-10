@@ -16,6 +16,11 @@ from typing import Any
 import jsonschema
 
 SCHEMA_PATH = Path(__file__).resolve().parent.parent / "assets/capability-battery-manifest.schema.json"
+MAX_MANIFEST_BYTES = 2 * 1024 * 1024
+MAX_PLANNED_SLOTS = 1000
+MAX_EVIDENCE_ROWS = 10000
+MAX_ATTEMPT = 101
+MAX_CONTROL_PROPERTIES = 32
 _SCHEMA_CACHE: dict[str, Any] | None = None
 
 STATUSES = {"pass", "semantic_fail", "transport_fail", "protocol_fail", "not_run", "inconclusive"}
@@ -23,10 +28,10 @@ ID_RE = re.compile(r"^[A-Za-z0-9._-]{1,160}$")
 MODEL_ID_RE = re.compile(r"^[A-Za-z0-9._/:@-]{1,160}$")
 SHA_RE = re.compile(r"^[a-f0-9]{64}$")
 SAFE_TEXT_RE = re.compile(r"^[^\r\n\t\x00-\x1f\x7f-\x9f]{1,240}$")
-FORBIDDEN_KEY = re.compile(
-    r"(?:^|_)(?:raw|authorization|cookie|token|secret|api_key|password|headers?|body|prompt|response)(?:_|$)",
-    re.I,
-)
+FORBIDDEN_KEY_PARTS = {
+    "raw", "authorization", "cookie", "token", "secret", "apikey", "password",
+    "header", "headers", "body", "prompt", "response", "credential", "credentials",
+}
 SECRET_VALUE = re.compile(
     r"(?:bearer\s+\S+|(?:sk|rk|pk|ghp)_[A-Za-z0-9_-]{12,}|-----BEGIN [A-Z ]+PRIVATE KEY-----|[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,})",
     re.I,
@@ -41,12 +46,59 @@ def load_json(path: Path) -> dict[str, Any]:
         raise ValueError(f"cannot read JSON {path}: {exc}") from exc
 
 
+def read_manifest_bytes(path: Path) -> bytes:
+    """Read one bounded, regular, non-symlink manifest and return those bytes."""
+    try:
+        fd = os.open(path, os.O_RDONLY | getattr(os, "O_NOFOLLOW", 0))
+        try:
+            stat = os.fstat(fd)
+            if not stat.st_mode & 0o170000 == 0o100000:
+                raise ValueError("manifest must be a regular file")
+            if stat.st_size > MAX_MANIFEST_BYTES:
+                raise ValueError("manifest exceeds maximum byte limit")
+            with os.fdopen(fd, "rb") as handle:
+                fd = -1
+                raw = handle.read()
+        finally:
+            if fd >= 0:
+                os.close(fd)
+    except ValueError:
+        raise
+    except OSError as exc:
+        raise ValueError("cannot read manifest input") from exc
+    if len(raw) > MAX_MANIFEST_BYTES:
+        raise ValueError("manifest exceeds maximum byte limit")
+    return raw
+
+
+def parse_json_bytes(raw: bytes) -> dict[str, Any]:
+    try:
+        value = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError("manifest is not valid UTF-8 JSON") from exc
+    if not isinstance(value, dict):
+        raise ValueError("manifest must be a JSON object")
+    return value
+
+
+def _key_parts(key: str) -> set[str]:
+    normalized = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", key)
+    return {part for part in re.split(r"[^A-Za-z0-9]+", normalized.lower()) if part}
+
+
+def _forbidden_key(key: str) -> bool:
+    parts = _key_parts(key)
+    return bool(parts & FORBIDDEN_KEY_PARTS) or {"api", "key"} <= parts or {
+        "private", "key"
+    } <= parts or {"access", "key"} <= parts or {"client", "secret"} <= parts
+
+
 def reject_secrets(value: Any, trail: str = "$") -> None:
     if isinstance(value, dict):
         for key, child in value.items():
-            if key != "response_sha256" and FORBIDDEN_KEY.search(key):
-                raise ValueError(f"forbidden raw or secret-shaped field at {trail}.{key}")
-            reject_secrets(child, f"{trail}.{key}")
+            if key != "response_sha256" and _forbidden_key(key):
+                raise ValueError(f"forbidden raw or secret-shaped field at {trail}")
+            reject_secrets(child, trail)
     elif isinstance(value, list):
         for index, child in enumerate(value):
             reject_secrets(child, f"{trail}[{index}]")
@@ -63,10 +115,26 @@ def safe_text(value: Any, name: str) -> None:
 
 def migrate_manifest_v1_to_v2(data: dict[str, Any]) -> dict[str, Any]:
     """Safely migrate a valid v1.0 manifest dictionary to v2.0 structure."""
-    if data.get("schema_version") not in {"1.0", "2.0"}:
-        raise ValueError("unsupported manifest schema version")
+    if data.get("schema_version") != "1.0":
+        raise ValueError("migration accepts v1.0 manifests only")
+    if not isinstance(data, dict) or not isinstance(data.get("planned_slots"), list) or not isinstance(data.get("evidence"), list):
+        raise ValueError("v1 manifest is not migratable")
+    requested_by_slot: dict[str, str] = {}
+    for row in data["evidence"]:
+        if not isinstance(row, dict) or not isinstance(row.get("slot_id"), str) or not isinstance(row.get("requested_model"), str) or not row["requested_model"]:
+            raise ValueError("v1 evidence requires requested_model for migration")
+        prior = requested_by_slot.setdefault(row["slot_id"], row["requested_model"])
+        if prior != row["requested_model"]:
+            raise ValueError("v1 migration has inconsistent requested_model")
     migrated = dict(data)
     migrated["schema_version"] = "2.0"
+    migrated.setdefault("provider", "legacy")
+    migrated.setdefault("route", "legacy")
+    migrated.setdefault("harness", "legacy")
+    for slot in migrated["planned_slots"]:
+        if not isinstance(slot, dict) or slot.get("slot_id") not in requested_by_slot:
+            raise ValueError("v1 migration lacks requested_model for planned slot")
+        slot["requested_model"] = requested_by_slot[slot["slot_id"]]
     return migrated
 
 
@@ -82,6 +150,8 @@ def validate_manifest(data: dict[str, Any]) -> dict[str, int]:
     reject_secrets(data)
     if not isinstance(data, dict):
         raise ValueError("manifest must be a JSON object")
+    if len(data.get("controls", {})) > MAX_CONTROL_PROPERTIES:
+        raise ValueError("controls exceeds maximum property limit")
 
     # Authoritative structural validation via JSON Schema
     schema = get_schema()
@@ -89,15 +159,20 @@ def validate_manifest(data: dict[str, Any]) -> dict[str, int]:
         jsonschema.validate(instance=data, schema=schema)
     except jsonschema.ValidationError as exc:
         field = ".".join(str(p) for p in exc.path) or "manifest"
-        msg = exc.message
-        if exc.validator == "pattern" and isinstance(exc.instance, str) and ("\n" in exc.instance or "\r" in exc.instance):
-            msg = f"{field} must be a non-empty, single-line string: {msg}"
-        elif exc.validator in ("maxLength", "maxProperties"):
-            msg = f"oversized {field}: {msg}"
+        if exc.validator in ("maxLength", "maxProperties", "maxItems"):
+            msg = f"oversized {field}"
+        elif exc.validator == "pattern" and isinstance(exc.instance, str) and ("\n" in exc.instance or "\r" in exc.instance):
+            msg = "field must be a non-empty, single-line string"
+        else:
+            msg = f"validator {exc.validator} rejected the field"
         raise ValueError(f"schema validation error at {field}: {msg}") from exc
 
     slots = data["planned_slots"]
     evidence = data["evidence"]
+    if len(slots) > MAX_PLANNED_SLOTS:
+        raise ValueError("planned_slots exceeds maximum slot limit")
+    if len(evidence) > MAX_EVIDENCE_ROWS:
+        raise ValueError("evidence exceeds maximum row limit")
 
     slot_defs: dict[str, dict[str, Any]] = {}
     for slot in slots:
@@ -117,6 +192,8 @@ def validate_manifest(data: dict[str, Any]) -> dict[str, int]:
             raise ValueError(f"evidence references unplanned slot: {slot_id}")
 
         attempt = row["attempt"]
+        if attempt > MAX_ATTEMPT:
+            raise ValueError(f"attempt exceeds maximum for slot {slot_id}")
         if (slot_id, attempt) in seen_attempts:
             raise ValueError(f"duplicate attempt {attempt} for slot {slot_id}")
         seen_attempts.add((slot_id, attempt))
@@ -127,13 +204,12 @@ def validate_manifest(data: dict[str, Any]) -> dict[str, int]:
             planned = slot_defs[slot_id]
             if "requested_model" in planned and planned["requested_model"] != row["requested_model"]:
                 raise ValueError(
-                    f"requested_model {row['requested_model']!r} does not match planned slot {planned['requested_model']!r} for {slot_id}"
+                    "requested_model does not match planned slot for " + slot_id
                 )
             requested_model_by_slot[slot_id] = row["requested_model"]
         elif requested_model_by_slot[slot_id] != row["requested_model"]:
             raise ValueError(
-                f"retry changing requested_model is forbidden for slot {slot_id}: "
-                f"{requested_model_by_slot[slot_id]!r} -> {row['requested_model']!r}"
+                f"retry changing requested_model is forbidden for slot {slot_id}"
             )
 
         status = row["status"]
@@ -144,8 +220,11 @@ def validate_manifest(data: dict[str, Any]) -> dict[str, int]:
         if status == "pass":
             if http_status is None or not (200 <= http_status < 300):
                 raise ValueError(f"status 'pass' requires successful HTTP 2xx transport; received http_status={http_status} for {slot_id}")
-            if not response_sha:
-                raise ValueError(f"status 'pass' requires non-empty response_sha256 for {slot_id}")
+            if not response_sha or not effective_model or not row.get("semantic_verdict"):
+                raise ValueError(f"status 'pass' requires response digest, effective model, and semantic verdict for {slot_id}")
+            for field in ("provider", "route", "harness"):
+                if not data.get(field):
+                    raise ValueError(f"status 'pass' requires manifest {field} binding")
 
         elif status == "semantic_fail":
             if http_status is None or not (200 <= http_status < 300):
@@ -188,6 +267,8 @@ def validate_manifest(data: dict[str, Any]) -> dict[str, int]:
     for slot_id, numbers in attempts_by_slot.items():
         if sorted(numbers) != list(range(1, max(numbers) + 1)):
             raise ValueError(f"attempt history is not contiguous for {slot_id}; retries cannot overwrite failures")
+        if "max_retries" in slot_defs[slot_id] and max(numbers) > slot_defs[slot_id]["max_retries"] + 1:
+            raise ValueError(f"attempt exceeds max_retries for {slot_id}")
 
     return {"planned_slot_count": len(slots), "evidence_count": len(evidence)}
 
@@ -200,7 +281,9 @@ def main() -> int:
     parser.add_argument("--migrated-out", type=Path, help="path to write migrated v2.0 manifest")
     args = parser.parse_args()
     try:
-        manifest_data = load_json(args.manifest)
+        raw = read_manifest_bytes(args.manifest)
+        manifest_data = parse_json_bytes(raw)
+        manifest_bytes = raw
         if args.migrate_v1:
             if not args.migrated_out:
                 raise ValueError("--migrate-v1 requires --migrated-out to be specified")
@@ -214,6 +297,7 @@ def main() -> int:
             counts = validate_manifest(migrated_data)
             manifest_data = migrated_data
             serialized = json.dumps(manifest_data, indent=2, sort_keys=True) + "\n"
+            manifest_bytes = serialized.encode("utf-8")
 
             target_out = args.migrated_out
             target_out.parent.mkdir(parents=True, exist_ok=True)
@@ -225,15 +309,13 @@ def main() -> int:
             finally:
                 if tmp_path.exists():
                     tmp_path.unlink()
-            raw = serialized.encode("utf-8")
         else:
             counts = validate_manifest(manifest_data)
-            raw = args.manifest.read_bytes()
 
         receipt = {
             "schema_version": manifest_data.get("schema_version", "2.0"),
             "status": "valid",
-            "manifest_sha256": hashlib.sha256(raw).hexdigest(),
+            "manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
             "validated_at": datetime.now(timezone.utc).isoformat(),
             **counts,
         }
