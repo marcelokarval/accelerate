@@ -2,7 +2,7 @@
 name: omnirouter-operations
 description: Use for OmniRoute operations, model research, audits, qualification, and bounded comparisons; not agent dispatch or business authorization.
 metadata:
-  version: 2.5.0
+  version: 2.5.1
   author: Karval/Hermes
   license: Proprietary - Karval/Hermes internal use
   compatibility: OmniRoute 3.8.50 on Linux with systemd --user and Agent Skills-compatible clients

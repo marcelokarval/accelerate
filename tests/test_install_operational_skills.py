@@ -3,6 +3,7 @@ from __future__ import annotations
 import importlib.util
 import json
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -553,3 +554,400 @@ def test_cli_codex_runtime_invocation_guides_operator_to_agents():
         f"CLI failed to guide operator to use 'agents' runtime. Output was:\n"
         f"STDERR: {result.stderr}\nSTDOUT: {result.stdout}"
     )
+
+
+def test_rollback_rejects_tampered_marker_sha256(tmp_path):
+    """T3 (Defect C33-P1-04): Rollback preflight must reject backups whose marker (.accelerate-operational-skill.json) was tampered with."""
+    root, registry, home = fixture(tmp_path)
+    module = load_installer()
+    # Install version 1
+    module.reconcile(
+        "opencode",
+        home=home,
+        registry_path=registry,
+        repo_root=root,
+        apply=True,
+        run_id="20260821T120000Z-opencode",
+    )
+    # Drift source to trigger version 2 and create a backup of version 1
+    source = root / "skills/operations/example-operations"
+    (source / "extra.txt").write_text("v2\n", encoding="utf-8")
+    run2_id = "20260821T130000Z-opencode"
+    module.reconcile(
+        "opencode",
+        home=home,
+        registry_path=registry,
+        repo_root=root,
+        apply=True,
+        run_id=run2_id,
+    )
+    backup_marker = (
+        home
+        / ".local/state/accelerate/backups/operational-skills"
+        / run2_id
+        / "example-operations.previous"
+        / module.MARKER
+    )
+    assert backup_marker.exists()
+
+    # Tamper with the marker inside the backup directory
+    marker_data = json.loads(backup_marker.read_text(encoding="utf-8"))
+    marker_data["source_digest"] = "tampered_digest_00000000000000000000"
+    backup_marker.write_text(json.dumps(marker_data), encoding="utf-8")
+
+    # Attempt rollback: must fail closed and refuse rollback due to tampered marker
+    with pytest.raises(ValueError, match=r"tampered|marker"):
+        module.rollback("opencode", run2_id, home=home, registry_path=registry, repo_root=root)
+
+
+def test_rollback_batch_failure_compensates_all_destinations(tmp_path, monkeypatch):
+    """T4 (Defect C33-P1-05): If rollback fails mid-batch on skill 2, skill 1 must be compensated back to its pre-rollback state."""
+    root = tmp_path / "repo"
+    home = tmp_path / "home"
+    home.mkdir()
+    source_a = root / "skills/operations/skill-a"
+    source_b = root / "skills/operations/skill-b"
+    source_a.mkdir(parents=True)
+    source_b.mkdir(parents=True)
+    (source_a / "SKILL.md").write_text("---\nname: skill-a\ndescription: a\n---\n# A1\n", encoding="utf-8")
+    (source_b / "SKILL.md").write_text("---\nname: skill-b\ndescription: b\n---\n# B1\n", encoding="utf-8")
+    registry = root / "registry.toml"
+    registry.write_text(
+        "schema_version = 1\n"
+        'managed_by = "accelerate"\n'
+        'marker = ".accelerate-operational-skill.json"\n\n'
+        "[[skills]]\n"
+        'name = "skill-a"\n'
+        'source = "skills/operations/skill-a"\n\n'
+        "[[skills]]\n"
+        'name = "skill-b"\n'
+        'source = "skills/operations/skill-b"\n\n'
+        "[[targets]]\n"
+        'runtime = "opencode"\n'
+        'home_suffix = ".config/opencode/skills"\n\n'
+        "[[targets]]\n"
+        'runtime = "agents"\n'
+        'home_suffix = ".agents/skills"\n\n'
+        "[[targets]]\n"
+        'runtime = "hermes"\n'
+        'home_suffix = ".hermes/skills/runtime"\n',
+        encoding="utf-8",
+    )
+    module = load_installer()
+    # Run 1: initial install
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id="20260821T120000Z-opencode")
+    # Drift both skills for run 2
+    (source_a / "SKILL.md").write_text("---\nname: skill-a\ndescription: a\n---\n# A2\n", encoding="utf-8")
+    (source_b / "SKILL.md").write_text("---\nname: skill-b\ndescription: b\n---\n# B2\n", encoding="utf-8")
+    run2_id = "20260821T130000Z-opencode"
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id=run2_id)
+
+    dest_a = home / ".config/opencode/skills/skill-a"
+    dest_b = home / ".config/opencode/skills/skill-b"
+    digest_a_run2 = module.tree_digest(dest_a)
+    digest_b_run2 = module.tree_digest(dest_b)
+
+    # Note: entries are processed in reversed(entries) -> skill-b first, then skill-a.
+    # We simulate a failure on the second skill swapped (skill-a).
+    original_replace = module._replace
+    def faulty_replace(destination, staged):
+        if destination.name == "skill-a":
+            raise OSError("Injected disk failure during skill-a rollback swap")
+        return original_replace(destination, staged)
+
+    monkeypatch.setattr(module, "_replace", faulty_replace)
+
+    with pytest.raises(OSError, match="Injected disk failure"):
+        module.rollback("opencode", run2_id, home=home, registry_path=registry, repo_root=root)
+
+    # Both destinations must remain or be compensated to their pre-rollback (run 2) state!
+    # Neither skill should be left in a half-rolled-back state.
+    assert module.tree_digest(dest_a) == digest_a_run2, "skill-a was left modified after failed rollback"
+    assert module.tree_digest(dest_b) == digest_b_run2, "skill-b was NOT compensated back to pre-rollback state after mid-batch failure"
+
+
+def test_install_and_backup_strict_permissions(tmp_path):
+    """T6 (Defect C33-P2-01): Backup directory and files must strictly enforce 0700 for directories and 0600 for manifest."""
+    root, registry, home = fixture(tmp_path)
+    module = load_installer()
+    run_id = "20260821T120000Z-opencode"
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id=run_id)
+    # Drift and create backup
+    (root / "skills/operations/example-operations/SKILL.md").write_text("---\nname: example-operations\ndescription: v2\n---\n# V2\n", encoding="utf-8")
+    run2_id = "20260821T130000Z-opencode"
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id=run2_id)
+
+    backup_dir = home / ".local/state/accelerate/backups/operational-skills" / run2_id
+    manifest_path = backup_dir / "manifest.json"
+    skill_backup = backup_dir / "example-operations.previous"
+
+    # Directory permissions must be 0700
+    assert (backup_dir.stat().st_mode & 0o777) == 0o700, f"backup_dir mode is {oct(backup_dir.stat().st_mode & 0o777)}"
+    assert (skill_backup.stat().st_mode & 0o777) == 0o700, f"skill_backup mode is {oct(skill_backup.stat().st_mode & 0o777)}"
+    # Manifest must be 0600
+    assert (manifest_path.stat().st_mode & 0o777) == 0o600, f"manifest mode is {oct(manifest_path.stat().st_mode & 0o777)}"
+
+
+def _run_child(root: Path, registry: Path, home: Path, event: Path, boundary: str) -> subprocess.CompletedProcess[str]:
+    # Empty CLI arguments are deliberately removed so this helper exercises
+    # the public command path rather than calling reconcile in-process.
+    env = {**__import__("os").environ, "ACCELERATE_TEST_MODE": "1", "ACCELERATE_TEST_FAULT_BOUNDARY": boundary,
+           "ACCELERATE_TEST_ALLOW_ROOT": str(home), "ACCELERATE_TEST_FAULT_EVENT": str(event)}
+    return subprocess.run([sys.executable, str(INSTALLER), "--runtime", "opencode", "--home", str(home),
+                          "--registry", str(registry), "--repo-root", str(root), "--apply"], env=env, capture_output=True, text=True)
+
+
+def _run_cli_recovery(root: Path, registry: Path, home: Path) -> subprocess.CompletedProcess[str]:
+    return subprocess.run([sys.executable, str(INSTALLER), "--runtime", "opencode", "--home", str(home),
+                           "--registry", str(registry), "--repo-root", str(root), "--apply"],
+                          capture_output=True, text=True, env={k: v for k, v in __import__("os").environ.items()
+                                                              if not k.startswith("ACCELERATE_TEST_")})
+
+
+@pytest.mark.parametrize("boundary", ["after_swap_intent", "after_candidate_installed"])
+def test_subprocess_kill_first_install_recovers_from_journal_boundary(tmp_path, boundary):
+    root, registry, home = fixture(tmp_path); event = home / "event"
+    crashed = _run_child(root, registry, home, event, boundary)
+    assert crashed.returncode == -9 and event.read_text() == boundary
+    recovered = load_installer().reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True)
+    assert recovered["changed"] == []
+    assert not (home / ".local/state/accelerate/operational-skills/active.json").exists()
+
+
+def test_fresh_cli_recovers_after_subprocess_kill(tmp_path):
+    root, registry, home = fixture(tmp_path); event = home / "event"
+    assert _run_child(root, registry, home, event, "after_swap_intent").returncode == -9
+    recovered = _run_cli_recovery(root, registry, home)
+    assert recovered.returncode == 0, recovered.stderr
+    assert (home / ".config/opencode/skills/example-operations/SKILL.md").is_file()
+
+
+@pytest.mark.parametrize("boundary", ["after_target_displaced", "before_cleanup"])
+def test_subprocess_kill_replacement_recovery_cleans_residuals(tmp_path, boundary):
+    root, registry, home = fixture(tmp_path); module = load_installer()
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True,
+                     run_id="20260821T120000Z-opencode")
+    (root / "skills/operations/example-operations/SKILL.md").write_text("v2\n", encoding="utf-8")
+    event = home / "event"; crashed = _run_child(root, registry, home, event, boundary)
+    assert crashed.returncode == -9 and event.read_text() == boundary
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True)
+    target = home / ".config/opencode/skills/example-operations"
+    assert module.tree_digest(target) == module.tree_digest(root / "skills/operations/example-operations")
+    assert not list((home / ".local/state/accelerate/operational-skills").glob("*.tmp-*"))
+
+
+def test_subprocess_kill_between_entries_recovers_all_entries(tmp_path):
+    root, registry, home = fixture(tmp_path)
+    second = root / "skills/operations/second"; second.mkdir(); (second / "SKILL.md").write_text("second\n", encoding="utf-8")
+    registry.write_text(registry.read_text() + '\n[[skills]]\nname = "second"\nsource = "skills/operations/second"\n', encoding="utf-8")
+    event = home / "event"; crashed = _run_child(root, registry, home, event, "between_entries")
+    assert crashed.returncode == -9
+    load_installer().reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True)
+    assert (home / ".config/opencode/skills/second/SKILL.md").is_file()
+
+
+def test_subprocess_kill_rollback_after_displacement_recovers(tmp_path):
+    root, registry, home = fixture(tmp_path); module = load_installer()
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id="20260821T120000Z-opencode")
+    (root / "skills/operations/example-operations/SKILL.md").write_text("v2\n", encoding="utf-8")
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id="20260821T120001Z-opencode")
+    event = home / "event"; env = {**__import__("os").environ, "ACCELERATE_TEST_MODE": "1", "ACCELERATE_TEST_FAULT_BOUNDARY": "after_target_displaced",
+                                      "ACCELERATE_TEST_ALLOW_ROOT": str(home), "ACCELERATE_TEST_FAULT_EVENT": str(event)}
+    crashed = subprocess.run([sys.executable, str(INSTALLER), "--runtime", "opencode", "--home", str(home), "--registry", str(registry), "--repo-root", str(root), "--rollback", "20260821T120001Z-opencode"], env=env, text=True)
+    assert crashed.returncode == -9
+    module.rollback("opencode", "20260821T120001Z-opencode", home=home, registry_path=registry, repo_root=root)
+    assert (home / ".config/opencode/skills/example-operations/SKILL.md").read_text() == "---\nname: example-operations\ndescription: fixture\n---\n# Example\n"
+
+
+def test_lock_contention_and_stale_process_death_are_fail_closed_then_released(tmp_path):
+    root, registry, home = fixture(tmp_path); module = load_installer()
+    control = home / ".local/state/accelerate/operational-skills"; control.mkdir(parents=True); control.chmod(0o700)
+    with module._Lock(control / "lock"):
+        with pytest.raises(ValueError, match="lock is held"):
+            module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True)
+    assert module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True)["changed"]
+
+
+def test_lock_holder_process_kill_releases_cooperative_lock(tmp_path):
+    root, registry, home = fixture(tmp_path); module = load_installer()
+    control = home / ".local/state/accelerate/operational-skills"
+    code = ("import importlib.util, os, pathlib, sys\n"
+            "s=importlib.util.spec_from_file_location('i', sys.argv[1])\n"
+            "m=importlib.util.module_from_spec(s); s.loader.exec_module(m)\n"
+            "with m._Lock(pathlib.Path(sys.argv[2])/'lock'):\n"
+            " print('READY', flush=True); os.read(0, 1)\n")
+    child = subprocess.Popen([sys.executable, "-c", code, str(INSTALLER), str(control)],
+                             stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+    assert child.stdout is not None
+    assert child.stdout.readline().strip() == "READY"
+    with pytest.raises(ValueError, match="lock is held"):
+        module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True)
+    child.kill(); child.wait()
+    assert module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True)["changed"]
+
+
+def test_all_v1_rollback_records_fail_closed(tmp_path):
+    root, registry, home = fixture(tmp_path); module = load_installer()
+    run_id = "20260821T120000Z-opencode"
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id=run_id)
+    target = home / ".config/opencode/skills/example-operations"
+    run = home / ".local/state/accelerate/backups/operational-skills" / run_id
+    journal = home / ".local/state/accelerate/operational-skills/journals" / f"{run_id}.json"
+    entries = [{"name": "example-operations", "previous": False, "previous_digest": None,
+                "installed_digest": module.tree_digest(target)}]
+    journal.unlink()
+    legacy_entries = [{k: e[k] for k in ("name", "previous", "previous_digest", "installed_digest")} for e in entries]
+    legacy = {"schema_version": 1, "runtime": "opencode", "run_id": run_id, "status": "prepared", "entries": legacy_entries}
+    (run / "manifest.json").write_text(json.dumps(legacy), encoding="utf-8")
+    with pytest.raises(ValueError, match="v1 rollback"):
+        module.rollback("opencode", run_id, home=home, registry_path=registry, repo_root=root)
+    legacy["status"] = "applied"; (run / "manifest.json").write_text(json.dumps(legacy), encoding="utf-8")
+    with pytest.raises(ValueError, match="v1 rollback"):
+        module.rollback("opencode", run_id, home=home, registry_path=registry, repo_root=root)
+    assert target.exists()
+
+
+def test_rollback_preflight_failure_never_arms_recovery(tmp_path):
+    root, registry, home = fixture(tmp_path); module = load_installer()
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id="20260821T120000Z-opencode")
+    (root / "skills/operations/example-operations/SKILL.md").write_text("v2\n", encoding="utf-8")
+    run_id = "20260821T120001Z-opencode"
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id=run_id)
+    backup = home / ".local/state/accelerate/backups/operational-skills" / run_id / "example-operations.previous" / module.MARKER
+    backup.write_text("tampered\n", encoding="utf-8")
+    before = module.tree_digest(home / ".config/opencode/skills/example-operations")
+    with pytest.raises(ValueError, match="backup"):
+        module.rollback("opencode", run_id, home=home, registry_path=registry, repo_root=root)
+    assert module.tree_digest(home / ".config/opencode/skills/example-operations") == before
+    assert not (home / ".local/state/accelerate/operational-skills/active.json").exists()
+    journal = json.loads((home / ".local/state/accelerate/operational-skills/journals" / f"{run_id}.json").read_text())
+    assert journal["goal"] == "apply" and journal["state"] == "applied"
+    with pytest.raises(ValueError, match="backup"):
+        module.rollback("opencode", run_id, home=home, registry_path=registry, repo_root=root)
+    assert module.tree_digest(home / ".config/opencode/skills/example-operations") == before
+
+
+def test_recovery_rejects_tampered_candidate_without_touching_target(tmp_path):
+    root, registry, home = fixture(tmp_path); event = home / "event"
+    crashed = _run_child(root, registry, home, event, "after_swap_intent")
+    assert crashed.returncode == -9
+    run_root = home / ".local/state/accelerate/backups/operational-skills"
+    candidate = next(run_root.glob("*/example-operations.candidate"))
+    (candidate / "SKILL.md").write_text("tampered\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="candidate"):
+        load_installer().reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True)
+    assert not (home / ".config/opencode/skills/example-operations").exists()
+    assert (home / ".local/state/accelerate/operational-skills/active.json").exists()
+
+
+def test_fresh_cli_recovery_rejects_marker_drift_without_mutation(tmp_path):
+    root, registry, home = fixture(tmp_path); event = home / "event"
+    assert _run_child(root, registry, home, event, "after_swap_intent").returncode == -9
+    candidate = next(p for p in (home / ".local/state/accelerate/backups/operational-skills").glob("2026*/example-operations.candidate"))
+    (candidate / load_installer().MARKER).write_text("drift\n", encoding="utf-8")
+    failed = _run_cli_recovery(root, registry, home)
+    assert failed.returncode == 2
+    assert not (home / ".config/opencode/skills/example-operations").exists()
+
+
+@pytest.mark.parametrize("substitution", ["journals", "run"])
+def test_fresh_cli_recovery_rejects_state_directory_symlink_without_cleanup(tmp_path, substitution):
+    root, registry, home = fixture(tmp_path); event = home / "event"
+    assert _run_child(root, registry, home, event, "after_swap_intent").returncode == -9
+    control = home / ".local/state/accelerate/operational-skills"
+    backup_root = home / ".local/state/accelerate/backups/operational-skills"
+    run = next(p for p in backup_root.glob("2026*") if (p / "example-operations.candidate").exists())
+    external = tmp_path / "external"; external.mkdir(); sentinel = external / "sentinel"; sentinel.write_text("keep")
+    if substitution == "journals":
+        journals = control / "journals"; shutil.rmtree(journals); journals.symlink_to(external, target_is_directory=True)
+    else:
+        shutil.rmtree(run); run.symlink_to(external, target_is_directory=True)
+    failed = _run_cli_recovery(root, registry, home)
+    assert failed.returncode == 2 and sentinel.read_text() == "keep"
+    assert (control / "active.json").exists() and not (home / ".config/opencode/skills/example-operations").exists()
+
+
+def test_fresh_cli_rollback_recovery_rejects_previous_marker_drift(tmp_path):
+    root, registry, home = fixture(tmp_path); module = load_installer()
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id="20260821T120000Z-opencode")
+    (root / "skills/operations/example-operations/SKILL.md").write_text("v2\n", encoding="utf-8")
+    run_id = "20260821T120001Z-opencode"
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id=run_id)
+    event = home / "event"
+    env = {**__import__("os").environ, "ACCELERATE_TEST_MODE": "1", "ACCELERATE_TEST_FAULT_BOUNDARY": "after_target_displaced",
+           "ACCELERATE_TEST_ALLOW_ROOT": str(home), "ACCELERATE_TEST_FAULT_EVENT": str(event)}
+    crashed = subprocess.run([sys.executable, str(INSTALLER), "--runtime", "opencode", "--home", str(home),
+                              "--registry", str(registry), "--repo-root", str(root), "--rollback", run_id], env=env, text=True)
+    assert crashed.returncode == -9
+    backup_marker = home / ".local/state/accelerate/backups/operational-skills" / run_id / "example-operations.previous" / module.MARKER
+    backup_marker.write_text("drift\n", encoding="utf-8")
+    failed = subprocess.run([sys.executable, str(INSTALLER), "--runtime", "opencode", "--home", str(home),
+                             "--registry", str(registry), "--repo-root", str(root), "--rollback", run_id], capture_output=True, text=True)
+    assert failed.returncode == 2 and (home / ".local/state/accelerate/operational-skills/active.json").exists()
+    assert not (home / ".config/opencode/skills/example-operations").exists()
+
+
+def test_direct_cli_rollback_rejects_journals_symlink_before_read(tmp_path):
+    root, registry, home = fixture(tmp_path); module = load_installer(); run_id = "20260821T120000Z-opencode"
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id=run_id)
+    control = home / ".local/state/accelerate/operational-skills"; journals = control / "journals"
+    external = tmp_path / "external"; external.mkdir(); sentinel = external / "sentinel"; sentinel.write_text("keep")
+    shutil.rmtree(journals); journals.symlink_to(external, target_is_directory=True)
+    target = home / ".config/opencode/skills/example-operations"; before = module.tree_digest(target)
+    failed = subprocess.run([sys.executable, str(INSTALLER), "--runtime", "opencode", "--home", str(home),
+                             "--registry", str(registry), "--repo-root", str(root), "--rollback", run_id], capture_output=True, text=True)
+    assert failed.returncode == 2 and sentinel.read_text() == "keep" and module.tree_digest(target) == before
+
+
+def test_fresh_cli_rollback_rejects_restored_target_marker_drift(tmp_path):
+    root, registry, home = fixture(tmp_path); module = load_installer()
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id="20260821T120000Z-opencode")
+    (root / "skills/operations/example-operations/SKILL.md").write_text("v2\n", encoding="utf-8")
+    run_id = "20260821T120001Z-opencode"
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id=run_id)
+    event = home / "event"
+    env = {**__import__("os").environ, "ACCELERATE_TEST_MODE": "1", "ACCELERATE_TEST_FAULT_BOUNDARY": "after_candidate_installed",
+           "ACCELERATE_TEST_ALLOW_ROOT": str(home), "ACCELERATE_TEST_FAULT_EVENT": str(event)}
+    crashed = subprocess.run([sys.executable, str(INSTALLER), "--runtime", "opencode", "--home", str(home),
+                              "--registry", str(registry), "--repo-root", str(root), "--rollback", run_id], env=env, text=True)
+    assert crashed.returncode == -9
+    target = home / ".config/opencode/skills/example-operations"; marker = target / module.MARKER
+    marker.write_text("drift\n", encoding="utf-8")
+    failed = subprocess.run([sys.executable, str(INSTALLER), "--runtime", "opencode", "--home", str(home),
+                             "--registry", str(registry), "--repo-root", str(root), "--rollback", run_id], capture_output=True, text=True)
+    assert failed.returncode == 2 and (home / ".local/state/accelerate/operational-skills/active.json").exists()
+    assert marker.read_text() == "drift\n"
+
+
+def test_dangling_active_pointer_fails_closed(tmp_path):
+    root, registry, home = fixture(tmp_path)
+    control = home / ".local/state/accelerate/operational-skills"; control.mkdir(parents=True); control.chmod(0o700)
+    (control / "active.json").symlink_to(control / "missing-active.json")
+    with pytest.raises(ValueError, match="active operational-skills pointer"):
+        load_installer().reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=False)
+
+
+@pytest.mark.parametrize("pointer", [{"schema_version": 1, "run_id": "../../escape"}, {"schema_version": 2, "run_id": "bad"}])
+def test_recovery_rejects_invalid_active_pointer_without_mutation(tmp_path, pointer):
+    root, registry, home = fixture(tmp_path); event = home / "event"
+    assert _run_child(root, registry, home, event, "after_swap_intent").returncode == -9
+    active = home / ".local/state/accelerate/operational-skills/active.json"
+    active.write_text(json.dumps(pointer), encoding="utf-8")
+    active.chmod(0o600)
+    with pytest.raises(ValueError, match="active operational-skills pointer|invalid active"):
+        load_installer().reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True)
+    assert not (home / ".config/opencode/skills/example-operations").exists()
+
+
+def test_recovery_never_terminalizes_previous_target_without_candidate(tmp_path):
+    root, registry, home = fixture(tmp_path); module = load_installer(); event = home / "event"
+    module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True, run_id="20260821T120000Z-opencode")
+    (root / "skills/operations/example-operations/SKILL.md").write_text("v2\n", encoding="utf-8")
+    assert _run_child(root, registry, home, event, "after_swap_intent").returncode == -9
+    run = next(p for p in (home / ".local/state/accelerate/backups/operational-skills").glob("2026*") if (p / "example-operations.candidate").exists())
+    candidate = run / "example-operations.candidate"; shutil.rmtree(candidate)
+    shutil.rmtree(home / ".config/opencode/skills/example-operations")
+    shutil.copytree(run / "example-operations.previous", home / ".config/opencode/skills/example-operations")
+    with pytest.raises(ValueError, match="ambiguous"):
+        module.reconcile("opencode", home=home, registry_path=registry, repo_root=root, apply=True)
+    assert (home / ".local/state/accelerate/operational-skills/active.json").exists()
