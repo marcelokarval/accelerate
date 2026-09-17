@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "kind": "bounded-s1a-conformance-successor-review-v2",
+  "date": "2026-09-10",
+  "work_item": "CODEX-34",
+  "candidate": {
+    "base": "710db6474292ff3deb74728c1d754aea6e7f806e",
+    "head": "2ac5156644d480f233560bff167f7990dcee5bde",
+    "revision": "head-plus-uncommitted-successor",
+    "tracked_binary_diff_sha256": "3bb78a55f8098e12d3cc374133afbd0e751f2ab3b182df05c54775e9acd1bce8",
+    "files_sha256": {
+      "scripts/validate-accelerate-v020-s1a-authority.py": "5c0494a3303521533d5003b2eb8890c5015d92d1a528bb29899a2fb30b231f4c",
+      "tests/accelerate-v020-s1a-authority.sh": "4a2454ec137605db4662e3f5830652f31369844ff8fb547459a628a01f281733",
+      "tests/test_s1a_conformance_enforcement.py": "d7224381b8c1f3a68b26e03c18bd021b580ac0b0dc2de13b1df106dfd6ebfcc5",
+      "tests/test_s1a_metadata_independence.py": "daeb0af6afdf69a5f97cc949d5077733b4ff035c050bd6ef6394b985130133ac"
+    },
+    "exclusions": ["This receipt does not hash itself"],
+    "commit": false,
+    "push": false
+  },
+  "lineage": {
+    "predecessor": "planning/evidence/dated-proof-appendix/codex-34-s1a/2026-09-10-s1a-conformance-successor-review.json",
+    "predecessor_sha256": "1bd0fc53e93c6a57af71f65ce538d3ef1062edd4041c2d71e7edaea76ab5a67c",
+    "predecessor_disposition": "superseded_for_task_provenance_only",
+    "predecessor_candidate_and_evidence_preserved_unchanged": true,
+    "older_predecessor": "planning/evidence/dated-proof-appendix/codex-34-s1a/2026-09-09-metadata-correction-review.json",
+    "older_predecessor_sha256": "e3de26e6cf6b1d0cbb0646dd54f3fc15bbed31d91100c5d5ba394515d670af9d",
+    "historical_receipt": "planning/evidence/dated-proof-appendix/codex-34-s1a/s1a-candidate-review-receipt.json",
+    "historical_receipt_preserved_unchanged": true,
+    "historical_receipt_reused_for_candidate_identity": false,
+    "historical_receipt_nonreuse_preserved": true
+  },
+  "correction_reason": "Correct complete task provenance for the V2 successor, retain the V1 candidate/evidence facts unchanged, replace the incomplete task attribution, and remove the unrelated prior task attribution from this round without invalidating its older predecessor record.",
+  "evidence": {
+    "root_exact_command": "PYTHONDONTWRITEBYTECODE=1 bash tests/all.sh",
+    "root_exact_command_exit_code": 0,
+    "root_exact_command_result": "all tests passed on final code",
+    "focal_conformance": "22 unittest methods A-U all pass",
+    "focal_metadata": "4 metadata tests pass",
+    "phase1": "81 pass; 1 explicit opt-in real OpenSpec skip",
+    "git_diff_check_exit_code": 0,
+    "historical_process_note": "An earlier aggregate run timed out during broader checks; reconciliation found no matching shell process, and the final exact all-tests command completed successfully.",
+    "runtime_limits": [
+      "Live Codex canary/logical runtime proof not run",
+      "Real OpenSpec lane not run",
+      "No runtime qualification"
+    ]
+  },
+  "task_provenance": {
+    "status_provenance": "Task IDs and returned statuses are observed native metadata; effective model is not exposed; requested bindings are not execution proof.",
+    "test_author_tasks": [
+      {"id": "ses_f76d7c981ffecwxyOtRYFpYQYC", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-luna/medium", "scope": "A-O through resumed assignments"},
+      {"id": "ses_f765e5f38ffedtXFdO3l2WMK7z", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-luna/medium", "scope": "P-Q"},
+      {"id": "ses_f765122a0ffeT0tVlUTySffZmO", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-luna/medium", "scope": "R"},
+      {"id": "ses_f764411ecffeYMTs2GcFtlY3hr", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-luna/medium", "scope": "S-T"},
+      {"id": "ses_f76365fa9ffeWbpmF4T9YVx5WG", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-luna/medium", "scope": "U"}
+    ],
+    "implementer_tasks": [
+      {"id": "ses_f76d5beadffe5MnbsLtzu6hrtL", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-terra/medium", "scope": "A-F, H-K and resumed validator"},
+      {"id": "ses_f7662b538ffen7oMstcI3b9IIL", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-terra/medium", "scope": "M-O"},
+      {"id": "ses_f765bee6dffeEF4rzeC0Ux8gKa", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-terra/medium", "scope": "P-Q"},
+      {"id": "ses_f764ed7faffeRfkAFWlZnDszdg", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-terra/medium", "scope": "R"},
+      {"id": "ses_f7640d5c1ffe4UHDsn6fJf71BW", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-terra/medium", "scope": "S-T"},
+      {"id": "ses_f763479ddffeDkjjP60FtHFVvQ", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-terra/medium", "scope": "U"}
+    ],
+    "runner_tasks": [
+      {"id": "ses_f767a41d6ffeoGpUHh65gYLKWW", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-luna/medium", "scope": "G, L"}
+    ],
+    "review_tasks_chronological": [
+      {"id": "ses_f766772f3ffe5f5RYCnELLogDk", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-terra/medium"},
+      {"id": "ses_f76527c15ffe8fYypBl8TPGJ2R", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-terra/medium"},
+      {"id": "ses_f7646203fffeH25BCkEJxhoGi4", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-terra/medium"},
+      {"id": "ses_f76381404ffeQHWncPtiRwZByU", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-terra/medium"},
+      {"id": "ses_f762ab42fffeTFsiA7m7EbwNT3", "status": "returned_native_metadata", "requested_binding": "openai/gpt-5.6-terra/medium"}
+    ],
+    "excluded_from_this_round": "Prior unrelated task attribution removed from this round; retained only in predecessor history.",
+    "root_executor_binding": "openai/gpt-5.6-sol/medium"
+  },
+  "reviews": {
+    "execution_claim": "Task IDs and returned statuses are observed native metadata only; no claim of effective model execution is made, and requested bindings are not execution proof."
+  },
+  "decision": {
+    "bounded_s1a_conformance_candidate_gate": "supported",
+    "prior_p0_p1": "closed",
+    "operator_acceptance": "NOT ISSUED",
+    "amendment": "draft-pre-s1a",
+    "s1b_wave0_core_mutation": "NOT AUTHORIZED",
+    "release_merge_push_plane_write": "none",
+    "residual_p2": "Markdown parser does not reject contradictory nonblank content after the first 24-row table before the next H2; nonblocking follow-up per final full reviewer gate."
+  },
+  "plane": {
+    "governed_readback": "CODEX-34 Review",
+    "write": false,
+    "status": "Any payload is stale and requires fresh governed preflight plus explicit authorization."
+  }
+}
