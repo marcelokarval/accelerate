@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "fixture_id": "NEG-ACV1-03",
+  "contract_name": "accelerate-contract-v1-neg-acv1-03-invalid-disposition-or-missing-id",
+  "version": "1.0.0",
+  "description": "Prova de não-conformidade no mapeamento ACV1: ID ausente (D005 omitido), disposição normativa inválida ('deprecated') e nota de gate mesclada no campo disposição.",
+  "slice": "S1A",
+  "target_repository": "/home/marcelo-karval/Backup/Projetos/accelerate",
+  "decisions_count": 23,
+  "missing_decision_ids": [
+    "ACV1-D005"
+  ],
+  "invalid_dispositions": [
+    {
+      "id": "ACV1-D001",
+      "disposition": "mantido - guardado por S1A",
+      "error": "gate note merged into normative disposition field"
+    },
+    {
+      "id": "ACV1-D002",
+      "disposition": "deprecated",
+      "error": "disposition 'deprecated' is not one of ['mantido', 'alterado', 'substituído']"
+    }
+  ],
+  "decisions": [
+    {
+      "id": "ACV1-D001",
+      "short_id": "D001",
+      "disposition": "mantido - guardado por S1A",
+      "wave": "Wave 0",
+      "gate_note": null
+    },
+    {
+      "id": "ACV1-D002",
+      "short_id": "D002",
+      "disposition": "deprecated",
+      "wave": "Wave 1",
+      "gate_note": "mapa declara sem mudança de vocabulário."
+    },
+    {
+      "id": "ACV1-D003",
+      "short_id": "D003",
+      "disposition": "mantido",
+      "wave": "Wave 1",
+      "gate_note": "nenhum schema paralelo é criado."
+    },
+    {
+      "id": "ACV1-D004",
+      "short_id": "D004",
+      "disposition": "mantido",
+      "wave": "Wave 1",
+      "gate_note": "escolha concreta segue pendente; S1A não introduz dependência."
+    },
+    {
+      "id": "ACV1-D006",
+      "short_id": "D006",
+      "disposition": "mantido",
+      "wave": "Wave 0",
+      "gate_note": "critérios não são relaxados."
+    },
+    {
+      "id": "ACV1-D007",
+      "short_id": "D007",
+      "disposition": "mantido",
+      "wave": "Wave 3",
+      "gate_note": "S1A tem rollback apenas por commit isolado."
+    },
+    {
+      "id": "ACV1-D008",
+      "short_id": "D008",
+      "disposition": "mantido",
+      "wave": "Wave 2",
+      "gate_note": "nenhum gate é dispensado por texto."
+    },
+    {
+      "id": "ACV1-D009",
+      "short_id": "D009",
+      "disposition": "mantido",
+      "wave": "Wave 3",
+      "gate_note": "planejamento separa prova planejada de observada."
+    },
+    {
+      "id": "ACV1-D010",
+      "short_id": "D010",
+      "disposition": "mantido",
+      "wave": "Wave 3",
+      "gate_note": "revisão/material change torna proof planejada stale."
+    },
+    {
+      "id": "ACV1-D011",
+      "short_id": "D011",
+      "disposition": "mantido",
+      "wave": "Wave 3",
+      "gate_note": "não aplicável a docs pré-S1A sem merge claim."
+    },
+    {
+      "id": "ACV1-D012",
+      "short_id": "D012",
+      "disposition": "mantido",
+      "wave": "Wave 3",
+      "gate_note": "não aplicável; não há worker de execução."
+    },
+    {
+      "id": "ACV1-D013",
+      "short_id": "D013",
+      "disposition": "mantido",
+      "wave": "Wave 3",
+      "gate_note": "não aplicável; não cria recurso gerenciado."
+    },
+    {
+      "id": "ACV1-D014",
+      "short_id": "D014",
+      "disposition": "mantido",
+      "wave": "Wave 3",
+      "gate_note": "não aplicável; não corrige incidente."
+    },
+    {
+      "id": "ACV1-D015",
+      "short_id": "D015",
+      "disposition": "mantido",
+      "wave": "Wave 5",
+      "gate_note": "export/runtime é exclusão explícita."
+    },
+    {
+      "id": "ACV1-D016",
+      "short_id": "D016",
+      "disposition": "mantido",
+      "wave": "Wave 5",
+      "gate_note": "não há migração nem dual-write."
+    },
+    {
+      "id": "ACV1-D017",
+      "short_id": "D017",
+      "disposition": "mantido",
+      "wave": "Wave 5",
+      "gate_note": "S1A prevê revisão, não fechamento."
+    },
+    {
+      "id": "ACV1-D018",
+      "short_id": "D018",
+      "disposition": "mantido",
+      "wave": "Wave 1",
+      "gate_note": "fixture recusa pacote concorrente/antecipado."
+    },
+    {
+      "id": "ACV1-D019",
+      "short_id": "D019",
+      "disposition": "mantido",
+      "wave": "Wave 4",
+      "gate_note": "nenhuma label é tratada como enum canônico."
+    },
+    {
+      "id": "ACV1-D020",
+      "short_id": "D020",
+      "disposition": "mantido",
+      "wave": "Wave 3",
+      "gate_note": "não aplicável; não existe fechamento."
+    },
+    {
+      "id": "ACV1-D021",
+      "short_id": "D021",
+      "disposition": "mantido",
+      "wave": "Wave 5",
+      "gate_note": "shadow/runtime são exclusões explícitas."
+    },
+    {
+      "id": "ACV1-D022",
+      "short_id": "D022",
+      "disposition": "mantido",
+      "wave": "Wave 3",
+      "gate_note": "não aplicável; sem lifecycle local novo."
+    },
+    {
+      "id": "ACV1-D023",
+      "short_id": "D023",
+      "disposition": "mantido",
+      "wave": "Wave 4",
+      "gate_note": "revisores apenas usam provas futuras."
+    },
+    {
+      "id": "ACV1-D024",
+      "short_id": "D024",
+      "disposition": "mantido",
+      "wave": "Wave 5",
+      "gate_note": "não aplicável; sem export, host ou rollback operacional."
+    }
+  ],
+  "violation": {
+    "type": "ACV1_MAPPING_NON_COMPLIANT",
+    "rule": "planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md",
+    "detail": "Mapping fails completeness (D005 missing), disposition validity (deprecated), and field separation (gate note merged)."
+  },
+  "expected_verdict": "REJECT",
+  "expected_rejection_marker": "[NEG-ACV1-03: ACV1_MAPPING_NON_COMPLIANT_REJECTED]"
+}

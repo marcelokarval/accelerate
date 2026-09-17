@@ -1,0 +1,147 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "PROMPT_H_CANDIDATE_FREEZE",
+  "frozen_at": "2026-09-04T01:39:48-04:00",
+  "governing_issue": "CODEX-26",
+  "correction_generation": 3,
+  "proof_generation": 3,
+  "candidate_status": "IMPLEMENTER_PASS_AWAITING_INDEPENDENT_REVIEW",
+  "implementer": {
+    "agent": "phimpl-zuli",
+    "process_call_id": "e6f801e4-d059-4bec-bf1a-846130c088e9",
+    "runtime": "Antigravity CLI 1.1.26",
+    "model": "gemini-3.8-flash-high",
+    "reasoning_effort": "high",
+    "fork_turns": "none",
+    "terminal_posture": "STOP_MUTATIONS / HOLD_FOR_ROOT_FREEZE"
+  },
+  "entry_authority": [
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-dogfood-closure-correction-prompt-h.md",
+      "sha256": "d8d91f73a4943c7e236a9ec1edac70ed3342d3522fa3c44c6e2a365bb0ddfd44"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-h-current-authority.json",
+      "sha256": "a497bd5fd09a3d5cb92a4fa5137b147b8575ce4616ca54374a73cd5c1dd405d2"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-h-baseline-receipt.json",
+      "sha256": "95a59b006f36ae2fe48146867d1d179cf9d85eb7be673df1ce6800305878bb69"
+    },
+    {
+      "path": "planning/executive/2026-09-04-codex-26-phase1-dogfood-closure-prompt-h-task-graph.md",
+      "sha256": "e2c963fb5eb76c1584edb11bdb7e87bcc2f2b69f09c54dabea24034a4599ddec"
+    }
+  ],
+  "candidate_files": [
+    {
+      "path": ".accelerate/state.yaml",
+      "sha256": "3c3532c099a0ec558098b5ba9073ef2a3bdb34913315604f773121460637747d"
+    },
+    {
+      "path": ".accelerate/status/readiness-dashboard.yaml",
+      "sha256": "0a4cb00fbc915a2bd34f9b8f8219524327edc1ca682df295bf16ef3ad789c830"
+    },
+    {
+      "path": ".accelerate/workflow/active-work-item.yaml",
+      "sha256": "0a2ae6d9807f1321f02cb2b848a607633f5d9e52c0c0f39055877e165080202b"
+    },
+    {
+      "path": "onboarding/local-workspace/prepare-closure.sh",
+      "sha256": "fde36bf77234c5a5ff213a85b7c2a37d60d9e1cc8bd1a86c1a25ac85408a01fd"
+    },
+    {
+      "path": "onboarding/local-workspace/prepare-dogfood-closure.sh",
+      "sha256": "7c19950621e83aafc251c79ef67304d7bcb1e0c62e5773bafaed321a5996b513"
+    },
+    {
+      "path": "onboarding/local-workspace/validate-dogfood-v2-subset.sh",
+      "sha256": "5cde24f53113c1892603f2b747945a7ad3ffdbdb7c18dd361382e6b2edcff32f"
+    },
+    {
+      "path": "scripts/validate-dogfood-current-authority.py",
+      "sha256": "77006c89ae7ca8d0ac7cac76e472a8438c53254cde29f275aef59b3a0c19b7e5"
+    },
+    {
+      "path": "scripts/validate-phase1-entry-currentness.py",
+      "sha256": "5078343d1b9aae66435df2db6b9b7893836fca1f0c7b2c0694d8e69e6ea0dc70"
+    },
+    {
+      "path": "tests/dogfood-closure-contract.sh",
+      "sha256": "10184444f25d588f714c0e087629ca99b88922e67bdf6b15951bb024d2d00a49"
+    },
+    {
+      "path": "tests/dogfood-workspace-contract.sh",
+      "sha256": "b72dcab744efebb53d907052673ea03a81a2523999f8584696cd07e008dd77c7"
+    },
+    {
+      "path": "tests/test_phase1_entry_currentness.py",
+      "sha256": "1ce7071a84e870d9bb0cd1b1cfc45e6a0f9a5144a8cdc43350253d821d1ebb94"
+    },
+    {
+      "path": ".accelerate/review/dogfood-closure-handoff.md",
+      "sha256": "a3f325548249ddaa75ad6592ac1fa5a3d0b7902861e276e7062b06445341d29a"
+    },
+    {
+      "path": ".accelerate/review/handoff-summary.md",
+      "sha256": "fe1f0a0221c0b94343d387412ed4c4448dd220749d7bff8579efae5c82efb9c9"
+    },
+    {
+      "path": ".accelerate/review/closure-packet.md",
+      "sha256": "619c3faae704bf2a4aa906ed9a25158ecdd7e7a7b8bec5bdee8568bc51e17a08"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-h-agy-return.md",
+      "sha256": "d6832ebd2123b5e07279a8666f4121610ce5850b15c8631363d8120900d9e6b8"
+    }
+  ],
+  "formal_proof": {
+    "focused_contract_and_authority": "PASS",
+    "dogfood_v2_subset": "PASS",
+    "workspace_contract": "PASS; 15 directed negative probes",
+    "phase1_currentness": "PASS",
+    "phase1_currentness_unittest": "PASS; 6 tests",
+    "canonical_prepare_closure": "PASS; exit 0 means preparation only",
+    "generated_artifact_inspection": "PASS; deterministic and no lifecycle overclaim",
+    "local_workspace_proof_gates": "PASS",
+    "global_suite": "PASS; bash tests/all.sh after final material mutation",
+    "git_diff_check": "PASS",
+    "immutable_authority_check": "PASS",
+    "cleanup": "PASS; no Prompt-H pycache, pyc, leaked negative fixture, or disposable helper retained"
+  },
+  "preserved_authority": [
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-g-candidate-g2-freeze.json",
+      "sha256": "1c1420356eaadfd226942cbbec4ab46b45f6e966e9d5e243041c38bc78eddaa5"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-g-task-g11-no-go.md",
+      "sha256": "a416da857135c994da53113d6484326b28066481824017f726d7555158e05396"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-f-task-f09-closure-review-go.md",
+      "sha256": "fcb91ad773a46b20467778cbb82959aa0a38d8d4f1b2927b9dd9a93aa57085aa"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-f-durable-proof-freeze.json",
+      "sha256": "1d21bbe918886ff8ff3acf696bd20f9f736a6b81d445e28f7e037e7245cbebda"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/implementation-candidate-c14-full-freeze.json",
+      "sha256": "7215486904c9fee3172ad1f53c3c3a63d4aa9ba62cea424d5bf8da60fcf72bc2"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/root-proof-harness-r1-freeze.json",
+      "sha256": "23ec174a784f5a0570419086cbccda39f9b08f8dd780889b0e30e449c0a73ecb"
+    }
+  ],
+  "prohibited_effects": {
+    "phase1_accepted": false,
+    "plane_closure_authorized": false,
+    "runtime_or_promotion_authorized": false,
+    "phase2_authorized": false,
+    "commit_push_merge_deploy_or_release_performed": false
+  },
+  "mutable_after_freeze": false,
+  "review_target": "verify Prompt H requirements H-R01 through H-R06, the complete G3 candidate hashes, proof trace, non-circular authority binding, full-V2 compatibility, negative lifecycle controls, scope discipline, and absence of overclaim"
+}

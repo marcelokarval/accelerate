@@ -1,0 +1,39 @@
+{
+  "schema_id": "accelerate-closure-packet-v1",
+  "work_item": "CODEX-25",
+  "scope": "Phase-0 architecture acceptance only",
+  "candidate_version": "v0.7.25",
+  "candidate_digest": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca",
+  "acceptance_receipt_digest": "f722da4531542f3e2585f111ba8f0d334e5bf3655e44c1cadf3f303cdb4c759d",
+  "proof_summary": {
+    "three_fresh_terra_medium_reviews": "PASS",
+    "common_axis_pass_count": 27,
+    "overlay_pass_count": 3,
+    "agy_structural_verifier": "PASS",
+    "root_review_of_review": "PASS",
+    "operator_acceptance": "ACCEPTED_PHASE_0_ONLY",
+    "evidence_digest_reconciliation": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "plane_readback": {
+    "work_item_id": "6dc9e3a8-b9bf-46f3-ae02-68936a4082a9",
+    "state_id": "ed644a27-2d9b-403a-9b23-574715cb7c14",
+    "completed_at": "2026-09-02T02:12:51.594473Z",
+    "updated_at": "2026-09-02T02:12:53.738928Z",
+    "state_readback_verified": true,
+    "comment_readback_verified": true,
+    "manual_reconciliation_required": false
+  },
+  "failed_rounds_preserved": [
+    "round 1: CODEX-24/CODEX-25 authority lineage and impossible trust-root uniqueness",
+    "round 2: terminal-LF normalization ambiguity",
+    "round 3 initial evidence: internal-consistency receipt lacked manifest/scan/verifier binding"
+  ],
+  "residual_gates": [
+    "Phase 1 remains blocked until a separate current scope-sufficient phase_implementation_authorization_receipt exists.",
+    "Phase 1 additionally requires mapped current D01, D08, D11, D12 and D14 dispositions/contracts.",
+    "No runtime, installation, sync, promotion, deployment, migration, WebUI or harness effect was authorized or performed."
+  ],
+  "closure_status": "COMPLETE_FOR_PHASE_0_ONLY",
+  "issued_at": "2026-09-01T22:13:00-04:00"
+}

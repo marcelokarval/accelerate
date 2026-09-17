@@ -1,0 +1,24 @@
+{
+  "schema_id": "phase0-internal-consistency-receipt-v1",
+  "review_round": 3,
+  "candidate_digest": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca",
+  "normalization_terminal_lf": "excluded",
+  "checks": {
+    "proposal_version_v0_7_25": "PASS",
+    "current_authority_codex_25": "PASS",
+    "codex_24_predecessor_only": "PASS",
+    "exactly_one_common_rubric": "PASS",
+    "exactly_three_unique_overlays": "PASS",
+    "exactly_three_unique_review_slots": "PASS",
+    "one_to_one_overlay_coverage": "PASS",
+    "actor_context_runtime_independence_required": "PASS",
+    "implementation_and_runtime_effects_blocked": "PASS"
+  },
+  "block_digests": {
+    "phase0-common-rubric-v1": "616b73aeeb152fb69bf6be3f599a73110386adb364fb5b1c4e7098305e54f576",
+    "phase0-lens-control-plane-v1": "2cd1b0ca01d2c24a75e5cc3db2de764398cc939d16a3dd9d1af4632dac5b96cc",
+    "phase0-lens-runtime-concurrency-v1": "53702a4de07a8ceef483f5ef0195655b9510a2af072d2945347431de78b70d5c",
+    "phase0-lens-migration-security-v1": "9ebee3cec1f27c745473497a210a799c4bd169ae529fbd17b27827ec7c47c634"
+  },
+  "issued_at": "2026-09-01T21:56:46-04:00"
+}

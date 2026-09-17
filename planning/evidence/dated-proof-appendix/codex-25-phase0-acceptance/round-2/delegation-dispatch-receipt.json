@@ -1,0 +1,47 @@
+{
+  "schema_id": "delegation-dispatch-receipt-v1",
+  "work_item": "CODEX-25",
+  "review_round": 2,
+  "execution_route": "orchestrated",
+  "tasks_ready": true,
+  "candidate_digest": "64d2485b92e595544dd19123ee0e46f72d49b47e3a0cad25932e7a611f7484a1",
+  "review_set_manifest_digest": "29b3ec1be2e6a93bb1846cc98ea76487d80d3efd22829db5bc47dd61274c9def",
+  "assignments": [
+    {
+      "assignment_id": "CODEX-25-P0-CP-R2",
+      "worker": "/root/codex25_r2_control_plane",
+      "role": "read-only control-plane reviewer",
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "fork_turns": "none",
+      "mutation_scope": "none"
+    },
+    {
+      "assignment_id": "CODEX-25-P0-RC-R2",
+      "worker": "/root/codex25_r2_runtime",
+      "role": "read-only runtime-concurrency reviewer",
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "fork_turns": "none",
+      "mutation_scope": "none"
+    },
+    {
+      "assignment_id": "CODEX-25-P0-MS-R2",
+      "worker": "/root/codex25_r2_migration_security",
+      "role": "read-only migration-security reviewer",
+      "model": "gpt-5.6-terra",
+      "reasoning_effort": "medium",
+      "fork_turns": "none",
+      "mutation_scope": "none"
+    }
+  ],
+  "root_retained_authority": [
+    "fan-in",
+    "review-of-review",
+    "structural verifier dispatch",
+    "operator acceptance binding",
+    "Plane reconciliation",
+    "closure"
+  ],
+  "issued_at": "2026-09-01T21:51:27-04:00"
+}

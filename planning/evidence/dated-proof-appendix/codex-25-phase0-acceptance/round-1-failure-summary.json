@@ -1,0 +1,19 @@
+{
+  "schema_id": "phase0-review-round-failure-summary-v1",
+  "round": 1,
+  "candidate_version": "v0.7.23",
+  "candidate_digest": "45cca9d97786548be2495190bed5f53997a2aeb00e488c0ce77db43380e6176e",
+  "manifest_digest": "b69b2e72b85082d1344320c2eab1b8313b3bc7d4d3c1b650e501b683b992d680",
+  "verdict": "FAIL",
+  "failed_slots": [
+    {
+      "review_slot": "P0-RC",
+      "finding": "Candidate named CODEX-24 while the review-set used CODEX-25 without a candidate-bound predecessor-to-successor handoff."
+    },
+    {
+      "review_slot": "P0-MS",
+      "finding": "The proposal required trust-root uniqueness even though the requested fresh Terra reviewers share the Codex collaboration runtime trust root."
+    }
+  ],
+  "disposition": "No acceptance was issued. Both mandatory findings produced successor candidate v0.7.24 and require complete redispatch."
+}

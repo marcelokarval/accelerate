@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "assets/schemas/task-graph-v1.schema.json",
+  "title": "Task graph v1 (source-only planning contract)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "graph_id", "semantic_id", "state", "baseline", "nodes", "authority"],
+  "properties": {
+    "contract_version": {"const": "task-graph/v1"},
+    "graph_id": {"$ref": "#/$defs/id"},
+    "semantic_id": {"$ref": "#/$defs/id"},
+    "state": {"enum": ["DRAFT", "FROZEN_CURRENT", "STALE_REANALYSIS_REQUIRED", "SUPERSEDED", "BLOCKED", "CANCELLED"]},
+    "baseline": {"$ref": "#/$defs/baseline"},
+    "nodes": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/node"}},
+    "authority": {"type": "object", "additionalProperties": false, "required": ["kind", "may_authorize", "may_close"], "properties": {"kind": {"const": "planning-only"}, "may_authorize": {"const": false}, "may_close": {"const": false}}}
+  },
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "baseline": {"type": "object", "additionalProperties": false, "required": ["category", "git_snapshot"], "properties": {"category": {"const": "delta-baseline"}, "git_snapshot": {"$ref": "#/$defs/git_snapshot"}}},
+    "repo_path": {"type": "string", "pattern": "^(?!.*[\\u0000-\\u001f\\u007f-\\u009f])(?!/)(?!.*\\\\)(?!.*//)(?!.*(?:^|/)\\.{1,2}(?:/|$))(?!.*/$)[^/]+(?:/[^/]+)*$"},
+    "git_snapshot": {"type": "object", "additionalProperties": false, "required": ["head", "parents", "branch_mode", "branch", "upstream", "upstream_divergence", "staged_fingerprint", "unstaged_fingerprint", "untracked_fingerprint", "staged_paths", "unstaged_paths", "untracked_paths", "operation_state"], "properties": {"head": {"$ref": "#/$defs/sha256"}, "parents": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/sha256"}}, "branch_mode": {"enum": ["branch", "detached"]}, "branch": {"type": ["string", "null"], "minLength": 1}, "upstream": {"type": ["string", "null"], "minLength": 1}, "upstream_divergence": {"type": "object", "additionalProperties": false, "required": ["ahead", "behind"], "properties": {"ahead": {"type": "integer", "minimum": 0}, "behind": {"type": "integer", "minimum": 0}}}, "staged_fingerprint": {"$ref": "#/$defs/sha256"}, "unstaged_fingerprint": {"$ref": "#/$defs/sha256"}, "untracked_fingerprint": {"$ref": "#/$defs/sha256"}, "staged_paths": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/repo_path"}}, "unstaged_paths": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/repo_path"}}, "untracked_paths": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/repo_path"}}, "operation_state": {"type": "object", "additionalProperties": false, "required": ["kind", "conflict_paths"], "properties": {"kind": {"enum": ["none", "merge", "rebase", "cherry-pick", "revert"]}, "conflict_paths": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/repo_path"}}}}}, "allOf": [{"if": {"properties": {"branch_mode": {"const": "branch"}}}, "then": {"properties": {"branch": {"type": "string", "minLength": 1}}}}, {"if": {"properties": {"branch_mode": {"const": "detached"}}}, "then": {"properties": {"branch": {"type": "null"}}}}]},
+    "node": {"type": "object", "additionalProperties": false, "required": ["node_id", "assignment_id", "semantic_id", "candidate_sha256", "depends_on", "write_scopes"], "properties": {"node_id": {"$ref": "#/$defs/id"}, "assignment_id": {"$ref": "#/$defs/id"}, "semantic_id": {"$ref": "#/$defs/id"}, "candidate_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"}, "depends_on": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/id"}}, "write_scopes": {"type": "array", "uniqueItems": true, "items": {"$ref": "#/$defs/repo_path"}}}}
+  }
+}

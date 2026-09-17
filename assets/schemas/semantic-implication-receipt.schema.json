@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://accelerate.local/schemas/semantic-implication-receipt.schema.json",
+  "title": "Semantic implication receipt",
+  "description": "Closed, machine-readable operational consequences of a bounded change in a named risk domain.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "receipt_id", "prompt_binding", "domain", "capability", "invariants", "seams", "effects", "external_effects", "reversibility", "risk_basis", "risk_tier", "change_summary", "implications", "selected_route", "required_proof", "escalation"],
+  "properties": {
+    "schema_version": {"const": "semantic-implication-receipt/v1"},
+    "receipt_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,63}$"},
+    "prompt_binding": {"type": "object", "additionalProperties": false, "required": ["raw_prompt", "sha256", "normalized_prompt", "normalized_signals", "target_kind"], "properties": {"raw_prompt": {"type": "string", "minLength": 1, "maxLength": 2000}, "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}, "normalized_prompt": {"type": "string", "minLength": 1, "maxLength": 2000}, "normalized_signals": {"type": "array", "uniqueItems": true, "items": {"type": "string", "enum": ["refund", "reimbursement", "duplicate", "payment", "reimburse", "overcharge", "card", "login", "authenticate", "authentication", "checkout", "migrate", "migration", "database", "typo"]}}, "target_kind": {"type": "string", "enum": ["documentation", "code", "unknown"]}}},
+    "domain": {"type": "string", "enum": ["refund", "authentication", "checkout-seam", "migration", "editorial"]},
+    "capability": {"type": "string", "enum": ["refund", "login", "checkout", "migrate", "copy-edit"]},
+    "invariants": {"$ref": "#/$defs/invariants"},
+    "seams": {"$ref": "#/$defs/seams"},
+    "effects": {"$ref": "#/$defs/effects"},
+    "external_effects": {"$ref": "#/$defs/external_effects"},
+    "reversibility": {"type": "string", "enum": ["reversible", "reversible-with-rollback", "irreversible-or-constrained"]},
+    "risk_basis": {"$ref": "#/$defs/risk_basis"},
+    "risk_tier": {"type": "string", "enum": ["low", "medium", "high", "critical"]},
+    "change_summary": {"type": "string", "minLength": 1, "maxLength": 280},
+    "implications": {"$ref": "#/$defs/implications"},
+    "selected_route": {"type": "object", "additionalProperties": false, "required": ["route", "basis"], "properties": {"route": {"type": "string", "enum": ["direct-fast-path", "scoped", "orchestrated"]}, "basis": {"type": "string", "minLength": 1, "maxLength": 280}}},
+    "required_proof": {"$ref": "#/$defs/required_proof"},
+    "escalation": {"type": "object", "additionalProperties": false, "required": ["required", "basis"], "properties": {"required": {"type": "boolean"}, "basis": {"type": "string", "minLength": 1, "maxLength": 280}}}
+  },
+  "$defs": {
+    "invariants": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["financial-ledger-integrity", "idempotent-provider-request", "ledger-reconciliation", "session-boundary", "checkout-contract", "data-integrity", "copy-accuracy"]}},
+    "seams": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["payment-provider", "identity-provider", "checkout-boundary", "persistence-store", "content-surface"]}},
+    "effects": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["financial-ledger-write", "refund", "session-issue", "checkout-routing", "data-transform", "copy-change"]}},
+    "external_effects": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["payment-provider-refund", "identity-provider-session", "payment-provider-checkout", "none"]}},
+    "risk_basis": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["financial", "identity", "payment", "data-persistence", "external-provider", "editorial"]}},
+    "implications": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["authorization", "idempotency", "audit-trail", "rollback", "session-security", "compatibility", "observability", "backup-recovery", "data-integrity", "copy-review"]}},
+    "required_proof": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "enum": ["idempotency", "ledger-reconciliation", "provider-readback", "session-security", "contract-test", "migration-integrity", "copy-review"]}}
+  }
+}

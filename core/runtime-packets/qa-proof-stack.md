@@ -31,6 +31,31 @@ run the closest deterministic unit/integration/contract suite instead.
 
 ## Lane Ownership
 
+### Assignment Ontology Boundary
+
+The named lanes below are proof responsibilities, not a requirement to create a
+physical profile for every lane, surface, or domain. In assignment receipts,
+Tester is the human-facing pairing `authority_role=verifier` and
+`work_role=verification`: it produces evidence and never approval or closure.
+Its `verification_mode` may be `standard` or `adversarial`; reviewer
+`review_mode` remains a separate actual-review posture. `QA` is the discipline
+that combines these proof lanes; it is not a physical identity.
+Adversarial verification or review records nonempty `negative_evidence`, not a
+generic success-only proof claim.
+
+Reviewer assignments are always independent and read-only: they require
+distinct runtime IDs, isolation evidence, exact candidate/spec bindings, and an
+exact target match. All non-reviewer assignments leave review fields null.
+Proof lanes are selected per surface, rather than treating one generic lane as
+evidence for backend, frontend, integrations, data, runtime, and governance.
+
+Specialize the bounded assignment with closed surfaces (`backend`, `frontend`,
+`integrations`, `data`, `runtime`, `governance`) and a hierarchical
+`domain_path`, such as `financial/gateway/refund`. When a slice spans multiple
+surfaces, retain seam proof. Independent review must be demonstrated by distinct
+`agent_id` and `call_id` plus an isolation reference, not inferred from a role
+name. See [`assignment-ontology.md`](../delegation/assignment-ontology.md).
+
 - `Backend Tester`
   - service tests
   - unit/integration/contract coverage for changed backend behavior

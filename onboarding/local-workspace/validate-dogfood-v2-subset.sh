@@ -8,6 +8,8 @@ fi
 
 TARGET_ROOT="$1"
 WORKSPACE="${TARGET_ROOT}/.accelerate"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 FAILURES=0
 
 fail() {
@@ -121,6 +123,8 @@ require_key "${state}" "active_runtime_adapters"
 require_key "${state}" "agent_mode"
 require_key "${state}" "current_plan"
 require_key "${state}" "current_task_ledger"
+require_key "${state}" "current_authority_receipt"
+require_key "${state}" "current_authority_digest"
 require_key "${state}" "readiness_dashboard"
 require_key "${state}" "workflow_adapter"
 require_key "${state}" "active_work_item"
@@ -134,15 +138,15 @@ require_exact_value "${state}" "kind" "accelerate-dogfood-state-index"
 require_exact_value "${state}" "materialization_profile" "committed-dogfood-v2-index"
 require_exact_value "${state}" "v2_contract_decision" "materialize-summary-index-and-local-workflow-adapter; keep generated/private proof outputs ignored"
 require_enum "${state}" "project_onboarded" "true" "false"
-require_enum "${state}" "onboarding_status" "not_started" "in_progress" "partially_stabilized" "completed"
-require_enum "${state}" "reentry_status" "clean" "light_reentry" "partial_reonboarding" "structural_reonboarding"
-require_enum "${state}" "workflow_backend" "none-yet" "github" "linear"
-require_enum "${state}" "workflow_backend_detected" "none-yet" "github" "linear"
+require_enum "${state}" "onboarding_status" "not_started" "in_progress" "partially_stabilized" "completed" "partial-reonboarding"
+require_enum "${state}" "reentry_status" "clean" "light_reentry" "partial_reonboarding" "partial-reonboarding" "structural_reonboarding"
+require_enum "${state}" "workflow_backend" "none-yet" "github" "linear" "plane"
+require_enum "${state}" "workflow_backend_detected" "none-yet" "github" "linear" "plane"
 require_enum "${state}" "agent_mode" "root-only" "agent-eligible"
 require_exact_value "${state}" "readiness_dashboard" ".accelerate/status/readiness-dashboard.yaml"
 require_exact_value "${state}" "workflow_adapter" ".accelerate/workflow/adapter.yaml"
 require_exact_value "${state}" "active_work_item" ".accelerate/workflow/active-work-item.yaml"
-require_exact_value "${state}" "last_accepted_status" "accepted"
+require_enum "${state}" "last_accepted_status" "accepted" "historical-accepted"
 
 require_key "${adapter}" "schema_version"
 require_key "${adapter}" "kind"
@@ -169,8 +173,6 @@ require_key "${active_work_item}" "status"
 require_key "${active_work_item}" "classification"
 require_key "${active_work_item}" "execution_model"
 require_key "${active_work_item}" "root_orchestrator"
-require_key "${active_work_item}" "governing_linear_parent"
-require_key "${active_work_item}" "governing_linear_child"
 require_key "${active_work_item}" "plan"
 require_key "${active_work_item}" "ledger"
 require_key "${active_work_item}" "provider_boundary"
@@ -182,22 +184,21 @@ require_key "${active_work_item}" "next_queue_source"
 
 require_exact_value "${active_work_item}" "schema_version" "1"
 require_exact_value "${active_work_item}" "kind" "accelerate-local-dogfood-active-work-item"
-require_exact_value "${active_work_item}" "status" "accepted"
+require_enum "${active_work_item}" "status" "accepted" "in-progress"
+require_exact_value "${active_work_item}" "remote_calls_allowed" "false"
 
 require_key "${readiness}" "schema_version"
 require_key "${readiness}" "kind"
 require_key "${readiness}" "cycle"
 require_key "${readiness}" "plan"
 require_key "${readiness}" "ledger"
-require_key "${readiness}" "governing_linear_parent"
-require_key "${readiness}" "governing_linear_child"
 require_key "${readiness}" "status"
 require_key "${readiness}" "entries"
 require_key "${readiness}" "residuals"
 
 require_exact_value "${readiness}" "schema_version" "1"
 require_exact_value "${readiness}" "kind" "accelerate-local-dogfood-readiness-dashboard"
-require_exact_value "${readiness}" "status" "accepted"
+require_enum "${readiness}" "status" "accepted" "implementing-not-accepted"
 
 state_active_work_item="$(sed -n 's/^active_work_item:[[:space:]]*//p' "${state}" | head -n 1)"
 adapter_active_work_item_locator="$(sed -n 's/^active_work_item_locator:[[:space:]]*//p' "${adapter}" | head -n 1)"
@@ -207,10 +208,18 @@ fi
 
 state_last_cycle="$(sed -n 's/^last_accepted_cycle:[[:space:]]*//p' "${state}" | head -n 1)"
 adapter_work_item_id="$(sed -n 's/^active_work_item_id:[[:space:]]*//p' "${adapter}" | head -n 1)"
-active_id="$(sed -n 's/^id:[[:space:]]*//p' "${active_work_item}" | head -n 1)"
-readiness_cycle="$(sed -n 's/^cycle:[[:space:]]*//p' "${readiness}" | head -n 1)"
-if [ "${state_last_cycle}" != "${adapter_work_item_id}" ] || [ "${state_last_cycle}" != "${active_id}" ] || [ "${state_last_cycle}" != "${readiness_cycle}" ]; then
-  record_failure "dogfood cycle identifiers are inconsistent across state, adapter, active work item, and readiness dashboard"
+if [ "${state_last_cycle}" != "${adapter_work_item_id}" ]; then
+  record_failure "state last_accepted_cycle (${state_last_cycle}) does not match adapter active_work_item_id (${adapter_work_item_id})"
+fi
+
+# Run authority validator (fail closed)
+AUTH_VALIDATOR="${REPO_ROOT}/scripts/validate-dogfood-current-authority.py"
+if [ ! -f "${AUTH_VALIDATOR}" ]; then
+  record_failure "missing required authority validator: ${AUTH_VALIDATOR}"
+else
+  if ! python3 "${AUTH_VALIDATOR}" --root "${TARGET_ROOT}" 2>&1; then
+    record_failure "authority binding or consistency failure"
+  fi
 fi
 
 for marker in \
@@ -221,7 +230,6 @@ for marker in \
   "linear-oauth-runtime-proof-2026-05-08-rc24-rc27" \
   "v2_contract_decision: materialize-summary-index-and-local-workflow-adapter" \
   "adapter: local" \
-  "status: accepted" \
   "Last Accepted Dogfood Cycle" \
   "planning/executive/2026-05-08-recursive-cycle-18-22-executive-plan.md" \
   "planning/executive/2026-05-08-recursive-cycle-18-22-task-ledger.md" \

@@ -1,0 +1,79 @@
+{
+  "contract_version": "1.0",
+  "state": "DISPATCHED",
+  "artifacts": {
+    "hardening": {
+      "ref": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-proof-continuation-prompt-e.md",
+      "sha256": "b121325d2b3bed71c825201e0ac0e9aea700731a7acfa3180a8ecd99fcb0600c"
+    },
+    "spec": {
+      "ref": "planning/architecture/2026-09-03-codex-26-root-proof-boundary-sdd.md",
+      "sha256": "3d40d22d856210fc118818d6109010c8eeb7155126272d4046c1ceba00631995"
+    },
+    "task_graph": {
+      "ref": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-proof-continuation-prompt-e.md",
+      "sha256": "b121325d2b3bed71c825201e0ac0e9aea700731a7acfa3180a8ecd99fcb0600c"
+    }
+  },
+  "route": "orchestrated",
+  "execution_requested": true,
+  "planned_task_owned_writes": false,
+  "capability_proof": {
+    "collaboration_available": true,
+    "spawn_api": "collaboration.spawn_agent",
+    "checked_at": "2026-09-03T18:49:59-04:00"
+  },
+  "budget": {"max_agents": 2, "active_count": 2},
+  "assignments": [
+    {
+      "assignment_id": "prompte-proof-runner",
+      "kind": "executor",
+      "task_id": "TASK-E03-TASK-E04",
+      "dependencies": ["TASK-E01", "TASK-E02"],
+      "wave": 1,
+      "role": "runtime-proof-auditor",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/prompte_proof_runner",
+      "call_id": "collaboration.spawn_agent:/root/prompte_proof_runner",
+      "read_scopes": ["repository source", "Prompt-E authority", "C14 and R1 freezes"],
+      "write_scopes": ["ephemeral test outputs and generated caches only; no repository source or durable evidence files"],
+      "proof": "exactly one normal-environment tests/all.sh; then exactly one real OpenSpec run on PASS",
+      "reviewer_assignment_id": "prompte-independent-tester",
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    },
+    {
+      "assignment_id": "prompte-independent-tester",
+      "kind": "reviewer",
+      "task_id": "TASK-E06",
+      "dependencies": ["TASK-E03", "TASK-E04", "TASK-E05"],
+      "wave": 2,
+      "role": "independent-test-reviewer",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/promptd_independent_tester",
+      "call_id": "collaboration.followup_task:/root/promptd_independent_tester",
+      "read_scopes": ["frozen objective, SDD-lite, diff/hash inputs, proof outputs, authority and non-goals"],
+      "write_scopes": [],
+      "proof": "fresh adversarial PASS or actionable FAIL",
+      "reviewer_assignment_id": null,
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    }
+  ],
+  "fan_in": {
+    "owner": "root",
+    "assignment_ids": ["prompte-proof-runner", "prompte-independent-tester"]
+  },
+  "exceptions": [],
+  "root_write_lock": {
+    "mode": "orchestrated-dispatched-scope-lock",
+    "task_owned_writes_forbidden": true,
+    "dispatched_task_scopes": ["ephemeral test outputs and generated caches only; no repository source or durable evidence files"]
+  }
+}

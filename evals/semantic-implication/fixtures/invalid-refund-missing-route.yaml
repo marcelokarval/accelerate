@@ -1,0 +1,19 @@
+schema_version: semantic-implication-receipt/v1
+receipt_id: refund-no-route-001
+domain: refund
+capability: refund
+invariants: [financial-ledger-integrity, idempotent-provider-request, ledger-reconciliation]
+seams: [payment-provider]
+effects: [financial-ledger-write, refund]
+external_effects: [payment-provider-refund]
+reversibility: irreversible-or-constrained
+risk_basis: [financial, external-provider]
+risk_tier: critical
+change_summary: Refund now.
+implications:
+  - authorization
+  - idempotency
+  - audit-trail
+  - rollback
+required_proof: [idempotency, ledger-reconciliation, provider-readback]
+escalation: {required: true, basis: Financial provider effect requires root review.}

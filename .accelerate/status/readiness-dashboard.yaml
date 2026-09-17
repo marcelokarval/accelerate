@@ -1,16 +1,22 @@
 schema_version: 1
 kind: accelerate-local-dogfood-readiness-dashboard
-cycle: linear-oauth-runtime-proof-2026-05-08-rc24-rc27
-plan: planning/executive/2026-05-08-linear-oauth-runtime-proof-executive-plan.md
-ledger: planning/executive/2026-05-08-linear-oauth-runtime-proof-task-ledger.md
-governing_linear_parent: P4Y-1298
-governing_linear_child: P4Y-1302
-status: accepted
+cycle: codex-26-phase1-dogfood-closure-prompt-h
+plan: planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-dogfood-closure-correction-prompt-h.md
+ledger: planning/executive/2026-09-04-codex-26-phase1-dogfood-closure-prompt-h-task-graph.md
+governing_plane_work_item: CODEX-26
+governing_plane_work_item_id: 549d5c6e-9066-440c-85a6-973a33b7eefe
+status: implementing-not-accepted
+authority_receipt: planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-h-current-authority.json
+authority_digest: sha256:a497bd5fd09a3d5cb92a4fa5137b147b8575ce4616ca54374a73cd5c1dd405d2
 entries:
   dogfood_workspace:
-    status: available
-    proof: bash tests/dogfood-workspace-contract.sh
-    boundary: committed non-secret fixture/state only; generated/private proof outputs ignored; selected state points to P4Y-1298 and the accepted RC24..RC27 cycle
+    status: partial-reonboarding
+    proof: python3 scripts/validate-phase1-entry-currentness.py
+    boundary: committed local state is reconciled to current CODEX-26 Plane work; the May Linear cycle remains historical only
+  phase1_entry_currentness:
+    status: implementing-not-accepted
+    proof: python3 scripts/validate-phase1-entry-currentness.py; PHASE1_REAL_OPENSPEC=0 bash tests/phase1/run.sh
+    boundary: CODEX-17 and C13 entry receipts are historical only; Prompt-H dogfood closure correction is current, does not authorize Plane closure, promotion, runtime mutation, or Phase-2 entry; real OpenSpec stays explicit opt-in via PHASE1_REAL_OPENSPEC=1
   semantic_negative_gates:
     status: available
     proof: bash tests/semantic-negative-fixtures.sh
@@ -44,6 +50,7 @@ entries:
     proof: bash tests/semantic-negative-fixtures.sh
     boundary: browser-capture packets set persistent_regression_handoff.required_before_persistent_e2e_claim=true and must not promote persistent E2E without separate repo-owned proof
 residuals:
+  - CODEX-26 Phase 1 Prompt-H dogfood closure correction in progress; committed-dogfood-v2-index closure preparation supported; external authority bound
   - remote provider payloads remain out of committed .accelerate state
   - Linear OAuth MCP is host-authenticated and conditional only; portable repo-local shell and CI availability remain unproven
   - Linear live fixture proof still requires a safe credential and explicit non-sensitive fixture configuration outside committed dogfood state

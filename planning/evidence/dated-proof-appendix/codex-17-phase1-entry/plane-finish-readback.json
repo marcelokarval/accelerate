@@ -1,0 +1,56 @@
+{
+  "schema_version": "accelerate-plane-finish-readback-v1",
+  "receipt_id": "CODEX-17-proposal-validation-finish-2026-09-01",
+  "provider": "plane",
+  "provider_atomicity": false,
+  "authorization_basis": "explicit_human_operator_authorization",
+  "workspace_slug": "karval",
+  "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+  "work_item_id": "9a5158ac-8f5a-456f-99c9-0f3091ba3adb",
+  "identifier": "CODEX-17",
+  "web_url": "https://plane.arthuragrelli.com/karval/projects/d6b855ec-77cb-4df0-b471-4f6cea011e02/issues/9a5158ac-8f5a-456f-99c9-0f3091ba3adb",
+  "state_before": {
+    "id": "caff4483-d337-47ae-ab44-2b5263ecc0e4",
+    "name": "Todo",
+    "expected_updated_at": "2026-09-01T15:49:09.455924Z"
+  },
+  "state_after": {
+    "id": "ed644a27-2d9b-403a-9b23-574715cb7c14",
+    "name": "Done",
+    "completed_at": "2026-09-01T16:07:51.379302Z",
+    "updated_at": "2026-09-01T16:07:53.573166Z"
+  },
+  "finish_comment": {
+    "id": "a554a7bf-34b4-4361-9a30-0ee79115af7b",
+    "created_at": "2026-09-01T16:07:53.454616Z",
+    "phase": "FINISH",
+    "session_id": "codex-phase1-entry-20260901",
+    "readback_verified": true
+  },
+  "transition_receipt": {
+    "status": "verified_non_atomic_operator_transition",
+    "state_mutation_applied": true,
+    "comment_mutation_applied": true,
+    "state_readback_verified": true,
+    "comment_readback_verified": true,
+    "manual_reconciliation_required": false
+  },
+  "evidence_binding": {
+    "phase1_entry_acceptance_digest": "sha256:18b82063a47171549efe9e38eea15e8d4b9268ca80b556ea70e62eff2986014c",
+    "final_bundle_review_digest": "sha256:0aee8486dcaad02c727af1c76d99e69bf1fbcc5cd1bf78e327b653ea2ccb4e18"
+  },
+  "scope_boundary": {
+    "proposal_validation_closed": true,
+    "phase1_entry_prerequisites_satisfied": true,
+    "phase1_implementation_authorized": false,
+    "package_installation_authorized": false,
+    "runtime_mutation_authorized": false,
+    "deployment_authorized": false,
+    "migration_authorized": false,
+    "webui_exposure_authorized": false
+  },
+  "receipt_integrity": {
+    "scheme": "sha256-domain-separated-canonical-json-v1",
+    "signature": "sha256:a59ab5fbd4e4e6ac079ca66915c75db530d968ae2fefdb3527ae4be54a65f41f"
+  }
+}

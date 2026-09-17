@@ -2,5 +2,8 @@
 .backups
 .playwright-mcp/
 .tmp/
+.worktrees/
 .claude/napkin.dev.md
 AGENTS.dev.md
+__pycache__/
+*.pyc

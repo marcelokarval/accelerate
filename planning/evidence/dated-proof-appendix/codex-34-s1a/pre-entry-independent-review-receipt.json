@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "kind": "accelerate-v020-s1a-pre-entry-independent-review-receipt",
+  "recorded_at": "2026-09-06T01:13:58-04:00",
+  "candidate_base": "6d41fedc786f5216e7c6a488fc8de7c94c155738",
+  "candidate_base_tree": "65d3d8c58e14fabbadc81753cf811216607d06f9",
+  "reviewer": {
+    "assignment": "/root/s1a_preentry_artifact_review",
+    "role": "independent-read-only-reviewer",
+    "model_metadata": "unavailable-from-completed-agent-readback",
+    "authorship": "no-authorship-of-reviewed-artifacts"
+  },
+  "reviewed_artifacts": [
+    {
+      "path": "planning/architecture/2026-09-06-accelerate-v020-acv1-authority-amendment.md",
+      "sha256": "d51e0d0420ed5f9c0433d9f7d5646d3f88042722f1fcf0a337a779ee17f74e05"
+    },
+    {
+      "path": "planning/architecture/2026-09-06-accelerate-v020-s1a-test-design.md",
+      "sha256": "57b81a281058df34149b7f6ee24bd547e8d1ce2c3d85bb87fd3ae95062d6d141"
+    },
+    {
+      "path": "planning/executive/2026-09-06-accelerate-v020-s1a-pre-entry-task-graph.md",
+      "sha256": "7f641ec7e18ab0ed2f3353eaafed82eba6b08097d6dae6d043df0ad770ed7906"
+    }
+  ],
+  "verdict": "PASS",
+  "remaining_findings": [],
+  "review_return": "Residual corrected; no remaining finding in the reviewed scope.",
+  "authority_boundary": "This receipt validates the reviewed candidate only. It does not accept the ACV1 amendment, authorize S1A execution, start Wave 0, or replace operator decision P09.",
+  "root_review_of_review": {
+    "status": "accepted-for-pre-entry-freeze",
+    "basis": "The independent PASS is consistent with the root re-evaluation; lifecycle and execution gates remain separate."
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schema_version": "codex26-phase1-sdd-architecture-acceptance-v1",
+  "issue_id": "CODEX-26",
+  "reviewer": {
+    "agent_id": "/root/phase1_sdd_acceptance",
+    "model": "gpt-5.6-terra",
+    "reasoning_effort": "medium",
+    "fork_turns": "none",
+    "read_only": true,
+    "independent_of_author": true
+  },
+  "verdict": "PASS",
+  "scope": "Phase-1 implementation task-graph readiness only",
+  "governing_proposal": {
+    "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "sha256": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca"
+  },
+  "accepted_artifacts": {
+    "sdd_sha256": "2e037c4063adf4d4088843baf1f655410d74424c2a0866c0bbd5951fe9aadefc",
+    "test_design_sha256": "f9a3f4f9708a54b9815b980cbfe342fe230744f97d1b37413175ed294a9eb147",
+    "decision_rebinding_sha256": "fc9ba212ca715a413470fb0b69cb17f5719d7678e9e7b15c226f254d7f448c16",
+    "d12_sha256": "62f05ee362aaf9967f3cf5749f41977a9c798690c8be13f83b6a4db9afd960ea",
+    "d14_sha256": "261e4d7005b11d3f769ee65d05743b5dd80d12f332be23f1a881c7ff2e0dffb2"
+  },
+  "confirmed": [
+    "nine_schema_closed_denominator",
+    "complete_a03_a04_union",
+    "d01_d08_d11_fixture_only_boundary",
+    "d12_d14_source_only_boundary",
+    "immutable_openspec_release_tuple",
+    "independent_proof_and_review_lane",
+    "isolated_rollback_cleanup"
+  ],
+  "blocking_findings": [],
+  "authorization_effect": "none; acceptance permits task-graph preparation only",
+  "issued_at": "2026-09-01T22:33:30-04:00"
+}

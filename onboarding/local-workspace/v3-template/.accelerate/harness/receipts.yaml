@@ -1,0 +1,5 @@
+schema_version: 1
+kind: local-harness-receipts
+authority_mode: receipt-only
+receipts: []
+receipt_is_authorization: false

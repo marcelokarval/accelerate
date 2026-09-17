@@ -1,0 +1,25 @@
+schema_version: semantic-implication-receipt/v1
+receipt_id: refund-short-001
+prompt_binding: {raw_prompt: Refund the duplicate payment now, sha256: 1e2011c05b988376950061f0a987d3a44270cec084e0b7b4d83ada14aaadccbb, normalized_prompt: refund the duplicate payment now, normalized_signals: [duplicate, payment, refund], target_kind: code}
+domain: refund
+capability: refund
+invariants: [financial-ledger-integrity, idempotent-provider-request, ledger-reconciliation]
+seams: [payment-provider]
+effects: [financial-ledger-write, refund]
+external_effects: [payment-provider-refund]
+reversibility: irreversible-or-constrained
+risk_basis: [financial, external-provider]
+risk_tier: critical
+change_summary: Refund now.
+implications:
+  - authorization
+  - idempotency
+  - audit-trail
+  - rollback
+selected_route:
+  route: orchestrated
+  basis: Financial external effect requires coordinated delivery.
+required_proof: [idempotency, ledger-reconciliation, provider-readback]
+escalation:
+  required: true
+  basis: Financial provider effect requires root review.

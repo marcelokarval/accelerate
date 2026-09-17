@@ -1,0 +1,20 @@
+schema_version: semantic-implication-receipt/v1
+receipt_id: checkout-seam-invalid-001
+prompt_binding: {raw_prompt: Route checkout through a new payment seam., sha256: e4582e185f09c393534981a0b01245d12b68c62cca07a0ebb60ce46769fe5ff1, normalized_prompt: route checkout through a new payment seam, normalized_signals: [checkout, payment], target_kind: code}
+domain: checkout-seam
+capability: checkout
+invariants: [checkout-contract, idempotent-provider-request]
+seams: [checkout-boundary, payment-provider]
+effects: [checkout-routing]
+external_effects: [payment-provider-checkout]
+reversibility: reversible-with-rollback
+risk_basis: [payment, external-provider]
+risk_tier: critical
+change_summary: Route checkout through a new payment seam.
+implications:
+  - authorization
+  - idempotency
+  - compatibility
+selected_route: {route: orchestrated, basis: Payment seam needs coordinated review.}
+required_proof: [idempotency, contract-test, provider-readback]
+escalation: {required: true, basis: Checkout provider boundary requires root review.}

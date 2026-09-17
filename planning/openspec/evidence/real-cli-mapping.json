@@ -1,0 +1,1 @@
+{"argv":{"archive":["archive","phase1-fixture","--yes","--json"],"instructions":["instructions","proposal","--change","phase1-fixture","--json"],"status":["status","--change","phase1-fixture","--json"],"validation":["validate","phase1-fixture","--strict","--json"]},"package":"@fission-ai/openspec","version":"1.11.0"}

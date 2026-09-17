@@ -1,0 +1,131 @@
+{
+  "contract_version": "1.0",
+  "state": "DISPATCHED",
+  "artifacts": {
+    "hardening": {
+      "ref": "Plane CODEX-25 issue readiness",
+      "sha256": "cf2bf2be57ee8c72087b0f85aef96177dbbd4638038bd9aa7d3cb2cac1c7c529"
+    },
+    "spec": {
+      "ref": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md@v0.7.23",
+      "sha256": "45cca9d97786548be2495190bed5f53997a2aeb00e488c0ce77db43380e6176e"
+    },
+    "task_graph": {
+      "ref": "planning/evidence/dated-proof-appendix/codex-25-phase0-acceptance/phase0-review-set-manifest.json",
+      "sha256": "b69b2e72b85082d1344320c2eab1b8313b3bc7d4d3c1b650e501b683b992d680"
+    }
+  },
+  "route": "orchestrated",
+  "execution_requested": true,
+  "planned_task_owned_writes": false,
+  "capability_proof": {
+    "collaboration_available": true,
+    "spawn_api": "collaboration.spawn_agent",
+    "checked_at": "2026-09-01T21:39:13-04:00"
+  },
+  "budget": {
+    "max_agents": 3,
+    "active_count": 3
+  },
+  "assignments": [
+    {
+      "assignment_id": "CODEX-25-P0-CP",
+      "kind": "executor",
+      "task_id": "P0-CP",
+      "dependencies": [],
+      "wave": 1,
+      "role": "Phase-0 control-plane review executor",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/codex25_phase0_control_plane",
+      "call_id": "spawn:/root/codex25_phase0_control_plane",
+      "read_scopes": [
+        "proposal-v0.7.23",
+        "phase0-review-set-manifest",
+        "phase0-internal-consistency-receipt"
+      ],
+      "write_scopes": [
+        "collaboration return packet for P0-CP only"
+      ],
+      "proof": "phase0-successor-review-v1 receipt for P0-CP",
+      "reviewer_assignment_id": "CODEX-25-P0-RC",
+      "recursion": {
+        "delegation_allowed": false,
+        "authorization": null
+      },
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    },
+    {
+      "assignment_id": "CODEX-25-P0-RC",
+      "kind": "reviewer",
+      "task_id": "P0-RC",
+      "dependencies": [],
+      "wave": 1,
+      "role": "Phase-0 runtime-concurrency architecture reviewer",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/codex25_phase0_runtime",
+      "call_id": "spawn:/root/codex25_phase0_runtime",
+      "read_scopes": [
+        "proposal-v0.7.23",
+        "phase0-review-set-manifest",
+        "phase0-internal-consistency-receipt"
+      ],
+      "write_scopes": [],
+      "proof": "phase0-successor-review-v1 receipt for P0-RC",
+      "reviewer_assignment_id": null,
+      "recursion": {
+        "delegation_allowed": false,
+        "authorization": null
+      },
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    },
+    {
+      "assignment_id": "CODEX-25-P0-MS",
+      "kind": "reviewer",
+      "task_id": "P0-MS",
+      "dependencies": [],
+      "wave": 1,
+      "role": "Phase-0 migration-security architecture reviewer",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/codex25_phase0_migration_security",
+      "call_id": "spawn:/root/codex25_phase0_migration_security",
+      "read_scopes": [
+        "proposal-v0.7.23",
+        "phase0-review-set-manifest",
+        "phase0-internal-consistency-receipt"
+      ],
+      "write_scopes": [],
+      "proof": "phase0-successor-review-v1 receipt for P0-MS",
+      "reviewer_assignment_id": null,
+      "recursion": {
+        "delegation_allowed": false,
+        "authorization": null
+      },
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    }
+  ],
+  "fan_in": {
+    "owner": "root",
+    "assignment_ids": [
+      "CODEX-25-P0-CP",
+      "CODEX-25-P0-RC",
+      "CODEX-25-P0-MS"
+    ]
+  },
+  "exceptions": [],
+  "root_write_lock": {
+    "mode": "orchestrated-dispatched-scope-lock",
+    "task_owned_writes_forbidden": true,
+    "dispatched_task_scopes": [
+      "collaboration return packet for P0-CP only"
+    ]
+  }
+}

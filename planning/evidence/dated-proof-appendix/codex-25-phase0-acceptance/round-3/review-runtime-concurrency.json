@@ -1,0 +1,50 @@
+{
+  "schema_id": "phase0-successor-review-v1",
+  "assignment_id": "CODEX-25-P0-RC-R3",
+  "review_slot": "P0-RC-R3",
+  "reviewer": {
+    "actor_id": "/root/codex25_r3b_runtime",
+    "actor_epoch": "fresh-child-turn-1",
+    "runtime_instance": "codex-collaboration:/root/codex25_r3b_runtime",
+    "context_root": "fresh-delegated-task-context",
+    "context_lineage": "/root/codex25_r3b_runtime",
+    "trust_root": "codex-collaboration",
+    "model": "gpt-5.6-terra",
+    "reasoning_effort": "medium",
+    "fork_turns": "none",
+    "read_only": true
+  },
+  "bindings": {
+    "candidate_digest": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca",
+    "manifest_digest": "44df3d6c4d059a66342e08022886afc15100173d8a9d7cda97a7b1fe070760b2",
+    "handoff_digest": "73c344a5576b7ba9502249c13668ba2b2aed2efb44336e83234ce047ef3811e5",
+    "internal_receipt_v2_digest": "adbaea654bf76eb0b4b502df8281b271594a767aacf1b4ab317fa3c6405a9f4d",
+    "scan_packet_digest": "9b8d2d5f624b87df150c8a5d8e29bd42e258539a2e2802531ad7bb6783414d16",
+    "agy_receipt_digest": "081aaf199d1830d1f2044c4537d0c17da9d30d158689db487f60057d76a181ea",
+    "base_rubric_digest": "616b73aeeb152fb69bf6be3f599a73110386adb364fb5b1c4e7098305e54f576",
+    "overlay_id": "phase0-lens-runtime-concurrency-v1",
+    "overlay_digest": "53702a4de07a8ceef483f5ef0195655b9510a2af072d2945347431de78b70d5c",
+    "all_match": true
+  },
+  "axes": {
+    "authority-and-scope": "PASS",
+    "state-and-transition-safety": "PASS",
+    "evidence-and-freshness": "PASS",
+    "lineage-and-fencing": "PASS",
+    "manifest-and-snapshot-integrity": "PASS",
+    "migration-denominator-and-rollback": "PASS",
+    "security-and-lan-boundary": "PASS",
+    "testability-and-negative-fixtures": "PASS",
+    "internal-consistency": "PASS"
+  },
+  "overlay_answers": {
+    "serializable_scheduler_admission": "PASS",
+    "fences_and_cas": "PASS",
+    "atomic_invalidation_and_single_lineage": "PASS"
+  },
+  "conflicts": [],
+  "verdict": "PASS",
+  "issued_at": "2026-09-01T22:06:35-04:00",
+  "expires_at": "2026-09-01T23:56:46-04:00",
+  "authority_limitation": "Read-only successor review only; no architecture acceptance or Phase 1-7/runtime authority."
+}

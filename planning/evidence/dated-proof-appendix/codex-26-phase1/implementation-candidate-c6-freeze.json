@@ -1,0 +1,31 @@
+{
+  "schema_id": "codex26_phase1_candidate_freeze_v1",
+  "issue_id": "CODEX-26",
+  "phase": 1,
+  "candidate_id": "CODEX-26-P1-IMPLEMENT-C6",
+  "status": "FROZEN_FOR_INDEPENDENT_PROOF_AND_REVIEW",
+  "source_roots": [
+    "adapters/openspec",
+    "core/phase1",
+    "planning/openspec",
+    "scripts/phase1",
+    "tests/phase1"
+  ],
+  "file_count": 22,
+  "candidate_aggregate_algorithm": "sort regular file paths; for each append UTF-8 path, NUL, lowercase SHA-256 of file bytes, LF; SHA-256 the concatenation",
+  "candidate_aggregate_sha256": "9d06ab81419e8740166c1bcebd2f7a5c0a5e381b37f901ae43a908b241be1da7",
+  "generated_receipt_tree_algorithm": "sort evidence paths; sha256sum every file; sha256sum the emitted list",
+  "generated_receipt_tree_sha256": "46430f63c3b5efa068819697de08130415ec0c2c62b121c7420f141e2f96186f",
+  "root_pre_freeze_proof": {
+    "command": "PHASE1_REAL_OPENSPEC=1 bash tests/phase1/run.sh",
+    "runs": 2,
+    "tests_each_run": 69,
+    "skipped_each_run": 0,
+    "result": "PASS",
+    "receipt_tree_deterministic": true,
+    "cache_artifacts_present": false,
+    "git_diff_check": "PASS"
+  },
+  "known_implementation_residuals": [],
+  "authority_effect": "This freeze permits read-only independent tester and reviewer gates only. It grants no acceptance, promotion, deployment, runtime mutation, namespace activation, reader retirement, Plane closure, or Phase-2 entry."
+}

@@ -1,0 +1,17 @@
+schema_version: semantic-implication-receipt/v1
+receipt_id: attack-refund-editorial-001
+prompt_binding: {raw_prompt: Refund the duplicate payment now, sha256: 1e2011c05b988376950061f0a987d3a44270cec084e0b7b4d83ada14aaadccbb, normalized_prompt: refund the duplicate payment now, normalized_signals: [duplicate, payment, refund], target_kind: documentation}
+domain: editorial
+capability: copy-edit
+invariants: [copy-accuracy]
+seams: [content-surface]
+effects: [copy-change]
+external_effects: [none]
+reversibility: reversible
+risk_basis: [editorial]
+risk_tier: low
+change_summary: Correct a typo in a non-operative label.
+implications: [copy-review]
+selected_route: {route: direct-fast-path, basis: Isolated non-operative copy correction.}
+required_proof: [copy-review]
+escalation: {required: false, basis: No elevated risk beyond copy review.}

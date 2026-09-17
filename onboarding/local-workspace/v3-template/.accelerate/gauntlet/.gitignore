@@ -1,0 +1,11 @@
+# D01 generated/private mutable state. Keep this control README tracked.
+state.sqlite3
+state.sqlite3-*
+cas/**
+exports/**
+backups/**
+journals/**
+provider-payloads/**
+*.lock
+*.log
+private-evidence/**

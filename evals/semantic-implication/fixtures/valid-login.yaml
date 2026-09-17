@@ -1,0 +1,21 @@
+schema_version: semantic-implication-receipt/v1
+receipt_id: login-001
+prompt_binding: {raw_prompt: 'Support passwordless login.', sha256: f85ac3cf4caa0e1140518e2a90e1b13887b9b238aa404b048f1e566358e3931b, normalized_prompt: support passwordless login, normalized_signals: [login], target_kind: code}
+domain: authentication
+capability: login
+invariants: [session-boundary]
+seams: [identity-provider]
+effects: [session-issue]
+external_effects: [identity-provider-session]
+reversibility: reversible-with-rollback
+risk_basis: [identity, external-provider]
+risk_tier: critical
+change_summary: Support passwordless login.
+implications:
+  - authorization
+  - session-security
+  - audit-trail
+  - rollback
+selected_route: {route: orchestrated, basis: Identity boundary needs coordinated review.}
+required_proof: [session-security, provider-readback]
+escalation: {required: true, basis: Authentication boundary requires root review.}

@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "kind": "bounded-s1a-conformance-successor-review",
+  "date": "2026-09-10",
+  "work_item": "CODEX-34",
+  "candidate": {
+    "base": "710db6474292ff3deb74728c1d754aea6e7f806e",
+    "head": "2ac5156644d480f233560bff167f7990dcee5bde",
+    "revision": "head-plus-uncommitted-successor",
+    "tracked_binary_diff_sha256": "3bb78a55f8098e12d3cc374133afbd0e751f2ab3b182df05c54775e9acd1bce8",
+    "files_sha256": {
+      "scripts/validate-accelerate-v020-s1a-authority.py": "5c0494a3303521533d5003b2eb8890c5015d92d1a528bb29899a2fb30b231f4c",
+      "tests/accelerate-v020-s1a-authority.sh": "4a2454ec137605db4662e3f5830652f31369844ff8fb547459a628a01f281733",
+      "tests/test_s1a_conformance_enforcement.py": "d7224381b8c1f3a68b26e03c18bd021b580ac0b0dc2de13b1df106dfd6ebfcc5",
+      "tests/test_s1a_metadata_independence.py": "daeb0af6afdf69a5f97cc949d5077733b4ff035c050bd6ef6394b985130133ac"
+    },
+    "exclusions": ["This receipt does not hash itself"],
+    "commit": false,
+    "push": false
+  },
+  "lineage": {
+    "predecessor": "planning/evidence/dated-proof-appendix/codex-34-s1a/2026-09-09-metadata-correction-review.json",
+    "predecessor_sha256": "e3de26e6cf6b1d0cbb0646dd54f3fc15bbed31d91100c5d5ba394515d670af9d",
+    "historical_receipt": "planning/evidence/dated-proof-appendix/codex-34-s1a/s1a-candidate-review-receipt.json",
+    "historical_receipt_preserved_unchanged": true,
+    "historical_receipt_reused_for_candidate_identity": false
+  },
+  "evidence": {
+    "root_exact_command": "PYTHONDONTWRITEBYTECODE=1 bash tests/all.sh",
+    "root_exact_command_exit_code": 0,
+    "root_exact_command_result": "all tests passed on final code",
+    "focal_conformance": "22 unittest methods A-U all pass",
+    "focal_metadata": "4 metadata tests pass",
+    "phase1": "81 pass; 1 explicit opt-in real OpenSpec skip",
+    "git_diff_check_exit_code": 0,
+    "historical_process_note": "An earlier aggregate run timed out during broader checks; reconciliation found no matching shell process, and the final exact all-tests command completed successfully.",
+    "runtime_limits": [
+      "Live Codex canary/logical runtime proof not run",
+      "Real OpenSpec lane not run",
+      "No runtime qualification"
+    ]
+  },
+  "reviews": {
+    "final_blocking_p1": {
+      "task_id": "ses_f76381404ffeQHWncPtiRwZByU",
+      "requested_binding": "openai/gpt-5.6-terra/medium",
+      "native_effective_model_metadata": "not exposed"
+    },
+    "final_targeted_closure": {
+      "task_id": "ses_f762ab42fffeTFsiA7m7EbwNT3",
+      "requested_binding": "openai/gpt-5.6-terra/medium",
+      "native_effective_model_metadata": "not exposed"
+    },
+    "implementation_tasks": [
+      {
+        "id": "ses_f76d5beadffe5MnbsLtzu6hrtL",
+        "requested_binding": "openai/gpt-5.6-terra/medium"
+      }
+    ],
+    "test_tasks": [
+      {
+        "id": "ses_f76d7c981ffecwxyOtRYFpYQYC",
+        "requested_binding": "openai/gpt-5.6-luna/medium"
+      },
+      {
+        "id": "ses_f76cb5763ffexSSXZcjgbOGHGi",
+        "requested_binding": "openai/gpt-5.6-terra/medium"
+      }
+    ],
+    "execution_claim": "No claim of observed model execution beyond returned native task IDs/status."
+  },
+  "decision": {
+    "bounded_s1a_conformance_candidate_gate": "supported",
+    "prior_p0_p1": "closed",
+    "operator_acceptance": "NOT ISSUED",
+    "amendment": "draft-pre-s1a",
+    "s1b_wave0_core_mutation": "NOT AUTHORIZED",
+    "release_merge_push_plane_write": "none",
+    "residual_p2": "Markdown parser does not reject contradictory nonblank content after the first 24-row table before the next H2; nonblocking follow-up per final full reviewer gate."
+  },
+  "plane": {
+    "governed_readback": "CODEX-34 Review",
+    "write": false,
+    "status": "Any payload is stale and requires fresh governed preflight plus explicit authorization."
+  }
+}

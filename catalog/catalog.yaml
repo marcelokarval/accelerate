@@ -1,0 +1,59 @@
+schema_version: 1
+catalog_id: prop4you-accelerate
+authority:
+  canonical_source: repository
+  repository_root: .
+  installed_discovery_catalog: ~/.agents
+  installed_catalog_role: discovery-only
+  promotion: separate-receipt-required-not-authorized-by-catalog
+  lifecycle_receipt_binding: >-
+    Any lifecycle_state above defined requires one receipt for every completed
+    transition. Each receipt is bound to the asset id, canonical source_path,
+    current source SHA-256, destination state, and lifecycle-required type.
+  statement: >-
+    This repository owns catalog definitions. Installed files, symlinks,
+    generated output, and API-visible records are projections and never become
+    source authority.
+assets:
+  - id: prop4you.accelerate.harness.codex
+    namespace: prop4you.accelerate.harness
+    kind: harness
+    source_path: references/harnesses/codex.md
+    lifecycle_state: defined
+    runtime_registry: {consumer: codex, bootstrap: codex}
+  - id: prop4you.accelerate.harness.claude
+    namespace: prop4you.accelerate.harness
+    kind: harness
+    source_path: references/harnesses/claude.md
+    lifecycle_state: defined
+    runtime_registry: {consumer: claude, bootstrap: claude}
+  - id: prop4you.accelerate.harness.hermes
+    namespace: prop4you.accelerate.harness
+    kind: harness
+    source_path: references/harnesses/hermes.md
+    lifecycle_state: defined
+    runtime_registry: {consumer: hermes, bootstrap: hermes}
+  - id: prop4you.accelerate.harness.paperclip
+    namespace: prop4you.accelerate.harness
+    kind: harness
+    source_path: references/harnesses/paperclip.md
+    lifecycle_state: defined
+    runtime_registry: none
+  - id: prop4you.accelerate.harness.deepseek-harness
+    namespace: prop4you.accelerate.harness
+    kind: harness
+    source_path: references/harnesses/deepseek-harness.md
+    lifecycle_state: defined
+    runtime_registry: none
+  - id: prop4you.accelerate.harness.opencode
+    namespace: prop4you.accelerate.harness
+    kind: harness
+    source_path: references/harnesses/opencode.md
+    lifecycle_state: defined
+    runtime_registry: {consumer: opencode, bootstrap: opencode}
+  - id: prop4you.accelerate.harness.openhands
+    namespace: prop4you.accelerate.harness
+    kind: harness
+    source_path: references/harnesses/openhands.md
+    lifecycle_state: defined
+    runtime_registry: {consumer: openhands, bootstrap: openhands}

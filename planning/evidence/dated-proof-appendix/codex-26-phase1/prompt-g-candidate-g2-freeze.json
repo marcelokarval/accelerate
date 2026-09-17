@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "receipt_type": "PROMPT_G_BLOCKED_CANDIDATE_FREEZE",
+  "frozen_at": "2026-09-03T23:52:52-04:00",
+  "governing_issue": "CODEX-26",
+  "generation": 2,
+  "predecessor_freeze": {
+    "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-g-candidate-g1-freeze.json",
+    "sha256": "146ab11981c95dc35b4f1b0e6977c92eb99896c48693e3580e0c19b06f276f33",
+    "review": "PROMPT_G_REVIEW_PASS in HCOM message 4894"
+  },
+  "correction_scope": "observability-only residual update after independent G1 review",
+  "candidate_status": "BLOCKED",
+  "implementer": {
+    "agent": "pgimpl-haka",
+    "model": "gemini-3.8-flash-high",
+    "reasoning_effort": "high",
+    "fork_turns": "none"
+  },
+  "candidate_files": [
+    {
+      "path": ".accelerate/state.yaml",
+      "sha256": "2fbf9e65d132d77d89ab89130249d482c7fc7d584fcce5f2d070aa9948f6d448"
+    },
+    {
+      "path": ".accelerate/status/readiness-dashboard.yaml",
+      "sha256": "b45efe9ddb21990c78b402727b03995fc245e468f5bf6d35128c6a175d01582f"
+    },
+    {
+      "path": ".accelerate/workflow/active-work-item.yaml",
+      "sha256": "19b05632c0f564a842698f36f1d17f0aec7ac6f4478130c40d562509676ba105"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-g-agy-closure-candidate.md",
+      "sha256": "1bee3a499ef965d4aec211a88752bd101bf5ab8880020423c1a2ea28cc135e78"
+    }
+  ],
+  "preserved_authority": [
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/implementation-candidate-c14-full-freeze.json",
+      "sha256": "7215486904c9fee3172ad1f53c3c3a63d4aa9ba62cea424d5bf8da60fcf72bc2",
+      "aggregate": "cbf26086ca9af5e7d927d7ee324818af35d74d972dfcdbfcce0cd562bc3780d4"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/root-proof-harness-r1-freeze.json",
+      "sha256": "23ec174a784f5a0570419086cbccda39f9b08f8dd780889b0e30e449c0a73ecb",
+      "aggregate": "aa9551f4b2f33fe382b043059034fe1b107e50ee8b99c5975869bdc67e5eaeed"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-f-task-f09-closure-review-go.md",
+      "sha256": "fcb91ad773a46b20467778cbb82959aa0a38d8d4f1b2927b9dd9a93aa57085aa"
+    },
+    {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-f-durable-proof-freeze.json",
+      "sha256": "1d21bbe918886ff8ff3acf696bd20f9f736a6b81d445e28f7e037e7245cbebda"
+    }
+  ],
+  "carried_proof": {
+    "prepare_closure": "exit 1; first broken boundary",
+    "dogfood_contract": "exit 1; second independent boundary",
+    "local_workspace_proof_gates": "exit 0; disposable fixture proof only",
+    "phase1_currentness": "exit 0 mechanically; semantic fail because C13 is certified current",
+    "git_diff_check_after_g2": "exit 0"
+  },
+  "plane_readback": {
+    "workspace_slug": "karval",
+    "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+    "work_item_id": "549d5c6e-9066-440c-85a6-973a33b7eefe",
+    "identifier": "CODEX-26",
+    "state_id": "e1e78b18-5b23-4b77-9a69-3e09f0b4cc33",
+    "state_name": "In Progress",
+    "completed_at": null,
+    "updated_at": "2026-09-04T03:18:33.731087Z",
+    "provider_mutation": false
+  },
+  "mutable_after_freeze": false,
+  "review_target": "verify the G2 observability correction, all hashes, and the unchanged blocked conclusion"
+}

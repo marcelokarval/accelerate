@@ -1,0 +1,471 @@
+---
+name: accelerate
+description: Use as the always-on runtime root for engineering work to classify trivial vs non-trivial execution, then route into the correct bounded or orchestrated workflow.
+metadata:
+  category: orchestration
+  origin: rewritten-from-claude
+---
+# Accelerate — Full Preserved Procedure
+
+Codex-native root orchestration skill for standalone engineering work.
+
+Use `accelerate` as the entry control plane for any engineering run.
+
+Its job is to decide how the work should run before implementation starts, then
+stay responsible for the runtime shape until real closure.
+
+This file is intentionally constitutional and compact.
+
+- `AGENTS.md` sets the repo bootstrap laws
+- `README.md` is the richer operating guide
+- `core/` is the native method surface
+- `references/` remains supporting inherited depth while rehoming continues
+
+Runtime bootstrap is semantic-core first: adapters decide native primitives,
+status and enforcement. After `TASKS_READY`, physical dispatch is allowed only
+where the chosen adapter is supported and callable; blocked, legacy, staged, or
+export-only adapters must surface their status without fallback. The root keeps
+fan-in, review-of-review, promotion, and closure. Mirrors are projections;
+read `core/control-plane/cross-runtime-bootstrap.md` before an adapter install.
+
+## Current Reality
+
+This repository is in the `standalone capability-portable` phase.
+
+That means:
+
+- the root control plane must already work with zero promoted agents
+- issue topology, risk enforcement, proof ordering, and closure discipline are
+  already native concerns
+- planning docs and executive artifacts are the current workflow vehicle until
+  a native workflow adapter exists
+
+Portability without collaboration remains valid, but it is not a silent
+fallback when the Standing Multi-Agent V2 gate can dispatch physical children.
+
+## Minimum Truth Stack
+
+For a fresh engineering session, start with:
+
+1. `AGENTS.md`
+2. `SKILL.md`
+
+When the run is non-trivial, architectural, or mutation-bearing, continue with:
+
+3. `README.md`
+4. `docs/architecture/accelerate-pre-agents-baseline.md`
+5. `docs/architecture/accelerate-control-plane.md`
+
+Then open the native surface that actually governs the branch, usually from:
+
+- `core/control-plane/branch-enforcement-matrix.md`
+- `core/control-plane/quick-invocation-map.md`
+- `core/control-plane/local-workspace-entry-gate.md`
+- `core/issue-topology/issue-driven-mutation-stack.md`
+- `core/runtime-packets/qa-proof-stack.md`
+- `core/workflows/operational-calibration.md`
+- `core/review/product-critical-surfaces.md`
+- `core/review/ux-ui-fullstack-surface.md`
+- `core/review/premium-interface-production.md`
+- `core/risk/enforcement-surfaces.md`
+
+## Root Laws
+
+`accelerate` always owns:
+
+- classification
+- response locale matching the user's request language
+- prompt-hardening decision
+- issue topology
+- lane opening order
+- staffing / delegation budget
+- risk enforcement
+- proof ordering
+- final AI review
+- root closure mode
+- `Done`
+
+Bounded execution may implement or inspect a slice, but it does not inherit root
+authority.
+
+## Operating Model
+
+Run `accelerate` in this order:
+
+1. decide whether the task is actually engineering work
+2. detect and preserve the user's response locale
+3. run Stage A of the Semantic Implication Gate: a bounded pre-scan that decides
+   whether micro or full hardening is safe
+4. decide the prompt-hardening level: micro for trivial, full for non-trivial or
+   ambiguous
+5. run Stage B of the Semantic Implication Gate: expand the hardened request's
+   domain, capability, invariants, seams, and effects before classification.
+   Prompt length is non-authoritative; read
+   `references/core/semantic-implication-gate.md`.
+6. when a governed target repository is in scope, decide local workspace entry
+   state first
+7. classify the run honestly
+8. state the outcome preamble: goal, success criteria, constraints, expected
+   output, and stop rules
+9. choose reasoning effort and delegation posture from success criteria, risk,
+   and available evidence
+10. open the required branch, skills, gates, and artifacts
+11. for orchestrated execution, apply the Standing Multi-Agent V2 gate after
+   `TASKS_READY` and before task-owned mutation; root dispatches physical
+   executor/reviewer authority when collaboration is available
+12. keep runtime state visible with explicit packets
+13. enforce proof in the correct order
+14. block closure until the branch contract is truly satisfied
+
+Do not treat `accelerate` as a label. Treat it as the visible team operating
+system for the run.
+
+## Fable Method Composition
+
+Fable is an optional reasoning/reporting overlay, never another root workflow.
+When Fable is considered, classify `fable_overlay` as `required`, `useful`, or
+`not-needed` and persist a short basis in the existing Branch Entry Packet:
+
+- `required` when the user explicitly names Fable inside an Accelerate run;
+- `useful` when authorities conflict, intent is materially ambiguous, or an
+  outcome-first audit/report is requested;
+- `not-needed` when the active specialist skill already defines mechanics and
+  proof without ambiguity.
+
+Accelerate retains classification, issue topology, delegation budget, risk,
+proof order and root closure. Fable feeds the outcome preamble, Authority Set,
+scope decision, existing proof lane and final report. Do not create a second
+issue, packet family, ledger, proof lane or closure mode. Load
+`references/fable-method-composition.md` for the complete repo-local contract.
+
+Use `core/control-plane/response-locale-gate.md` for user-facing language. If
+the user writes in pt-BR, respond in pt-BR unless they explicitly request another
+language. English docs, tool output, paths, and code identifiers do not override
+the user's conversational language.
+
+This locale rule governs communication with the user. Agent assignments,
+runtime packets, code identifiers, validation output, and repo documentation may
+remain in English when that is the repo/runtime convention or improves precision.
+Do not let English agent work leak into the user-facing summary when the active
+conversation locale is pt-BR.
+
+## Classification Contract
+
+Every engineering run must be classified before execution continues.
+
+Classification consumes the Stage B Semantic Implication Gate output, not prompt
+length, file count, or apparent simplicity alone. A short request that reaches a
+sensitive invariant, cross-boundary seam, irreversible effect, or unresolved
+authority cannot be classified as trivial until that implication is resolved.
+
+The top-level outcomes are:
+
+- conversational / no-op
+- trivial bounded engineering work
+- orchestrated non-trivial work
+
+## Execution Routes
+
+After classification, choose exactly one execution route:
+
+- `direct-fast-path`: a known target, one logical surface, low and reversible
+  risk, and focal proof. The root executes directly with micro-hardening and
+  zero physical or virtual subagents. Do not create a plan, handoff, browser
+  lane, or extra packet merely because the work is engineering. Never use this
+  route for auth, billing, permissions, sensitive data, migrations, secrets,
+  irreversible external calls, or runtime truth.
+- `scoped`: one bounded lane needs discovery, current external knowledge, or
+  independent proof. Keep execution `single`; use at most one sidecar only when
+  its return will reduce uncertainty or elapsed time more than the handoff costs.
+- `orchestrated`: cross-surface risk, material uncertainty, or two or more
+  independent lanes justify explicit orchestration, ownership, reconciliation,
+  and proportionate proof.
+
+`direct-fast-path`, `scoped`, and `orchestrated` are an execution route, not a
+classification or execution mode. They do not override a target repository's
+stricter issue, local-workspace, safety, or proof authority.
+
+Escalate out of `direct-fast-path` when the target stops being known, proof
+becomes broad or runtime-facing, risk is material, or the work gains a genuinely
+independent lane. Do not use file count, UI presence, or agent availability as
+an escalation trigger by itself.
+
+All engineering runs need outcome clarity.
+
+Use micro-hardening for trivial bounded work:
+
+- `goal`
+- `done means`
+- material constraints, when any exist
+
+Use full `prompt-hardening` when the request is:
+
+- long
+- ambiguous
+- multi-objective
+- multi-phase
+- architecture-heavy
+- likely to drift without shaping
+- security-, billing-, auth-, data-, governance-, workflow-, runtime-, external
+  side-effect-, or product/visual-acceptance-sensitive
+
+Do not skip hardening only because the task later turns out to be bounded.
+
+When the user asks for an executive plan, full task ledger, execution, subagent
+review, correction, and final confirmation by the main session, open
+`core/control-plane/orchestrator-first-execution-gate.md` and
+`core/review/one-shot-side-by-side-protocol.md`. The main session is the
+orchestrator and final forensic reviewer. For orchestrated execution with
+collaboration available, physical executor/reviewer dispatch is mandatory;
+virtual packets only document a permitted degradation and executor self-review
+is never acceptance proof.
+
+Reasoning effort is a separate decision from branch size and agent count. Choose
+the lowest effort that can safely satisfy success criteria:
+
+- `low` for simple bounded answers or mechanical changes
+- `medium` for ordinary bounded engineering and familiar review
+- `high` for architecture, sensitive data, security, billing, auth, cross-layer,
+  contradictory, or product/visual-risk work
+- `xhigh` only for irreversible, financial/source-of-truth, incident,
+  adversarial, broad migration, or final high-impact forensic closure work
+
+Re-evaluate `low` and `medium` before escalating. Future agent selection must
+trace back to this effort decision, but final closure remains root-owned.
+
+## Branch Selection
+
+Use the native branch matrix for exact routing.
+
+The recurring branch families are:
+
+- trivial bounded
+- ambiguous / long / epic-like
+- issue-driven delivery
+- bug / failure / regression
+- adversarial security / hostile-path review
+- architecture / governance doubt
+- runtime / product-heavy flow
+- product-critical user surface
+- premium interface
+- untrusted ingress / upload / import / media ingestion
+- persisted-modeling / contract-heavy review
+
+When structural UI uncertainty exists, use wireframe / visual-contract
+discipline before implementation.
+
+When a run is design-system-driven, premium, or broadly visual, default to the
+UI Mutation Ladder:
+
+1. token authority
+2. derived token wiring
+3. shared primitives
+4. shared composites
+5. registry / examples / reference package
+6. shells / layouts
+7. pages / feature consumers
+
+When design-system extraction or premium artifacts already exist and rollout
+planning enters the picture, do not let the session jump from premium package
+to implementation by implication. Open
+`core/control-plane/design-system-rollout-entry-gate.md` and verify that the
+implementation entrypoint explicitly names:
+
+- required pre-read artifacts
+- immutable contract authority
+- primary implementation driver
+- secondary macro direction when active
+- execution slicing artifact
+
+Do not start broad premiumization at page level unless a bounded exception is
+explicitly packeted.
+
+When design-system or premium artifacts mutate real UI, open
+`core/control-plane/design-implementation-proof-gate.md` and require runtime
+comparison proof against the active artifacts before closure.
+
+## Runtime Visibility
+
+Non-trivial runs should keep the active runtime state visible.
+
+At minimum, runtime packets should expose:
+
+- active branch
+- active skills
+- authority set (governing authorities, supporting references, decision artifacts,
+  backend authority, generated exports, and forbidden authority exclusions)
+- local workspace status / action
+- readiness status
+- timeline checkpoint status
+- learning disposition
+- gate ledger
+- phase / SDLC
+- issue stack status
+- QA / proof lane
+- browser-proof status
+- persistent E2E status
+- local review / closure action
+- closure blockers
+- `single-threaded exception` blocker receipt when an allowed degradation is
+  claimed; never root-only execution permission
+
+Do not replace packeted runtime state with long opaque progress prose.
+
+## QA Proof Contract
+
+When backend or frontend behavior is in scope, open
+`core/runtime-packets/qa-proof-stack.md` and do not close from a generic
+`tested` claim. Backend QA must rerun relevant tests, run coverage when
+configured, and capture/scan backend logs. Frontend/browser QA must rerun
+relevant tests, run coverage when configured, inspect Chrome DevTools console
+and network, capture screenshots, check ARIA/accessibility when UI semantics are
+in scope, compare against the active framework/design-system rules, and run the
+3x3 mobile/tablet/desktop viewport matrix for visual or responsive UI work.
+When risk exists, QA must also prove or explicitly rule out Negative Path,
+Security/Auth/Ownership, Concurrency/Idempotency, Performance Minimum, External
+Resilience, Clean State/Cleanup, and Observability Correlation. For full QA
+coverage, also cover Test Data, Contracts, Observability, Compatibility, Deep
+Accessibility, Internationalization, Migration/Rollback, Dependency Audit, and
+Snapshot/Golden Master when applicable.
+
+QA findings are active correction inputs. In-scope console, network, visual,
+ARIA, responsive, backend-log, or coverage defects must be fixed and reproofed,
+or explicitly classified as waived/deferred/blocked before closure.
+
+## Mutation Rule
+
+If the run mutates:
+
+- code
+- docs
+- workflow seeds
+- runtime governance
+
+then the issue stack is mandatory unless a narrow explicit no-issue exception
+exists.
+
+In the current pre-agents phase, that means:
+
+- executive planning artifacts are the governing execution handoff
+- do not invent a fake workflow adapter
+- do not assume Linear or another backend is already the enforced runtime truth
+- in governed target repositories, do not skip `.accelerate/` local workspace
+  entry detection before issue and planning gates
+
+## Proof Order
+
+The proof order is:
+
+1. implementation proof
+2. backend/frontend QA proof
+3. browser truth
+4. persistent regression proof
+5. forensic closure
+
+Do not collapse these lanes into a vague “tested” claim.
+
+Browser truth comes before Playwright when the flow is not yet stabilized.
+
+When a governed target repository has active `.accelerate/` local status and
+the run is entering review or closure, prefer the canonical composed commands:
+
+- `onboarding/local-workspace/prepare-review.sh`
+- `onboarding/local-workspace/prepare-closure.sh`
+
+Do not replace these with an ad hoc sequence unless the run is explicitly
+debugging that local workspace layer itself.
+
+When the root is reentering a governed target repository with `.accelerate/`
+already present, prefer this compact read order:
+
+1. `.accelerate/review/handoff-summary.md`
+2. if missing or still only template-shaped, `onboarding/local-workspace/read-local-handoff.sh`
+3. only then expand into packets, bundles, or deeper planning/onboarding state
+
+## Product-Critical And Premium Rule
+
+Use `product-critical user surface` when backend truth and frontend product
+quality are both closure-critical.
+
+Use `UX/UI fullstack surface` when backend state, frontend rendering, UX copy,
+visual hierarchy, and browser runtime behavior must be reconciled before the
+work can honestly close.
+
+Escalate into `premium interface` when:
+
+- perceived quality is part of the requested outcome
+- a reference, Stitch, or Figma artifact is central
+- technical correctness alone would still be unacceptable
+- an existing `docs/reference/design-system*` package is meant to drive
+  implementation, correction, improvement, or proposal work
+
+These branches do not close on logic correctness alone.
+
+## Standing Multi-Agent V2 Delegation Request
+
+For `execution_route=orchestrated`, requested execution, and `TASKS_READY`,
+the root MUST call `collaboration.spawn_agent` before any task-owned mutation
+when collaboration exists. The user need not repeat that request. Root MUST
+NOT execute assigned task-owned scopes: it retains hardening, SDD/PRD/task
+graph, dispatch, fan-in, integration-only repairs, review-of-review,
+promotion, and closure. A virtual packet or `single-threaded exception` is a
+blocking exception receipt, not permission, while physical collaboration is
+available.
+
+The only exceptions are explicit user opt-out, collaboration unavailable, or a
+spawn failure with operator-authorized degradation. Planning-only work may stop
+at `TASKS_READY`; direct-fast-path and scoped retain proportional routing.
+Every child assignment explicitly declares `model`, `reasoning_effort`, and
+`fork_turns`; default is `fork_turns=none`; only an explicit integer `1..5`
+may override it. Read
+[the delegation dispatch gate](delegation-dispatch-gate.md),
+[collaboration routing](codex-collaboration-routing.md), and
+[runtime packet templates](runtime-packet-templates.md) before
+dispatch.
+
+## Reference Map
+
+Use these native authorities first:
+
+- branch routing:
+  - `references/core/semantic-implication-gate.md`
+  - `core/control-plane/authority-set-gate.md`
+  - `core/control-plane/branch-enforcement-matrix.md`
+  - `core/control-plane/quick-invocation-map.md`
+  - `core/control-plane/local-workspace-entry-gate.md`
+  - `core/control-plane/ui-mutation-ladder.md`
+  - `core/control-plane/design-implementation-proof-gate.md`
+  - `core/control-plane/review-readiness-gate.md`
+  - `core/control-plane/timeline-continuity-gate.md`
+  - `core/control-plane/durable-learning-registration-gate.md`
+- mutation / issue discipline:
+  - `core/issue-topology/issue-driven-mutation-stack.md`
+- product/specification planning:
+  - `planning/README.md`
+  - `planning/product/README.md`
+  - `planning/product/user-story-template.md`
+  - `planning/product/prd-lite-template.md`
+  - `planning/architecture/sdd-template.md`
+  - `planning/execution/task-breakdown-template.md`
+- proof and closure:
+  - `core/runtime-packets/qa-proof-stack.md`
+  - `core/workflows/operational-calibration.md`
+  - `references/release-update-governance.md`
+- optional reasoning/reporting overlays:
+  - `references/fable-method-composition.md`
+- risk and enforcement:
+  - `core/risk/enforcement-surfaces.md`
+- critical visual/runtime review:
+  - `core/review/product-critical-surfaces.md`
+  - `core/review/premium-interface-production.md`
+  - `core/review/html-design-system-extraction.md`
+  - `core/review/design-system-contract-application.md`
+  - `core/control-plane/design-implementation-proof-gate.md`
+- delegation:
+  - `core/delegation/subagent-model.md`
+  - `references/delegation-dispatch-gate.md`
+  - `references/codex-collaboration-routing.md`
+  - `references/runtime-packet-templates.md`
+
+Open `references/` only when native authority is still thin or when comparison
+against inherited doctrine is the point of the run.

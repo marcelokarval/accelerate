@@ -1,0 +1,26 @@
+{
+  "schema_id": "phase0-internal-consistency-receipt-v1",
+  "candidate_digest": "45cca9d97786548be2495190bed5f53997a2aeb00e488c0ce77db43380e6176e",
+  "checks": {
+    "candidate_digest_matches_document_digest": "PASS",
+    "phase0_common_rubric_marker_count": 1,
+    "phase0_control_plane_overlay_marker_count": 1,
+    "phase0_runtime_concurrency_overlay_marker_count": 1,
+    "phase0_migration_security_overlay_marker_count": 1,
+    "exact_three_overlay_slots": "PASS",
+    "unique_overlay_ids": "PASS",
+    "unique_overlay_digests": "PASS",
+    "markdown_link_integrity": "PASS",
+    "git_diff_check_candidate": "PASS"
+  },
+  "block_digests": {
+    "phase0-common-rubric-v1": "616b73aeeb152fb69bf6be3f599a73110386adb364fb5b1c4e7098305e54f576",
+    "phase0-lens-control-plane-v1": "2cd1b0ca01d2c24a75e5cc3db2de764398cc939d16a3dd9d1af4632dac5b96cc",
+    "phase0-lens-runtime-concurrency-v1": "53702a4de07a8ceef483f5ef0195655b9510a2af072d2945347431de78b70d5c",
+    "phase0-lens-migration-security-v1": "9ebee3cec1f27c745473497a210a799c4bd169ae529fbd17b27827ec7c47c634"
+  },
+  "issued_by": "codex-root-control-plane",
+  "issued_at": "2026-09-01T21:39:13-04:00",
+  "effect": "review-admission-only",
+  "implementation_authority": false
+}

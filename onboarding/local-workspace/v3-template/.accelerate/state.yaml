@@ -1,0 +1,10 @@
+schema_version: 3
+workspace_kind: local-overlay
+template_status: declaration-only
+core_authority: external
+planning_authority: planning/openspec
+planning_pointer: .accelerate/planning-pointer.yaml
+gauntlet_state_root: .accelerate/gauntlet
+harness_root: .accelerate/harness
+runtime_enabled: false
+secrets_present: false

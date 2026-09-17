@@ -1,0 +1,52 @@
+{
+  "schema_version": "accelerate-phase1-entry-current-candidate-supersession-v1",
+  "receipt_id": "CODEX-17-phase1-entry-current-candidate-supersession-2026-09-01",
+  "reason": "mutated successor candidate",
+  "old_acceptance_receipt": {
+    "path": "planning/evidence/dated-proof-appendix/codex-17-phase1-entry/phase1-entry-disposition-acceptance.json",
+    "digest": "sha256:18b82063a47171549efe9e38eea15e8d4b9268ca80b556ea70e62eff2986014c"
+  },
+  "old_frozen_bindings": {
+    "proposal": {
+      "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+      "digest": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a"
+    },
+    "D01": {
+      "path": "planning/architecture/decisions/2026-09-01-d01-gauntlet-durable-state.md",
+      "digest": "sha256:073e01db5d3fbd01ae802c1da9d3e0f7501ebdcde2bd6683f9ac49df8ad6d3a9"
+    },
+    "D08": {
+      "path": "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md",
+      "digest": "sha256:926f4dc17ab8de935d03ddb2ae7ac9635813da0896e3186d189b74a092718c0e"
+    },
+    "D11": {
+      "path": "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md",
+      "digest": "sha256:bdfe70d6b8cd1a95c1c20da3cbc73b48f276286baf2f3a8d088120714cae5384"
+    }
+  },
+  "current_candidate_bindings": {
+    "proposal": {
+      "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+      "digest": "sha256:79473c41e77c626a0c849d0ff385be7c140e7f66cfbf047e55ba5ccfe05cd067"
+    },
+    "D01": {
+      "path": "planning/architecture/decisions/2026-09-01-d01-gauntlet-durable-state.md",
+      "digest": "sha256:eda61a2316826217d9f0a94cf1be38caf110d4f3c4e2ac0cfca942597f0376f0"
+    },
+    "D08": {
+      "path": "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md",
+      "digest": "sha256:aa63b3de4ad72d3d4dee433548f319a935fbf2b6a83e55b042b9249c5f38c8ba"
+    },
+    "D11": {
+      "path": "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md",
+      "digest": "sha256:0d46e9c0ddf875c489dd74c465d925f99ca3105c7b31db40bb964bea726b036b"
+    }
+  },
+  "authority_effect": {
+    "old_acceptance_validity": "FROZEN_BYTES_ONLY",
+    "current_candidate_entry_status": "REQUIRES_NEW_REVIEW_AND_ACCEPTANCE",
+    "authority_transfer": false,
+    "new_acceptance": false,
+    "implementation_or_activation_authorization": false
+  }
+}

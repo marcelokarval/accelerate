@@ -1,0 +1,12 @@
+schema_version: 1
+kind: local-harness-declarations
+authority_mode: declaration-only
+declared_constraints:
+  project_root: explicit-required
+  planning_root: planning/openspec
+  state_root: .accelerate/gauntlet
+  state_root_must_be_inside_workspace: true
+  state_root_symlinks_allowed: false
+  secrets_allowed: false
+  executable_hooks_allowed: false
+authority_grants: []

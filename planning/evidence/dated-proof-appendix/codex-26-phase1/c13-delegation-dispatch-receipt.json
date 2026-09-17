@@ -1,0 +1,102 @@
+{
+  "contract_version": "1.0",
+  "state": "DISPATCHED",
+  "artifacts": {
+    "hardening": {
+      "ref": "planning/evidence/dated-proof-appendix/codex-26-phase1/c13-hardened-prompt.md",
+      "sha256": "4a94adeda91a5763590e4b86c84bb9b3691a310f44933793fa74800120e16abd"
+    },
+    "spec": {
+      "ref": "planning/architecture/2026-09-02-codex-26-phase1-reentry-c13-sdd.md",
+      "sha256": "9e19fddf816d30b8d12446f71b2fe9b37ab26a31f1d1cb57e011916bbd2f81f3"
+    },
+    "task_graph": {
+      "ref": "planning/executive/2026-09-02-codex-26-phase1-r0-c13-task-graph.md",
+      "sha256": "5a87799c65e14914ae2bdf0e7821de2eb5e81403ec2851c8fb79bc96750260b8"
+    }
+  },
+  "route": "orchestrated",
+  "execution_requested": true,
+  "planned_task_owned_writes": true,
+  "capability_proof": {
+    "collaboration_available": true,
+    "spawn_api": "collaboration.spawn_agent",
+    "checked_at": "2026-09-02T19:16:29-04:00"
+  },
+  "budget": {
+    "max_agents": 3,
+    "active_count": 3
+  },
+  "assignments": [
+    {
+      "assignment_id": "c13-r0-executor",
+      "kind": "executor",
+      "task_id": "R0",
+      "dependencies": [],
+      "wave": 1,
+      "role": "governance-currentness-implementer",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/phase1_c13_r0",
+      "call_id": "spawn:/root/phase1_c13_r0",
+      "read_scopes": ["AGENTS.md", "planning/", ".accelerate/", "scripts/", "tests/"],
+      "write_scopes": [".accelerate/state.yaml", ".accelerate/status/readiness-dashboard.yaml", ".accelerate/workflow/active-work-item.yaml", "scripts/validate-phase1-entry-currentness.py", "tests/test_phase1_entry_currentness.py", "tests/all.sh", "planning/evidence/dated-proof-appendix/codex-26-phase1/c13-current-status-and-reentry-reconciliation.json"],
+      "proof": "RED currentness mismatch; Green currentness/local-state/root-suite proof",
+      "reviewer_assignment_id": "c13-shared-reviewer",
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    },
+    {
+      "assignment_id": "c13-core-executor",
+      "kind": "executor",
+      "task_id": "C13-core",
+      "dependencies": [],
+      "wave": 1,
+      "role": "phase1-semantic-contract-implementer",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/phase1_c13_core",
+      "call_id": "spawn:/root/phase1_c13_core",
+      "read_scopes": ["AGENTS.md", "planning/", "core/phase1/", "tests/phase1/"],
+      "write_scopes": ["core/phase1/contracts.py", "tests/phase1/test_a04_behavioral.py", "tests/phase1/fixtures/a04-normative-outcomes.json"],
+      "proof": "RED semantic probes; Green normative-oracle and lineage/disposition proof",
+      "reviewer_assignment_id": "c13-shared-reviewer",
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    },
+    {
+      "assignment_id": "c13-shared-reviewer",
+      "kind": "reviewer",
+      "task_id": "C13-independent-review",
+      "dependencies": ["c13-r0-executor", "c13-core-executor"],
+      "wave": 2,
+      "role": "independent-reviewer",
+      "model": "gpt-5.6-terra",
+      "effort": "medium",
+      "fork": "none",
+      "agent_id": "/root/phase1_c13_shared_reviewer",
+      "call_id": "spawn:/root/phase1_c13_shared_reviewer",
+      "read_scopes": ["AGENTS.md", "planning/", ".accelerate/", "scripts/", "tests/", "core/phase1/"],
+      "write_scopes": [],
+      "proof": "read-only review of frozen successor candidate and isolated proof receipts",
+      "reviewer_assignment_id": null,
+      "recursion": {"delegation_allowed": false, "authorization": null},
+      "parent_assignment_id": null,
+      "delegation_reference": null
+    }
+  ],
+  "fan_in": {
+    "owner": "root",
+    "assignment_ids": ["c13-r0-executor", "c13-core-executor", "c13-shared-reviewer"]
+  },
+  "exceptions": [],
+  "root_write_lock": {
+    "mode": "orchestrated-dispatched-scope-lock",
+    "task_owned_writes_forbidden": true,
+    "dispatched_task_scopes": [".accelerate/state.yaml", ".accelerate/status/readiness-dashboard.yaml", ".accelerate/workflow/active-work-item.yaml", "scripts/validate-phase1-entry-currentness.py", "tests/test_phase1_entry_currentness.py", "tests/all.sh", "planning/evidence/dated-proof-appendix/codex-26-phase1/c13-current-status-and-reentry-reconciliation.json", "core/phase1/contracts.py", "tests/phase1/test_a04_behavioral.py", "tests/phase1/fixtures/a04-normative-outcomes.json"]
+  }
+}

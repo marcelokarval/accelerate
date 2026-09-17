@@ -1,0 +1,21 @@
+# CODEX-26 C13 successor frozen candidate — 2026-09-02
+# Supersedes the rejected caf8df C13 candidate only for a fresh validation pass.
+13f65c01c32347dd8602d0c34869b1ee44c981d93fa16c38f7f420976810cc25  core/phase1/contracts.py
+4ed13039e857d098c04e4de6935151155eff302ee7a7d44ba1ee784e0aec2ff1  tests/phase1/test_a04_behavioral.py
+aff70c8009bd8d524cfac2d39dc61710e4bcb0ee2800eded40503e984c4a5223  tests/phase1/fixtures/a04-normative-outcomes.json
+893c4382113fcac209cf1a540e342f0e00ff98408e800562096eb1bdb9d4f5d4  .accelerate/state.yaml
+f8bb037cbe9e99357782cbef4874423c536e01956ed999a0d5c964e6a8621565  .accelerate/status/readiness-dashboard.yaml
+9e2fe257cd75f3bacb50125cff73cc2b00ddac33b26b97f3c696169e7d1985e6  .accelerate/workflow/active-work-item.yaml
+dab3ab6cd9229ad580fa42461e19d4ef8feb49727cc9743ecd5678bd3968acb2  scripts/validate-phase1-entry-currentness.py
+9b10651fb573308acf7881e735e6ba04119a70f613a86a799fec0234cccf7570  tests/test_phase1_entry_currentness.py
+2547f3e4578e2ff434f025b96542f24e5e552c66558d3587955066c6727e816a  tests/all.sh
+7106c86c5502bd56bf864a29174eba45cd20819f6e554c3904bb9fb7292b8fe7  tests/dogfood-workspace-contract.sh
+0d88b4d8da85c359c50f7d5252d66620a00843f52b800149a2cc8511d05ebb24  planning/evidence/dated-proof-appendix/codex-26-phase1/c13-current-status-and-reentry-reconciliation.json
+4a94adeda91a5763590e4b86c84bb9b3691a310f44933793fa74800120e16abd  planning/evidence/dated-proof-appendix/codex-26-phase1/c13-hardened-prompt.md
+9e19fddf816d30b8d12446f71b2fe9b37ab26a31f1d1cb57e011916bbd2f81f3  planning/architecture/2026-09-02-codex-26-phase1-reentry-c13-sdd.md
+faaab8680c9e70bf5ca72750d52d1a886053972c5ceef306017b8de0f8ad59f3  planning/architecture/2026-09-02-codex-26-phase1-c13-test-design.md
+96b0e4a4f4643dbe981b4b1dbd3e185c617dd17341a2754582bb3dfb69ad342a  planning/executive/2026-09-02-codex-26-phase1-r0-c13-task-graph.md
+3d822296e303db1f871213f4bc3e227827ee38d9c0affdd2dc6adb466315d965  planning/evidence/dated-proof-appendix/codex-26-phase1/c13-operator-reentry-authorization.json
+bc5a5a1401273817761e32523e79ac55e49140fb0a8e1301dac4af1d16515a59  planning/evidence/dated-proof-appendix/codex-26-phase1/c13-delegation-dispatch-receipt.json
+048c990a6a55832fd99e27c2c59c5750d3a936323accc307d00490826a33af4c  planning/executive/2026-09-02-codex-26-phase1-r0a-dogfood-contract-amendment.md
+72d5956b35285e6432463660532fb73fd1ad00f797eb33c8e570427d42e78120  planning/evidence/dated-proof-appendix/codex-26-phase1/c13-r0a-dogfood-dispatch-receipt.json

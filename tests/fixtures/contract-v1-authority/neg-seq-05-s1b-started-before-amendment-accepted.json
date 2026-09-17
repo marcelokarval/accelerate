@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "fixture_id": "NEG-SEQ-05",
+  "contract_name": "accelerate-contract-v1-neg-seq-05-s1b-started-before-amendment-accepted",
+  "version": "1.0.0",
+  "description": "Prova de preparação ou início de S1B antes de emenda ACV1 aceita pelo operador (violação do gate causal de sequência).",
+  "target_slice": "S1B",
+  "target_repository": "/home/marcelo-karval/Backup/Projetos/accelerate",
+  "s1a_amendment": {
+    "status": "draft-pre-s1a",
+    "operator_acceptance": {
+      "status": "pending",
+      "accepted_by": null,
+      "accepted_at": null
+    }
+  },
+  "s1b_execution": {
+    "initiated": true,
+    "claim": "S1B prepared and started based on draft planning and existing tests",
+    "inferred_acceptance": true
+  },
+  "violation": {
+    "type": "S1B_PREMATURE_START",
+    "rule": "planning/architecture/2026-09-06-accelerate-v020-s1a-test-design.md / NEG-SEQ-05",
+    "detail": "S1B preparation or start attempted while ACV1 authority amendment remains in draft-pre-s1a. Operator acceptance cannot be inferred from document or test existence."
+  },
+  "expected_verdict": "REJECT",
+  "expected_rejection_marker": "[NEG-SEQ-05: S1B_PREMATURE_START_REJECTED]"
+}

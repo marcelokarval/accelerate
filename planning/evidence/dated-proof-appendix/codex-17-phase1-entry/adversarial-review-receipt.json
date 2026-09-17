@@ -1,0 +1,71 @@
+{
+  "schema_version": "accelerate-phase1-entry-independent-review-v1",
+  "review_id": "CODEX-17-phase1-entry-adversarial-provenance-security-2026-09-01",
+  "reviewer_actor_id": "phase1-entry-adversarial-reviewer",
+  "reviewer_actor_epoch": "phase1-entry-adversarial-20260901-epoch1",
+  "runtime_instance_id": "/root/phase1_entry_adversarial_review",
+  "context_root": "sha256:a095920b9b0c189efaaa5d9a66c1726c823195b780e79014dee0cda4d4c9f60a",
+  "lens_id": "phase1-entry-provenance-security-v1",
+  "model": "gpt-5.6",
+  "reasoning_effort": "medium",
+  "fork_turns": "none",
+  "read_only_over_candidate": true,
+  "fresh_context": true,
+  "candidate": {
+    "path": "planning/evidence/dated-proof-appendix/codex-17-phase1-entry/phase1-entry-review-candidate.json",
+    "digest": "sha256:47b5ae21a00bf5dc9b7b29d801e0394b4fc3141aedaf88e77395cb93257f87da",
+    "signature_verification": {
+      "method": "SHA-256 over literal prefix accelerate-phase1-entry-review-candidate-v1\\n plus compact key-sorted JSON with freeze_integrity envelope removed, no terminal LF",
+      "observed": "PASS; computed sha256:f9a122b10b9cf059ff29d185eed355e600eb03e2ee5633fe1f2855450d157ed2 matches candidate"
+    }
+  },
+  "bound_artifacts": {
+    "proposal": {
+      "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+      "digest": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a"
+    },
+    "phase0_acceptance": {
+      "path": "planning/evidence/dated-proof-appendix/codex-17-phase0-architecture-acceptance-2026-09-01.json",
+      "digest": "sha256:293ece64c8bc452239ff5e2220dbbd297dfc9d595e45e9f90d148e9818e421a8",
+      "signature_verification": "PASS; phase0-operator-architecture-acceptance-v1 domain, receipt_integrity envelope removed"
+    },
+    "D01": {
+      "path": "planning/architecture/decisions/2026-09-01-d01-gauntlet-durable-state.md",
+      "digest": "sha256:073e01db5d3fbd01ae802c1da9d3e0f7501ebdcde2bd6683f9ac49df8ad6d3a9"
+    },
+    "D08": {
+      "path": "planning/architecture/decisions/2026-09-01-d08-openspec-delivery-form.md",
+      "digest": "sha256:926f4dc17ab8de935d03ddb2ae7ac9635813da0896e3186d189b74a092718c0e"
+    },
+    "D11": {
+      "path": "planning/architecture/decisions/2026-09-01-d11-openspec-artifact-location.md",
+      "digest": "sha256:bdfe70d6b8cd1a95c1c20da3cbc73b48f276286baf2f3a8d088120714cae5384"
+    }
+  },
+  "axes": [
+    {"axis":"proposal-and-phase0-binding","verdict":"PASS","evidence_locator":"candidate proposal/phase0 digests; sha256sum; Phase0 receipt lines 14-25, 98-104"},
+    {"axis":"decision-completeness","verdict":"PASS","evidence_locator":"proposal lines 1845-1857 and 2030-2041; D01/D08/D11 declared Phase-1 dispositions"},
+    {"axis":"cross-decision-consistency","verdict":"PASS","evidence_locator":"candidate cross_decision_bindings; D08 lines 49-55, 103-105; D11 lines 90-105, 196-203"},
+    {"axis":"authority-and-no-dual-writer","verdict":"PASS","evidence_locator":"D01 lines 51-57; D11 lines 52-76, 134-145; D08 lines 35-37 and 71"},
+    {"axis":"durability-cas-restore","verdict":"PASS","evidence_locator":"D01 lines 90-135, 147-153; D11 lines 128-145"},
+    {"axis":"external-provenance-and-delivery","verdict":"PASS","evidence_locator":"official Fission-AI/OpenSpec GitHub tag API v1.11.0; package.json/LICENSE/docs/cli.md at a0ddb60d040c61f4907436a9d91310934b1dda63; D08 lines 16-20, 49-55, 75-85"},
+    {"axis":"path-containment-and-cleanup","verdict":"PASS","evidence_locator":"D11 lines 90-119 and 148-184; D08 lines 50-55, 67-71"},
+    {"axis":"fixture-and-rollback-testability","verdict":"PASS","evidence_locator":"proposal lines 1845-1857; D01 lines 147-153; D08 lines 73-81; D11 lines 166-194"},
+    {"axis":"authorization-boundary","verdict":"PASS","evidence_locator":"candidate forbidden_effects; Phase0 receipt lines 84-103; D08 lines 10, 18-20, 101-105; D11 lines 8-11, 48-49"},
+    {"axis":"internal-consistency","verdict":"PASS","evidence_locator":"candidate hash/signature recomputation and all referenced SHA-256 values; OpenSpec source verification expressly labels D11 mapping as repository inference"}
+  ],
+  "findings": [],
+  "conflicts": [],
+  "source_verification": [
+    {"claim":"OpenSpec v1.11.0 tag resolves to candidate commit","source":"https://api.github.com/repos/Fission-AI/OpenSpec/git/ref/tags/v1.11.0","owner":"Fission-AI/OpenSpec","accessed_at":"2026-09-01","verdict":"verified","observed":"official ref object SHA a0ddb60d040c61f4907436a9d91310934b1dda63"},
+    {"claim":"Package identity, license and Node runtime floor","source":"https://github.com/Fission-AI/OpenSpec/blob/a0ddb60d040c61f4907436a9d91310934b1dda63/package.json","owner":"Fission-AI/OpenSpec","accessed_at":"2026-09-01","verdict":"verified","observed":"@fission-ai/openspec 1.11.0; MIT; engines.node >=20.19.0"},
+    {"claim":"Selected JSON/store/telemetry assertions are bounded by upstream docs","source":"https://github.com/Fission-AI/OpenSpec/blob/a0ddb60d040c61f4907436a9d91310934b1dda63/docs/cli.md","owner":"Fission-AI/OpenSpec","accessed_at":"2026-09-01","verdict":"verified","observed":"agent commands document --json; store-aware commands document --store; telemetry opt-out env precedence is documented; beta shape is acknowledged"},
+    {"claim":"Store artifact shape/root selection informs, but does not govern, D11","source":"https://github.com/Fission-AI/OpenSpec/blob/a0ddb60d040c61f4907436a9d91310934b1dda63/docs/stores-beta/user-guide.md","owner":"Fission-AI/OpenSpec","accessed_at":"2026-09-01","verdict":"verified-with-inference-boundary","observed":"official docs place store artifacts at <store>/openspec and describe root precedence; D08/D11 explicitly retain repository-owned mapping and deny fallback discovery"}
+  ],
+  "verdict": "PASS",
+  "issued_at": "2026-09-01T12:30:00-04:00",
+  "verifier_signature": {
+    "scheme": "sha256-domain-separated-canonical-json-v1",
+    "value": "sha256:ab3fe9524daf3c9f2cee0c36c127306b6f78ca370b905af2ba7f3338b37cf7ce"
+  }
+}

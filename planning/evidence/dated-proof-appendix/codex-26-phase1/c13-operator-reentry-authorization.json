@@ -1,0 +1,51 @@
+{
+  "schema_version": "codex26-phase1-c13-reentry-authorization-v1",
+  "issue_id": "CODEX-26",
+  "authorization_basis": "explicit-user-message-authorization-v1",
+  "operator_message": "ok, agora que temos tudo definido, pode executar",
+  "predecessor": {
+    "candidate_id": "CODEX-26-P1-IMPLEMENT-C12",
+    "disposition": "REJECTED_BY_INDEPENDENT_REVIEW_AND_ROOT_REVIEW_OF_REVIEW",
+    "failure_packet": "planning/evidence/dated-proof-appendix/codex-26-phase1/c12-final-independent-gate-failure-and-round-exhaustion.md"
+  },
+  "governing_proposal": {
+    "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "sha256": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca"
+  },
+  "authorized_work": [
+    "R0 current-authority, local-workspace, and canonical-suite reconciliation",
+    "C13 correction of exactly the three C12 semantic blockers",
+    "new candidate freeze and independent tester/reviewer gates"
+  ],
+  "allowed_paths": [
+    ".accelerate/state.yaml",
+    ".accelerate/status/readiness-dashboard.yaml",
+    ".accelerate/workflow/active-work-item.yaml",
+    "scripts/validate-phase1-entry-currentness.py",
+    "tests/test_phase1_entry_currentness.py",
+    "tests/all.sh",
+    "core/phase1/",
+    "tests/phase1/",
+    "planning/architecture/2026-09-02-codex-26-phase1-reentry-c13-sdd.md",
+    "planning/architecture/2026-09-02-codex-26-phase1-c13-test-design.md",
+    "planning/executive/2026-09-02-codex-26-phase1-r0-c13-task-graph.md",
+    "planning/evidence/dated-proof-appendix/codex-26-phase1/"
+  ],
+  "forbidden_effects": [
+    "global_or_user_home_install_or_sync",
+    "runtime_or_catalog_projection_activation",
+    "namespace_migration_or_reader_retirement",
+    "webui_or_lan_exposure",
+    "deployment",
+    "phase2_through_phase7",
+    "frozen_proposal_or_historical_receipt_rewrite",
+    "broad_unrelated_worktree_cleanup"
+  ],
+  "stop_rules": [
+    "two_material_c13_correction_attempts_maximum",
+    "authority_drift_blocks",
+    "authorization_expiry_blocks",
+    "new_material_P0_outside_this_SDD_blocks"
+  ],
+  "authority_effect": "Permits only the bounded R0+C13 source correction and proof workflow. It grants no acceptance, promotion, deployment, runtime mutation, Phase-2 entry, or Plane closure."
+}

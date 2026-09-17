@@ -4,6 +4,9 @@ authority = "logical routing contract; Codex profiles are additive and do not en
 spawn_packet_limit = 10
 root_exclusive_authority = ["issue topology", "external writes", "integration", "review-of-review", "closure"]
 assignment_contract = "assignment-only; logical profiles do not enforce process, tool, MCP, credential, or filesystem isolation"
+assignment_ontology = "static orthogonal vocabulary; Tester=verifier+verification, QA is proof-lane discipline, adversarial verification is verification_mode and adversarial review is review_mode"
+specialization_dimensions = ["surface", "domain_path"]
+physical_profile_policy = "small fixed logical profiles; specialize assignments by surface and domain_path rather than creating profiles"
 default_fork_turns = "none"
 fork_turns_override = "integer-1-to-5-only"
 forbid_fork_turns_all_with_override = true

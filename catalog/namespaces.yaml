@@ -1,0 +1,23 @@
+schema_version: 1
+canonical_namespace: prop4you.accelerate
+namespaces:
+  - name: prop4you.accelerate
+    owner: accelerate-repository
+    reserved_unqualified_names: [accelerate]
+  - name: prop4you.accelerate.harness
+    owner: accelerate-repository
+    parent: prop4you.accelerate
+collision_policy:
+  comparison: exact-after-casefold
+  unqualified_lookup: denied
+  reserved_name_rule: >-
+    `accelerate` resolves only to the repository-owned canonical namespace;
+    another provider must use its fully qualified provider identity.
+  external_distribution_exception:
+    distribution: huggingface-accelerate
+    forbidden_aliases: [accelerate, hf-accelerate]
+    required_identifier: external.huggingface.huggingface-accelerate
+    rationale: >-
+      The Hugging Face Python distribution is a distinct external dependency,
+      not a skill, harness, profile, adapter, or projection of this repository.
+  resolution_on_collision: block-and-report

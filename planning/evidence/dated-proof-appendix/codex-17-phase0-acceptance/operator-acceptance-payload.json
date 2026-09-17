@@ -1,0 +1,45 @@
+{
+  "schema_version": "phase0-operator-acceptance-payload-v1",
+  "decision": "ACCEPTED",
+  "issued_at": "2026-09-01T04:38:37-03:00",
+  "operator": {
+    "actor": "Marcelo/operator",
+    "role": "operator-architecture-acceptor",
+    "authorization_basis": "explicit_operator_instruction_to_proceed_to_the_next_separate_gate",
+    "root_self_acceptance": false
+  },
+  "candidate": {
+    "artifact_path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "document_digest": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a"
+  },
+  "evidence": {
+    "review_set_manifest_digest": "sha256:231d87b4eed01a02e2e4851b128248f40db718ff29a4f33962be4e23bf2ed4ff",
+    "control_plane_review_receipt_digest": "sha256:82851c278d770bd45abd254b84bb896a4082ae9e987a1f369d98c0b8c5c379e3",
+    "runtime_concurrency_review_receipt_digest": "sha256:cc76e24c9c120cfc8ba0230631b5d0a626f4d06151aac4c052c1e834c25f4ac3",
+    "migration_security_review_receipt_digest": "sha256:296e2493054a022e0d9264d56fc7781139757b470d3ebf5249830d11c6b61c48",
+    "internal_consistency_receipt_digest": "sha256:dfc610e4a8a1d20708b16392f452fecbf8139a9ffbb9317c86613baca0c7a743"
+  },
+  "accepted_scope": {
+    "phase0_state": "accepted",
+    "architecture_candidate_accepted": true,
+    "open_implementation_decisions_may_remain_deferred": true
+  },
+  "forbidden_effects": {
+    "implementation_authorized": false,
+    "installation_authorized": false,
+    "promotion_authorized": false,
+    "deployment_authorized": false,
+    "migration_authorized": false,
+    "runtime_mutation_authorized": false,
+    "webui_network_exposure_authorized": false
+  },
+  "next_gate": {
+    "phase": "Phase 1 - OpenSpec adapter spike",
+    "entry_requires": [
+      "D01 accepted disposition",
+      "D08 accepted disposition",
+      "D11 accepted disposition"
+    ],
+    "status": "NOT_AUTHORIZED_BY_THIS_PAYLOAD"
+  }
+}

@@ -1,0 +1,11 @@
+schema_version: 1
+kind: digest-bound-read-only-pointer
+intended_canonical_target: planning/openspec
+target_artifact_digest: unavailable-pending-activation
+target_artifact_digest_status: no-target-artifact-before-d11-activation
+governing_design_path: planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md
+governing_design_sha256: 749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca
+authority: external-to-overlay
+fallback_root: none
+local_copy_permitted: false
+writer: selected-openspec-adapter-only

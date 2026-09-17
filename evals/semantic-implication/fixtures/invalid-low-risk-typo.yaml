@@ -1,0 +1,18 @@
+schema_version: semantic-implication-receipt/v1
+receipt_id: typo-invalid-001
+prompt_binding: {raw_prompt: Correct a typo in a non-operative label., sha256: 6a92ed3c2a2f1d4dfb82a31a15868d949151b4f1bf93fedbe84223ee6606629b, normalized_prompt: correct a typo in a non operative label, normalized_signals: [typo], target_kind: documentation}
+domain: editorial
+capability: copy-edit
+invariants: [copy-accuracy]
+seams: [content-surface]
+effects: [copy-change]
+external_effects: [none]
+reversibility: reversible
+risk_basis: [editorial]
+risk_tier: low
+change_summary: Correct a typo in a non-operative label.
+implications:
+  - audit-trail
+selected_route: {route: direct-fast-path, basis: Isolated non-operative copy correction.}
+required_proof: [copy-review]
+escalation: {required: false, basis: No elevated risk beyond copy review.}

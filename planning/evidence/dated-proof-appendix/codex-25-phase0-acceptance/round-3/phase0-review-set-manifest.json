@@ -1,0 +1,68 @@
+{
+  "schema_id": "phase0-review-set-manifest-v1",
+  "review_round": 3,
+  "issue": {
+    "work_item_id": "6dc9e3a8-b9bf-46f3-ae02-68936a4082a9",
+    "sequence_id": "CODEX-25"
+  },
+  "candidate": {
+    "path": "planning/architecture/2026-09-01-accelerate-portable-agent-fabric-openspec-design.md",
+    "version": "v0.7.25",
+    "digest_algorithm": "sha256",
+    "candidate_digest": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca",
+    "document_digest": "749d829a5b5868370b05007ad71e4b4b285623db79cbefeaa47ba9a3b07e7cca"
+  },
+  "normalization": "UTF-8; CRLF/CR to LF; strip trailing ASCII space/tab per line; include marker lines; exclude prose; stop after final end-marker > with no terminal LF",
+  "predecessor_successor_handoff_path": "planning/evidence/dated-proof-appendix/codex-25-phase0-acceptance/round-3/predecessor-successor-handoff.json",
+  "predecessor_successor_handoff_digest": "73c344a5576b7ba9502249c13668ba2b2aed2efb44336e83234ce047ef3811e5",
+  "candidate_author": {
+    "actor_id": "/root/codex25_digest_normalization_fix",
+    "actor_epoch": "v0.7.25-final",
+    "trust_root": "codex-collaboration"
+  },
+  "architecture_owner": {
+    "actor_id": "codex-root-control-plane",
+    "actor_epoch": "CODEX-25-round-3",
+    "trust_root": "codex-root-session"
+  },
+  "review_set_verifier": {
+    "actor_id": "agy:gemini-3.7-flash-low",
+    "actor_epoch": "CODEX-25-round-3-fresh-print-turn",
+    "trust_root": "agy-cli-local",
+    "authority": "structural-verification-only"
+  },
+  "base_rubric": {
+    "id": "phase0-common-rubric-v1",
+    "digest": "616b73aeeb152fb69bf6be3f599a73110386adb364fb5b1c4e7098305e54f576"
+  },
+  "review_slots": [
+    {"review_slot":"P0-CP-R3","required_overlay_id":"phase0-lens-control-plane-v1","required_overlay_digest":"2cd1b0ca01d2c24a75e5cc3db2de764398cc939d16a3dd9d1af4632dac5b96cc","assignment_id":"CODEX-25-P0-CP-R3"},
+    {"review_slot":"P0-RC-R3","required_overlay_id":"phase0-lens-runtime-concurrency-v1","required_overlay_digest":"53702a4de07a8ceef483f5ef0195655b9510a2af072d2945347431de78b70d5c","assignment_id":"CODEX-25-P0-RC-R3"},
+    {"review_slot":"P0-MS-R3","required_overlay_id":"phase0-lens-migration-security-v1","required_overlay_digest":"9ebee3cec1f27c745473497a210a799c4bd169ae529fbd17b27827ec7c47c634","assignment_id":"CODEX-25-P0-MS-R3"}
+  ],
+  "review_policy": {
+    "model": "gpt-5.6-terra",
+    "reasoning_effort": "medium",
+    "fork_turns": "none",
+    "read_only": true,
+    "required_verdict": "PASS",
+    "exact_slot_count": 3,
+    "overlay_coverage": "one-to-one-exhaustive",
+    "independence_dimensions": ["actor_id","actor_epoch","runtime_instance","context_root","context_lineage"],
+    "shared_context_or_transcript_forbidden": true,
+    "shared_runtime_trust_root_alone_is_neither_sufficient_nor_disqualifying": true
+  },
+  "operator_acceptor": {
+    "actor_id": "marcelo-karval",
+    "actor_epoch": "CODEX-25-round-3",
+    "trust_root": "explicit-human-operator"
+  },
+  "issued_at": "2026-09-01T21:56:46-04:00",
+  "expires_at": "2026-09-01T23:56:46-04:00",
+  "non_goals": [
+    "No Phase 1-7 implementation authorization",
+    "No runtime, install, promotion, deployment, migration, WebUI or harness mutation",
+    "No reuse of round-1 or round-2 reviews",
+    "No Agy architecture acceptance authority"
+  ]
+}

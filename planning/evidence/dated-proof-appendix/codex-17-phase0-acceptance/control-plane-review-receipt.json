@@ -1,0 +1,107 @@
+{
+  "schema_version": "phase0-successor-review-v1",
+  "review_id": "proposal_v05_final_control_plane_validation",
+  "review_set_manifest_digest": "sha256:231d87b4eed01a02e2e4851b128248f40db718ff29a4f33962be4e23bf2ed4ff",
+  "verifier_version": "codex-collaboration-phase0-review-verifier-v1",
+  "document_digest": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a",
+  "reviewer_actor_id": "phase0-control-plane-reviewer",
+  "reviewer_actor_epoch": "phase0-acceptance-2026-09-01-control-plane-epoch-1",
+  "runtime_instance_id": "/root/phase0_acceptance_control_plane_receipt",
+  "context_root": "sha256:24478524f601daef49bd7793f2631a16d263815f83c6e35ecf439d543ea82e22",
+  "fresh_context_receipt": {
+    "fork_turns": "none",
+    "prior_turns_inherited": 0,
+    "verified": true,
+    "context_root": "sha256:24478524f601daef49bd7793f2631a16d263815f83c6e35ecf439d543ea82e22"
+  },
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "medium",
+  "read_only": true,
+  "base_rubric_digest": "sha256:25e77374f3d93ea065cd0921078b90e1239fa82bed81863870ecaedc7a79d94b",
+  "lens_overlay": {
+    "id": "phase0-lens-control-plane-v1",
+    "digest": "sha256:3188fb43b2ece8377891185d1e35a0619b5a4b53186b2223fda88c75d165e1ba"
+  },
+  "verdict": "PASS",
+  "axis_results": [
+    {
+      "axis": "authority-and-scope",
+      "verdict": "PASS",
+      "claim_locator": "Architectural principles > One authority per concern; Field authority, projection, and conflict resolution; Canonical binding and OpenSpec reconciliation > Authority rules",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Exclusive owner/writer table, CAS-only mutation path, operator-only external-effect and closure authority, and projection-only OpenSpec task state.",
+      "required_correction": null
+    },
+    {
+      "axis": "state-and-transition-safety",
+      "verdict": "PASS",
+      "claim_locator": "Governed Apply protocol > Apply state machine; Domain Gauntlet gates; Closed go/no-go and closure receipts",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Closed root/node/lease/review enums, legal transition table, single-consumption G0-G3, parent-scoped G4-G6, derived G7, and operator-only closure consumption.",
+      "required_correction": null
+    },
+    {
+      "axis": "evidence-and-freshness",
+      "verdict": "PASS",
+      "claim_locator": "Evidence packet; Receipt predicates and freshness; Proof architecture",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Candidate/scope-bound typed evidence, explicit valid/fresh/callable/authorized predicates, 15-minute runtime-fact freshness, invalidation on candidate change, and ordered proof lanes.",
+      "required_correction": null
+    },
+    {
+      "axis": "lineage-and-fencing",
+      "verdict": "PASS",
+      "claim_locator": "Field authority, projection, and conflict resolution; Candidate and root-run lineage; Mission scheduler and fencing",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Revisioned CAS records, immutable successor receipts, terminal-root successor rule, serializable correction transaction, mission counter inheritance, and current-token-only writes.",
+      "required_correction": null
+    },
+    {
+      "axis": "manifest-and-snapshot-integrity",
+      "verdict": "PASS",
+      "claim_locator": "Content-addressed execution input and review candidate manifests",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Three closed Phase-1-owned JCS schemas with domain separation, duplicate/unknown rejection, pre-dispatch input freeze, post-return candidate freeze, regenerated output snapshots, and root-manifest child/gate completeness checks.",
+      "required_correction": null
+    },
+    {
+      "axis": "migration-denominator-and-rollback",
+      "verdict": "PASS",
+      "claim_locator": "Source-to-target migration and parity; Frozen migration denominator inventory; Acceptance criteria A11",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Exhaustive pre-mutation denominator, exact one-row classification requirement, closed unclassified-root failure, reader/retention/rollback fields, explicit exclusions, and per-class parity fixtures.",
+      "required_correction": null
+    },
+    {
+      "axis": "security-and-lan-boundary",
+      "verdict": "PASS",
+      "claim_locator": "WebUI decision: authorized LAN exposure > Intended role; Mandatory controls for 0.0.0.0; Recommended integration shape",
+      "contradiction_or_gap": null,
+      "evidence_locator": "WebUI is non-authoritative; exposure is blocked absent enforced proxy/backend allowlists, backend isolation, authenticated identity, D05-frozen CSRF/origin mode, root containment, and closed negative-canary coverage.",
+      "required_correction": null
+    },
+    {
+      "axis": "testability-and-negative-fixtures",
+      "verdict": "PASS",
+      "claim_locator": "Acceptance criteria for the architecture; Proposed delivery phases; Content-addressed execution input and review candidate manifests",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Closed five-field fixture grammar, A01-A11 future owner commands and exact positive/negative assertions, phase-specific entry/exit gates, and declared deterministic manifest, concurrency, closure, and boundary fixtures.",
+      "required_correction": null
+    },
+    {
+      "axis": "internal-consistency",
+      "verdict": "PASS",
+      "claim_locator": "Phase 0 — Architecture acceptance; Resolved decisions; Open decisions for the next analysis; Recommendation",
+      "contradiction_or_gap": null,
+      "evidence_locator": "Candidate digest and rubric/lens blocks recompute to manifest values; Phase 0 remains non-mutating; D07 is phase-0 resolved and D01-D06/D08-D11 are explicitly deferred with mapped blocking phases.",
+      "required_correction": null
+    }
+  ],
+  "findings": [],
+  "conflicts": [],
+  "issued_at": "2026-09-01T03:45:10-04:00",
+  "verifier_signature": {
+    "scheme": "sha256-domain-separated-canonical-json-v1",
+    "value": "sha256:7a735e718d9309c09b88a823721ba4107973199710e53d1cc49bc4082f567429"
+  }
+}

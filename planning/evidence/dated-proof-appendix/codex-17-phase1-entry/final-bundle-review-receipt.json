@@ -1,0 +1,49 @@
+{
+  "schema_version": "accelerate-phase1-entry-final-bundle-review-v1",
+  "review_id": "CODEX-17-phase1-entry-final-bundle-review-2026-09-01",
+  "reviewer_actor_id": "phase1-entry-final-bundle-reviewer",
+  "reviewer_actor_epoch": "phase1-entry-final-bundle-20260901-epoch1",
+  "runtime_instance_id": "/root/phase1_entry_final_bundle_review",
+  "reviewer_context_id": "phase1-entry-final-bundle-independent-context-20260901-epoch1",
+  "lens_id": "phase1-entry-final-bundle-review-of-review-v1",
+  "input_hashes": {
+    "proposal": "sha256:8a0f6bd1b41c3f10b6622e18b049b1119f41307715850ffb6ca8214c59985b3a",
+    "phase0_receipt": "sha256:293ece64c8bc452239ff5e2220dbbd297dfc9d595e45e9f90d148e9818e421a8",
+    "phase1_candidate": "sha256:47b5ae21a00bf5dc9b7b29d801e0394b4fc3141aedaf88e77395cb93257f87da",
+    "d01": "sha256:073e01db5d3fbd01ae802c1da9d3e0f7501ebdcde2bd6683f9ac49df8ad6d3a9",
+    "d08": "sha256:926f4dc17ab8de935d03ddb2ae7ac9635813da0896e3186d189b74a092718c0e",
+    "d11": "sha256:bdfe70d6b8cd1a95c1c20da3cbc73b48f276286baf2f3a8d088120714cae5384",
+    "architecture_review": "sha256:7be7718037f7c8708dafba58db936e98ba8e840cd4c6e5fb4f64584470325317",
+    "adversarial_review": "sha256:0b541a451b1c15fac8b346a5ab0389089de9c56a6138633a84c7367cf207de62",
+    "acceptance_receipt": "sha256:18b82063a47171549efe9e38eea15e8d4b9268ca80b556ea70e62eff2986014c"
+  },
+  "check_results": {
+    "physical_input_hashes": "PASS",
+    "domain_separated_signatures": "PASS",
+    "candidate_and_review_schema_axes": "PASS",
+    "review_findings_conflicts": "PASS_EMPTY",
+    "pairwise_independence": "PASS_2:2:2:2:2",
+    "proposal_phase0_binding": "PASS",
+    "cross_decision_consistency": "PASS",
+    "external_source_applicability": "PASS_WITH_D11_INFERENCE_BOUNDARY",
+    "acceptance_authority": "PASS",
+    "entry_prerequisites_semantics": "PASS_NOT_IMPLEMENTATION_AUTHORIZATION",
+    "forbidden_effects": "PASS_ALL_FALSE",
+    "correction_normalization_honesty": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "evidence": {
+    "external_source": "official OpenSpec v1.11.0 resolves to a0ddb60d040c61f4907436a9d91310934b1dda63; pinned package metadata and CLI/store docs support bounded claims; D11 mapping is expressly repository inference.",
+    "authorization_boundary": "ENTRY_PREREQUISITES_SATISFIED is paired with NOT_AUTHORIZED_BY_THIS_RECEIPT and residual execution gates.",
+    "signature_results": "phase0=6d92a44c2801f42ff86513a634f1b59ea7230c3486be383c5ab393cfd2907403; candidate=f9a122b10b9cf059ff29d185eed355e600eb03e2ee5633fe1f2855450d157ed2; architecture=cd46dc23ff0150b481fe4a2840f87146b04926e5abcf0037f49c36854bd6f341; adversarial=ab3fe9524daf3c9f2cee0c36c127306b6f78ca370b905af2ba7f3338b37cf7ce; acceptance=181ea8315353ba3d4b3e84ad305108efeea5ffac0c0951960db23f74166b9d12"
+  },
+  "findings": [],
+  "conflicts": [],
+  "issued_at": "2026-09-01T12:05:14-04:00",
+  "verdict": "PASS",
+  "verifier_signature": {
+    "scheme": "sha256-domain-separated-canonical-json-v1",
+    "algorithm": "SHA-256 over literal prefix accelerate-phase1-entry-final-bundle-review-v1 followed by LF and compact key-sorted JSON with verifier_signature removed and no terminal LF",
+    "value": "sha256:2c7b50b57d6ac648be96396b8c4fd35ee561df86b6cba429fe0fe94345cf88f7"
+  }
+}

@@ -1,0 +1,20 @@
+schema_version: semantic-implication-receipt/v1
+receipt_id: migration-invalid-001
+prompt_binding: {raw_prompt: Move persisted account records to the new representation., sha256: d70cd9dc20827f807980da023398e06c8c7f077a86876ed9be16972a75eb3132, normalized_prompt: move persisted account records to the new representation, normalized_signals: [], target_kind: code}
+domain: migration
+capability: migrate
+invariants: [data-integrity]
+seams: [persistence-store]
+effects: [data-transform]
+external_effects: [none]
+reversibility: reversible-with-rollback
+risk_basis: [data-persistence]
+risk_tier: critical
+change_summary: Move persisted account records to the new representation.
+implications:
+  - backup-recovery
+  - compatibility
+  - data-integrity
+selected_route: {route: orchestrated, basis: Persisted data change needs coordinated review.}
+required_proof: [migration-integrity]
+escalation: {required: true, basis: Data migration requires root review.}

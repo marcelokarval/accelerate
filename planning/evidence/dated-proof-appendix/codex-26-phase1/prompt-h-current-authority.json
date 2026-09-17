@@ -1,0 +1,56 @@
+{
+  "schema_version": "codex26-phase1-current-authority-v1",
+  "authority_id": "CODEX-26-PHASE1-PROMPT-H-CURRENT",
+  "governing_issue": {
+    "identifier": "CODEX-26",
+    "id": "549d5c6e-9066-440c-85a6-973a33b7eefe",
+    "project_id": "d6b855ec-77cb-4df0-b471-4f6cea011e02",
+    "workspace_slug": "karval",
+    "expected_state": "In Progress",
+    "expected_completed_at": null
+  },
+  "current": {
+    "cycle": "codex-26-phase1-dogfood-closure-prompt-h",
+    "plan": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-dogfood-closure-correction-prompt-h.md",
+    "ledger": "planning/executive/2026-09-04-codex-26-phase1-dogfood-closure-prompt-h-task-graph.md",
+    "phase_status": "implementing-not-accepted",
+    "local_work_item_status": "in-progress",
+    "materialization_profile": "committed-dogfood-v2-index",
+    "remote_calls_allowed": false
+  },
+  "supersedes": [
+    {
+      "authority": "CODEX-26 C13 reentry",
+      "disposition": "historical-lineage-not-current"
+    },
+    {
+      "authority": "CODEX-26 Prompt G closure review",
+      "disposition": "historical-no-go-input"
+    }
+  ],
+  "immutable_inputs": {
+    "prompt_h_execution_contract": {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/phase1-dogfood-closure-correction-prompt-h.md",
+      "sha256": "d8d91f73a4943c7e236a9ec1edac70ed3342d3522fa3c44c6e2a365bb0ddfd44"
+    },
+    "prompt_h_task_graph": {
+      "path": "planning/executive/2026-09-04-codex-26-phase1-dogfood-closure-prompt-h-task-graph.md",
+      "sha256": "e2c963fb5eb76c1584edb11bdb7e87bcc2f2b69f09c54dabea24034a4599ddec"
+    },
+    "prompt_g_final_result": {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-g-task-g11-no-go.md",
+      "sha256": "a416da857135c994da53113d6484326b28066481824017f726d7555158e05396"
+    },
+    "prompt_g_final_freeze": {
+      "path": "planning/evidence/dated-proof-appendix/codex-26-phase1/prompt-g-candidate-g2-freeze.json",
+      "sha256": "1c1420356eaadfd226942cbbec4ab46b45f6e966e9d5e243041c38bc78eddaa5"
+    }
+  },
+  "authority_effect": {
+    "prompt_h_is_current": true,
+    "phase1_accepted": false,
+    "plane_closure_authorized": false,
+    "runtime_or_promotion_authorized": false,
+    "phase2_authorized": false
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "schema_id": "codex26_phase1_candidate_freeze_v1",
+  "issue_id": "CODEX-26",
+  "phase": 1,
+  "candidate_id": "CODEX-26-P1-IMPLEMENT-C9",
+  "predecessor_candidate_id": "CODEX-26-P1-IMPLEMENT-C8",
+  "predecessor_disposition": "REJECTED_BY_INDEPENDENT_TESTER_AND_REVIEWER",
+  "correction_round": "operator-extra-5-of-8",
+  "status": "FROZEN_FOR_INDEPENDENT_PROOF_AND_REVIEW",
+  "source_roots": ["adapters/openspec", "core/phase1", "planning/openspec", "scripts/phase1", "tests/phase1"],
+  "file_count": 22,
+  "candidate_aggregate_algorithm": "sort regular file paths; for each append UTF-8 path, NUL, lowercase SHA-256 of file bytes, LF; SHA-256 the concatenation",
+  "candidate_aggregate_sha256": "5238804725120c83a3b6bb174ff7d1e44e4ad37e5cea53586fef0e5bac635032",
+  "generated_receipt_manifest_algorithm": "sort evidence paths; sha256sum every file; SHA-256 the resulting manifest bytes",
+  "generated_receipt_manifest_sha256": "21de5b385344f1934f16609640671d7cc59a6637160a0524d652737640ee4280",
+  "root_pre_freeze_proof": {
+    "command": "PHASE1_REAL_OPENSPEC=1 bash tests/phase1/run.sh",
+    "runs": 2,
+    "tests_each_run": 77,
+    "skipped_each_run": 0,
+    "result": "PASS",
+    "receipt_tree_deterministic": true,
+    "cache_artifacts_present": false,
+    "git_diff_check": "PASS"
+  },
+  "c8_counterexample_regression_denominator": [
+    "complete_mandatory_readiness_expected_context",
+    "trusted_validator_and_trust_root_signature_binding",
+    "closed_a04_internal_policy",
+    "observed_outcome_domain_separated_receipt_digest",
+    "changed_policy_noop_reject",
+    "derived_d12_catalog_source_digest"
+  ],
+  "known_implementation_residuals": [],
+  "authority_effect": "This freeze permits fresh read-only tester and reviewer gates only. It grants no acceptance, promotion, deployment, runtime mutation, namespace activation, reader retirement, Plane closure, or Phase-2 entry."
+}

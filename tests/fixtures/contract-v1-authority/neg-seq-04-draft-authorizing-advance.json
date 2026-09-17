@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "fixture_id": "NEG-SEQ-04",
+  "contract_name": "accelerate-contract-v1-neg-seq-04-draft-authorizing-advance",
+  "version": "1.0.0",
+  "description": "Prova de draft S1A tentando autorizar Wave 0 ou mutação em core/contracts/v1/ sem os pré-requisitos normativos de aceitação e gates.",
+  "slice": "S1A",
+  "status": "draft-pre-s1a",
+  "target_repository": "/home/marcelo-karval/Backup/Projetos/accelerate",
+  "operator_acceptance": {
+    "status": "pending",
+    "accepted_by": null,
+    "accepted_at": null
+  },
+  "advance_claims": {
+    "authorize_wave_0": true,
+    "authorize_core_contracts_v1_mutation": true,
+    "skip_operator_acceptance": true,
+    "rationale": "Draft existence treated as sufficient authorization to open Wave 0"
+  },
+  "violation": {
+    "type": "DRAFT_AUTHORIZATION_OF_ADVANCE",
+    "rule": "planning/architecture/2026-09-06-accelerate-v020-s1a-test-design.md / NEG-SEQ-04",
+    "detail": "A draft in draft-pre-s1a allows evaluation only. Wave 0, S1B, and core/contracts/v1/ remain strictly blocked until amendment is accepted by project operator."
+  },
+  "expected_verdict": "REJECT",
+  "expected_rejection_marker": "[NEG-SEQ-04: DRAFT_AUTHORIZATION_OF_ADVANCE_REJECTED]"
+}

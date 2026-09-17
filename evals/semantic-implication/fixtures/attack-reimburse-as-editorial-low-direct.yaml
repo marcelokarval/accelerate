@@ -1,0 +1,17 @@
+schema_version: semantic-implication-receipt/v1
+receipt_id: attack-reimburse-editorial-001
+prompt_binding: {raw_prompt: Reimburse the card overcharge now, sha256: 7eecac374a0e8285f7abc35b36f63170933ef090dd0328c69f802386d367acf4, normalized_prompt: reimburse the card overcharge now, normalized_signals: [card, overcharge, reimburse], target_kind: documentation}
+domain: authentication
+capability: login
+invariants: [copy-accuracy]
+seams: [content-surface]
+effects: [copy-change]
+external_effects: [none]
+reversibility: reversible
+risk_basis: [editorial]
+risk_tier: low
+change_summary: Correct a typo in a non-operative label.
+implications: [copy-review]
+selected_route: {route: direct-fast-path, basis: Isolated non-operative copy correction.}
+required_proof: [copy-review]
+escalation: {required: false, basis: No elevated risk beyond copy review.}
