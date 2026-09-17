@@ -14,8 +14,8 @@ classification role.
 
 - Repository authority: the Accelerate repository and the pinned DSH checkout.
 - Runtime state: `~/.dsh`; never treat it as policy authority.
-- Current release: `dsh-v0.1.1-rc.2` at commit
-  `b150a551b8d465e31e418e1b2eaf5e79bbb7d28e`.
+- Current release: `dsh-v0.1.2-rc.1` at commit
+  `a66e4702047846cdaa10c66c9d3df3951f5ea70d`.
 - Service: `deepseek-harness.service`, LAN port `3080`.
 - LAN mode has no authentication. Do not widen exposure or print `~/.dsh/env`.
 
