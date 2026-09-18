@@ -40,8 +40,8 @@ CANONICAL_INPUT_SHA256 = {
     "catalog/namespaces.yaml": "2fd3ea0942a6b29af964197f1ff1218eaafc08e51ac7a123a5eeb9eb921a239f",
     "catalog/provenance.yaml": "7f5d5c04cd9c571982e804b8f90b1c0e16b0b84ef2ebe0e4ac5ce2c6c95cedce",
     "catalog/lifecycle.yaml": "27f70fe66b9a883594d5db9d8f561622c5a4955ae7a676565230e267008bc775",
-    "adapters/runtime/runtime-consumer-registry.json": "c3fd92a66307a32d164361b01c962df994ae7992572482798759f9da3b5083c0",
-    "adapters/runtime/cross-runtime-bootstrap-manifest.json": "6b5382f6e4a1caca4166b5b17639a479452a1ed4ec1c39f2afb5196c95b1fb57",
+    "adapters/runtime/runtime-consumer-registry.json": "7a43443aaa337cd00a1b9516bd4fa74bb2d1ec760a67a6d3abaa3e6dc64b861a",
+    "adapters/runtime/cross-runtime-bootstrap-manifest.json": "b1c08633d4b4de2dc22d38ce6547fbdf7e1b31e8c9cab8af8c0e1d4e5e00373e",
 }
 CANONICAL_HARNESS_SHA256 = {
     "references/harnesses/codex.md": "a31cddf41491bda6cc79e3d60528fa0139efd3bf104f399bb149473c37b530f3",
