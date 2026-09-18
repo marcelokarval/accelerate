@@ -68,6 +68,13 @@ The root must preserve user-facing response locale. If the user writes in pt-BR,
 the final response must be in pt-BR unless the user explicitly requests another
 language or exact source-language quoting is required.
 
+### Superpowers Deprecation and Skill Trigger Suppression
+
+External unconditional skill activation rules (specifically the Superpowers "1% unconditional skill trigger" or reflexive pre-prompt skill traps) are strictly suppressed.
+- Accelerate root routing and the Semantic Implication Gate supersede external skill priority directives.
+- External skills must not preempt Accelerate classification, prompt hardening, or the issue-driven mutation stack.
+- Core capabilities from Superpowers are absorbed natively: Spec-Driven Development (SDD) into the One-Shot Protocol / SDD architecture specifications, and Brainstorming into Prompt Hardening and Semantic Pre-scan.
+
 ## Proof Ordering
 
 The intended order remains:
@@ -111,6 +118,20 @@ In the capability-portable phase, the platform must already be complete enough t
 
 That is the baseline for later agent promotion. Agents are not the foundation
 of the system.
+
+## Orchestrator Todo and Dispatch Display Convention
+
+In orchestrated execution, root-owned live dispatch tracking and todo ledgers (such as OpenCode / OpenChamber task panes) MUST follow the high-signal compact convention:
+
+```text
+[ORCH] -> [W-<num>] <ícone_tipo> <Ação/Objetivo> - expect <resultado_esperado>
+```
+
+1. Prefix MUST be `[ORCH]`.
+2. Dispatch direction indicator MUST be `->`.
+3. Target MUST be numbered worker ID `[W-<num>]`.
+4. Type icon MUST be a canonical registered semantic icon (`🧹`, `🔬`, `✨`, `🐛`, `🛡️`, `⚙️`, `📝`, `🔧`).
+5. Action and expected result MUST state clear outcome and concrete evidence.
 
 ## Current Authority Sources
 

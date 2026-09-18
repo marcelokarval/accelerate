@@ -51,6 +51,18 @@
       "rollback": "not-supported"
     },
     {
+      "runtime": "openchamber",
+      "status": "legacy-reference",
+      "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",
+      "projection": {"mode": "reference-only", "path": "adapters/runtime/openchamber/capabilities.yaml", "behavior_change": "none"},
+      "loader": "none",
+      "native_primitive": "session lifecycle: session.create, session.send, session.status, session.messages",
+      "adapter": "adapters/runtime/openchamber/",
+      "proof": "static-contract-only; runtime callability unproven",
+      "install": "denied/not-supported",
+      "rollback": "not-supported"
+    },
+    {
       "runtime": "openclaw",
       "status": "legacy-reference",
       "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",

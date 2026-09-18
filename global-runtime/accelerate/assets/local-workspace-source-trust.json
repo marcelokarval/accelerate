@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "trusted_sources": [
+    {
+      "path": "${USER_HOME}/Backup/Projetos/accelerate",
+      "commit": "710db6474292ff3deb74728c1d754aea6e7f806e",
+      "origin": "https://github.com/marcelokarval/accelerate.git"
+    }
+  ]
+}

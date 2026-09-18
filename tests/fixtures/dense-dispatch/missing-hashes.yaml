@@ -1,0 +1,37 @@
+projection_version: dense-dispatch/v1
+example_kind: doctrine-conformance-expansion-only
+identity:
+  run_id: semantic-core-positive
+  assignment_id: implement
+  named_expansion_target: runtime-neutral-assignment-projection/v1
+verified_base:
+  authority_refs:
+    - ref: core/hardening/prompt-hardening.md
+    - ref: core/delegation/runtime-neutral-delegation.schema.json
+    - ref: core/runtime-packets/agent-return-packet.md
+  named_source:
+    ref: tests/fixtures/runtime-delegation-semantics/valid-run.json
+    assignment_id: implement
+  binding_policy:
+    ref: adapters/runtime/codex-collaboration/role-policy.json
+    profile: implementation
+requested:
+  model: gpt-5.6-terra
+  reasoning_effort: medium
+  fork_turns: none
+targets:
+  surfaces: [governance]
+  paths: [core/]
+constraints:
+  - ASCII only
+  - preserve root-owned closure
+forbidden_paths:
+  - core/runtime-packets/delegation-dispatch-receipt.schema.json
+  - adapters/runtime/openchamber/
+evidence_gates:
+  - focused-document-review
+  - source-link-check
+delta:
+  objective: implement bounded change
+  write_scopes: [core/]
+  proof_requirement: focused test

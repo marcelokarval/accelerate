@@ -30,6 +30,14 @@ The root always owns:
 - truth ownership, risk enforcement, proof ordering, AI review, and closure
 - `Done`; a bounded executor never inherits root closure authority
 
+### Superpowers Deprecation and Native Absorption
+
+Unconditional skill invocation (including the external "1% skill trigger" rule from Superpowers) is deprecated and explicitly superseded by `accelerate` root governance. `accelerate` natively absorbs and standardizes the core mechanics:
+- **Spec-Driven Development (SDD)**: absorbed natively as the One-Shot Protocol and architecture specifications (`planning/architecture/sdd-template.md`, `core/review/one-shot-side-by-side-protocol.md`).
+- **Brainstorming**: absorbed natively as Prompt Hardening (`core/hardening/prompt-hardening.md`) and the Semantic Implication Gate (`references/core/semantic-implication-gate.md`).
+
+Do not yield root control to external process loops or unconditional skill traps.
+
 Use `core/control-plane/authority-set-gate.md` and
 `core/control-plane/truth-ownership-check.md` whenever ownership is unclear.
 

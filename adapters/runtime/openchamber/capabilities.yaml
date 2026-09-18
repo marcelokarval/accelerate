@@ -1,0 +1,46 @@
+schema_version: 1
+name: openchamber
+type: runtime-reference
+status: experimental
+runtime_status: legacy-reference
+proof_class: static-contract
+authority_boundary: reference-only; no host configuration is loaded or mutated; physical delegation is staged-only
+allowed_current_tools: []
+candidate_native_tools: [session.create, session.send, session.status, session.messages]
+allowed_roles: [orchestrator, python-backend, nextjs-frontend, research, reviewer, qa, data-db, integrations-ops]
+suppressed_roles: [designer, observer, council]
+allowed_efforts: [low, medium, high]
+suppressed_capabilities:
+  - run-classification
+  - issue-topology-authority
+  - task-ledger-authority
+  - role-family-selection
+  - external-workflow-mutation
+  - review-of-review
+  - promotion
+  - root-closure-and-done
+  - unbounded-nested-delegation
+  - session-cancellation
+  - session-deletion
+  - wildcard-skills
+  - wildcard-mcp
+  - xhigh
+  - max
+nesting: disabled
+max_assignment_depth: 0
+max_concurrent_children: 3
+named_model_allowlist: true
+named_tool_allowlist: true
+named_skill_allowlist: true
+named_mcp_allowlist: true
+timeout_required: true
+cleanup_currently_allowed: false
+root_only_synthesis: true
+effective_model_receipt_required: true
+callability_proven: false
+loader_proven: false
+validation_command: python3 scripts/validate-runtime-delegation-semantics.py tests/fixtures/runtime-delegation-semantics/valid-run.json
+proof_artifacts:
+  - adapters/runtime/openchamber/delegation-contract.md
+  - docs/architecture/openchamber-runtime-adapter-proposal.md
+privacy_notes: never read or reproduce credentials, tokens, or private conversation state; receipts record non-secret IDs and hashes only

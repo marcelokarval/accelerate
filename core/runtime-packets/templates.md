@@ -725,6 +725,34 @@ Closure Packet
 - recommendation: <done|partial|follow-up|blocked>
 ```
 
+## Orchestrator Todo & Dispatch Display Standard
+
+In orchestrated execution, root-owned todo lists and live dispatch tracking (e.g. OpenCode / OpenChamber task panes) MUST follow the compact, high-signal convention:
+
+```text
+[ORCH] -> [W-<num>] <ícone_tipo> <Ação/Objetivo> - expect <resultado_esperado>
+```
+
+### Formatting Rules:
+1. **Root Prefix**: Always `[ORCH]` (never verbose `[ORCHESTRATION]`).
+2. **Dispatch Indicator**: `->` (arrow indicates active physical delegation).
+3. **Target Identifier**: `[W-<num>]` (e.g. `[W-1]`, `[W-6]`).
+4. **Semantic Icon**: Exactly one canonical icon from the Accelerate Icon Registry (`icon-registry.v1.json`):
+   - `🧹` (`type.tech-debt`): Cleanup, prune, refactoring.
+   - `🔬` / `🧠` (`type.spike`): Deep investigation, architecture probe.
+   - `✨` (`type.feature`): Feature implementation.
+   - `🐛` (`type.bug`): Defect / bug fix.
+   - `🛡️` (`type.hardening`): Security, adapter hardening, operational contracts.
+   - `⚙️` (`type.ops`): CLI tools, automation scripts, build pipelines.
+   - `📝` (`type.docs`): Pure documentation and architectural specifications.
+   - `🔧` (`type.melhoria`): Incremental improvement, package installation, runtime config.
+5. **Action & Expected Result**: Imperative action followed by `- expect <concrete_evidence>`.
+
+### Canonical Example:
+- `[ORCH] -> [W-6] 🛡️ Implement OpenChamber runtime adapter & fail-closed timeout policy - expect adapter tests pass`
+- `[ORCH] -> [W-7] ⚙️ Build scripts/dense-dispatch-codec.py CLI validator - expect valid skeleton verification`
+- `[ORCH] -> [W-8] 🔧 Install codebase-memory-mcp and register in opencode.json - expect active stdio handshake`
+
 ## Authority
 
 Inherited reference depth still lives in:

@@ -10,6 +10,7 @@ EXPECTED={"contract_version":2,"semantic_core":"core/delegation/runtime-neutral-
 "openhands":{"status":"export-only","apply_eligible":False,"loader":"binding_unavailable","projection":"adapters/runtime/openhands/accelerate-bootstrap-projection.md"},
 "hermes":{"status":"staged-only","apply_eligible":False,"loader":"runtime-truth-required","projection":"adapters/runtime/hermes/hermes-delegate-task-bootstrap.fragment.md"},
 "opencode":{"status":"legacy-reference","apply_eligible":False,"loader":"none","projection":"adapters/runtime/opencode/delegation-contract.md"},
+"openchamber":{"status":"staged-only","apply_eligible":False,"loader":"runtime-truth-required","projection":"adapters/runtime/openchamber/delegation-contract.md"},
 "openclaw":{"status":"legacy-reference","apply_eligible":False,"loader":"none","projection":"adapters/runtime/openclaw/delegation-contract.md"},
 "claude":{"status":"export-only","apply_eligible":False,"loader":"none","projection":"adapters/runtime/claude/delegation-contract.md"}}}
 START=b"<!-- accelerate-delegation-policy:start -->"; END=b"<!-- accelerate-delegation-policy:end -->"
@@ -38,7 +39,7 @@ def contract():
  if json.loads(MANIFEST.read_text())!=EXPECTED: die("bootstrap manifest violates approved invariants")
  reg=json.loads((REPO/"adapters/runtime/runtime-consumer-registry.json").read_text()); par=(REPO/"adapters/runtime/model-lanes/cross-runtime-agent-parity.toml").read_text(); oth=json.loads((REPO/"adapters/runtime/other-runtime-adapters.policy.json").read_text())
  rows={row['runtime']:row for row in reg.get('consumers',[])}
- required={'codex':('legacy-reference','none','adapters/runtime/codex/README.md'),'openhands':('export-only','no semantic-core loader is installed','adapters/runtime/model-lanes/cross-runtime-agent-parity.toml'),'hermes':('legacy-reference','none','adapters/runtime/hermes/capabilities.yaml'),'opencode':('legacy-reference','none','adapters/runtime/opencode/capabilities.yaml'),'openclaw':('legacy-reference','none','adapters/runtime/openclaw/capabilities.yaml'),'claude':('export-only','no semantic-core loader is installed','adapters/runtime/claude/capabilities.yaml')}
+ required={'codex':('legacy-reference','none','adapters/runtime/codex/README.md'),'openhands':('export-only','no semantic-core loader is installed','adapters/runtime/model-lanes/cross-runtime-agent-parity.toml'),'hermes':('legacy-reference','none','adapters/runtime/hermes/capabilities.yaml'),'opencode':('legacy-reference','none','adapters/runtime/opencode/capabilities.yaml'),'openchamber':('legacy-reference','none','adapters/runtime/openchamber/capabilities.yaml'),'openclaw':('legacy-reference','none','adapters/runtime/openclaw/capabilities.yaml'),'claude':('export-only','no semantic-core loader is installed','adapters/runtime/claude/capabilities.yaml')}
  for name,(status,loader,path) in required.items():
   row=rows.get(name)
   if not row or row.get('status')!=status or row.get('loader')!=loader or row.get('projection',{}).get('path')!=path: die('runtime consumer registry cross-validation failed')
