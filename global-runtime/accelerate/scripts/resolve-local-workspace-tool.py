@@ -158,7 +158,10 @@ def resolve_source_root(source: TrustedSource) -> Path | None:
         ).stdout.strip()
     except (OSError, subprocess.SubprocessError):
         return None
-    if origin != source.origin or head != source.commit:
+    def normalize_origin(url: str) -> str:
+        cleaned = re.sub(r"^https?://[^@]+@", "https://", url.strip())
+        return cleaned.removesuffix(".git")
+    if normalize_origin(origin) != normalize_origin(source.origin) or head != source.commit:
         return None
     try:
         root = Path(completed.stdout.strip()).resolve(strict=True)

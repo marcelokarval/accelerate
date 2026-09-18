@@ -32,10 +32,11 @@ test -f "$LOCAL_WORKSPACE_TRUST"
 trust_backup="$STAGE_ROOT/local-workspace-source-trust.original.json"
 cp "$LOCAL_WORKSPACE_TRUST" "$trust_backup"
 root_commit="$(git -C "$ROOT" rev-parse HEAD)"
-python3 - "$LOCAL_WORKSPACE_TRUST" "$ROOT" "$root_commit" <<'PY'
+root_origin="$(git -C "$ROOT" remote get-url origin)"
+python3 - "$LOCAL_WORKSPACE_TRUST" "$ROOT" "$root_commit" "$root_origin" <<'PY'
 import json, sys
 from pathlib import Path
-manifest, source, commit = sys.argv[1:]
+manifest, source, commit, origin = sys.argv[1:]
 Path(manifest).write_text(
     json.dumps(
         {
@@ -44,7 +45,7 @@ Path(manifest).write_text(
                 {
                     "path": source,
                     "commit": commit,
-                    "origin": "https://github.com/marcelokarval/accelerate.git",
+                    "origin": origin,
                 }
             ],
         },
