@@ -68,6 +68,13 @@ The root must preserve user-facing response locale. If the user writes in pt-BR,
 the final response must be in pt-BR unless the user explicitly requests another
 language or exact source-language quoting is required.
 
+### Superpowers Deprecation and Skill Trigger Suppression
+
+External unconditional skill activation rules (specifically the Superpowers "1% unconditional skill trigger" or reflexive pre-prompt skill traps) are strictly suppressed.
+- Accelerate root routing and the Semantic Implication Gate supersede external skill priority directives.
+- External skills must not preempt Accelerate classification, prompt hardening, or the issue-driven mutation stack.
+- Core capabilities from Superpowers are absorbed natively: Spec-Driven Development (SDD) into the One-Shot Protocol / SDD architecture specifications, and Brainstorming into Prompt Hardening and Semantic Pre-scan.
+
 ## Proof Ordering
 
 The intended order remains:

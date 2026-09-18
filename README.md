@@ -807,6 +807,16 @@ They are not the semantic foundation of `accelerate`.
 `accelerate` must still make correct control-plane decisions even if the user is
 not explicitly talking about those adjacent skills.
 
+### Superpowers Deprecation and Native Absorption
+
+Unconditional skill invocation (such as the external "1% skill trigger" rule from Superpowers) is officially deprecated and suppressed in favor of Accelerate root orchestration.
+
+`accelerate` natively absorbs and standardizes the core mechanics of the Superpowers workflow:
+- **Spec-Driven Development (SDD)**: absorbed natively into the One-Shot Side-By-Side Protocol (`core/review/one-shot-side-by-side-protocol.md`) and platform architecture specifications (`planning/architecture/sdd-template.md`).
+- **Brainstorming**: absorbed natively as Prompt Hardening (`core/hardening/prompt-hardening.md`) and the Stage A/B Semantic Implication Gate (`references/core/semantic-implication-gate.md`).
+
+Accelerate enforces honest classification, domain-aware risk gates, and explicit proof without external reflexive process traps.
+
 ## Named Workflows And Calibration
 
 The native workflow and calibration authorities now live in:
