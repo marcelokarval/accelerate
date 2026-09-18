@@ -29,6 +29,30 @@ LOCAL_WORKSPACE_RESOLVER="$STAGE_ROOT/.codex/skills/accelerate/scripts/resolve-l
 LOCAL_WORKSPACE_TRUST="$STAGE_ROOT/.codex/skills/accelerate/assets/local-workspace-source-trust.json"
 test -f "$LOCAL_WORKSPACE_RESOLVER"
 test -f "$LOCAL_WORKSPACE_TRUST"
+trust_backup="$STAGE_ROOT/local-workspace-source-trust.original.json"
+cp "$LOCAL_WORKSPACE_TRUST" "$trust_backup"
+root_commit="$(git -C "$ROOT" rev-parse HEAD)"
+python3 - "$LOCAL_WORKSPACE_TRUST" "$ROOT" "$root_commit" <<'PY'
+import json, sys
+from pathlib import Path
+manifest, source, commit = sys.argv[1:]
+Path(manifest).write_text(
+    json.dumps(
+        {
+            "schema_version": 1,
+            "trusted_sources": [
+                {
+                    "path": source,
+                    "commit": commit,
+                    "origin": "https://github.com/marcelokarval/accelerate.git",
+                }
+            ],
+        },
+        indent=2,
+    ) + "\n",
+    encoding="utf-8",
+)
+PY
 grep -Fq -- 'resolve-local-workspace-tool.py' "$LOCAL_WORKSPACE_REFERENCE"
 if grep -Fq -- '../onboarding/local-workspace/' "$LOCAL_WORKSPACE_REFERENCE"; then
   printf 'runtime reference still derives source-only onboarding paths from the installed skill\n' >&2
@@ -69,8 +93,6 @@ if ACCELERATE_SOURCE_ROOT="$fake_source" python3 "$LOCAL_WORKSPACE_RESOLVER" emi
   exit 1
 fi
 fake_commit="$(git -C "$fake_source" rev-parse HEAD)"
-trust_backup="$STAGE_ROOT/local-workspace-source-trust.original.json"
-cp "$LOCAL_WORKSPACE_TRUST" "$trust_backup"
 python3 - "$LOCAL_WORKSPACE_TRUST" "$fake_source" "$fake_commit" <<'PY'
 import json
 import sys
