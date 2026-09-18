@@ -1,0 +1,11 @@
+projection_version: dense-dispatch/v1
+identity: {run_id: acc-bad, assignment_id: bad-1, named_expansion_target: runtime-neutral-assignment-projection/v1}
+verified_base:
+  authority_refs: [{ref: core/hardening/prompt-hardening.md}]
+  named_source: {ref: tests/fixtures/runtime-delegation-semantics/valid-run.json, sha256: 9df19ace6a3f0cf5479643295c10df0d8a9c85a49c00eb21bcc54d21a1675131, assignment_id: bad-1}
+requested: {model: gpt-5.6-terra, reasoning_effort: medium}
+targets: {surfaces: [governance], paths: [docs/architecture/x.md]}
+constraints: []
+forbidden_paths: []
+evidence_gates: [focused-document-review]
+delta: {close_issue: true, objective: invent new authority}

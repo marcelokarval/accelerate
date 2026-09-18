@@ -116,7 +116,7 @@ def test_registry_covers_required_runtimes_with_machine_readable_lifecycle_field
     )
     consumers = {consumer["runtime"]: consumer for consumer in registry["consumers"]}
 
-    assert set(consumers) == {"codex", "openhands", "hermes", "opencode", "openclaw", "claude"}
+    assert set(consumers) == {"codex", "openhands", "hermes", "opencode", "openclaw", "claude", "openchamber"}
     for consumer in consumers.values():
         for field in (
             "status",

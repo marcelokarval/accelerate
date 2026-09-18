@@ -10,7 +10,7 @@ from jsonschema import Draft202012Validator
 REPO = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = REPO / "core/delegation/runtime-neutral-delegation.schema.json"
 REGISTRY_PATH = REPO / "adapters/runtime/runtime-consumer-registry.json"
-RUNTIMES = {"codex", "openhands", "hermes", "opencode", "openclaw", "claude"}
+RUNTIMES = {"codex", "openhands", "hermes", "opencode", "openclaw", "claude", "openchamber"}
 STATUSES = {"supported", "blocked", "export-only", "legacy-reference"}
 TRANSITIONS = {"draft": {"hardened", "blocked", "cancelled"}, "hardened": {"tasks-ready", "blocked", "exception", "cancelled"}, "tasks-ready": {"dispatch-required", "executing", "blocked", "exception", "cancelled"}, "dispatch-required": {"dispatched", "blocked", "exception", "cancelled"}, "dispatched": {"executing", "blocked", "exception", "cancelled"}, "executing": {"fan-in", "blocked", "exception", "cancelled", "superseded"}, "fan-in": {"independent-review", "root-review-of-review", "blocked", "exception", "superseded"}, "independent-review": {"root-review-of-review", "blocked", "rejected", "exception"}, "root-review-of-review": {"promotion-pending", "completed", "blocked", "rejected", "exception"}, "promotion-pending": {"promoted", "rejected", "blocked", "exception"}, "promoted": {"completed", "superseded"}, "exception": {"hardened", "tasks-ready", "dispatch-required", "executing", "fan-in", "blocked", "rejected", "cancelled"}, "blocked": {"hardened", "tasks-ready", "exception", "rejected", "cancelled", "superseded"}, "rejected": set(), "cancelled": set(), "superseded": set(), "completed": set()}
 

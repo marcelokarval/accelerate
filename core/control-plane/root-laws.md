@@ -119,6 +119,20 @@ In the capability-portable phase, the platform must already be complete enough t
 That is the baseline for later agent promotion. Agents are not the foundation
 of the system.
 
+## Orchestrator Todo and Dispatch Display Convention
+
+In orchestrated execution, root-owned live dispatch tracking and todo ledgers (such as OpenCode / OpenChamber task panes) MUST follow the high-signal compact convention:
+
+```text
+[ORCH] -> [W-<num>] <ícone_tipo> <Ação/Objetivo> - expect <resultado_esperado>
+```
+
+1. Prefix MUST be `[ORCH]`.
+2. Dispatch direction indicator MUST be `->`.
+3. Target MUST be numbered worker ID `[W-<num>]`.
+4. Type icon MUST be a canonical registered semantic icon (`🧹`, `🔬`, `✨`, `🐛`, `🛡️`, `⚙️`, `📝`, `🔧`).
+5. Action and expected result MUST state clear outcome and concrete evidence.
+
 ## Current Authority Sources
 
 Use these docs together:
