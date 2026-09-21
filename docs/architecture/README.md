@@ -8,14 +8,14 @@ Este diretório contém a documentação arquitetural, decisões formais de desi
 
 ```text
 docs/architecture/
-├── adr/                         # Architectural Decision Records (Decisões Formais)
+├── adr/                         # Architectural Decision Records (Decisões de Design)
 │   ├── 2026-09-18-adr-001-opencode-plugin-hardening.md
 │   └── 2026-09-21-adr-002-portable-accelerate-operational-integration-boundary.md
-├── sdd/                         # Software Design Documents (Especificações Detalhadas)
+├── sdd/                         # Software Design Documents (Especificações Técnicas)
 │   └── 2026-09-18-sdd-v032-harness-hardening.md
-├── accelerate-control-plane.md  # Arquitetura do control plane soberano
+├── accelerate-control-plane.md  # Arquitetura do control plane
 ├── accelerate-sdd-v1.md         # SDD fundamental v1
-├── dense-dispatch-and-caveman-protocol.md # Protocolo de comunicação Master-Worker
+├── dense-dispatch-and-caveman-protocol.md # Proposta de notação para despacho denso e retornos
 └── ...
 ```
 
@@ -23,29 +23,22 @@ docs/architecture/
 
 ## Architectural Decision Records (ADRs)
 
-Os ADRs registram decisões técnicas fundamentais, trade-offs analisados e as justificativas para escolhas de design:
-
 - **[ADR 001: OpenCode Plugin Hardening, Envelope Provenance & Role Sandboxing](adr/2026-09-18-adr-001-opencode-plugin-hardening.md)**
-  - Define o isolamento de prompts, supressão segura de superpowers via parsing AST/delimitado, hashing canônico RFC 8785 (JCS) de envelopes e sandboxing estrito de ferramentas por papel.
+  - Documento de design que estabelece diretrizes de sanitização de mensagens, mitigação de injeções redundantes e isolamento de contexto de execução por papel no plugin OpenCode.
 
-- **[ADR 002: Portable Accelerate Operational Integration Boundary](adr/2026-09-21-adr-002-portable-accelerate-operational-integration-boundary.md)**
-  - Define a soberania metodológica inegociável do Accelerate (escopo, critérios, planejamento proporcional, revisão, prova e aceite).
-  - Estabelece o papel de tradução neutra dos adaptadores de runtime (`adapters/runtime/*`), sem poluição de nomes de ferramentas, portas locais ou identificadores de providers no core.
-  - Formaliza o desacoplamento de complementos operacionais (como `accelerate-omo-plugin`): o plugin provê infraestrutura auxiliar; o hospedeiro (ex: OmO/OpenCode) permanece o orquestrador; o plugin não define requisitos de produto nem exige cerimônias inflacionadas (ex: 9 fases) para tarefas simples.
-  - Delimita a topologia `Master -> Workers-Sessões (Worktrees) -> Subagentes Locais`, com proibição de herança de autoridade de fechamento (`Done`) por subagentes e verificação de capacidades por adaptador.
-  - Garante a cadeia causal e coerência documental `PRD -> ADR -> SDD -> Tasks` (tasks nunca reescrevem requisitos de produto).
-  - Impõe a tripartição estrita dos três grafos: Especificação ($G_{spec}$), Execução ($G_{exec}$) e Evidências/Invalidação ($G_{proof}$).
-  - Define regras de anti-fragmentação (interfaces versionadas, consumo explícito, proibição de cópia de doutrina em mini-skills avulsas e banimento de caminhos absolutos como contrato).
-  - Diferencia explicitamente dívida técnica de código em `adapters/runtime/opencode/accelerate-plugin.js` de ativação física/operacional no host (a mera presença do arquivo não equivale a plugin ativo).
-  - Cataloga os defeitos identificados na auditoria v0.3.2 como trabalho interno prioritário do Accelerate.
-  - Padroniza o ponto de integração futuro via `Dense-Dispatch Skeleton YAML v1` (entrada) e `Caveman Return v1` (saída).
+- **[ADR 002: Portable Accelerate Operational Integration Boundary](adr/2026-09-21-adr-002-portable-accelerate-operational-integration-boundary.md)** *(PROPOSED / pendente de revisão de conteúdo)*
+  - Registra a direção de separação entre o método portátil Accelerate e complementos operacionais de runtime (como `accelerate-omo-plugin`).
+  - Estabelece que o Accelerate retém soberania metodológica quando selecionado, enquanto complementos operacionais gerenciam infraestrutura de sessões, worktrees e observabilidade sem competir pela governança de requisitos.
+  - Define a topologia Master ➔ Workers-Sessões ➔ Subagentes, permitindo que subagentes executem pesquisas, implementação e verificações no slice atribuído, sem herdar autoridade de fechamento global (`Done`).
+  - Formaliza a relação entre PRD, ADR, SDD e Tasks com suporte a feedback iterativo da execução e proporcionalidade de artefatos.
+  - Diferencia dívida técnica de adapters no repositório (`adapters/runtime/opencode/`) de ativação física no host, mantendo o backlog de auditoria v0.3.2 como trabalho próprio do projeto.
 
 ---
 
 ## Software Design Documents (SDDs)
 
 - **[SDD v0.3.2: Harness Hardening & Envelope Integrity](sdd/2026-09-18-sdd-v032-harness-hardening.md)**
-  - Detalha a implementação física do hook `experimental.chat.messages.transform` do OpenCode, a máquina de estados para parsing delimitado, as rotinas de verificação de hash canônico e a matriz de tratamento de erros.
+  - Especificação de design para o tratamento de mensagens no hook de runtime e conformidade de envelopes de controle.
 
 ---
 
@@ -53,6 +46,6 @@ Os ADRs registram decisões técnicas fundamentais, trade-offs analisados e as j
 
 - **[Accelerate Control Plane](accelerate-control-plane.md)**: Governança soberana, matriz de enforçamento e ciclo de vida de mutação.
 - **[Accelerate SDD v1](accelerate-sdd-v1.md)**: Especificação canônica de interfaces e modelos do core.
-- **[Dense-Dispatch and Caveman Protocol](dense-dispatch-and-caveman-protocol.md)**: Racional de economia de tokens e comunicação de alta densidade semântica entre Master e Workers.
-- **[Zero-Waste Dispatch & Readiness Pipeline](zero-waste-dispatch-and-readiness-pipeline.md)**: Pipeline de preparação e prontidão de tarefas sem overhead de contexto.
+- **[Dense-Dispatch and Caveman Protocol](dense-dispatch-and-caveman-protocol.md)**: Proposta arquitetural para otimização de entrada e saída em despachos multi-sessão.
+- **[Zero-Waste Dispatch & Readiness Pipeline](zero-waste-dispatch-and-readiness-pipeline.md)**: Proposta de pipeline de preparação e prontidão sem redundância de descoberta.
 - **[OpenChamber Runtime Adapter Proposal](openchamber-runtime-adapter-proposal.md)**: Proposta de integração e adaptação para o runtime OpenChamber.
