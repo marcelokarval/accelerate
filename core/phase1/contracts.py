@@ -50,7 +50,7 @@ def canonical_bytes(value):
  # Do not materialize a sorted object: ECMAScript reorders integer-like member
  # names on object construction.  Emit sorted key/value fragments directly.
  program="const x=JSON.parse(process.argv[1]);const s=v=>Array.isArray(v)?'['+v.map(s).join(',')+']':v&&typeof v==='object'?'{'+Object.keys(v).sort((a,b)=>a<b?-1:a>b?1:0).map(k=>JSON.stringify(k)+':'+s(v[k])).join(',')+'}':JSON.stringify(v);process.stdout.write(s(x))"
- try:return subprocess.run(["node","-e",program,raw],check=True,capture_output=True,timeout=5).stdout
+ try:return subprocess.run(["node","-e",program,raw],check=True,capture_output=True,timeout=15).stdout
  except Exception as e:raise ContractError("JCS_RUNTIME_UNAVAILABLE") from e
 def domain_digest(schema_id,value):
  if schema_id not in PREFIXES:raise ContractError("NO_MANIFEST_DOMAIN")

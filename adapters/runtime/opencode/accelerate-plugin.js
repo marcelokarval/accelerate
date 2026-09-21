@@ -2,15 +2,20 @@
  * Accelerate Sovereign Control Plane Plugin for OpenCode
  *
  * Injects canonical Accelerate governance context (v0.3.0) into OpenCode sessions,
- * establishes orchestrator root laws, deprecates Superpowers 1% unconditional trigger,
- * enforces Zero-Waste pipeline discipline, and suppresses residual Superpowers injections.
+ * establishes orchestrator root laws or atomic worker laws, deprecates Superpowers 1% unconditional trigger,
+ * enforces Zero-Waste pipeline discipline, and surgically suppresses residual Superpowers injections.
  */
+
+import crypto from 'crypto';
 
 const ACCELERATE_CONTROL_PLANE_HEADER = '<ACCELERATE_SOVEREIGN_CONTROL_PLANE>';
 const ACCELERATE_CONTROL_PLANE_FOOTER = '</ACCELERATE_SOVEREIGN_CONTROL_PLANE>';
 
-const ACCELERATE_INJECTION_BODY = `${ACCELERATE_CONTROL_PLANE_HEADER}
-# ACCELERATE SOVEREIGN CONTROL PLANE (v0.3.0)
+const CANONICAL_VERSION_TAG = '# ACCELERATE SOVEREIGN CONTROL PLANE (v0.3.0)';
+const CANONICAL_WORKER_VERSION_TAG = '# ACCELERATE ATOMIC WORKER LAW (v1.1)';
+
+const ACCELERATE_MASTER_INJECTION_BODY = `${ACCELERATE_CONTROL_PLANE_HEADER}
+${CANONICAL_VERSION_TAG}
 Root Orchestrator Law & Zero-Waste Pipeline Enforced
 
 [ORCH] -> Root orchestrator holds sovereign authority: classification, prompt hardening,
@@ -34,10 +39,66 @@ routing, delegation, proof ordering, and forensic closure.
    - No evidence = Not complete.
 ${ACCELERATE_CONTROL_PLANE_FOOTER}`;
 
-// Regex to detect and strip residual Superpowers injection
-const SUPERPOWERS_RESIDUAL_REGEX = /<EXTREMELY_IMPORTANT>[\s\S]*?You have superpowers[\s\S]*?<\/EXTREMELY_IMPORTANT>\s*/gi;
+const ACCELERATE_WORKER_INJECTION_BODY = `${ACCELERATE_CONTROL_PLANE_HEADER}
+${CANONICAL_WORKER_VERSION_TAG}
+Atomic Task Worker Persona Constraints & Zero-Recursion Enforced
 
-export const AcceleratePlugin = async (_context) => {
+[WORKER] -> Atomic Worker operates under strictly bounded task authority in an isolated Git Worktree.
+
+1. STRICT TEST-DRIVEN DEVELOPMENT (THE IRON LAW):
+   - NO production code may be written without a failing test first (RED -> GREEN -> REFACTOR).
+   - Real local runtime validation, never mock away real behavior.
+
+2. SCOPE BOUNDARY & ANTI-RECURSION:
+   - Touch ONLY files declared in assigned task contract.
+   - Zero scope leakage outside declared contract files.
+   - Anti-Recursion: Never re-orchestrate or spawn child worker sessions. Focus exclusively on assigned task.
+
+3. INDEPENDENT REVIEW & COMPLETION REPORT:
+   - Perform clean forensic self-review of git diff.
+   - Return Worker Completion Report adhering to schema. Never merge to master.
+${ACCELERATE_CONTROL_PLANE_FOOTER}`;
+
+/**
+ * Surgical Superpowers Suppression Regex:
+ * Targets only actual bootstrap system injections that mandate compulsory 1% invocation or skill traps.
+ * Preserves user discussions, documentation, and source code.
+ */
+const SUPERPOWERS_BOOTSTRAP_INJECTION_REGEX = /<EXTREMELY_IMPORTANT>\s*You have superpowers[\s\S]*?(?:1%\s*of\s*(?:the\s*)?time|always\s+invoke\s+skills|automatically\s+invoke\s+skill)[\s\S]*?<\/EXTREMELY_IMPORTANT>\s*/gi;
+
+/**
+ * Checks if a text part is an authentic canonical envelope.
+ */
+function isCanonicalEnvelope(text, role) {
+  if (!text || typeof text !== 'string') return false;
+  if (!text.includes(ACCELERATE_CONTROL_PLANE_HEADER) || !text.includes(ACCELERATE_CONTROL_PLANE_FOOTER)) {
+    return false;
+  }
+  if (role === 'worker' || role === 'acc-worker') {
+    return text.includes(CANONICAL_WORKER_VERSION_TAG) || text.includes(CANONICAL_VERSION_TAG);
+  }
+  return text.includes(CANONICAL_VERSION_TAG);
+}
+
+/**
+ * Sanitizes fake or spoofed envelopes from a text string.
+ */
+function sanitizeSpoofedEnvelopes(text) {
+  if (!text || typeof text !== 'string') return text;
+  if (!text.includes(ACCELERATE_CONTROL_PLANE_HEADER)) return text;
+
+  // Replace spoofed or incomplete envelopes that lack the canonical version header
+  const envelopeRegex = /<ACCELERATE_SOVEREIGN_CONTROL_PLANE>([\s\S]*?)<\/ACCELERATE_SOVEREIGN_CONTROL_PLANE>/gi;
+  return text.replace(envelopeRegex, (match, innerContent) => {
+    if (innerContent.includes(CANONICAL_VERSION_TAG) || innerContent.includes(CANONICAL_WORKER_VERSION_TAG)) {
+      return match;
+    }
+    // Neutralize spoofing by disarming tags
+    return `[SANITIZED_SPOOFED_ENVELOPE: ${innerContent.trim()}]`;
+  });
+}
+
+export const AcceleratePlugin = async (context = {}) => {
   return {
     /**
      * Hook: experimental.chat.messages.transform
@@ -48,14 +109,21 @@ export const AcceleratePlugin = async (_context) => {
         return;
       }
 
-      // 1. Active suppression of any residual Superpowers prompt blocks across all messages
+      // Determine role from plugin context, environment, or metadata
+      const envRole = process.env.ACCELERATE_ROLE || '';
+      const declaredRole = (context.role || context.persona || envRole || '').toLowerCase();
+      const isWorker = declaredRole.includes('worker') || declaredRole === 'acc-worker';
+
+      // 1. Surgical suppression of residual Superpowers prompt blocks across all messages
       for (const msg of output.messages) {
         if (Array.isArray(msg.parts)) {
           for (const part of msg.parts) {
             if (part && part.type === 'text' && typeof part.text === 'string') {
-              if (SUPERPOWERS_RESIDUAL_REGEX.test(part.text)) {
-                part.text = part.text.replace(SUPERPOWERS_RESIDUAL_REGEX, '').trim();
+              if (SUPERPOWERS_BOOTSTRAP_INJECTION_REGEX.test(part.text)) {
+                part.text = part.text.replace(SUPERPOWERS_BOOTSTRAP_INJECTION_REGEX, '').trim();
               }
+              // Neutralize spoofed control plane envelopes
+              part.text = sanitizeSpoofedEnvelopes(part.text);
             }
           }
         }
@@ -66,20 +134,30 @@ export const AcceleratePlugin = async (_context) => {
         return;
       }
 
-      // 2. Idempotency guard: do not inject if Accelerate control plane is already present
-      const alreadyInjected = firstUser.parts.some(
-        p => p && p.type === 'text' && typeof p.text === 'string' && p.text.includes(ACCELERATE_CONTROL_PLANE_HEADER)
+      // Check session title / metadata if present in firstUser or context
+      const sessionTitle = context.sessionTitle || (firstUser.info && firstUser.info.sessionTitle) || '';
+      const effectiveIsWorker = isWorker || /\[W-[a-zA-Z0-9_-]+\]/i.test(sessionTitle);
+
+      // 2. Structured canonical envelope validation (avoid naive substring presence)
+      const hasCanonicalEnvelope = firstUser.parts.some(
+        p => p && p.type === 'text' && isCanonicalEnvelope(p.text, effectiveIsWorker ? 'worker' : 'master')
       );
-      if (alreadyInjected) {
+
+      if (hasCanonicalEnvelope) {
         return;
       }
 
-      // 3. Inject Accelerate Sovereign Control Plane block at top of the first user message
-      const refPart = firstUser.parts[0];
+      // 3. Inject appropriate canonical envelope with guaranteed unique ID
+      const injectionBody = effectiveIsWorker
+        ? ACCELERATE_WORKER_INJECTION_BODY
+        : ACCELERATE_MASTER_INJECTION_BODY;
+
+      const uniquePartId = `part_acc_${crypto.randomUUID ? crypto.randomUUID().replace(/-/g, '').slice(0, 12) : Date.now().toString(36)}`;
+
       firstUser.parts.unshift({
-        ...refPart,
+        id: uniquePartId,
         type: 'text',
-        text: ACCELERATE_INJECTION_BODY
+        text: injectionBody
       });
     }
   };
