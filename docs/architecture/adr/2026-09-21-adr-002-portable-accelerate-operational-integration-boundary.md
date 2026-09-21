@@ -54,6 +54,8 @@ Com o surgimento de complementos operacionais voltados a harnesses específicos 
 - **Tasks (DAG)**: Decompõem a implementação em unidades atômicas executáveis.
 - **Proporcionalidade**: Nem toda alteração exige a produção simultânea dos quatro artefatos. Pequenas correções e tarefas delimitadas utilizam documentação proporcional.
 - **Feedback da Execução**: As tarefas não reescrevem requisitos silenciosamente. Caso descobertas práticas durante a execução revelem incompatibilidades, o worker deve reportar a situação, abrindo uma revisão explícita e autorizada de PRD, ADR ou SDD. A parte afetada só avança após a conciliação documental e atualização das provas correspondentes.
+- Ordem de elaboração, ordem de leitura e autoridade em conflito são distintas. ADRs vigentes relevantes são consultados antes de propor novas decisões, e o SDD e novos ADRs podem evoluir iterativamente. A sequência apresentada não impõe um ADR separado para toda mudança nem define precedência automática apenas pelo tipo de documento.
+- As relações entre especificações e artefatos, as dependências e o estado da execução, e a validade das evidências permanecem distintas. A existência de um documento não autoriza uma tarefa; execução concluída não equivale a aceite; mudanças materiais exigem reavaliar as provas afetadas. Essa separação é uma decisão de design e não comprova, por si só, enforcement implementado.
 
 ### 2.5 Preservação da Doutrina de Rotas e Provas
 - As rotas de execução do Accelerate mantêm sua classificação canônica: `direct-fast-path`, `scoped` e `orchestrated`. A dimensão de esforço de raciocínio (`low`, `medium`, `high`, `xhigh`) é tratada separadamente, conforme a política de reasoning vigente.
@@ -63,6 +65,8 @@ Com o surgimento de complementos operacionais voltados a harnesses específicos 
 - A integração entre o Accelerate e complementos operacionais deve ocorrer por meio de interfaces versionadas com consumo explícito.
 - Notações existentes no repositório — como o *Dense-Dispatch Skeleton YAML v1* e o *Caveman Return v1* (documentados em `docs/architecture/dense-dispatch-and-caveman-protocol.md`) — constituem propostas arquiteturais em processo de avaliação e refinamento. Não devem ser tratadas nesta decisão como protocolo obrigatório pré-qualificado entre produtos.
 - O ponto de integração futuro entregará referências metodológicas versionadas, contexto e escopo delimitado para assignments, além de critérios para recepção de candidatos e resultados verificáveis.
+- O consumo explícito não autoriza cópias manuais divergentes da doutrina em mini-skills de outros produtos nem caminhos absolutos da máquina do operador como contrato. Exportações geradas, versionadas e rastreáveis podem distribuir o método sem se tornarem outra fonte de autoridade; o adaptador resolve a localização efetiva.
+- Ownership, compatibilidade e qualificação da interface serão definidos em rodada própria. Caveman Return é uma apresentação concisa, não aceite do trabalho; um hash isolado não comprova autoria ou autorização.
 
 ### 2.7 Tratamento de Dívida Técnica e Escopo de Auditoria
 - O arquivo `adapters/runtime/opencode/accelerate-plugin.js` representa código de adapter interno mantido sob dívida técnica no repositório. Sua existência no código-fonte não constitui evidência de que esteja ativo ou operacionalmente instalado no host do operador.
