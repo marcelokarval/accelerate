@@ -1,9 +1,9 @@
 # ADR 002: Fronteira de Integração entre o Accelerate Portátil e Complementos Operacionais
 
-- **Status**: PROPOSED / pendente de revisão externa de conteúdo
+- **Status**: ACCEPTED (decisão de design documental aceita pelo operador; integração pendente de implementação e qualificação)
 - **Data**: 2026-09-21
-- **Decisores**: Direção de separação arquitetural solicitada pelo operador (Karval); redação normativa submetida a revisão independente de conteúdo
-- **Contexto**: Branch `docs/a0-preserve-portable-accelerate-integration-boundary`, pós-auditoria v0.3.2 no repositório `marcelokarval/accelerate`
+- **Decisores**: Decisão documental aceita pelo operador (Karval) via prompt A0-FINAL, tendo como referência o conteúdo revisado do commit `2584c5ae7b246e21eca62750fd88172a616937fc`
+- **Contexto**: Branch `docs/a0-preserve-portable-accelerate-integration-boundary`, pós-auditoria v0.3.2 no repositório `marcelokarval/accelerate`. O aceite refere-se estritamente à decisão arquitetural documentada e não constitui implementação ou qualificação de runtime.
 
 ---
 

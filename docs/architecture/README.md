@@ -26,7 +26,7 @@ docs/architecture/
 - **[ADR 001: OpenCode Plugin Hardening, Envelope Provenance & Role Sandboxing](adr/2026-09-18-adr-001-opencode-plugin-hardening.md)**
   - Documento de design que estabelece diretrizes de sanitização de mensagens, mitigação de injeções redundantes e isolamento de contexto de execução por papel no plugin OpenCode.
 
-- **[ADR 002: Portable Accelerate Operational Integration Boundary](adr/2026-09-21-adr-002-portable-accelerate-operational-integration-boundary.md)** *(PROPOSED / pendente de revisão de conteúdo)*
+- **[ADR 002: Portable Accelerate Operational Integration Boundary](adr/2026-09-21-adr-002-portable-accelerate-operational-integration-boundary.md)** *(ACCEPTED / decisão de design; integração pendente de implementação e qualificação)*
   - Registra a direção de separação entre o método portátil Accelerate e complementos operacionais de runtime (como `accelerate-omo-plugin`).
   - Estabelece que o Accelerate retém soberania metodológica quando selecionado, enquanto complementos operacionais gerenciam infraestrutura de sessões, worktrees e observabilidade sem competir pela governança de requisitos.
   - Define a topologia Master ➔ Workers-Sessões ➔ Subagentes, permitindo que subagentes executem pesquisas, implementação e verificações no slice atribuído, sem herdar autoridade de fechamento global (`Done`).
