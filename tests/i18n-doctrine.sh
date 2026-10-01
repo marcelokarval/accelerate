@@ -46,7 +46,7 @@ if grep -Fq "all supported locales: \`en\`, \`pt\`, \`es\`" "${I18N_SKILL}"; the
   fail "i18n skill still hardcodes en/pt/es as universal closure law"
 fi
 
-require_contains "${BRANCH_MATRIX}" "Locale Pack Parity Packet"
+require_contains "${PARITY_ADAPTER}" "Locale Pack Parity Packet"
 require_contains "${PROFILE}" "Do not assume a universal locale list"
 
 echo "i18n doctrine tests passed"

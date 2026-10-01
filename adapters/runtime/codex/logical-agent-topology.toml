@@ -2,7 +2,7 @@ schema_version = 1
 topology_identity = "codex-logical-agent-topology"
 authority = "logical routing contract; Codex profiles are additive and do not enforce process, tool, MCP, credential, or filesystem isolation"
 spawn_packet_limit = 10
-root_exclusive_authority = ["issue topology", "external writes", "integration", "review-of-review", "closure"]
+root_exclusive_authority = ["request classification", "context preparation", "ASDS handoff"]
 assignment_contract = "assignment-only; logical profiles do not enforce process, tool, MCP, credential, or filesystem isolation"
 assignment_ontology = "static orthogonal vocabulary; Tester=verifier+verification, QA is proof-lane discipline, adversarial verification is verification_mode and adversarial review is review_mode"
 specialization_dimensions = ["surface", "domain_path"]
@@ -24,7 +24,7 @@ review_posture = "adversarial-consolidation"
 write_mode = "root-only"
 external_writes = true
 closure_authority = true
-required_skills = ["accelerate", "prompt-hardening", "plane", "subagent-governance", "skill-catalog-router", "verification-before-completion"]
+required_skills = ["accelerate"]
 
 [[agents]]
 name = "python-backend"

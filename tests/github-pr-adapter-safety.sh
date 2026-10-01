@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 WORK_ROOT="${ROOT}/.tmp/github-pr-adapter-safety"
+trap 'rm -rf "${WORK_ROOT}"' EXIT
 SCRIPTS="${ROOT}/onboarding/local-workspace"
 
 fail() {

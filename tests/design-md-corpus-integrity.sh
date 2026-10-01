@@ -44,7 +44,7 @@ done
 require_match 'Total entries: `69`' "references/design-md/index.md"
 
 require_match 'design-md-corpus-patterns' "skills/_registry/manifest.md"
-require_match 'DESIGN.md corpus' "README.md"
+require_match 'DESIGN.md corpus' "core/review/design-md-corpus.md"
 require_match 'DESIGN.md corpus' "core/review/html-design-system-extraction.md"
 require_match 'DESIGN.md corpus' "core/review/design-system-contract-application.md"
 

@@ -20,12 +20,9 @@ real_agents="${CODEX_GLOBAL_AGENTS:-$ROOT/tests/fixtures/codex-global-bootstrap/
 [[ -f "$installer" ]] || fail 'missing installer'
 rg -F '<!-- accelerate-delegation-policy:start -->' "$fragment" >/dev/null || fail 'missing start marker'
 rg -F '<!-- accelerate-delegation-policy:end -->' "$fragment" >/dev/null || fail 'missing end marker'
-rg -F 'MUST call `collaboration.spawn_agent` before any task-owned mutation' "$fragment" >/dev/null || fail 'missing physical dispatch requirement'
-for exception_code in explicit_user_opt_out collaboration_unavailable spawn_failed_operator_authorized; do
-  rg -F "\`$exception_code\`" "$fragment" >/dev/null || fail "missing canonical exception code $exception_code"
-done
-if rg -F 'spawn_failed_operator_authorized_degradation' "$fragment" >/dev/null; then
-  fail 'non-canonical exception code remains'
+rg -F 'ASDS owns' "$fragment" >/dev/null || fail 'missing ASDS workflow ownership'
+if rg -F 'MUST call `collaboration.spawn_agent`' "$fragment" >/dev/null; then
+  fail 'bootstrap reintroduces mandatory dispatch'
 fi
 
 [[ -f "$real_agents" ]] || fail 'missing checked-in legacy AGENTS fixture source'

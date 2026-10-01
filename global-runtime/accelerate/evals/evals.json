@@ -1,98 +1,62 @@
 [
   {
-    "id": "trivial-readonly-no-wave",
-    "prompt": "qual é o status do catálogo? apenas confira e responda",
-    "should_trigger": true,
-    "expected_behavior": "Classify as trivial read-only or quick command, use compact proof, and do not invoke Wave-Gated Execution."
-  },
-  {
-    "id": "small-bugfix-bounded-slice",
-    "prompt": "corrija este bug pequeno e prove com teste focado",
-    "should_trigger": true,
-    "expected_behavior": "Classify as bounded slice or trivial mutation depending on scope; use entry/proof/closure, not wave-gated unless a repeated denominator appears."
-  },
-  {
-    "id": "large-one-shot-no-wave-by-default",
-    "prompt": "implemente uma feature grande ponta-a-ponta uma vez e valide",
-    "should_trigger": true,
-    "expected_behavior": "Classify as orchestrated mission one-shot with ledger/proof lanes; after TASKS_READY and before task-owned mutation, call collaboration.spawn_agent with explicit model, reasoning_effort, and fork_turns; do not use coverage wave gates unless repeatable target sets are identified."
-  },
-  {
-    "id": "large-repeated-wave-gated",
-    "prompt": "padronize todos os endpoints em ondas, teste tudo e avance só com cobertura maior que 95%",
-    "should_trigger": true,
-    "expected_behavior": "Use orchestrated mission / wave-gated mode; freeze denominator, emit Wave Packet, compute Coverage Gate, run correction/reproof loop, then Wave Closure Packet."
-  },
-  {
-    "id": "small-multitask-checklist-not-wave",
-    "prompt": "faça três ajustes pequenos independentes e me diga o que mudou",
-    "should_trigger": true,
-    "expected_behavior": "Use bounded slice with checklist and requested-vs-delivered proof; do not use wave-gated unless tasks are homogeneous/repeated."
-  },
-  {
-    "id": "large-multitask-hybrid",
-    "prompt": "audite backend, frontend, docs e integrações, corrija tudo e prove",
-    "should_trigger": true,
-    "expected_behavior": "Use orchestrated mission; split lanes first, then apply wave-gated execution only to repeated target sets within lanes."
-  },
-  {
-    "id": "near-miss-generic-planning",
-    "prompt": "explique conceitualmente o que é cobertura de testes sem executar nada",
+    "id": "conversation",
+    "prompt": "explique o que é cobertura de testes",
     "should_trigger": false,
-    "expected_behavior": "Do not run accelerate mutation workflow; answer conversationally unless the user asks for operational execution."
+    "expected_behavior": "Answer directly; no ASDS, setup questions, project state, or mandatory artifacts."
   },
   {
-    "id": "accelerate-fable-dual-explicit",
-    "prompt": "use Accelerate com Fable Method para executar esta mudança e fechar com prova outcome-first",
+    "id": "trivial",
+    "prompt": "corrija uma chave YAML conhecida e valide o parser",
     "should_trigger": true,
-    "expected_behavior": "Keep one Accelerate root, set fable_overlay=required, apply the bounded Fable loop inside the active branch, and do not create duplicate packets, ledgers, proof lanes or closure."
+    "expected_behavior": "Execute directly with focused verification; no ASDS, issue, workspace, delegation, or planning gates."
   },
   {
-    "id": "fable-only-does-not-activate-accelerate",
-    "prompt": "use apenas o Fable Method para reescrever este relatório outcome-first, sem orquestração",
+    "id": "non-trivial",
+    "prompt": "implemente autenticação e permissões desta aplicação",
+    "should_trigger": true,
+    "expected_behavior": "Prepare context and existing authorization, then hand workflow ownership to ASDS. ASDS selects its own activation and execution depth."
+  },
+  {
+    "id": "explicit-asds",
+    "prompt": "use ASDS para este pequeno ajuste",
+    "should_trigger": true,
+    "expected_behavior": "Honor the explicit ASDS request; do not let the trivial classifier override user intent."
+  },
+  {
+    "id": "authorization",
+    "prompt": "já autorizei a configuração do projeto; continue a mudança",
+    "should_trigger": true,
+    "expected_behavior": "Carry prior authorization into the ASDS handoff without asking again or creating duplicate state."
+  },
+  {
+    "id": "asds-unavailable",
+    "prompt": "execute esta mudança não trivial",
+    "should_trigger": true,
+    "expected_behavior": "If ASDS is unavailable, report the missing capability. Do not claim handoff or restore legacy Accelerate orchestration; continue independent useful work."
+  },
+  {
+    "id": "resume",
+    "prompt": "continue a implementação já conduzida pelo ASDS",
     "should_trigger": false,
-    "expected_behavior": "Do not activate Accelerate solely because Fable is named when no engineering/root-governance trigger exists."
+    "expected_behavior": "Preserve ASDS ownership; do not restart classification, planning, dispatch, or closure."
   },
   {
-    "id": "accelerate-only-fable-not-needed",
-    "prompt": "use Accelerate para corrigir uma chave YAML local bem definida e validar o parser",
+    "id": "read-only-complex",
+    "prompt": "analise arquitetura e dependências sem alterar arquivos",
     "should_trigger": true,
-    "expected_behavior": "Use a bounded Accelerate branch, set fable_overlay=not-needed, and rely on the specialist/parser proof without loading Fable automatically."
+    "expected_behavior": "Forward non-trivial analysis to ASDS without assuming OpenSpec or a full implementation workflow is required."
   },
   {
-    "id": "accelerate-fable-useful-authority-conflict",
-    "prompt": "use Accelerate: a especificação diz desconto de 10%, o teste exige 15% e o código implementa 10%; resolva e prove",
-    "should_trigger": true,
-    "expected_behavior": "Set fable_overlay=useful, resolve intent from primary authority before editing, correct the wrong side through the specialist lane, and close only through Accelerate root proof."
+    "id": "standalone-asds",
+    "prompt": "use apenas spec-driven-superpowers",
+    "should_trigger": false,
+    "expected_behavior": "Allow independent ASDS use; no Accelerate prerequisite or competing coordinator."
   },
   {
-    "id": "orchestrated-execution-physical-dispatch",
-    "prompt": "corrija backend e frontend desta jornada, execute as mudanças e valide; não mencionei agentes",
-    "should_trigger": true,
-    "expected_behavior": "Classify as orchestrated execution. Once TASKS_READY is reached and collaboration.spawn_agent exists, root must call collaboration.spawn_agent before any task-owned mutation; the user need not repeat the delegation request."
-  },
-  {
-    "id": "direct-fast-path-no-dispatch",
-    "prompt": "corrija uma chave YAML local conhecida e valide o parser",
-    "should_trigger": true,
-    "expected_behavior": "Use direct-fast-path when its narrow criteria hold; root executes directly with zero spawns and does not apply the orchestrated physical-dispatch gate."
-  },
-  {
-    "id": "planning-only-stops-at-tasks-ready",
-    "prompt": "prepare somente o PRD, SDD e task graph; não execute nem altere os escopos das tarefas",
-    "should_trigger": true,
-    "expected_behavior": "Planning-only may stop at TASKS_READY without dispatch because task-owned execution was not requested."
-  },
-  {
-    "id": "orchestrated-explicit-user-opt-out",
-    "prompt": "execute esta mudança multi-superfície, mas não use agentes; eu autorizo explicitamente a degradação",
-    "should_trigger": true,
-    "expected_behavior": "Record explicit_user_opt_out as the blocking exception receipt; it is the only user opt-out that can waive physical dispatch for orchestrated execution."
-  },
-  {
-    "id": "prescribed-mechanical-luna-dispatch",
-    "prompt": "execute uma alteração mecânica prescrita depois de TASKS_READY: renomeie os campos já mapeados e rode o teste focal",
-    "should_trigger": true,
-    "expected_behavior": "For an orchestrated prescribed mechanical assignment, dispatch gpt-5.6-luna with reasoning_effort=medium and explicit fork_turns=none; root retains dispatch, fan-in, review-of-review, promotion, and closure."
+    "id": "worker",
+    "prompt": "execute somente a tarefa atribuída pelo coordenador ASDS",
+    "should_trigger": false,
+    "expected_behavior": "Honor the bounded assignment without reactivating entry classification or imposing new orchestration."
   }
 ]

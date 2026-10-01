@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 WORK_ROOT="${ROOT}/.tmp/theme-template-portability"
+trap 'rm -rf "${WORK_ROOT}"' EXIT
 DISCOVER="${ROOT}/onboarding/local-workspace/discover-visual-config.sh"
 AUDIT="${ROOT}/onboarding/local-workspace/check-theme-consumption.sh"
 COMPONENT_AUDIT="${ROOT}/onboarding/local-workspace/check-componentization-discipline.sh"

@@ -14,8 +14,8 @@ REQUIRED_NAMES = {
     "orchestrator", "python-backend", "nextjs-frontend", "research",
     "reviewer", "qa", "data-db", "integrations-ops",
 }
-ROOT_EXCLUSIVE = {"issue topology", "external writes", "integration", "review-of-review", "closure"}
-ROOT_SKILLS = {"accelerate", "prompt-hardening", "plane", "subagent-governance", "skill-catalog-router", "verification-before-completion"}
+ROOT_EXCLUSIVE = {"request classification", "context preparation", "ASDS handoff"}
+ROOT_SKILLS = {"accelerate"}
 SPECIALIST_KEYS = {"name", "kind", "role_family", "catalog_group", "collaboration_profile", "model", "reasoning_effort", "fork_turns", "review_posture", "write_mode", "external_writes", "closure_authority", "required_skills"}
 ROOT_KEYS = SPECIALIST_KEYS - {"collaboration_profile", "fork_turns"}
 REVIEW_POSTURES = {
@@ -104,8 +104,8 @@ def main() -> int:
                     fail("orchestrator must be Sol/medium")
                 if agent.get("write_mode") != "root-only" or agent.get("external_writes") is not True or agent.get("closure_authority") is not True:
                     fail("orchestrator authority is invalid")
-                if not ROOT_SKILLS <= set(skills):
-                    fail("orchestrator is missing mandatory root skills")
+                if set(skills) != ROOT_SKILLS:
+                    fail("entry profile must require only accelerate; ASDS selects workflow resources")
                 continue
             if agent.get("external_writes") is not False or agent.get("closure_authority") is not False:
                 fail(f"specialist {agent.get('name')} exceeds root authority")

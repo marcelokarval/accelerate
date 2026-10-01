@@ -20,8 +20,9 @@ the full catalog into the prompt.
 2. Prefer a skill already visible in the active prompt when it is an exact fit.
 3. For a hidden governed skill, select exactly one indexed row unless the task
    clearly crosses multiple independent capability boundaries.
-4. At runtime, require the indexed absolute runtime path to exist and its file
-   SHA-256 to equal the indexed digest.
+4. At runtime, expand the indexed `~/` prefix against the actual user home.
+   Require that exact runtime path to exist and its file SHA-256 to equal the
+   indexed digest; never substitute the source checkout as a deployed skill.
 5. Load that exact file, follow it, and record the resolved ID, path, and digest
    in the assignment or runtime packet.
 6. Fail closed on an absent, duplicate, stale, path-escaping, or hash-mismatched
@@ -34,8 +35,9 @@ the full catalog into the prompt.
 - Do not treat a global mirror, cache, plugin path, or generated profile as
   authoring authority.
 - Do not silently substitute a similarly named community skill.
-- Root retains staffing, issue topology, integration, review-of-review, and
-  closure authority.
+- Discovery does not change workflow ownership. ASDS retains planning, staffing,
+  integration, review and closure for work it accepted; Accelerate remains the
+  entry classifier. Do not reactivate historical root gates through a skill.
 
 ## Maintenance
 

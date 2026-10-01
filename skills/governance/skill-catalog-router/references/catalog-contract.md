@@ -12,11 +12,15 @@ Each tab-separated row contains exactly:
 
 1. unique skill ID;
 2. repository-relative source `SKILL.md` path;
-3. absolute expected runtime `SKILL.md` path;
+3. home-relative expected runtime `SKILL.md` path (`~/.codex/skills/<id>/SKILL.md`);
 4. lowercase SHA-256 of the source bytes;
 5. normalized frontmatter description.
 
 Rows are sorted by skill ID. Descriptions contain neither tabs nor newlines.
+The source index is identical on developer machines and CI. Resolve `~/` only
+when loading a deployed skill, against the current user home; the resolved path
+must remain under that user's `.codex/skills` root. Do not expand environment
+variables or execute shell substitutions from an index row.
 
 ## Failure Rules
 

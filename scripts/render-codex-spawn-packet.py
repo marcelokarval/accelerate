@@ -85,7 +85,7 @@ if not args.nested_luna_child and agent["model"] == "gpt-5.6-luna":
 print(binding + ".")
 if args.nested_luna_child:
     print("- Nested exception: root-authorized-only; global physical budget = 3 (Terra parent, Luna child, independent reviewer); scopes disjoint; Luna is a leaf.")
-    print("- Root only: issue topology, external writes, integration, review-of-review, closure; child returns only evidence, risks, and recommendation.")
+    print("- ASDS coordinator owns integration, review, and completion; harness permissions govern external writes; child returns only evidence, risks, and recommendation.")
 else:
-    print("- Root only: issue topology, external writes, integration, review-of-review, closure.")
+    print("- ASDS coordinator owns integration, review, and completion; harness permissions govern external writes.")
     print("- No nested spawn; return only evidence, risks, and recommendation.")

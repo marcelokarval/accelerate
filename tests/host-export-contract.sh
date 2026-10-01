@@ -18,6 +18,7 @@ require_match() {
 contract="adapters/runtime/host-export-contract.md"
 script="scripts/export-runtime-host.sh"
 out_dir=".tmp/host-export-contract/codex"
+trap 'rm -rf ".tmp/host-export-contract" ".tmp/host-export-invalid-topology"' EXIT
 
 [ -f "$contract" ] || fail "missing host export contract"
 [ -x "$script" ] || fail "export script is missing or not executable"

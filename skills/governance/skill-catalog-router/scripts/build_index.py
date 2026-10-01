@@ -69,7 +69,7 @@ def build(repo_root: Path) -> str:
         if name in seen:
             raise ValueError(f"duplicate governed skill id: {name}")
         seen.add(name)
-        runtime = Path.home() / ".codex" / "skills" / name / "SKILL.md"
+        runtime = Path("~") / ".codex" / "skills" / name / "SKILL.md"
         digest = hashlib.sha256(resolved.read_bytes()).hexdigest()
         rows.append((name, relative.as_posix(), str(runtime), digest, description))
     rows.sort(key=lambda row: row[0])

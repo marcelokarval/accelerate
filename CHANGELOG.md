@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.0 — Accelerate before ASDS
+
+Tracked by GitHub issue #24.
+
+Breaking: Accelerate becomes the entry classifier and preparation layer. ASDS
+owns activation, specification, planning, task execution, review, integration and
+completion after handoff. Conversation and trivial work bypass ASDS.
+
+- Remove unconditional issue/workspace/delegation and duplicate closure from entry.
+- Preserve risk screening, context, authorizations and reusable technical skills.
+- Add pure structured routing/handoff validation and current behavior tests.
+- Align runtime prompts and adapters without installing into user harnesses.
+- Supersede v0 orchestration authority and distinguish historical tests.
+
+Source release only: does not claim ASDS receiver implementation, live model
+compliance, DSH plugin migration or user-home deployment.
+
 ## 0.1.0 — published baseline
 
 - Baseline source: `8e3fd1220fde1b841a8a2356b740ca5b04c0769c` on `main`.

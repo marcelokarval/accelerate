@@ -1,70 +1,9 @@
 # Accelerate Runtime Export Bundle
 
-This directory is the repo-governed portable source for optional runtime exports
-of the `accelerate` skill bundle.
+This repository-owned portable bundle implements the v1 entry classifier. Its `SKILL.md` is self-contained and transfers non-trivial workflow ownership to spec-driven-superpowers (ASDS). It does not package or install ASDS.
 
-It exists because the standalone product repository also has a root `SKILL.md`
-for repository-local bootstrap, and that root file is not a drop-in portable
-replacement for the globally installed skill.
+The product checkout remains the source of truth. Export is a separate deployment operation, never an implicit effect of loading the skill. Do not edit user-home exports as source or synchronize them without a deployment request.
 
-## Authority Split
+Bundled reasoning validators, wave utilities, templates, and reference material are retained as optional specialist resources for an execution owner to select. Their presence does not activate legacy Accelerate issue, delegation, workspace, planning, or closure requirements. They are not required by the v1 entry path.
 
-- repository root `SKILL.md`
-  - authorizes bootstrap inside the standalone `accelerate` repository itself
-- `global-runtime/accelerate/SKILL.md`
-  - authorizes the portable runtime export bundle
-- `references/`
-  - portable bundled doctrine copied into runtime exports when export is in
-    scope
-
-## Sync Rule
-
-Do not hand-edit a user-home runtime export as the primary source.
-
-Update this repo-owned bundle and synchronize it with:
-
-```bash
-bash scripts/sync-skills-to-global.sh
-```
-
-Then verify:
-
-```bash
-bash scripts/check-global-skill-mirror.sh
-git diff --check
-```
-
-Those commands are deployment/export checks. They do not make user-home paths
-authoritative.
-
-When local workspace state is active, this portable bundle should expose:
-
-- readiness dashboard status
-- continuity timeline status
-- learning disposition
-- local review / closure action
-
-And when the target repo already has `.accelerate/` local status, it should
-prefer the canonical composed local commands for handoff preparation:
-
-- `prepare-review.sh`
-- `prepare-closure.sh`
-
-Those commands are expected to leave the local workspace with a complete
-handoff surface, including:
-
-- review / closure artifacts
-- pre-review / closure bundles
-- persisted branch entry packet
-- persisted runtime delta packet
-- persisted handoff summary
-
-For fast reentry, the preferred compact read is:
-
-- `review/handoff-summary.md`
-
-If that file is missing or still template-shaped, fall back to:
-
-- `read-local-handoff.sh`
-
-Then, only when needed, expand into the individual packets and bundles.
+The harness supplies tools and permissions. ASDS supplies its own activation and workflow decisions. A missing ASDS capability must be reported honestly; a portable skill file does not prove a native plugin or hook is installed.

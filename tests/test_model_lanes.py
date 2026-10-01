@@ -249,7 +249,7 @@ def test_openhands_native_task_contract_blocks_unproven_children(tmp_path):
     assert contract["runtime_package"] == "openhands-agent-server"
     assert contract["runtime_package_version"] == "1.42.1"
     assert contract["child_binding_state"] == "binding_unavailable"
-    assert contract["dispatch_after"] == "TASKS_READY"
+    assert contract["dispatch_after"] == "ASDS_owned_assignment"
     assert contract["max_parallel_policy_cap"] == 3
     assert contract["enforcement"] == "prompt-contract-only"
     assert module.dry_run_materialization(PARITY, target) == 0
@@ -374,14 +374,14 @@ def test_openhands_subagent_quarantine_rollback_is_two_phase(tmp_path, late_fail
     assert second.is_file()
 
 
-def test_openhands_reviewers_and_root_require_adversarial_review_contract():
+def test_openhands_root_routes_to_asds_and_reusable_reviewers_remain_adversarial():
     with PARITY.open("rb") as stream:
         parity = tomllib.load(stream)
     root_suffix = parity["openhands_root_delegation_policy"]["system_message_suffix"]
-    assert "TASKS_READY gate before dispatching any task" in root_suffix
-    assert "Do not silently perform delegated work in the root" in root_suffix
-    assert "Treat every child result as evidence, never as truth" in root_suffix
-    assert "actively try to disprove" in root_suffix
+    assert "spec-driven-superpowers" in root_suffix
+    assert "ASDS owns" in root_suffix
+    assert "TASKS_READY gate before dispatching any task" not in root_suffix
+    assert parity["openhands_native_task"]["dispatch_after"] == "ASDS_owned_assignment"
     module = load_subagent_materializer()
     with PARITY.open("rb") as stream:
         agents = {agent["name"]: agent for agent in tomllib.load(stream)["openhands_subagent_registry"]["agents"]}

@@ -138,35 +138,14 @@ If the artifact only rephrases the prompt at the same abstraction level or only
 lists a summary without showing the before/after transformation, treat the gate
 as unsatisfied.
 
-## Relationship To Accelerate
+## Relationship To Accelerate and ASDS
 
-For non-trivial work, `prompt-hardening` is a gate inside `accelerate`, not a
-competing entry skill.
-
-The chain is:
-
-```text
-accelerate
-  -> prompt-hardening when request shape requires it
-  -> task classification
-  -> downstream execution workflow
-```
-
-When this branch is active, `accelerate` should not treat the gate as passed
-until the hardened artifact is visible in the run.
-
-The visible artifact should normally be rendered in this shape:
-
-```text
-Hardened Prompt
-- Prompt A: ...
-- Prompt B: ...
-- Non-goals: ...
-- Mandatory quality lenses: ...
-```
-
-The artifact should surface before normal execution continues, typically in the
-first technical update or immediately after the execution manifest.
+This is optional request-elaboration guidance, not a mandatory Accelerate entry
+gate. Accelerate collects enough context to classify and hand off; ASDS may
+select deeper hardening when its workflow needs it. Do not create a duplicate
+specification, plan or approval, or require a Prompt A/Prompt B artifact merely
+because Accelerate was loaded. When explicitly selected, deliver the bounded
+hardening result to the current workflow owner without taking over its lifecycle.
 
 ## Verification
 
