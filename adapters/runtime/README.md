@@ -1,5 +1,9 @@
 # Runtime Adapters
 
+## v1 ownership
+
+These are optional technical resources, not automatic Accelerate workflow policy. The active entry classifier hands non-trivial work to ASDS, which selects planning, delegation, review, and completion procedures. References below to a root or coordinator mean that execution owner, not a second Accelerate controller. Legacy issue/workspace/closure recipes run only when selected by that owner and compatible with user and project instructions. Profiles provide stack knowledge and verification guidance; they do not activate ASDS or impose an independent task lifecycle.
+
 Runtime adapters translate capability-level expectations into concrete commands
 and tools.
 
@@ -17,12 +21,11 @@ Examples:
   `~/.agents/agents`; Agent Profiles remain launch configurations, while these
   Markdown definitions are the spawnable `AgentDefinition` layer
 
-The `default` Agent Profile receives a governed routing prompt from the same
-parity manifest. It asks the parent to delegate independent
-bounded slices and retain integration/closure. This is behavioral routing, not
-a deterministic classifier. Child `write_mode` metadata is likewise not a
-sandbox: enforcement comes from tool scope, confirmation policy, task-tool
-omission, iteration/budget limits, and explicit parent/child contracts.
+The `default` Agent Profile receives an entry-routing prompt from the same
+parity manifest. It classifies and hands non-trivial work to ASDS rather than
+forcing native delegation. Child `write_mode` metadata is not a sandbox:
+enforcement comes from the runtime's actual tools and permissions. ASDS decides
+whether delegation is appropriate and can select these optional resources.
 
 The canonical OpenHands chat parent is `default`: it alone receives the root
 delegation prompt and `enable_sub_agents=true`. `orchestrator` remains a

@@ -1,4 +1,5 @@
 name: accelerate
-category: orchestration
+version: 1.0.0
+category: routing
 origin: standalone-global-runtime
-summary: Runtime root for classifying engineering work, routing workflows, and enforcing proof gates.
+summary: Classify and prepare requests, execute trivial work, and hand non-trivial workflow ownership to ASDS.

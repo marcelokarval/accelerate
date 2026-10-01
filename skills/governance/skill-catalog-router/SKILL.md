@@ -34,8 +34,9 @@ the full catalog into the prompt.
 - Do not treat a global mirror, cache, plugin path, or generated profile as
   authoring authority.
 - Do not silently substitute a similarly named community skill.
-- Root retains staffing, issue topology, integration, review-of-review, and
-  closure authority.
+- Discovery does not change workflow ownership. ASDS retains planning, staffing,
+  integration, review and closure for work it accepted; Accelerate remains the
+  entry classifier. Do not reactivate historical root gates through a skill.
 
 ## Maintenance
 

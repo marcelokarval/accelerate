@@ -54,7 +54,7 @@ rg -n 'status: experimental' "$capabilities" >/dev/null || fail 'adapter must re
 rg -n 'allowed_tools:' "$capabilities" >/dev/null || fail 'capabilities must declare allowed tools'
 rg -n 'suppressed_capabilities:' "$capabilities" >/dev/null || fail 'capabilities must declare suppressed capabilities'
 rg -n 'codex-collaboration/role-policy.json' core/delegation/subagent-model.md agents/doctrine/selection-policy.md >/dev/null || fail 'selection is not integrated'
-rg -n 'references/codex-collaboration-routing.md' global-runtime/accelerate/SKILL.md >/dev/null || fail 'runtime reference is not reachable'
+test -f references/codex-collaboration-routing.md || fail 'optional runtime reference missing'
 
 tmp_dir="$(mktemp -d)"
 trap 'rm -rf "$tmp_dir"' EXIT

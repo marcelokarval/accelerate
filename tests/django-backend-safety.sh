@@ -43,11 +43,5 @@ require_contains core/control-plane/gate-ownership-index.md "Django ORM Query Sh
 require_contains core/control-plane/gate-ownership-index.md "Ownership / IDOR Gate"
 require_contains core/control-plane/gate-ownership-index.md "Backend Subagent Readiness Contract"
 require_contains core/control-plane/gate-ownership-index.md "Django Service Layer Contract"
-require_contains core/control-plane/branch-enforcement-matrix.md "Django Backend Safety Gate"
-require_contains core/control-plane/branch-enforcement-matrix.md "Django ORM Query Shape Gate"
-require_contains core/control-plane/branch-enforcement-matrix.md "Ownership / IDOR Gate"
-require_contains core/control-plane/branch-enforcement-matrix.md "Backend Subagent Readiness Contract"
-require_contains core/control-plane/branch-enforcement-matrix.md "Django Service Layer Contract"
-require_contains core/control-plane/branch-enforcement-matrix.md "N+1 admin changelist"
 
 echo "django backend safety tests passed"

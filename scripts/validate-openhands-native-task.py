@@ -56,8 +56,8 @@ def validate_contract(path: Path = PARITY) -> dict:
         raise ValueError("OpenHands children must fail closed without a proven binding")
     if set(bindings) != {"default"}:
         raise ValueError("only the supported OpenHands root may retain an LLM binding")
-    if contract["dispatch_after"] != "TASKS_READY":
-        raise ValueError("OpenHands dispatch must occur after TASKS_READY")
+    if contract["dispatch_after"] != "ASDS_owned_assignment":
+        raise ValueError("OpenHands optional dispatch requires an ASDS-owned assignment")
     if contract["on_required_dispatch_failure"] != "blocked":
         raise ValueError("OpenHands dispatch failure must block")
     if contract["max_parallel_policy_cap"] != 3 or registry["max_parallel_recommendation"] != 3:

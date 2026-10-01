@@ -3,6 +3,7 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 WORK_ROOT="${ROOT}/.tmp/design-system-artifact-consistency"
+trap 'rm -rf "${WORK_ROOT}"' EXIT
 SCRIPT="${ROOT}/onboarding/local-workspace/check-design-system-artifact-consistency.sh"
 
 fail() {

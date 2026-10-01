@@ -13,8 +13,10 @@ root `orchestrator` and seven logical specialists: `python-backend`,
 `integrations-ops`.
 
 Profiles are logical capability selection, never proof of process, filesystem,
-tool, MCP, credential, or physical-agent isolation. Root retains issue
-topology, external writes, integration, review-of-review, and closure.
+tool, MCP, credential, or physical-agent isolation. Accelerate classifies and
+prepares requests; ASDS owns the non-trivial workflow and its completion. The
+legacy profile name `orchestrator` does not grant Accelerate planning or
+closure authority after handoff. Specialist profiles are optional resources.
 
 The portable delegation meanings are defined by
 [`core/delegation/runtime-neutral-delegation.schema.json`](../../../core/delegation/runtime-neutral-delegation.schema.json)

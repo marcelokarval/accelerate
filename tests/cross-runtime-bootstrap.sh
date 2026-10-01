@@ -33,10 +33,11 @@ python3 "$sync" --runtime codex --test-root "$tmp" --dry-run >/dev/null
 python3 "$sync" --runtime codex --test-root "$tmp" --apply >/dev/null
 
 # A single managed block is corrected; duplicate/malformed blocks fail closed.
-perl -0pi -e 's/Standing Multi-Agent V2/Corrupted Policy/' "$target"
+perl -0pi -e 's/ASDS owns/Corrupted Policy/' "$target"
+if rg -F 'ASDS owns' "$target" >/dev/null; then fail 'fixture did not corrupt v1 ownership'; fi
 python3 "$sync" --runtime codex --test-root "$tmp" --dry-run >/dev/null
 python3 "$sync" --runtime codex --test-root "$tmp" --apply >/dev/null
-rg -F 'Standing Multi-Agent V2' "$target" >/dev/null || fail 'tampered block not corrected'
+rg -F 'ASDS owns' "$target" >/dev/null || fail 'tampered block not corrected'
 printf '\n<!-- accelerate-delegation-policy:start -->' >> "$target"
 if python3 "$sync" --runtime codex --test-root "$tmp" --dry-run >/dev/null 2>&1; then fail 'malformed block admitted'; fi
 cp "$tmp/original" "$target"

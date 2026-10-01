@@ -1,0 +1,505 @@
+{
+  "schema_version": 1,
+  "tests": [
+    {
+      "path": "tests/accelerate-governed-drift-sync.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/accelerate-v020-s1a-authority.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/agent-family-compatibility.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/agent-install-export-contract.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/agent-template-integrity.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/ascii-wireframe-references.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/authority-set-gate.sh",
+      "status": "historical-v0",
+      "reason": "Requires the retired governing-authority assembly before work; replaced by v1 explicit ASDS handoff ownership tests."
+    },
+    {
+      "path": "tests/base-agent-contract.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/browser-proof-monitoring.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/check-ship-readiness-review-decision.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/ci-contract.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/classification-golden.sh",
+      "status": "historical-v0",
+      "reason": "Requires Standing Multi-Agent V2 and old execution-route classification; replaced by test_routing.py behavior cases."
+    },
+    {
+      "path": "tests/codex-collaboration-policy.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/codex-global-bootstrap-install.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/codex-hook-contract.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/codex-logical-agent-install.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/codex-logical-agent-runtime-proof.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/codex-logical-agent-topology.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/codex-skill-catalog-truth.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/codex-v2-delegation-live-canary.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/codex-v2-delegation-transcript.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/control-plane-rc4-rc6.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/core-command-boundary.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/cross-runtime-bootstrap.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/delegation-dispatch-receipt.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/design-md-corpus-integrity.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/design-md-corpus-semantic.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/design-system-artifact-consistency.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/direct-fast-path-routing.sh",
+      "status": "historical-v0",
+      "reason": "Asserts old scoped/orchestrated root workflow and mandatory issue topology; replaced by v1 direct/asds routing tests."
+    },
+    {
+      "path": "tests/django-backend-safety.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/doc-snippet-integrity.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/doctrine-integrity.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/dogfood-closure-contract.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/dogfood-workspace-contract.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/generated-docs-integrity.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/github-pr-adapter-safety.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/github-pr-helper-parse.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/global-skill-mirror-stage.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/governance-maintenance-pack.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/gstack-pattern-adoption.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/host-export-contract.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/i18n-doctrine.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/linear-helper-python-parse.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/linear-oauth-status-honesty.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/linear-structured-mcp-binding.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/local-workflow-adapter.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/local-workspace-proof-gates.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/local-workspace-scenario-matrix.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/local-workspace-v3-contract.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/manifest-truth-gate.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/markdown-link-integrity.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/one-shot-protocol-closure.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/one-shot-protocol-delegation.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/one-shot-protocol-integrity.sh",
+      "status": "historical-v0",
+      "reason": "Requires One-Shot to be an unconditional root branch gate; v1 assigns specification and execution depth to ASDS. Optional One-Shot semantic and closure tests remain active."
+    },
+    {
+      "path": "tests/one-shot-protocol-semantic.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/physical-agent-runtime-adapter.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/post-spec-delegation-dispatch-gate.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/production-readiness-gate.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/profile-integrity.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/promotion-replay-fixtures.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/proof-locator-integrity.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/qa-proof-stack-strict-contract.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/recursive-self-improvement-contract.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/remote-write-registry.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/response-locale-gate.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/runtime-capability-governance.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/runtime-delegation-semantics.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/runtime-proof-fixtures.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/runtime-sync-codex-collaboration.sh",
+      "status": "historical-v0",
+      "reason": "Asserts mandatory collaboration bootstrap in deployed Accelerate; v1 bootstrap installation and worker-isolation tests replace that activation contract."
+    },
+    {
+      "path": "tests/runtime-sync-direct-fast-path.sh",
+      "status": "historical-v0",
+      "reason": "Asserts old runtime fast-path text and root dispatch gates; v1 routing and generated-entry tests replace them."
+    },
+    {
+      "path": "tests/semantic-implication-python-contract.sh",
+      "status": "historical-v0",
+      "reason": "v0 aggregator mandates Phase-1 currentness; semantic implication and harness catalog Python tests run directly in the v1 runner."
+    },
+    {
+      "path": "tests/semantic-negative-fixtures.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/skill-export-proof.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/subagent-assignment-builder.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/subagent-routing-policy.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/template-promotion-readiness.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/test_assignment_ontology.py",
+      "status": "active",
+      "reason": "Reusable capability regression; no automatic activation is implied."
+    },
+    {
+      "path": "tests/test_dsh_support_repair.py",
+      "status": "active",
+      "reason": "Reusable capability regression; no automatic activation is implied."
+    },
+    {
+      "path": "tests/test_harness_catalog.py",
+      "status": "active",
+      "reason": "Reusable capability regression; no automatic activation is implied."
+    },
+    {
+      "path": "tests/test_hermes_delegate_task_adapter.py",
+      "status": "active",
+      "reason": "Reusable capability regression; no automatic activation is implied."
+    },
+    {
+      "path": "tests/test_install_operational_skills.py",
+      "status": "active",
+      "reason": "Reusable capability regression; no automatic activation is implied."
+    },
+    {
+      "path": "tests/test_model_lanes.py",
+      "status": "active",
+      "reason": "Reusable capability regression; no automatic activation is implied."
+    },
+    {
+      "path": "tests/test_omnirouter_capability_battery.py",
+      "status": "active",
+      "reason": "Reusable capability regression; no automatic activation is implied."
+    },
+    {
+      "path": "tests/test_other_runtime_adapters.py",
+      "status": "active",
+      "reason": "Reusable capability regression; no automatic activation is implied."
+    },
+    {
+      "path": "tests/test_phase1_entry_currentness.py",
+      "status": "historical-v0",
+      "reason": "Asserts old Phase-1 Accelerate-owned OpenSpec entry eligibility; ASDS now owns structured activation, covered by v1 routing and ownership checks."
+    },
+    {
+      "path": "tests/test_runtime_delegation_semantics.py",
+      "status": "active",
+      "reason": "Reusable capability regression; no automatic activation is implied."
+    },
+    {
+      "path": "tests/test_s1a_conformance_enforcement.py",
+      "status": "active",
+      "reason": "Optional validator regression for immutable v0 receipt formats; validates data without activating v0 workflow."
+    },
+    {
+      "path": "tests/test_s1a_metadata_independence.py",
+      "status": "active",
+      "reason": "Optional validator regression for immutable v0 receipt formats; validates data without activating v0 workflow."
+    },
+    {
+      "path": "tests/test_semantic_implication.py",
+      "status": "active",
+      "reason": "Reusable capability regression; no automatic activation is implied."
+    },
+    {
+      "path": "tests/test_task_graph_heartbeat.py",
+      "status": "active",
+      "reason": "Reusable capability regression; no automatic activation is implied."
+    },
+    {
+      "path": "tests/theme-template-portability.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/visual-modeling-contract.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/workflow-adapter-contract.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/workflow-backend-neutrality.sh",
+      "status": "active",
+      "reason": "Existing capability and contract regression; migrate superseded ownership assertions when needed."
+    },
+    {
+      "path": "tests/phase1/test_a04_behavioral.py",
+      "status": "historical-v0",
+      "reason": "Phase-1 Accelerate-owned OpenSpec execution moved to independent ASDS; not v1 entry-layer behavior."
+    },
+    {
+      "path": "tests/phase1/test_phase1.py",
+      "status": "historical-v0",
+      "reason": "Phase-1 Accelerate-owned OpenSpec execution moved to independent ASDS; not v1 entry-layer behavior."
+    },
+    {
+      "path": "tests/harness/test-plugin-gaps.mjs",
+      "status": "historical-v0",
+      "reason": "Asserts superseded sovereign bootstrap text; input preservation and worker isolation are covered by test-plugin-v1.mjs."
+    },
+    {
+      "path": "tests/test_routing.py",
+      "status": "active",
+      "reason": "v1 classification and ASDS handoff behavior."
+    },
+    {
+      "path": "tests/test_v1_authority.py",
+      "status": "active",
+      "reason": "v1 source ownership and test inventory."
+    },
+    {
+      "path": "tests/harness/test-plugin-v1.mjs",
+      "status": "active",
+      "reason": "v1 root injection, ASDS handoff, worker isolation and unchanged user input."
+    }
+  ]
+}

@@ -55,7 +55,7 @@ rg -F 'nextjs-app-router-patterns/SKILL.md", enabled = true' "$tmp_dir/nextjs-fr
 packet="$(python3 "$assignment" "$topology" --agent python-backend --task-id CODEX-1 --objective 'Add one bounded backend change' --scope 'src/service.py' --write-scope 'src/service.py tests/test_service.py' --evidence 'pytest tests/test_service.py' --context 'Use the active issue and current worktree.')"
 printf '%s\n' "$packet" | rg -F 'Spawn Packet' >/dev/null || fail 'spawn packet missing heading'
 [ "$(printf '%s\n' "$packet" | rg -c '^-' || true)" -le 10 ] || fail 'spawn packet exceeds ten lines'
-printf '%s\n' "$packet" | rg -F 'Root only: issue topology, external writes, integration, review-of-review, closure.' >/dev/null || fail 'root boundary missing'
+printf '%s\n' "$packet" | rg -F 'ASDS coordinator owns integration, review, and completion; harness permissions govern external writes.' >/dev/null || fail 'root boundary missing'
 printf '%s\n' "$packet" | rg -F 'No nested spawn; return only evidence, risks, and recommendation.' >/dev/null || fail 'return boundary missing'
 printf '%s\n' "$packet" | rg -F 'Physical binding: model override gpt-5.6-terra/medium; fork_turns = none.' >/dev/null || fail 'default physical binding missing'
 

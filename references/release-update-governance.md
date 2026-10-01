@@ -21,17 +21,19 @@ source first and determine what that option resolves for that installation.
    Use the official exact-version/tag migration path instead.
 5. Use the supported build runtime used by the active service, not an
    incidental shell runtime.
-6. Freeze health, state authority, identity/count invariants, and a fresh
-   recoverable backup before cutover.
+6. Record health, state authority and identity/count invariants. Create a backup
+   only when specifically authorized with destination, size and retention.
 7. Install the immutable target and restart only the owned service if needed.
 8. Read back CLI/service versions, payload provenance, migrations, health,
    state invariants, logs, and update availability.
-9. Preserve or explicitly disposition rollback payloads and temporary roots.
+9. Remove operation-owned temporary roots and unauthorized residual payloads
+   after verifying consumers and preservation of unique user data.
 
 ## Stop rules
 
 - Do not chase a branch that advances after the denominator was frozen.
-- Do not disable backup merely to make an updater proceed.
+- Follow the official installation/update path; alternate runtimes and backups
+  require specific prior authorization, never generic update permission.
 - Allow at most one evidence-backed retry for a proven runtime mismatch.
 - After rollback, prove active payload, process, health, data, and service
   state directly; installer prose is not runtime truth.
@@ -60,7 +62,7 @@ Inspect `~/.paperclip/cli/install.json` before updating Paperclip.
 official_release = <immutable version/tag>
 installed_source_before = <npm|git|other>
 resolved_target = <exact target>
-backup = <fresh recoverable artifact>
+backup = <none or explicitly authorized artifact and retention>
 active_payload = <canonical path/version>
 service_health = <status/version>
 state_invariants = <preserved or explicit change>

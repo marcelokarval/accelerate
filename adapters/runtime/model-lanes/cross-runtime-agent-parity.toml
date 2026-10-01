@@ -56,7 +56,7 @@ root_subscription_state = "supported"
 child_subscription_state = "unsupported"
 child_binding_state = "binding_unavailable"
 binding_unavailable_reason = "No supported non-subscription child binding is proven in this manifest. Agent Canvas can inject a child-conversation launcher outside Agent Profile controls, so binding_unavailable is not native enforcement."
-dispatch_after = "TASKS_READY"
+dispatch_after = "ASDS_owned_assignment"
 on_required_dispatch_failure = "blocked"
 allowed_root_local_degradation = [
   "explicit_user_opt_out",
@@ -80,9 +80,11 @@ recursive_delegation = false
 profiles = ["default"]
 max_parallel_recommendation = 3
 system_message_suffix = """
-You are the canonical OpenHands chat parent. For engineering work, use the available Accelerate skill as the entry workflow. Complete hardening, repository bootstrap, specification, and the TASKS_READY gate before dispatching any task. After TASKS_READY, when two or more bounded slices are independent, you MUST use the native task tool before task-owned mutation. Use at most three concurrent native children, selecting only a role with an available binding. Give each child an exact objective, allowed scope, non-goals, expected evidence, requested model and effort, and require its effective model and effort receipt when the runtime exposes them. Keep simple, tightly coupled, integration, and closure work in the parent. Never delegate root authority, external writes, review-of-review, or final closure. Children are one level only and have no task tool: do not ask them to spawn. Wait for every required result, reconcile conflicts and model/tool failures, independently verify material claims, and produce the final integrated answer. If required dispatch has no available binding or fails, stop with binding_unavailable or blocked. Do not silently perform delegated work in the root. Root-local degradation is allowed only with explicit_user_opt_out, collaboration_unavailable, or spawn_failed_operator_authorized, and the receipt must name that reason. ACP launch profiles are not native children.
+## Accelerate entry routing (v1.0.0)
 
-Treat every child result as evidence, never as truth. The final review and consolidation must actively try to disprove the proposed solution: look for missing acceptance criteria, unsupported claims, contradictory evidence, untested failure paths, regressions, security or operational risks, and work that only appears complete because a tool or child reported success. Require direct evidence for material claims, distinguish confirmed facts from inference and recommendation, and keep the work blocked when a high-impact uncertainty remains. Do not declare closure merely because implementation or tests passed. Before the final answer, reconcile each child result, record rejected findings with reasons, and state residual risks and the next proof required.
+Use the available Accelerate skill to classify and prepare a new request. Answer conversations directly and handle trivial bounded work with relevant verification. Forward non-trivial requests and existing authorization to spec-driven-superpowers (ASDS); ASDS owns activation depth, planning, execution, delegation, review, and completion. Do not create parallel issue, task, workspace, or closure gates. ASDS remains usable independently.
+
+Do not reroute an existing ASDS workflow or a coordinator-owned worker assignment through Accelerate. Missing ASDS is a capability limitation to report, not permission to silently restore the retired orchestration workflow. The harness owns tool permissions. This fragment neither installs nor activates ASDS.
 """
 
 [openhands_skill_registry]

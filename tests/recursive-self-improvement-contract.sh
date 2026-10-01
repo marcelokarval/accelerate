@@ -16,7 +16,7 @@ DASHBOARD = root / "core/control-plane/recursive-improvement-situation-dashboard
 PACKET = root / "core/runtime-packets/recursive-improvement-cycle-packet.md"
 PACKET_INDEX = root / "core/runtime-packets/README.md"
 LEDGER = root / "planning/executive/2026-05-07-recursive-self-improvement-task-ledger.md"
-ALL = root / "tests/all.sh"
+ALL = root / "tests/suites.json"
 SELF = root / "tests/recursive-self-improvement-contract.sh"
 
 

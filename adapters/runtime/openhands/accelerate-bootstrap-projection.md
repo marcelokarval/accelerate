@@ -1,16 +1,9 @@
 ---
 name: accelerate-bootstrap
-description: Apply the Accelerate semantic delegation core in a governed OpenHands skill runtime.
+description: Classify requests and transfer non-trivial workflow ownership to ASDS.
 ---
-# OpenHands Bootstrap Projection
+## Accelerate entry routing (v1.0.0)
 
-This is a projection of the repository semantic core, not a second source of
-truth. The OpenHands adapter decides its native primitive, status, and actual
-enforcement. Dispatch only after `TASKS_READY`, and only when the adapter is
-supported and callable; blocked or export-only states must stop without a
-fallback.
+Use the available Accelerate skill to classify and prepare a new request. Answer conversations directly and handle trivial bounded work with relevant verification. Forward non-trivial requests and existing authorization to spec-driven-superpowers (ASDS); ASDS owns activation depth, planning, execution, delegation, review, and completion. Do not create parallel issue, task, workspace, or closure gates. ASDS remains usable independently.
 
-The root retains task graph, fan-in, integration, review-of-review, promotion,
-and closure. Map quality classes through the active adapter binding and record
-the effective model/effort receipt. This skill does not claim that a profile or
-catalog entry proves a callable OpenHands child.
+Do not reroute an existing ASDS workflow or a coordinator-owned worker assignment through Accelerate. Missing ASDS is a capability limitation to report, not permission to silently restore the retired orchestration workflow. The harness owns tool permissions. This fragment neither installs nor activates ASDS.
