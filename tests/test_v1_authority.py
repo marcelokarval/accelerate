@@ -54,3 +54,21 @@ def test_declared_release_version_matches_active_projections():
     assert str(metadata["version"]) == version
     assert f"Version **{version}**" in (ROOT / "README.md").read_text()
     assert f'version="{version}"' in (ROOT / "adapters/runtime/opencode/accelerate-plugin.js").read_text()
+
+
+def test_skill_index_is_independent_of_builder_home():
+    import importlib.util
+    from unittest.mock import patch
+
+    path = ROOT / "skills/governance/skill-catalog-router/scripts/build_index.py"
+    spec = importlib.util.spec_from_file_location("catalog_builder", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    with patch.object(Path, "home", return_value=Path("/home/developer")):
+        developer = module.build(ROOT)
+    with patch.object(Path, "home", return_value=Path("/home/runner")):
+        runner = module.build(ROOT)
+    assert developer == runner
+    assert all(row.split("\t")[2].startswith("~/.codex/skills/")
+               for row in runner.splitlines())
+    assert runner == (ROOT / "skills/governance/skill-catalog-router/references/index.tsv").read_text()
