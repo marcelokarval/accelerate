@@ -137,3 +137,49 @@ def test_failed_atomic_replace_removes_temporary_and_keeps_owner_file(tmp_path, 
         installer.atomic_write(file, b'changed', 0o600)
     assert file.read_bytes() == b'Owner rules\n'
     assert list(tmp_path.iterdir()) == [file]
+
+
+def test_explicit_upgrade_binds_old_bytes_and_preview_and_preserves_owner_rule(tmp_path):
+    skill = tmp_path / '.gemini/config/skills/accelerate/SKILL.md'
+    skill.parent.mkdir(parents=True)
+    skill.write_bytes(b'Previous reviewed skill\n')
+    skill.chmod(0o600)
+    rule = tmp_path / '.gemini/GEMINI.md'
+    rule.write_bytes(b'Owner policy\n')
+    old_hash = installer.digest(skill.read_bytes())
+    preview = cli(tmp_path, '--replace-skill-sha256', old_hash)
+    assert preview.returncode == 0, preview.stderr
+    token = json.loads(preview.stdout)['plan_sha256']
+    assert skill.read_bytes() == b'Previous reviewed skill\n'
+    assert cli(tmp_path, '--apply', '--expect-plan-sha256', token).returncode != 0
+    result = cli(tmp_path, '--replace-skill-sha256', old_hash,
+                 '--apply', '--expect-plan-sha256', token)
+    assert result.returncode == 0, result.stderr
+    assert skill.read_bytes() == (ROOT / 'global-runtime/accelerate/SKILL.md').read_bytes()
+    assert skill.stat().st_mode & 0o777 == 0o600
+    assert rule.read_bytes() == b'Owner policy\n'
+    assert not list(tmp_path.rglob('*.bak'))
+    assert not list(tmp_path.rglob('.accelerate-write-*'))
+    assert cli(tmp_path, '--replace-skill-sha256', old_hash).returncode != 0
+
+
+@pytest.mark.parametrize('old_hash', ['bad', 'F' * 64, '0' * 64])
+def test_upgrade_rejects_invalid_or_mismatched_hash_before_rule_write(tmp_path, old_hash):
+    skill = tmp_path / '.gemini/config/skills/accelerate/SKILL.md'
+    skill.parent.mkdir(parents=True); skill.write_bytes(b'Owner skill')
+    assert cli(tmp_path, '--with-entry-rule', '--replace-skill-sha256', old_hash).returncode != 0
+    assert skill.read_bytes() == b'Owner skill'
+    assert not (tmp_path / '.gemini/GEMINI.md').exists()
+
+
+def test_upgrade_requires_existing_target_and_stale_preview_cannot_write(tmp_path):
+    old_hash = installer.digest(b'Old skill')
+    assert cli(tmp_path, '--replace-skill-sha256', old_hash).returncode != 0
+    skill = tmp_path / '.gemini/config/skills/accelerate/SKILL.md'
+    skill.parent.mkdir(parents=True); skill.write_bytes(b'Old skill')
+    result = cli(tmp_path, '--replace-skill-sha256', old_hash)
+    token = json.loads(result.stdout)['plan_sha256']
+    skill.write_bytes(b'Concurrent owner edit')
+    assert cli(tmp_path, '--replace-skill-sha256', old_hash, '--apply',
+               '--expect-plan-sha256', token).returncode != 0
+    assert skill.read_bytes() == b'Concurrent owner edit'

@@ -32,6 +32,12 @@ appropriate. It consumes existing permissions and project configuration without
 repeated setup questions. This document does not modify ASDS implementation or
 promise an ASDS receiver for Accelerate's reference JSON format.
 
+Discovery limits travel in the existing `constraints` and `references` fields;
+no new handoff field is required. Accelerate identifies the intended project and
+necessary sources. Unrelated logs, sibling projects and evaluation evidence are
+not task context merely because they are readable. ASDS preserves these limits
+after acceptance and evaluates any concretely justified expansion itself.
+
 ## Continuation and return
 
 Once ASDS accepts a task, follow its progress and state. Do not run Accelerate's

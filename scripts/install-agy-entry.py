@@ -69,9 +69,11 @@ def render_rule(before: bytes | None, block: bytes) -> bytes:
     return original + separator + block
 
 
-def plan(home: Path, with_entry_rule: bool) -> tuple[list[dict], dict]:
+def plan(home: Path, with_entry_rule: bool, replace_skill_sha256: str | None = None) -> tuple[list[dict], dict]:
     """Prepare an exact native-path plan; do not create directories or receipts."""
     home = Path(os.path.abspath(home.expanduser()))
+    if replace_skill_sha256 is not None and (len(replace_skill_sha256) != 64 or any(c not in '0123456789abcdef' for c in replace_skill_sha256)):
+        raise ValueError('replace-skill-sha256 must be a lowercase SHA256')
     skill = (ROOT / 'global-runtime/accelerate/SKILL.md').read_bytes()
     rule = (ROOT / 'adapters/runtime/agy/entry-rule.md').read_bytes()
     entries = []
@@ -85,11 +87,14 @@ def plan(home: Path, with_entry_rule: bool) -> tuple[list[dict], dict]:
             if len(after) > 24000:
                 raise ValueError('GEMINI.md would exceed the documented 24000-byte rule limit')
         else:
-            if before is not None and before != source:
+            if replace_skill_sha256 is not None and (before is None or digest(before) != replace_skill_sha256):
+                raise ValueError(f'existing skill does not match replacement SHA256: {target}')
+            if before is not None and before != source and replace_skill_sha256 is None:
                 raise ValueError(f'existing skill differs; reconcile explicitly: {target}')
             after = source
         entries.append(dict(path=target, before=before, after=after, mode=mode))
     public = dict(format=1, adapter='agy-native-entry', with_entry_rule=with_entry_rule,
+                  replace_skill_sha256=replace_skill_sha256,
                   files=[dict(path=str(e['path']), before_sha256=None if e['before'] is None else digest(e['before']),
                               after_sha256=digest(e['after']), before_bytes=0 if e['before'] is None else len(e['before']),
                               after_bytes=len(e['after']), mode=e['mode'],
@@ -161,11 +166,12 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--home', type=Path, default=Path.home(), help='User home; override for fixtures')
     parser.add_argument('--with-entry-rule', action='store_true', help='Explicitly manage a conditional GEMINI.md block')
+    parser.add_argument('--replace-skill-sha256', help='Explicit replacement of the exact existing skill bytes; preview first')
     parser.add_argument('--apply', action='store_true')
     parser.add_argument('--expect-plan-sha256', help='Exact fingerprint from the approved preview; required to apply')
     args = parser.parse_args()
     try:
-        entries, report = plan(args.home, args.with_entry_rule)
+        entries, report = plan(args.home, args.with_entry_rule, args.replace_skill_sha256)
         if args.apply:
             if args.expect_plan_sha256 != report['plan_sha256']:
                 raise ValueError('apply requires the current preview --expect-plan-sha256')

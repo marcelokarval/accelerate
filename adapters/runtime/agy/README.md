@@ -42,7 +42,12 @@ binds the preview, not human identity or consent; obtain authorization separatel
 No installation is implied by publishing or reviewing this source.
 
 The skill source is `global-runtime/accelerate/SKILL.md`, copied byte-for-byte.
-An existing different skill is a conflict, never an implicit upgrade. The rule
+An existing different skill is a conflict, never an implicit upgrade. To update
+an installation, inspect its content and pass `--replace-skill-sha256 CURRENT_SHA`
+to preview and apply, together with the new preview fingerprint. The exact current
+hash is required even when the destination already matches the new source; a
+missing or changed target fails before writing. This explicit option replaces
+only the skill and preserves rule conflict handling. No previous copy is retained. The rule
 comes from `entry-rule.md`; enabling it replaces an exact standalone
 `No global skill or workflow bootstrap is configured.` line, if present, or appends
 the managed block. All other owner bytes and existing file permissions remain.

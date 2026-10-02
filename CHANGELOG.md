@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.2.0 — Native Agy entry and bounded discovery context
+
+Tracked by GitHub issue #28.
+
+- Publish the native Antigravity skill installer with optional owner-preserving
+  entry rule, no-write previews, explicit fingerprints and no automatic backups.
+- Support explicit upgrades bound to the existing skill hash; retain conflict
+  rejection, rollback of ordinary write failures and cleanup of temporary files.
+- Carry discovery scope through existing ASDS handoff fields; stop entry discovery
+  once routing is clear and distinguish tool execution from project test evidence.
+- Preserve the contaminated Agy probe and explicitly restricted repeat as distinct
+  evidence. Prompt instructions are not filesystem confinement or general proof
+  of model compliance. ASDS retains ownership after acceptance.
+
+
 ## 1.1.0 — Evidence-labelled entry and proportional hardening
 
 Tracked by GitHub issue #26.

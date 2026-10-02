@@ -64,6 +64,17 @@ Inspection precedes asking only for genuinely entry-blocking facts. Do not use
 an irrelevant lookup to delay the answer or treat a material choice as routine.
 If inspection reveals material effects, update observations before mutation.
 
+## Discovery scope
+
+Keep entry discovery within the intended project and necessary instructions or
+references. Before reading outside that scope, identify the missing task fact and
+why the specific source can resolve it; do not search sibling projects, home-wide
+logs or previous evaluation evidence merely because they are accessible. Stop
+entry discovery when routing is clear. Carry these limits in the existing handoff
+constraints/references; ASDS owns their preservation after acceptance. This is
+prompt guidance, not filesystem confinement. Report actual tool activity precisely:
+a version command is execution, but is not a test or a project program run.
+
 ## Hardening depth
 
 Conversation needs no engineering hardening. Trivial work needs a concise outcome
