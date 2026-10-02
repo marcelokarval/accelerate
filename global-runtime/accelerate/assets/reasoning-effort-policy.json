@@ -3,14 +3,28 @@
   "version": 1,
   "runtime": "codex",
   "default_provider_effort": "medium",
-  "supported_provider_efforts": ["low", "medium", "high", "xhigh"],
-  "decision_efforts": ["no-model", "low", "medium", "high"],
-  "prompt_hardening_modes": ["not-needed", "micro", "full"],
+  "supported_provider_efforts": [
+    "low",
+    "medium",
+    "high",
+    "xhigh"
+  ],
+  "decision_efforts": [
+    "no-model",
+    "low",
+    "medium",
+    "high"
+  ],
+  "prompt_hardening_modes": [
+    "not-needed",
+    "micro",
+    "full"
+  ],
   "advisory_classification_rules": {
     "prompt_hardening": {
-      "not-needed": "Use when the execution/classification packet is already explicit and no missing acceptance, proof, material conflict or risky boundary needs added instruction framing.",
-      "micro": "Use when a bounded task lacks one or more explicit acceptance, proof or observable details that can be added without a full authority and edge-case packet.",
-      "full": "Use when cross-runtime governance explicitly requires Prompt A/B, or when material authority conflict, an incident without a reliable observable, irreversible production/security/authentication/secrets action, or architecture deadlock requires explicit authorities, boundaries, edge cases and stop conditions."
+      "not-needed": "Objective, target and applicable constraints are already clear.",
+      "micro": "Clarify only a bounded missing entry fact, preserving existing decisions.",
+      "full": "Consolidate objective, scope, constraints, observed material effects and unresolved gaps for ASDS. No mandatory Prompt A/B, artifact, plan or repeated approval. ASDS owns detailed design and verification decisions."
     },
     "observable_status": {
       "not-applicable": "Use only when no semantic or runtime decision needs an observable, such as deterministic mechanics.",
@@ -60,19 +74,52 @@
   "high_escalation": {
     "default": false,
     "triggers": [
-      {"id": "authority-conflict", "description": "Repo-local authorities or evidence materially conflict and direct readback cannot resolve it."},
-      {"id": "observable-insufficient", "description": "An active incident or runtime decision lacks a reliable observable."},
-      {"id": "irreversible-risk", "description": "The decision is materially irreversible and affects production, security, authentication or secrets."},
-      {"id": "architecture-deadlock", "description": "Materially different architectural choices remain and repo-local authority is insufficient."},
-      {"id": "forensic-evidence-conflict", "description": "Agent or forensic evidence conflicts and root readback cannot resolve it."}
+      {
+        "id": "authority-conflict",
+        "description": "Repo-local authorities or evidence materially conflict and direct readback cannot resolve it."
+      },
+      {
+        "id": "observable-insufficient",
+        "description": "An active incident or runtime decision lacks a reliable observable."
+      },
+      {
+        "id": "irreversible-risk",
+        "description": "The decision is materially irreversible and affects production, security, authentication or secrets."
+      },
+      {
+        "id": "architecture-deadlock",
+        "description": "Materially different architectural choices remain and repo-local authority is insufficient."
+      },
+      {
+        "id": "forensic-evidence-conflict",
+        "description": "Agent or forensic evidence conflicts and root readback cannot resolve it."
+      }
     ],
     "prohibitions": [
-      {"id": "observable-sufficient", "description": "Do not escalate when an active coherent observable answers the decision."},
-      {"id": "documentation-sufficient", "description": "Do not escalate when repo-local AGENTS, documentation and lifecycle rules answer the decision."},
-      {"id": "bounded-acceptance-sufficient", "description": "Do not escalate when scope, acceptance, proof and stop conditions are already bounded."},
-      {"id": "direct-readback-available", "description": "Do not escalate to reconcile claims that a direct root readback can resolve."},
-      {"id": "priority-label-only", "description": "Project or issue priority HIGH is never a reasoning-effort trigger."},
-      {"id": "user-request-only", "description": "A bare request to use HIGH is insufficient without an objective trigger."}
+      {
+        "id": "observable-sufficient",
+        "description": "Do not escalate when an active coherent observable answers the decision."
+      },
+      {
+        "id": "documentation-sufficient",
+        "description": "Do not escalate when repo-local AGENTS, documentation and lifecycle rules answer the decision."
+      },
+      {
+        "id": "bounded-acceptance-sufficient",
+        "description": "Do not escalate when scope, acceptance, proof and stop conditions are already bounded."
+      },
+      {
+        "id": "direct-readback-available",
+        "description": "Do not escalate to reconcile claims that a direct root readback can resolve."
+      },
+      {
+        "id": "priority-label-only",
+        "description": "Project or issue priority HIGH is never a reasoning-effort trigger."
+      },
+      {
+        "id": "user-request-only",
+        "description": "A bare request to use HIGH is insufficient without an objective trigger."
+      }
     ],
     "required_receipt_fields": [
       "selected_effort",
@@ -82,12 +129,25 @@
       "budget",
       "stop_condition"
     ],
-    "lower_effort_insufficiency_forbidden": ["not-applicable"],
-    "budget_minimums": {"model_calls": 1}
+    "lower_effort_insufficiency_forbidden": [
+      "not-applicable"
+    ],
+    "budget_minimums": {
+      "model_calls": 1
+    }
   },
   "exceptional_efforts": {
-    "names": ["xhigh", "max", "ultra"],
-    "fail_closed_without": ["explicit_scope", "budget", "evaluation_case", "stop_condition"]
+    "names": [
+      "xhigh",
+      "max",
+      "ultra"
+    ],
+    "fail_closed_without": [
+      "explicit_scope",
+      "budget",
+      "evaluation_case",
+      "stop_condition"
+    ]
   },
   "receipt": {
     "expose_raw_chain_of_thought": false,

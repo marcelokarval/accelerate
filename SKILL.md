@@ -44,11 +44,16 @@ policy. Project instructions and the user's actual authorization still apply.
 5. Execute the direct route with proportionate verification, or pass the context
    to ASDS and transfer process ownership. Report actual results and limitations.
 
-Prompt length and file count do not establish triviality. Unresolved uncertainty,
-multiple dependent steps, architecture changes, sensitive data, authentication,
-authorization, billing, migrations, secrets, irreversible effects and runtime
-truth changes exclude the trivial route. A complex read-only analysis may be
-non-trivial; ASDS decides its appropriate workflow without forcing OpenSpec.
+Apply [the entry rubric](core/entry-rubric.md) before choosing a route. Classify
+the requested action, not topic words. Inspect/edit/test are operations for one
+outcome, not dependent deliverables. Require evidence and a concrete consequence
+for material risk. Length, file count and routine verification do not imply
+complexity. A one-line access-policy change can still be non-trivial.
+
+Resolve only entry-blocking gaps: inspect available facts, ask for a missing user
+choice, or carry design decisions to ASDS when the route is already clear.
+Hardening preserves objective, target, constraints, uncertainty and prior decisions;
+it does not create a plan, mandatory artifact or another approval round.
 
 ## Handoff to ASDS
 
@@ -86,7 +91,9 @@ acceptance process.
 
 ## Executable Contract
 
-[`core/routing.py`](core/routing.py) classifies explicit structured observations
+[`core/entry.py`](core/entry.py) applies the evidence-labelled rubric and returns
+respond, inspect, ask, execute_direct, handoff or continue_asds. It preserves
+ASDS ownership during continuation. [`core/routing.py`](core/routing.py) classifies explicit structured observations
 and validates the handoff fields. It performs no model inference, installation,
 filesystem mutation, ASDS invocation or authorization enforcement. A host adapter
 must supply observations and deliver accepted handoffs; this module alone does

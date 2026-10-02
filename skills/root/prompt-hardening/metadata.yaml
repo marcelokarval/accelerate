@@ -1,11 +1,11 @@
 name: prompt-hardening
-category: root
-status: standalone-adapted
+category: routing
+status: native
 source: skills/root/prompt-hardening
 owner: accelerate
 runtime_export: optional
 local_native_owner: core/hardening/prompt-hardening.md
 adaptation_policy: >
-  Standalone Accelerate version. Keep prompt-hardening project-agnostic,
-  workflow-adapter-aware, and visible through Prompt A / Prompt B artifacts.
-last_reviewed: 2026-04-22
+  Clarify entry context proportionately, preserve decisions and refusals,
+  and leave planning and lifecycle ownership with ASDS.
+last_reviewed: 2026-10-01

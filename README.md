@@ -1,6 +1,6 @@
 # Accelerate
 
-Version **1.0.0**. Accelerate classifies and prepares requests before
+Version **1.1.0**. Accelerate classifies and prepares requests before
 `spec-driven-superpowers` (ASDS).
 It also provides reusable engineering skills. ASDS owns the structured workflow
 for work handed to it and remains usable independently.
@@ -32,8 +32,11 @@ Read [SKILL.md](SKILL.md) for agent behavior and
 [the integration contract](core/asds-integration.md) for ownership, handoff,
 resumption and unavailable-ASDS behavior. `core/routing.py` is a dependency-free
 Python reference implementation for structured observations; it does not infer
-intent from arbitrary text or invoke ASDS. Its executable examples and negative
-cases are in `tests/test_routing.py`.
+intent from arbitrary text or invoke ASDS. `core/entry.py` adds
+evidence-labelled observations, entry gaps and ASDS continuation using the
+[entry rubric](core/entry-rubric.md). Its labelled prompt cases live in
+`evals/entry-cases.json`; reference-observation tests do not measure model
+interpretation. Executable cases are in `tests/test_routing.py` and `tests/test_entry.py`.
 
 A harness adapter loads the entry instructions through its supported discovery
 mechanism. Runtime prompts live under `global-runtime/accelerate/` and

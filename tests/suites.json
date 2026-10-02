@@ -500,6 +500,11 @@
       "path": "tests/harness/test-plugin-v1.mjs",
       "status": "active",
       "reason": "v1 root injection, ASDS handoff, worker isolation and unchanged user input."
+    },
+    {
+      "path": "tests/test_entry.py",
+      "status": "active",
+      "reason": "Evidence-labelled routing, entry gaps, continuation and reference prompt cases."
     }
   ]
 }
