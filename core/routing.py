@@ -36,6 +36,8 @@ def classify(request: dict[str, Any]) -> dict[str, Any]:
 
     The caller must establish observations from the actual request. This function
     does not assess natural language or infer that ASDS is installed or accepted.
+    multi_step denotes dependent outcomes, not read/edit/test operations; risks
+    are material effects. See entry-rubric.md and assess_entry for richer inputs.
     """
     _fields(request, _REQUEST_FIELDS, "request")
     for field in _REQUEST_FIELDS - {"risks"}:

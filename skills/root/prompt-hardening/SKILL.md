@@ -1,159 +1,44 @@
 ---
 name: prompt-hardening
-description: Use when a software-engineering request is long, ambiguous, multi-phase, architecture-heavy, or likely to drift unless it is converted into a bounded execution-ready prompt.
+description: Clarify intent, target, scope, constraints and material gaps before routing engineering work; preserve existing decisions without creating another plan.
 metadata:
-  category: root
+  category: routing
   origin: accelerate-native
 ---
+# Prompt hardening at entry
 
-# Prompt Hardening
+Use this skill when wording leaves a material ambiguity about the requested
+outcome or target. Length, many commands, or a sensitive topic alone do not
+require hardening. Conversation and already clear bounded edits need no ritual.
 
-Use this skill to turn a broad request into a prompt that is safe to execute
-without interpretation drift.
+## Procedure
 
-## When to Use
+1. Recover the user's actual objective, intended target and explicit exclusions
+   from available context. Keep authorization, refusal and uncertainty intact.
+2. Separate facts supported by sources from hypotheses. Inspect a bounded source
+   when it can resolve an entry question. Do not invent a requirement to fill a gap.
+3. Ask only about a missing user choice that blocks routing or the next authorized
+   step. Reuse prior answers and permissions; silence grants nothing.
+4. State the outcome and applicable constraints concisely when clarification is
+   useful. Preserve meaning, language, scope and exclusions. No mandatory paired
+   original/rewritten prompt, file or approval round is required.
+5. If work is non-trivial, pass this context and remaining design questions to
+   ASDS. Do not specify phases, task graphs, staffing, proof stacks or closure.
 
-Use this skill when the input is:
+## Ownership
 
-- long
-- ambiguous
-- multi-surface
-- multi-phase
-- epic-like
-- architecture-heavy
-- likely to split into several issues, phases, or review lenses
+Accelerate owns entry preparation and routing. ASDS may reuse this skill for
+bounded clarification inside its own workflow; selecting it does not restart
+entry, overwrite accepted decisions or transfer ownership back to Accelerate.
+Never force brainstorming, planning-with-files or executing-plans from this skill.
+For direct work, verify the actual adjustment. For accepted ASDS work, preserve
+its coordinator and return the clarified facts or remaining questions to it.
 
-Do not use it for:
+## Quality check
 
-- tiny bounded edits
-- single-bug fixes with a clear repro and obvious owner
-- direct factual questions
-
-## Core Principle
-
-Do not execute a complex request in its raw form when the wording still allows
-multiple reasonable interpretations.
-
-`prompt-hardening` exists to produce:
-
-- bounded phases
-- explicit goals
-- explicit non-goals
-- clearer ownership
-- a safer execution order
-
-## Output Contract
-
-The hardened result should make these things explicit:
-
-1. what problem is actually being solved
-2. what is in scope now
-3. what is not in scope now
-4. which phases or slices exist
-5. which follow-ups are expected instead of being silently absorbed
-6. which quality lenses are likely mandatory
-
-When the gate is active, the visible artifact must also make the transformation
-itself explicit:
-
-7. `Prompt A`
-   - the raw or minimally normalized input prompt being hardened
-8. `Prompt B`
-   - the bounded execution-ready prompt that will govern the run
-
-When `prompt-hardening` is actually triggered as a gate, the run should expose
-one visible artifact before normal execution continues:
-
-- `Hardened Prompt`
-- `Execution-Ready Prompt`
-- `Execution-Ready Prompt Packet`
-
-Naming the gate without surfacing one of these artifacts is a workflow failure,
-not a stylistic omission.
-
-## Workflow
-
-### 1. Separate Intent From Surface Noise
-
-Extract:
-
-- the real user goal
-- the visible surfaces involved
-- the hidden architectural concerns
-- the likely misunderstanding vectors
-
-### 2. Bound the Problem
-
-Rewrite the request into:
-
-- a primary goal
-- bounded sub-goals
-- clear non-goals
-
-### 3. Identify Workflow Shape
-
-Decide whether the next step should route into:
-
-- `brainstorming`
-- `systematic-debugging`
-- the active workflow adapter
-- `planning-with-files`
-- `executing-plans`
-
-### 4. Name the Quality and Review Expectations
-
-When relevant, call out:
-
-- `Product Correctness`
-- `Anti-Abuse`
-- `Contract Correctness`
-- micro-review checkpoints during execution
-- final recursive forensic review before closure
-
-### 5. Produce an Execution-Ready Prompt
-
-The result should be usable as:
-
-- a discussion driver
-- a spec seed
-- an issue seed for the active workflow backend
-- a plan-opening prompt for `accelerate`
-
-The result should be visible enough that another operator could point to the
-artifact and say: "this is the bounded prompt we are executing now."
-
-At minimum, the visible artifact should include:
-
-- `Prompt A`
-- `Prompt B`
-- primary problem being solved
-- bounded scope now
-- explicit non-goals
-- next branch or skill route
-- mandatory quality lenses if already known
-
-`Prompt B` must be materially more execution-ready than `Prompt A`.
-
-If the artifact only rephrases the prompt at the same abstraction level or only
-lists a summary without showing the before/after transformation, treat the gate
-as unsatisfied.
-
-## Relationship To Accelerate and ASDS
-
-This is optional request-elaboration guidance, not a mandatory Accelerate entry
-gate. Accelerate collects enough context to classify and hand off; ASDS may
-select deeper hardening when its workflow needs it. Do not create a duplicate
-specification, plan or approval, or require a Prompt A/Prompt B artifact merely
-because Accelerate was loaded. When explicitly selected, deliver the bounded
-hardening result to the current workflow owner without taking over its lifecycle.
-
-## Verification
-
-This skill is being used correctly if:
-
-- the revised prompt removes obvious ambiguity
-- the phases are bounded
-- non-goals are explicit
-- the next skill branch becomes clear
-- the hardened prompt reduces the chance of drifting implementation
-- the run visibly exposes the hardened artifact instead of only naming the gate
+The prepared request preserves the goal, target, exclusions and decisions; it
+labels uncertainty, narrows only within authorized scope and enables the next
+step without inventing a plan. Ask no question already answered in context.
+Routine choices remain with the executor; material design choices remain with
+ASDS. A reformulation that adds features, removes a refusal or assumes permission
+fails this check even if it sounds more detailed.

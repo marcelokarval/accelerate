@@ -10,7 +10,7 @@ permissions on behalf of the user or override project/system instructions.
 
 Conversation bypasses engineering workflows even inside an initialized project.
 Trivial engineering proceeds directly with relevant verification. Sensitive,
-irreversible, uncertain or multi-step engineering is forwarded to ASDS; a short
+irreversible, materially uncertain or dependent-outcome engineering is forwarded to ASDS; a short
 request or small diff is not evidence of low risk. Explicit ASDS requests route
 to ASDS even when small. No setup, issue or artifact is created by classification.
 

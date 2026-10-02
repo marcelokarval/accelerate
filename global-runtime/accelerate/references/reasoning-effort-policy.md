@@ -1,6 +1,6 @@
 # Codex Reasoning Effort Policy
 
-This is the Codex-native decision contract. Machine authority is `../assets/reasoning-effort-policy.json`; validation belongs to this skill package and never falls back to the Hermes copy.
+This optional Codex effort helper does not activate entry or own ASDS work. Machine authority is `../assets/reasoning-effort-policy.json`; validation belongs to this skill package and never falls back to the Hermes copy.
 
 ## Minimum sufficient effort
 
@@ -19,9 +19,11 @@ Repo-local `AGENTS.md` and project documentation remain authoritative after entr
 
 Classify separately from reasoning effort:
 
-- `not-needed`: the current request or packet already supplies goal, done, constraints and proof;
-- `micro`: add only the missing compact outcome constraints;
-- `full`: produce Prompt A/B for material ambiguity, governance mutation, side effects or multi-surface work.
+- `not-needed`: objective, target and applicable constraints are already clear;
+- `micro`: clarify only a bounded missing entry fact;
+- `full`: consolidate objective, scope, constraints, observed effects and unresolved
+  gaps for ASDS. This legacy enum does not require Prompt A/B, artifacts, a plan
+  or another approval. ASDS owns detailed design and verification decisions.
 
 Full hardening does not imply `high`.
 

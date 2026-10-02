@@ -49,7 +49,7 @@ def test_declared_release_version_matches_active_projections():
     import yaml
     version = (ROOT / "VERSION").read_text().strip()
     assert re.fullmatch(r"\d+\.\d+\.\d+", version)
-    assert version == "1.0.0", "the responsibility split is the v1 major release"
+    assert version.split(".")[0] == "1", "current projections implement the v1 ownership split"
     metadata = yaml.safe_load((ROOT / "global-runtime/accelerate/metadata.yaml").read_text())
     assert str(metadata["version"]) == version
     assert f"Version **{version}**" in (ROOT / "README.md").read_text()

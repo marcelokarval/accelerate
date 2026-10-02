@@ -9,15 +9,18 @@ not reactivate that earlier controller.
 | --- | --- | --- | --- |
 | Conversation, explanation or no-op | conversation | Accelerate | Respond directly; do not initialize project state |
 | Understood, bounded, reversible engineering adjustment without sensitive risk | direct | Accelerate | Make the requested change and verify its relevant behavior |
-| Uncertain, multi-step, broad or sensitive engineering work | asds | ASDS after acceptance | Transfer context; ASDS decides workflow and activation |
+| Materially uncertain, dependent-outcome, broad or sensitive engineering work | asds | ASDS after acceptance | Transfer context; ASDS decides workflow and activation |
 | Explicit request to use ASDS | asds | ASDS after acceptance | Honor the selection without inferring permission to initialize or mutate |
 
 ## Classification
 
 `core/routing.py` accepts explicit observations, not raw natural-language intent.
 All boolean observations must be actual booleans. `risks` contains nonempty
-risk descriptions; any identified risk excludes the trivial route. Uncertainty,
-a multi-step task, an unbounded scope or a non-reversible change also excludes it.
+material risk descriptions supported by evidence and consequence. Material uncertainty,
+dependent deliverables, broad scope or irreversible change exclude direct work.
+Read/edit/test operations alone are not dependent deliverables. Apply
+[the entry rubric](../entry-rubric.md); `core/entry.py` also represents unresolved
+entry gaps and continuation without reclassifying ASDS-owned work.
 Unknown fields are rejected so an adapter cannot silently misspell a control.
 
 The executable routes are `conversation`, `direct` and `asds`. Classification

@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1.0 — Evidence-labelled entry and proportional hardening
+
+Tracked by GitHub issue #26.
+
+- Define material effects with evidence and consequence, distinguishing topic words
+  and routine operations from behavioral changes and dependent outcomes.
+- Add pure entry assessment with inspect/ask/handoff/continuation decisions; retain
+  the v1 seven-field ASDS handoff and authorization/refusal semantics.
+- Limit hardening to entry context and unresolved gaps; remove duplicate planning
+  and mandatory approval artifacts from the prompt-hardening skill.
+- Align portable entry instructions and add labelled prompts with policy regressions.
+
+Source release only. Reference observations test policy, not natural-language
+interpretation, fresh-session discovery or deployed harness compliance.
+
 ## 1.0.0 — Accelerate before ASDS
 
 Tracked by GitHub issue #24.
