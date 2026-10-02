@@ -1,0 +1,17 @@
+name: agy
+type: native-skill-installer
+status: experimental
+authority_boundary: entry classification only; ASDS owns accepted work; harness owns permissions
+allowed_tools: []
+suppressed_capabilities:
+  - filesystem confinement by prompt
+  - implicit installation or upgrade
+  - ASDS installation
+  - model or provider configuration
+  - universal runtime compliance claim
+validation_command: python3 -B scripts/install-agy-entry.py --help
+proof_artifacts:
+  - scripts/install-agy-entry.py
+  - tests/test_agy_entry_install.py
+  - docs/reviews/native-entry-1.2.0.md
+privacy_notes: previews report hashes and sizes only; no owner rule content or credentials

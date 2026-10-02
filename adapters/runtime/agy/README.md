@@ -17,6 +17,8 @@ The installed `agy` executable's embedded customization documentation also names
 `~/.gemini/config/` as global discovery and `skills/<name>/SKILL.md` as the skill
 layout. This is Antigravity CLI (`agy`), not the separate Gemini CLI product.
 No live discovery or routing qualification is implied by file placement.
+The registry marks this adapter experimental because model compliance remains
+bounded; generic host-export documents are not native installation.
 
 ## Preview and explicit application
 
