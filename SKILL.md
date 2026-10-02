@@ -55,6 +55,17 @@ choice, or carry design decisions to ASDS when the route is already clear.
 Hardening preserves objective, target, constraints, uncertainty and prior decisions;
 it does not create a plan, mandatory artifact or another approval round.
 
+## Discovery scope
+
+Keep entry discovery within the intended project and necessary instructions or
+references. Before reading outside that scope, identify the missing task fact and
+why the specific source can resolve it; do not search sibling projects, home-wide
+logs or previous evaluation evidence merely because they are accessible. Stop
+entry discovery when routing is clear. Carry these limits in the existing handoff
+constraints/references; ASDS owns their preservation after acceptance. This is
+prompt guidance, not filesystem confinement. Report actual tool activity precisely:
+a version command is execution, but is not a test or a project program run.
+
 ## Handoff to ASDS
 
 Pass the objective, intended project, scope, constraints, identified risks,

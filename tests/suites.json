@@ -505,6 +505,11 @@
       "path": "tests/test_entry.py",
       "status": "active",
       "reason": "Evidence-labelled routing, entry gaps, continuation and reference prompt cases."
+    },
+    {
+      "path": "tests/test_agy_entry_install.py",
+      "status": "active",
+      "reason": "Agy native-path preview, explicit application, owner-rule preservation and failure cleanup."
     }
   ]
 }

@@ -25,6 +25,17 @@ require hardening. Conversation and already clear bounded edits need no ritual.
 5. If work is non-trivial, pass this context and remaining design questions to
    ASDS. Do not specify phases, task graphs, staffing, proof stacks or closure.
 
+## Discovery scope
+
+Keep entry discovery within the intended project and necessary instructions or
+references. Before reading outside that scope, identify the missing task fact and
+why the specific source can resolve it; do not search sibling projects, home-wide
+logs or previous evaluation evidence merely because they are accessible. Stop
+entry discovery when routing is clear. Carry these limits in the existing handoff
+constraints/references; ASDS owns their preservation after acceptance. This is
+prompt guidance, not filesystem confinement. Report actual tool activity precisely:
+a version command is execution, but is not a test or a project program run.
+
 ## Ownership
 
 Accelerate owns entry preparation and routing. ASDS may reuse this skill for

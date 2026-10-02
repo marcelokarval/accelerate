@@ -1,6 +1,6 @@
 # Accelerate
 
-Version **1.1.0**. Accelerate classifies and prepares requests before
+Version **1.2.0**. Accelerate classifies and prepares requests before
 `spec-driven-superpowers` (ASDS).
 It also provides reusable engineering skills. ASDS owns the structured workflow
 for work handed to it and remains usable independently.
@@ -42,6 +42,12 @@ A harness adapter loads the entry instructions through its supported discovery
 mechanism. Runtime prompts live under `global-runtime/accelerate/` and
 `adapters/runtime/`. Source availability is not proof of installation. This
 release does not install/update DSH, ASDS or any user-home runtime.
+
+The [native Agy adapter](adapters/runtime/agy/README.md) provides a preview-first
+installer and explicit hash-bound skill updates using the supported user paths.
+Its optional entry rule preserves owner policy and creates no backups. See the
+[bounded runtime evidence](docs/reviews/native-entry-1.2.0.md) for observed
+selection, scope drift and the limits of the repeated probe.
 
 ## Reusable capabilities and previous releases
 

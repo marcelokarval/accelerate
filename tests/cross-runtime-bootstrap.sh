@@ -33,7 +33,7 @@ python3 "$sync" --runtime codex --test-root "$tmp" --dry-run >/dev/null
 python3 "$sync" --runtime codex --test-root "$tmp" --apply >/dev/null
 
 # A single managed block is corrected; duplicate/malformed blocks fail closed.
-perl -0pi -e 's/ASDS owns/Corrupted Policy/' "$target"
+perl -0pi -e 's/ASDS owns/Corrupted Policy/g' "$target"
 if rg -F 'ASDS owns' "$target" >/dev/null; then fail 'fixture did not corrupt v1 ownership'; fi
 python3 "$sync" --runtime codex --test-root "$tmp" --dry-run >/dev/null
 python3 "$sync" --runtime codex --test-root "$tmp" --apply >/dev/null
