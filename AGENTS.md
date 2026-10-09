@@ -8,8 +8,9 @@ spec-driven-superpowers (ASDS). This repository owns Accelerate, not ASDS.
 Read `SKILL.md` and `core/asds-integration.md`. These define current behavior.
 Accelerate identifies intent, project, scope, constraints, risk and existing
 permissions. Conversation and bounded low-risk work proceed directly. Other
-engineering work is handed to ASDS, which owns activation, specification,
-planning, scheduling, review, integration and completion of that work.
+engineering work that needs planning is handed to ASDS, which owns specification,
+task decomposition, planning review, persistence and planning delivery. ASDS does
+not implement future tasks; the caller selects a consumer after planning returns.
 
 Do not reactivate the v0 orchestration procedure through a specialist skill,
 legacy reference, runtime profile, workspace helper or generated projection.

@@ -6,5 +6,5 @@ bounded clarification. Older full-hardening gates are superseded.
 
 Conversation bypasses engineering. Clear trivial work uses the existing outcome
 and constraints. Non-trivial work receives only enough preparation to hand off;
-ASDS owns detailed requirements, decisions, planning and completion. Do not add
+ASDS owns detailed requirements, decisions, planning review and delivery. Do not add
 mandatory artifacts, phases, issue topology or repeated permission questions.

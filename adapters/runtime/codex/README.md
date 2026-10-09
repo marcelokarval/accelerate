@@ -14,7 +14,7 @@ root `orchestrator` and seven logical specialists: `python-backend`,
 
 Profiles are logical capability selection, never proof of process, filesystem,
 tool, MCP, credential, or physical-agent isolation. Accelerate classifies and
-prepares requests; ASDS owns the non-trivial workflow and its completion. The
+prepares requests; ASDS owns planning through reviewed delivery and then releases ownership. The
 legacy profile name `orchestrator` does not grant Accelerate planning or
 closure authority after handoff. Specialist profiles are optional resources.
 

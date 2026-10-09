@@ -23,7 +23,9 @@ def assess_entry(observation: dict[str, Any]) -> dict[str, Any]:
     never determines complexity. Routing gaps use inspection or a user question;
     workflow decisions travel to ASDS. Accepted ASDS work bypasses new triage.
     """
-    _fields(observation, _FIELDS, "entry observation")
+    fields = set(observation)
+    if fields not in (set(_FIELDS), set(_FIELDS) | {"requested_product"}):
+        _fields(observation, _FIELDS, "entry observation")
     for field, allowed in {
         "intent": ("conversation", "engineering"),
         "scope": ("bounded", "broad", "unknown"),
@@ -33,6 +35,9 @@ def assess_entry(observation: dict[str, Any]) -> dict[str, Any]:
         if observation[field] not in allowed:
             raise ValueError(f"invalid {field}")
     _text(observation["outcome"], "outcome")
+    requested_product = observation.get("requested_product", "implementation")
+    if requested_product not in ("implementation", "planning", "conversation"):
+        raise ValueError("invalid requested_product")
     if type(observation["explicit_asds"]) is not bool:
         raise ValueError("explicit_asds must be a boolean")
     _texts(observation["operations"], "operations")
@@ -64,6 +69,9 @@ def assess_entry(observation: dict[str, Any]) -> dict[str, Any]:
         if questions:
             return {"state": "needs_context", "route": None, "next_action": action,
                     "reasons": questions}
+    if requested_product == "planning":
+        return {"state": "ready", "route": "asds", "next_action": "handoff",
+                "reasons": ["planning is the requested product; ASDS owns planning only"]}
     kinds = {signal["kind"] for signal in observation["signals"]}
     workflow_gap = any(gap["resolver"] == "asds" for gap in observation["gaps"])
     known_asds = (observation["explicit_asds"] or kinds or workflow_gap

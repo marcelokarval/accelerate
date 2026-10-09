@@ -2,15 +2,15 @@
 
 ## Ownership
 
-Accelerate owns entry classification and initial preparation. ASDS owns its own
-activation decision and the lifecycle of work it accepts: elaboration, specs,
-planning, tasks, scheduling, execution guidance, review, integration and closure.
+Accelerate owns entry classification and initial preparation. ASDS owns only the
+planning lifecycle it accepts: elaboration, specs, task decomposition, planning
+review, persistence and planning return. It does not implement future tasks.
 The harness executes tools and enforces permissions. Neither product can grant
 permissions on behalf of the user or override project/system instructions.
 
 Conversation bypasses engineering workflows even inside an initialized project.
 Trivial engineering proceeds directly with relevant verification. Sensitive,
-irreversible, materially uncertain or dependent-outcome engineering is forwarded to ASDS; a short
+irreversible, materially uncertain or dependent-outcome engineering is forwarded to ASDS for planning; a short
 request or small diff is not evidence of low risk. Explicit ASDS requests route
 to ASDS even when small. No setup, issue or artifact is created by classification.
 
@@ -27,7 +27,7 @@ Validation proves structure only, not provenance, current permission or consent.
 The consumer must consult the session and harness authority. Silence is never
 permission. Refused OpenSpec initialization does not mean the task is refused.
 
-ASDS decides whether to initialize/use OpenSpec and which workflow depth is
+ASDS decides whether to initialize/use OpenSpec and which planning depth is
 appropriate. It consumes existing permissions and project configuration without
 repeated setup questions. This document does not modify ASDS implementation or
 promise an ASDS receiver for Accelerate's reference JSON format.
@@ -40,13 +40,15 @@ after acceptance and evaluates any concretely justified expansion itself.
 
 ## Continuation and return
 
-Once ASDS accepts a task, follow its progress and state. Do not run Accelerate's
-classifier again on every ASDS subtask, create another task graph, mandate a
+Once ASDS accepts planning, follow its planning progress and state. Do not run Accelerate's
+classifier again on every planning subtask, create another task graph, mandate a
 second review, or reopen completed approvals. A materially changed goal, target,
 risk or permission requires reassessment of the affected work, not an automatic
 restart. Preserve accepted work and relevant evidence on resumption.
 
-ASDS returns outcome, evidence references, remaining work and limitations.
+ASDS returns planning outcome, evidence references, remaining planning work and
+limitations, then releases ownership. If implementation was originally requested,
+the caller selects its consumer; ASDS planning delivery does not fulfill it.
 Accelerate may present that result in the user's language, attributing it to the
 workflow. Presentation does not constitute another acceptance/closure gate.
 A returned claim is not proof of live runtime health or deployment.

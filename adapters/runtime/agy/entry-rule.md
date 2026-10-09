@@ -8,7 +8,8 @@ relevant verification; do not load a workflow or ask about setup for those reque
 For new structured engineering work (material uncertainty, shared interfaces,
 dependent outcomes or material effects), read the available Accelerate skill at
 ~/.gemini/config/skills/accelerate/SKILL.md before creating a plan. Pass the context
-to spec-driven-superpowers (ASDS), which owns discovery, planning and completion.
+to spec-driven-superpowers (ASDS), which owns discovery and the reviewed planning
+product, then releases ownership to a caller-selected implementation consumer.
 If the owner explicitly selected ASDS directly, honor that selection.
 
 Continue an accepted ASDS task or worker assignment with its existing coordinator;

@@ -1,6 +1,6 @@
 ---
 name: accelerate
-description: Classify requests and prepare context. Handle conversation and trivial work directly; hand non-trivial work to spec-driven-superpowers (ASDS), which owns its process.
+description: Classify the requested product and prepare context. Handle conversation and trivial implementation directly; use ASDS for reviewed planning, then return implementation to a caller-selected consumer.
 metadata:
   category: routing
   origin: standalone-native-router
@@ -17,8 +17,9 @@ neither absorbs ASDS nor runs a second planning and acceptance process around it
 | --- | --- |
 | Understand the request, preserve language and existing authorization, classify and prepare context | Accelerate |
 | Respond to conversation and execute trivial bounded work with relevant verification | Accelerate |
-| Decide whether and how to activate a structured workflow after handoff | ASDS |
-| Specification, planning, task dependencies, execution strategy, review, integration and completion of accepted work | ASDS |
+| Decide whether and how to activate a planning workflow after handoff | ASDS |
+| Specification, task dependencies, planning review, persistence and planning delivery | ASDS |
+| Implement future tasks after planning, when requested and authorized | Caller-selected consumer |
 | Tools, actual permissions and execution isolation | Host harness |
 | Domain knowledge and technical guidance | Relevant reusable skills |
 
@@ -39,8 +40,8 @@ policy. Project instructions and the user's actual authorization still apply.
    create a detailed plan or repeat approvals before handing off.
 4. Choose one route using [the routing matrix](core/control-plane/branch-enforcement-matrix.md):
    - **conversation**: respond directly; no engineering workflow;
-   - **direct**: trivial, understood, bounded, reversible, low-risk work;
-   - **asds**: non-trivial work or an explicit request to use ASDS.
+   - **direct**: trivial, understood, bounded, reversible, low-risk implementation;
+   - **asds**: planning is requested/needed, or the user explicitly requests ASDS.
 5. Execute the direct route with proportionate verification, or pass the context
    to ASDS and transfer process ownership. Report actual results and limitations.
 
@@ -85,8 +86,9 @@ with Accelerate's historical orchestrator. A different execution workflow needs
 an explicit user choice. Do not reclassify risky work as trivial to bypass the
 missing dependency.
 
-For resumed work, reuse the existing ASDS state and authorization context. Do
-not restart planning or route an ASDS-owned task back through Accelerate.
+For resumed planning, reuse the existing ASDS state and authorization context.
+After planning delivery ASDS releases ownership. A follow-up asking to implement
+returns to entry/caller selection; it must not keep ASDS as executor by inertia.
 
 ## Technical Skills and Evidence
 

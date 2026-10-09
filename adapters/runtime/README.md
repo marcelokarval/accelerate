@@ -2,7 +2,7 @@
 
 ## v1 ownership
 
-These are optional technical resources, not automatic Accelerate workflow policy. The active entry classifier hands non-trivial work to ASDS, which selects planning, delegation, review, and completion procedures. References below to a root or coordinator mean that execution owner, not a second Accelerate controller. Legacy issue/workspace/closure recipes run only when selected by that owner and compatible with user and project instructions. Profiles provide stack knowledge and verification guidance; they do not activate ASDS or impose an independent task lifecycle.
+These are optional technical resources, not automatic Accelerate workflow policy. The active entry classifier hands planning to ASDS, which delivers a reviewed package and releases ownership. A caller-selected consumer may later use execution resources. Legacy issue/workspace/closure recipes run only when explicitly selected by that consumer and compatible with user and project instructions.
 
 Runtime adapters translate capability-level expectations into concrete commands
 and tools.

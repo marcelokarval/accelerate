@@ -1,6 +1,6 @@
 # Accelerate Runtime Export Bundle
 
-This repository-owned portable bundle implements the v1 entry classifier. Its `SKILL.md` is self-contained and transfers non-trivial workflow ownership to spec-driven-superpowers (ASDS). It does not package or install ASDS.
+This repository-owned portable bundle implements the v1 entry classifier. Its `SKILL.md` transfers planning ownership to spec-driven-superpowers (ASDS), which releases it after planning delivery. It does not package or install ASDS.
 
 The product checkout remains the source of truth. Export is a separate deployment operation, never an implicit effect of loading the skill. Do not edit user-home exports as source or synchronize them without a deployment request.
 

@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.3.0 — Planning ownership boundary
+
+Tracked by GitHub issue #30.
+
+Accelerate still classifies and prepares engineering requests, while ASDS now
+owns reviewed planning only. After ASDS delivers a persisted plan, a
+caller-selected consumer owns implementation, code review and software integration.
+
+- Route explicit planning requests to ASDS without treating every non-trivial
+  implementation request as permanently ASDS-owned.
+- Preserve accepted planning continuity while returning later implementation to
+  caller selection instead of keeping ASDS as an executor by inertia.
+- Align root instructions, runtime projections and supported harness adapters with
+  the same Accelerate -> ASDS -> consumer authority chain.
+- Extend the executable entry contract with an explicit requested-product signal
+  and regressions for planning-only routing and stale execution language.
+- Preserve source-only boundaries: this release does not install ASDS, initialize
+  OpenSpec, choose an implementation consumer or prove a live harness deployment.
+
 ## 1.2.0 — Native Agy entry and bounded discovery context
 
 Tracked by GitHub issue #28.

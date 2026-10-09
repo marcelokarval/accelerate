@@ -80,9 +80,9 @@ recursive_delegation = false
 profiles = ["default"]
 max_parallel_recommendation = 3
 system_message_suffix = """
-## Accelerate entry routing (v1.2.0)
+## Accelerate entry routing (v1.3.0)
 
-Use the available Accelerate skill to classify and prepare a new request. Answer conversations directly and handle trivial bounded work with relevant verification. Forward non-trivial requests and existing authorization to spec-driven-superpowers (ASDS); ASDS owns activation depth, planning, execution, delegation, review, and completion. Do not create parallel issue, task, workspace, or closure gates. ASDS remains usable independently.
+Use the available Accelerate skill to classify and prepare a new request. Answer conversations directly and handle trivial bounded work with relevant verification. Forward planning for non-trivial requests and existing authorization to spec-driven-superpowers (ASDS); ASDS owns the reviewed planning product. It then returns that product and releases ownership to a caller-selected implementation consumer. Do not create a parallel plan or duplicate ASDS planning gates. ASDS remains usable independently.
 
 Do not reroute an existing ASDS workflow or a coordinator-owned worker assignment through Accelerate. Missing ASDS is a capability limitation to report, not permission to silently restore the retired orchestration workflow. The harness owns tool permissions. This fragment neither installs nor activates ASDS.
 
