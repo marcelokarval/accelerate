@@ -26,13 +26,18 @@ def test_suite_inventory_accounts_for_every_test():
 
 
 def test_active_entry_sources_do_not_reinstate_v0_root_ownership():
-    sources = ["SKILL.md", "AGENTS.md", "README.md", "core/control-plane/root-laws.md",
-               "core/control-plane/branch-enforcement-matrix.md", "global-runtime/accelerate/SKILL.md"]
+    entry_sources = ["SKILL.md", "AGENTS.md", "README.md", "core/control-plane/root-laws.md",
+                     "core/control-plane/branch-enforcement-matrix.md", "global-runtime/accelerate/SKILL.md",
+               "adapters/runtime/agy/entry-rule.md",
+                     "adapters/runtime/model-lanes/cross-runtime-agent-parity.toml"]
+    sources = [*entry_sources, "scripts/render-codex-spawn-packet.py"]
     prohibited = [r"natively absorbs", r"Standing Multi-Agent V2", r"root-owned issue topology",
-                  r"root always owns[\s\S]*?final AI review", r"MUST call `collaboration\.spawn_agent`"]
+                  r"root always owns[\s\S]*?final AI review", r"MUST call `collaboration\.spawn_agent`",
+                  r"ASDS owns[^.\n]*(?:execution|implementation|integration|completion)"]
     for relative in sources:
         text = (ROOT / relative).read_text()
-        assert "ASDS" in text or "spec-driven-superpowers" in text, relative
+        if relative in entry_sources:
+            assert "ASDS" in text or "spec-driven-superpowers" in text, relative
         for pattern in prohibited:
             assert not re.search(pattern, text, re.I), (relative, pattern)
 

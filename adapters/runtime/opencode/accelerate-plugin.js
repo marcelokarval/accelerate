@@ -7,15 +7,15 @@
 import { randomUUID } from 'node:crypto';
 
 const PART_PREFIX = 'part_acc_v1_';
-const ENTRY_PROMPT = `<ACCELERATE_ENTRY_ROUTING version="1.2.0">
+const ENTRY_PROMPT = `<ACCELERATE_ENTRY_ROUTING version="1.3.0">
 Use the available Accelerate skill to classify and prepare this request.
 Conversation: answer directly. Trivial bounded low-risk work: execute directly
 with relevant verification, without ASDS or mandatory workflow artifacts.
 Non-trivial work: hand objective, project, scope, constraints, risks, existing
 authorizations, and useful evidence to spec-driven-superpowers (ASDS).
-ASDS owns activation depth, specification, planning, execution, delegation,
-review, integration, and completion. Do not impose duplicate Accelerate issue,
-workspace, dispatch, planning, or closure gates. ASDS is independently usable.
+ASDS owns planning depth, specification, task decomposition, planning review,
+persistence and return, then releases ownership. A caller-selected consumer owns
+future implementation. Do not impose duplicate planning or review gates.
 Preserve ASDS ownership during follow-ups and do not reroute assigned workers.
 If ASDS is unavailable, report the limitation; do not claim it was loaded or
 silently restore legacy orchestration. The harness owns tools and permissions.

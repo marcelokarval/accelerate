@@ -30,6 +30,26 @@ def test_operation_count_cannot_escalate_a_known_bounded_adjustment():
         assert assess_entry(observation(operations=['inspect'] * count))['route'] == 'direct'
 
 
+def test_requested_product_distinguishes_planning_from_direct_implementation():
+    assert assess_entry(observation(requested_product='planning'))['route'] == 'asds'
+    assert assess_entry(observation(requested_product='planning'))['reasons'] == [
+        'planning is the requested product; ASDS owns planning only']
+    assert assess_entry(observation(requested_product='implementation'))['route'] == 'direct'
+    with pytest.raises(ValueError, match='requested_product'):
+        assess_entry(observation(requested_product='execute-and-close'))
+
+
+def test_requested_planning_does_not_bypass_entry_blocking_context():
+    inspect_gap = dict(resolver='inspect', question='Which project is targeted?', source='Request')
+    user_gap = dict(resolver='user', question='May the destination be created?', source='Project rules')
+    assert assess_entry(observation(requested_product='planning', gaps=[inspect_gap])) == {
+        'state': 'needs_context', 'route': None, 'next_action': 'inspect',
+        'reasons': ['Which project is targeted?']}
+    assert assess_entry(observation(requested_product='planning', gaps=[user_gap])) == {
+        'state': 'needs_context', 'route': None, 'next_action': 'ask',
+        'reasons': ['May the destination be created?']}
+
+
 @pytest.mark.parametrize('kind', sorted(MATERIAL_SIGNALS))
 def test_each_material_effect_excludes_direct_execution(kind):
     assert assess_entry(observation(signals=[dict(kind=kind, evidence='Observed requested change',

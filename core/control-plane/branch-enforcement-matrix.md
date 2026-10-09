@@ -9,7 +9,7 @@ not reactivate that earlier controller.
 | --- | --- | --- | --- |
 | Conversation, explanation or no-op | conversation | Accelerate | Respond directly; do not initialize project state |
 | Understood, bounded, reversible engineering adjustment without sensitive risk | direct | Accelerate | Make the requested change and verify its relevant behavior |
-| Materially uncertain, dependent-outcome, broad or sensitive engineering work | asds | ASDS after acceptance | Transfer context; ASDS decides workflow and activation |
+| Planning requested, or materially uncertain/dependent/broad/sensitive engineering | asds | ASDS for planning | Transfer context; ASDS delivers reviewed planning and releases ownership |
 | Explicit request to use ASDS | asds | ASDS after acceptance | Honor the selection without inferring permission to initialize or mutate |
 
 ## Classification
@@ -47,10 +47,10 @@ existing decisions; the validator cannot authenticate their origin.
 ## Transfer and Return
 
 Accelerate owns routing and context preparation. After ASDS accepts a handoff,
-ASDS owns specifications, planning, task graph, execution strategy, delegation,
-review, integration and conclusion. It may choose a lightweight flow and may
-operate independently of Accelerate. Reusable technical skills supply expertise
-without taking ownership of the process.
+ASDS owns specifications, planning graph, planning review, persistence and planning
+return. It releases ownership after delivery. A caller-selected consumer owns future
+execution, code review, integration and software conclusion. Reusable skills supply
+expertise without changing these boundaries.
 
 Accelerate presents returned results with their evidence and limitations. It
 does not rebuild the task graph, repeat approval, demand a second review, or

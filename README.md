@@ -1,15 +1,16 @@
 # Accelerate
 
-Version **1.2.0**. Accelerate classifies and prepares requests before
+Version **1.3.0**. Accelerate classifies and prepares requests before
 `spec-driven-superpowers` (ASDS).
-It also provides reusable engineering skills. ASDS owns the structured workflow
-for work handed to it and remains usable independently.
+It also provides reusable engineering skills. ASDS owns reviewed planning for work
+handed to it; a caller-selected consumer owns any later implementation.
 
 ```text
 Request -> Accelerate
              conversation -> direct response
              trivial engineering -> direct execution and relevant checks
-             non-trivial / explicit ASDS -> ASDS activation and workflow
+             planning needed/requested -> ASDS planning delivery
+                                        -> caller selects implementation consumer
 ```
 
 ## Responsibilities
@@ -17,7 +18,8 @@ Request -> Accelerate
 | Layer | Owns |
 | --- | --- |
 | Accelerate | Intent, initial scope, target, constraints, risk screening, routing |
-| ASDS | Its activation, specs, plans, tasks, scheduling, reviews, integration, completion |
+| ASDS | Planning activation, specs, tasks, planning reviews, persistence and return |
+| Consumer | Authorized implementation, code review, integration and software completion |
 | Harness | Available tools, execution, permissions, session persistence |
 | Specialist skills | Selected technical guidance, without workflow ownership |
 
