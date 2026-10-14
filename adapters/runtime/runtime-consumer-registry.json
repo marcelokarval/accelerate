@@ -40,13 +40,13 @@
     },
     {
       "runtime": "opencode",
-      "status": "legacy-reference",
+      "status": "blocked",
       "source_authority": "core/delegation/runtime-neutral-delegation.schema.json",
       "projection": {"mode": "generated-export", "path": "adapters/runtime/opencode/capabilities.yaml", "behavior_change": "none"},
-      "loader": "none",
+      "loader": "OMO-Slim observed; Accelerate loader absent",
       "native_primitive": "OMO-Slim task lifecycle: task, tasks, wait, cancel",
       "adapter": "adapters/runtime/opencode/",
-      "proof": "static-contract-only; runtime callability unproven",
+      "proof": "bounded filesystem declarations only; no fresh CLI, Accelerate loader, or ASDS host readback",
       "install": "denied/not-supported",
       "rollback": "not-supported"
     },

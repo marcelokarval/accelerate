@@ -1,0 +1,4 @@
+Surface/behavior invariant: UI wording never proves a change presentation-only; unresolved login admission authority requires inspection; a confirmed authentication or compatibility effect requires ASDS, continuing an accepted ASDS workflow instead of asking prematurely.
+Continuity invariant: A current defect report is new intent evidence; an older plan may explain existing behavior but cannot silently close the request, so a confirmed conflict reopens or continues the same ASDS planning lineage.
+Failure invariant: If the ASDS coordinator cannot actually be invoked, do not write fallback reassessments or mutate ASDS/OpenSpec planning state; report the capability block and preserve the package unchanged.
+Evidence invariant: Static checks do not prove interactive behavior; blocked pertinent functional or browser evidence forbids claiming fixed, complete or accepted.

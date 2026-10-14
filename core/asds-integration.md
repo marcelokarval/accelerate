@@ -22,6 +22,13 @@ relevant context references. Preserve the user's language. Unknown target or
 missing facts remain unknown; clarify only when they block the next step. Do not
 turn classification into a duplicate specification or plan.
 
+When a request is phrased as a surface change but alters an admission rule, carry
+the actual authority, the conflict, the accepted behavior that may be lost and the
+affected users or consumers. Accelerate must not choose between signup, password
+change, sign-in, provider or project policies merely because the requested diff is
+small. ASDS resolves the planning decision and compatibility work; it still does
+not implement the future tasks.
+
 Authorization records report previously expressed decisions and their scope.
 Validation proves structure only, not provenance, current permission or consent.
 The consumer must consult the session and harness authority. Silence is never
@@ -52,6 +59,9 @@ the caller selects its consumer; ASDS planning delivery does not fulfill it.
 Accelerate may present that result in the user's language, attributing it to the
 workflow. Presentation does not constitute another acceptance/closure gate.
 A returned claim is not proof of live runtime health or deployment.
+Planning delivery is not a software correction. Presentation must preserve missing
+functional/browser evidence and may not upgrade `implemented`, `partial` or
+`blocked` into `fixed`, `complete` or `accepted`.
 
 ## Availability
 

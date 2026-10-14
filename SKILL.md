@@ -51,8 +51,29 @@ outcome, not dependent deliverables. Require evidence and a concrete consequence
 for material risk. Length, file count and routine verification do not imply
 complexity. A one-line access-policy change can still be non-trivial.
 
+Classify the behavior imposed, not the layer named in the request. `UI`, `button`,
+`frontend`, `one line` and `simple` do not prove a presentation-only change. A
+login-button change that starts rejecting credentials the backend or provider may
+accept changes authentication and existing-user compatibility; applying signup or
+password-change policy to sign-in without an authority equating them is a material
+decision for ASDS. Conversely, login copy or layout with unchanged submission
+criteria can remain direct. Topic words alone never create a material signal.
+
+<!-- accelerate-entry-invariants:start -->
+Surface/behavior invariant: UI wording never proves a change presentation-only; unresolved login admission authority requires inspection; a confirmed authentication or compatibility effect requires ASDS, continuing an accepted ASDS workflow instead of asking prematurely.
+Continuity invariant: A current defect report is new intent evidence; an older plan may explain existing behavior but cannot silently close the request, so a confirmed conflict reopens or continues the same ASDS planning lineage.
+Failure invariant: If the ASDS coordinator cannot actually be invoked, do not write fallback reassessments or mutate ASDS/OpenSpec planning state; report the capability block and preserve the package unchanged.
+Evidence invariant: Static checks do not prove interactive behavior; blocked pertinent functional or browser evidence forbids claiming fixed, complete or accepted.
+<!-- accelerate-entry-invariants:end -->
+
 Resolve only entry-blocking gaps: inspect available facts, ask for a missing user
 choice, or carry design decisions to ASDS when the route is already clear.
+When inspection confirms a conflict with an authoritative sign-in contract, carry
+the material decision to ASDS; if ASDS already owns the objective, continue that
+workflow rather than asking the user to arbitrate before planning.
+A delivered plan may explain the present behavior, but it does not override a
+later defect report. Treat the report as a requirements-change input to the same
+ASDS lineage; do not stop after explaining the earlier decision.
 Hardening preserves objective, target, constraints, uncertainty and prior decisions;
 it does not create a plan, mandatory artifact or another approval round.
 
@@ -85,6 +106,9 @@ read-only discovery where useful; do not claim ASDS ran or silently replace it
 with Accelerate's historical orchestrator. A different execution workflow needs
 an explicit user choice. Do not reclassify risky work as trivial to bypass the
 missing dependency.
+An approval denial or unavailable coordinator also forbids fallback writes into
+the ASDS/OpenSpec package. Do not create a reassessment note, edit `tasks.md` or
+revise planning manifests on the coordinator's behalf.
 
 For resumed planning, reuse the existing ASDS state and authorization context.
 After planning delivery ASDS releases ownership. A follow-up asking to implement
@@ -101,6 +125,12 @@ For direct work, run relevant checks and report what they establish. For ASDS
 work, present the result, evidence and unresolved limitations returned by ASDS
 without treating an unverified claim as observed execution or opening a second
 acceptance process.
+
+Verification must reach the claimed behavior. Static checks do not prove an
+interactive login state, and planning or an unexecuted test is not evidence. When
+the pertinent browser or functional regression is blocked, report implementation
+and the missing proof separately; do not claim the behavior fixed, complete or
+accepted.
 
 ## Executable Contract
 

@@ -6,9 +6,63 @@
     "expected_behavior": "Sensitive authorization work transfers to ASDS; it is not trivial based on file count."
   },
   {
+    "id": "login-readiness-ambiguous-natural-report",
+    "prompt": "nossa tela de login, quando o usuário adiciona o e-mail e a senha, mesmo sem o tamanho mínimo o botão fica habilitado",
+    "expected_route": "inspect",
+    "expected_behavior": "Inspect the available sign-in authority before mutation. Do not infer a signup/password-change minimum, do not implement from wording alone, and hand a material conflict to ASDS if inspection reveals one."
+  },
+  {
+    "id": "login-conflict-existing-asds",
+    "prompt": "o plano ASDS existente preserva senhas legadas, mas o novo pedido quer mínimo no botão de login",
+    "expected_route": "continue_asds",
+    "expected_behavior": "Carry the current defect report and confirmed authentication/compatibility conflict to the existing ASDS coordinator; the older plan cannot silently close the newer request. Do not implement directly or ask the user to arbitrate before planning."
+  },
+  {
+    "id": "login-policy-disguised-as-ui",
+    "prompt": "é só frontend: habilite Entrar apenas com senha de oito caracteres",
+    "expected_route": "asds",
+    "expected_behavior": "Recognize credential admission and the signup-versus-sign-in policy choice; do not implement before ASDS planning."
+  },
+  {
+    "id": "existing-login-compatibility",
+    "prompt": "bloqueie senhas curtas no login mesmo para contas antigas aceitas pelo provider",
+    "expected_route": "asds",
+    "expected_behavior": "Carry authentication and existing-user compatibility effects to ASDS."
+  },
+  {
+    "id": "login-copy-control",
+    "prompt": "corrija Sennha para Senha sem alterar validação ou envio",
+    "expected_route": "direct",
+    "expected_behavior": "Keep a demonstrably copy-only change on the direct path."
+  },
+  {
+    "id": "login-layout-control",
+    "prompt": "ajuste somente o espaço do botão Entrar; preserve estado, wiring e critérios",
+    "expected_route": "direct",
+    "expected_behavior": "Keep a demonstrably presentation-only change on the direct path."
+  },
+  {
+    "id": "login-authority-inspection",
+    "prompt": "corrija o login conforme a política documentada no projeto; confira qual é a autoridade",
+    "expected_route": "inspect",
+    "expected_behavior": "Inspect the bounded project authority before deciding; do not guess or mutate."
+  },
+  {
+    "id": "blocked-continuation-no-fallback-write",
+    "prompt": "retome o pacote ASDS, mas o coordenador não pode ser invocado neste harness",
+    "expected_route": "blocked_asds",
+    "expected_behavior": "Preserve the package unchanged and report the capability block; no reassessment note, tasks.md edit, manifest revision, direct implementation, or false handoff."
+  },
+  {
+    "id": "blocked-behavior-proof",
+    "prompt": "implemente a mudança interativa, mas o browser está bloqueado",
+    "expected_route": "depends_on_change",
+    "expected_behavior": "Routing follows the actual behavior, while completion remains partial: static checks cannot justify fixed or complete."
+  },
+  {
     "id": "bounded-research",
     "prompt": "confira documentação e ajuste uma opção local conhecida",
     "expected_route": "direct",
-    "expected_behavior": "A lookup alone does not mandate a sidecar or ASDS. Reclassify only if uncertainty or material risk makes the work non-trivial."
+    "expected_behavior": "A lookup alone does not mandate ASDS. Reclassify only if uncertainty or material risk makes the work non-trivial."
   }
 ]

@@ -40,6 +40,9 @@ def test_other_runtime_adapter_contracts_reject_reviewer_adversarial_cases(tmp_p
     (tmp_path / "core/delegation/runtime-neutral-delegation.schema.json").write_text((REPO / "core/delegation/runtime-neutral-delegation.schema.json").read_text(encoding="utf-8"), encoding="utf-8")
     (tmp_path / "tests").mkdir()
     (tmp_path / "tests/test_other_runtime_adapters.py").write_text("fixture", encoding="utf-8")
+    (tmp_path / "tests/test_opencode_host_inspector.py").write_text("fixture", encoding="utf-8")
+    (tmp_path / "scripts").mkdir()
+    (tmp_path / "scripts/inspect-opencode-host.py").write_text("fixture", encoding="utf-8")
     (tmp_path / "adapters/runtime/other-runtime-adapters.policy.json").write_text((REPO / "adapters/runtime/other-runtime-adapters.policy.json").read_text(encoding="utf-8"), encoding="utf-8")
     registry = tmp_path / "registry.json"
     registry.write_text((REPO / "adapters/runtime/runtime-consumer-registry.json").read_text(encoding="utf-8"), encoding="utf-8")
@@ -54,9 +57,10 @@ def test_other_runtime_adapter_contracts_reject_reviewer_adversarial_cases(tmp_p
             "claude-callability": (registry, '"runtime": "claude",\n      "status": "export-only"', '"runtime": "claude",\n      "status": "supported"', "claude registry status/projection drift"),
             "appended-contradiction": (runtime / "claude/delegation-contract.md", "<!-- accelerate-runtime-policy", "Contradictory supported callability\n<!-- accelerate-runtime-policy", "claude contract renderer hash mismatch"),
             "visible-row-drift": (tmp_path / "core/control-plane/runtime-adapter-maturity-dashboard.md", "| OpenCode / OMO-Slim task projection", "| Drifted / OMO-Slim task projection", "opencode visible dashboard row or metadata drift"),
-                    "unsafe-registry-proof": (registry, "static-contract-only; runtime callability unproven", "live callable proof", "opencode unsafe registry proof/install/readback/rollback claim"),
-            "empty-proof": (runtime / "opencode/capabilities.yaml", "proof_artifacts: [adapters/runtime/opencode/delegation-contract.md, tests/test_other_runtime_adapters.py]", "proof_artifacts: []", "opencode manifest renderer hash mismatch"),
+                    "unsafe-registry-proof": (registry, "bounded filesystem declarations only; no fresh CLI, Accelerate loader, or ASDS host readback", "live callable proof", "opencode unsafe registry proof/install/readback/rollback claim"),
+            "empty-proof": (runtime / "opencode/capabilities.yaml", "proof_artifacts: [adapters/runtime/opencode/delegation-contract.md, tests/test_other_runtime_adapters.py, scripts/inspect-opencode-host.py, tests/test_opencode_host_inspector.py]", "proof_artifacts: []", "opencode manifest renderer hash mismatch"),
             "removed-effective-receipt": (tmp_path / "adapters/runtime/other-runtime-adapters.policy.json", '"effective_model_receipt_required": true', '"effective_model_receipt_required": false', "opencode effective-model/effort receipt requirement removed"),
+            "host-observation-overclaim": (tmp_path / "adapters/runtime/other-runtime-adapters.policy.json", '"accelerate_loader": "absent"', '"accelerate_loader": "loaded"', "opencode bounded host observation drift"),
             "extra-structured-key": (tmp_path / "adapters/runtime/other-runtime-adapters.policy.json", '"type": "runtime-reference", "runtime_status"', '"type": "runtime-reference", "optimistic": true, "runtime_status"', "opencode machine policy contains unknown or missing key"),
     }
     for _name, (path, before, after, expected) in cases.items():

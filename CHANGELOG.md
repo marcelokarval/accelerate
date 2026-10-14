@@ -1,5 +1,34 @@
 # Changelog
 
+## 1.4.0 — Native AGY entry plugin, OpenCode host inspection and cross-workspace ASDS CLI verification
+
+Tracked by GitHub issue #32.
+
+Add the fail-closed Antigravity (`accelerate-entry`) native plugin with
+session-bound classification receipts, route-scoped tool admission, canonical
+ASDS lineage/repair handoff, OpenCode host inspection receipts, and expanded
+direct-route verification ergonomics across workspace subprojects.
+
+- Ship the native Antigravity plugin (`adapters/runtime/agy/`) with
+  preview-first lifecycle management (`scripts/manage-agy-plugin.py`),
+  hash-bound legacy adapter retirement, and host-owned reclassification
+  continuations.
+- Admit coordinator-child writes to `dag.mmd`, `dag-status.md`, and
+  `package-spec.json` inside bound ASDS planning packages.
+- Expand `route="direct"` verification grammar (`safe_command` /
+  `validate_command_paths`) to cover `npm run --prefix`, `uv run --no-sync`,
+  `manage.py check`/`makemigrations --check --dry-run`/`migrate --check`, the
+  full ASDS CLI (`validate.mjs`, `check.mjs`, `build-package.mjs`,
+  `consume.mjs`, `orchestrate.mjs`, `install.mjs`), and any non-protected path
+  inside `seed["workspacePaths"]`.
+- Refresh `inspection-ledger.json` automatically after admitted file mutations,
+  preserve background `run_command` pending state across intermediate `stop`
+  events until `post-tool-use`, and allow direct re-classification when dropping
+  `inspect` after host-observed inspection.
+- Add the redacted, zero-write OpenCode host inspector
+  (`scripts/inspect-opencode-host.py`) and updated runtime consumer registry
+  invariants.
+
 ## 1.3.0 — Planning ownership boundary
 
 Tracked by GitHub issue #30.

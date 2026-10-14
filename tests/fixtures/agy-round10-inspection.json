@@ -1,0 +1,51 @@
+{
+  "observation": {
+    "explicit_asds": true,
+    "gaps": [],
+    "intent": "engineering",
+    "operations": [
+      "inspect",
+      "plan"
+    ],
+    "outcome": "validate and reconcile the existing ASDS planning package",
+    "requested_product": "planning",
+    "reversibility": "reversible",
+    "scope": "bounded",
+    "signals": [
+      {
+        "consequence": "ASDS must validate planning state before downstream execution",
+        "evidence": "the request names an existing reviewed planning package",
+        "kind": "material_decision"
+      }
+    ],
+    "workflow_owner": null
+  },
+  "irrelevantCalls": [
+    {
+      "arguments": {
+        "Pattern": "*",
+        "SearchDirectory": "__WORKSPACE__/docs/tasks"
+      },
+      "tool": "find_by_name"
+    },
+    {
+      "arguments": {
+        "AbsolutePath": "__WORKSPACE__/docs/tasks/auth15-controlled-recovery.md"
+      },
+      "tool": "view_file"
+    },
+    {
+      "arguments": {
+        "DirectoryPath": "__WORKSPACE__/.agents"
+      },
+      "tool": "list_dir"
+    },
+    {
+      "arguments": {
+        "Query": "accelerate-entry continue",
+        "SearchPath": "__WORKSPACE__"
+      },
+      "tool": "grep_search"
+    }
+  ]
+}

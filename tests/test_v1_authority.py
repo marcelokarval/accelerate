@@ -42,6 +42,27 @@ def test_active_entry_sources_do_not_reinstate_v0_root_ownership():
             assert not re.search(pattern, text, re.I), (relative, pattern)
 
 
+def test_active_entry_projections_preserve_sensitive_surface_and_evidence_gates():
+    projections = [
+        "SKILL.md",
+        "global-runtime/accelerate/SKILL.md",
+        "adapters/runtime/opencode/accelerate-plugin.js",
+        "adapters/runtime/codex/global-bootstrap-orchestration.fragment.md",
+        "adapters/runtime/openhands/accelerate-bootstrap-projection.md",
+        "adapters/runtime/agy/entry-rule.md",
+    ]
+    canonical = (ROOT / "core/entry-projection-invariants.txt").read_text().strip()
+    marker = re.compile(
+        r"<!-- accelerate-entry-invariants:start -->\s*(.*?)\s*"
+        r"<!-- accelerate-entry-invariants:end -->",
+        re.S,
+    )
+    for relative in projections:
+        text = (ROOT / relative).read_text()
+        matches = marker.findall(text)
+        assert matches == [canonical], relative
+
+
 def test_canonical_runner_does_not_recursively_activate_historical_tests():
     runner = (ROOT / "tests/run-suite.py").read_text()
     assert 'entry["status"] == "active"' in runner
@@ -59,6 +80,11 @@ def test_declared_release_version_matches_active_projections():
     assert str(metadata["version"]) == version
     assert f"Version **{version}**" in (ROOT / "README.md").read_text()
     assert f'version="{version}"' in (ROOT / "adapters/runtime/opencode/accelerate-plugin.js").read_text()
+
+
+def test_opencode_adapter_declares_its_esm_package_scope():
+    package = json.loads((ROOT / "adapters/runtime/opencode/package.json").read_text())
+    assert package == {"private": True, "type": "module"}
 
 
 def test_skill_index_is_independent_of_builder_home():

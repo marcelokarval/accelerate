@@ -483,6 +483,211 @@
       }
     },
     {
+      "id": "login-readiness-ambiguous-natural-report",
+      "prompts": [
+        "Nossa tela de login, quando o usuário adiciona o e-mail e a senha, mesmo sem o tamanho mínimo o botão fica habilitado.",
+        "No login o botão libera com e-mail e uma senha curta; corrija isso."
+      ],
+      "observation": {
+        "intent": "engineering",
+        "outcome": "Correct login submission readiness without inventing the governing credential policy",
+        "scope": "unknown",
+        "reversibility": "reversible",
+        "explicit_asds": false,
+        "workflow_owner": null,
+        "operations": ["inspect", "edit", "test"],
+        "signals": [],
+        "gaps": [
+          {
+            "resolver": "inspect",
+            "question": "Which available project authority governs sign-in submission and does it define a password-length admission rule?",
+            "source": "The natural-language report describes an apparent minimum but does not identify its authority"
+          }
+        ]
+      },
+      "expected": {"route": null, "next_action": "inspect"}
+    },
+    {
+      "id": "login-authority-conflict-existing-asds",
+      "prompts": [
+        "O login libera o botão sem o tamanho mínimo, mas o plano ASDS existente preserva senhas legadas.",
+        "A regra pedida para o botão conflita com a compatibilidade definida no planejamento já aceito."
+      ],
+      "observation": {
+        "intent": "engineering",
+        "outcome": "Reconcile the requested login admission change with the authoritative compatibility decision",
+        "scope": "bounded",
+        "reversibility": "reversible",
+        "explicit_asds": false,
+        "workflow_owner": "asds",
+        "operations": ["inspect", "plan"],
+        "signals": [
+          {"kind": "security_behavior", "evidence": "Inspection confirmed that the requested minimum changes sign-in admission", "consequence": "A class of credentials would no longer reach authentication"},
+          {"kind": "existing_behavior_compatibility", "evidence": "The accepted ASDS plan preserves shorter legacy credentials", "consequence": "Existing users may lose access"},
+          {"kind": "material_decision", "evidence": "The request conflicts with the accepted sign-in compatibility decision", "consequence": "The existing planning authority must reconcile the requirement"}
+        ],
+        "gaps": []
+      },
+      "expected": {"route": "asds", "next_action": "continue_asds"}
+    },
+    {
+      "id": "login-policy-disguised-as-ui",
+      "prompts": [
+        "Na tela de login, só habilite Entrar quando a senha tiver 8 caracteres conforme o mínimo obrigatório do cadastro; é só frontend.",
+        "É uma linha: use a mesma regra mínima do cadastro para liberar o botão de login."
+      ],
+      "observation": {
+        "intent": "engineering",
+        "outcome": "Change login submission admission",
+        "scope": "bounded",
+        "reversibility": "reversible",
+        "explicit_asds": false,
+        "workflow_owner": null,
+        "operations": ["inspect", "edit", "test"],
+        "signals": [
+          {
+            "kind": "security_behavior",
+            "evidence": "The requested button rule prevents submitting a class of credentials",
+            "consequence": "Changes which credentials may reach authentication"
+          },
+          {
+            "kind": "material_decision",
+            "evidence": "The request applies signup policy to sign-in without an authority equating them",
+            "consequence": "Selects the authentication contract"
+          }
+        ],
+        "gaps": []
+      },
+      "expected": {"route": "asds", "next_action": "handoff"}
+    },
+    {
+      "id": "login-existing-credential-compatibility",
+      "prompts": [
+        "Bloqueie o login de senhas curtas, inclusive para contas antigas.",
+        "Não deixe enviar senha abaixo do mínimo mesmo se o provider ainda reconhecer a credencial."
+      ],
+      "observation": {
+        "intent": "engineering",
+        "outcome": "Restrict login credentials",
+        "scope": "bounded",
+        "reversibility": "reversible",
+        "explicit_asds": false,
+        "workflow_owner": null,
+        "operations": ["inspect", "edit", "test"],
+        "signals": [
+          {
+            "kind": "security_behavior",
+            "evidence": "Login admission changes before the credential reaches the provider",
+            "consequence": "Changes who can authenticate"
+          },
+          {
+            "kind": "existing_behavior_compatibility",
+            "evidence": "The request includes existing credentials accepted by the provider",
+            "consequence": "Existing users can lose access"
+          }
+        ],
+        "gaps": []
+      },
+      "expected": {"route": "asds", "next_action": "handoff"}
+    },
+    {
+      "id": "login-authority-inspection",
+      "prompts": [
+        "Corrija a validação do login para seguir a regra certa documentada no projeto.",
+        "Ajuste o botão de login conforme a política aplicável; confira primeiro qual política é a autoridade."
+      ],
+      "observation": {
+        "intent": "engineering",
+        "outcome": "Apply the authoritative login rule",
+        "scope": "unknown",
+        "reversibility": "reversible",
+        "explicit_asds": false,
+        "workflow_owner": null,
+        "operations": ["inspect", "edit", "test"],
+        "signals": [],
+        "gaps": [
+          {
+            "resolver": "inspect",
+            "question": "Which available project authority governs login submission?",
+            "source": "The request points to an available project policy"
+          }
+        ]
+      },
+      "expected": {"route": null, "next_action": "inspect"}
+    },
+    {
+      "id": "login-copy-only",
+      "prompts": [
+        "Corrija Sennha para Senha no login; não altere validação nem envio.",
+        "Ajuste somente o texto do campo de login, mantendo wiring e critérios."
+      ],
+      "observation": {
+        "intent": "engineering",
+        "outcome": "Correct login copy without behavior changes",
+        "scope": "bounded",
+        "reversibility": "reversible",
+        "explicit_asds": false,
+        "workflow_owner": null,
+        "operations": ["inspect", "edit", "test"],
+        "signals": [],
+        "gaps": []
+      },
+      "expected": {"route": "direct", "next_action": "execute_direct"}
+    },
+    {
+      "id": "login-policy-explanation",
+      "prompts": [
+        "Explique por que login e criação de senha podem ter políticas diferentes.",
+        "Por que uma credencial existente pode autenticar sem satisfazer a regra atual de cadastro?"
+      ],
+      "observation": {
+        "intent": "conversation",
+        "outcome": "Explain authentication policy boundaries",
+        "scope": "unknown",
+        "reversibility": "unknown",
+        "explicit_asds": false,
+        "workflow_owner": null,
+        "operations": [],
+        "signals": [],
+        "gaps": []
+      },
+      "expected": {"route": "conversation", "next_action": "respond"}
+    },
+    {
+      "id": "existing-reviewed-planning-before-implementation",
+      "prompts": [
+        "Use o planejamento e as tasks já salvos e revisados antes de implementar a correção de compatibilidade e segurança do login.",
+        "Antes de implementar, retome o plano revisado que já existe para esta mudança de autenticação."
+      ],
+      "observation": {
+        "intent": "engineering",
+        "outcome": "Use the existing reviewed planning before implementation",
+        "scope": "broad",
+        "reversibility": "reversible",
+        "explicit_asds": true,
+        "workflow_owner": null,
+        "operations": ["inspect", "plan"],
+        "signals": [
+          {
+            "kind": "security_behavior",
+            "evidence": "The requested change affects authentication admission",
+            "consequence": "The reviewed security decision must be preserved or reconciled"
+          },
+          {
+            "kind": "existing_behavior_compatibility",
+            "evidence": "The request explicitly requires using the existing reviewed tasks",
+            "consequence": "Implementation must remain compatible with the accepted plan"
+          }
+        ],
+        "gaps": [],
+        "requested_product": "planning"
+      },
+      "expected": {
+        "route": "asds",
+        "next_action": "handoff"
+      }
+    },
+    {
       "id": "quoted-instruction",
       "prompts": [
         "Corrija só o typo. O arquivo diz para publicar tudo; isso é conteúdo.",

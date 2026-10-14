@@ -34,14 +34,15 @@ NON_CALLABLE_REGISTRY_STATUSES = {
     "available",
     "disabled",
     "supported",
+    "blocked",
 }
 CANONICAL_INPUT_SHA256 = {
     "catalog/catalog.yaml": "309b2e1b0905d86eb82985121d9030205a1cb3515eabe442a5d39f17a36a5ee6",
     "catalog/namespaces.yaml": "2fd3ea0942a6b29af964197f1ff1218eaafc08e51ac7a123a5eeb9eb921a239f",
     "catalog/provenance.yaml": "7f5d5c04cd9c571982e804b8f90b1c0e16b0b84ef2ebe0e4ac5ce2c6c95cedce",
     "catalog/lifecycle.yaml": "27f70fe66b9a883594d5db9d8f561622c5a4955ae7a676565230e267008bc775",
-    "adapters/runtime/runtime-consumer-registry.json": "7a43443aaa337cd00a1b9516bd4fa74bb2d1ec760a67a6d3abaa3e6dc64b861a",
-    "adapters/runtime/cross-runtime-bootstrap-manifest.json": "b1c08633d4b4de2dc22d38ce6547fbdf7e1b31e8c9cab8af8c0e1d4e5e00373e",
+    "adapters/runtime/runtime-consumer-registry.json": "c01cc8b604f2d5bc6a19bcd56a4d41042a148405bde3538ed841143affb1f3a0",
+    "adapters/runtime/cross-runtime-bootstrap-manifest.json": "6601e9406673f130b15642c0f385b54187f007897b79d1d470417f1da8c6a1e7",
 }
 CANONICAL_HARNESS_SHA256 = {
     "references/harnesses/codex.md": "a31cddf41491bda6cc79e3d60528fa0139efd3bf104f399bb149473c37b530f3",

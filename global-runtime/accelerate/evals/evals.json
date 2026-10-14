@@ -15,7 +15,43 @@
     "id": "non-trivial",
     "prompt": "implemente autenticação e permissões desta aplicação",
     "should_trigger": true,
-    "expected_behavior": "Prepare context and existing authorization, then hand workflow ownership to ASDS. ASDS selects its own activation and execution depth."
+    "expected_behavior": "Prepare context and existing authorization, then hand planning ownership to ASDS. ASDS selects planning depth and returns reviewed persisted planning; it does not implement future tasks."
+  },
+  {
+    "id": "login-readiness-natural-language",
+    "prompt": "nossa tela de login quando o usuário adiciona o email e a senha, mesmo sem o tamanho mínimo para liberação de envio o botão fica habilitado",
+    "should_trigger": true,
+    "expected_behavior": "Treat the requested minimum as an unresolved authentication-policy fact, inspect the bounded project authority before mutation, and never invent or copy a signup minimum into sign-in. If the authority exposes a material choice or compatibility effect, hand it to ASDS."
+  },
+  {
+    "id": "existing-reviewed-planning-before-implementation",
+    "prompt": "use o planejamento e as tasks que já estão salvos e revisados antes de implementar a correção de compatibilidade e segurança do login",
+    "should_trigger": true,
+    "expected_behavior": "Classify the immediate requested product as planning with explicit_asds true and security_behavior plus existing_behavior_compatibility signals. Inspect the existing package and capability, then reclassify through the exact hook-provided carrier before the byte-bound ASDS coordinator handoff; do not downgrade this to generic implementation or direct execution."
+  },
+  {
+    "id": "login-authority-conflict-after-inspection",
+    "prompt": "o plano ASDS aceito diz preservar senhas legadas e o pedido atual quer exigir mínimo no login",
+    "should_trigger": true,
+    "expected_behavior": "Treat the current defect report as new intent evidence and continue the accepted ASDS workflow with the confirmed authority and compatibility conflict; do not stop at explaining the old plan, ask prematurely, or create a second plan."
+  },
+  {
+    "id": "login-policy-under-routing",
+    "prompt": "é só UI: no login libere o botão somente quando a senha satisfizer o mínimo do cadastro",
+    "should_trigger": true,
+    "expected_behavior": "Recognize authentication admission, compatibility and a material policy choice; hand off to ASDS before implementation."
+  },
+  {
+    "id": "login-copy-negative-control",
+    "prompt": "corrija somente o texto Sennha no login, sem mudar validação, estado ou submit",
+    "should_trigger": true,
+    "expected_behavior": "Execute the demonstrably copy-only change directly with proportionate verification; do not over-route based on the word login."
+  },
+  {
+    "id": "completion-proof-boundary",
+    "prompt": "o lint passou mas a prova funcional e o browser ficaram bloqueados",
+    "should_trigger": true,
+    "expected_behavior": "Report static checks and blocked behavior proof separately; never call the behavior fixed, complete or accepted."
   },
   {
     "id": "explicit-asds",
@@ -28,6 +64,12 @@
     "prompt": "já autorizei a configuração do projeto; continue a mudança",
     "should_trigger": true,
     "expected_behavior": "Carry prior authorization into the ASDS handoff without asking again or creating duplicate state."
+  },
+  {
+    "id": "blocked-asds-continuation-preserves-package",
+    "prompt": "continue o ASDS existente, mas a chamada do coordenador exige uma aprovação indisponível",
+    "should_trigger": true,
+    "expected_behavior": "Report the approval or capability block and leave ASDS/OpenSpec planning state byte-for-byte unchanged; do not write a fallback reassessment, edit tasks.md, or claim continuation."
   },
   {
     "id": "asds-unavailable",

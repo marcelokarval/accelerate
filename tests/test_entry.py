@@ -56,6 +56,47 @@ def test_each_material_effect_excludes_direct_execution(kind):
                                                 consequence='Material changed behavior')]))['route'] == 'asds'
 
 
+def test_login_ui_rule_with_credential_compatibility_and_policy_choice_hands_off():
+    signals = [
+        dict(kind='security_behavior',
+             evidence='Button blocks a credential before provider authentication',
+             consequence='Changes who can authenticate'),
+        dict(kind='existing_behavior_compatibility',
+             evidence='Provider may accept an existing credential below the new threshold',
+             consequence='Existing users can lose access'),
+        dict(kind='material_decision',
+             evidence='Signup policy is being applied to sign-in without matching authority',
+             consequence='Selects a different authentication contract'),
+    ]
+    result = assess_entry(observation(signals=signals))
+    assert result['route'] == 'asds'
+    assert result['next_action'] == 'handoff'
+
+
+def test_login_copy_with_unchanged_admission_remains_direct():
+    result = assess_entry(observation(outcome='Correct login copy only'))
+    assert result['route'] == 'direct'
+    assert result['next_action'] == 'execute_direct'
+
+
+def test_confirmed_login_conflict_continues_existing_asds_without_asking():
+    signals = [
+        dict(kind='security_behavior', evidence='Login admission changes',
+             consequence='Credentials may be rejected'),
+        dict(kind='existing_behavior_compatibility',
+             evidence='Accepted plan preserves legacy credentials',
+             consequence='Existing users may lose access'),
+        dict(kind='material_decision',
+             evidence='Current request conflicts with accepted plan',
+             consequence='Planning authority must reconcile the requirement'),
+    ]
+    result = assess_entry(observation(
+        outcome='Reconcile login readiness with the accepted compatibility plan',
+        workflow_owner='asds', signals=signals))
+    assert result['route'] == 'asds'
+    assert result['next_action'] == 'continue_asds'
+
+
 @pytest.mark.parametrize('field,value', [('scope', 'unknown'), ('reversibility', 'unknown')])
 def test_unknown_observation_cannot_silently_admit_direct_work(field, value):
     with pytest.raises(ValueError, match='unknown'):

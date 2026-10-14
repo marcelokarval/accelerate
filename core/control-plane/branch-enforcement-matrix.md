@@ -8,8 +8,8 @@ not reactivate that earlier controller.
 | Request | Route | Process owner | Required behavior |
 | --- | --- | --- | --- |
 | Conversation, explanation or no-op | conversation | Accelerate | Respond directly; do not initialize project state |
-| Understood, bounded, reversible engineering adjustment without sensitive risk | direct | Accelerate | Make the requested change and verify its relevant behavior |
-| Planning requested, or materially uncertain/dependent/broad/sensitive engineering | asds | ASDS for planning | Transfer context; ASDS delivers reviewed planning and releases ownership |
+| Understood, bounded, reversible engineering adjustment without sensitive risk | direct | Accelerate | Make the requested change and verify its relevant behavior; near auth, billing or data boundaries, the effect must be demonstrably presentation-only or otherwise materially unchanged |
+| Planning requested, or materially uncertain/dependent/broad/sensitive engineering | asds | ASDS for planning | Transfer context, including existing-behavior compatibility and authority conflicts; ASDS delivers reviewed planning and releases ownership |
 | Explicit request to use ASDS | asds | ASDS after acceptance | Honor the selection without inferring permission to initialize or mutate |
 
 ## Classification

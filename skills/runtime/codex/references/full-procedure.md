@@ -125,9 +125,9 @@ If Spark is used for implementation, pair it with explicit instructions to run
 or report the relevant verification steps, then have the root orchestrator or a
 stronger reviewer validate the result before closure.
 
-### Prop4You Assistant Defaults
+### Persistent Assistant Defaults
 
-For Prop4You/AionUI persistent assistants:
+For persistent project/AionUI assistants:
 
 | Assistant type | Default | Escalate when |
 | --- | --- | --- |

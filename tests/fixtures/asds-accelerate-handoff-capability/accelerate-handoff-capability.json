@@ -1,0 +1,10 @@
+{
+  "schema": "asds.accelerate-handoff-capability/1",
+  "typeName": "spec-driven-superpowers",
+  "agentRelativePath": ".agents/agents/spec-driven-superpowers.md",
+  "agentSha256": "e98a7ff3ddeee77733b767065ea63f1512ae725565e9849a86dc02d34184954f",
+  "asdsVersion": "2.0.0",
+  "planningOnly": true,
+  "writesApplicationCode": false,
+  "futureTaskExecution": false
+}

@@ -422,6 +422,11 @@
       "reason": "Reusable capability regression; no automatic activation is implied."
     },
     {
+      "path": "tests/test_opencode_host_inspector.py",
+      "status": "active",
+      "reason": "Read-only redacted OpenCode declaration receipt and fail-closed ASDS consumer qualification."
+    },
+    {
       "path": "tests/test_phase1_entry_currentness.py",
       "status": "historical-v0",
       "reason": "Asserts old Phase-1 Accelerate-owned OpenSpec entry eligibility; ASDS now owns structured activation, covered by v1 routing and ownership checks."
@@ -509,7 +514,12 @@
     {
       "path": "tests/test_agy_entry_install.py",
       "status": "active",
-      "reason": "Agy native-path preview, explicit application, owner-rule preservation and failure cleanup."
+      "reason": "Legacy loose Agy adapter recognition, owner-rule preservation and hash-bound cleanup compatibility."
+    },
+    {
+      "path": "tests/test_agy_plugin.py",
+      "status": "active",
+      "reason": "AGY native plugin validation shape, entry receipts, route-scoped hooks and official lifecycle migration."
     }
   ]
 }

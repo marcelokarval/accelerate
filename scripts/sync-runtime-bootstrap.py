@@ -9,7 +9,7 @@ EXPECTED={"contract_version":2,"semantic_core":"core/delegation/runtime-neutral-
 "codex":{"status":"supported","apply_eligible":True,"loader":"AGENTS.md","projection":"adapters/runtime/codex/global-bootstrap-orchestration.fragment.md"},
 "openhands":{"status":"export-only","apply_eligible":False,"loader":"binding_unavailable","projection":"adapters/runtime/openhands/accelerate-bootstrap-projection.md"},
 "hermes":{"status":"staged-only","apply_eligible":False,"loader":"runtime-truth-required","projection":"adapters/runtime/hermes/hermes-delegate-task-bootstrap.fragment.md"},
-"opencode":{"status":"legacy-reference","apply_eligible":False,"loader":"none","projection":"adapters/runtime/opencode/delegation-contract.md"},
+"opencode":{"status":"blocked","apply_eligible":False,"loader":"Accelerate loader absent","projection":"adapters/runtime/opencode/delegation-contract.md"},
 "openchamber":{"status":"staged-only","apply_eligible":False,"loader":"runtime-truth-required","projection":"adapters/runtime/openchamber/delegation-contract.md"},
 "openclaw":{"status":"legacy-reference","apply_eligible":False,"loader":"none","projection":"adapters/runtime/openclaw/delegation-contract.md"},
 "claude":{"status":"export-only","apply_eligible":False,"loader":"none","projection":"adapters/runtime/claude/delegation-contract.md"}}}
@@ -39,12 +39,12 @@ def contract():
  if json.loads(MANIFEST.read_text())!=EXPECTED: die("bootstrap manifest violates approved invariants")
  reg=json.loads((REPO/"adapters/runtime/runtime-consumer-registry.json").read_text()); par=(REPO/"adapters/runtime/model-lanes/cross-runtime-agent-parity.toml").read_text(); oth=json.loads((REPO/"adapters/runtime/other-runtime-adapters.policy.json").read_text())
  rows={row['runtime']:row for row in reg.get('consumers',[])}
- required={'codex':('legacy-reference','none','adapters/runtime/codex/README.md'),'openhands':('export-only','no semantic-core loader is installed','adapters/runtime/model-lanes/cross-runtime-agent-parity.toml'),'hermes':('legacy-reference','none','adapters/runtime/hermes/capabilities.yaml'),'opencode':('legacy-reference','none','adapters/runtime/opencode/capabilities.yaml'),'openchamber':('legacy-reference','none','adapters/runtime/openchamber/capabilities.yaml'),'openclaw':('legacy-reference','none','adapters/runtime/openclaw/capabilities.yaml'),'claude':('export-only','no semantic-core loader is installed','adapters/runtime/claude/capabilities.yaml')}
+ required={'codex':('legacy-reference','none','adapters/runtime/codex/README.md'),'openhands':('export-only','no semantic-core loader is installed','adapters/runtime/model-lanes/cross-runtime-agent-parity.toml'),'hermes':('legacy-reference','none','adapters/runtime/hermes/capabilities.yaml'),'opencode':('blocked','OMO-Slim observed; Accelerate loader absent','adapters/runtime/opencode/capabilities.yaml'),'openchamber':('legacy-reference','none','adapters/runtime/openchamber/capabilities.yaml'),'openclaw':('legacy-reference','none','adapters/runtime/openclaw/capabilities.yaml'),'claude':('export-only','no semantic-core loader is installed','adapters/runtime/claude/capabilities.yaml')}
  for name,(status,loader,path) in required.items():
   row=rows.get(name)
   if not row or row.get('status')!=status or row.get('loader')!=loader or row.get('projection',{}).get('path')!=path: die('runtime consumer registry cross-validation failed')
  if 'child_binding_state = "binding_unavailable"' not in par: die('OpenHands binding cross-validation failed')
- for name,status in (('opencode','legacy-reference'),('openclaw','legacy-reference'),('claude','export-only')):
+ for name,status in (('opencode','blocked'),('openclaw','legacy-reference'),('claude','export-only')):
   if oth.get('runtimes',{}).get(name,{}).get('runtime_status')!=status: die('adapter registry cross-validation failed')
 def root_for(test):
  if not test: return Path.home()

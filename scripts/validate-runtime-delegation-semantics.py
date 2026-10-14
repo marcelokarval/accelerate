@@ -118,6 +118,12 @@ def validate_registry(registry: dict[str, Any]) -> None:
             allowed_modes = {"reference-only"}
             if item["runtime"] == "opencode": allowed_modes.add("generated-export")
             if projection["mode"] not in allowed_modes or item["loader"] != "none": fail(f"legacy-reference registry entry is inconsistent: {item['runtime']}")
+        elif item["status"] == "blocked" and item["runtime"] == "opencode":
+            if (projection["mode"] != "generated-export" or projection["behavior_change"] != "none"
+                    or item["loader"] != "OMO-Slim observed; Accelerate loader absent"
+                    or item["install"] != "denied/not-supported"
+                    or "no fresh CLI, Accelerate loader, or ASDS host readback" not in item["proof"]):
+                fail("blocked OpenCode registry entry overclaims runtime authority")
         elif projection["mode"] != "none" or item["adapter"] != "none" or item["loader"] != "none": fail(f"blocked registry entry is inconsistent: {item['runtime']}")
         if item["runtime"] == "openhands" and item["status"] != "export-only": fail("openhands remains export-only until separately proven")
 
