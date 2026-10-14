@@ -1,0 +1,11 @@
+{
+  "Subagents": [
+    {
+      "Model": "inherit",
+      "Prompt": "__CANONICAL_HANDOFF_PROMPT__",
+      "Role": "planner",
+      "TypeName": "spec-driven-superpowers",
+      "Workspace": "inherit"
+    }
+  ]
+}

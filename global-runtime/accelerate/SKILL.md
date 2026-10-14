@@ -4,7 +4,7 @@ description: Classify the requested product; handle conversation and trivial imp
 metadata:
   category: routing
   origin: standalone-global-runtime
-  version: 1.3.0
+  version: 1.4.0
 ---
 # Accelerate
 
@@ -42,6 +42,21 @@ an understood bounded outcome, known reversibility, no material unresolved choic
 and no material effect. Inspect/edit/test/format are operations for one outcome;
 their count, prompt length and file count do not determine complexity.
 
+Classify the behavior imposed, not the layer named in the request. `UI`, `button`,
+`frontend`, `one line` and `simple` do not prove a presentation-only change. A
+login-button rule that rejects credentials the backend or provider may accept is
+an authentication and existing-behavior compatibility change. Applying signup or
+password-change policy to sign-in without an authority equating them is a material
+decision for ASDS. Login copy or layout with unchanged admission can remain direct;
+the topic word alone is not a material signal.
+
+<!-- accelerate-entry-invariants:start -->
+Surface/behavior invariant: UI wording never proves a change presentation-only; unresolved login admission authority requires inspection; a confirmed authentication or compatibility effect requires ASDS, continuing an accepted ASDS workflow instead of asking prematurely.
+Continuity invariant: A current defect report is new intent evidence; an older plan may explain existing behavior but cannot silently close the request, so a confirmed conflict reopens or continues the same ASDS planning lineage.
+Failure invariant: If the ASDS coordinator cannot actually be invoked, do not write fallback reassessments or mutate ASDS/OpenSpec planning state; report the capability block and preserve the package unchanged.
+Evidence invariant: Static checks do not prove interactive behavior; blocked pertinent functional or browser evidence forbids claiming fixed, complete or accepted.
+<!-- accelerate-entry-invariants:end -->
+
 Forward engineering work involving changes to access/security behavior, sensitive
 data exposure, charging/accounting, durable application data, irreversible effects,
 shared interfaces, dependent deliverables or material solution choices. Each risk
@@ -64,3 +79,8 @@ entry discovery when routing is clear. Carry these limits in the existing handof
 constraints/references; ASDS owns their preservation after acceptance. This is
 prompt guidance, not filesystem confinement. Report actual tool activity precisely:
 a version command is execution, but is not a test or a project program run.
+
+Verification must reach the claimed behavior. Static checks do not prove an
+interactive login state. If the pertinent browser or functional regression is
+blocked, report implementation and missing proof separately; do not claim the
+behavior fixed, complete or accepted.

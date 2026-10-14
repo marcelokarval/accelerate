@@ -2,13 +2,14 @@
   "schema_version": 1,
   "runtimes": {
     "opencode": {
-      "type": "runtime-reference", "runtime_status": "legacy-reference", "proof_class": "static-contract", "projection_mode": "generated-export", "loader": "none",
-      "authority_boundary": "reference-only; no host configuration is loaded or mutated", "current_tools": [], "candidate_tools": ["task", "tasks", "wait", "cancel"],
+      "type": "runtime-reference", "runtime_status": "blocked", "proof_class": "static-contract", "projection_mode": "generated-export", "loader": "OMO-Slim observed; Accelerate loader absent",
+      "authority_boundary": "read-only declaration inspection only; no CLI, log, model, permission, installation, or ASDS host authority", "current_tools": [], "candidate_tools": ["task", "tasks", "wait", "cancel"],
       "allowed_roles": ["orchestrator", "python-backend", "nextjs-frontend", "research", "reviewer", "qa", "data-db", "integrations-ops"], "forbidden_roles": ["designer", "observer", "council"], "allowed_efforts": ["low", "medium", "high"], "forbidden_efforts": ["xhigh", "max"],
       "suppressed_capabilities": ["wildcard-skills", "wildcard-mcp", "xhigh", "max", "nested-delegation", "plaintext-token-config", "installer"], "nesting": "disabled", "max_assignment_depth": 0, "max_concurrent_children": 0,
       "named_model_allowlist": false, "named_tool_allowlist": false, "named_skill_allowlist": true, "named_mcp_allowlist": true, "timeout_required": false, "cleanup_currently_allowed": false, "root_only_synthesis": true, "effective_model_receipt_required": true, "callability_proven": false, "loader_proven": false,
-      "privacy_notes": "never read or reproduce plaintext-token configuration; export requires separate approval", "observed_version": "OpenCode 1.18.18", "candidate_note": "OMO-Slim task lifecycle candidate only; no task execution proof",
-      "registry_proof": "static-contract-only; runtime callability unproven", "registry_install": "denied/not-supported", "registry_rollback": "not-supported"
+      "privacy_notes": "inspect only explicitly supplied package and configuration files; never read auth, tokens, logs, provider state, or model output", "observed_version": "OpenCode package 2.0.26 without fresh CLI readback; OMO-Slim 2.2.24 observed loaded on 2026-10-10", "candidate_note": "fail-safe blocked: Accelerate has no observed loader and OMO-Slim does not qualify the ASDS execution-consumer host contract; manual_handoff_required",
+      "registry_proof": "bounded filesystem declarations only; no fresh CLI, Accelerate loader, or ASDS host readback", "registry_install": "denied/not-supported", "registry_rollback": "not-supported",
+      "host_observation": {"opencode_package_version": "2.0.26", "opencode_cli_readback": "unavailable", "omo_slim_package_version": "2.2.24", "omo_slim_loader": "observed-loaded-2026-10-10", "accelerate_loader": "absent", "asds_execution_consumer": "manual_handoff_required"}
     },
     "openclaw": {
       "type": "runtime-reference", "runtime_status": "legacy-reference", "proof_class": "static-contract", "projection_mode": "reference-only", "loader": "none",

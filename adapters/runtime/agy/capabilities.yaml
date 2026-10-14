@@ -1,17 +1,27 @@
 name: agy
-type: native-skill-installer
+type: native-entry-plugin
 status: experimental
-authority_boundary: entry classification only; ASDS owns accepted work; harness owns permissions
-allowed_tools: []
+authority_boundary: entry admission and route-scoped tool gating only; ASDS owns accepted planning; harness owns permissions and confinement
+allowed_tools:
+  - route-scoped native AGY tools after a valid session receipt
 suppressed_capabilities:
-  - filesystem confinement by prompt
-  - implicit installation or upgrade
+  - semantic correctness proof from a routing receipt
+  - operating-system containment from command parsing or declared Cwd
+  - semantic containment of workspace code executed by admitted test runners
+  - host fail-closed guarantee for crashed or timed-out hooks
+  - implicit plugin installation or agent selection
   - ASDS installation
   - model or provider configuration
   - universal runtime compliance claim
-validation_command: python3 -B scripts/install-agy-entry.py --help
+  - live-qualified host support for nested caller provenance, reviewer-result binding, or executed-call readback
+  - active ASDS coordinator acceptance receipt and continue_asds runtime
+validation_command: agy plugin validate adapters/runtime/agy
 proof_artifacts:
-  - scripts/install-agy-entry.py
-  - tests/test_agy_entry_install.py
-  - docs/reviews/native-entry-1.2.0.md
-privacy_notes: previews report hashes and sizes only; no owner rule content or credentials
+  - adapters/runtime/agy/plugin.json
+  - adapters/runtime/agy/agents/accelerate-entry.md
+  - adapters/runtime/agy/hooks.json
+  - adapters/runtime/agy/scripts/entry_hook.py
+  - scripts/manage-agy-plugin.py
+  - tests/test_agy_plugin.py
+privacy_notes: private mode-0700 state stays under the AGY user config root outside workspace and artifacts; lifecycle previews/readback report hashes, sizes, modes and paths, not prompt or owner-rule contents
+entry_protocol: classifier carrier is decoded and classified inside PreToolUse, then intentionally denied with structured completion context in the documented reason field; malformed object envelopes normalize conservatively to inspect with non-sensitive signed warnings; current-turn read evidence records canonical governed path and digest; a unique validated delivered ASDS manifest plus project-local ASDS-owned agent capability promotes only to a signed byte-exact handoff

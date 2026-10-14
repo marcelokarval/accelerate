@@ -1,0 +1,42 @@
+{
+  "accelerate-entry-enforcement": {
+    "PreInvocation": [
+      {
+        "type": "command",
+        "command": "python3 -I -B scripts/entry_hook.py pre-invocation",
+        "timeout": 10
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -I -B scripts/entry_hook.py pre-tool-use",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -I -B scripts/entry_hook.py post-tool-use",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "type": "command",
+        "command": "python3 -I -B scripts/entry_hook.py stop",
+        "timeout": 10
+      }
+    ]
+  }
+}

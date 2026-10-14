@@ -2,9 +2,9 @@ schema_version: 1
 name: opencode
 type: runtime-reference
 status: experimental
-runtime_status: legacy-reference
+runtime_status: blocked
 proof_class: static-contract
-authority_boundary: reference-only; no host configuration is loaded or mutated
+authority_boundary: read-only declaration inspection only; no CLI, log, model, permission, installation, or ASDS host authority
 allowed_current_tools: []
 candidate_native_tools: [task, tasks, wait, cancel]
 allowed_roles: [orchestrator, python-backend, nextjs-frontend, research, reviewer, qa, data-db, integrations-ops]
@@ -12,6 +12,13 @@ suppressed_roles: [designer, observer, council]
 allowed_efforts: [low, medium, high]
 suppressed_capabilities: [wildcard-skills, wildcard-mcp, xhigh, max, nested-delegation, plaintext-token-config, installer]
 nesting: disabled
+observed_opencode_package: 2.0.26
+opencode_cli_readback: unavailable
+observed_omo_slim_package: 2.2.24
+omo_slim_loader_observation: observed-loaded-2026-10-10
+accelerate_loader_status: absent
+asds_execution_consumer_status: manual_handoff_required
+inspector_command: python3 scripts/inspect-opencode-host.py --help
 validation_command: python3 scripts/validate-other-runtime-adapters.py
-proof_artifacts: [adapters/runtime/opencode/delegation-contract.md, tests/test_other_runtime_adapters.py]
-privacy_notes: never read or reproduce plaintext-token configuration; export requires separate approval
+proof_artifacts: [adapters/runtime/opencode/delegation-contract.md, tests/test_other_runtime_adapters.py, scripts/inspect-opencode-host.py, tests/test_opencode_host_inspector.py]
+privacy_notes: inspect only explicitly supplied package and configuration files; never read auth, tokens, logs, provider state, or model output

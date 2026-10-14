@@ -1,6 +1,6 @@
 # Accelerate
 
-Version **1.3.0**. Accelerate classifies and prepares requests before
+Version **1.4.0**. Accelerate classifies and prepares requests before
 `spec-driven-superpowers` (ASDS).
 It also provides reusable engineering skills. ASDS owns reviewed planning for work
 handed to it; a caller-selected consumer owns any later implementation.
@@ -45,11 +45,14 @@ mechanism. Runtime prompts live under `global-runtime/accelerate/` and
 `adapters/runtime/`. Source availability is not proof of installation. This
 release does not install/update DSH, ASDS or any user-home runtime.
 
-The [native Agy adapter](adapters/runtime/agy/README.md) provides a preview-first
-installer and explicit hash-bound skill updates using the supported user paths.
-Its optional entry rule preserves owner policy and creates no backups. See the
-[bounded runtime evidence](docs/reviews/native-entry-1.2.0.md) for observed
-selection, scope drift and the limits of the repeated probe.
+The [native AGY plugin](adapters/runtime/agy/README.md) provides a selectable
+`accelerate-entry` primary agent, route-scoped lifecycle hooks, session-bound
+classification receipts, official preview-first plugin lifecycle operations,
+and hash-bound cleanup of the previous loose skill/rule adapter. It creates no
+backup and is not installed merely by existing in source. See the [bounded
+runtime evidence](docs/reviews/native-entry-1.2.0.md) for earlier prompt-only
+results; source plugin validation still does not prove live model compliance or
+host behavior when a hook process crashes.
 
 ## Reusable capabilities and previous releases
 

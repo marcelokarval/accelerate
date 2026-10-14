@@ -1,0 +1,5 @@
+{
+  "$schema": "https://antigravity.google/schemas/v1/plugin.json",
+  "name": "accelerate-entry",
+  "description": "Fail-closed Accelerate entry classification and route-scoped tool admission for Antigravity CLI."
+}

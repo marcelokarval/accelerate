@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "asds.planning-delivery/1",
+  "returnVersion": "asds.planning-return/2",
+  "packageId": "__PACKAGE_ID__",
+  "revision": "login-access-recovery-r5",
+  "state": "delivered",
+  "author": "ASDS coordinator",
+  "originalRequestedProduct": {
+    "kind": "planning",
+    "text": "Reassess the current login request without implementing future tasks.",
+    "source": "current user request",
+    "status": "fulfilled"
+  },
+  "planningContribution": {
+    "product": "reviewed-planning-package",
+    "executionPerformed": false,
+    "usableTasks": ["0001"],
+    "limitations": ["No future task implementation"]
+  },
+  "attendanceOutcome": "planning_delivered",
+  "authority": {
+    "destination": "openspec/changes/__PACKAGE_ID__",
+    "authorization": "Planning-only fixture modeled on the real target delivery shape.",
+    "originalExecutionAuthority": "not granted"
+  },
+  "references": [
+    {"id": "tasks", "path": "tasks.md", "role": "index", "sha256": "__TASKS_SHA__"},
+    {"id": "task-0001", "path": "tasks/task-0001.md", "role": "contract", "sha256": "__TASK_SHA__"}
+  ],
+  "tasks": [
+    {"id": "0001", "nodeType": "task", "write": ["__GOVERNED_PATH__"], "resources": []}
+  ],
+  "blockers": [],
+  "reviews": [
+    {"kind": "fidelity", "verdict": "pass", "findings": [], "revision": "login-access-recovery-r5", "candidateSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "synthetic": false, "liveEvidence": "independent fidelity readback"},
+    {"kind": "quality", "verdict": "pass", "findings": [], "revision": "login-access-recovery-r5", "candidateSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "synthetic": false, "liveEvidence": "independent quality readback"}
+  ],
+  "readback": {
+    "revision": "login-access-recovery-r5",
+    "candidateSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "readbackSha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "destination": "openspec/changes/__PACKAGE_ID__",
+    "status": "matched",
+    "synthetic": false,
+    "executionEvidence": false,
+    "verifiedBy": "ASDS planning store readback",
+    "evidence": "fixture derived from the real target manifest shape",
+    "referenceIds": ["tasks", "task-0001"],
+    "taskIds": ["0001"],
+    "checks": {"bytes": true, "files": true, "ids": true, "relations": true, "decisions": true, "reviews": true}
+  }
+}

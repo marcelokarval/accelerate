@@ -9,8 +9,9 @@ spec = importlib.util.spec_from_file_location("renderer", REPO / "scripts/render
 renderer = importlib.util.module_from_spec(spec); spec.loader.exec_module(renderer)
 POLICY = "adapters/runtime/other-runtime-adapters.policy.json"; REGISTRY = "adapters/runtime/runtime-consumer-registry.json"; DASHBOARD = "core/control-plane/runtime-adapter-maturity-dashboard.md"
 BASE = {"type","runtime_status","proof_class","projection_mode","loader","authority_boundary","current_tools","candidate_tools","allowed_roles","forbidden_roles","allowed_efforts","forbidden_efforts","suppressed_capabilities","nesting","max_assignment_depth","max_concurrent_children","named_model_allowlist","named_tool_allowlist","named_skill_allowlist","named_mcp_allowlist","timeout_required","cleanup_currently_allowed","root_only_synthesis","effective_model_receipt_required","callability_proven","loader_proven","privacy_notes","observed_version","candidate_note","registry_proof","registry_install","registry_rollback"}
+OPENCODE_OBSERVATION = {"opencode_package_version":"2.0.26","opencode_cli_readback":"unavailable","omo_slim_package_version":"2.2.24","omo_slim_loader":"observed-loaded-2026-10-10","accelerate_loader":"absent","asds_execution_consumer":"manual_handoff_required"}
 APPROVED = {
- "opencode":{"runtime_status":"legacy-reference","proof_class":"static-contract","projection_mode":"generated-export","registry_proof":"static-contract-only; runtime callability unproven","registry_install":"denied/not-supported","registry_rollback":"not-supported"},
+ "opencode":{"runtime_status":"blocked","proof_class":"static-contract","projection_mode":"generated-export","registry_proof":"bounded filesystem declarations only; no fresh CLI, Accelerate loader, or ASDS host readback","registry_install":"denied/not-supported","registry_rollback":"not-supported"},
  "openclaw":{"runtime_status":"legacy-reference","proof_class":"static-contract","projection_mode":"reference-only","registry_proof":"static-contract-only; runtime callability unproven","registry_install":"denied/not-supported","registry_rollback":"not-supported"},
  "claude":{"runtime_status":"export-only","proof_class":"static-contract","projection_mode":"future-export","registry_proof":"static-contract-only; runtime callability unproven","registry_install":"denied/not-supported","registry_rollback":"not-supported"}}
 
@@ -24,7 +25,9 @@ def validate(root: Path, registry_path: Path | None = None):
     if not meta: fail("dashboard metadata missing")
     status_meta=json.loads(meta.group(1))
     for name,item in source["runtimes"].items():
-        if set(item)!=BASE: fail(f"{name} machine policy contains unknown or missing key")
+        expected_keys=BASE|({"host_observation"} if name=="opencode" else set())
+        if set(item)!=expected_keys: fail(f"{name} machine policy contains unknown or missing key")
+        if name=="opencode" and item["host_observation"]!=OPENCODE_OBSERVATION: fail("opencode bounded host observation drift")
         for key,value in APPROVED[name].items():
             if item[key] != value: fail(f"{name} approved {key} invariant drift")
         if item["callability_proven"] or item["loader_proven"]: fail(f"{name} callability/loader overclaim")
@@ -42,6 +45,7 @@ def validate(root: Path, registry_path: Path | None = None):
         if contract.read_text()!=expected_contract: fail(f"{name} contract renderer hash mismatch")
         if not item["current_tools"]==[]: fail(f"{name} current tool claim is unsafe")
         proof=[f"adapters/runtime/{name}/delegation-contract.md","tests/test_other_runtime_adapters.py"]
+        if name=="opencode": proof += ["scripts/inspect-opencode-host.py","tests/test_opencode_host_inspector.py"]
         if not proof or any(not (root/p).is_file() for p in proof): fail(f"{name} proof artifacts are empty or missing")
         entry=consumers[name]
         required={"runtime","status","source_authority","projection","loader","native_primitive","adapter","proof","install","rollback"}

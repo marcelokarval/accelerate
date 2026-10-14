@@ -10,7 +10,8 @@ from core.routing import classify, _fields, _text, _texts
 MATERIAL_SIGNALS = frozenset({
     "security_behavior", "sensitive_data_effect", "financial_effect",
     "persistent_state_change", "irreversible_effect", "shared_interface_change",
-    "dependent_outcomes", "material_decision", "other_material_effect",
+    "dependent_outcomes", "material_decision", "existing_behavior_compatibility",
+    "other_material_effect",
 })
 _FIELDS = frozenset({"intent", "outcome", "scope", "reversibility",
                      "explicit_asds", "workflow_owner", "operations", "signals", "gaps"})

@@ -42,8 +42,9 @@ class RoutingTests(unittest.TestCase):
                 self.assertEqual(classify(request(**{field: value}))["route"], "asds")
 
     def test_sensitive_and_unknown_risks_cannot_bypass_asds(self):
-        for risk in ("auth", "billing", "permissions", "sensitive data", "migration",
-                     "secrets", "irreversible effect", "runtime truth", "new risk"):
+        for risk in ("auth", "credential acceptance", "existing behavior compatibility",
+                     "billing", "permissions", "sensitive data", "migration", "secrets",
+                     "irreversible effect", "runtime truth", "new risk"):
             with self.subTest(risk=risk):
                 self.assertEqual(classify(request(risks=[risk]))["route"], "asds")
 

@@ -22,6 +22,8 @@ test('root receives one entry instruction and keeps user input byte-for-byte', a
   assert.deepEqual(original.parts.slice(1), before);
   assert.match(original.parts[0].text, /ASDS owns/);
   assert.match(original.parts[0].text, /harness owns tools and permissions/);
+  assert.match(original.parts[0].text, /login-button rule that rejects a\s+credential/i);
+  assert.match(original.parts[0].text, /Static checks do not prove interactive behavior/);
   const once = structuredClone(output);
   await apply(output);
   assert.deepEqual(output, once);

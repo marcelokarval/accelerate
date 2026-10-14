@@ -134,6 +134,9 @@ def test_registry_covers_required_runtimes_with_machine_readable_lifecycle_field
     assert consumers["codex"]["projection"]["mode"] == "reference-only"
     assert (REPO / consumers["codex"]["projection"]["path"]).is_file()
     assert "runtime-neutral-delegation" in (REPO / consumers["codex"]["projection"]["path"]).read_text()
+    assert consumers["opencode"]["status"] == "blocked"
+    assert consumers["opencode"]["loader"] == "OMO-Slim observed; Accelerate loader absent"
+    assert "no fresh CLI, Accelerate loader, or ASDS host readback" in consumers["opencode"]["proof"]
 
 
 def test_registry_negative_probes_fail_for_bad_types_paths_and_static_support_claims(tmp_path):
@@ -144,10 +147,12 @@ def test_registry_negative_probes_fail_for_bad_types_paths_and_static_support_cl
         "missing-path": lambda item: item["projection"].update({"path": "missing/file"}),
         "static-supported": lambda item: item.update({"status": "supported", "proof": "registry validation only"}),
         "openhands-supported": lambda item: item.update({"status": "supported"}),
+        "opencode-loader-overclaim": lambda item: item.update({"loader": "Accelerate loader loaded"}),
     }
     for name, mutate in probes.items():
         candidate = json.loads(json.dumps(registry))
-        item = next(entry for entry in candidate["consumers"] if entry["runtime"] == ("openhands" if name == "openhands-supported" else "codex"))
+        runtime = "openhands" if name == "openhands-supported" else "opencode" if name == "opencode-loader-overclaim" else "codex"
+        item = next(entry for entry in candidate["consumers"] if entry["runtime"] == runtime)
         mutate(item)
         path = tmp_path / f"{name}.json"
         path.write_text(json.dumps(candidate), encoding="utf-8")
